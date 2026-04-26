@@ -1,0 +1,4 @@
+link-assistant/meta-expression:docs/ROADMAP.md: - parent astronomical body through P397,
+link-assistant/meta-expression:src/index.js: sourceUrl: 'https://www.wikidata.org/wiki/Q2#P397',
+link-assistant/meta-expression:src/index.js: 'Wikidata Q2 Earth has parent astronomical body P397 with value Q525 Sun.',
+link-assistant/meta-expression:docs/case-studies/issue-5/data/wikidata-code-search.txt: link-assistant/meta-expression:src/index.js: sourceUrl: 'https://www.wikidata.org/wiki/Q2#P397',

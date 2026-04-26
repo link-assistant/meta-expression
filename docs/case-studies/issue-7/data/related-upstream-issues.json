@@ -1,0 +1,17 @@
+[
+  {
+    "repository": "link-assistant/calculator",
+    "url": "https://github.com/link-assistant/calculator/issues/142",
+    "purpose": "Reusable issue-report URL builder"
+  },
+  {
+    "repository": "link-foundation/relative-meta-logic",
+    "url": "https://github.com/link-foundation/relative-meta-logic/issues/24",
+    "purpose": "Stable formalization and evaluation adapter"
+  },
+  {
+    "repository": "link-assistant/human-language",
+    "url": "https://github.com/link-assistant/human-language/issues/28",
+    "purpose": "Reusable Wikidata Q/P phrase mapping"
+  }
+]

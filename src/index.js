@@ -1,13 +1,15 @@
+import { createWikimediaEvidenceClient } from './wikimedia-evidence.js';
+export {
+  createWikimediaEvidenceClient,
+  resolveLiveEvidence,
+} from './wikimedia-evidence.js';
+
 const arithmeticEqualityPattern =
   /^\s*(-?\d+(?:\.\d+)?)\s*([+*/-])\s*(-?\d+(?:\.\d+)?)\s*=\s*(-?\d+(?:\.\d+)?)\s*$/;
 const arithmeticQuestionPattern =
   /^\s*(?:what\s+is\s+)?(-?\d+(?:\.\d+)?)\s*([+*/-])\s*(-?\d+(?:\.\d+)?)\??\s*$/i;
 const realWorldConfidenceEpsilon = 0.01;
 const issueReportRepoUrl = 'https://github.com/link-assistant/meta-expression';
-const wikidataApiUrl = 'https://www.wikidata.org/w/api.php';
-const wikipediaSummaryBaseUrl =
-  'https://en.wikipedia.org/api/rest_v1/page/summary/';
-const defaultEvidenceCacheTtlMs = 60 * 60 * 1000;
 const selfReferentialFalseStatements = new Set([
   'this statement is false',
   'this sentence is false',
@@ -31,6 +33,62 @@ const knownEvidence = [
     },
   },
   {
+    key: 'moon orbits the sun',
+    polarity: 'support',
+    weight: 1,
+    sourceType: 'wikidata',
+    sourceUrl: 'https://www.wikidata.org/wiki/Q405#P397',
+    retrievedAt: '2026-04-26',
+    claim:
+      'Wikidata Q405 Moon has parent astronomical body P397 Q2 Earth, and Q2 Earth has parent astronomical body P397 Q525 Sun.',
+    identifiers: {
+      subject: 'Q405',
+      property: 'P397',
+      object: 'Q525',
+      path: 'Q405>P397>Q2>P397>Q525',
+    },
+    context: {
+      phraseMappings: [
+        {
+          text: 'Moon -> Q405',
+          phrase: 'Moon',
+          role: 'subject noun phrase',
+          wikidataId: 'Q405',
+          sourceUrl: 'https://www.wikidata.org/wiki/Q405',
+        },
+        {
+          text: 'orbits -> P397',
+          phrase: 'orbits',
+          role: 'verb phrase',
+          wikidataId: 'P397',
+          sourceUrl: 'https://www.wikidata.org/wiki/Property:P397',
+        },
+        {
+          text: 'Sun -> Q525',
+          phrase: 'Sun',
+          role: 'object noun phrase',
+          wikidataId: 'Q525',
+          sourceUrl: 'https://www.wikidata.org/wiki/Q525',
+        },
+      ],
+      reasoningSteps: [
+        {
+          text: 'Q405 Moon -> P397 -> Q2 Earth',
+          sourceUrl: 'https://www.wikidata.org/wiki/Q405#P397',
+        },
+        {
+          text: 'Q2 Earth -> P397 -> Q525 Sun',
+          sourceUrl: 'https://www.wikidata.org/wiki/Q2#P397',
+        },
+      ],
+      orbitPath: [
+        { id: 'Q405', label: 'Moon' },
+        { id: 'Q2', label: 'Earth' },
+        { id: 'Q525', label: 'Sun' },
+      ],
+    },
+  },
+  {
     key: 'elon musk is alive',
     polarity: 'support',
     weight: 1,
@@ -46,6 +104,47 @@ const knownEvidence = [
     },
   },
 ];
+
+const knownRealWorldClaims = Object.freeze({
+  'earth orbits the sun': Object.freeze({
+    interpretationKind: 'wikidata-astronomy-claim',
+    paraphrase: 'Earth has the Sun as its parent astronomical body.',
+    examples: Object.freeze(['Earth -> parent astronomical body -> Sun']),
+    expressionType: 'wikidata-claim',
+    wikidata: Object.freeze({
+      subject: 'Q2',
+      property: 'P397',
+      object: 'Q525',
+    }),
+  }),
+  'moon orbits the sun': Object.freeze({
+    interpretationKind: 'wikidata-astronomy-chain-claim',
+    paraphrase:
+      'The Moon reaches the Sun through the parent astronomical body chain Moon -> Earth -> Sun.',
+    examples: Object.freeze([
+      'Moon -> parent astronomical body -> Earth -> Sun',
+    ]),
+    expressionType: 'wikidata-claim',
+    wikidata: Object.freeze({
+      subject: 'Q405',
+      property: 'P397',
+      object: 'Q525',
+      path: Object.freeze(['Q405', 'Q2', 'Q525']),
+    }),
+  }),
+  'elon musk is alive': Object.freeze({
+    interpretationKind: 'wikidata-person-liveness-claim',
+    paraphrase:
+      'Elon Musk is a person whose Wikidata item has no date of death statement in the captured data.',
+    examples: Object.freeze(['Elon Musk -> date of death -> missing']),
+    expressionType: 'wikidata-person-liveness-claim',
+    wikidata: Object.freeze({
+      subject: 'Q317521',
+      property: 'P570',
+      object: 'missing',
+    }),
+  }),
+});
 
 export const defaultBeliefSystem = Object.freeze({
   id: 'default-scientific',
@@ -120,6 +219,13 @@ const preparedExamples = Object.freeze([
     label: 'Wikidata astronomy claim',
     category: 'evidence',
     description: 'Real-world evidence with provenance and bounded confidence.',
+  }),
+  Object.freeze({
+    input: 'Moon orbits the Sun',
+    label: 'Wikidata orbit chain',
+    category: 'evidence',
+    description:
+      'A real-world orbit claim that follows parent astronomical bodies.',
   }),
   Object.freeze({
     input: 'Elon Musk is alive',
@@ -291,45 +397,6 @@ export async function analyzeStatementWithLiveEvidence(input, options = {}) {
   });
 }
 
-export function createWikimediaEvidenceClient(options = {}) {
-  const cache = options.cache ?? new Map();
-  const clientOptions = { ...options, cache };
-
-  return {
-    cache,
-    async resolveEvidence(input, overrideOptions = {}) {
-      return await resolveLiveEvidence(input, {
-        ...clientOptions,
-        ...overrideOptions,
-        cache,
-      });
-    },
-  };
-}
-
-export async function resolveLiveEvidence(input, options = {}) {
-  const text = normalizeInput(input);
-  const query = createEvidenceQuery(text);
-  if (!query) {
-    return [];
-  }
-
-  const fetchImpl = options.fetch ?? globalThis.fetch?.bind(globalThis);
-  if (typeof fetchImpl !== 'function') {
-    throw new Error(
-      'Live evidence resolution requires a fetch implementation.'
-    );
-  }
-
-  const request = {
-    fetchImpl,
-    cache: options.cache ?? new Map(),
-    cacheTtlMs: options.cacheTtlMs ?? defaultEvidenceCacheTtlMs,
-    now: options.now ?? Date.now,
-  };
-  return await resolveEvidenceQuery(query, request);
-}
-
 export function generateInterpretations(input, options = {}) {
   const text = normalizeInput(input);
   const topK = Math.max(1, Math.min(options.topK ?? 3, 10));
@@ -410,6 +477,7 @@ function createIssueReportBody(analysis, options) {
   lines.push('');
   lines.push(analysis.selectedInterpretation.paraphrase);
   lines.push('');
+  appendInterpretationLines(lines, analysis.interpretations);
   lines.push('## Result');
   lines.push('');
   lines.push(`- **Value**: ${analysis.result.value}`);
@@ -429,6 +497,7 @@ function createIssueReportBody(analysis, options) {
     'Refuting evidence',
     analysis.result.refutingEvidence
   );
+  appendReasoningTraceLines(lines, analysis.linksNetwork.links);
   lines.push('');
   lines.push('## Links Notation');
   lines.push('');
@@ -442,6 +511,21 @@ function createIssueReportBody(analysis, options) {
   lines.push('');
 
   return lines.join('\n');
+}
+
+function appendInterpretationLines(lines, interpretations) {
+  if (!Array.isArray(interpretations) || interpretations.length <= 1) {
+    return;
+  }
+
+  lines.push('## Candidate Interpretations');
+  lines.push('');
+  for (const interpretation of interpretations) {
+    lines.push(
+      `- **${interpretation.id}** (${interpretation.kind}): ${interpretation.paraphrase}`
+    );
+  }
+  lines.push('');
 }
 
 function appendEvidenceLines(lines, heading, evidenceItems) {
@@ -460,6 +544,45 @@ function appendEvidenceLines(lines, heading, evidenceItems) {
     lines.push(`- ${source}: ${evidence.claim}`);
   }
   lines.push('');
+}
+
+function appendReasoningTraceLines(lines, links) {
+  const traceLinks = links.filter((link) =>
+    ['meaning', 'reasoning-step'].includes(link.role)
+  );
+  if (traceLinks.length === 0) {
+    return;
+  }
+
+  lines.push('## Reasoning Trace');
+  lines.push('');
+  for (const link of traceLinks) {
+    const source = link.value?.sourceUrl
+      ? ` ([source](${link.value.sourceUrl}))`
+      : '';
+    lines.push(
+      `- **${link.role}**: ${summarizeReportValue(link.value)}${source}`
+    );
+  }
+  lines.push('');
+}
+
+function summarizeReportValue(value) {
+  if (value === null) {
+    return '';
+  }
+  if (typeof value === 'string' || typeof value === 'number') {
+    return String(value);
+  }
+  return (
+    value.text ??
+    value.paraphrase ??
+    value.claim ??
+    value.relation ??
+    value.kind ??
+    value.expression?.type ??
+    ''
+  );
 }
 
 export function computeEvidenceConfidence(evidenceItems) {
@@ -574,319 +697,6 @@ function findUserBelief(userBeliefs, normalized) {
   return undefined;
 }
 
-function createEvidenceQuery(text) {
-  const normalized = normalizeKey(text);
-  const liveness = text.match(/^(.+?)\s+is\s+(alive|dead)\s*\.?$/i);
-  if (liveness) {
-    return {
-      kind: 'person-liveness',
-      normalized,
-      originalText: text,
-      subjectLabel: cleanEntityLabel(liveness[1]),
-      desiredState: liveness[2].toLowerCase(),
-      property: 'P570',
-    };
-  }
-
-  const capital = text.match(
-    /^(.+?)\s+is\s+(?:the\s+)?capital\s+of\s+(.+?)\s*\.?$/i
-  );
-  if (capital) {
-    return {
-      kind: 'capital',
-      normalized,
-      originalText: text,
-      subjectLabel: cleanEntityLabel(capital[1]),
-      objectLabel: cleanEntityLabel(capital[2]),
-      property: 'P36',
-    };
-  }
-
-  const orbit = text.match(/^(.+?)\s+orbits\s+(.+?)\s*\.?$/i);
-  if (orbit) {
-    return {
-      kind: 'orbit',
-      normalized,
-      originalText: text,
-      subjectLabel: cleanEntityLabel(orbit[1]),
-      objectLabel: cleanEntityLabel(orbit[2]),
-      property: 'P397',
-    };
-  }
-
-  return null;
-}
-
-async function resolveEvidenceQuery(query, request) {
-  if (query.kind === 'person-liveness') {
-    return await resolvePersonLivenessEvidence(query, request);
-  }
-  if (query.kind === 'capital') {
-    return await resolveCapitalEvidence(query, request);
-  }
-  if (query.kind === 'orbit') {
-    return await resolveOrbitEvidence(query, request);
-  }
-  return [];
-}
-
-async function resolvePersonLivenessEvidence(query, request) {
-  const subject = await searchWikidataEntity(query.subjectLabel, request);
-  if (!subject) {
-    return [];
-  }
-
-  const entity = await fetchWikidataEntity(subject.id, request);
-  if (!entity) {
-    return [];
-  }
-
-  const summary = await fetchWikipediaSummary(entity, request);
-  const deathValues = getClaimValues(entity, query.property);
-  const hasDeathDate = deathValues.length > 0;
-  const wantsDead = query.desiredState === 'dead';
-  const polarity = hasDeathDate === wantsDead ? 'support' : 'refute';
-  const weight = hasDeathDate ? 1 : 0.8;
-  const dateValue = deathValues[0]?.time ?? null;
-  const label = getEntityLabel(entity, query.subjectLabel);
-
-  return [
-    createLiveEvidence(query, {
-      polarity,
-      weight,
-      sourceUrl: wikidataEntityUrl(subject.id, query.property),
-      claim: hasDeathDate
-        ? `Wikidata ${subject.id} identifies ${label} with date of death ${dateValue}.`
-        : `Wikidata ${subject.id} identifies ${label} and has no date of death (${query.property}) statement in the retrieved entity data.`,
-      identifiers: {
-        subject: subject.id,
-        property: query.property,
-        object: hasDeathDate ? 'date-of-death-present' : 'missing',
-      },
-      context: createEvidenceContext(entity, summary),
-      retrievedAt: retrievalTimestamp(request),
-    }),
-  ];
-}
-
-async function resolveCapitalEvidence(query, request) {
-  const [capital, country] = await Promise.all([
-    searchWikidataEntity(query.subjectLabel, request),
-    searchWikidataEntity(query.objectLabel, request),
-  ]);
-  if (!capital || !country) {
-    return [];
-  }
-
-  const countryEntity = await fetchWikidataEntity(country.id, request);
-  if (!countryEntity) {
-    return [];
-  }
-
-  const summary = await fetchWikipediaSummary(countryEntity, request);
-  const capitalIds = getClaimEntityIds(countryEntity, query.property);
-  const supports = capitalIds.includes(capital.id);
-  const countryLabel = getEntityLabel(countryEntity, query.objectLabel);
-
-  return [
-    createLiveEvidence(query, {
-      polarity: supports ? 'support' : 'refute',
-      weight: 1,
-      sourceUrl: wikidataEntityUrl(country.id, query.property),
-      claim: supports
-        ? `Wikidata ${country.id} lists ${capital.id} as the capital (${query.property}) of ${countryLabel}.`
-        : `Wikidata ${country.id} does not list ${capital.id} as the capital (${query.property}) of ${countryLabel} in the retrieved entity data.`,
-      identifiers: {
-        subject: country.id,
-        property: query.property,
-        object: capital.id,
-      },
-      context: createEvidenceContext(countryEntity, summary),
-      retrievedAt: retrievalTimestamp(request),
-    }),
-  ];
-}
-
-async function resolveOrbitEvidence(query, request) {
-  const [subject, object] = await Promise.all([
-    searchWikidataEntity(query.subjectLabel, request),
-    searchWikidataEntity(query.objectLabel, request),
-  ]);
-  if (!subject || !object) {
-    return [];
-  }
-
-  const subjectEntity = await fetchWikidataEntity(subject.id, request);
-  if (!subjectEntity) {
-    return [];
-  }
-
-  const summary = await fetchWikipediaSummary(subjectEntity, request);
-  const objectIds = getClaimEntityIds(subjectEntity, query.property);
-  const supports = objectIds.includes(object.id);
-  const subjectLabel = getEntityLabel(subjectEntity, query.subjectLabel);
-
-  return [
-    createLiveEvidence(query, {
-      polarity: supports ? 'support' : 'refute',
-      weight: 1,
-      sourceUrl: wikidataEntityUrl(subject.id, query.property),
-      claim: supports
-        ? `Wikidata ${subject.id} lists ${object.id} as the parent astronomical body (${query.property}) of ${subjectLabel}.`
-        : `Wikidata ${subject.id} does not list ${object.id} as the parent astronomical body (${query.property}) of ${subjectLabel} in the retrieved entity data.`,
-      identifiers: {
-        subject: subject.id,
-        property: query.property,
-        object: object.id,
-      },
-      context: createEvidenceContext(subjectEntity, summary),
-      retrievedAt: retrievalTimestamp(request),
-    }),
-  ];
-}
-
-function createLiveEvidence(query, evidence) {
-  return {
-    id: `live-${safeReference(query.kind)}-${safeReference(query.normalized)}`,
-    key: query.normalized,
-    sourceType: 'wikidata',
-    ...evidence,
-  };
-}
-
-async function searchWikidataEntity(label, request) {
-  const url = new URL(wikidataApiUrl);
-  url.search = new URLSearchParams({
-    action: 'wbsearchentities',
-    format: 'json',
-    language: 'en',
-    origin: '*',
-    type: 'item',
-    limit: '5',
-    search: label,
-  }).toString();
-  const payload = await fetchJson(url, request);
-  const result = chooseBestSearchResult(label, payload.search ?? []);
-  return result?.id ? { id: result.id, label: result.label ?? label } : null;
-}
-
-function chooseBestSearchResult(label, results) {
-  const normalizedLabel = normalizeSearchLabel(label);
-  return (
-    results.find(
-      (result) => normalizeSearchLabel(result.label) === normalizedLabel
-    ) ??
-    results[0] ??
-    null
-  );
-}
-
-function normalizeSearchLabel(value) {
-  return String(value ?? '')
-    .toLowerCase()
-    .replace(/[^\p{Letter}\p{Number}]+/gu, ' ')
-    .trim()
-    .replace(/\s+/g, ' ');
-}
-
-async function fetchWikidataEntity(id, request) {
-  const url = new URL(wikidataApiUrl);
-  url.search = new URLSearchParams({
-    action: 'wbgetentities',
-    format: 'json',
-    ids: id,
-    languages: 'en',
-    origin: '*',
-    props: 'labels|descriptions|claims|sitelinks',
-    sitefilter: 'enwiki',
-  }).toString();
-  const payload = await fetchJson(url, request);
-  const entity = payload.entities?.[id];
-  return entity && !entity.missing ? entity : null;
-}
-
-async function fetchWikipediaSummary(entity, request) {
-  const title = entity.sitelinks?.enwiki?.title;
-  if (!title) {
-    return null;
-  }
-
-  const url = new URL(encodeURIComponent(title), wikipediaSummaryBaseUrl);
-  try {
-    return await fetchJson(url, request);
-  } catch {
-    return null;
-  }
-}
-
-async function fetchJson(url, request) {
-  const key = String(url);
-  const now = Number(request.now());
-  const cached = request.cache.get(key);
-  if (cached && cached.expiresAt > now) {
-    return cached.value;
-  }
-
-  const response = await request.fetchImpl(key, {
-    headers: { accept: 'application/json' },
-  });
-  if (!response.ok) {
-    throw new Error(`Wikimedia request failed with status ${response.status}.`);
-  }
-
-  const value = await response.json();
-  request.cache.set(key, {
-    expiresAt: now + request.cacheTtlMs,
-    value,
-  });
-  return value;
-}
-
-function getClaimValues(entity, property) {
-  return (entity.claims?.[property] ?? [])
-    .map((claim) => claim.mainsnak?.datavalue?.value)
-    .filter(Boolean);
-}
-
-function getClaimEntityIds(entity, property) {
-  return getClaimValues(entity, property)
-    .map((value) => value.id ?? wikidataIdFromNumericValue(value))
-    .filter(Boolean);
-}
-
-function wikidataIdFromNumericValue(value) {
-  return value['numeric-id'] ? `Q${value['numeric-id']}` : null;
-}
-
-function createEvidenceContext(entity, summary) {
-  return {
-    wikidataEntityUrl: wikidataEntityUrl(entity.id),
-    wikipediaSummaryUrl: summary?.content_urls?.desktop?.page ?? null,
-    wikipediaTitle: summary?.title ?? entity.sitelinks?.enwiki?.title ?? null,
-    wikipediaExtract: summary?.extract ?? null,
-  };
-}
-
-function wikidataEntityUrl(id, property) {
-  return property
-    ? `https://www.wikidata.org/wiki/${id}#${property}`
-    : `https://www.wikidata.org/wiki/${id}`;
-}
-
-function getEntityLabel(entity, fallback) {
-  return entity.labels?.en?.value ?? fallback;
-}
-
-function cleanEntityLabel(value) {
-  return normalizeInput(value)
-    .replace(/^the\s+/i, '')
-    .replace(/\.$/, '');
-}
-
-function retrievalTimestamp(request) {
-  return new Date(Number(request.now())).toISOString();
-}
-
 function arithmeticInterpretations(text) {
   return [
     {
@@ -982,33 +792,22 @@ function selfReferenceInterpretations() {
 }
 
 function realWorldInterpretations(text) {
-  const normalized = normalizeKey(text);
-  const knownEarth = normalized === 'earth orbits the sun';
-  const knownAlive = normalized === 'elon musk is alive';
+  const knownClaim = knownRealWorldClaims[normalizeKey(text)];
 
   return [
     {
-      kind: knownEarth
-        ? 'wikidata-astronomy-claim'
-        : knownAlive
-          ? 'wikidata-person-liveness-claim'
-          : 'real-world-claim',
-      paraphrase: knownEarth
-        ? 'Earth has the Sun as its parent astronomical body.'
-        : knownAlive
-          ? 'Elon Musk is a person whose Wikidata item has no date of death statement in the captured data.'
-          : `Treat "${text}" as a factual claim that needs evidence.`,
-      examples: knownEarth
-        ? ['Earth -> parent astronomical body -> Sun']
-        : knownAlive
-          ? ['Elon Musk -> date of death -> missing']
-          : ['Evidence may support or refute the claim'],
-      confidence: knownEarth || knownAlive ? 0.95 : 0.5,
+      kind: knownClaim?.interpretationKind ?? 'real-world-claim',
+      paraphrase:
+        knownClaim?.paraphrase ??
+        `Treat "${text}" as a factual claim that needs evidence.`,
+      examples: knownClaim?.examples ?? [
+        'Evidence may support or refute the claim',
+      ],
+      confidence: knownClaim ? 0.95 : 0.5,
       source: 'deterministic-rule',
-      formalizationLevel:
-        knownEarth || knownAlive
-          ? FORMALIZATION_LEVELS.PARTIAL_FORMAL_EXPRESSION
-          : FORMALIZATION_LEVELS.STRUCTURED_MEANING_LINKS,
+      formalizationLevel: knownClaim
+        ? FORMALIZATION_LEVELS.PARTIAL_FORMAL_EXPRESSION
+        : FORMALIZATION_LEVELS.STRUCTURED_MEANING_LINKS,
     },
     {
       kind: 'ambiguous-claim',
@@ -1084,40 +883,26 @@ function formalizeInterpretation(text, interpretation) {
   }
 
   const normalized = normalizeKey(text);
-  const knownEarth = normalized === 'earth orbits the sun';
-  const knownAlive = normalized === 'elon musk is alive';
+  const knownClaim = knownRealWorldClaims[normalized];
 
   return {
-    level:
-      knownEarth || knownAlive
-        ? FORMALIZATION_LEVELS.PARTIAL_FORMAL_EXPRESSION
-        : interpretation.formalizationLevel,
+    level: knownClaim
+      ? FORMALIZATION_LEVELS.PARTIAL_FORMAL_EXPRESSION
+      : interpretation.formalizationLevel,
     computable: false,
     expression: {
-      type: knownEarth
-        ? 'wikidata-claim'
-        : knownAlive
-          ? 'wikidata-person-liveness-claim'
-          : 'partial-claim',
+      type: knownClaim?.expressionType ?? 'partial-claim',
       text,
       normalized,
-      wikidata: knownEarth
-        ? { subject: 'Q2', property: 'P397', object: 'Q525' }
-        : knownAlive
-          ? { subject: 'Q317521', property: 'P570', object: 'missing' }
-          : null,
+      wikidata: knownClaim?.wikidata ?? null,
     },
-    unknowns:
-      knownEarth || knownAlive
-        ? []
-        : ['formal predicate', 'evidence source mapping'],
-    refinementSuggestions:
-      knownEarth || knownAlive
-        ? []
-        : [
-            'Choose a specific subject.',
-            'Choose a relation that can be checked against evidence.',
-          ],
+    unknowns: knownClaim ? [] : ['formal predicate', 'evidence source mapping'],
+    refinementSuggestions: knownClaim
+      ? []
+      : [
+          'Choose a specific subject.',
+          'Choose a relation that can be checked against evidence.',
+        ],
   };
 }
 
@@ -1297,6 +1082,7 @@ function addResultLinks(context, statement, formalizationLink, result) {
       value: evidence,
       provenance: evidenceProvenance(evidence),
     });
+    addEvidenceContextLinks(context, evidenceLink, evidence);
     addLink(context, {
       role: evidence.polarity,
       references: [evidenceLink.id, resultLink.id],
@@ -1309,6 +1095,34 @@ function addResultLinks(context, statement, formalizationLink, result) {
   }
 
   return resultLink;
+}
+
+function addEvidenceContextLinks(context, evidenceLink, evidence) {
+  const provenance = evidenceProvenance(evidence);
+  const phraseMappings = evidence.context?.phraseMappings ?? [];
+  const reasoningSteps = evidence.context?.reasoningSteps ?? [];
+
+  if (Array.isArray(phraseMappings)) {
+    for (const mapping of phraseMappings) {
+      addLink(context, {
+        role: 'meaning',
+        references: [evidenceLink.id],
+        value: mapping,
+        provenance,
+      });
+    }
+  }
+
+  if (Array.isArray(reasoningSteps)) {
+    for (const step of reasoningSteps) {
+      addLink(context, {
+        role: 'reasoning-step',
+        references: [evidenceLink.id],
+        value: step,
+        provenance,
+      });
+    }
+  }
 }
 
 function evaluateArithmeticExpression(expression) {

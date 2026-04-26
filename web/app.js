@@ -61,14 +61,7 @@ copyLino.addEventListener('click', async () => {
 });
 
 reportIssue.addEventListener('click', () => {
-  if (!currentAnalysis) {
-    return;
-  }
-  const url = createIssueReportUrl(currentAnalysis, {
-    pageUrl: globalThis.location.href,
-    userAgent: globalThis.navigator.userAgent,
-  });
-  globalThis.open(url, '_blank', 'noopener,noreferrer');
+  updateReportIssueLink();
 });
 
 beliefSlider.addEventListener('input', () => {
@@ -102,6 +95,7 @@ function render(statement, interpretationIndex = 0) {
   renderInterpretations(draft);
   renderResult(currentAnalysis);
   renderLinksNetwork(currentAnalysis.linksNetwork.links);
+  updateReportIssueLink();
   syncSelectedExample(statement);
   requestLiveEvidence(statement);
   linoOutput.hidden = true;
@@ -145,11 +139,28 @@ function renderLinksNetwork(links) {
   for (const link of links) {
     const item = document.createElement('article');
     item.className = `link-row ${link.role}`;
-    item.innerHTML = `
-      <span class="link-role">${escapeHtml(link.role)}</span>
-      <strong>${escapeHtml(link.id)}</strong>
-      <span>${escapeHtml(summary(link.value))}</span>
-    `;
+    const role = document.createElement('span');
+    const id = document.createElement('strong');
+    const value = document.createElement('span');
+    const sourceUrl = sourceUrlFor(link.value);
+
+    role.className = 'link-role';
+    role.textContent = link.role;
+    id.textContent = link.id;
+    value.textContent = summary(link.value);
+
+    if (sourceUrl) {
+      value.append(' ');
+      const source = document.createElement('a');
+      source.className = 'link-source';
+      source.href = sourceUrl;
+      source.target = '_blank';
+      source.rel = 'noopener noreferrer';
+      source.textContent = sourceLabelFor(link.value);
+      value.append(source);
+    }
+
+    item.append(role, id, value);
     linkLanes.append(item);
   }
 }
@@ -201,7 +212,21 @@ function applyLiveEvidenceResult(data) {
   });
   renderResult(currentAnalysis);
   renderLinksNetwork(currentAnalysis.linksNetwork.links);
+  updateReportIssueLink();
   liveEvidenceStatus.textContent = 'Live Wikimedia evidence';
+}
+
+function updateReportIssueLink() {
+  if (!currentAnalysis) {
+    reportIssue.href =
+      'https://github.com/link-assistant/meta-expression/issues/new';
+    return;
+  }
+
+  reportIssue.href = createIssueReportUrl(currentAnalysis, {
+    pageUrl: globalThis.location.href,
+    userAgent: globalThis.navigator.userAgent,
+  });
 }
 
 function summary(value) {
@@ -220,6 +245,20 @@ function summary(value) {
     value.expression?.type ??
     ''
   );
+}
+
+function sourceUrlFor(value) {
+  if (value === null || typeof value !== 'object') {
+    return null;
+  }
+  return value.sourceUrl ?? value.context?.wikidataEntityUrl ?? null;
+}
+
+function sourceLabelFor(value) {
+  if (value === null || typeof value !== 'object') {
+    return 'source';
+  }
+  return value.wikidataId ?? value.sourceType ?? 'source';
 }
 
 function escapeHtml(value) {
