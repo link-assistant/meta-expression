@@ -48,6 +48,32 @@ describe('meta-expression prototype pipeline', () => {
     ).toBe(true);
   });
 
+  it('supports the Moon-Sun orbit claim through a Wikidata parent-body chain', () => {
+    const analysis = analyzeStatement('Moon orbits the Sun');
+    const evidence = analysis.result.supportingEvidence[0];
+    const meaningLinks = analysis.linksNetwork.links
+      .filter((link) => link.role === 'meaning')
+      .map((link) => link.value.text)
+      .join('\n');
+    const reasoningSteps = analysis.linksNetwork.links
+      .filter((link) => link.role === 'reasoning-step')
+      .map((link) => link.value.text)
+      .join('\n');
+
+    expect(analysis.result.kind).toBe('evidence-estimate');
+    expect(analysis.result.value).toBe(0.99);
+    expect(analysis.result.supportingEvidence.length).toBe(1);
+    expect(evidence.identifiers.subject).toBe('Q405');
+    expect(evidence.identifiers.property).toBe('P397');
+    expect(evidence.identifiers.object).toBe('Q525');
+    expect(evidence.identifiers.path).toBe('Q405>P397>Q2>P397>Q525');
+    expect(meaningLinks.includes('Moon -> Q405')).toBe(true);
+    expect(meaningLinks.includes('orbits -> P397')).toBe(true);
+    expect(meaningLinks.includes('Sun -> Q525')).toBe(true);
+    expect(reasoningSteps.includes('Q405 Moon -> P397 -> Q2 Earth')).toBe(true);
+    expect(reasoningSteps.includes('Q2 Earth -> P397 -> Q525 Sun')).toBe(true);
+  });
+
   it('uses bounded Wikidata-backed evidence for a person alive claim', () => {
     const analysis = analyzeStatement('Elon Musk is alive');
 
@@ -104,10 +130,22 @@ describe('meta-expression prototype pipeline', () => {
       pageUrl: 'https://link-assistant.github.io/meta-expression/web/',
       userAgent: 'test browser',
     });
+    const moonReport = createIssueReportUrl(
+      analyzeStatement('Moon orbits the Sun'),
+      {
+        pageUrl: 'https://link-assistant.github.io/meta-expression/web/',
+        userAgent: 'test browser',
+        timestamp: '2026-04-26T00:00:00.000Z',
+      }
+    );
     const decodedReportUrl = decodeURIComponent(reportUrl.replace(/\+/g, ' '));
+    const moonReportBody = new URL(moonReport).searchParams.get('body');
 
     expect(
       examples.some((example) => example.input === 'Elon Musk is alive')
+    ).toBe(true);
+    expect(
+      examples.some((example) => example.input === 'Moon orbits the Sun')
     ).toBe(true);
     expect(level.name).toBe('Fully computable expression');
     expect(decodedReportUrl).toContain(
@@ -116,8 +154,14 @@ describe('meta-expression prototype pipeline', () => {
     expect(decodedReportUrl).toContain('## Statement');
     expect(decodedReportUrl).toContain('1 + 1');
     expect(decodedReportUrl).toContain('links-network');
+    expect(moonReportBody.includes('## Candidate Interpretations')).toBe(true);
+    expect(moonReportBody.includes('## Reasoning Trace')).toBe(true);
+    expect(moonReportBody.includes('Moon -> Q405')).toBe(true);
+    expect(moonReportBody.includes('orbits -> P397')).toBe(true);
   });
+});
 
+describe('Wikimedia live evidence client', () => {
   it('resolves live Wikimedia evidence with reusable cache and statement templates', async () => {
     const fetchCalls = [];
     const client = createWikimediaEvidenceClient({
@@ -133,10 +177,21 @@ describe('meta-expression prototype pipeline', () => {
       'Paris is the capital of France',
       { wikimediaClient: client }
     );
+    const moonOrbitAnalysis = await analyzeStatementWithLiveEvidence(
+      'Moon orbits the Sun',
+      {
+        wikimediaClient: client,
+        includeFixtureEvidence: false,
+      }
+    );
     const callsAfterFirstPass = fetchCalls.length;
     const cachedDeadEvidence = await client.resolveEvidence(
       'Ada Lovelace is dead'
     );
+    const moonEvidence = moonOrbitAnalysis.result.supportingEvidence[0];
+    const moonMappings = moonEvidence.context.phraseMappings
+      .map((mapping) => mapping.text)
+      .join('\n');
 
     expect(deadEvidence[0].polarity).toBe('support');
     expect(deadEvidence[0].identifiers.subject).toBe('Q7259');
@@ -147,6 +202,14 @@ describe('meta-expression prototype pipeline', () => {
     expect(
       capitalAnalysis.result.supportingEvidence[0].identifiers.object
     ).toBe('Q90');
+    expect(moonOrbitAnalysis.result.confidence).toBe(0.99);
+    expect(moonEvidence.identifiers.subject).toBe('Q405');
+    expect(moonEvidence.identifiers.property).toBe('P397');
+    expect(moonEvidence.identifiers.object).toBe('Q525');
+    expect(moonEvidence.identifiers.path).toBe('Q405>P397>Q2>P397>Q525');
+    expect(moonMappings.includes('Moon -> Q405')).toBe(true);
+    expect(moonMappings.includes('orbits -> P397')).toBe(true);
+    expect(moonMappings.includes('Sun -> Q525')).toBe(true);
     expect(capitalAnalysis.result.confidence).toBeLessThan(1);
     expect(cachedDeadEvidence[0].claim).toBe(deadEvidence[0].claim);
     expect(fetchCalls.length).toBe(callsAfterFirstPass);
@@ -159,9 +222,7 @@ function mockWikimediaResponse(url) {
     const action = parsed.searchParams.get('action');
     if (action === 'wbsearchentities') {
       return jsonResponse({
-        search: [
-          searchEntityResult(parsed.searchParams.get('search') ?? ''),
-        ].filter(Boolean),
+        search: searchEntityResults(parsed.searchParams.get('search') ?? ''),
       });
     }
     if (action === 'wbgetentities') {
@@ -192,14 +253,27 @@ function mockWikimediaResponse(url) {
   throw new Error(`Unexpected mock URL: ${url}`);
 }
 
-function searchEntityResult(search) {
+function searchEntityResults(search) {
   const entities = {
-    'ada lovelace': ['Q7259', 'Ada Lovelace'],
-    paris: ['Q90', 'Paris'],
-    france: ['Q142', 'France'],
+    'ada lovelace': [['Q7259', 'Ada Lovelace', 'English mathematician']],
+    paris: [['Q90', 'Paris', 'capital and largest city of France']],
+    france: [['Q142', 'France', 'country in Western Europe']],
+    moon: [
+      ['Q16877383', 'Moon', 'family name'],
+      ['Q405', 'Moon', "Earth's only natural satellite"],
+    ],
+    sun: [
+      [
+        'Q14647',
+        'Sun Microsystems',
+        'defunct American computer hardware and software company',
+      ],
+      ['Q525', 'Sun', 'star at the centre of the Solar System'],
+    ],
   };
-  const entity = entities[search.trim().toLowerCase()];
-  return entity ? { id: entity[0], label: entity[1] } : null;
+  return (entities[search.trim().toLowerCase()] ?? []).map(
+    ([id, label, description]) => ({ id, label, description })
+  );
 }
 
 function wikidataEntity(id) {
@@ -228,6 +302,38 @@ function wikidataEntity(id) {
       descriptions: { en: { value: 'capital and largest city of France' } },
       claims: {},
       sitelinks: { enwiki: { title: 'Paris' } },
+    },
+    Q16877383: {
+      id: 'Q16877383',
+      labels: { en: { value: 'Moon' } },
+      descriptions: { en: { value: 'family name' } },
+      claims: {},
+      sitelinks: { enwiki: { title: 'Moon_(surname)' } },
+    },
+    Q405: {
+      id: 'Q405',
+      labels: { en: { value: 'Moon' } },
+      descriptions: { en: { value: "Earth's only natural satellite" } },
+      claims: {
+        P397: [entityClaim('Q2')],
+      },
+      sitelinks: { enwiki: { title: 'Moon' } },
+    },
+    Q2: {
+      id: 'Q2',
+      labels: { en: { value: 'Earth' } },
+      descriptions: { en: { value: 'third planet from the Sun' } },
+      claims: {
+        P397: [entityClaim('Q525')],
+      },
+      sitelinks: { enwiki: { title: 'Earth' } },
+    },
+    Q525: {
+      id: 'Q525',
+      labels: { en: { value: 'Sun' } },
+      descriptions: { en: { value: 'star at the centre of the Solar System' } },
+      claims: {},
+      sitelinks: { enwiki: { title: 'Sun' } },
     },
   };
   return entities[id] ?? { id, missing: '' };

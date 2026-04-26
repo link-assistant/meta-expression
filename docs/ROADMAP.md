@@ -15,10 +15,14 @@ Implemented or added in PR #6:
 - Exact arithmetic equality and arithmetic question evaluation.
 - Bounded confidence for real-world evidence estimates.
 - Fixture evidence for `Earth orbits the Sun` and `Elon Musk is alive`.
-- Live Wikimedia evidence resolver for liveness, capital, and orbit templates.
+- Fixture evidence for `Moon orbits the Sun` through the parent-body chain
+  `Moon -> Earth -> Sun`.
+- Live Wikimedia evidence resolver for liveness, capital, and orbit templates,
+  including direct and parent-chain astronomical-body checks.
 - Browser worker that resolves live evidence after initial render.
 - Local user belief slider persisted in `localStorage`.
-- Prefilled GitHub issue reporting with Links Notation.
+- Prefilled GitHub issue reporting with interpretations, Q/P reasoning traces,
+  evidence, and Links Notation.
 - Rust core workspace with Doublets-based relation-link encoding and WASM-ready
   crate type.
 - Canonical top-level requirements and roadmap docs.
@@ -65,7 +69,7 @@ Goal: replace fixture-only evidence with scoped live retrieval.
 - Keep evidence fetching in a worker for browser responsiveness.
 - Support selected statement templates first:
   - person alive/dead through P570,
-  - parent astronomical body through P397,
+  - direct and parent-chain astronomical body through P397,
   - capital through P36,
   - instance/subclass after the first three are stable.
 - Add request cancellation, retry/backoff, explicit timeout state, and unknown

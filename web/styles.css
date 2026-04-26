@@ -21,6 +21,7 @@ body {
 }
 
 button,
+.button-link,
 input {
   font: inherit;
 }
@@ -76,7 +77,8 @@ input {
   color: #172026;
 }
 
-button {
+button,
+.button-link {
   border: 1px solid #1d4e89;
   border-radius: 6px;
   padding: 10px 14px;
@@ -85,8 +87,17 @@ button {
   cursor: pointer;
 }
 
-button:hover {
+button:hover,
+.button-link:hover {
   background: #163d6c;
+}
+
+.button-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 42px;
+  text-decoration: none;
 }
 
 h1,
@@ -173,7 +184,8 @@ h2 {
 }
 
 .belief-control button,
-.network-actions button {
+.network-actions button,
+.network-actions .button-link {
   min-height: 42px;
 }
 
@@ -307,6 +319,16 @@ h2 {
 .link-row span:last-child {
   overflow-wrap: anywhere;
   color: #51636f;
+}
+
+.link-source {
+  color: #1d4e89;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.link-source:hover {
+  text-decoration: underline;
 }
 
 pre {

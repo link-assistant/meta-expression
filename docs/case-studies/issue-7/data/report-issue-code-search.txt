@@ -1,0 +1,36 @@
+link-assistant/calculator:docs/case-studies/issue-121/README.md: In `web/src/utils/reportIssue.ts`, the `generateIssueReport()` function only includes the default `lino_interpretation` in the report body. The `alternative_lino` array (which lists all alternative interpretations) is not included. This means when users report issues involving ambiguous expressions (like `2 + 3 * 4`), the report only shows the default interpretation, not all the alternatives that may be relevant to the bug.
+link-assistant/calculator:docs/case-studies/issue-121/README.md: - `web/src/utils/reportIssue.ts` — Include alternative interpretations in bug report
+link-assistant/meta-expression:web/app.js: const reportIssue = document.querySelector('#report-issue');
+link-assistant/meta-expression:web/app.js: reportIssue.addEventListener('click', () => {
+link-assistant/hive-mind:src/solve.error-handlers.lib.mjs: autoReport: argv.autoReportIssue,
+link-assistant/hive-mind:src/solve.error-handlers.lib.mjs: disableReport: argv.disableReportIssue,
+link-assistant/calculator:web/src/i18n/locales/fr.lino: reportIssue 'Signaler ce problème'
+link-assistant/calculator:web/src/i18n/locales/fr.lino: reportIssue 'Signaler un problème'
+link-assistant/meta-expression:docs/case-studies/issue-5/data/calculator-issue-report-code-search.txt: link-assistant/calculator:web/src/utils/reportIssue.ts: const baseUrl = 'https://github.com/link-assistant/calculator/issues/new';
+link-assistant/meta-expression:docs/case-studies/issue-5/data/calculator-issue-report-code-search.txt: link-assistant/calculator:web/src/utils/reportIssue.test.ts: expect(url).toContain('https://github.com/link-assistant/calculator/issues/new');
+link-assistant/calculator:web/src/i18n/locales/de.lino: reportIssue 'Dies als Problem melden'
+link-assistant/calculator:web/src/i18n/locales/de.lino: reportIssue 'Problem melden'
+link-assistant/meta-expression:docs/case-studies/issue-5/ONLINE-RESEARCH.md: | [`link-assistant/calculator` report helper](./data/calculator-reportIssue.ts)                                                                        | The calculator project already builds a prefilled issue URL containing environment, input, result, Links Notation, and reproduction context.                      |
+link-assistant/calculator:web/src/i18n/locales/zh.lino: reportIssue 报告此问题
+link-assistant/calculator:web/src/i18n/locales/zh.lino: reportIssue 报告问题
+link-assistant/meta-expression:docs/case-studies/issue-5/data/meta-expression-file-tree.txt: ./docs/case-studies/issue-5/data/calculator-reportIssue-test.ts.txt
+link-assistant/meta-expression:docs/case-studies/issue-5/data/meta-expression-file-tree.txt: ./docs/case-studies/issue-5/data/calculator-reportIssue.ts
+link-assistant/calculator:web/src/i18n/locales/en.lino: reportIssue 'Report this as an issue'
+link-assistant/calculator:web/src/i18n/locales/en.lino: reportIssue 'Report Issue'
+link-assistant/meta-expression:docs/case-studies/issue-5/README.md: | [`calculator-reportIssue.ts`](./data/calculator-reportIssue.ts)                              | Reference issue-report implementation from `link-assistant/calculator` |
+link-assistant/meta-expression:docs/case-studies/issue-5/README.md: | [`calculator-reportIssue-test.ts.txt`](./data/calculator-reportIssue-test.ts.txt)            | Reference issue-report test fixture captured as inert data             |
+link-assistant/calculator:web/src/App.tsx: import { generateIssueUrl, type PageState } from './utils/reportIssue';
+link-assistant/calculator:web/src/App.tsx: {t('errors.reportIssue')} →
+link-assistant/meta-expression:docs/case-studies/issue-5/ci-logs/checks-and-release-24959524749.txt: Detect Changes	Detect changes	2026-04-26T14:54:31.1515556Z   docs/case-studies/issue-5/data/calculator-reportIssue.test.ts
+link-assistant/meta-expression:docs/case-studies/issue-5/ci-logs/checks-and-release-24959524749.txt: Detect Changes	Detect changes	2026-04-26T14:54:31.1517830Z   docs/case-studies/issue-5/data/calculator-reportIssue.ts
+link-assistant/calculator:web/src/i18n/locales/ar.lino: reportIssue 'الإبلاغ عن هذه المشكلة'
+link-assistant/calculator:web/src/i18n/locales/ar.lino: reportIssue 'الإبلاغ عن مشكلة'
+link-assistant/calculator:web/src/i18n/locales/ru.lino: reportIssue 'Сообщить о проблеме'
+link-assistant/calculator:web/src/i18n/locales/ru.lino: reportIssue 'Сообщить о проблеме'
+link-assistant/calculator:web/src/i18n/locales/hi.lino: reportIssue 'इस समस्या की रिपोर्ट करें'
+link-assistant/calculator:web/src/i18n/locales/hi.lino: reportIssue 'समस्या की रिपोर्ट करें'
+link-assistant/calculator:web/src/utils/reportIssue.test.ts: import { generateIssueReport, generateIssueUrl, type PageState } from './reportIssue';
+link-assistant/calculator:web/src/utils/reportIssue.test.ts: describe('reportIssue utilities', () => {
+link-assistant/calculator:web/src/App.test.tsx: 'footer.reportIssue': 'Report Issue',
+link-assistant/meta-expression:docs/case-studies/issue-5/data/calculator-reportIssue-test.ts.txt: import { generateIssueReport, generateIssueUrl, type PageState } from './reportIssue';
+link-assistant/meta-expression:docs/case-studies/issue-5/data/calculator-reportIssue-test.ts.txt: describe('reportIssue utilities', () => {

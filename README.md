@@ -47,6 +47,8 @@ Current deterministic examples:
 - `1 + 1` -> arithmetic question result `2`.
 - `Earth orbits the Sun` -> Wikidata-backed evidence estimate, confidence
   `0.99`.
+- `Moon orbits the Sun` -> Wikidata-backed parent-body chain
+  `Moon -> Earth -> Sun`, confidence `0.99`.
 - `Elon Musk is alive` -> Wikidata-backed person-alive evidence estimate,
   confidence `0.99`.
 - `Paris is the capital of France` -> live Wikimedia-capable country-capital
@@ -95,8 +97,8 @@ Pages `/web/` path after tests pass.
 
 The web prototype includes prepared examples, an interpretation selector, local
 belief slider saved in `localStorage`, confidence/result/evidence summaries,
-Links Notation output, a live Wikimedia evidence worker, and a prefilled GitHub
-issue report button.
+Q/P source links in the links network, Links Notation output, a live Wikimedia
+evidence worker, and a prefilled GitHub issue report link.
 
 ## Rust Core
 

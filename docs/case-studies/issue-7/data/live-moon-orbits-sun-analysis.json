@@ -1,0 +1,177 @@
+{
+  "statement": "Moon orbits the Sun",
+  "result": {
+    "kind": "evidence-estimate",
+    "value": 0.99,
+    "confidence": 0.99,
+    "rawBalance": 1,
+    "supportWeight": 1,
+    "refuteWeight": 0,
+    "supportingEvidence": [
+      {
+        "id": "live-orbit-moon-orbits-the-sun",
+        "key": "moon orbits the sun",
+        "sourceType": "wikidata",
+        "polarity": "support",
+        "weight": 1,
+        "sourceUrl": "https://www.wikidata.org/wiki/Q405#P397",
+        "claim": "Wikidata parent astronomical body (P397) statements connect Moon to Sun: Q405 Moon -> Q2 Earth -> Q525 Sun.",
+        "identifiers": {
+          "subject": "Q405",
+          "property": "P397",
+          "object": "Q525",
+          "path": "Q405>P397>Q2>P397>Q525"
+        },
+        "context": {
+          "wikidataEntityUrl": "https://www.wikidata.org/wiki/Q405",
+          "wikipediaSummaryUrl": "https://en.wikipedia.org/wiki/Moon",
+          "wikipediaTitle": "Moon",
+          "wikipediaExtract": "The Moon is the only natural satellite of Earth. It orbits around Earth at an average distance of 384,399 kilometres (238,854 mi), a distance roughly 30 times the width of Earth. It completes an orbit in relation to Earth and the Sun (synodically) every 29.5 days. The Moon and Earth are bound by gravitational attraction, which is stronger on the sides facing each other. The resulting tidal forces are the main driver of Earth's tides, and have pulled the Moon to always face Earth with the same near side. This tidal locking effectively synchronizes the Moon's rotation period to its orbital period.",
+          "phraseMappings": [
+            {
+              "text": "Moon -> Q405",
+              "phrase": "Moon",
+              "role": "subject noun phrase",
+              "wikidataId": "Q405",
+              "sourceUrl": "https://www.wikidata.org/wiki/Q405"
+            },
+            {
+              "text": "orbits -> P397",
+              "phrase": "orbits",
+              "role": "verb phrase",
+              "wikidataId": "P397",
+              "sourceUrl": "https://www.wikidata.org/wiki/Property:P397",
+              "label": "parent astronomical body"
+            },
+            {
+              "text": "Sun -> Q525",
+              "phrase": "Sun",
+              "role": "object noun phrase",
+              "wikidataId": "Q525",
+              "sourceUrl": "https://www.wikidata.org/wiki/Q525"
+            }
+          ],
+          "reasoningSteps": [
+            {
+              "text": "Q405 Moon -> P397 -> Q2 Earth",
+              "sourceUrl": "https://www.wikidata.org/wiki/Q405#P397"
+            },
+            {
+              "text": "Q2 Earth -> P397 -> Q525 Sun",
+              "sourceUrl": "https://www.wikidata.org/wiki/Q2#P397"
+            }
+          ],
+          "orbitPath": [
+            {
+              "id": "Q405",
+              "label": "Moon"
+            },
+            {
+              "id": "Q2",
+              "label": "Earth"
+            },
+            {
+              "id": "Q525",
+              "label": "Sun"
+            }
+          ]
+        },
+        "retrievedAt": "2026-04-26T18:06:00.320Z"
+      }
+    ],
+    "refutingEvidence": [],
+    "explanation": "Confidence is the weighted support ratio over configured evidence, bounded away from absolute certainty for real-world claims."
+  },
+  "trace": [
+    {
+      "id": "meaning-1",
+      "role": "meaning",
+      "references": [
+        "live-orbit-moon-orbits-the-sun"
+      ],
+      "value": {
+        "text": "Moon -> Q405",
+        "phrase": "Moon",
+        "role": "subject noun phrase",
+        "wikidataId": "Q405",
+        "sourceUrl": "https://www.wikidata.org/wiki/Q405"
+      },
+      "provenance": {
+        "sourceType": "wikidata",
+        "sourceUrl": "https://www.wikidata.org/wiki/Q405#P397",
+        "retrievedAt": "2026-04-26T18:06:00.320Z"
+      }
+    },
+    {
+      "id": "meaning-2",
+      "role": "meaning",
+      "references": [
+        "live-orbit-moon-orbits-the-sun"
+      ],
+      "value": {
+        "text": "orbits -> P397",
+        "phrase": "orbits",
+        "role": "verb phrase",
+        "wikidataId": "P397",
+        "sourceUrl": "https://www.wikidata.org/wiki/Property:P397",
+        "label": "parent astronomical body"
+      },
+      "provenance": {
+        "sourceType": "wikidata",
+        "sourceUrl": "https://www.wikidata.org/wiki/Q405#P397",
+        "retrievedAt": "2026-04-26T18:06:00.320Z"
+      }
+    },
+    {
+      "id": "meaning-3",
+      "role": "meaning",
+      "references": [
+        "live-orbit-moon-orbits-the-sun"
+      ],
+      "value": {
+        "text": "Sun -> Q525",
+        "phrase": "Sun",
+        "role": "object noun phrase",
+        "wikidataId": "Q525",
+        "sourceUrl": "https://www.wikidata.org/wiki/Q525"
+      },
+      "provenance": {
+        "sourceType": "wikidata",
+        "sourceUrl": "https://www.wikidata.org/wiki/Q405#P397",
+        "retrievedAt": "2026-04-26T18:06:00.320Z"
+      }
+    },
+    {
+      "id": "reasoning-step-1",
+      "role": "reasoning-step",
+      "references": [
+        "live-orbit-moon-orbits-the-sun"
+      ],
+      "value": {
+        "text": "Q405 Moon -> P397 -> Q2 Earth",
+        "sourceUrl": "https://www.wikidata.org/wiki/Q405#P397"
+      },
+      "provenance": {
+        "sourceType": "wikidata",
+        "sourceUrl": "https://www.wikidata.org/wiki/Q405#P397",
+        "retrievedAt": "2026-04-26T18:06:00.320Z"
+      }
+    },
+    {
+      "id": "reasoning-step-2",
+      "role": "reasoning-step",
+      "references": [
+        "live-orbit-moon-orbits-the-sun"
+      ],
+      "value": {
+        "text": "Q2 Earth -> P397 -> Q525 Sun",
+        "sourceUrl": "https://www.wikidata.org/wiki/Q2#P397"
+      },
+      "provenance": {
+        "sourceType": "wikidata",
+        "sourceUrl": "https://www.wikidata.org/wiki/Q405#P397",
+        "retrievedAt": "2026-04-26T18:06:00.320Z"
+      }
+    }
+  ]
+}
