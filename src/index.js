@@ -4,6 +4,10 @@ const arithmeticQuestionPattern =
   /^\s*(?:what\s+is\s+)?(-?\d+(?:\.\d+)?)\s*([+*/-])\s*(-?\d+(?:\.\d+)?)\??\s*$/i;
 const realWorldConfidenceEpsilon = 0.01;
 const issueReportRepoUrl = 'https://github.com/link-assistant/meta-expression';
+const wikidataApiUrl = 'https://www.wikidata.org/w/api.php';
+const wikipediaSummaryBaseUrl =
+  'https://en.wikipedia.org/api/rest_v1/page/summary/';
+const defaultEvidenceCacheTtlMs = 60 * 60 * 1000;
 const selfReferentialFalseStatements = new Set([
   'this statement is false',
   'this sentence is false',
@@ -123,6 +127,12 @@ const preparedExamples = Object.freeze([
     category: 'evidence',
     description:
       'A person claim backed by Wikidata identifiers without absolute certainty.',
+  }),
+  Object.freeze({
+    input: 'Paris is the capital of France',
+    label: 'Live capital claim',
+    category: 'evidence',
+    description: 'A live Wikimedia template for country-capital evidence.',
   }),
   Object.freeze({
     input: 'this statement is false',
@@ -264,6 +274,60 @@ export function analyzeStatement(input, options = {}) {
     resultLink,
     linksNetwork: context.linksNetwork,
   };
+}
+
+export async function analyzeStatementWithLiveEvidence(input, options = {}) {
+  const client =
+    options.wikimediaClient ?? createWikimediaEvidenceClient(options);
+  const liveEvidence = await client.resolveEvidence(input, options);
+  const baseEvidence =
+    options.includeFixtureEvidence === false
+      ? []
+      : (options.evidence ?? knownEvidence);
+
+  return analyzeStatement(input, {
+    ...options,
+    evidence: [...baseEvidence, ...liveEvidence],
+  });
+}
+
+export function createWikimediaEvidenceClient(options = {}) {
+  const cache = options.cache ?? new Map();
+  const clientOptions = { ...options, cache };
+
+  return {
+    cache,
+    async resolveEvidence(input, overrideOptions = {}) {
+      return await resolveLiveEvidence(input, {
+        ...clientOptions,
+        ...overrideOptions,
+        cache,
+      });
+    },
+  };
+}
+
+export async function resolveLiveEvidence(input, options = {}) {
+  const text = normalizeInput(input);
+  const query = createEvidenceQuery(text);
+  if (!query) {
+    return [];
+  }
+
+  const fetchImpl = options.fetch ?? globalThis.fetch?.bind(globalThis);
+  if (typeof fetchImpl !== 'function') {
+    throw new Error(
+      'Live evidence resolution requires a fetch implementation.'
+    );
+  }
+
+  const request = {
+    fetchImpl,
+    cache: options.cache ?? new Map(),
+    cacheTtlMs: options.cacheTtlMs ?? defaultEvidenceCacheTtlMs,
+    now: options.now ?? Date.now,
+  };
+  return await resolveEvidenceQuery(query, request);
 }
 
 export function generateInterpretations(input, options = {}) {
@@ -508,6 +572,319 @@ function findUserBelief(userBeliefs, normalized) {
     }
   }
   return undefined;
+}
+
+function createEvidenceQuery(text) {
+  const normalized = normalizeKey(text);
+  const liveness = text.match(/^(.+?)\s+is\s+(alive|dead)\s*\.?$/i);
+  if (liveness) {
+    return {
+      kind: 'person-liveness',
+      normalized,
+      originalText: text,
+      subjectLabel: cleanEntityLabel(liveness[1]),
+      desiredState: liveness[2].toLowerCase(),
+      property: 'P570',
+    };
+  }
+
+  const capital = text.match(
+    /^(.+?)\s+is\s+(?:the\s+)?capital\s+of\s+(.+?)\s*\.?$/i
+  );
+  if (capital) {
+    return {
+      kind: 'capital',
+      normalized,
+      originalText: text,
+      subjectLabel: cleanEntityLabel(capital[1]),
+      objectLabel: cleanEntityLabel(capital[2]),
+      property: 'P36',
+    };
+  }
+
+  const orbit = text.match(/^(.+?)\s+orbits\s+(.+?)\s*\.?$/i);
+  if (orbit) {
+    return {
+      kind: 'orbit',
+      normalized,
+      originalText: text,
+      subjectLabel: cleanEntityLabel(orbit[1]),
+      objectLabel: cleanEntityLabel(orbit[2]),
+      property: 'P397',
+    };
+  }
+
+  return null;
+}
+
+async function resolveEvidenceQuery(query, request) {
+  if (query.kind === 'person-liveness') {
+    return await resolvePersonLivenessEvidence(query, request);
+  }
+  if (query.kind === 'capital') {
+    return await resolveCapitalEvidence(query, request);
+  }
+  if (query.kind === 'orbit') {
+    return await resolveOrbitEvidence(query, request);
+  }
+  return [];
+}
+
+async function resolvePersonLivenessEvidence(query, request) {
+  const subject = await searchWikidataEntity(query.subjectLabel, request);
+  if (!subject) {
+    return [];
+  }
+
+  const entity = await fetchWikidataEntity(subject.id, request);
+  if (!entity) {
+    return [];
+  }
+
+  const summary = await fetchWikipediaSummary(entity, request);
+  const deathValues = getClaimValues(entity, query.property);
+  const hasDeathDate = deathValues.length > 0;
+  const wantsDead = query.desiredState === 'dead';
+  const polarity = hasDeathDate === wantsDead ? 'support' : 'refute';
+  const weight = hasDeathDate ? 1 : 0.8;
+  const dateValue = deathValues[0]?.time ?? null;
+  const label = getEntityLabel(entity, query.subjectLabel);
+
+  return [
+    createLiveEvidence(query, {
+      polarity,
+      weight,
+      sourceUrl: wikidataEntityUrl(subject.id, query.property),
+      claim: hasDeathDate
+        ? `Wikidata ${subject.id} identifies ${label} with date of death ${dateValue}.`
+        : `Wikidata ${subject.id} identifies ${label} and has no date of death (${query.property}) statement in the retrieved entity data.`,
+      identifiers: {
+        subject: subject.id,
+        property: query.property,
+        object: hasDeathDate ? 'date-of-death-present' : 'missing',
+      },
+      context: createEvidenceContext(entity, summary),
+      retrievedAt: retrievalTimestamp(request),
+    }),
+  ];
+}
+
+async function resolveCapitalEvidence(query, request) {
+  const [capital, country] = await Promise.all([
+    searchWikidataEntity(query.subjectLabel, request),
+    searchWikidataEntity(query.objectLabel, request),
+  ]);
+  if (!capital || !country) {
+    return [];
+  }
+
+  const countryEntity = await fetchWikidataEntity(country.id, request);
+  if (!countryEntity) {
+    return [];
+  }
+
+  const summary = await fetchWikipediaSummary(countryEntity, request);
+  const capitalIds = getClaimEntityIds(countryEntity, query.property);
+  const supports = capitalIds.includes(capital.id);
+  const countryLabel = getEntityLabel(countryEntity, query.objectLabel);
+
+  return [
+    createLiveEvidence(query, {
+      polarity: supports ? 'support' : 'refute',
+      weight: 1,
+      sourceUrl: wikidataEntityUrl(country.id, query.property),
+      claim: supports
+        ? `Wikidata ${country.id} lists ${capital.id} as the capital (${query.property}) of ${countryLabel}.`
+        : `Wikidata ${country.id} does not list ${capital.id} as the capital (${query.property}) of ${countryLabel} in the retrieved entity data.`,
+      identifiers: {
+        subject: country.id,
+        property: query.property,
+        object: capital.id,
+      },
+      context: createEvidenceContext(countryEntity, summary),
+      retrievedAt: retrievalTimestamp(request),
+    }),
+  ];
+}
+
+async function resolveOrbitEvidence(query, request) {
+  const [subject, object] = await Promise.all([
+    searchWikidataEntity(query.subjectLabel, request),
+    searchWikidataEntity(query.objectLabel, request),
+  ]);
+  if (!subject || !object) {
+    return [];
+  }
+
+  const subjectEntity = await fetchWikidataEntity(subject.id, request);
+  if (!subjectEntity) {
+    return [];
+  }
+
+  const summary = await fetchWikipediaSummary(subjectEntity, request);
+  const objectIds = getClaimEntityIds(subjectEntity, query.property);
+  const supports = objectIds.includes(object.id);
+  const subjectLabel = getEntityLabel(subjectEntity, query.subjectLabel);
+
+  return [
+    createLiveEvidence(query, {
+      polarity: supports ? 'support' : 'refute',
+      weight: 1,
+      sourceUrl: wikidataEntityUrl(subject.id, query.property),
+      claim: supports
+        ? `Wikidata ${subject.id} lists ${object.id} as the parent astronomical body (${query.property}) of ${subjectLabel}.`
+        : `Wikidata ${subject.id} does not list ${object.id} as the parent astronomical body (${query.property}) of ${subjectLabel} in the retrieved entity data.`,
+      identifiers: {
+        subject: subject.id,
+        property: query.property,
+        object: object.id,
+      },
+      context: createEvidenceContext(subjectEntity, summary),
+      retrievedAt: retrievalTimestamp(request),
+    }),
+  ];
+}
+
+function createLiveEvidence(query, evidence) {
+  return {
+    id: `live-${safeReference(query.kind)}-${safeReference(query.normalized)}`,
+    key: query.normalized,
+    sourceType: 'wikidata',
+    ...evidence,
+  };
+}
+
+async function searchWikidataEntity(label, request) {
+  const url = new URL(wikidataApiUrl);
+  url.search = new URLSearchParams({
+    action: 'wbsearchentities',
+    format: 'json',
+    language: 'en',
+    origin: '*',
+    type: 'item',
+    limit: '5',
+    search: label,
+  }).toString();
+  const payload = await fetchJson(url, request);
+  const result = chooseBestSearchResult(label, payload.search ?? []);
+  return result?.id ? { id: result.id, label: result.label ?? label } : null;
+}
+
+function chooseBestSearchResult(label, results) {
+  const normalizedLabel = normalizeSearchLabel(label);
+  return (
+    results.find(
+      (result) => normalizeSearchLabel(result.label) === normalizedLabel
+    ) ??
+    results[0] ??
+    null
+  );
+}
+
+function normalizeSearchLabel(value) {
+  return String(value ?? '')
+    .toLowerCase()
+    .replace(/[^\p{Letter}\p{Number}]+/gu, ' ')
+    .trim()
+    .replace(/\s+/g, ' ');
+}
+
+async function fetchWikidataEntity(id, request) {
+  const url = new URL(wikidataApiUrl);
+  url.search = new URLSearchParams({
+    action: 'wbgetentities',
+    format: 'json',
+    ids: id,
+    languages: 'en',
+    origin: '*',
+    props: 'labels|descriptions|claims|sitelinks',
+    sitefilter: 'enwiki',
+  }).toString();
+  const payload = await fetchJson(url, request);
+  const entity = payload.entities?.[id];
+  return entity && !entity.missing ? entity : null;
+}
+
+async function fetchWikipediaSummary(entity, request) {
+  const title = entity.sitelinks?.enwiki?.title;
+  if (!title) {
+    return null;
+  }
+
+  const url = new URL(encodeURIComponent(title), wikipediaSummaryBaseUrl);
+  try {
+    return await fetchJson(url, request);
+  } catch {
+    return null;
+  }
+}
+
+async function fetchJson(url, request) {
+  const key = String(url);
+  const now = Number(request.now());
+  const cached = request.cache.get(key);
+  if (cached && cached.expiresAt > now) {
+    return cached.value;
+  }
+
+  const response = await request.fetchImpl(key, {
+    headers: { accept: 'application/json' },
+  });
+  if (!response.ok) {
+    throw new Error(`Wikimedia request failed with status ${response.status}.`);
+  }
+
+  const value = await response.json();
+  request.cache.set(key, {
+    expiresAt: now + request.cacheTtlMs,
+    value,
+  });
+  return value;
+}
+
+function getClaimValues(entity, property) {
+  return (entity.claims?.[property] ?? [])
+    .map((claim) => claim.mainsnak?.datavalue?.value)
+    .filter(Boolean);
+}
+
+function getClaimEntityIds(entity, property) {
+  return getClaimValues(entity, property)
+    .map((value) => value.id ?? wikidataIdFromNumericValue(value))
+    .filter(Boolean);
+}
+
+function wikidataIdFromNumericValue(value) {
+  return value['numeric-id'] ? `Q${value['numeric-id']}` : null;
+}
+
+function createEvidenceContext(entity, summary) {
+  return {
+    wikidataEntityUrl: wikidataEntityUrl(entity.id),
+    wikipediaSummaryUrl: summary?.content_urls?.desktop?.page ?? null,
+    wikipediaTitle: summary?.title ?? entity.sitelinks?.enwiki?.title ?? null,
+    wikipediaExtract: summary?.extract ?? null,
+  };
+}
+
+function wikidataEntityUrl(id, property) {
+  return property
+    ? `https://www.wikidata.org/wiki/${id}#${property}`
+    : `https://www.wikidata.org/wiki/${id}`;
+}
+
+function getEntityLabel(entity, fallback) {
+  return entity.labels?.en?.value ?? fallback;
+}
+
+function cleanEntityLabel(value) {
+  return normalizeInput(value)
+    .replace(/^the\s+/i, '')
+    .replace(/\.$/, '');
+}
+
+function retrievalTimestamp(request) {
+  return new Date(Number(request.now())).toISOString();
 }
 
 function arithmeticInterpretations(text) {

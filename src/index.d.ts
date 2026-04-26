@@ -65,6 +65,7 @@ export interface EvidenceItem {
   retrievedAt: string;
   claim: string;
   identifiers?: Record<string, string>;
+  context?: Record<string, unknown>;
 }
 
 export interface EvaluationResult {
@@ -101,6 +102,12 @@ export interface AnalysisOptions {
   evidence?: EvidenceItem[];
   userBeliefs?: Record<string, number> | Map<string, number>;
   realWorldUncertainty?: number;
+  includeFixtureEvidence?: boolean;
+  wikimediaClient?: WikimediaEvidenceClient;
+  fetch?: typeof fetch;
+  cache?: Map<string, unknown>;
+  cacheTtlMs?: number;
+  now?: () => number;
 }
 
 export interface PreparedExample {
@@ -123,6 +130,14 @@ export interface IssueReportOptions {
   pageUrl?: string;
   userAgent?: string;
   timestamp?: string;
+}
+
+export interface WikimediaEvidenceClient {
+  cache: Map<string, unknown>;
+  resolveEvidence(
+    input: string,
+    options?: AnalysisOptions
+  ): Promise<EvidenceItem[]>;
 }
 
 export declare const defaultBeliefSystem: BeliefSystem;
@@ -160,6 +175,20 @@ export declare function analyzeStatement(
   input: string,
   options?: AnalysisOptions
 ): StatementAnalysis;
+
+export declare function analyzeStatementWithLiveEvidence(
+  input: string,
+  options?: AnalysisOptions
+): Promise<StatementAnalysis>;
+
+export declare function createWikimediaEvidenceClient(
+  options?: AnalysisOptions
+): WikimediaEvidenceClient;
+
+export declare function resolveLiveEvidence(
+  input: string,
+  options?: AnalysisOptions
+): Promise<EvidenceItem[]>;
 
 export declare function generateInterpretations(
   input: string,

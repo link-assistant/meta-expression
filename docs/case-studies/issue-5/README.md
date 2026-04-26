@@ -100,11 +100,13 @@ Online research and ecosystem source review are summarized in
 
 ## Requirement Coverage
 
-The full extracted matrix is in [`REQUIREMENTS.md`](./REQUIREMENTS.md). This PR
-directly covers the issue's concrete examples and UX gaps. It intentionally
+The case-study extracted matrix is in [`REQUIREMENTS.md`](./REQUIREMENTS.md),
+and the canonical repository-wide matrix is in
+[`docs/REQUIREMENTS.md`](../../REQUIREMENTS.md). This PR directly covers the
+issue's concrete examples and UX gaps. It intentionally
 does not claim to implement live Wikipedia/Wikidata traversal or Doublets
-persistence yet; those are kept in [`ROADMAP.md`](./ROADMAP.md) with specific
-acceptance criteria.
+persistence yet; those are kept in [`ROADMAP.md`](./ROADMAP.md) and
+[`docs/ROADMAP.md`](../../ROADMAP.md) with specific acceptance criteria.
 
 ## Validation
 

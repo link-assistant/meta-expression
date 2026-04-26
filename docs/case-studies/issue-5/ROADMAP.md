@@ -15,21 +15,26 @@ Implemented now:
 - Local user belief evidence from web slider state.
 - Prepared examples and issue-report URL generation.
 - Human-readable formalization level metadata.
+- Live Wikimedia evidence resolver for person liveness, capital, and orbit
+  statement templates.
+- Browser Web Worker that updates the links network with live evidence when the
+  request succeeds.
+- Rust core workspace with Doublets-backed relation-link encoding and a
+  WASM-ready crate type.
+- Canonical [`docs/REQUIREMENTS.md`](../../REQUIREMENTS.md) and
+  [`docs/ROADMAP.md`](../../ROADMAP.md).
 - Case-study data, screenshot, requirement matrix, and online research notes.
 
-## Phase 1: Live Wikidata Evidence Worker
+## Phase 1: Harden Live Wikimedia Evidence
 
-Goal: replace selected fixture evidence with scoped live retrieval.
+Goal: turn the first live resolver into a robust evidence subsystem.
 
-- Add a browser Web Worker for evidence lookup.
-- Search candidate entities and properties only after interpretation selection.
-- Support controlled claim templates:
-  - person alive/dead via P570,
-  - parent astronomical body via P397,
-  - instance/subclass claims,
-  - country/capital claims.
-- Cache response payloads with retrieval timestamps.
+- Add request cancellation and stale-response handling.
+- Add retry/backoff for temporary Wikimedia failures.
+- Add persistent IndexedDB cache with retrieval timestamps.
+- Add controlled claim templates for instance/subclass claims.
 - Return explicit timeout/error/unknown evidence links.
+- Add scoped WDQS query templates after candidate Q/P identifiers are known.
 
 Exit criteria:
 

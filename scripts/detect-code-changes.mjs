@@ -19,7 +19,7 @@
 // - examples/ folder (example scripts)
 //
 // Outputs (written to GITHUB_OUTPUT):
-//   mjs-changed, js-changed, package-changed, docs-changed,
+//   mjs-changed, js-changed, rust-changed, package-changed, docs-changed,
 //   workflow-changed, any-code-changed
 
 import { execSync } from 'child_process';
@@ -117,6 +117,15 @@ function detectChanges() {
   const jsChanged = changedFiles.some((file) => file.endsWith('.js'));
   setOutput('js-changed', jsChanged ? 'true' : 'false');
 
+  const rustChanged = changedFiles.some(
+    (file) =>
+      file.endsWith('.rs') ||
+      file === 'Cargo.toml' ||
+      file === 'Cargo.lock' ||
+      file.startsWith('rust/')
+  );
+  setOutput('rust-changed', rustChanged ? 'true' : 'false');
+
   const packageChanged = changedFiles.some((file) => file === 'package.json');
   setOutput('package-changed', packageChanged ? 'true' : 'false');
 
@@ -140,7 +149,8 @@ function detectChanges() {
   }
   console.log('');
 
-  const codePattern = /\.(mjs|js|json|yml|yaml)$|\.github\/workflows\//;
+  const codePattern =
+    /\.(mjs|js|json|rs|toml|lock|yml|yaml)$|\.github\/workflows\//;
   const anyCodeChanged = codeChangedFiles.some((file) =>
     codePattern.test(file)
   );

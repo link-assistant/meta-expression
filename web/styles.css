@@ -248,6 +248,11 @@ h2 {
   font-size: 1.15rem;
 }
 
+.evidence-band small {
+  grid-column: 1 / -1;
+  color: #51636f;
+}
+
 .network-panel {
   display: grid;
   grid-template-rows: auto 1fr auto;

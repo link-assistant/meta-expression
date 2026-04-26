@@ -82,8 +82,8 @@ See [`ONLINE-RESEARCH.md`](./ONLINE-RESEARCH.md) for source notes.
 
 ## Product Requirements Summary
 
-The full requirement extraction is in
-[`REQUIREMENTS.md`](./REQUIREMENTS.md). The requirements fall into these
+The canonical requirement extraction is in
+[`docs/REQUIREMENTS.md`](../../REQUIREMENTS.md). The requirements fall into these
 groups:
 
 1. Product surfaces: library, CLI, microservice, and static web playground.
@@ -250,7 +250,7 @@ The first prototype now includes:
 
 The prototype is deliberately deterministic. Live Wikidata loading, Rust/WASM,
 React, Doublets persistence, and full Relative Meta Logic integration are
-tracked in [`ROADMAP.md`](./ROADMAP.md).
+tracked in [`docs/ROADMAP.md`](../../ROADMAP.md).
 
 ## Conclusion
 

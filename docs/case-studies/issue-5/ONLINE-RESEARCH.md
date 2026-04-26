@@ -59,10 +59,24 @@ same generated report into form-compatible fields.
 | [`link-foundation/link-cli`](https://github.com/link-foundation/link-cli)           | Reference for Links Notation and link-only operations; useful for future Unicode-as-links mapping.              |
 | [`linksplatform/doublets-rs`](https://github.com/linksplatform/doublets-rs)         | Target Rust storage layer for binary links operations once the JS schema is stable.                             |
 
+## Current Package and Crate Checks
+
+These checks were run during the PR feedback iteration on 2026-04-26:
+
+| Package/crate              | Current finding                                                                                 |
+| -------------------------- | ----------------------------------------------------------------------------------------------- |
+| `links-notation` on npm    | Latest version `0.13.0`; no npm dependencies reported by `npm view`.                            |
+| `lino-arguments` on npm    | Latest version `0.3.0`; repository points to `link-foundation/lino-arguments`.                  |
+| `relative-meta-logic` npm  | Not published under the plain `relative-meta-logic` package name at lookup time.                |
+| `doublets` on crates.io    | Latest compatible crate `0.3.0`; repository/homepage points to `linksplatform/doublets-rs`.     |
+| `doublets` Rust interface  | Exposes `Doublet`, `Link`, `Links`, `Doublets`, `DoubletsExt`, and memory-backed store modules. |
+| `relative-meta-logic` repo | GitHub repository exists and describes probability-relative logic over input statements.        |
+
 ## Design Conclusions
 
 - The current PR should not pretend to implement live Wikipedia traversal.
-- The deterministic prototype should still make the issue examples useful now.
+- The current PR should expose narrow live Wikimedia algorithms where they are
+  tested, and still keep deterministic fallback behavior for unsupported cases.
 - Real-world statements need provenance and bounded confidence.
 - User beliefs should be explicit evidence, not hidden state.
 - Reported issues should include Links Notation so later debugging can preserve

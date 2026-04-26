@@ -25,6 +25,10 @@ export default [
         AbortController: 'readonly',
         document: 'readonly',
         navigator: 'readonly',
+        self: 'readonly',
+        URL: 'readonly',
+        URLSearchParams: 'readonly',
+        Worker: 'readonly',
         // Runtime-specific globals
         Bun: 'readonly',
         Deno: 'readonly',
