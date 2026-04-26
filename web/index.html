@@ -24,7 +24,15 @@
         </form>
 
         <section class="examples" aria-label="Prepared examples">
-          <h1>Examples</h1>
+          <div class="examples-heading">
+            <h1>Examples</h1>
+            <div class="examples-actions">
+              <button type="button" id="shuffle-examples">Shuffle</button>
+              <button type="button" id="toggle-show-all" aria-pressed="false">
+                Show all
+              </button>
+            </div>
+          </div>
           <div class="example-list" id="example-list"></div>
         </section>
 
@@ -51,6 +59,51 @@
         <section class="interpretations" aria-label="Interpretations">
           <h1>Interpretations</h1>
           <div id="interpretation-list"></div>
+        </section>
+
+        <section class="alternatives" aria-label="Alternatives">
+          <h1>Alternatives</h1>
+          <p class="section-hint">
+            More precise rephrasings of the current statement.
+          </p>
+          <div id="alternative-list"></div>
+        </section>
+
+        <section class="dependencies" aria-label="Dependencies">
+          <h1>Dependencies</h1>
+          <p class="section-hint">
+            The selected interpretation may only be true if these conditions
+            hold.
+          </p>
+          <ul id="dependency-list"></ul>
+        </section>
+
+        <section class="definitions" aria-label="Definitions">
+          <h1>Definitions</h1>
+          <p class="section-hint">
+            Wikidata-backed definitions for each phrase in the statement.
+          </p>
+          <ul id="definition-list"></ul>
+        </section>
+
+        <section class="confirmations" aria-label="Confirmations">
+          <h1>Confirmations</h1>
+          <ul id="confirmation-list"></ul>
+        </section>
+
+        <section class="refutations" aria-label="Refutations">
+          <h1>Refutations</h1>
+          <ul id="refutation-list"></ul>
+        </section>
+
+        <section class="opposite" aria-label="Opposite statement">
+          <h1>Opposite</h1>
+          <p class="section-hint">
+            Click to analyze the negation of the current statement.
+          </p>
+          <button type="button" id="opposite-button" class="opposite-button">
+            -
+          </button>
         </section>
 
         <section class="result-band" aria-label="Result">
@@ -86,10 +139,14 @@
         </section>
       </section>
 
-      <section class="network-panel" aria-label="Links network">
+      <section class="network-panel" aria-label="Reasoning steps">
         <div class="network-header">
-          <h2>Links Network</h2>
+          <h2>Reasoning Steps</h2>
           <div class="network-actions">
+            <label class="strategy-control">
+              <span>Strategy</span>
+              <select id="strategy-select"></select>
+            </label>
             <button type="button" id="copy-lino">Lino</button>
             <a
               class="button-link"
@@ -101,6 +158,7 @@
             >
           </div>
         </div>
+        <p class="strategy-summary" id="strategy-summary"></p>
         <div class="link-lanes" id="link-lanes"></div>
         <pre id="lino-output"></pre>
       </section>
