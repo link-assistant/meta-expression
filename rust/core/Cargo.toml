@@ -1,0 +1,12 @@
+[package]
+name = "meta-expression-core"
+version = "0.1.0"
+edition = "2021"
+license = "Unlicense"
+description = "Rust core primitives for the meta-expression prototype"
+
+[lib]
+crate-type = ["rlib", "cdylib"]
+
+[dependencies]
+doublets = "0.3.0"

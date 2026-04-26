@@ -3,6 +3,7 @@ export interface BeliefSystem {
   name: string;
   probabilityStrategy: string;
   sourceWeights: Record<string, number>;
+  realWorldUncertainty?: number;
 }
 
 export interface LinkProvenance {
@@ -64,6 +65,7 @@ export interface EvidenceItem {
   retrievedAt: string;
   claim: string;
   identifiers?: Record<string, string>;
+  context?: Record<string, unknown>;
 }
 
 export interface EvaluationResult {
@@ -98,6 +100,44 @@ export interface AnalysisOptions {
   selectedBy?: string;
   beliefSystem?: BeliefSystem;
   evidence?: EvidenceItem[];
+  userBeliefs?: Record<string, number> | Map<string, number>;
+  realWorldUncertainty?: number;
+  includeFixtureEvidence?: boolean;
+  wikimediaClient?: WikimediaEvidenceClient;
+  fetch?: typeof fetch;
+  cache?: Map<string, unknown>;
+  cacheTtlMs?: number;
+  now?: () => number;
+}
+
+export interface PreparedExample {
+  input: string;
+  label: string;
+  category: string;
+  description: string;
+}
+
+export interface FormalizationLevelDetail {
+  level: number;
+  name: string;
+  summary: string;
+  executable: boolean;
+}
+
+export interface IssueReportOptions {
+  repoUrl?: string;
+  labels?: string;
+  pageUrl?: string;
+  userAgent?: string;
+  timestamp?: string;
+}
+
+export interface WikimediaEvidenceClient {
+  cache: Map<string, unknown>;
+  resolveEvidence(
+    input: string,
+    options?: AnalysisOptions
+  ): Promise<EvidenceItem[]>;
 }
 
 export declare const defaultBeliefSystem: BeliefSystem;
@@ -109,11 +149,22 @@ export declare const FORMALIZATION_LEVELS: {
   readonly FULLY_COMPUTABLE_EXPRESSION: 4;
 };
 
+export declare const FORMALIZATION_LEVEL_DETAILS: Record<
+  number,
+  FormalizationLevelDetail
+>;
+
 export declare const add: (a: number, b: number) => number;
 
 export declare const multiply: (a: number, b: number) => number;
 
 export declare const delay: (ms: number) => Promise<void>;
+
+export declare function getPreparedExamples(): PreparedExample[];
+
+export declare function describeFormalizationLevel(
+  level: number
+): FormalizationLevelDetail;
 
 export declare function createStatementDraft(
   input: string,
@@ -125,6 +176,20 @@ export declare function analyzeStatement(
   options?: AnalysisOptions
 ): StatementAnalysis;
 
+export declare function analyzeStatementWithLiveEvidence(
+  input: string,
+  options?: AnalysisOptions
+): Promise<StatementAnalysis>;
+
+export declare function createWikimediaEvidenceClient(
+  options?: AnalysisOptions
+): WikimediaEvidenceClient;
+
+export declare function resolveLiveEvidence(
+  input: string,
+  options?: AnalysisOptions
+): Promise<EvidenceItem[]>;
+
 export declare function generateInterpretations(
   input: string,
   options?: AnalysisOptions
@@ -132,6 +197,11 @@ export declare function generateInterpretations(
 
 export declare function serializeLinksNotation(
   linksNetwork: LinksNetwork
+): string;
+
+export declare function createIssueReportUrl(
+  analysis: StatementAnalysis,
+  options?: IssueReportOptions
 ): string;
 
 export declare function computeEvidenceConfidence(

@@ -5,10 +5,10 @@ human-language statement, generates selectable interpretations, formalizes the
 selected meaning when possible, evaluates computable fragments, and attaches
 evidence with provenance for non-computable claims.
 
-The implementation in this PR is intentionally small and deterministic. It
-keeps the long-term Rust/WASM/React/Doublets direction documented in
-[`docs/case-studies/issue-1/ROADMAP.md`](docs/case-studies/issue-1/ROADMAP.md),
-while providing working library, CLI, microservice, and static web surfaces now.
+The implementation in this PR keeps the long-term direction documented in
+[`docs/REQUIREMENTS.md`](docs/REQUIREMENTS.md) and
+[`docs/ROADMAP.md`](docs/ROADMAP.md), while providing working library, CLI,
+microservice, and static web surfaces now.
 
 ## Library
 
@@ -30,12 +30,39 @@ Core exports:
   links network, formalization, result, confidence, and evidence.
 - `serializeLinksNotation(linksNetwork)` exports the selected links network in
   a Lino-style text form.
+- `getPreparedExamples()` returns the current examples shown by the static web
+  prototype.
+- `describeFormalizationLevel(level)` returns the level name, summary, and
+  executability flag.
+- `createIssueReportUrl(analysis, options)` creates a prefilled GitHub issue
+  URL with statement, result, evidence, and Links Notation.
+- `createWikimediaEvidenceClient()` and `analyzeStatementWithLiveEvidence()`
+  resolve supported real-world claims through Wikimedia APIs with cacheable
+  evidence.
+
+Current deterministic examples:
+
+- `1 + 1 = 2` -> computed `true`, confidence `1`.
+- `1 + 1 = 1` -> computed `false`, confidence `0`.
+- `1 + 1` -> arithmetic question result `2`.
+- `Earth orbits the Sun` -> Wikidata-backed evidence estimate, confidence
+  `0.99`.
+- `Elon Musk is alive` -> Wikidata-backed person-alive evidence estimate,
+  confidence `0.99`.
+- `Paris is the capital of France` -> live Wikimedia-capable country-capital
+  evidence template.
+- `this statement is false` -> self-reference status `undetermined`,
+  confidence `0.5`.
+
+Real-world confidence is intentionally bounded away from absolute `0%` and
+`100%`; exact certainty is reserved for deterministic computable expressions.
 
 ## CLI
 
 ```bash
 node src/cli.js analyze "1 + 1 = 2"
 node src/cli.js analyze --input "Earth orbits the Sun" --format links
+node src/cli.js analyze --input "Paris is the capital of France" --live
 ```
 
 ## Microservice
@@ -50,6 +77,7 @@ Routes:
 
 - `GET /health`
 - `GET /analyze?input=...&format=json|links&select=0`
+- `GET /analyze?input=...&live=true`
 - `POST /analyze` with `{ "input": "...", "format": "json" }`
 
 ## Static Web Prototype
@@ -64,6 +92,20 @@ Then visit `http://127.0.0.1:4173/web/`.
 
 On `main`, CI publishes the same static prototype to the repository's GitHub
 Pages `/web/` path after tests pass.
+
+The web prototype includes prepared examples, an interpretation selector, local
+belief slider saved in `localStorage`, confidence/result/evidence summaries,
+Links Notation output, a live Wikimedia evidence worker, and a prefilled GitHub
+issue report button.
+
+## Rust Core
+
+The Rust workspace under [`rust/core`](rust/core) contains WASM-ready core
+primitives and uses the `doublets` crate for relation-link doublet encoding:
+
+```bash
+cargo test --workspace
+```
 
 ## Development
 

@@ -50,6 +50,7 @@ jobs:
     outputs:
       mjs-changed: ${{ steps.changes.outputs.mjs-changed }}
       js-changed: ${{ steps.changes.outputs.js-changed }}
+      rust-changed: ${{ steps.changes.outputs.rust-changed }}
       package-changed: ${{ steps.changes.outputs.package-changed }}
       docs-changed: ${{ steps.changes.outputs.docs-changed }}
       workflow-changed: ${{ steps.changes.outputs.workflow-changed }}
@@ -80,6 +81,25 @@ jobs:
 
       - name: Check .mjs syntax
         run: bash scripts/check-mjs-syntax.sh
+
+  rust-check:
+    name: Rust Check
+    runs-on: ubuntu-latest
+    needs: [detect-changes]
+    if: |
+      github.event_name == 'push' ||
+      needs.detect-changes.outputs.rust-changed == 'true'
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Setup Rust
+        uses: dtolnay/rust-toolchain@stable
+
+      - name: Check Rust formatting
+        run: cargo fmt --check
+
+      - name: Test Rust workspace
+        run: cargo test --workspace
 
   # Enforce 1500-line limit on .mjs files and release.yml
   check-file-line-limits:
@@ -220,6 +240,7 @@ jobs:
         detect-changes,
         changeset-check,
         test-compilation,
+        rust-check,
         lint,
         check-file-line-limits,
       ]
@@ -230,6 +251,7 @@ jobs:
       !cancelled() &&
       (github.event_name == 'push' || needs.changeset-check.result == 'success' || needs.changeset-check.result == 'skipped') &&
       (needs.test-compilation.result == 'success' || needs.test-compilation.result == 'skipped') &&
+      (needs.rust-check.result == 'success' || needs.rust-check.result == 'skipped') &&
       (needs.lint.result == 'success' || needs.lint.result == 'skipped') &&
       (needs.check-file-line-limits.result == 'success' || needs.check-file-line-limits.result == 'skipped')
     strategy:

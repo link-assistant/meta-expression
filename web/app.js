@@ -1,21 +1,47 @@
 import {
   analyzeStatement,
+  createIssueReportUrl,
   createStatementDraft,
+  describeFormalizationLevel,
+  getPreparedExamples,
   serializeLinksNotation,
 } from '../src/index.js';
 
+const beliefStorageKey = 'meta-expression.user-beliefs.v1';
+
 const form = document.querySelector('#statement-form');
 const input = document.querySelector('#statement-input');
+const exampleList = document.querySelector('#example-list');
+const beliefSlider = document.querySelector('#belief-slider');
+const beliefValue = document.querySelector('#belief-value');
+const resetBelief = document.querySelector('#reset-belief');
 const interpretationList = document.querySelector('#interpretation-list');
 const confidenceValue = document.querySelector('#confidence-value');
 const formalizationLevel = document.querySelector('#formalization-level');
+const formalizationLevelName = document.querySelector(
+  '#formalization-level-name'
+);
 const resultValue = document.querySelector('#result-value');
+const supportCount = document.querySelector('#support-count');
+const refuteCount = document.querySelector('#refute-count');
+const unknownCount = document.querySelector('#unknown-count');
+const liveEvidenceStatus = document.querySelector('#live-evidence-status');
 const linkLanes = document.querySelector('#link-lanes');
 const linoOutput = document.querySelector('#lino-output');
 const copyLino = document.querySelector('#copy-lino');
+const reportIssue = document.querySelector('#report-issue');
 
 let selectedIndex = 0;
 let currentAnalysis = null;
+let liveRequestId = 0;
+const userBeliefs = loadUserBeliefs();
+const liveEvidenceWorker = createLiveEvidenceWorker();
+
+if (liveEvidenceWorker) {
+  liveEvidenceWorker.addEventListener('message', (event) => {
+    applyLiveEvidenceResult(event.data);
+  });
+}
 
 form.addEventListener('submit', (event) => {
   event.preventDefault();
@@ -34,6 +60,33 @@ copyLino.addEventListener('click', async () => {
   }
 });
 
+reportIssue.addEventListener('click', () => {
+  if (!currentAnalysis) {
+    return;
+  }
+  const url = createIssueReportUrl(currentAnalysis, {
+    pageUrl: globalThis.location.href,
+    userAgent: globalThis.navigator.userAgent,
+  });
+  globalThis.open(url, '_blank', 'noopener,noreferrer');
+});
+
+beliefSlider.addEventListener('input', () => {
+  const probability = Number(beliefSlider.value) / 100;
+  setUserBelief(input.value, probability);
+  render(input.value, selectedIndex);
+});
+
+resetBelief.addEventListener('click', () => {
+  setUserBelief(input.value, 0.5);
+  syncBeliefControl(input.value);
+  render(input.value, selectedIndex);
+});
+
+input.addEventListener('input', () => {
+  syncBeliefControl(input.value);
+});
+
 function render(statement, interpretationIndex = 0) {
   const draft = createStatementDraft(statement);
   selectedIndex = Math.min(
@@ -43,11 +96,14 @@ function render(statement, interpretationIndex = 0) {
   currentAnalysis = analyzeStatement(statement, {
     interpretationIndex: selectedIndex,
     selectedBy: 'web',
+    userBeliefs,
   });
 
   renderInterpretations(draft);
   renderResult(currentAnalysis);
   renderLinksNetwork(currentAnalysis.linksNetwork.links);
+  syncSelectedExample(statement);
+  requestLiveEvidence(statement);
   linoOutput.hidden = true;
 }
 
@@ -72,10 +128,16 @@ function renderInterpretations(draft) {
 
 function renderResult(analysis) {
   const confidence = analysis.result.confidence;
+  const level = describeFormalizationLevel(analysis.formalization.level);
+
   confidenceValue.textContent =
     confidence === null ? 'unknown' : `${Math.round(confidence * 100)}%`;
   formalizationLevel.textContent = String(analysis.formalization.level);
-  resultValue.textContent = String(analysis.result.value);
+  formalizationLevelName.textContent = level.name;
+  resultValue.textContent = formatResultValue(analysis.result);
+  supportCount.textContent = String(analysis.result.supportingEvidence.length);
+  refuteCount.textContent = String(analysis.result.refutingEvidence.length);
+  unknownCount.textContent = String(analysis.formalization.unknowns.length);
 }
 
 function renderLinksNetwork(links) {
@@ -90,6 +152,56 @@ function renderLinksNetwork(links) {
     `;
     linkLanes.append(item);
   }
+}
+
+function createLiveEvidenceWorker() {
+  if (!('Worker' in globalThis)) {
+    return null;
+  }
+
+  try {
+    return new Worker('./evidence-worker.js', { type: 'module' });
+  } catch {
+    return null;
+  }
+}
+
+function requestLiveEvidence(statement) {
+  if (!liveEvidenceWorker) {
+    liveEvidenceStatus.textContent = 'Fixture evidence';
+    return;
+  }
+
+  const id = String((liveRequestId += 1));
+  liveEvidenceStatus.dataset.requestId = id;
+  liveEvidenceStatus.textContent = 'Checking Wikimedia';
+  liveEvidenceWorker.postMessage({ id, statement });
+}
+
+function applyLiveEvidenceResult(data) {
+  if (!data || data.id !== liveEvidenceStatus.dataset.requestId) {
+    return;
+  }
+
+  if (data.error) {
+    liveEvidenceStatus.textContent = 'Live evidence unavailable';
+    return;
+  }
+
+  if (!Array.isArray(data.evidence) || data.evidence.length === 0) {
+    liveEvidenceStatus.textContent = 'No live evidence';
+    return;
+  }
+
+  currentAnalysis = analyzeStatement(input.value, {
+    interpretationIndex: selectedIndex,
+    selectedBy: 'web-worker',
+    userBeliefs,
+    evidence: data.evidence,
+  });
+  renderResult(currentAnalysis);
+  renderLinksNetwork(currentAnalysis.linksNetwork.links);
+  liveEvidenceStatus.textContent = 'Live Wikimedia evidence';
 }
 
 function summary(value) {
@@ -118,4 +230,96 @@ function escapeHtml(value) {
     .replace(/"/g, '&quot;');
 }
 
+function formatResultValue(result) {
+  if (result.kind === 'evidence-estimate' && typeof result.value === 'number') {
+    return `${Math.round(result.value * 100)}%`;
+  }
+  return String(result.value);
+}
+
+function renderPreparedExamples() {
+  exampleList.replaceChildren();
+  for (const example of getPreparedExamples()) {
+    const button = document.createElement('button');
+    button.type = 'button';
+    button.className = 'example-button';
+    button.dataset.category = example.category;
+    button.dataset.input = example.input;
+    button.innerHTML = `
+      <strong>${escapeHtml(example.label)}</strong>
+      <span>${escapeHtml(example.input)}</span>
+    `;
+    button.addEventListener('click', () => {
+      selectedIndex = 0;
+      input.value = example.input;
+      syncBeliefControl(input.value);
+      render(input.value, selectedIndex);
+    });
+    exampleList.append(button);
+  }
+}
+
+function syncSelectedExample(statement) {
+  const normalized = statement.trim().toLowerCase().replace(/\s+/g, ' ');
+  for (const button of exampleList.querySelectorAll('.example-button')) {
+    button.classList.toggle(
+      'active',
+      button.dataset.input.trim().toLowerCase().replace(/\s+/g, ' ') ===
+        normalized
+    );
+  }
+}
+
+function loadUserBeliefs() {
+  try {
+    return JSON.parse(globalThis.localStorage.getItem(beliefStorageKey)) ?? {};
+  } catch {
+    return {};
+  }
+}
+
+function saveUserBeliefs() {
+  try {
+    globalThis.localStorage.setItem(
+      beliefStorageKey,
+      JSON.stringify(userBeliefs)
+    );
+  } catch {
+    // Belief sliders still work for the current page even if storage is blocked.
+  }
+}
+
+function setUserBelief(statement, probability) {
+  const key = statement.trim();
+  if (!key) {
+    return;
+  }
+  if (probability === 0.5) {
+    delete userBeliefs[key];
+  } else {
+    userBeliefs[key] = probability;
+  }
+  saveUserBeliefs();
+  syncBeliefControl(statement);
+}
+
+function syncBeliefControl(statement) {
+  const stored = findStoredBelief(statement);
+  const percent = Math.round((stored ?? 0.5) * 100);
+  beliefSlider.value = String(percent);
+  beliefValue.textContent = `${percent}%`;
+}
+
+function findStoredBelief(statement) {
+  const key = statement.trim().toLowerCase().replace(/\s+/g, ' ');
+  for (const [storedKey, value] of Object.entries(userBeliefs)) {
+    if (storedKey.trim().toLowerCase().replace(/\s+/g, ' ') === key) {
+      return Number(value);
+    }
+  }
+  return undefined;
+}
+
+renderPreparedExamples();
+syncBeliefControl(input.value);
 render(input.value);

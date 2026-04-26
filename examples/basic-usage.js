@@ -7,9 +7,13 @@
  * - Deno: deno run --allow-read examples/basic-usage.js
  */
 
-import { analyzeStatement, serializeLinksNotation } from '../src/index.js';
+import {
+  analyzeStatement,
+  getPreparedExamples,
+  serializeLinksNotation,
+} from '../src/index.js';
 
-const examples = ['1 + 1 = 2', '1 + 1 = 1', 'Earth orbits the Sun'];
+const examples = getPreparedExamples().map((example) => example.input);
 
 for (const statement of examples) {
   const analysis = analyzeStatement(statement);

@@ -1,0 +1,1587 @@
+Detect Changes	Set up job	﻿2026-04-26T14:54:29.6767465Z Current runner version: '2.333.1'
+Detect Changes	Set up job	2026-04-26T14:54:29.6803955Z ##[group]Runner Image Provisioner
+Detect Changes	Set up job	2026-04-26T14:54:29.6805226Z Hosted Compute Agent
+Detect Changes	Set up job	2026-04-26T14:54:29.6806203Z Version: 20260213.493
+Detect Changes	Set up job	2026-04-26T14:54:29.6807147Z Commit: 5c115507f6dd24b8de37d8bbe0bb4509d0cc0fa3
+Detect Changes	Set up job	2026-04-26T14:54:29.6808353Z Build Date: 2026-02-13T00:28:41Z
+Detect Changes	Set up job	2026-04-26T14:54:29.6809327Z Worker ID: {aab2d38b-f81c-460b-a246-fdcda89128bd}
+Detect Changes	Set up job	2026-04-26T14:54:29.6810492Z Azure Region: eastus
+Detect Changes	Set up job	2026-04-26T14:54:29.6811358Z ##[endgroup]
+Detect Changes	Set up job	2026-04-26T14:54:29.6814133Z ##[group]Operating System
+Detect Changes	Set up job	2026-04-26T14:54:29.6815131Z Ubuntu
+Detect Changes	Set up job	2026-04-26T14:54:29.6815878Z 24.04.4
+Detect Changes	Set up job	2026-04-26T14:54:29.6816635Z LTS
+Detect Changes	Set up job	2026-04-26T14:54:29.6817346Z ##[endgroup]
+Detect Changes	Set up job	2026-04-26T14:54:29.6818226Z ##[group]Runner Image
+Detect Changes	Set up job	2026-04-26T14:54:29.6819042Z Image: ubuntu-24.04
+Detect Changes	Set up job	2026-04-26T14:54:29.6819917Z Version: 20260413.86.1
+Detect Changes	Set up job	2026-04-26T14:54:29.6821595Z Included Software: https://github.com/actions/runner-images/blob/ubuntu24/20260413.86/images/ubuntu/Ubuntu2404-Readme.md
+Detect Changes	Set up job	2026-04-26T14:54:29.6824579Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu24%2F20260413.86
+Detect Changes	Set up job	2026-04-26T14:54:29.6826211Z ##[endgroup]
+Detect Changes	Set up job	2026-04-26T14:54:29.6831401Z ##[group]GITHUB_TOKEN Permissions
+Detect Changes	Set up job	2026-04-26T14:54:29.6834576Z Actions: write
+Detect Changes	Set up job	2026-04-26T14:54:29.6835455Z ArtifactMetadata: write
+Detect Changes	Set up job	2026-04-26T14:54:29.6836241Z Attestations: write
+Detect Changes	Set up job	2026-04-26T14:54:29.6837219Z Checks: write
+Detect Changes	Set up job	2026-04-26T14:54:29.6837975Z Contents: write
+Detect Changes	Set up job	2026-04-26T14:54:29.6838808Z Deployments: write
+Detect Changes	Set up job	2026-04-26T14:54:29.6839699Z Discussions: write
+Detect Changes	Set up job	2026-04-26T14:54:29.6840482Z Issues: write
+Detect Changes	Set up job	2026-04-26T14:54:29.6841324Z Metadata: read
+Detect Changes	Set up job	2026-04-26T14:54:29.6842080Z Models: read
+Detect Changes	Set up job	2026-04-26T14:54:29.6842882Z Packages: write
+Detect Changes	Set up job	2026-04-26T14:54:29.6844039Z Pages: write
+Detect Changes	Set up job	2026-04-26T14:54:29.6845158Z PullRequests: write
+Detect Changes	Set up job	2026-04-26T14:54:29.6846095Z RepositoryProjects: write
+Detect Changes	Set up job	2026-04-26T14:54:29.6846959Z SecurityEvents: write
+Detect Changes	Set up job	2026-04-26T14:54:29.6847958Z Statuses: write
+Detect Changes	Set up job	2026-04-26T14:54:29.6848751Z VulnerabilityAlerts: read
+Detect Changes	Set up job	2026-04-26T14:54:29.6849660Z ##[endgroup]
+Detect Changes	Set up job	2026-04-26T14:54:29.6852890Z Secret source: Actions
+Detect Changes	Set up job	2026-04-26T14:54:29.6854393Z Prepare workflow directory
+Detect Changes	Set up job	2026-04-26T14:54:29.7353403Z Prepare all required actions
+Detect Changes	Set up job	2026-04-26T14:54:29.7412013Z Getting action download info
+Detect Changes	Set up job	2026-04-26T14:54:29.9908474Z Download action repository 'actions/checkout@v6' (SHA:de0fac2e4500dabe0009e67214ff5f5447ce83dd)
+Detect Changes	Set up job	2026-04-26T14:54:30.2284494Z Complete job name: Detect Changes
+Detect Changes	Run actions/checkout@v6	﻿2026-04-26T14:54:30.3012785Z ##[group]Run actions/checkout@v6
+Detect Changes	Run actions/checkout@v6	2026-04-26T14:54:30.3014036Z with:
+Detect Changes	Run actions/checkout@v6	2026-04-26T14:54:30.3014450Z   fetch-depth: 0
+Detect Changes	Run actions/checkout@v6	2026-04-26T14:54:30.3014891Z   repository: link-assistant/meta-expression
+Detect Changes	Run actions/checkout@v6	2026-04-26T14:54:30.3015654Z   token: ***
+Detect Changes	Run actions/checkout@v6	2026-04-26T14:54:30.3016024Z   ssh-strict: true
+Detect Changes	Run actions/checkout@v6	2026-04-26T14:54:30.3016406Z   ssh-user: git
+Detect Changes	Run actions/checkout@v6	2026-04-26T14:54:30.3016791Z   persist-credentials: true
+Detect Changes	Run actions/checkout@v6	2026-04-26T14:54:30.3017245Z   clean: true
+Detect Changes	Run actions/checkout@v6	2026-04-26T14:54:30.3017634Z   sparse-checkout-cone-mode: true
+Detect Changes	Run actions/checkout@v6	2026-04-26T14:54:30.3018094Z   fetch-tags: false
+Detect Changes	Run actions/checkout@v6	2026-04-26T14:54:30.3018512Z   show-progress: true
+Detect Changes	Run actions/checkout@v6	2026-04-26T14:54:30.3018900Z   lfs: false
+Detect Changes	Run actions/checkout@v6	2026-04-26T14:54:30.3019595Z   submodules: false
+Detect Changes	Run actions/checkout@v6	2026-04-26T14:54:30.3020045Z   set-safe-directory: true
+Detect Changes	Run actions/checkout@v6	2026-04-26T14:54:30.3020985Z ##[endgroup]
+Detect Changes	Run actions/checkout@v6	2026-04-26T14:54:30.3994317Z Syncing repository: link-assistant/meta-expression
+Detect Changes	Run actions/checkout@v6	2026-04-26T14:54:30.3996406Z ##[group]Getting Git version info
+Detect Changes	Run actions/checkout@v6	2026-04-26T14:54:30.3997227Z Working directory is '/home/runner/work/meta-expression/meta-expression'
+Detect Changes	Run actions/checkout@v6	2026-04-26T14:54:30.3998366Z [command]/usr/bin/git version
+Detect Changes	Run actions/checkout@v6	2026-04-26T14:54:30.4047420Z git version 2.53.0
+Detect Changes	Run actions/checkout@v6	2026-04-26T14:54:30.4072680Z ##[endgroup]
+Detect Changes	Run actions/checkout@v6	2026-04-26T14:54:30.4089000Z Temporarily overriding HOME='/home/runner/work/_temp/b53b4eff-f626-4cd8-9f9d-a6e2db81a9f9' before making global git config changes
+Detect Changes	Run actions/checkout@v6	2026-04-26T14:54:30.4090437Z Adding repository directory to the temporary git global config as a safe directory
+Detect Changes	Run actions/checkout@v6	2026-04-26T14:54:30.4094953Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/meta-expression/meta-expression
+Detect Changes	Run actions/checkout@v6	2026-04-26T14:54:30.4134665Z Deleting the contents of '/home/runner/work/meta-expression/meta-expression'
+Detect Changes	Run actions/checkout@v6	2026-04-26T14:54:30.4139108Z ##[group]Initializing the repository
+Detect Changes	Run actions/checkout@v6	2026-04-26T14:54:30.4144746Z [command]/usr/bin/git init /home/runner/work/meta-expression/meta-expression
+Detect Changes	Run actions/checkout@v6	2026-04-26T14:54:30.4248470Z hint: Using 'master' as the name for the initial branch. This default branch name
+Detect Changes	Run actions/checkout@v6	2026-04-26T14:54:30.4251096Z hint: will change to "main" in Git 3.0. To configure the initial branch name
+Detect Changes	Run actions/checkout@v6	2026-04-26T14:54:30.4253485Z hint: to use in all of your new repositories, which will suppress this warning,
+Detect Changes	Run actions/checkout@v6	2026-04-26T14:54:30.4254511Z hint: call:
+Detect Changes	Run actions/checkout@v6	2026-04-26T14:54:30.4254910Z hint:
+Detect Changes	Run actions/checkout@v6	2026-04-26T14:54:30.4255392Z hint: 	git config --global init.defaultBranch <name>
+Detect Changes	Run actions/checkout@v6	2026-04-26T14:54:30.4255952Z hint:
+Detect Changes	Run actions/checkout@v6	2026-04-26T14:54:30.4256485Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+Detect Changes	Run actions/checkout@v6	2026-04-26T14:54:30.4257384Z hint: 'development'. The just-created branch can be renamed via this command:
+Detect Changes	Run actions/checkout@v6	2026-04-26T14:54:30.4258301Z hint:
+Detect Changes	Run actions/checkout@v6	2026-04-26T14:54:30.4258698Z hint: 	git branch -m <name>
+Detect Changes	Run actions/checkout@v6	2026-04-26T14:54:30.4259300Z hint:
+Detect Changes	Run actions/checkout@v6	2026-04-26T14:54:30.4260110Z hint: Disable this message with "git config set advice.defaultBranchName false"
+Detect Changes	Run actions/checkout@v6	2026-04-26T14:54:30.4261118Z Initialized empty Git repository in /home/runner/work/meta-expression/meta-expression/.git/
+Detect Changes	Run actions/checkout@v6	2026-04-26T14:54:30.4262951Z [command]/usr/bin/git remote add origin https://github.com/link-assistant/meta-expression
+Detect Changes	Run actions/checkout@v6	2026-04-26T14:54:30.4296706Z ##[endgroup]
+Detect Changes	Run actions/checkout@v6	2026-04-26T14:54:30.4297456Z ##[group]Disabling automatic garbage collection
+Detect Changes	Run actions/checkout@v6	2026-04-26T14:54:30.4300915Z [command]/usr/bin/git config --local gc.auto 0
+Detect Changes	Run actions/checkout@v6	2026-04-26T14:54:30.4332481Z ##[endgroup]
+Detect Changes	Run actions/checkout@v6	2026-04-26T14:54:30.4333464Z ##[group]Setting up auth
+Detect Changes	Run actions/checkout@v6	2026-04-26T14:54:30.4334484Z Removing SSH command configuration
+Detect Changes	Run actions/checkout@v6	2026-04-26T14:54:30.4340428Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+Detect Changes	Run actions/checkout@v6	2026-04-26T14:54:30.4373039Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+Detect Changes	Run actions/checkout@v6	2026-04-26T14:54:30.4672686Z Removing HTTP extra header
+Detect Changes	Run actions/checkout@v6	2026-04-26T14:54:30.4680728Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+Detect Changes	Run actions/checkout@v6	2026-04-26T14:54:30.4717588Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+Detect Changes	Run actions/checkout@v6	2026-04-26T14:54:30.4937761Z Removing includeIf entries pointing to credentials config files
+Detect Changes	Run actions/checkout@v6	2026-04-26T14:54:30.4944805Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+Detect Changes	Run actions/checkout@v6	2026-04-26T14:54:30.4979480Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+Detect Changes	Run actions/checkout@v6	2026-04-26T14:54:30.5209847Z [command]/usr/bin/git config --file /home/runner/work/_temp/git-credentials-2f07792b-43a8-4a44-92b1-aa787036fb60.config http.https://github.com/.extraheader AUTHORIZATION: basic ***
+Detect Changes	Run actions/checkout@v6	2026-04-26T14:54:30.5249693Z [command]/usr/bin/git config --local includeIf.gitdir:/home/runner/work/meta-expression/meta-expression/.git.path /home/runner/work/_temp/git-credentials-2f07792b-43a8-4a44-92b1-aa787036fb60.config
+Detect Changes	Run actions/checkout@v6	2026-04-26T14:54:30.5279721Z [command]/usr/bin/git config --local includeIf.gitdir:/home/runner/work/meta-expression/meta-expression/.git/worktrees/*.path /home/runner/work/_temp/git-credentials-2f07792b-43a8-4a44-92b1-aa787036fb60.config
+Detect Changes	Run actions/checkout@v6	2026-04-26T14:54:30.5309338Z [command]/usr/bin/git config --local includeIf.gitdir:/github/workspace/.git.path /github/runner_temp/git-credentials-2f07792b-43a8-4a44-92b1-aa787036fb60.config
+Detect Changes	Run actions/checkout@v6	2026-04-26T14:54:30.5340866Z [command]/usr/bin/git config --local includeIf.gitdir:/github/workspace/.git/worktrees/*.path /github/runner_temp/git-credentials-2f07792b-43a8-4a44-92b1-aa787036fb60.config
+Detect Changes	Run actions/checkout@v6	2026-04-26T14:54:30.5370231Z ##[endgroup]
+Detect Changes	Run actions/checkout@v6	2026-04-26T14:54:30.5371673Z ##[group]Fetching the repository
+Detect Changes	Run actions/checkout@v6	2026-04-26T14:54:30.5380812Z [command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules origin +refs/heads/*:refs/remotes/origin/* +refs/tags/*:refs/tags/* +7472003b096af09e6ebbf87db8006ed72928dbf3:refs/remotes/pull/6/merge
+Detect Changes	Run actions/checkout@v6	2026-04-26T14:54:30.9485008Z From https://github.com/link-assistant/meta-expression
+Detect Changes	Run actions/checkout@v6	2026-04-26T14:54:30.9487613Z  * [new branch]      issue-1-66f2990709b5                     -> origin/issue-1-66f2990709b5
+Detect Changes	Run actions/checkout@v6	2026-04-26T14:54:30.9490166Z  * [new branch]      issue-3-130348eb2e36                     -> origin/issue-3-130348eb2e36
+Detect Changes	Run actions/checkout@v6	2026-04-26T14:54:30.9492547Z  * [new branch]      issue-5-2c7b23a3dfee                     -> origin/issue-5-2c7b23a3dfee
+Detect Changes	Run actions/checkout@v6	2026-04-26T14:54:30.9495173Z  * [new branch]      main                                     -> origin/main
+Detect Changes	Run actions/checkout@v6	2026-04-26T14:54:30.9497329Z  * [new ref]         7472003b096af09e6ebbf87db8006ed72928dbf3 -> pull/6/merge
+Detect Changes	Run actions/checkout@v6	2026-04-26T14:54:30.9529382Z ##[endgroup]
+Detect Changes	Run actions/checkout@v6	2026-04-26T14:54:30.9530984Z ##[group]Determining the checkout info
+Detect Changes	Run actions/checkout@v6	2026-04-26T14:54:30.9532800Z ##[endgroup]
+Detect Changes	Run actions/checkout@v6	2026-04-26T14:54:30.9537054Z [command]/usr/bin/git sparse-checkout disable
+Detect Changes	Run actions/checkout@v6	2026-04-26T14:54:30.9582805Z [command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+Detect Changes	Run actions/checkout@v6	2026-04-26T14:54:30.9614800Z ##[group]Checking out the ref
+Detect Changes	Run actions/checkout@v6	2026-04-26T14:54:30.9618259Z [command]/usr/bin/git checkout --progress --force refs/remotes/pull/6/merge
+Detect Changes	Run actions/checkout@v6	2026-04-26T14:54:31.0028920Z Note: switching to 'refs/remotes/pull/6/merge'.
+Detect Changes	Run actions/checkout@v6	2026-04-26T14:54:31.0030021Z 
+Detect Changes	Run actions/checkout@v6	2026-04-26T14:54:31.0030729Z You are in 'detached HEAD' state. You can look around, make experimental
+Detect Changes	Run actions/checkout@v6	2026-04-26T14:54:31.0032422Z changes and commit them, and you can discard any commits you make in this
+Detect Changes	Run actions/checkout@v6	2026-04-26T14:54:31.0034448Z state without impacting any branches by switching back to a branch.
+Detect Changes	Run actions/checkout@v6	2026-04-26T14:54:31.0035352Z 
+Detect Changes	Run actions/checkout@v6	2026-04-26T14:54:31.0035778Z If you want to create a new branch to retain commits you create, you may
+Detect Changes	Run actions/checkout@v6	2026-04-26T14:54:31.0036947Z do so (now or later) by using -c with the switch command. Example:
+Detect Changes	Run actions/checkout@v6	2026-04-26T14:54:31.0037678Z 
+Detect Changes	Run actions/checkout@v6	2026-04-26T14:54:31.0037953Z   git switch -c <new-branch-name>
+Detect Changes	Run actions/checkout@v6	2026-04-26T14:54:31.0038634Z 
+Detect Changes	Run actions/checkout@v6	2026-04-26T14:54:31.0039057Z Or undo this operation with:
+Detect Changes	Run actions/checkout@v6	2026-04-26T14:54:31.0039540Z 
+Detect Changes	Run actions/checkout@v6	2026-04-26T14:54:31.0039737Z   git switch -
+Detect Changes	Run actions/checkout@v6	2026-04-26T14:54:31.0040039Z 
+Detect Changes	Run actions/checkout@v6	2026-04-26T14:54:31.0040609Z Turn off this advice by setting config variable advice.detachedHead to false
+Detect Changes	Run actions/checkout@v6	2026-04-26T14:54:31.0041534Z 
+Detect Changes	Run actions/checkout@v6	2026-04-26T14:54:31.0042860Z HEAD is now at 7472003 Merge 8f800f1b2657da1d51104e04d0721227a3f11328 into 2fd354e49141e7eed85845cd8f441003abd7aa79
+Detect Changes	Run actions/checkout@v6	2026-04-26T14:54:31.0046607Z ##[endgroup]
+Detect Changes	Run actions/checkout@v6	2026-04-26T14:54:31.0082949Z [command]/usr/bin/git log -1 --format=%H
+Detect Changes	Run actions/checkout@v6	2026-04-26T14:54:31.0109388Z 7472003b096af09e6ebbf87db8006ed72928dbf3
+Detect Changes	Detect changes	﻿2026-04-26T14:54:31.0336552Z ##[group]Run node scripts/detect-code-changes.mjs
+Detect Changes	Detect changes	2026-04-26T14:54:31.0337802Z [36;1mnode scripts/detect-code-changes.mjs[0m
+Detect Changes	Detect changes	2026-04-26T14:54:31.0364534Z shell: /usr/bin/bash -e {0}
+Detect Changes	Detect changes	2026-04-26T14:54:31.0365298Z ##[endgroup]
+Detect Changes	Detect changes	2026-04-26T14:54:31.1406571Z Detecting file changes for CI/CD...
+Detect Changes	Detect changes	2026-04-26T14:54:31.1407754Z 
+Detect Changes	Detect changes	2026-04-26T14:54:31.1459149Z Merge commit detected (pull_request event)
+Detect Changes	Detect changes	2026-04-26T14:54:31.1461039Z Comparing HEAD^2^ to HEAD^2 (per-commit diff of PR head)
+Detect Changes	Detect changes	2026-04-26T14:54:31.1497579Z Changed files:
+Detect Changes	Detect changes	2026-04-26T14:54:31.1498961Z   .changeset/static-pages-independent-release.md
+Detect Changes	Detect changes	2026-04-26T14:54:31.1500485Z   README.md
+Detect Changes	Detect changes	2026-04-26T14:54:31.1501504Z   docs/case-studies/issue-5/ONLINE-RESEARCH.md
+Detect Changes	Detect changes	2026-04-26T14:54:31.1503056Z   docs/case-studies/issue-5/README.md
+Detect Changes	Detect changes	2026-04-26T14:54:31.1504739Z   docs/case-studies/issue-5/REQUIREMENTS.md
+Detect Changes	Detect changes	2026-04-26T14:54:31.1506242Z   docs/case-studies/issue-5/ROADMAP.md
+Detect Changes	Detect changes	2026-04-26T14:54:31.1507919Z   docs/case-studies/issue-5/assets/issue-screenshot.png
+Detect Changes	Detect changes	2026-04-26T14:54:31.1510394Z   docs/case-studies/issue-5/data/calculator-issue-report-code-search.txt
+Detect Changes	Detect changes	2026-04-26T14:54:31.1512745Z   docs/case-studies/issue-5/data/calculator-repo.json
+Detect Changes	Detect changes	2026-04-26T14:54:31.1515556Z   docs/case-studies/issue-5/data/calculator-reportIssue.test.ts
+Detect Changes	Detect changes	2026-04-26T14:54:31.1517830Z   docs/case-studies/issue-5/data/calculator-reportIssue.ts
+Detect Changes	Detect changes	2026-04-26T14:54:31.1519950Z   docs/case-studies/issue-5/data/doublets-rs-repo.json
+Detect Changes	Detect changes	2026-04-26T14:54:31.1521940Z   docs/case-studies/issue-5/data/human-language-readme.md
+Detect Changes	Detect changes	2026-04-26T14:54:31.1524373Z   docs/case-studies/issue-5/data/human-language-repo.json
+Detect Changes	Detect changes	2026-04-26T14:54:31.1526423Z   docs/case-studies/issue-5/data/issue-5-comments.json
+Detect Changes	Detect changes	2026-04-26T14:54:31.1528142Z   docs/case-studies/issue-5/data/issue-5.json
+Detect Changes	Detect changes	2026-04-26T14:54:31.1529826Z   docs/case-studies/issue-5/data/link-cli-readme.md
+Detect Changes	Detect changes	2026-04-26T14:54:31.1531569Z   docs/case-studies/issue-5/data/link-cli-repo.json
+Detect Changes	Detect changes	2026-04-26T14:54:31.1533855Z   docs/case-studies/issue-5/data/meta-expression-file-tree.txt
+Detect Changes	Detect changes	2026-04-26T14:54:31.1536073Z   docs/case-studies/issue-5/data/pr-6-conversation-comments.json
+Detect Changes	Detect changes	2026-04-26T14:54:31.1538285Z   docs/case-studies/issue-5/data/pr-6-review-comments.json
+Detect Changes	Detect changes	2026-04-26T14:54:31.1540286Z   docs/case-studies/issue-5/data/pr-6-reviews.json
+Detect Changes	Detect changes	2026-04-26T14:54:31.1541932Z   docs/case-studies/issue-5/data/pr-6.json
+Detect Changes	Detect changes	2026-04-26T14:54:31.1544244Z   docs/case-studies/issue-5/data/reference-pr-2.json
+Detect Changes	Detect changes	2026-04-26T14:54:31.1546169Z   docs/case-studies/issue-5/data/wikidata-code-search.txt
+Detect Changes	Detect changes	2026-04-26T14:54:31.1548363Z   docs/case-studies/issue-5/data/wikidata-q2.json
+Detect Changes	Detect changes	2026-04-26T14:54:31.1550197Z   docs/case-studies/issue-5/data/wikidata-q317521.json
+Detect Changes	Detect changes	2026-04-26T14:54:31.1552084Z   docs/case-studies/issue-5/web-prototype-desktop.png
+Detect Changes	Detect changes	2026-04-26T14:54:31.1553957Z   docs/case-studies/issue-5/web-prototype-mobile.png
+Detect Changes	Detect changes	2026-04-26T14:54:31.1555332Z   examples/basic-usage.js
+Detect Changes	Detect changes	2026-04-26T14:54:31.1556247Z   src/index.d.ts
+Detect Changes	Detect changes	2026-04-26T14:54:31.1556949Z   src/index.js
+Detect Changes	Detect changes	2026-04-26T14:54:31.1557673Z   tests/prototype.test.js
+Detect Changes	Detect changes	2026-04-26T14:54:31.1558518Z   web/app.js
+Detect Changes	Detect changes	2026-04-26T14:54:31.1559275Z   web/index.html
+Detect Changes	Detect changes	2026-04-26T14:54:31.1559981Z   web/styles.css
+Detect Changes	Detect changes	2026-04-26T14:54:31.1560299Z 
+Detect Changes	Detect changes	2026-04-26T14:54:31.1560574Z mjs-changed=false
+Detect Changes	Detect changes	2026-04-26T14:54:31.1561075Z js-changed=true
+Detect Changes	Detect changes	2026-04-26T14:54:31.1561571Z package-changed=false
+Detect Changes	Detect changes	2026-04-26T14:54:31.1562102Z docs-changed=true
+Detect Changes	Detect changes	2026-04-26T14:54:31.1562605Z workflow-changed=false
+Detect Changes	Detect changes	2026-04-26T14:54:31.1562978Z 
+Detect Changes	Detect changes	2026-04-26T14:54:31.1563586Z Files considered as code changes:
+Detect Changes	Detect changes	2026-04-26T14:54:31.1564322Z   src/index.d.ts
+Detect Changes	Detect changes	2026-04-26T14:54:31.1564797Z   src/index.js
+Detect Changes	Detect changes	2026-04-26T14:54:31.1565288Z   tests/prototype.test.js
+Detect Changes	Detect changes	2026-04-26T14:54:31.1565872Z   web/app.js
+Detect Changes	Detect changes	2026-04-26T14:54:31.1566311Z   web/index.html
+Detect Changes	Detect changes	2026-04-26T14:54:31.1566819Z   web/styles.css
+Detect Changes	Detect changes	2026-04-26T14:54:31.1567122Z 
+Detect Changes	Detect changes	2026-04-26T14:54:31.1567315Z any-code-changed=true
+Detect Changes	Detect changes	2026-04-26T14:54:31.1567686Z 
+Detect Changes	Detect changes	2026-04-26T14:54:31.1567898Z Change detection completed.
+Detect Changes	Post Run actions/checkout@v6	﻿2026-04-26T14:54:31.1783671Z Post job cleanup.
+Detect Changes	Post Run actions/checkout@v6	2026-04-26T14:54:31.2636877Z [command]/usr/bin/git version
+Detect Changes	Post Run actions/checkout@v6	2026-04-26T14:54:31.2675359Z git version 2.53.0
+Detect Changes	Post Run actions/checkout@v6	2026-04-26T14:54:31.2752746Z Temporarily overriding HOME='/home/runner/work/_temp/ce939898-f8de-4d71-baee-de3482f8bfd5' before making global git config changes
+Detect Changes	Post Run actions/checkout@v6	2026-04-26T14:54:31.2757309Z Adding repository directory to the temporary git global config as a safe directory
+Detect Changes	Post Run actions/checkout@v6	2026-04-26T14:54:31.2760867Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/meta-expression/meta-expression
+Detect Changes	Post Run actions/checkout@v6	2026-04-26T14:54:31.2793025Z Removing SSH command configuration
+Detect Changes	Post Run actions/checkout@v6	2026-04-26T14:54:31.2801266Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+Detect Changes	Post Run actions/checkout@v6	2026-04-26T14:54:31.2838525Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+Detect Changes	Post Run actions/checkout@v6	2026-04-26T14:54:31.3069035Z Removing HTTP extra header
+Detect Changes	Post Run actions/checkout@v6	2026-04-26T14:54:31.3075761Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+Detect Changes	Post Run actions/checkout@v6	2026-04-26T14:54:31.3111526Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+Detect Changes	Post Run actions/checkout@v6	2026-04-26T14:54:31.3336995Z Removing includeIf entries pointing to credentials config files
+Detect Changes	Post Run actions/checkout@v6	2026-04-26T14:54:31.3343486Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+Detect Changes	Post Run actions/checkout@v6	2026-04-26T14:54:31.3368459Z includeif.gitdir:/home/runner/work/meta-expression/meta-expression/.git.path
+Detect Changes	Post Run actions/checkout@v6	2026-04-26T14:54:31.3371624Z includeif.gitdir:/home/runner/work/meta-expression/meta-expression/.git/worktrees/*.path
+Detect Changes	Post Run actions/checkout@v6	2026-04-26T14:54:31.3374478Z includeif.gitdir:/github/workspace/.git.path
+Detect Changes	Post Run actions/checkout@v6	2026-04-26T14:54:31.3376184Z includeif.gitdir:/github/workspace/.git/worktrees/*.path
+Detect Changes	Post Run actions/checkout@v6	2026-04-26T14:54:31.3380586Z [command]/usr/bin/git config --local --get-all includeif.gitdir:/home/runner/work/meta-expression/meta-expression/.git.path
+Detect Changes	Post Run actions/checkout@v6	2026-04-26T14:54:31.3404096Z /home/runner/work/_temp/git-credentials-2f07792b-43a8-4a44-92b1-aa787036fb60.config
+Detect Changes	Post Run actions/checkout@v6	2026-04-26T14:54:31.3418217Z [command]/usr/bin/git config --local --unset includeif.gitdir:/home/runner/work/meta-expression/meta-expression/.git.path /home/runner/work/_temp/git-credentials-2f07792b-43a8-4a44-92b1-aa787036fb60.config
+Detect Changes	Post Run actions/checkout@v6	2026-04-26T14:54:31.3456602Z [command]/usr/bin/git config --local --get-all includeif.gitdir:/home/runner/work/meta-expression/meta-expression/.git/worktrees/*.path
+Detect Changes	Post Run actions/checkout@v6	2026-04-26T14:54:31.3481659Z /home/runner/work/_temp/git-credentials-2f07792b-43a8-4a44-92b1-aa787036fb60.config
+Detect Changes	Post Run actions/checkout@v6	2026-04-26T14:54:31.3586987Z [command]/usr/bin/git config --local --unset includeif.gitdir:/home/runner/work/meta-expression/meta-expression/.git/worktrees/*.path /home/runner/work/_temp/git-credentials-2f07792b-43a8-4a44-92b1-aa787036fb60.config
+Detect Changes	Post Run actions/checkout@v6	2026-04-26T14:54:31.3595443Z [command]/usr/bin/git config --local --get-all includeif.gitdir:/github/workspace/.git.path
+Detect Changes	Post Run actions/checkout@v6	2026-04-26T14:54:31.3598959Z /github/runner_temp/git-credentials-2f07792b-43a8-4a44-92b1-aa787036fb60.config
+Detect Changes	Post Run actions/checkout@v6	2026-04-26T14:54:31.3615261Z [command]/usr/bin/git config --local --unset includeif.gitdir:/github/workspace/.git.path /github/runner_temp/git-credentials-2f07792b-43a8-4a44-92b1-aa787036fb60.config
+Detect Changes	Post Run actions/checkout@v6	2026-04-26T14:54:31.3619177Z [command]/usr/bin/git config --local --get-all includeif.gitdir:/github/workspace/.git/worktrees/*.path
+Detect Changes	Post Run actions/checkout@v6	2026-04-26T14:54:31.3626002Z /github/runner_temp/git-credentials-2f07792b-43a8-4a44-92b1-aa787036fb60.config
+Detect Changes	Post Run actions/checkout@v6	2026-04-26T14:54:31.3638071Z [command]/usr/bin/git config --local --unset includeif.gitdir:/github/workspace/.git/worktrees/*.path /github/runner_temp/git-credentials-2f07792b-43a8-4a44-92b1-aa787036fb60.config
+Detect Changes	Post Run actions/checkout@v6	2026-04-26T14:54:31.3672102Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+Detect Changes	Post Run actions/checkout@v6	2026-04-26T14:54:31.3896940Z Removing credentials config '/home/runner/work/_temp/git-credentials-2f07792b-43a8-4a44-92b1-aa787036fb60.config'
+Detect Changes	Complete job	﻿2026-04-26T14:54:31.4049973Z Evaluate and set job outputs
+Detect Changes	Complete job	2026-04-26T14:54:31.4061367Z Set output 'mjs-changed'
+Detect Changes	Complete job	2026-04-26T14:54:31.4064104Z Set output 'js-changed'
+Detect Changes	Complete job	2026-04-26T14:54:31.4065329Z Set output 'package-changed'
+Detect Changes	Complete job	2026-04-26T14:54:31.4066112Z Set output 'docs-changed'
+Detect Changes	Complete job	2026-04-26T14:54:31.4066845Z Set output 'workflow-changed'
+Detect Changes	Complete job	2026-04-26T14:54:31.4067621Z Set output 'any-code-changed'
+Detect Changes	Complete job	2026-04-26T14:54:31.4068895Z Cleaning up orphan processes
+Check for Manual Version Changes	Set up job	﻿2026-04-26T14:54:29.6479219Z Current runner version: '2.333.1'
+Check for Manual Version Changes	Set up job	2026-04-26T14:54:29.6507901Z ##[group]Runner Image Provisioner
+Check for Manual Version Changes	Set up job	2026-04-26T14:54:29.6508854Z Hosted Compute Agent
+Check for Manual Version Changes	Set up job	2026-04-26T14:54:29.6509388Z Version: 20260213.493
+Check for Manual Version Changes	Set up job	2026-04-26T14:54:29.6510025Z Commit: 5c115507f6dd24b8de37d8bbe0bb4509d0cc0fa3
+Check for Manual Version Changes	Set up job	2026-04-26T14:54:29.6510783Z Build Date: 2026-02-13T00:28:41Z
+Check for Manual Version Changes	Set up job	2026-04-26T14:54:29.6511470Z Worker ID: {589770cd-5445-48b7-b056-ceb939338948}
+Check for Manual Version Changes	Set up job	2026-04-26T14:54:29.6512576Z Azure Region: eastus
+Check for Manual Version Changes	Set up job	2026-04-26T14:54:29.6513201Z ##[endgroup]
+Check for Manual Version Changes	Set up job	2026-04-26T14:54:29.6514859Z ##[group]Operating System
+Check for Manual Version Changes	Set up job	2026-04-26T14:54:29.6515480Z Ubuntu
+Check for Manual Version Changes	Set up job	2026-04-26T14:54:29.6516037Z 24.04.4
+Check for Manual Version Changes	Set up job	2026-04-26T14:54:29.6516480Z LTS
+Check for Manual Version Changes	Set up job	2026-04-26T14:54:29.6516951Z ##[endgroup]
+Check for Manual Version Changes	Set up job	2026-04-26T14:54:29.6517451Z ##[group]Runner Image
+Check for Manual Version Changes	Set up job	2026-04-26T14:54:29.6518023Z Image: ubuntu-24.04
+Check for Manual Version Changes	Set up job	2026-04-26T14:54:29.6518573Z Version: 20260413.86.1
+Check for Manual Version Changes	Set up job	2026-04-26T14:54:29.6519575Z Included Software: https://github.com/actions/runner-images/blob/ubuntu24/20260413.86/images/ubuntu/Ubuntu2404-Readme.md
+Check for Manual Version Changes	Set up job	2026-04-26T14:54:29.6521212Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu24%2F20260413.86
+Check for Manual Version Changes	Set up job	2026-04-26T14:54:29.6522463Z ##[endgroup]
+Check for Manual Version Changes	Set up job	2026-04-26T14:54:29.6525343Z ##[group]GITHUB_TOKEN Permissions
+Check for Manual Version Changes	Set up job	2026-04-26T14:54:29.6527809Z Actions: write
+Check for Manual Version Changes	Set up job	2026-04-26T14:54:29.6528398Z ArtifactMetadata: write
+Check for Manual Version Changes	Set up job	2026-04-26T14:54:29.6528977Z Attestations: write
+Check for Manual Version Changes	Set up job	2026-04-26T14:54:29.6529555Z Checks: write
+Check for Manual Version Changes	Set up job	2026-04-26T14:54:29.6530045Z Contents: write
+Check for Manual Version Changes	Set up job	2026-04-26T14:54:29.6530640Z Deployments: write
+Check for Manual Version Changes	Set up job	2026-04-26T14:54:29.6531115Z Discussions: write
+Check for Manual Version Changes	Set up job	2026-04-26T14:54:29.6531696Z Issues: write
+Check for Manual Version Changes	Set up job	2026-04-26T14:54:29.6532604Z Metadata: read
+Check for Manual Version Changes	Set up job	2026-04-26T14:54:29.6533115Z Models: read
+Check for Manual Version Changes	Set up job	2026-04-26T14:54:29.6533663Z Packages: write
+Check for Manual Version Changes	Set up job	2026-04-26T14:54:29.6534266Z Pages: write
+Check for Manual Version Changes	Set up job	2026-04-26T14:54:29.6534888Z PullRequests: write
+Check for Manual Version Changes	Set up job	2026-04-26T14:54:29.6535686Z RepositoryProjects: write
+Check for Manual Version Changes	Set up job	2026-04-26T14:54:29.6536481Z SecurityEvents: write
+Check for Manual Version Changes	Set up job	2026-04-26T14:54:29.6537270Z Statuses: write
+Check for Manual Version Changes	Set up job	2026-04-26T14:54:29.6538151Z VulnerabilityAlerts: read
+Check for Manual Version Changes	Set up job	2026-04-26T14:54:29.6539063Z ##[endgroup]
+Check for Manual Version Changes	Set up job	2026-04-26T14:54:29.6542336Z Secret source: Actions
+Check for Manual Version Changes	Set up job	2026-04-26T14:54:29.6543515Z Prepare workflow directory
+Check for Manual Version Changes	Set up job	2026-04-26T14:54:29.6889786Z Prepare all required actions
+Check for Manual Version Changes	Set up job	2026-04-26T14:54:29.6929144Z Getting action download info
+Check for Manual Version Changes	Set up job	2026-04-26T14:54:29.9770253Z Download action repository 'actions/checkout@v6' (SHA:de0fac2e4500dabe0009e67214ff5f5447ce83dd)
+Check for Manual Version Changes	Set up job	2026-04-26T14:54:30.2000963Z Complete job name: Check for Manual Version Changes
+Check for Manual Version Changes	Run actions/checkout@v6	﻿2026-04-26T14:54:30.2725893Z ##[group]Run actions/checkout@v6
+Check for Manual Version Changes	Run actions/checkout@v6	2026-04-26T14:54:30.2726811Z with:
+Check for Manual Version Changes	Run actions/checkout@v6	2026-04-26T14:54:30.2727213Z   fetch-depth: 0
+Check for Manual Version Changes	Run actions/checkout@v6	2026-04-26T14:54:30.2727683Z   repository: link-assistant/meta-expression
+Check for Manual Version Changes	Run actions/checkout@v6	2026-04-26T14:54:30.2728406Z   token: ***
+Check for Manual Version Changes	Run actions/checkout@v6	2026-04-26T14:54:30.2728795Z   ssh-strict: true
+Check for Manual Version Changes	Run actions/checkout@v6	2026-04-26T14:54:30.2729191Z   ssh-user: git
+Check for Manual Version Changes	Run actions/checkout@v6	2026-04-26T14:54:30.2729600Z   persist-credentials: true
+Check for Manual Version Changes	Run actions/checkout@v6	2026-04-26T14:54:30.2730050Z   clean: true
+Check for Manual Version Changes	Run actions/checkout@v6	2026-04-26T14:54:30.2730754Z   sparse-checkout-cone-mode: true
+Check for Manual Version Changes	Run actions/checkout@v6	2026-04-26T14:54:30.2731298Z   fetch-tags: false
+Check for Manual Version Changes	Run actions/checkout@v6	2026-04-26T14:54:30.2731831Z   show-progress: true
+Check for Manual Version Changes	Run actions/checkout@v6	2026-04-26T14:54:30.2732667Z   lfs: false
+Check for Manual Version Changes	Run actions/checkout@v6	2026-04-26T14:54:30.2733054Z   submodules: false
+Check for Manual Version Changes	Run actions/checkout@v6	2026-04-26T14:54:30.2733477Z   set-safe-directory: true
+Check for Manual Version Changes	Run actions/checkout@v6	2026-04-26T14:54:30.2734221Z ##[endgroup]
+Check for Manual Version Changes	Run actions/checkout@v6	2026-04-26T14:54:30.3677612Z Syncing repository: link-assistant/meta-expression
+Check for Manual Version Changes	Run actions/checkout@v6	2026-04-26T14:54:30.3679466Z ##[group]Getting Git version info
+Check for Manual Version Changes	Run actions/checkout@v6	2026-04-26T14:54:30.3680387Z Working directory is '/home/runner/work/meta-expression/meta-expression'
+Check for Manual Version Changes	Run actions/checkout@v6	2026-04-26T14:54:30.3681527Z [command]/usr/bin/git version
+Check for Manual Version Changes	Run actions/checkout@v6	2026-04-26T14:54:30.3717077Z git version 2.53.0
+Check for Manual Version Changes	Run actions/checkout@v6	2026-04-26T14:54:30.3741094Z ##[endgroup]
+Check for Manual Version Changes	Run actions/checkout@v6	2026-04-26T14:54:30.3756330Z Temporarily overriding HOME='/home/runner/work/_temp/cdde9551-4b52-4952-b515-c6905a4eb057' before making global git config changes
+Check for Manual Version Changes	Run actions/checkout@v6	2026-04-26T14:54:30.3758529Z Adding repository directory to the temporary git global config as a safe directory
+Check for Manual Version Changes	Run actions/checkout@v6	2026-04-26T14:54:30.3761599Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/meta-expression/meta-expression
+Check for Manual Version Changes	Run actions/checkout@v6	2026-04-26T14:54:30.3798988Z Deleting the contents of '/home/runner/work/meta-expression/meta-expression'
+Check for Manual Version Changes	Run actions/checkout@v6	2026-04-26T14:54:30.3803476Z ##[group]Initializing the repository
+Check for Manual Version Changes	Run actions/checkout@v6	2026-04-26T14:54:30.3808801Z [command]/usr/bin/git init /home/runner/work/meta-expression/meta-expression
+Check for Manual Version Changes	Run actions/checkout@v6	2026-04-26T14:54:30.3909860Z hint: Using 'master' as the name for the initial branch. This default branch name
+Check for Manual Version Changes	Run actions/checkout@v6	2026-04-26T14:54:30.3911598Z hint: will change to "main" in Git 3.0. To configure the initial branch name
+Check for Manual Version Changes	Run actions/checkout@v6	2026-04-26T14:54:30.3912946Z hint: to use in all of your new repositories, which will suppress this warning,
+Check for Manual Version Changes	Run actions/checkout@v6	2026-04-26T14:54:30.3913663Z hint: call:
+Check for Manual Version Changes	Run actions/checkout@v6	2026-04-26T14:54:30.3914034Z hint:
+Check for Manual Version Changes	Run actions/checkout@v6	2026-04-26T14:54:30.3914515Z hint: 	git config --global init.defaultBranch <name>
+Check for Manual Version Changes	Run actions/checkout@v6	2026-04-26T14:54:30.3915100Z hint:
+Check for Manual Version Changes	Run actions/checkout@v6	2026-04-26T14:54:30.3915648Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+Check for Manual Version Changes	Run actions/checkout@v6	2026-04-26T14:54:30.3916536Z hint: 'development'. The just-created branch can be renamed via this command:
+Check for Manual Version Changes	Run actions/checkout@v6	2026-04-26T14:54:30.3917720Z hint:
+Check for Manual Version Changes	Run actions/checkout@v6	2026-04-26T14:54:30.3918334Z hint: 	git branch -m <name>
+Check for Manual Version Changes	Run actions/checkout@v6	2026-04-26T14:54:30.3919037Z hint:
+Check for Manual Version Changes	Run actions/checkout@v6	2026-04-26T14:54:30.3919980Z hint: Disable this message with "git config set advice.defaultBranchName false"
+Check for Manual Version Changes	Run actions/checkout@v6	2026-04-26T14:54:30.3921743Z Initialized empty Git repository in /home/runner/work/meta-expression/meta-expression/.git/
+Check for Manual Version Changes	Run actions/checkout@v6	2026-04-26T14:54:30.3924923Z [command]/usr/bin/git remote add origin https://github.com/link-assistant/meta-expression
+Check for Manual Version Changes	Run actions/checkout@v6	2026-04-26T14:54:30.3956488Z ##[endgroup]
+Check for Manual Version Changes	Run actions/checkout@v6	2026-04-26T14:54:30.3957624Z ##[group]Disabling automatic garbage collection
+Check for Manual Version Changes	Run actions/checkout@v6	2026-04-26T14:54:30.3960097Z [command]/usr/bin/git config --local gc.auto 0
+Check for Manual Version Changes	Run actions/checkout@v6	2026-04-26T14:54:30.3990209Z ##[endgroup]
+Check for Manual Version Changes	Run actions/checkout@v6	2026-04-26T14:54:30.3991257Z ##[group]Setting up auth
+Check for Manual Version Changes	Run actions/checkout@v6	2026-04-26T14:54:30.3992308Z Removing SSH command configuration
+Check for Manual Version Changes	Run actions/checkout@v6	2026-04-26T14:54:30.3998268Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+Check for Manual Version Changes	Run actions/checkout@v6	2026-04-26T14:54:30.4029471Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+Check for Manual Version Changes	Run actions/checkout@v6	2026-04-26T14:54:30.4320394Z Removing HTTP extra header
+Check for Manual Version Changes	Run actions/checkout@v6	2026-04-26T14:54:30.4327330Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+Check for Manual Version Changes	Run actions/checkout@v6	2026-04-26T14:54:30.4361680Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+Check for Manual Version Changes	Run actions/checkout@v6	2026-04-26T14:54:30.4579946Z Removing includeIf entries pointing to credentials config files
+Check for Manual Version Changes	Run actions/checkout@v6	2026-04-26T14:54:30.4586132Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+Check for Manual Version Changes	Run actions/checkout@v6	2026-04-26T14:54:30.4618283Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+Check for Manual Version Changes	Run actions/checkout@v6	2026-04-26T14:54:30.4844940Z [command]/usr/bin/git config --file /home/runner/work/_temp/git-credentials-3b6153b2-528c-4d1e-93bb-3f0413cfeb39.config http.https://github.com/.extraheader AUTHORIZATION: basic ***
+Check for Manual Version Changes	Run actions/checkout@v6	2026-04-26T14:54:30.4882674Z [command]/usr/bin/git config --local includeIf.gitdir:/home/runner/work/meta-expression/meta-expression/.git.path /home/runner/work/_temp/git-credentials-3b6153b2-528c-4d1e-93bb-3f0413cfeb39.config
+Check for Manual Version Changes	Run actions/checkout@v6	2026-04-26T14:54:30.4977449Z [command]/usr/bin/git config --local includeIf.gitdir:/home/runner/work/meta-expression/meta-expression/.git/worktrees/*.path /home/runner/work/_temp/git-credentials-3b6153b2-528c-4d1e-93bb-3f0413cfeb39.config
+Check for Manual Version Changes	Run actions/checkout@v6	2026-04-26T14:54:30.4983844Z [command]/usr/bin/git config --local includeIf.gitdir:/github/workspace/.git.path /github/runner_temp/git-credentials-3b6153b2-528c-4d1e-93bb-3f0413cfeb39.config
+Check for Manual Version Changes	Run actions/checkout@v6	2026-04-26T14:54:30.4991792Z [command]/usr/bin/git config --local includeIf.gitdir:/github/workspace/.git/worktrees/*.path /github/runner_temp/git-credentials-3b6153b2-528c-4d1e-93bb-3f0413cfeb39.config
+Check for Manual Version Changes	Run actions/checkout@v6	2026-04-26T14:54:30.5025036Z ##[endgroup]
+Check for Manual Version Changes	Run actions/checkout@v6	2026-04-26T14:54:30.5026807Z ##[group]Fetching the repository
+Check for Manual Version Changes	Run actions/checkout@v6	2026-04-26T14:54:30.5035234Z [command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules origin +refs/heads/*:refs/remotes/origin/* +refs/tags/*:refs/tags/* +7472003b096af09e6ebbf87db8006ed72928dbf3:refs/remotes/pull/6/merge
+Check for Manual Version Changes	Run actions/checkout@v6	2026-04-26T14:54:30.9059930Z From https://github.com/link-assistant/meta-expression
+Check for Manual Version Changes	Run actions/checkout@v6	2026-04-26T14:54:30.9063274Z  * [new branch]      issue-1-66f2990709b5                     -> origin/issue-1-66f2990709b5
+Check for Manual Version Changes	Run actions/checkout@v6	2026-04-26T14:54:30.9066964Z  * [new branch]      issue-3-130348eb2e36                     -> origin/issue-3-130348eb2e36
+Check for Manual Version Changes	Run actions/checkout@v6	2026-04-26T14:54:30.9070834Z  * [new branch]      issue-5-2c7b23a3dfee                     -> origin/issue-5-2c7b23a3dfee
+Check for Manual Version Changes	Run actions/checkout@v6	2026-04-26T14:54:30.9094872Z  * [new branch]      main                                     -> origin/main
+Check for Manual Version Changes	Run actions/checkout@v6	2026-04-26T14:54:30.9097695Z  * [new ref]         7472003b096af09e6ebbf87db8006ed72928dbf3 -> pull/6/merge
+Check for Manual Version Changes	Run actions/checkout@v6	2026-04-26T14:54:30.9103196Z ##[endgroup]
+Check for Manual Version Changes	Run actions/checkout@v6	2026-04-26T14:54:30.9105354Z ##[group]Determining the checkout info
+Check for Manual Version Changes	Run actions/checkout@v6	2026-04-26T14:54:30.9107968Z ##[endgroup]
+Check for Manual Version Changes	Run actions/checkout@v6	2026-04-26T14:54:30.9109416Z [command]/usr/bin/git sparse-checkout disable
+Check for Manual Version Changes	Run actions/checkout@v6	2026-04-26T14:54:30.9151356Z [command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+Check for Manual Version Changes	Run actions/checkout@v6	2026-04-26T14:54:30.9179633Z ##[group]Checking out the ref
+Check for Manual Version Changes	Run actions/checkout@v6	2026-04-26T14:54:30.9182479Z [command]/usr/bin/git checkout --progress --force refs/remotes/pull/6/merge
+Check for Manual Version Changes	Run actions/checkout@v6	2026-04-26T14:54:30.9576523Z Note: switching to 'refs/remotes/pull/6/merge'.
+Check for Manual Version Changes	Run actions/checkout@v6	2026-04-26T14:54:30.9578355Z 
+Check for Manual Version Changes	Run actions/checkout@v6	2026-04-26T14:54:30.9579660Z You are in 'detached HEAD' state. You can look around, make experimental
+Check for Manual Version Changes	Run actions/checkout@v6	2026-04-26T14:54:30.9582981Z changes and commit them, and you can discard any commits you make in this
+Check for Manual Version Changes	Run actions/checkout@v6	2026-04-26T14:54:30.9585278Z state without impacting any branches by switching back to a branch.
+Check for Manual Version Changes	Run actions/checkout@v6	2026-04-26T14:54:30.9587120Z 
+Check for Manual Version Changes	Run actions/checkout@v6	2026-04-26T14:54:30.9588030Z If you want to create a new branch to retain commits you create, you may
+Check for Manual Version Changes	Run actions/checkout@v6	2026-04-26T14:54:30.9590121Z do so (now or later) by using -c with the switch command. Example:
+Check for Manual Version Changes	Run actions/checkout@v6	2026-04-26T14:54:30.9591300Z 
+Check for Manual Version Changes	Run actions/checkout@v6	2026-04-26T14:54:30.9592326Z   git switch -c <new-branch-name>
+Check for Manual Version Changes	Run actions/checkout@v6	2026-04-26T14:54:30.9593279Z 
+Check for Manual Version Changes	Run actions/checkout@v6	2026-04-26T14:54:30.9593801Z Or undo this operation with:
+Check for Manual Version Changes	Run actions/checkout@v6	2026-04-26T14:54:30.9594566Z 
+Check for Manual Version Changes	Run actions/checkout@v6	2026-04-26T14:54:30.9595022Z   git switch -
+Check for Manual Version Changes	Run actions/checkout@v6	2026-04-26T14:54:30.9595600Z 
+Check for Manual Version Changes	Run actions/checkout@v6	2026-04-26T14:54:30.9596573Z Turn off this advice by setting config variable advice.detachedHead to false
+Check for Manual Version Changes	Run actions/checkout@v6	2026-04-26T14:54:30.9598190Z 
+Check for Manual Version Changes	Run actions/checkout@v6	2026-04-26T14:54:30.9600075Z HEAD is now at 7472003 Merge 8f800f1b2657da1d51104e04d0721227a3f11328 into 2fd354e49141e7eed85845cd8f441003abd7aa79
+Check for Manual Version Changes	Run actions/checkout@v6	2026-04-26T14:54:30.9605192Z ##[endgroup]
+Check for Manual Version Changes	Run actions/checkout@v6	2026-04-26T14:54:30.9628372Z [command]/usr/bin/git log -1 --format=%H
+Check for Manual Version Changes	Run actions/checkout@v6	2026-04-26T14:54:30.9652285Z 7472003b096af09e6ebbf87db8006ed72928dbf3
+Check for Manual Version Changes	Check for version changes in package.json	﻿2026-04-26T14:54:30.9897805Z ##[group]Run node scripts/check-version.mjs
+Check for Manual Version Changes	Check for version changes in package.json	2026-04-26T14:54:30.9899339Z [36;1mnode scripts/check-version.mjs[0m
+Check for Manual Version Changes	Check for version changes in package.json	2026-04-26T14:54:30.9926796Z shell: /usr/bin/bash -e {0}
+Check for Manual Version Changes	Check for version changes in package.json	2026-04-26T14:54:30.9927931Z env:
+Check for Manual Version Changes	Check for version changes in package.json	2026-04-26T14:54:30.9928824Z   GITHUB_HEAD_REF: issue-5-2c7b23a3dfee
+Check for Manual Version Changes	Check for version changes in package.json	2026-04-26T14:54:30.9930036Z   GITHUB_BASE_REF: main
+Check for Manual Version Changes	Check for version changes in package.json	2026-04-26T14:54:30.9931015Z ##[endgroup]
+Check for Manual Version Changes	Check for version changes in package.json	2026-04-26T14:54:31.0891290Z Checking for manual version changes in package.json...
+Check for Manual Version Changes	Check for version changes in package.json	2026-04-26T14:54:31.0893832Z 
+Check for Manual Version Changes	Check for version changes in package.json	2026-04-26T14:54:31.0938750Z No manual version changes detected - check passed
+Check for Manual Version Changes	Post Run actions/checkout@v6	﻿2026-04-26T14:54:31.1187563Z Post job cleanup.
+Check for Manual Version Changes	Post Run actions/checkout@v6	2026-04-26T14:54:31.2001106Z [command]/usr/bin/git version
+Check for Manual Version Changes	Post Run actions/checkout@v6	2026-04-26T14:54:31.2037688Z git version 2.53.0
+Check for Manual Version Changes	Post Run actions/checkout@v6	2026-04-26T14:54:31.2083943Z Temporarily overriding HOME='/home/runner/work/_temp/8e654f07-d96e-4877-b0b6-f320820a317b' before making global git config changes
+Check for Manual Version Changes	Post Run actions/checkout@v6	2026-04-26T14:54:31.2087590Z Adding repository directory to the temporary git global config as a safe directory
+Check for Manual Version Changes	Post Run actions/checkout@v6	2026-04-26T14:54:31.2091546Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/meta-expression/meta-expression
+Check for Manual Version Changes	Post Run actions/checkout@v6	2026-04-26T14:54:31.2121327Z Removing SSH command configuration
+Check for Manual Version Changes	Post Run actions/checkout@v6	2026-04-26T14:54:31.2129504Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+Check for Manual Version Changes	Post Run actions/checkout@v6	2026-04-26T14:54:31.2164590Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+Check for Manual Version Changes	Post Run actions/checkout@v6	2026-04-26T14:54:31.2384170Z Removing HTTP extra header
+Check for Manual Version Changes	Post Run actions/checkout@v6	2026-04-26T14:54:31.2390324Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+Check for Manual Version Changes	Post Run actions/checkout@v6	2026-04-26T14:54:31.2425241Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+Check for Manual Version Changes	Post Run actions/checkout@v6	2026-04-26T14:54:31.2642499Z Removing includeIf entries pointing to credentials config files
+Check for Manual Version Changes	Post Run actions/checkout@v6	2026-04-26T14:54:31.2648807Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+Check for Manual Version Changes	Post Run actions/checkout@v6	2026-04-26T14:54:31.2673737Z includeif.gitdir:/home/runner/work/meta-expression/meta-expression/.git.path
+Check for Manual Version Changes	Post Run actions/checkout@v6	2026-04-26T14:54:31.2677682Z includeif.gitdir:/home/runner/work/meta-expression/meta-expression/.git/worktrees/*.path
+Check for Manual Version Changes	Post Run actions/checkout@v6	2026-04-26T14:54:31.2680872Z includeif.gitdir:/github/workspace/.git.path
+Check for Manual Version Changes	Post Run actions/checkout@v6	2026-04-26T14:54:31.2683554Z includeif.gitdir:/github/workspace/.git/worktrees/*.path
+Check for Manual Version Changes	Post Run actions/checkout@v6	2026-04-26T14:54:31.2687808Z [command]/usr/bin/git config --local --get-all includeif.gitdir:/home/runner/work/meta-expression/meta-expression/.git.path
+Check for Manual Version Changes	Post Run actions/checkout@v6	2026-04-26T14:54:31.2713062Z /home/runner/work/_temp/git-credentials-3b6153b2-528c-4d1e-93bb-3f0413cfeb39.config
+Check for Manual Version Changes	Post Run actions/checkout@v6	2026-04-26T14:54:31.2725150Z [command]/usr/bin/git config --local --unset includeif.gitdir:/home/runner/work/meta-expression/meta-expression/.git.path /home/runner/work/_temp/git-credentials-3b6153b2-528c-4d1e-93bb-3f0413cfeb39.config
+Check for Manual Version Changes	Post Run actions/checkout@v6	2026-04-26T14:54:31.2759519Z [command]/usr/bin/git config --local --get-all includeif.gitdir:/home/runner/work/meta-expression/meta-expression/.git/worktrees/*.path
+Check for Manual Version Changes	Post Run actions/checkout@v6	2026-04-26T14:54:31.2779948Z /home/runner/work/_temp/git-credentials-3b6153b2-528c-4d1e-93bb-3f0413cfeb39.config
+Check for Manual Version Changes	Post Run actions/checkout@v6	2026-04-26T14:54:31.2790350Z [command]/usr/bin/git config --local --unset includeif.gitdir:/home/runner/work/meta-expression/meta-expression/.git/worktrees/*.path /home/runner/work/_temp/git-credentials-3b6153b2-528c-4d1e-93bb-3f0413cfeb39.config
+Check for Manual Version Changes	Post Run actions/checkout@v6	2026-04-26T14:54:31.2820502Z [command]/usr/bin/git config --local --get-all includeif.gitdir:/github/workspace/.git.path
+Check for Manual Version Changes	Post Run actions/checkout@v6	2026-04-26T14:54:31.2841066Z /github/runner_temp/git-credentials-3b6153b2-528c-4d1e-93bb-3f0413cfeb39.config
+Check for Manual Version Changes	Post Run actions/checkout@v6	2026-04-26T14:54:31.2850097Z [command]/usr/bin/git config --local --unset includeif.gitdir:/github/workspace/.git.path /github/runner_temp/git-credentials-3b6153b2-528c-4d1e-93bb-3f0413cfeb39.config
+Check for Manual Version Changes	Post Run actions/checkout@v6	2026-04-26T14:54:31.2880390Z [command]/usr/bin/git config --local --get-all includeif.gitdir:/github/workspace/.git/worktrees/*.path
+Check for Manual Version Changes	Post Run actions/checkout@v6	2026-04-26T14:54:31.2900712Z /github/runner_temp/git-credentials-3b6153b2-528c-4d1e-93bb-3f0413cfeb39.config
+Check for Manual Version Changes	Post Run actions/checkout@v6	2026-04-26T14:54:31.2910015Z [command]/usr/bin/git config --local --unset includeif.gitdir:/github/workspace/.git/worktrees/*.path /github/runner_temp/git-credentials-3b6153b2-528c-4d1e-93bb-3f0413cfeb39.config
+Check for Manual Version Changes	Post Run actions/checkout@v6	2026-04-26T14:54:31.2941457Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+Check for Manual Version Changes	Post Run actions/checkout@v6	2026-04-26T14:54:31.3157564Z Removing credentials config '/home/runner/work/_temp/git-credentials-3b6153b2-528c-4d1e-93bb-3f0413cfeb39.config'
+Check for Manual Version Changes	Complete job	﻿2026-04-26T14:54:31.3339660Z Cleaning up orphan processes
+Validate Documentation	Set up job	﻿2026-04-26T14:54:35.1390602Z Current runner version: '2.333.1'
+Validate Documentation	Set up job	2026-04-26T14:54:35.1411475Z ##[group]Runner Image Provisioner
+Validate Documentation	Set up job	2026-04-26T14:54:35.1412225Z Hosted Compute Agent
+Validate Documentation	Set up job	2026-04-26T14:54:35.1412633Z Version: 20260213.493
+Validate Documentation	Set up job	2026-04-26T14:54:35.1413120Z Commit: 5c115507f6dd24b8de37d8bbe0bb4509d0cc0fa3
+Validate Documentation	Set up job	2026-04-26T14:54:35.1413681Z Build Date: 2026-02-13T00:28:41Z
+Validate Documentation	Set up job	2026-04-26T14:54:35.1414230Z Worker ID: {3541ee25-dc88-44ce-b113-ec2af293f52d}
+Validate Documentation	Set up job	2026-04-26T14:54:35.1414780Z Azure Region: westcentralus
+Validate Documentation	Set up job	2026-04-26T14:54:35.1415279Z ##[endgroup]
+Validate Documentation	Set up job	2026-04-26T14:54:35.1416302Z ##[group]Operating System
+Validate Documentation	Set up job	2026-04-26T14:54:35.1416742Z Ubuntu
+Validate Documentation	Set up job	2026-04-26T14:54:35.1417167Z 24.04.4
+Validate Documentation	Set up job	2026-04-26T14:54:35.1417555Z LTS
+Validate Documentation	Set up job	2026-04-26T14:54:35.1417972Z ##[endgroup]
+Validate Documentation	Set up job	2026-04-26T14:54:35.1418325Z ##[group]Runner Image
+Validate Documentation	Set up job	2026-04-26T14:54:35.1418823Z Image: ubuntu-24.04
+Validate Documentation	Set up job	2026-04-26T14:54:35.1419208Z Version: 20260413.86.1
+Validate Documentation	Set up job	2026-04-26T14:54:35.1419995Z Included Software: https://github.com/actions/runner-images/blob/ubuntu24/20260413.86/images/ubuntu/Ubuntu2404-Readme.md
+Validate Documentation	Set up job	2026-04-26T14:54:35.1421493Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu24%2F20260413.86
+Validate Documentation	Set up job	2026-04-26T14:54:35.1422226Z ##[endgroup]
+Validate Documentation	Set up job	2026-04-26T14:54:35.1424349Z ##[group]GITHUB_TOKEN Permissions
+Validate Documentation	Set up job	2026-04-26T14:54:35.1425840Z Actions: write
+Validate Documentation	Set up job	2026-04-26T14:54:35.1426356Z ArtifactMetadata: write
+Validate Documentation	Set up job	2026-04-26T14:54:35.1426853Z Attestations: write
+Validate Documentation	Set up job	2026-04-26T14:54:35.1427241Z Checks: write
+Validate Documentation	Set up job	2026-04-26T14:54:35.1427712Z Contents: write
+Validate Documentation	Set up job	2026-04-26T14:54:35.1428129Z Deployments: write
+Validate Documentation	Set up job	2026-04-26T14:54:35.1428514Z Discussions: write
+Validate Documentation	Set up job	2026-04-26T14:54:35.1428959Z Issues: write
+Validate Documentation	Set up job	2026-04-26T14:54:35.1429352Z Metadata: read
+Validate Documentation	Set up job	2026-04-26T14:54:35.1429756Z Models: read
+Validate Documentation	Set up job	2026-04-26T14:54:35.1430136Z Packages: write
+Validate Documentation	Set up job	2026-04-26T14:54:35.1430563Z Pages: write
+Validate Documentation	Set up job	2026-04-26T14:54:35.1431030Z PullRequests: write
+Validate Documentation	Set up job	2026-04-26T14:54:35.1431616Z RepositoryProjects: write
+Validate Documentation	Set up job	2026-04-26T14:54:35.1432217Z SecurityEvents: write
+Validate Documentation	Set up job	2026-04-26T14:54:35.1432612Z Statuses: write
+Validate Documentation	Set up job	2026-04-26T14:54:35.1433048Z VulnerabilityAlerts: read
+Validate Documentation	Set up job	2026-04-26T14:54:35.1433491Z ##[endgroup]
+Validate Documentation	Set up job	2026-04-26T14:54:35.1435103Z Secret source: Actions
+Validate Documentation	Set up job	2026-04-26T14:54:35.1435606Z Prepare workflow directory
+Validate Documentation	Set up job	2026-04-26T14:54:35.1692255Z Prepare all required actions
+Validate Documentation	Set up job	2026-04-26T14:54:35.1724087Z Getting action download info
+Validate Documentation	Set up job	2026-04-26T14:54:35.5127194Z Download action repository 'actions/checkout@v6' (SHA:de0fac2e4500dabe0009e67214ff5f5447ce83dd)
+Validate Documentation	Set up job	2026-04-26T14:54:35.7056393Z Complete job name: Validate Documentation
+Validate Documentation	Run actions/checkout@v6	﻿2026-04-26T14:54:35.7612644Z ##[group]Run actions/checkout@v6
+Validate Documentation	Run actions/checkout@v6	2026-04-26T14:54:35.7613502Z with:
+Validate Documentation	Run actions/checkout@v6	2026-04-26T14:54:35.7613929Z   repository: link-assistant/meta-expression
+Validate Documentation	Run actions/checkout@v6	2026-04-26T14:54:35.7614539Z   token: ***
+Validate Documentation	Run actions/checkout@v6	2026-04-26T14:54:35.7614860Z   ssh-strict: true
+Validate Documentation	Run actions/checkout@v6	2026-04-26T14:54:35.7615181Z   ssh-user: git
+Validate Documentation	Run actions/checkout@v6	2026-04-26T14:54:35.7615509Z   persist-credentials: true
+Validate Documentation	Run actions/checkout@v6	2026-04-26T14:54:35.7615868Z   clean: true
+Validate Documentation	Run actions/checkout@v6	2026-04-26T14:54:35.7616185Z   sparse-checkout-cone-mode: true
+Validate Documentation	Run actions/checkout@v6	2026-04-26T14:54:35.7616568Z   fetch-depth: 1
+Validate Documentation	Run actions/checkout@v6	2026-04-26T14:54:35.7616873Z   fetch-tags: false
+Validate Documentation	Run actions/checkout@v6	2026-04-26T14:54:35.7617231Z   show-progress: true
+Validate Documentation	Run actions/checkout@v6	2026-04-26T14:54:35.7617552Z   lfs: false
+Validate Documentation	Run actions/checkout@v6	2026-04-26T14:54:35.7617853Z   submodules: false
+Validate Documentation	Run actions/checkout@v6	2026-04-26T14:54:35.7618178Z   set-safe-directory: true
+Validate Documentation	Run actions/checkout@v6	2026-04-26T14:54:35.7618667Z ##[endgroup]
+Validate Documentation	Run actions/checkout@v6	2026-04-26T14:54:35.8385813Z Syncing repository: link-assistant/meta-expression
+Validate Documentation	Run actions/checkout@v6	2026-04-26T14:54:35.8387294Z ##[group]Getting Git version info
+Validate Documentation	Run actions/checkout@v6	2026-04-26T14:54:35.8387865Z Working directory is '/home/runner/work/meta-expression/meta-expression'
+Validate Documentation	Run actions/checkout@v6	2026-04-26T14:54:35.8388799Z [command]/usr/bin/git version
+Validate Documentation	Run actions/checkout@v6	2026-04-26T14:54:35.8409659Z git version 2.53.0
+Validate Documentation	Run actions/checkout@v6	2026-04-26T14:54:35.8427430Z ##[endgroup]
+Validate Documentation	Run actions/checkout@v6	2026-04-26T14:54:35.8438936Z Temporarily overriding HOME='/home/runner/work/_temp/1e83ef17-6938-4b42-8bc6-e401f4d57bb9' before making global git config changes
+Validate Documentation	Run actions/checkout@v6	2026-04-26T14:54:35.8440519Z Adding repository directory to the temporary git global config as a safe directory
+Validate Documentation	Run actions/checkout@v6	2026-04-26T14:54:35.8442969Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/meta-expression/meta-expression
+Validate Documentation	Run actions/checkout@v6	2026-04-26T14:54:35.8471905Z Deleting the contents of '/home/runner/work/meta-expression/meta-expression'
+Validate Documentation	Run actions/checkout@v6	2026-04-26T14:54:35.8474807Z ##[group]Initializing the repository
+Validate Documentation	Run actions/checkout@v6	2026-04-26T14:54:35.8478405Z [command]/usr/bin/git init /home/runner/work/meta-expression/meta-expression
+Validate Documentation	Run actions/checkout@v6	2026-04-26T14:54:35.8803974Z hint: Using 'master' as the name for the initial branch. This default branch name
+Validate Documentation	Run actions/checkout@v6	2026-04-26T14:54:35.8805926Z hint: will change to "main" in Git 3.0. To configure the initial branch name
+Validate Documentation	Run actions/checkout@v6	2026-04-26T14:54:35.8807624Z hint: to use in all of your new repositories, which will suppress this warning,
+Validate Documentation	Run actions/checkout@v6	2026-04-26T14:54:35.8808765Z hint: call:
+Validate Documentation	Run actions/checkout@v6	2026-04-26T14:54:35.8809540Z hint:
+Validate Documentation	Run actions/checkout@v6	2026-04-26T14:54:35.8810230Z hint: 	git config --global init.defaultBranch <name>
+Validate Documentation	Run actions/checkout@v6	2026-04-26T14:54:35.8810744Z hint:
+Validate Documentation	Run actions/checkout@v6	2026-04-26T14:54:35.8811176Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+Validate Documentation	Run actions/checkout@v6	2026-04-26T14:54:35.8812084Z hint: 'development'. The just-created branch can be renamed via this command:
+Validate Documentation	Run actions/checkout@v6	2026-04-26T14:54:35.8812721Z hint:
+Validate Documentation	Run actions/checkout@v6	2026-04-26T14:54:35.8813118Z hint: 	git branch -m <name>
+Validate Documentation	Run actions/checkout@v6	2026-04-26T14:54:35.8813450Z hint:
+Validate Documentation	Run actions/checkout@v6	2026-04-26T14:54:35.8813897Z hint: Disable this message with "git config set advice.defaultBranchName false"
+Validate Documentation	Run actions/checkout@v6	2026-04-26T14:54:35.8815128Z Initialized empty Git repository in /home/runner/work/meta-expression/meta-expression/.git/
+Validate Documentation	Run actions/checkout@v6	2026-04-26T14:54:35.8817257Z [command]/usr/bin/git remote add origin https://github.com/link-assistant/meta-expression
+Validate Documentation	Run actions/checkout@v6	2026-04-26T14:54:35.8851036Z ##[endgroup]
+Validate Documentation	Run actions/checkout@v6	2026-04-26T14:54:35.8851978Z ##[group]Disabling automatic garbage collection
+Validate Documentation	Run actions/checkout@v6	2026-04-26T14:54:35.8854245Z [command]/usr/bin/git config --local gc.auto 0
+Validate Documentation	Run actions/checkout@v6	2026-04-26T14:54:35.8880745Z ##[endgroup]
+Validate Documentation	Run actions/checkout@v6	2026-04-26T14:54:35.8881671Z ##[group]Setting up auth
+Validate Documentation	Run actions/checkout@v6	2026-04-26T14:54:35.8882234Z Removing SSH command configuration
+Validate Documentation	Run actions/checkout@v6	2026-04-26T14:54:35.8886793Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+Validate Documentation	Run actions/checkout@v6	2026-04-26T14:54:35.8914365Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+Validate Documentation	Run actions/checkout@v6	2026-04-26T14:54:35.9184011Z Removing HTTP extra header
+Validate Documentation	Run actions/checkout@v6	2026-04-26T14:54:35.9189323Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+Validate Documentation	Run actions/checkout@v6	2026-04-26T14:54:35.9216326Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+Validate Documentation	Run actions/checkout@v6	2026-04-26T14:54:35.9396929Z Removing includeIf entries pointing to credentials config files
+Validate Documentation	Run actions/checkout@v6	2026-04-26T14:54:35.9402668Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+Validate Documentation	Run actions/checkout@v6	2026-04-26T14:54:35.9429411Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+Validate Documentation	Run actions/checkout@v6	2026-04-26T14:54:35.9618234Z [command]/usr/bin/git config --file /home/runner/work/_temp/git-credentials-0db689a4-65f4-4d1e-90f8-7bab1534b45b.config http.https://github.com/.extraheader AUTHORIZATION: basic ***
+Validate Documentation	Run actions/checkout@v6	2026-04-26T14:54:35.9649742Z [command]/usr/bin/git config --local includeIf.gitdir:/home/runner/work/meta-expression/meta-expression/.git.path /home/runner/work/_temp/git-credentials-0db689a4-65f4-4d1e-90f8-7bab1534b45b.config
+Validate Documentation	Run actions/checkout@v6	2026-04-26T14:54:35.9675377Z [command]/usr/bin/git config --local includeIf.gitdir:/home/runner/work/meta-expression/meta-expression/.git/worktrees/*.path /home/runner/work/_temp/git-credentials-0db689a4-65f4-4d1e-90f8-7bab1534b45b.config
+Validate Documentation	Run actions/checkout@v6	2026-04-26T14:54:35.9701037Z [command]/usr/bin/git config --local includeIf.gitdir:/github/workspace/.git.path /github/runner_temp/git-credentials-0db689a4-65f4-4d1e-90f8-7bab1534b45b.config
+Validate Documentation	Run actions/checkout@v6	2026-04-26T14:54:35.9726724Z [command]/usr/bin/git config --local includeIf.gitdir:/github/workspace/.git/worktrees/*.path /github/runner_temp/git-credentials-0db689a4-65f4-4d1e-90f8-7bab1534b45b.config
+Validate Documentation	Run actions/checkout@v6	2026-04-26T14:54:35.9754668Z ##[endgroup]
+Validate Documentation	Run actions/checkout@v6	2026-04-26T14:54:35.9755887Z ##[group]Fetching the repository
+Validate Documentation	Run actions/checkout@v6	2026-04-26T14:54:35.9763167Z [command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +7472003b096af09e6ebbf87db8006ed72928dbf3:refs/remotes/pull/6/merge
+Validate Documentation	Run actions/checkout@v6	2026-04-26T14:54:37.5945729Z From https://github.com/link-assistant/meta-expression
+Validate Documentation	Run actions/checkout@v6	2026-04-26T14:54:37.5947111Z  * [new ref]         7472003b096af09e6ebbf87db8006ed72928dbf3 -> pull/6/merge
+Validate Documentation	Run actions/checkout@v6	2026-04-26T14:54:37.5970071Z ##[endgroup]
+Validate Documentation	Run actions/checkout@v6	2026-04-26T14:54:37.5971307Z ##[group]Determining the checkout info
+Validate Documentation	Run actions/checkout@v6	2026-04-26T14:54:37.5972811Z ##[endgroup]
+Validate Documentation	Run actions/checkout@v6	2026-04-26T14:54:37.5975430Z [command]/usr/bin/git sparse-checkout disable
+Validate Documentation	Run actions/checkout@v6	2026-04-26T14:54:37.6006359Z [command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+Validate Documentation	Run actions/checkout@v6	2026-04-26T14:54:37.6031014Z ##[group]Checking out the ref
+Validate Documentation	Run actions/checkout@v6	2026-04-26T14:54:37.6033196Z [command]/usr/bin/git checkout --progress --force refs/remotes/pull/6/merge
+Validate Documentation	Run actions/checkout@v6	2026-04-26T14:54:37.6362416Z Note: switching to 'refs/remotes/pull/6/merge'.
+Validate Documentation	Run actions/checkout@v6	2026-04-26T14:54:37.6363559Z 
+Validate Documentation	Run actions/checkout@v6	2026-04-26T14:54:37.6364273Z You are in 'detached HEAD' state. You can look around, make experimental
+Validate Documentation	Run actions/checkout@v6	2026-04-26T14:54:37.6366014Z changes and commit them, and you can discard any commits you make in this
+Validate Documentation	Run actions/checkout@v6	2026-04-26T14:54:37.6367673Z state without impacting any branches by switching back to a branch.
+Validate Documentation	Run actions/checkout@v6	2026-04-26T14:54:37.6368480Z 
+Validate Documentation	Run actions/checkout@v6	2026-04-26T14:54:37.6368979Z If you want to create a new branch to retain commits you create, you may
+Validate Documentation	Run actions/checkout@v6	2026-04-26T14:54:37.6370438Z do so (now or later) by using -c with the switch command. Example:
+Validate Documentation	Run actions/checkout@v6	2026-04-26T14:54:37.6371113Z 
+Validate Documentation	Run actions/checkout@v6	2026-04-26T14:54:37.6371551Z   git switch -c <new-branch-name>
+Validate Documentation	Run actions/checkout@v6	2026-04-26T14:54:37.6372028Z 
+Validate Documentation	Run actions/checkout@v6	2026-04-26T14:54:37.6372295Z Or undo this operation with:
+Validate Documentation	Run actions/checkout@v6	2026-04-26T14:54:37.6372794Z 
+Validate Documentation	Run actions/checkout@v6	2026-04-26T14:54:37.6373022Z   git switch -
+Validate Documentation	Run actions/checkout@v6	2026-04-26T14:54:37.6373349Z 
+Validate Documentation	Run actions/checkout@v6	2026-04-26T14:54:37.6373881Z Turn off this advice by setting config variable advice.detachedHead to false
+Validate Documentation	Run actions/checkout@v6	2026-04-26T14:54:37.6374730Z 
+Validate Documentation	Run actions/checkout@v6	2026-04-26T14:54:37.6375844Z HEAD is now at 7472003 Merge 8f800f1b2657da1d51104e04d0721227a3f11328 into 2fd354e49141e7eed85845cd8f441003abd7aa79
+Validate Documentation	Run actions/checkout@v6	2026-04-26T14:54:37.6379089Z ##[endgroup]
+Validate Documentation	Run actions/checkout@v6	2026-04-26T14:54:37.6406794Z [command]/usr/bin/git log -1 --format=%H
+Validate Documentation	Run actions/checkout@v6	2026-04-26T14:54:37.6428717Z 7472003b096af09e6ebbf87db8006ed72928dbf3
+Validate Documentation	Check documentation file sizes	﻿2026-04-26T14:54:37.6647376Z ##[group]Run LIMIT=2500
+Validate Documentation	Check documentation file sizes	2026-04-26T14:54:37.6648312Z [36;1mLIMIT=2500[0m
+Validate Documentation	Check documentation file sizes	2026-04-26T14:54:37.6649039Z [36;1mFAILURES=()[0m
+Validate Documentation	Check documentation file sizes	2026-04-26T14:54:37.6649784Z [36;1m[0m
+Validate Documentation	Check documentation file sizes	2026-04-26T14:54:37.6650819Z [36;1mecho "Checking that documentation files are under ${LIMIT} lines..."[0m
+Validate Documentation	Check documentation file sizes	2026-04-26T14:54:37.6652270Z [36;1m[0m
+Validate Documentation	Check documentation file sizes	2026-04-26T14:54:37.6652968Z [36;1mwhile IFS= read -r -d '' file; do[0m
+Validate Documentation	Check documentation file sizes	2026-04-26T14:54:37.6653975Z [36;1m  line_count=$(wc -l < "$file")[0m
+Validate Documentation	Check documentation file sizes	2026-04-26T14:54:37.6654953Z [36;1m  if [ "$line_count" -gt "$LIMIT" ]; then[0m
+Validate Documentation	Check documentation file sizes	2026-04-26T14:54:37.6656179Z [36;1m    echo "ERROR: $file has $line_count lines (limit: ${LIMIT})"[0m
+Validate Documentation	Check documentation file sizes	2026-04-26T14:54:37.6657865Z [36;1m    echo "::error file=$file::Documentation file has $line_count lines (limit: ${LIMIT})"[0m
+Validate Documentation	Check documentation file sizes	2026-04-26T14:54:37.6659331Z [36;1m    FAILURES+=("$file")[0m
+Validate Documentation	Check documentation file sizes	2026-04-26T14:54:37.6660163Z [36;1m  fi[0m
+Validate Documentation	Check documentation file sizes	2026-04-26T14:54:37.6661061Z [36;1mdone < <(find docs -name "*.md" -type f -print0 2>/dev/null)[0m
+Validate Documentation	Check documentation file sizes	2026-04-26T14:54:37.6662330Z [36;1m[0m
+Validate Documentation	Check documentation file sizes	2026-04-26T14:54:37.6663062Z [36;1mif [ "${#FAILURES[@]}" -gt 0 ]; then[0m
+Validate Documentation	Check documentation file sizes	2026-04-26T14:54:37.6664242Z [36;1m  echo "The following docs exceed the ${LIMIT} line limit:"[0m
+Validate Documentation	Check documentation file sizes	2026-04-26T14:54:37.6665413Z [36;1m  printf '  %s\n' "${FAILURES[@]}"[0m
+Validate Documentation	Check documentation file sizes	2026-04-26T14:54:37.6666322Z [36;1m  exit 1[0m
+Validate Documentation	Check documentation file sizes	2026-04-26T14:54:37.6666981Z [36;1melse[0m
+Validate Documentation	Check documentation file sizes	2026-04-26T14:54:37.6667988Z [36;1m  echo "All documentation files are within the ${LIMIT} line limit."[0m
+Validate Documentation	Check documentation file sizes	2026-04-26T14:54:37.6669227Z [36;1mfi[0m
+Validate Documentation	Check documentation file sizes	2026-04-26T14:54:37.6692789Z shell: /usr/bin/bash -e {0}
+Validate Documentation	Check documentation file sizes	2026-04-26T14:54:37.6693703Z ##[endgroup]
+Validate Documentation	Check documentation file sizes	2026-04-26T14:54:37.6763815Z Checking that documentation files are under 2500 lines...
+Validate Documentation	Check documentation file sizes	2026-04-26T14:54:37.7486743Z All documentation files are within the 2500 line limit.
+Validate Documentation	Check required documentation files exist	﻿2026-04-26T14:54:37.7549473Z ##[group]Run REQUIRED_FILES=(
+Validate Documentation	Check required documentation files exist	2026-04-26T14:54:37.7550336Z [36;1mREQUIRED_FILES=([0m
+Validate Documentation	Check required documentation files exist	2026-04-26T14:54:37.7551089Z [36;1m  "docs/BEST-PRACTICES.md"[0m
+Validate Documentation	Check required documentation files exist	2026-04-26T14:54:37.7552066Z [36;1m  "docs/CONTRIBUTING.md"[0m
+Validate Documentation	Check required documentation files exist	2026-04-26T14:54:37.7552859Z [36;1m  "README.md"[0m
+Validate Documentation	Check required documentation files exist	2026-04-26T14:54:37.7553569Z [36;1m  "CHANGELOG.md"[0m
+Validate Documentation	Check required documentation files exist	2026-04-26T14:54:37.7554260Z [36;1m)[0m
+Validate Documentation	Check required documentation files exist	2026-04-26T14:54:37.7554823Z [36;1m[0m
+Validate Documentation	Check required documentation files exist	2026-04-26T14:54:37.7555397Z [36;1mMISSING=()[0m
+Validate Documentation	Check required documentation files exist	2026-04-26T14:54:37.7556113Z [36;1mfor file in "${REQUIRED_FILES[@]}"; do[0m
+Validate Documentation	Check required documentation files exist	2026-04-26T14:54:37.7557020Z [36;1m  if [ ! -f "$file" ]; then[0m
+Validate Documentation	Check required documentation files exist	2026-04-26T14:54:37.7558060Z [36;1m    echo "ERROR: Required documentation file missing: $file"[0m
+Validate Documentation	Check required documentation files exist	2026-04-26T14:54:37.7559129Z [36;1m    MISSING+=("$file")[0m
+Validate Documentation	Check required documentation files exist	2026-04-26T14:54:37.7559860Z [36;1m  else[0m
+Validate Documentation	Check required documentation files exist	2026-04-26T14:54:37.7560492Z [36;1m    echo "Found: $file"[0m
+Validate Documentation	Check required documentation files exist	2026-04-26T14:54:37.7561232Z [36;1m  fi[0m
+Validate Documentation	Check required documentation files exist	2026-04-26T14:54:37.7561924Z [36;1mdone[0m
+Validate Documentation	Check required documentation files exist	2026-04-26T14:54:37.7562519Z [36;1m[0m
+Validate Documentation	Check required documentation files exist	2026-04-26T14:54:37.7563188Z [36;1mif [ "${#MISSING[@]}" -gt 0 ]; then[0m
+Validate Documentation	Check required documentation files exist	2026-04-26T14:54:37.7564039Z [36;1m  echo ""[0m
+Validate Documentation	Check required documentation files exist	2026-04-26T14:54:37.7564811Z [36;1m  echo "Missing required documentation files:"[0m
+Validate Documentation	Check required documentation files exist	2026-04-26T14:54:37.7565819Z [36;1m  printf '  %s\n' "${MISSING[@]}"[0m
+Validate Documentation	Check required documentation files exist	2026-04-26T14:54:37.7566657Z [36;1m  exit 1[0m
+Validate Documentation	Check required documentation files exist	2026-04-26T14:54:37.7567276Z [36;1melse[0m
+Validate Documentation	Check required documentation files exist	2026-04-26T14:54:37.7568056Z [36;1m  echo "All required documentation files present."[0m
+Validate Documentation	Check required documentation files exist	2026-04-26T14:54:37.7569043Z [36;1mfi[0m
+Validate Documentation	Check required documentation files exist	2026-04-26T14:54:37.7588612Z shell: /usr/bin/bash -e {0}
+Validate Documentation	Check required documentation files exist	2026-04-26T14:54:37.7589362Z ##[endgroup]
+Validate Documentation	Check required documentation files exist	2026-04-26T14:54:37.7634114Z Found: docs/BEST-PRACTICES.md
+Validate Documentation	Check required documentation files exist	2026-04-26T14:54:37.7635274Z Found: docs/CONTRIBUTING.md
+Validate Documentation	Check required documentation files exist	2026-04-26T14:54:37.7636537Z Found: README.md
+Validate Documentation	Check required documentation files exist	2026-04-26T14:54:37.7637419Z Found: CHANGELOG.md
+Validate Documentation	Check required documentation files exist	2026-04-26T14:54:37.7638397Z All required documentation files present.
+Validate Documentation	Post Run actions/checkout@v6	﻿2026-04-26T14:54:37.7857962Z Post job cleanup.
+Validate Documentation	Post Run actions/checkout@v6	2026-04-26T14:54:37.8497803Z [command]/usr/bin/git version
+Validate Documentation	Post Run actions/checkout@v6	2026-04-26T14:54:37.8529725Z git version 2.53.0
+Validate Documentation	Post Run actions/checkout@v6	2026-04-26T14:54:37.8560331Z Temporarily overriding HOME='/home/runner/work/_temp/b65e8e85-a735-407c-b1fb-70125773166d' before making global git config changes
+Validate Documentation	Post Run actions/checkout@v6	2026-04-26T14:54:37.8562829Z Adding repository directory to the temporary git global config as a safe directory
+Validate Documentation	Post Run actions/checkout@v6	2026-04-26T14:54:37.8565832Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/meta-expression/meta-expression
+Validate Documentation	Post Run actions/checkout@v6	2026-04-26T14:54:37.8592170Z Removing SSH command configuration
+Validate Documentation	Post Run actions/checkout@v6	2026-04-26T14:54:37.8597756Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+Validate Documentation	Post Run actions/checkout@v6	2026-04-26T14:54:37.8626522Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+Validate Documentation	Post Run actions/checkout@v6	2026-04-26T14:54:37.8843937Z Removing HTTP extra header
+Validate Documentation	Post Run actions/checkout@v6	2026-04-26T14:54:37.8848323Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+Validate Documentation	Post Run actions/checkout@v6	2026-04-26T14:54:37.8876239Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+Validate Documentation	Post Run actions/checkout@v6	2026-04-26T14:54:37.9055156Z Removing includeIf entries pointing to credentials config files
+Validate Documentation	Post Run actions/checkout@v6	2026-04-26T14:54:37.9059715Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+Validate Documentation	Post Run actions/checkout@v6	2026-04-26T14:54:37.9078432Z includeif.gitdir:/home/runner/work/meta-expression/meta-expression/.git.path
+Validate Documentation	Post Run actions/checkout@v6	2026-04-26T14:54:37.9080631Z includeif.gitdir:/home/runner/work/meta-expression/meta-expression/.git/worktrees/*.path
+Validate Documentation	Post Run actions/checkout@v6	2026-04-26T14:54:37.9082554Z includeif.gitdir:/github/workspace/.git.path
+Validate Documentation	Post Run actions/checkout@v6	2026-04-26T14:54:37.9083654Z includeif.gitdir:/github/workspace/.git/worktrees/*.path
+Validate Documentation	Post Run actions/checkout@v6	2026-04-26T14:54:37.9087274Z [command]/usr/bin/git config --local --get-all includeif.gitdir:/home/runner/work/meta-expression/meta-expression/.git.path
+Validate Documentation	Post Run actions/checkout@v6	2026-04-26T14:54:37.9106036Z /home/runner/work/_temp/git-credentials-0db689a4-65f4-4d1e-90f8-7bab1534b45b.config
+Validate Documentation	Post Run actions/checkout@v6	2026-04-26T14:54:37.9115422Z [command]/usr/bin/git config --local --unset includeif.gitdir:/home/runner/work/meta-expression/meta-expression/.git.path /home/runner/work/_temp/git-credentials-0db689a4-65f4-4d1e-90f8-7bab1534b45b.config
+Validate Documentation	Post Run actions/checkout@v6	2026-04-26T14:54:37.9146802Z [command]/usr/bin/git config --local --get-all includeif.gitdir:/home/runner/work/meta-expression/meta-expression/.git/worktrees/*.path
+Validate Documentation	Post Run actions/checkout@v6	2026-04-26T14:54:37.9164035Z /home/runner/work/_temp/git-credentials-0db689a4-65f4-4d1e-90f8-7bab1534b45b.config
+Validate Documentation	Post Run actions/checkout@v6	2026-04-26T14:54:37.9171983Z [command]/usr/bin/git config --local --unset includeif.gitdir:/home/runner/work/meta-expression/meta-expression/.git/worktrees/*.path /home/runner/work/_temp/git-credentials-0db689a4-65f4-4d1e-90f8-7bab1534b45b.config
+Validate Documentation	Post Run actions/checkout@v6	2026-04-26T14:54:37.9263277Z [command]/usr/bin/git config --local --get-all includeif.gitdir:/github/workspace/.git.path
+Validate Documentation	Post Run actions/checkout@v6	2026-04-26T14:54:37.9281713Z /github/runner_temp/git-credentials-0db689a4-65f4-4d1e-90f8-7bab1534b45b.config
+Validate Documentation	Post Run actions/checkout@v6	2026-04-26T14:54:37.9287989Z [command]/usr/bin/git config --local --unset includeif.gitdir:/github/workspace/.git.path /github/runner_temp/git-credentials-0db689a4-65f4-4d1e-90f8-7bab1534b45b.config
+Validate Documentation	Post Run actions/checkout@v6	2026-04-26T14:54:37.9313632Z [command]/usr/bin/git config --local --get-all includeif.gitdir:/github/workspace/.git/worktrees/*.path
+Validate Documentation	Post Run actions/checkout@v6	2026-04-26T14:54:37.9330720Z /github/runner_temp/git-credentials-0db689a4-65f4-4d1e-90f8-7bab1534b45b.config
+Validate Documentation	Post Run actions/checkout@v6	2026-04-26T14:54:37.9338853Z [command]/usr/bin/git config --local --unset includeif.gitdir:/github/workspace/.git/worktrees/*.path /github/runner_temp/git-credentials-0db689a4-65f4-4d1e-90f8-7bab1534b45b.config
+Validate Documentation	Post Run actions/checkout@v6	2026-04-26T14:54:37.9365001Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+Validate Documentation	Post Run actions/checkout@v6	2026-04-26T14:54:37.9544851Z Removing credentials config '/home/runner/work/_temp/git-credentials-0db689a4-65f4-4d1e-90f8-7bab1534b45b.config'
+Validate Documentation	Complete job	﻿2026-04-26T14:54:37.9683610Z Cleaning up orphan processes
+Check File Line Limits	Set up job	﻿2026-04-26T14:54:35.0325357Z Current runner version: '2.333.1'
+Check File Line Limits	Set up job	2026-04-26T14:54:35.0348518Z ##[group]Runner Image Provisioner
+Check File Line Limits	Set up job	2026-04-26T14:54:35.0349300Z Hosted Compute Agent
+Check File Line Limits	Set up job	2026-04-26T14:54:35.0349835Z Version: 20260213.493
+Check File Line Limits	Set up job	2026-04-26T14:54:35.0350414Z Commit: 5c115507f6dd24b8de37d8bbe0bb4509d0cc0fa3
+Check File Line Limits	Set up job	2026-04-26T14:54:35.0351188Z Build Date: 2026-02-13T00:28:41Z
+Check File Line Limits	Set up job	2026-04-26T14:54:35.0351831Z Worker ID: {1ec90704-4234-46d0-ab3d-ae849543dacf}
+Check File Line Limits	Set up job	2026-04-26T14:54:35.0352880Z Azure Region: northcentralus
+Check File Line Limits	Set up job	2026-04-26T14:54:35.0353580Z ##[endgroup]
+Check File Line Limits	Set up job	2026-04-26T14:54:35.0355421Z ##[group]Operating System
+Check File Line Limits	Set up job	2026-04-26T14:54:35.0356060Z Ubuntu
+Check File Line Limits	Set up job	2026-04-26T14:54:35.0356586Z 24.04.4
+Check File Line Limits	Set up job	2026-04-26T14:54:35.0357043Z LTS
+Check File Line Limits	Set up job	2026-04-26T14:54:35.0357455Z ##[endgroup]
+Check File Line Limits	Set up job	2026-04-26T14:54:35.0357995Z ##[group]Runner Image
+Check File Line Limits	Set up job	2026-04-26T14:54:35.0358547Z Image: ubuntu-24.04
+Check File Line Limits	Set up job	2026-04-26T14:54:35.0359046Z Version: 20260413.86.1
+Check File Line Limits	Set up job	2026-04-26T14:54:35.0360094Z Included Software: https://github.com/actions/runner-images/blob/ubuntu24/20260413.86/images/ubuntu/Ubuntu2404-Readme.md
+Check File Line Limits	Set up job	2026-04-26T14:54:35.0361652Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu24%2F20260413.86
+Check File Line Limits	Set up job	2026-04-26T14:54:35.0362815Z ##[endgroup]
+Check File Line Limits	Set up job	2026-04-26T14:54:35.0365566Z ##[group]GITHUB_TOKEN Permissions
+Check File Line Limits	Set up job	2026-04-26T14:54:35.0367577Z Actions: write
+Check File Line Limits	Set up job	2026-04-26T14:54:35.0368125Z ArtifactMetadata: write
+Check File Line Limits	Set up job	2026-04-26T14:54:35.0368680Z Attestations: write
+Check File Line Limits	Set up job	2026-04-26T14:54:35.0369191Z Checks: write
+Check File Line Limits	Set up job	2026-04-26T14:54:35.0369691Z Contents: write
+Check File Line Limits	Set up job	2026-04-26T14:54:35.0370188Z Deployments: write
+Check File Line Limits	Set up job	2026-04-26T14:54:35.0370720Z Discussions: write
+Check File Line Limits	Set up job	2026-04-26T14:54:35.0371202Z Issues: write
+Check File Line Limits	Set up job	2026-04-26T14:54:35.0371689Z Metadata: read
+Check File Line Limits	Set up job	2026-04-26T14:54:35.0372484Z Models: read
+Check File Line Limits	Set up job	2026-04-26T14:54:35.0373108Z Packages: write
+Check File Line Limits	Set up job	2026-04-26T14:54:35.0373648Z Pages: write
+Check File Line Limits	Set up job	2026-04-26T14:54:35.0374179Z PullRequests: write
+Check File Line Limits	Set up job	2026-04-26T14:54:35.0374784Z RepositoryProjects: write
+Check File Line Limits	Set up job	2026-04-26T14:54:35.0375317Z SecurityEvents: write
+Check File Line Limits	Set up job	2026-04-26T14:54:35.0375822Z Statuses: write
+Check File Line Limits	Set up job	2026-04-26T14:54:35.0376362Z VulnerabilityAlerts: read
+Check File Line Limits	Set up job	2026-04-26T14:54:35.0376961Z ##[endgroup]
+Check File Line Limits	Set up job	2026-04-26T14:54:35.0378933Z Secret source: Actions
+Check File Line Limits	Set up job	2026-04-26T14:54:35.0379693Z Prepare workflow directory
+Check File Line Limits	Set up job	2026-04-26T14:54:35.0718241Z Prepare all required actions
+Check File Line Limits	Set up job	2026-04-26T14:54:35.0755571Z Getting action download info
+Check File Line Limits	Set up job	2026-04-26T14:54:35.3750963Z Download action repository 'actions/checkout@v6' (SHA:de0fac2e4500dabe0009e67214ff5f5447ce83dd)
+Check File Line Limits	Set up job	2026-04-26T14:54:35.5891008Z Complete job name: Check File Line Limits
+Check File Line Limits	Run actions/checkout@v6	﻿2026-04-26T14:54:35.6595804Z ##[group]Run actions/checkout@v6
+Check File Line Limits	Run actions/checkout@v6	2026-04-26T14:54:35.6596877Z with:
+Check File Line Limits	Run actions/checkout@v6	2026-04-26T14:54:35.6597489Z   fetch-depth: 0
+Check File Line Limits	Run actions/checkout@v6	2026-04-26T14:54:35.6598028Z   repository: link-assistant/meta-expression
+Check File Line Limits	Run actions/checkout@v6	2026-04-26T14:54:35.6598744Z   token: ***
+Check File Line Limits	Run actions/checkout@v6	2026-04-26T14:54:35.6599135Z   ssh-strict: true
+Check File Line Limits	Run actions/checkout@v6	2026-04-26T14:54:35.6599537Z   ssh-user: git
+Check File Line Limits	Run actions/checkout@v6	2026-04-26T14:54:35.6599960Z   persist-credentials: true
+Check File Line Limits	Run actions/checkout@v6	2026-04-26T14:54:35.6600415Z   clean: true
+Check File Line Limits	Run actions/checkout@v6	2026-04-26T14:54:35.6600839Z   sparse-checkout-cone-mode: true
+Check File Line Limits	Run actions/checkout@v6	2026-04-26T14:54:35.6601327Z   fetch-tags: false
+Check File Line Limits	Run actions/checkout@v6	2026-04-26T14:54:35.6601769Z   show-progress: true
+Check File Line Limits	Run actions/checkout@v6	2026-04-26T14:54:35.6602407Z   lfs: false
+Check File Line Limits	Run actions/checkout@v6	2026-04-26T14:54:35.6602802Z   submodules: false
+Check File Line Limits	Run actions/checkout@v6	2026-04-26T14:54:35.6603222Z   set-safe-directory: true
+Check File Line Limits	Run actions/checkout@v6	2026-04-26T14:54:35.6603959Z ##[endgroup]
+Check File Line Limits	Run actions/checkout@v6	2026-04-26T14:54:35.7511964Z Syncing repository: link-assistant/meta-expression
+Check File Line Limits	Run actions/checkout@v6	2026-04-26T14:54:35.7514264Z ##[group]Getting Git version info
+Check File Line Limits	Run actions/checkout@v6	2026-04-26T14:54:35.7515052Z Working directory is '/home/runner/work/meta-expression/meta-expression'
+Check File Line Limits	Run actions/checkout@v6	2026-04-26T14:54:35.7516186Z [command]/usr/bin/git version
+Check File Line Limits	Run actions/checkout@v6	2026-04-26T14:54:35.7542905Z git version 2.53.0
+Check File Line Limits	Run actions/checkout@v6	2026-04-26T14:54:35.7565606Z ##[endgroup]
+Check File Line Limits	Run actions/checkout@v6	2026-04-26T14:54:35.7579123Z Temporarily overriding HOME='/home/runner/work/_temp/11c56c46-7d1b-4cda-abcc-0975fd51ae80' before making global git config changes
+Check File Line Limits	Run actions/checkout@v6	2026-04-26T14:54:35.7584025Z Adding repository directory to the temporary git global config as a safe directory
+Check File Line Limits	Run actions/checkout@v6	2026-04-26T14:54:35.7585497Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/meta-expression/meta-expression
+Check File Line Limits	Run actions/checkout@v6	2026-04-26T14:54:35.7616735Z Deleting the contents of '/home/runner/work/meta-expression/meta-expression'
+Check File Line Limits	Run actions/checkout@v6	2026-04-26T14:54:35.7621337Z ##[group]Initializing the repository
+Check File Line Limits	Run actions/checkout@v6	2026-04-26T14:54:35.7627041Z [command]/usr/bin/git init /home/runner/work/meta-expression/meta-expression
+Check File Line Limits	Run actions/checkout@v6	2026-04-26T14:54:35.7720865Z hint: Using 'master' as the name for the initial branch. This default branch name
+Check File Line Limits	Run actions/checkout@v6	2026-04-26T14:54:35.7722689Z hint: will change to "main" in Git 3.0. To configure the initial branch name
+Check File Line Limits	Run actions/checkout@v6	2026-04-26T14:54:35.7724102Z hint: to use in all of your new repositories, which will suppress this warning,
+Check File Line Limits	Run actions/checkout@v6	2026-04-26T14:54:35.7725136Z hint: call:
+Check File Line Limits	Run actions/checkout@v6	2026-04-26T14:54:35.7725761Z hint:
+Check File Line Limits	Run actions/checkout@v6	2026-04-26T14:54:35.7726445Z hint: 	git config --global init.defaultBranch <name>
+Check File Line Limits	Run actions/checkout@v6	2026-04-26T14:54:35.7727390Z hint:
+Check File Line Limits	Run actions/checkout@v6	2026-04-26T14:54:35.7728051Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+Check File Line Limits	Run actions/checkout@v6	2026-04-26T14:54:35.7728926Z hint: 'development'. The just-created branch can be renamed via this command:
+Check File Line Limits	Run actions/checkout@v6	2026-04-26T14:54:35.7729621Z hint:
+Check File Line Limits	Run actions/checkout@v6	2026-04-26T14:54:35.7730112Z hint: 	git branch -m <name>
+Check File Line Limits	Run actions/checkout@v6	2026-04-26T14:54:35.7730819Z hint:
+Check File Line Limits	Run actions/checkout@v6	2026-04-26T14:54:35.7731794Z hint: Disable this message with "git config set advice.defaultBranchName false"
+Check File Line Limits	Run actions/checkout@v6	2026-04-26T14:54:35.7733315Z Initialized empty Git repository in /home/runner/work/meta-expression/meta-expression/.git/
+Check File Line Limits	Run actions/checkout@v6	2026-04-26T14:54:35.7735043Z [command]/usr/bin/git remote add origin https://github.com/link-assistant/meta-expression
+Check File Line Limits	Run actions/checkout@v6	2026-04-26T14:54:35.7763197Z ##[endgroup]
+Check File Line Limits	Run actions/checkout@v6	2026-04-26T14:54:35.7763919Z ##[group]Disabling automatic garbage collection
+Check File Line Limits	Run actions/checkout@v6	2026-04-26T14:54:35.7766983Z [command]/usr/bin/git config --local gc.auto 0
+Check File Line Limits	Run actions/checkout@v6	2026-04-26T14:54:35.7794457Z ##[endgroup]
+Check File Line Limits	Run actions/checkout@v6	2026-04-26T14:54:35.7795122Z ##[group]Setting up auth
+Check File Line Limits	Run actions/checkout@v6	2026-04-26T14:54:35.7795931Z Removing SSH command configuration
+Check File Line Limits	Run actions/checkout@v6	2026-04-26T14:54:35.7801839Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+Check File Line Limits	Run actions/checkout@v6	2026-04-26T14:54:35.7832403Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+Check File Line Limits	Run actions/checkout@v6	2026-04-26T14:54:35.8109660Z Removing HTTP extra header
+Check File Line Limits	Run actions/checkout@v6	2026-04-26T14:54:35.8115437Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+Check File Line Limits	Run actions/checkout@v6	2026-04-26T14:54:35.8144813Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+Check File Line Limits	Run actions/checkout@v6	2026-04-26T14:54:35.8356423Z Removing includeIf entries pointing to credentials config files
+Check File Line Limits	Run actions/checkout@v6	2026-04-26T14:54:35.8362571Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+Check File Line Limits	Run actions/checkout@v6	2026-04-26T14:54:35.8393163Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+Check File Line Limits	Run actions/checkout@v6	2026-04-26T14:54:35.8610364Z [command]/usr/bin/git config --file /home/runner/work/_temp/git-credentials-b0eafcd5-13c9-4020-8254-cb4bbeea075c.config http.https://github.com/.extraheader AUTHORIZATION: basic ***
+Check File Line Limits	Run actions/checkout@v6	2026-04-26T14:54:35.8644528Z [command]/usr/bin/git config --local includeIf.gitdir:/home/runner/work/meta-expression/meta-expression/.git.path /home/runner/work/_temp/git-credentials-b0eafcd5-13c9-4020-8254-cb4bbeea075c.config
+Check File Line Limits	Run actions/checkout@v6	2026-04-26T14:54:35.8674688Z [command]/usr/bin/git config --local includeIf.gitdir:/home/runner/work/meta-expression/meta-expression/.git/worktrees/*.path /home/runner/work/_temp/git-credentials-b0eafcd5-13c9-4020-8254-cb4bbeea075c.config
+Check File Line Limits	Run actions/checkout@v6	2026-04-26T14:54:35.8706646Z [command]/usr/bin/git config --local includeIf.gitdir:/github/workspace/.git.path /github/runner_temp/git-credentials-b0eafcd5-13c9-4020-8254-cb4bbeea075c.config
+Check File Line Limits	Run actions/checkout@v6	2026-04-26T14:54:35.8735095Z [command]/usr/bin/git config --local includeIf.gitdir:/github/workspace/.git/worktrees/*.path /github/runner_temp/git-credentials-b0eafcd5-13c9-4020-8254-cb4bbeea075c.config
+Check File Line Limits	Run actions/checkout@v6	2026-04-26T14:54:35.8763554Z ##[endgroup]
+Check File Line Limits	Run actions/checkout@v6	2026-04-26T14:54:35.8764577Z ##[group]Fetching the repository
+Check File Line Limits	Run actions/checkout@v6	2026-04-26T14:54:35.8771716Z [command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules origin +refs/heads/*:refs/remotes/origin/* +refs/tags/*:refs/tags/* +7472003b096af09e6ebbf87db8006ed72928dbf3:refs/remotes/pull/6/merge
+Check File Line Limits	Run actions/checkout@v6	2026-04-26T14:54:36.4704778Z From https://github.com/link-assistant/meta-expression
+Check File Line Limits	Run actions/checkout@v6	2026-04-26T14:54:36.4707770Z  * [new branch]      issue-1-66f2990709b5                     -> origin/issue-1-66f2990709b5
+Check File Line Limits	Run actions/checkout@v6	2026-04-26T14:54:36.4710896Z  * [new branch]      issue-3-130348eb2e36                     -> origin/issue-3-130348eb2e36
+Check File Line Limits	Run actions/checkout@v6	2026-04-26T14:54:36.4714179Z  * [new branch]      issue-5-2c7b23a3dfee                     -> origin/issue-5-2c7b23a3dfee
+Check File Line Limits	Run actions/checkout@v6	2026-04-26T14:54:36.4717098Z  * [new branch]      main                                     -> origin/main
+Check File Line Limits	Run actions/checkout@v6	2026-04-26T14:54:36.4719028Z  * [new ref]         7472003b096af09e6ebbf87db8006ed72928dbf3 -> pull/6/merge
+Check File Line Limits	Run actions/checkout@v6	2026-04-26T14:54:36.4742908Z ##[endgroup]
+Check File Line Limits	Run actions/checkout@v6	2026-04-26T14:54:36.4744317Z ##[group]Determining the checkout info
+Check File Line Limits	Run actions/checkout@v6	2026-04-26T14:54:36.4745668Z ##[endgroup]
+Check File Line Limits	Run actions/checkout@v6	2026-04-26T14:54:36.4750753Z [command]/usr/bin/git sparse-checkout disable
+Check File Line Limits	Run actions/checkout@v6	2026-04-26T14:54:36.4790836Z [command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+Check File Line Limits	Run actions/checkout@v6	2026-04-26T14:54:36.4818723Z ##[group]Checking out the ref
+Check File Line Limits	Run actions/checkout@v6	2026-04-26T14:54:36.4821742Z [command]/usr/bin/git checkout --progress --force refs/remotes/pull/6/merge
+Check File Line Limits	Run actions/checkout@v6	2026-04-26T14:54:36.5197550Z Note: switching to 'refs/remotes/pull/6/merge'.
+Check File Line Limits	Run actions/checkout@v6	2026-04-26T14:54:36.5199300Z 
+Check File Line Limits	Run actions/checkout@v6	2026-04-26T14:54:36.5200417Z You are in 'detached HEAD' state. You can look around, make experimental
+Check File Line Limits	Run actions/checkout@v6	2026-04-26T14:54:36.5203361Z changes and commit them, and you can discard any commits you make in this
+Check File Line Limits	Run actions/checkout@v6	2026-04-26T14:54:36.5205892Z state without impacting any branches by switching back to a branch.
+Check File Line Limits	Run actions/checkout@v6	2026-04-26T14:54:36.5206998Z 
+Check File Line Limits	Run actions/checkout@v6	2026-04-26T14:54:36.5207668Z If you want to create a new branch to retain commits you create, you may
+Check File Line Limits	Run actions/checkout@v6	2026-04-26T14:54:36.5209981Z do so (now or later) by using -c with the switch command. Example:
+Check File Line Limits	Run actions/checkout@v6	2026-04-26T14:54:36.5211013Z 
+Check File Line Limits	Run actions/checkout@v6	2026-04-26T14:54:36.5211371Z   git switch -c <new-branch-name>
+Check File Line Limits	Run actions/checkout@v6	2026-04-26T14:54:36.5212451Z 
+Check File Line Limits	Run actions/checkout@v6	2026-04-26T14:54:36.5213030Z Or undo this operation with:
+Check File Line Limits	Run actions/checkout@v6	2026-04-26T14:54:36.5214013Z 
+Check File Line Limits	Run actions/checkout@v6	2026-04-26T14:54:36.5214445Z   git switch -
+Check File Line Limits	Run actions/checkout@v6	2026-04-26T14:54:36.5214996Z 
+Check File Line Limits	Run actions/checkout@v6	2026-04-26T14:54:36.5215939Z Turn off this advice by setting config variable advice.detachedHead to false
+Check File Line Limits	Run actions/checkout@v6	2026-04-26T14:54:36.5217425Z 
+Check File Line Limits	Run actions/checkout@v6	2026-04-26T14:54:36.5219383Z HEAD is now at 7472003 Merge 8f800f1b2657da1d51104e04d0721227a3f11328 into 2fd354e49141e7eed85845cd8f441003abd7aa79
+Check File Line Limits	Run actions/checkout@v6	2026-04-26T14:54:36.5224027Z ##[endgroup]
+Check File Line Limits	Run actions/checkout@v6	2026-04-26T14:54:36.5243480Z [command]/usr/bin/git log -1 --format=%H
+Check File Line Limits	Run actions/checkout@v6	2026-04-26T14:54:36.5264788Z 7472003b096af09e6ebbf87db8006ed72928dbf3
+Check File Line Limits	Simulate fresh merge with base branch (PR only)	﻿2026-04-26T14:54:36.5519263Z ##[group]Run bash scripts/simulate-fresh-merge.sh
+Check File Line Limits	Simulate fresh merge with base branch (PR only)	2026-04-26T14:54:36.5520847Z [36;1mbash scripts/simulate-fresh-merge.sh[0m
+Check File Line Limits	Simulate fresh merge with base branch (PR only)	2026-04-26T14:54:36.5547661Z shell: /usr/bin/bash -e {0}
+Check File Line Limits	Simulate fresh merge with base branch (PR only)	2026-04-26T14:54:36.5548766Z env:
+Check File Line Limits	Simulate fresh merge with base branch (PR only)	2026-04-26T14:54:36.5549605Z   BASE_REF: main
+Check File Line Limits	Simulate fresh merge with base branch (PR only)	2026-04-26T14:54:36.5550633Z ##[endgroup]
+Check File Line Limits	Simulate fresh merge with base branch (PR only)	2026-04-26T14:54:36.5634487Z === Synchronizing PR with latest main ===
+Check File Line Limits	Simulate fresh merge with base branch (PR only)	2026-04-26T14:54:36.5636778Z This prevents stale merge preview issues (see docs/case-studies/issue-23)
+Check File Line Limits	Simulate fresh merge with base branch (PR only)	2026-04-26T14:54:36.5638211Z 
+Check File Line Limits	Simulate fresh merge with base branch (PR only)	2026-04-26T14:54:36.5665879Z Fetching latest main...
+Check File Line Limits	Simulate fresh merge with base branch (PR only)	2026-04-26T14:54:36.7499347Z From https://github.com/link-assistant/meta-expression
+Check File Line Limits	Simulate fresh merge with base branch (PR only)	2026-04-26T14:54:36.7501068Z  * branch            main       -> FETCH_HEAD
+Check File Line Limits	Simulate fresh merge with base branch (PR only)	2026-04-26T14:54:36.7570969Z Current checkout (merge preview): 7472003b096af09e6ebbf87db8006ed72928dbf3
+Check File Line Limits	Simulate fresh merge with base branch (PR only)	2026-04-26T14:54:36.7573505Z Latest base branch (main): 2fd354e49141e7eed85845cd8f441003abd7aa79
+Check File Line Limits	Simulate fresh merge with base branch (PR only)	2026-04-26T14:54:36.7574798Z 
+Check File Line Limits	Simulate fresh merge with base branch (PR only)	2026-04-26T14:54:36.7589997Z Merge preview is up-to-date with main. No simulation needed.
+Check File Line Limits	Simulate fresh merge with base branch (PR only)	2026-04-26T14:54:36.7594516Z 
+Check File Line Limits	Check file line limits	﻿2026-04-26T14:54:36.7670836Z ##[group]Run bash scripts/check-file-line-limits.sh
+Check File Line Limits	Check file line limits	2026-04-26T14:54:36.7672672Z [36;1mbash scripts/check-file-line-limits.sh[0m
+Check File Line Limits	Check file line limits	2026-04-26T14:54:36.7695278Z shell: /usr/bin/bash -e {0}
+Check File Line Limits	Check file line limits	2026-04-26T14:54:36.7696239Z ##[endgroup]
+Check File Line Limits	Check file line limits	2026-04-26T14:54:36.7758440Z Checking that all .mjs files are under 1500 lines...
+Check File Line Limits	Check file line limits	2026-04-26T14:54:36.7802397Z ./scripts/create-manual-changeset.mjs: 89 lines
+Check File Line Limits	Check file line limits	2026-04-26T14:54:36.7820454Z ./scripts/merge-changesets.mjs: 263 lines
+Check File Line Limits	Check file line limits	2026-04-26T14:54:36.7837990Z ./scripts/js-paths.mjs: 177 lines
+Check File Line Limits	Check file line limits	2026-04-26T14:54:36.7855642Z ./scripts/publish-to-npm.mjs: 302 lines
+Check File Line Limits	Check file line limits	2026-04-26T14:54:36.7873644Z ./scripts/version-and-commit.mjs: 284 lines
+Check File Line Limits	Check file line limits	2026-04-26T14:54:36.7891149Z ./scripts/check-web-archive.mjs: 263 lines
+Check File Line Limits	Check file line limits	2026-04-26T14:54:36.7908825Z ./scripts/check-release-needed.mjs: 128 lines
+Check File Line Limits	Check file line limits	2026-04-26T14:54:36.7926869Z ./scripts/instant-version-bump.mjs: 172 lines
+Check File Line Limits	Check file line limits	2026-04-26T14:54:36.7944749Z ./scripts/validate-changeset.mjs: 265 lines
+Check File Line Limits	Check file line limits	2026-04-26T14:54:36.7962501Z ./scripts/create-github-release.mjs: 100 lines
+Check File Line Limits	Check file line limits	2026-04-26T14:54:36.7981223Z ./scripts/check-changesets.mjs: 67 lines
+Check File Line Limits	Check file line limits	2026-04-26T14:54:36.7999245Z ./scripts/detect-code-changes.mjs: 153 lines
+Check File Line Limits	Check file line limits	2026-04-26T14:54:36.8017084Z ./scripts/format-release-notes.mjs: 219 lines
+Check File Line Limits	Check file line limits	2026-04-26T14:54:36.8034951Z ./scripts/format-github-release.mjs: 90 lines
+Check File Line Limits	Check file line limits	2026-04-26T14:54:36.8053260Z ./scripts/changeset-version.mjs: 75 lines
+Check File Line Limits	Check file line limits	2026-04-26T14:54:36.8070274Z ./scripts/setup-npm.mjs: 118 lines
+Check File Line Limits	Check file line limits	2026-04-26T14:54:36.8087929Z ./scripts/check-version.mjs: 129 lines
+Check File Line Limits	Check file line limits	2026-04-26T14:54:36.8106276Z ./docs/case-studies/issue-23/data/hive-mind-eslint.config.mjs: 86 lines
+Check File Line Limits	Check file line limits	2026-04-26T14:54:36.8123842Z ./docs/case-studies/issue-23/data/hive-mind-check-version.mjs: 121 lines
+Check File Line Limits	Check file line limits	2026-04-26T14:54:36.8141267Z ./experiments/test-format-no-hash.mjs: 43 lines
+Check File Line Limits	Check file line limits	2026-04-26T14:54:36.8158962Z ./experiments/test-detect-changes.mjs: 178 lines
+Check File Line Limits	Check file line limits	2026-04-26T14:54:36.8176768Z ./experiments/test-check-release-needed.mjs: 104 lines
+Check File Line Limits	Check file line limits	2026-04-26T14:54:36.8194469Z ./experiments/test-format-minor-changes.mjs: 52 lines
+Check File Line Limits	Check file line limits	2026-04-26T14:54:36.8212820Z ./experiments/test-failure-detection.mjs: 143 lines
+Check File Line Limits	Check file line limits	2026-04-26T14:54:36.8230523Z ./experiments/test-format-major-changes.mjs: 49 lines
+Check File Line Limits	Check file line limits	2026-04-26T14:54:36.8248066Z ./experiments/test-changeset-scripts.mjs: 303 lines
+Check File Line Limits	Check file line limits	2026-04-26T14:54:36.8266296Z ./experiments/test-format-patch-changes.mjs: 46 lines
+Check File Line Limits	Check file line limits	2026-04-26T14:54:36.8267396Z 
+Check File Line Limits	Check file line limits	2026-04-26T14:54:36.8268262Z Checking that .github/workflows/release.yml is under 1500 lines...
+Check File Line Limits	Check file line limits	2026-04-26T14:54:36.8284824Z .github/workflows/release.yml: 604 lines
+Check File Line Limits	Check file line limits	2026-04-26T14:54:36.8285727Z 
+Check File Line Limits	Check file line limits	2026-04-26T14:54:36.8286410Z All checked files are within the 1500 line limit!
+Check File Line Limits	Post Run actions/checkout@v6	﻿2026-04-26T14:54:36.8561673Z Post job cleanup.
+Check File Line Limits	Post Run actions/checkout@v6	2026-04-26T14:54:36.9343958Z [command]/usr/bin/git version
+Check File Line Limits	Post Run actions/checkout@v6	2026-04-26T14:54:36.9378319Z git version 2.53.0
+Check File Line Limits	Post Run actions/checkout@v6	2026-04-26T14:54:36.9417899Z Temporarily overriding HOME='/home/runner/work/_temp/a48848c8-5c10-481d-97c8-68b0aab59cee' before making global git config changes
+Check File Line Limits	Post Run actions/checkout@v6	2026-04-26T14:54:36.9421483Z Adding repository directory to the temporary git global config as a safe directory
+Check File Line Limits	Post Run actions/checkout@v6	2026-04-26T14:54:36.9425430Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/meta-expression/meta-expression
+Check File Line Limits	Post Run actions/checkout@v6	2026-04-26T14:54:36.9453135Z Removing SSH command configuration
+Check File Line Limits	Post Run actions/checkout@v6	2026-04-26T14:54:36.9459164Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+Check File Line Limits	Post Run actions/checkout@v6	2026-04-26T14:54:36.9493933Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+Check File Line Limits	Post Run actions/checkout@v6	2026-04-26T14:54:36.9743784Z Removing HTTP extra header
+Check File Line Limits	Post Run actions/checkout@v6	2026-04-26T14:54:36.9746846Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+Check File Line Limits	Post Run actions/checkout@v6	2026-04-26T14:54:36.9781647Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+Check File Line Limits	Post Run actions/checkout@v6	2026-04-26T14:54:36.9992731Z Removing includeIf entries pointing to credentials config files
+Check File Line Limits	Post Run actions/checkout@v6	2026-04-26T14:54:36.9998803Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+Check File Line Limits	Post Run actions/checkout@v6	2026-04-26T14:54:37.0021066Z includeif.gitdir:/home/runner/work/meta-expression/meta-expression/.git.path
+Check File Line Limits	Post Run actions/checkout@v6	2026-04-26T14:54:37.0025163Z includeif.gitdir:/home/runner/work/meta-expression/meta-expression/.git/worktrees/*.path
+Check File Line Limits	Post Run actions/checkout@v6	2026-04-26T14:54:37.0028363Z includeif.gitdir:/github/workspace/.git.path
+Check File Line Limits	Post Run actions/checkout@v6	2026-04-26T14:54:37.0030771Z includeif.gitdir:/github/workspace/.git/worktrees/*.path
+Check File Line Limits	Post Run actions/checkout@v6	2026-04-26T14:54:37.0037077Z [command]/usr/bin/git config --local --get-all includeif.gitdir:/home/runner/work/meta-expression/meta-expression/.git.path
+Check File Line Limits	Post Run actions/checkout@v6	2026-04-26T14:54:37.0054148Z /home/runner/work/_temp/git-credentials-b0eafcd5-13c9-4020-8254-cb4bbeea075c.config
+Check File Line Limits	Post Run actions/checkout@v6	2026-04-26T14:54:37.0068099Z [command]/usr/bin/git config --local --unset includeif.gitdir:/home/runner/work/meta-expression/meta-expression/.git.path /home/runner/work/_temp/git-credentials-b0eafcd5-13c9-4020-8254-cb4bbeea075c.config
+Check File Line Limits	Post Run actions/checkout@v6	2026-04-26T14:54:37.0099753Z [command]/usr/bin/git config --local --get-all includeif.gitdir:/home/runner/work/meta-expression/meta-expression/.git/worktrees/*.path
+Check File Line Limits	Post Run actions/checkout@v6	2026-04-26T14:54:37.0120792Z /home/runner/work/_temp/git-credentials-b0eafcd5-13c9-4020-8254-cb4bbeea075c.config
+Check File Line Limits	Post Run actions/checkout@v6	2026-04-26T14:54:37.0131215Z [command]/usr/bin/git config --local --unset includeif.gitdir:/home/runner/work/meta-expression/meta-expression/.git/worktrees/*.path /home/runner/work/_temp/git-credentials-b0eafcd5-13c9-4020-8254-cb4bbeea075c.config
+Check File Line Limits	Post Run actions/checkout@v6	2026-04-26T14:54:37.0159902Z [command]/usr/bin/git config --local --get-all includeif.gitdir:/github/workspace/.git.path
+Check File Line Limits	Post Run actions/checkout@v6	2026-04-26T14:54:37.0183980Z /github/runner_temp/git-credentials-b0eafcd5-13c9-4020-8254-cb4bbeea075c.config
+Check File Line Limits	Post Run actions/checkout@v6	2026-04-26T14:54:37.0194723Z [command]/usr/bin/git config --local --unset includeif.gitdir:/github/workspace/.git.path /github/runner_temp/git-credentials-b0eafcd5-13c9-4020-8254-cb4bbeea075c.config
+Check File Line Limits	Post Run actions/checkout@v6	2026-04-26T14:54:37.0225820Z [command]/usr/bin/git config --local --get-all includeif.gitdir:/github/workspace/.git/worktrees/*.path
+Check File Line Limits	Post Run actions/checkout@v6	2026-04-26T14:54:37.0246490Z /github/runner_temp/git-credentials-b0eafcd5-13c9-4020-8254-cb4bbeea075c.config
+Check File Line Limits	Post Run actions/checkout@v6	2026-04-26T14:54:37.0255858Z [command]/usr/bin/git config --local --unset includeif.gitdir:/github/workspace/.git/worktrees/*.path /github/runner_temp/git-credentials-b0eafcd5-13c9-4020-8254-cb4bbeea075c.config
+Check File Line Limits	Post Run actions/checkout@v6	2026-04-26T14:54:37.0287470Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+Check File Line Limits	Post Run actions/checkout@v6	2026-04-26T14:54:37.0497198Z Removing credentials config '/home/runner/work/_temp/git-credentials-b0eafcd5-13c9-4020-8254-cb4bbeea075c.config'
+Check File Line Limits	Complete job	﻿2026-04-26T14:54:37.0639706Z Cleaning up orphan processes
+Check for Changesets	Set up job	﻿2026-04-26T14:54:35.5417500Z Current runner version: '2.333.1'
+Check for Changesets	Set up job	2026-04-26T14:54:35.5443216Z ##[group]Runner Image Provisioner
+Check for Changesets	Set up job	2026-04-26T14:54:35.5444078Z Hosted Compute Agent
+Check for Changesets	Set up job	2026-04-26T14:54:35.5444582Z Version: 20260213.493
+Check for Changesets	Set up job	2026-04-26T14:54:35.5445182Z Commit: 5c115507f6dd24b8de37d8bbe0bb4509d0cc0fa3
+Check for Changesets	Set up job	2026-04-26T14:54:35.5445970Z Build Date: 2026-02-13T00:28:41Z
+Check for Changesets	Set up job	2026-04-26T14:54:35.5446640Z Worker ID: {52403746-a133-473e-b47b-b1bb534efd5c}
+Check for Changesets	Set up job	2026-04-26T14:54:35.5447835Z Azure Region: westus3
+Check for Changesets	Set up job	2026-04-26T14:54:35.5448376Z ##[endgroup]
+Check for Changesets	Set up job	2026-04-26T14:54:35.5449926Z ##[group]Operating System
+Check for Changesets	Set up job	2026-04-26T14:54:35.5450659Z Ubuntu
+Check for Changesets	Set up job	2026-04-26T14:54:35.5451144Z 24.04.4
+Check for Changesets	Set up job	2026-04-26T14:54:35.5451639Z LTS
+Check for Changesets	Set up job	2026-04-26T14:54:35.5452092Z ##[endgroup]
+Check for Changesets	Set up job	2026-04-26T14:54:35.5452545Z ##[group]Runner Image
+Check for Changesets	Set up job	2026-04-26T14:54:35.5453120Z Image: ubuntu-24.04
+Check for Changesets	Set up job	2026-04-26T14:54:35.5453618Z Version: 20260413.86.1
+Check for Changesets	Set up job	2026-04-26T14:54:35.5454586Z Included Software: https://github.com/actions/runner-images/blob/ubuntu24/20260413.86/images/ubuntu/Ubuntu2404-Readme.md
+Check for Changesets	Set up job	2026-04-26T14:54:35.5456689Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu24%2F20260413.86
+Check for Changesets	Set up job	2026-04-26T14:54:35.5457786Z ##[endgroup]
+Check for Changesets	Set up job	2026-04-26T14:54:35.5460585Z ##[group]GITHUB_TOKEN Permissions
+Check for Changesets	Set up job	2026-04-26T14:54:35.5462530Z Actions: write
+Check for Changesets	Set up job	2026-04-26T14:54:35.5463169Z ArtifactMetadata: write
+Check for Changesets	Set up job	2026-04-26T14:54:35.5463681Z Attestations: write
+Check for Changesets	Set up job	2026-04-26T14:54:35.5464181Z Checks: write
+Check for Changesets	Set up job	2026-04-26T14:54:35.5464653Z Contents: write
+Check for Changesets	Set up job	2026-04-26T14:54:35.5465156Z Deployments: write
+Check for Changesets	Set up job	2026-04-26T14:54:35.5465664Z Discussions: write
+Check for Changesets	Set up job	2026-04-26T14:54:35.5466196Z Issues: write
+Check for Changesets	Set up job	2026-04-26T14:54:35.5466657Z Metadata: read
+Check for Changesets	Set up job	2026-04-26T14:54:35.5467343Z Models: read
+Check for Changesets	Set up job	2026-04-26T14:54:35.5467794Z Packages: write
+Check for Changesets	Set up job	2026-04-26T14:54:35.5468348Z Pages: write
+Check for Changesets	Set up job	2026-04-26T14:54:35.5468943Z PullRequests: write
+Check for Changesets	Set up job	2026-04-26T14:54:35.5469427Z RepositoryProjects: write
+Check for Changesets	Set up job	2026-04-26T14:54:35.5470041Z SecurityEvents: write
+Check for Changesets	Set up job	2026-04-26T14:54:35.5470512Z Statuses: write
+Check for Changesets	Set up job	2026-04-26T14:54:35.5471014Z VulnerabilityAlerts: read
+Check for Changesets	Set up job	2026-04-26T14:54:35.5471597Z ##[endgroup]
+Check for Changesets	Set up job	2026-04-26T14:54:35.5473814Z Secret source: Actions
+Check for Changesets	Set up job	2026-04-26T14:54:35.5474483Z Prepare workflow directory
+Check for Changesets	Set up job	2026-04-26T14:54:35.5809586Z Prepare all required actions
+Check for Changesets	Set up job	2026-04-26T14:54:35.5848154Z Getting action download info
+Check for Changesets	Set up job	2026-04-26T14:54:35.9964378Z Download action repository 'actions/checkout@v6' (SHA:de0fac2e4500dabe0009e67214ff5f5447ce83dd)
+Check for Changesets	Set up job	2026-04-26T14:54:36.1382443Z Download action repository 'actions/setup-node@v6' (SHA:48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e)
+Check for Changesets	Set up job	2026-04-26T14:54:37.3541928Z Complete job name: Check for Changesets
+Check for Changesets	Run actions/checkout@v6	﻿2026-04-26T14:54:37.4304262Z ##[group]Run actions/checkout@v6
+Check for Changesets	Run actions/checkout@v6	2026-04-26T14:54:37.4305219Z with:
+Check for Changesets	Run actions/checkout@v6	2026-04-26T14:54:37.4305663Z   fetch-depth: 0
+Check for Changesets	Run actions/checkout@v6	2026-04-26T14:54:37.4306171Z   repository: link-assistant/meta-expression
+Check for Changesets	Run actions/checkout@v6	2026-04-26T14:54:37.4306964Z   token: ***
+Check for Changesets	Run actions/checkout@v6	2026-04-26T14:54:37.4307629Z   ssh-strict: true
+Check for Changesets	Run actions/checkout@v6	2026-04-26T14:54:37.4308084Z   ssh-user: git
+Check for Changesets	Run actions/checkout@v6	2026-04-26T14:54:37.4308535Z   persist-credentials: true
+Check for Changesets	Run actions/checkout@v6	2026-04-26T14:54:37.4309042Z   clean: true
+Check for Changesets	Run actions/checkout@v6	2026-04-26T14:54:37.4309513Z   sparse-checkout-cone-mode: true
+Check for Changesets	Run actions/checkout@v6	2026-04-26T14:54:37.4310058Z   fetch-tags: false
+Check for Changesets	Run actions/checkout@v6	2026-04-26T14:54:37.4310500Z   show-progress: true
+Check for Changesets	Run actions/checkout@v6	2026-04-26T14:54:37.4310946Z   lfs: false
+Check for Changesets	Run actions/checkout@v6	2026-04-26T14:54:37.4311354Z   submodules: false
+Check for Changesets	Run actions/checkout@v6	2026-04-26T14:54:37.4311847Z   set-safe-directory: true
+Check for Changesets	Run actions/checkout@v6	2026-04-26T14:54:37.4312633Z ##[endgroup]
+Check for Changesets	Run actions/checkout@v6	2026-04-26T14:54:37.5294677Z Syncing repository: link-assistant/meta-expression
+Check for Changesets	Run actions/checkout@v6	2026-04-26T14:54:37.5296750Z ##[group]Getting Git version info
+Check for Changesets	Run actions/checkout@v6	2026-04-26T14:54:37.5297877Z Working directory is '/home/runner/work/meta-expression/meta-expression'
+Check for Changesets	Run actions/checkout@v6	2026-04-26T14:54:37.5299102Z [command]/usr/bin/git version
+Check for Changesets	Run actions/checkout@v6	2026-04-26T14:54:37.5327946Z git version 2.53.0
+Check for Changesets	Run actions/checkout@v6	2026-04-26T14:54:37.5352723Z ##[endgroup]
+Check for Changesets	Run actions/checkout@v6	2026-04-26T14:54:37.5368940Z Temporarily overriding HOME='/home/runner/work/_temp/6320ce27-0ea4-47c9-b3d1-830ff828efd8' before making global git config changes
+Check for Changesets	Run actions/checkout@v6	2026-04-26T14:54:37.5371674Z Adding repository directory to the temporary git global config as a safe directory
+Check for Changesets	Run actions/checkout@v6	2026-04-26T14:54:37.5374729Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/meta-expression/meta-expression
+Check for Changesets	Run actions/checkout@v6	2026-04-26T14:54:37.5409356Z Deleting the contents of '/home/runner/work/meta-expression/meta-expression'
+Check for Changesets	Run actions/checkout@v6	2026-04-26T14:54:37.5414977Z ##[group]Initializing the repository
+Check for Changesets	Run actions/checkout@v6	2026-04-26T14:54:37.5420633Z [command]/usr/bin/git init /home/runner/work/meta-expression/meta-expression
+Check for Changesets	Run actions/checkout@v6	2026-04-26T14:54:37.5507446Z hint: Using 'master' as the name for the initial branch. This default branch name
+Check for Changesets	Run actions/checkout@v6	2026-04-26T14:54:37.5509390Z hint: will change to "main" in Git 3.0. To configure the initial branch name
+Check for Changesets	Run actions/checkout@v6	2026-04-26T14:54:37.5511380Z hint: to use in all of your new repositories, which will suppress this warning,
+Check for Changesets	Run actions/checkout@v6	2026-04-26T14:54:37.5512960Z hint: call:
+Check for Changesets	Run actions/checkout@v6	2026-04-26T14:54:37.5513785Z hint:
+Check for Changesets	Run actions/checkout@v6	2026-04-26T14:54:37.5514909Z hint: 	git config --global init.defaultBranch <name>
+Check for Changesets	Run actions/checkout@v6	2026-04-26T14:54:37.5516175Z hint:
+Check for Changesets	Run actions/checkout@v6	2026-04-26T14:54:37.5517540Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+Check for Changesets	Run actions/checkout@v6	2026-04-26T14:54:37.5519442Z hint: 'development'. The just-created branch can be renamed via this command:
+Check for Changesets	Run actions/checkout@v6	2026-04-26T14:54:37.5521195Z hint:
+Check for Changesets	Run actions/checkout@v6	2026-04-26T14:54:37.5521677Z hint: 	git branch -m <name>
+Check for Changesets	Run actions/checkout@v6	2026-04-26T14:54:37.5522172Z hint:
+Check for Changesets	Run actions/checkout@v6	2026-04-26T14:54:37.5522813Z hint: Disable this message with "git config set advice.defaultBranchName false"
+Check for Changesets	Run actions/checkout@v6	2026-04-26T14:54:37.5523893Z Initialized empty Git repository in /home/runner/work/meta-expression/meta-expression/.git/
+Check for Changesets	Run actions/checkout@v6	2026-04-26T14:54:37.5525743Z [command]/usr/bin/git remote add origin https://github.com/link-assistant/meta-expression
+Check for Changesets	Run actions/checkout@v6	2026-04-26T14:54:37.5558435Z ##[endgroup]
+Check for Changesets	Run actions/checkout@v6	2026-04-26T14:54:37.5559275Z ##[group]Disabling automatic garbage collection
+Check for Changesets	Run actions/checkout@v6	2026-04-26T14:54:37.5561956Z [command]/usr/bin/git config --local gc.auto 0
+Check for Changesets	Run actions/checkout@v6	2026-04-26T14:54:37.5590524Z ##[endgroup]
+Check for Changesets	Run actions/checkout@v6	2026-04-26T14:54:37.5591633Z ##[group]Setting up auth
+Check for Changesets	Run actions/checkout@v6	2026-04-26T14:54:37.5592434Z Removing SSH command configuration
+Check for Changesets	Run actions/checkout@v6	2026-04-26T14:54:37.5598020Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+Check for Changesets	Run actions/checkout@v6	2026-04-26T14:54:37.5628214Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+Check for Changesets	Run actions/checkout@v6	2026-04-26T14:54:37.5908408Z Removing HTTP extra header
+Check for Changesets	Run actions/checkout@v6	2026-04-26T14:54:37.5916068Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+Check for Changesets	Run actions/checkout@v6	2026-04-26T14:54:37.5954149Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+Check for Changesets	Run actions/checkout@v6	2026-04-26T14:54:37.6201636Z Removing includeIf entries pointing to credentials config files
+Check for Changesets	Run actions/checkout@v6	2026-04-26T14:54:37.6206543Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+Check for Changesets	Run actions/checkout@v6	2026-04-26T14:54:37.6249149Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+Check for Changesets	Run actions/checkout@v6	2026-04-26T14:54:37.6510526Z [command]/usr/bin/git config --file /home/runner/work/_temp/git-credentials-2410d1fe-c930-4efa-84c8-7dfd41b4d845.config http.https://github.com/.extraheader AUTHORIZATION: basic ***
+Check for Changesets	Run actions/checkout@v6	2026-04-26T14:54:37.6561112Z [command]/usr/bin/git config --local includeIf.gitdir:/home/runner/work/meta-expression/meta-expression/.git.path /home/runner/work/_temp/git-credentials-2410d1fe-c930-4efa-84c8-7dfd41b4d845.config
+Check for Changesets	Run actions/checkout@v6	2026-04-26T14:54:37.6593812Z [command]/usr/bin/git config --local includeIf.gitdir:/home/runner/work/meta-expression/meta-expression/.git/worktrees/*.path /home/runner/work/_temp/git-credentials-2410d1fe-c930-4efa-84c8-7dfd41b4d845.config
+Check for Changesets	Run actions/checkout@v6	2026-04-26T14:54:37.6625054Z [command]/usr/bin/git config --local includeIf.gitdir:/github/workspace/.git.path /github/runner_temp/git-credentials-2410d1fe-c930-4efa-84c8-7dfd41b4d845.config
+Check for Changesets	Run actions/checkout@v6	2026-04-26T14:54:37.6656612Z [command]/usr/bin/git config --local includeIf.gitdir:/github/workspace/.git/worktrees/*.path /github/runner_temp/git-credentials-2410d1fe-c930-4efa-84c8-7dfd41b4d845.config
+Check for Changesets	Run actions/checkout@v6	2026-04-26T14:54:37.6686802Z ##[endgroup]
+Check for Changesets	Run actions/checkout@v6	2026-04-26T14:54:37.6688477Z ##[group]Fetching the repository
+Check for Changesets	Run actions/checkout@v6	2026-04-26T14:54:37.6695992Z [command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules origin +refs/heads/*:refs/remotes/origin/* +refs/tags/*:refs/tags/* +7472003b096af09e6ebbf87db8006ed72928dbf3:refs/remotes/pull/6/merge
+Check for Changesets	Run actions/checkout@v6	2026-04-26T14:54:39.2917274Z From https://github.com/link-assistant/meta-expression
+Check for Changesets	Run actions/checkout@v6	2026-04-26T14:54:39.2919470Z  * [new branch]      issue-1-66f2990709b5                     -> origin/issue-1-66f2990709b5
+Check for Changesets	Run actions/checkout@v6	2026-04-26T14:54:39.2920786Z  * [new branch]      issue-3-130348eb2e36                     -> origin/issue-3-130348eb2e36
+Check for Changesets	Run actions/checkout@v6	2026-04-26T14:54:39.2921944Z  * [new branch]      issue-5-2c7b23a3dfee                     -> origin/issue-5-2c7b23a3dfee
+Check for Changesets	Run actions/checkout@v6	2026-04-26T14:54:39.2923122Z  * [new branch]      main                                     -> origin/main
+Check for Changesets	Run actions/checkout@v6	2026-04-26T14:54:39.2924112Z  * [new ref]         7472003b096af09e6ebbf87db8006ed72928dbf3 -> pull/6/merge
+Check for Changesets	Run actions/checkout@v6	2026-04-26T14:54:39.2954657Z ##[endgroup]
+Check for Changesets	Run actions/checkout@v6	2026-04-26T14:54:39.2955374Z ##[group]Determining the checkout info
+Check for Changesets	Run actions/checkout@v6	2026-04-26T14:54:39.2956188Z ##[endgroup]
+Check for Changesets	Run actions/checkout@v6	2026-04-26T14:54:39.2960966Z [command]/usr/bin/git sparse-checkout disable
+Check for Changesets	Run actions/checkout@v6	2026-04-26T14:54:39.2998883Z [command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+Check for Changesets	Run actions/checkout@v6	2026-04-26T14:54:39.3024237Z ##[group]Checking out the ref
+Check for Changesets	Run actions/checkout@v6	2026-04-26T14:54:39.3027796Z [command]/usr/bin/git checkout --progress --force refs/remotes/pull/6/merge
+Check for Changesets	Run actions/checkout@v6	2026-04-26T14:54:39.3444979Z Note: switching to 'refs/remotes/pull/6/merge'.
+Check for Changesets	Run actions/checkout@v6	2026-04-26T14:54:39.3445722Z 
+Check for Changesets	Run actions/checkout@v6	2026-04-26T14:54:39.3446501Z You are in 'detached HEAD' state. You can look around, make experimental
+Check for Changesets	Run actions/checkout@v6	2026-04-26T14:54:39.3448050Z changes and commit them, and you can discard any commits you make in this
+Check for Changesets	Run actions/checkout@v6	2026-04-26T14:54:39.3449293Z state without impacting any branches by switching back to a branch.
+Check for Changesets	Run actions/checkout@v6	2026-04-26T14:54:39.3450017Z 
+Check for Changesets	Run actions/checkout@v6	2026-04-26T14:54:39.3450543Z If you want to create a new branch to retain commits you create, you may
+Check for Changesets	Run actions/checkout@v6	2026-04-26T14:54:39.3451708Z do so (now or later) by using -c with the switch command. Example:
+Check for Changesets	Run actions/checkout@v6	2026-04-26T14:54:39.3452259Z 
+Check for Changesets	Run actions/checkout@v6	2026-04-26T14:54:39.3452478Z   git switch -c <new-branch-name>
+Check for Changesets	Run actions/checkout@v6	2026-04-26T14:54:39.3452933Z 
+Check for Changesets	Run actions/checkout@v6	2026-04-26T14:54:39.3453147Z Or undo this operation with:
+Check for Changesets	Run actions/checkout@v6	2026-04-26T14:54:39.3453470Z 
+Check for Changesets	Run actions/checkout@v6	2026-04-26T14:54:39.3453654Z   git switch -
+Check for Changesets	Run actions/checkout@v6	2026-04-26T14:54:39.3453909Z 
+Check for Changesets	Run actions/checkout@v6	2026-04-26T14:54:39.3454344Z Turn off this advice by setting config variable advice.detachedHead to false
+Check for Changesets	Run actions/checkout@v6	2026-04-26T14:54:39.3454995Z 
+Check for Changesets	Run actions/checkout@v6	2026-04-26T14:54:39.3456112Z HEAD is now at 7472003 Merge 8f800f1b2657da1d51104e04d0721227a3f11328 into 2fd354e49141e7eed85845cd8f441003abd7aa79
+Check for Changesets	Run actions/checkout@v6	2026-04-26T14:54:39.3458554Z ##[endgroup]
+Check for Changesets	Run actions/checkout@v6	2026-04-26T14:54:39.3493282Z [command]/usr/bin/git log -1 --format=%H
+Check for Changesets	Run actions/checkout@v6	2026-04-26T14:54:39.3515998Z 7472003b096af09e6ebbf87db8006ed72928dbf3
+Check for Changesets	Setup Node.js	﻿2026-04-26T14:54:39.3779264Z ##[group]Run actions/setup-node@v6
+Check for Changesets	Setup Node.js	2026-04-26T14:54:39.3779905Z with:
+Check for Changesets	Setup Node.js	2026-04-26T14:54:39.3780232Z   node-version: 24.x
+Check for Changesets	Setup Node.js	2026-04-26T14:54:39.3780620Z   check-latest: false
+Check for Changesets	Setup Node.js	2026-04-26T14:54:39.3781169Z   token: ***
+Check for Changesets	Setup Node.js	2026-04-26T14:54:39.3781489Z   package-manager-cache: true
+Check for Changesets	Setup Node.js	2026-04-26T14:54:39.3781868Z ##[endgroup]
+Check for Changesets	Setup Node.js	2026-04-26T14:54:39.5455221Z Found in cache @ /opt/hostedtoolcache/node/24.14.1/x64
+Check for Changesets	Setup Node.js	2026-04-26T14:54:39.5458839Z ##[group]Environment details
+Check for Changesets	Setup Node.js	2026-04-26T14:54:39.8303472Z node: v24.14.1
+Check for Changesets	Setup Node.js	2026-04-26T14:54:39.8304030Z npm: 11.11.0
+Check for Changesets	Setup Node.js	2026-04-26T14:54:39.8304450Z yarn: 1.22.22
+Check for Changesets	Setup Node.js	2026-04-26T14:54:39.8305347Z ##[endgroup]
+Check for Changesets	Install dependencies	﻿2026-04-26T14:54:39.8513575Z ##[group]Run npm install
+Check for Changesets	Install dependencies	2026-04-26T14:54:39.8513878Z [36;1mnpm install[0m
+Check for Changesets	Install dependencies	2026-04-26T14:54:39.8548571Z shell: /usr/bin/bash -e {0}
+Check for Changesets	Install dependencies	2026-04-26T14:54:39.8548819Z ##[endgroup]
+Check for Changesets	Install dependencies	2026-04-26T14:54:43.5269796Z 
+Check for Changesets	Install dependencies	2026-04-26T14:54:43.5278597Z > my-package@0.9.0 prepare
+Check for Changesets	Install dependencies	2026-04-26T14:54:43.5280478Z > husky || true
+Check for Changesets	Install dependencies	2026-04-26T14:54:43.5280975Z 
+Check for Changesets	Install dependencies	2026-04-26T14:54:43.5977197Z 
+Check for Changesets	Install dependencies	2026-04-26T14:54:43.5978418Z added 320 packages, and audited 321 packages in 4s
+Check for Changesets	Install dependencies	2026-04-26T14:54:43.5979468Z 
+Check for Changesets	Install dependencies	2026-04-26T14:54:43.5980054Z 74 packages are looking for funding
+Check for Changesets	Install dependencies	2026-04-26T14:54:43.5980974Z   run `npm fund` for details
+Check for Changesets	Install dependencies	2026-04-26T14:54:43.6054728Z 
+Check for Changesets	Install dependencies	2026-04-26T14:54:43.6055311Z 6 vulnerabilities (3 moderate, 3 high)
+Check for Changesets	Install dependencies	2026-04-26T14:54:43.6055922Z 
+Check for Changesets	Install dependencies	2026-04-26T14:54:43.6056342Z To address all issues, run:
+Check for Changesets	Install dependencies	2026-04-26T14:54:43.6056931Z   npm audit fix
+Check for Changesets	Install dependencies	2026-04-26T14:54:43.6057541Z 
+Check for Changesets	Install dependencies	2026-04-26T14:54:43.6059094Z Run `npm audit` for details.
+Check for Changesets	Check for changesets	﻿2026-04-26T14:54:43.6835399Z ##[group]Run # Skip changeset check for automated version PRs
+Check for Changesets	Check for changesets	2026-04-26T14:54:43.6835897Z [36;1m# Skip changeset check for automated version PRs[0m
+Check for Changesets	Check for changesets	2026-04-26T14:54:43.6836304Z [36;1mif [[ "issue-5-2c7b23a3dfee" == "changeset-release/"* ]]; then[0m
+Check for Changesets	Check for changesets	2026-04-26T14:54:43.6836736Z [36;1m  echo "Skipping changeset check for automated release PR"[0m
+Check for Changesets	Check for changesets	2026-04-26T14:54:43.6837335Z [36;1m  exit 0[0m
+Check for Changesets	Check for changesets	2026-04-26T14:54:43.6837655Z [36;1mfi[0m
+Check for Changesets	Check for changesets	2026-04-26T14:54:43.6837833Z [36;1m[0m
+Check for Changesets	Check for changesets	2026-04-26T14:54:43.6838050Z [36;1m# Run changeset validation script[0m
+Check for Changesets	Check for changesets	2026-04-26T14:54:43.6838415Z [36;1m# This validates that exactly ONE changeset was ADDED by this PR[0m
+Check for Changesets	Check for changesets	2026-04-26T14:54:43.6838858Z [36;1m# Pre-existing changesets from other merged PRs are ignored[0m
+Check for Changesets	Check for changesets	2026-04-26T14:54:43.6839220Z [36;1mnode scripts/validate-changeset.mjs[0m
+Check for Changesets	Check for changesets	2026-04-26T14:54:43.6861709Z shell: /usr/bin/bash -e {0}
+Check for Changesets	Check for changesets	2026-04-26T14:54:43.6861954Z env:
+Check for Changesets	Check for changesets	2026-04-26T14:54:43.6862128Z   GITHUB_BASE_REF: main
+Check for Changesets	Check for changesets	2026-04-26T14:54:43.6862392Z   GITHUB_BASE_SHA: 2fd354e49141e7eed85845cd8f441003abd7aa79
+Check for Changesets	Check for changesets	2026-04-26T14:54:43.6862806Z   GITHUB_HEAD_SHA: 8f800f1b2657da1d51104e04d0721227a3f11328
+Check for Changesets	Check for changesets	2026-04-26T14:54:43.6863090Z ##[endgroup]
+Check for Changesets	Check for changesets	2026-04-26T14:54:43.7208585Z Validating changesets added by this PR...
+Check for Changesets	Check for changesets	2026-04-26T14:54:43.7211717Z Comparing 2fd354e49141e7eed85845cd8f441003abd7aa79...8f800f1b2657da1d51104e04d0721227a3f11328
+Check for Changesets	Check for changesets	2026-04-26T14:54:43.7292487Z Found 0 changeset file(s) added by this PR
+Check for Changesets	Check for changesets	2026-04-26T14:54:43.7315548Z ##[error]No changeset found in this PR. Please add a changeset by running 'npm run changeset' and commit the result.
+Check for Changesets	Check for changesets	2026-04-26T14:54:43.7340588Z ##[error]Process completed with exit code 1.
+Check for Changesets	Post Run actions/checkout@v6	﻿2026-04-26T14:54:43.7443788Z Post job cleanup.
+Check for Changesets	Post Run actions/checkout@v6	2026-04-26T14:54:43.8278717Z [command]/usr/bin/git version
+Check for Changesets	Post Run actions/checkout@v6	2026-04-26T14:54:43.8319892Z git version 2.53.0
+Check for Changesets	Post Run actions/checkout@v6	2026-04-26T14:54:43.8397869Z Temporarily overriding HOME='/home/runner/work/_temp/d80ec2cb-1efb-4bb6-a97e-874d0373c165' before making global git config changes
+Check for Changesets	Post Run actions/checkout@v6	2026-04-26T14:54:43.8399504Z Adding repository directory to the temporary git global config as a safe directory
+Check for Changesets	Post Run actions/checkout@v6	2026-04-26T14:54:43.8402066Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/meta-expression/meta-expression
+Check for Changesets	Post Run actions/checkout@v6	2026-04-26T14:54:43.8434520Z Removing SSH command configuration
+Check for Changesets	Post Run actions/checkout@v6	2026-04-26T14:54:43.8442366Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+Check for Changesets	Post Run actions/checkout@v6	2026-04-26T14:54:43.8479125Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+Check for Changesets	Post Run actions/checkout@v6	2026-04-26T14:54:43.8716034Z Removing HTTP extra header
+Check for Changesets	Post Run actions/checkout@v6	2026-04-26T14:54:43.8722939Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+Check for Changesets	Post Run actions/checkout@v6	2026-04-26T14:54:43.8765616Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+Check for Changesets	Post Run actions/checkout@v6	2026-04-26T14:54:43.8985019Z Removing includeIf entries pointing to credentials config files
+Check for Changesets	Post Run actions/checkout@v6	2026-04-26T14:54:43.8992324Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+Check for Changesets	Post Run actions/checkout@v6	2026-04-26T14:54:43.9015254Z includeif.gitdir:/home/runner/work/meta-expression/meta-expression/.git.path
+Check for Changesets	Post Run actions/checkout@v6	2026-04-26T14:54:43.9016204Z includeif.gitdir:/home/runner/work/meta-expression/meta-expression/.git/worktrees/*.path
+Check for Changesets	Post Run actions/checkout@v6	2026-04-26T14:54:43.9017778Z includeif.gitdir:/github/workspace/.git.path
+Check for Changesets	Post Run actions/checkout@v6	2026-04-26T14:54:43.9019102Z includeif.gitdir:/github/workspace/.git/worktrees/*.path
+Check for Changesets	Post Run actions/checkout@v6	2026-04-26T14:54:43.9025565Z [command]/usr/bin/git config --local --get-all includeif.gitdir:/home/runner/work/meta-expression/meta-expression/.git.path
+Check for Changesets	Post Run actions/checkout@v6	2026-04-26T14:54:43.9049425Z /home/runner/work/_temp/git-credentials-2410d1fe-c930-4efa-84c8-7dfd41b4d845.config
+Check for Changesets	Post Run actions/checkout@v6	2026-04-26T14:54:43.9060911Z [command]/usr/bin/git config --local --unset includeif.gitdir:/home/runner/work/meta-expression/meta-expression/.git.path /home/runner/work/_temp/git-credentials-2410d1fe-c930-4efa-84c8-7dfd41b4d845.config
+Check for Changesets	Post Run actions/checkout@v6	2026-04-26T14:54:43.9095525Z [command]/usr/bin/git config --local --get-all includeif.gitdir:/home/runner/work/meta-expression/meta-expression/.git/worktrees/*.path
+Check for Changesets	Post Run actions/checkout@v6	2026-04-26T14:54:43.9118462Z /home/runner/work/_temp/git-credentials-2410d1fe-c930-4efa-84c8-7dfd41b4d845.config
+Check for Changesets	Post Run actions/checkout@v6	2026-04-26T14:54:43.9130389Z [command]/usr/bin/git config --local --unset includeif.gitdir:/home/runner/work/meta-expression/meta-expression/.git/worktrees/*.path /home/runner/work/_temp/git-credentials-2410d1fe-c930-4efa-84c8-7dfd41b4d845.config
+Check for Changesets	Post Run actions/checkout@v6	2026-04-26T14:54:43.9162149Z [command]/usr/bin/git config --local --get-all includeif.gitdir:/github/workspace/.git.path
+Check for Changesets	Post Run actions/checkout@v6	2026-04-26T14:54:43.9195526Z /github/runner_temp/git-credentials-2410d1fe-c930-4efa-84c8-7dfd41b4d845.config
+Check for Changesets	Post Run actions/checkout@v6	2026-04-26T14:54:43.9198088Z [command]/usr/bin/git config --local --unset includeif.gitdir:/github/workspace/.git.path /github/runner_temp/git-credentials-2410d1fe-c930-4efa-84c8-7dfd41b4d845.config
+Check for Changesets	Post Run actions/checkout@v6	2026-04-26T14:54:43.9230315Z [command]/usr/bin/git config --local --get-all includeif.gitdir:/github/workspace/.git/worktrees/*.path
+Check for Changesets	Post Run actions/checkout@v6	2026-04-26T14:54:43.9252256Z /github/runner_temp/git-credentials-2410d1fe-c930-4efa-84c8-7dfd41b4d845.config
+Check for Changesets	Post Run actions/checkout@v6	2026-04-26T14:54:43.9261973Z [command]/usr/bin/git config --local --unset includeif.gitdir:/github/workspace/.git/worktrees/*.path /github/runner_temp/git-credentials-2410d1fe-c930-4efa-84c8-7dfd41b4d845.config
+Check for Changesets	Post Run actions/checkout@v6	2026-04-26T14:54:43.9295175Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+Check for Changesets	Post Run actions/checkout@v6	2026-04-26T14:54:43.9526721Z Removing credentials config '/home/runner/work/_temp/git-credentials-2410d1fe-c930-4efa-84c8-7dfd41b4d845.config'
+Check for Changesets	Complete job	﻿2026-04-26T14:54:43.9665606Z Cleaning up orphan processes
+Lint and Format Check	Set up job	﻿2026-04-26T14:54:35.0907420Z Current runner version: '2.333.1'
+Lint and Format Check	Set up job	2026-04-26T14:54:35.0942085Z ##[group]Runner Image Provisioner
+Lint and Format Check	Set up job	2026-04-26T14:54:35.0943208Z Hosted Compute Agent
+Lint and Format Check	Set up job	2026-04-26T14:54:35.0943891Z Version: 20260213.493
+Lint and Format Check	Set up job	2026-04-26T14:54:35.0944846Z Commit: 5c115507f6dd24b8de37d8bbe0bb4509d0cc0fa3
+Lint and Format Check	Set up job	2026-04-26T14:54:35.0945899Z Build Date: 2026-02-13T00:28:41Z
+Lint and Format Check	Set up job	2026-04-26T14:54:35.0946944Z Worker ID: {1fdaec88-e081-4744-a765-f89d31af33d1}
+Lint and Format Check	Set up job	2026-04-26T14:54:35.0948091Z Azure Region: centralus
+Lint and Format Check	Set up job	2026-04-26T14:54:35.0948898Z ##[endgroup]
+Lint and Format Check	Set up job	2026-04-26T14:54:35.0951655Z ##[group]Operating System
+Lint and Format Check	Set up job	2026-04-26T14:54:35.0952601Z Ubuntu
+Lint and Format Check	Set up job	2026-04-26T14:54:35.0953309Z 24.04.4
+Lint and Format Check	Set up job	2026-04-26T14:54:35.0953919Z LTS
+Lint and Format Check	Set up job	2026-04-26T14:54:35.0954642Z ##[endgroup]
+Lint and Format Check	Set up job	2026-04-26T14:54:35.0955471Z ##[group]Runner Image
+Lint and Format Check	Set up job	2026-04-26T14:54:35.0956245Z Image: ubuntu-24.04
+Lint and Format Check	Set up job	2026-04-26T14:54:35.0957215Z Version: 20260413.86.1
+Lint and Format Check	Set up job	2026-04-26T14:54:35.0958701Z Included Software: https://github.com/actions/runner-images/blob/ubuntu24/20260413.86/images/ubuntu/Ubuntu2404-Readme.md
+Lint and Format Check	Set up job	2026-04-26T14:54:35.0961228Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu24%2F20260413.86
+Lint and Format Check	Set up job	2026-04-26T14:54:35.0962569Z ##[endgroup]
+Lint and Format Check	Set up job	2026-04-26T14:54:35.0967073Z ##[group]GITHUB_TOKEN Permissions
+Lint and Format Check	Set up job	2026-04-26T14:54:35.0970074Z Actions: write
+Lint and Format Check	Set up job	2026-04-26T14:54:35.0970867Z ArtifactMetadata: write
+Lint and Format Check	Set up job	2026-04-26T14:54:35.0971785Z Attestations: write
+Lint and Format Check	Set up job	2026-04-26T14:54:35.0972600Z Checks: write
+Lint and Format Check	Set up job	2026-04-26T14:54:35.0973254Z Contents: write
+Lint and Format Check	Set up job	2026-04-26T14:54:35.0974077Z Deployments: write
+Lint and Format Check	Set up job	2026-04-26T14:54:35.0974853Z Discussions: write
+Lint and Format Check	Set up job	2026-04-26T14:54:35.0975631Z Issues: write
+Lint and Format Check	Set up job	2026-04-26T14:54:35.0976365Z Metadata: read
+Lint and Format Check	Set up job	2026-04-26T14:54:35.0977305Z Models: read
+Lint and Format Check	Set up job	2026-04-26T14:54:35.0978024Z Packages: write
+Lint and Format Check	Set up job	2026-04-26T14:54:35.0978778Z Pages: write
+Lint and Format Check	Set up job	2026-04-26T14:54:35.0979637Z PullRequests: write
+Lint and Format Check	Set up job	2026-04-26T14:54:35.0980396Z RepositoryProjects: write
+Lint and Format Check	Set up job	2026-04-26T14:54:35.0981318Z SecurityEvents: write
+Lint and Format Check	Set up job	2026-04-26T14:54:35.0982126Z Statuses: write
+Lint and Format Check	Set up job	2026-04-26T14:54:35.0982870Z VulnerabilityAlerts: read
+Lint and Format Check	Set up job	2026-04-26T14:54:35.0983766Z ##[endgroup]
+Lint and Format Check	Set up job	2026-04-26T14:54:35.0987092Z Secret source: Actions
+Lint and Format Check	Set up job	2026-04-26T14:54:35.0988180Z Prepare workflow directory
+Lint and Format Check	Set up job	2026-04-26T14:54:35.1323608Z Prepare all required actions
+Lint and Format Check	Set up job	2026-04-26T14:54:35.1379207Z Getting action download info
+Lint and Format Check	Set up job	2026-04-26T14:54:35.4489961Z Download action repository 'actions/checkout@v6' (SHA:de0fac2e4500dabe0009e67214ff5f5447ce83dd)
+Lint and Format Check	Set up job	2026-04-26T14:54:35.5369003Z Download action repository 'actions/setup-node@v6' (SHA:48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e)
+Lint and Format Check	Set up job	2026-04-26T14:54:36.2830009Z Complete job name: Lint and Format Check
+Lint and Format Check	Run actions/checkout@v6	﻿2026-04-26T14:54:36.3568809Z ##[group]Run actions/checkout@v6
+Lint and Format Check	Run actions/checkout@v6	2026-04-26T14:54:36.3569536Z with:
+Lint and Format Check	Run actions/checkout@v6	2026-04-26T14:54:36.3569882Z   fetch-depth: 0
+Lint and Format Check	Run actions/checkout@v6	2026-04-26T14:54:36.3570285Z   repository: link-assistant/meta-expression
+Lint and Format Check	Run actions/checkout@v6	2026-04-26T14:54:36.3570954Z   token: ***
+Lint and Format Check	Run actions/checkout@v6	2026-04-26T14:54:36.3571273Z   ssh-strict: true
+Lint and Format Check	Run actions/checkout@v6	2026-04-26T14:54:36.3571602Z   ssh-user: git
+Lint and Format Check	Run actions/checkout@v6	2026-04-26T14:54:36.3571954Z   persist-credentials: true
+Lint and Format Check	Run actions/checkout@v6	2026-04-26T14:54:36.3572353Z   clean: true
+Lint and Format Check	Run actions/checkout@v6	2026-04-26T14:54:36.3572710Z   sparse-checkout-cone-mode: true
+Lint and Format Check	Run actions/checkout@v6	2026-04-26T14:54:36.3573121Z   fetch-tags: false
+Lint and Format Check	Run actions/checkout@v6	2026-04-26T14:54:36.3573459Z   show-progress: true
+Lint and Format Check	Run actions/checkout@v6	2026-04-26T14:54:36.3573811Z   lfs: false
+Lint and Format Check	Run actions/checkout@v6	2026-04-26T14:54:36.3574125Z   submodules: false
+Lint and Format Check	Run actions/checkout@v6	2026-04-26T14:54:36.3574477Z   set-safe-directory: true
+Lint and Format Check	Run actions/checkout@v6	2026-04-26T14:54:36.3575027Z ##[endgroup]
+Lint and Format Check	Run actions/checkout@v6	2026-04-26T14:54:36.4451513Z Syncing repository: link-assistant/meta-expression
+Lint and Format Check	Run actions/checkout@v6	2026-04-26T14:54:36.4453137Z ##[group]Getting Git version info
+Lint and Format Check	Run actions/checkout@v6	2026-04-26T14:54:36.4453788Z Working directory is '/home/runner/work/meta-expression/meta-expression'
+Lint and Format Check	Run actions/checkout@v6	2026-04-26T14:54:36.4454807Z [command]/usr/bin/git version
+Lint and Format Check	Run actions/checkout@v6	2026-04-26T14:54:36.4478057Z git version 2.53.0
+Lint and Format Check	Run actions/checkout@v6	2026-04-26T14:54:36.4499094Z ##[endgroup]
+Lint and Format Check	Run actions/checkout@v6	2026-04-26T14:54:36.4511857Z Temporarily overriding HOME='/home/runner/work/_temp/62795118-485c-457c-bc90-502dc8da6c39' before making global git config changes
+Lint and Format Check	Run actions/checkout@v6	2026-04-26T14:54:36.4513057Z Adding repository directory to the temporary git global config as a safe directory
+Lint and Format Check	Run actions/checkout@v6	2026-04-26T14:54:36.4516534Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/meta-expression/meta-expression
+Lint and Format Check	Run actions/checkout@v6	2026-04-26T14:54:36.4545737Z Deleting the contents of '/home/runner/work/meta-expression/meta-expression'
+Lint and Format Check	Run actions/checkout@v6	2026-04-26T14:54:36.4549607Z ##[group]Initializing the repository
+Lint and Format Check	Run actions/checkout@v6	2026-04-26T14:54:36.4554558Z [command]/usr/bin/git init /home/runner/work/meta-expression/meta-expression
+Lint and Format Check	Run actions/checkout@v6	2026-04-26T14:54:36.4630842Z hint: Using 'master' as the name for the initial branch. This default branch name
+Lint and Format Check	Run actions/checkout@v6	2026-04-26T14:54:36.4632287Z hint: will change to "main" in Git 3.0. To configure the initial branch name
+Lint and Format Check	Run actions/checkout@v6	2026-04-26T14:54:36.4633230Z hint: to use in all of your new repositories, which will suppress this warning,
+Lint and Format Check	Run actions/checkout@v6	2026-04-26T14:54:36.4634456Z hint: call:
+Lint and Format Check	Run actions/checkout@v6	2026-04-26T14:54:36.4634983Z hint:
+Lint and Format Check	Run actions/checkout@v6	2026-04-26T14:54:36.4635617Z hint: 	git config --global init.defaultBranch <name>
+Lint and Format Check	Run actions/checkout@v6	2026-04-26T14:54:36.4636146Z hint:
+Lint and Format Check	Run actions/checkout@v6	2026-04-26T14:54:36.4636634Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+Lint and Format Check	Run actions/checkout@v6	2026-04-26T14:54:36.4637720Z hint: 'development'. The just-created branch can be renamed via this command:
+Lint and Format Check	Run actions/checkout@v6	2026-04-26T14:54:36.4638348Z hint:
+Lint and Format Check	Run actions/checkout@v6	2026-04-26T14:54:36.4638690Z hint: 	git branch -m <name>
+Lint and Format Check	Run actions/checkout@v6	2026-04-26T14:54:36.4639098Z hint:
+Lint and Format Check	Run actions/checkout@v6	2026-04-26T14:54:36.4639748Z hint: Disable this message with "git config set advice.defaultBranchName false"
+Lint and Format Check	Run actions/checkout@v6	2026-04-26T14:54:36.4640922Z Initialized empty Git repository in /home/runner/work/meta-expression/meta-expression/.git/
+Lint and Format Check	Run actions/checkout@v6	2026-04-26T14:54:36.4642479Z [command]/usr/bin/git remote add origin https://github.com/link-assistant/meta-expression
+Lint and Format Check	Run actions/checkout@v6	2026-04-26T14:54:36.4666582Z ##[endgroup]
+Lint and Format Check	Run actions/checkout@v6	2026-04-26T14:54:36.4667900Z ##[group]Disabling automatic garbage collection
+Lint and Format Check	Run actions/checkout@v6	2026-04-26T14:54:36.4671084Z [command]/usr/bin/git config --local gc.auto 0
+Lint and Format Check	Run actions/checkout@v6	2026-04-26T14:54:36.4693358Z ##[endgroup]
+Lint and Format Check	Run actions/checkout@v6	2026-04-26T14:54:36.4693988Z ##[group]Setting up auth
+Lint and Format Check	Run actions/checkout@v6	2026-04-26T14:54:36.4694546Z Removing SSH command configuration
+Lint and Format Check	Run actions/checkout@v6	2026-04-26T14:54:36.4700442Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+Lint and Format Check	Run actions/checkout@v6	2026-04-26T14:54:36.4724632Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+Lint and Format Check	Run actions/checkout@v6	2026-04-26T14:54:36.4943347Z Removing HTTP extra header
+Lint and Format Check	Run actions/checkout@v6	2026-04-26T14:54:36.4948516Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+Lint and Format Check	Run actions/checkout@v6	2026-04-26T14:54:36.4971931Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+Lint and Format Check	Run actions/checkout@v6	2026-04-26T14:54:36.5127898Z Removing includeIf entries pointing to credentials config files
+Lint and Format Check	Run actions/checkout@v6	2026-04-26T14:54:36.5132929Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+Lint and Format Check	Run actions/checkout@v6	2026-04-26T14:54:36.5156245Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+Lint and Format Check	Run actions/checkout@v6	2026-04-26T14:54:36.5326301Z [command]/usr/bin/git config --file /home/runner/work/_temp/git-credentials-b8e743bc-5ed0-45a5-a1c9-d628c22a7acb.config http.https://github.com/.extraheader AUTHORIZATION: basic ***
+Lint and Format Check	Run actions/checkout@v6	2026-04-26T14:54:36.5354627Z [command]/usr/bin/git config --local includeIf.gitdir:/home/runner/work/meta-expression/meta-expression/.git.path /home/runner/work/_temp/git-credentials-b8e743bc-5ed0-45a5-a1c9-d628c22a7acb.config
+Lint and Format Check	Run actions/checkout@v6	2026-04-26T14:54:36.5377544Z [command]/usr/bin/git config --local includeIf.gitdir:/home/runner/work/meta-expression/meta-expression/.git/worktrees/*.path /home/runner/work/_temp/git-credentials-b8e743bc-5ed0-45a5-a1c9-d628c22a7acb.config
+Lint and Format Check	Run actions/checkout@v6	2026-04-26T14:54:36.5400357Z [command]/usr/bin/git config --local includeIf.gitdir:/github/workspace/.git.path /github/runner_temp/git-credentials-b8e743bc-5ed0-45a5-a1c9-d628c22a7acb.config
+Lint and Format Check	Run actions/checkout@v6	2026-04-26T14:54:36.5461661Z [command]/usr/bin/git config --local includeIf.gitdir:/github/workspace/.git/worktrees/*.path /github/runner_temp/git-credentials-b8e743bc-5ed0-45a5-a1c9-d628c22a7acb.config
+Lint and Format Check	Run actions/checkout@v6	2026-04-26T14:54:36.5480421Z ##[endgroup]
+Lint and Format Check	Run actions/checkout@v6	2026-04-26T14:54:36.5481054Z ##[group]Fetching the repository
+Lint and Format Check	Run actions/checkout@v6	2026-04-26T14:54:36.5489409Z [command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules origin +refs/heads/*:refs/remotes/origin/* +refs/tags/*:refs/tags/* +7472003b096af09e6ebbf87db8006ed72928dbf3:refs/remotes/pull/6/merge
+Lint and Format Check	Run actions/checkout@v6	2026-04-26T14:54:37.2320649Z From https://github.com/link-assistant/meta-expression
+Lint and Format Check	Run actions/checkout@v6	2026-04-26T14:54:37.2322590Z  * [new branch]      issue-1-66f2990709b5                     -> origin/issue-1-66f2990709b5
+Lint and Format Check	Run actions/checkout@v6	2026-04-26T14:54:37.2324825Z  * [new branch]      issue-3-130348eb2e36                     -> origin/issue-3-130348eb2e36
+Lint and Format Check	Run actions/checkout@v6	2026-04-26T14:54:37.2327120Z  * [new branch]      issue-5-2c7b23a3dfee                     -> origin/issue-5-2c7b23a3dfee
+Lint and Format Check	Run actions/checkout@v6	2026-04-26T14:54:37.2328888Z  * [new branch]      main                                     -> origin/main
+Lint and Format Check	Run actions/checkout@v6	2026-04-26T14:54:37.2330502Z  * [new ref]         7472003b096af09e6ebbf87db8006ed72928dbf3 -> pull/6/merge
+Lint and Format Check	Run actions/checkout@v6	2026-04-26T14:54:37.2348174Z ##[endgroup]
+Lint and Format Check	Run actions/checkout@v6	2026-04-26T14:54:37.2350700Z ##[group]Determining the checkout info
+Lint and Format Check	Run actions/checkout@v6	2026-04-26T14:54:37.2353116Z ##[endgroup]
+Lint and Format Check	Run actions/checkout@v6	2026-04-26T14:54:37.2355864Z [command]/usr/bin/git sparse-checkout disable
+Lint and Format Check	Run actions/checkout@v6	2026-04-26T14:54:37.2387225Z [command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+Lint and Format Check	Run actions/checkout@v6	2026-04-26T14:54:37.2408933Z ##[group]Checking out the ref
+Lint and Format Check	Run actions/checkout@v6	2026-04-26T14:54:37.2411935Z [command]/usr/bin/git checkout --progress --force refs/remotes/pull/6/merge
+Lint and Format Check	Run actions/checkout@v6	2026-04-26T14:54:37.2780479Z Note: switching to 'refs/remotes/pull/6/merge'.
+Lint and Format Check	Run actions/checkout@v6	2026-04-26T14:54:37.2782257Z 
+Lint and Format Check	Run actions/checkout@v6	2026-04-26T14:54:37.2783353Z You are in 'detached HEAD' state. You can look around, make experimental
+Lint and Format Check	Run actions/checkout@v6	2026-04-26T14:54:37.2785359Z changes and commit them, and you can discard any commits you make in this
+Lint and Format Check	Run actions/checkout@v6	2026-04-26T14:54:37.2788031Z state without impacting any branches by switching back to a branch.
+Lint and Format Check	Run actions/checkout@v6	2026-04-26T14:54:37.2789263Z 
+Lint and Format Check	Run actions/checkout@v6	2026-04-26T14:54:37.2790051Z If you want to create a new branch to retain commits you create, you may
+Lint and Format Check	Run actions/checkout@v6	2026-04-26T14:54:37.2792392Z do so (now or later) by using -c with the switch command. Example:
+Lint and Format Check	Run actions/checkout@v6	2026-04-26T14:54:37.2793686Z 
+Lint and Format Check	Run actions/checkout@v6	2026-04-26T14:54:37.2794181Z   git switch -c <new-branch-name>
+Lint and Format Check	Run actions/checkout@v6	2026-04-26T14:54:37.2795012Z 
+Lint and Format Check	Run actions/checkout@v6	2026-04-26T14:54:37.2795478Z Or undo this operation with:
+Lint and Format Check	Run actions/checkout@v6	2026-04-26T14:54:37.2796269Z 
+Lint and Format Check	Run actions/checkout@v6	2026-04-26T14:54:37.2796976Z   git switch -
+Lint and Format Check	Run actions/checkout@v6	2026-04-26T14:54:37.2797601Z 
+Lint and Format Check	Run actions/checkout@v6	2026-04-26T14:54:37.2798562Z Turn off this advice by setting config variable advice.detachedHead to false
+Lint and Format Check	Run actions/checkout@v6	2026-04-26T14:54:37.2799990Z 
+Lint and Format Check	Run actions/checkout@v6	2026-04-26T14:54:37.2801813Z HEAD is now at 7472003 Merge 8f800f1b2657da1d51104e04d0721227a3f11328 into 2fd354e49141e7eed85845cd8f441003abd7aa79
+Lint and Format Check	Run actions/checkout@v6	2026-04-26T14:54:37.2806481Z ##[endgroup]
+Lint and Format Check	Run actions/checkout@v6	2026-04-26T14:54:37.2820331Z [command]/usr/bin/git log -1 --format=%H
+Lint and Format Check	Run actions/checkout@v6	2026-04-26T14:54:37.2840006Z 7472003b096af09e6ebbf87db8006ed72928dbf3
+Lint and Format Check	Simulate fresh merge with base branch (PR only)	﻿2026-04-26T14:54:37.3073366Z ##[group]Run bash scripts/simulate-fresh-merge.sh
+Lint and Format Check	Simulate fresh merge with base branch (PR only)	2026-04-26T14:54:37.3075087Z [36;1mbash scripts/simulate-fresh-merge.sh[0m
+Lint and Format Check	Simulate fresh merge with base branch (PR only)	2026-04-26T14:54:37.3094176Z shell: /usr/bin/bash -e {0}
+Lint and Format Check	Simulate fresh merge with base branch (PR only)	2026-04-26T14:54:37.3095285Z env:
+Lint and Format Check	Simulate fresh merge with base branch (PR only)	2026-04-26T14:54:37.3096063Z   BASE_REF: main
+Lint and Format Check	Simulate fresh merge with base branch (PR only)	2026-04-26T14:54:37.3097032Z ##[endgroup]
+Lint and Format Check	Simulate fresh merge with base branch (PR only)	2026-04-26T14:54:37.3169383Z === Synchronizing PR with latest main ===
+Lint and Format Check	Simulate fresh merge with base branch (PR only)	2026-04-26T14:54:37.3171118Z This prevents stale merge preview issues (see docs/case-studies/issue-23)
+Lint and Format Check	Simulate fresh merge with base branch (PR only)	2026-04-26T14:54:37.3172326Z 
+Lint and Format Check	Simulate fresh merge with base branch (PR only)	2026-04-26T14:54:37.3194529Z Fetching latest main...
+Lint and Format Check	Simulate fresh merge with base branch (PR only)	2026-04-26T14:54:37.5346500Z From https://github.com/link-assistant/meta-expression
+Lint and Format Check	Simulate fresh merge with base branch (PR only)	2026-04-26T14:54:37.5408734Z  * branch            main       -> FETCH_HEAD
+Lint and Format Check	Simulate fresh merge with base branch (PR only)	2026-04-26T14:54:37.5409582Z Current checkout (merge preview): 7472003b096af09e6ebbf87db8006ed72928dbf3
+Lint and Format Check	Simulate fresh merge with base branch (PR only)	2026-04-26T14:54:37.5410397Z Latest base branch (main): 2fd354e49141e7eed85845cd8f441003abd7aa79
+Lint and Format Check	Simulate fresh merge with base branch (PR only)	2026-04-26T14:54:37.5411042Z 
+Lint and Format Check	Simulate fresh merge with base branch (PR only)	2026-04-26T14:54:37.5424523Z Merge preview is up-to-date with main. No simulation needed.
+Lint and Format Check	Simulate fresh merge with base branch (PR only)	2026-04-26T14:54:37.5425113Z 
+Lint and Format Check	Setup Node.js	﻿2026-04-26T14:54:37.5509850Z ##[group]Run actions/setup-node@v6
+Lint and Format Check	Setup Node.js	2026-04-26T14:54:37.5510165Z with:
+Lint and Format Check	Setup Node.js	2026-04-26T14:54:37.5510359Z   node-version: 24.x
+Lint and Format Check	Setup Node.js	2026-04-26T14:54:37.5510588Z   check-latest: false
+Lint and Format Check	Setup Node.js	2026-04-26T14:54:37.5510977Z   token: ***
+Lint and Format Check	Setup Node.js	2026-04-26T14:54:37.5511192Z   package-manager-cache: true
+Lint and Format Check	Setup Node.js	2026-04-26T14:54:37.5511445Z ##[endgroup]
+Lint and Format Check	Setup Node.js	2026-04-26T14:54:37.6938880Z Found in cache @ /opt/hostedtoolcache/node/24.14.1/x64
+Lint and Format Check	Setup Node.js	2026-04-26T14:54:37.6943022Z ##[group]Environment details
+Lint and Format Check	Setup Node.js	2026-04-26T14:54:38.0394593Z node: v24.14.1
+Lint and Format Check	Setup Node.js	2026-04-26T14:54:38.0395653Z npm: 11.11.0
+Lint and Format Check	Setup Node.js	2026-04-26T14:54:38.0396033Z yarn: 1.22.22
+Lint and Format Check	Setup Node.js	2026-04-26T14:54:38.0397466Z ##[endgroup]
+Lint and Format Check	Install dependencies	﻿2026-04-26T14:54:38.0488457Z ##[group]Run npm install
+Lint and Format Check	Install dependencies	2026-04-26T14:54:38.0488771Z [36;1mnpm install[0m
+Lint and Format Check	Install dependencies	2026-04-26T14:54:38.0510555Z shell: /usr/bin/bash -e {0}
+Lint and Format Check	Install dependencies	2026-04-26T14:54:38.0510862Z ##[endgroup]
+Lint and Format Check	Install dependencies	2026-04-26T14:54:41.2557146Z 
+Lint and Format Check	Install dependencies	2026-04-26T14:54:41.2564978Z > my-package@0.9.0 prepare
+Lint and Format Check	Install dependencies	2026-04-26T14:54:41.2566444Z > husky || true
+Lint and Format Check	Install dependencies	2026-04-26T14:54:41.2567091Z 
+Lint and Format Check	Install dependencies	2026-04-26T14:54:41.3059052Z 
+Lint and Format Check	Install dependencies	2026-04-26T14:54:41.3060124Z added 320 packages, and audited 321 packages in 3s
+Lint and Format Check	Install dependencies	2026-04-26T14:54:41.3060939Z 
+Lint and Format Check	Install dependencies	2026-04-26T14:54:41.3062037Z 74 packages are looking for funding
+Lint and Format Check	Install dependencies	2026-04-26T14:54:41.3062717Z   run `npm fund` for details
+Lint and Format Check	Install dependencies	2026-04-26T14:54:41.3111828Z 
+Lint and Format Check	Install dependencies	2026-04-26T14:54:41.3112792Z 6 vulnerabilities (3 moderate, 3 high)
+Lint and Format Check	Install dependencies	2026-04-26T14:54:41.3113210Z 
+Lint and Format Check	Install dependencies	2026-04-26T14:54:41.3113441Z To address all issues, run:
+Lint and Format Check	Install dependencies	2026-04-26T14:54:41.3113907Z   npm audit fix
+Lint and Format Check	Install dependencies	2026-04-26T14:54:41.3114120Z 
+Lint and Format Check	Install dependencies	2026-04-26T14:54:41.3114362Z Run `npm audit` for details.
+Lint and Format Check	Run ESLint	﻿2026-04-26T14:54:41.3524594Z ##[group]Run npm run lint
+Lint and Format Check	Run ESLint	2026-04-26T14:54:41.3524864Z [36;1mnpm run lint[0m
+Lint and Format Check	Run ESLint	2026-04-26T14:54:41.3539575Z shell: /usr/bin/bash -e {0}
+Lint and Format Check	Run ESLint	2026-04-26T14:54:41.3539838Z ##[endgroup]
+Lint and Format Check	Run ESLint	2026-04-26T14:54:41.4445078Z 
+Lint and Format Check	Run ESLint	2026-04-26T14:54:41.4445829Z > my-package@0.9.0 lint
+Lint and Format Check	Run ESLint	2026-04-26T14:54:41.4446361Z > eslint .
+Lint and Format Check	Run ESLint	2026-04-26T14:54:41.4446624Z 
+Lint and Format Check	Check formatting	﻿2026-04-26T14:54:42.7905876Z ##[group]Run npm run format:check
+Lint and Format Check	Check formatting	2026-04-26T14:54:42.7906177Z [36;1mnpm run format:check[0m
+Lint and Format Check	Check formatting	2026-04-26T14:54:42.7919988Z shell: /usr/bin/bash -e {0}
+Lint and Format Check	Check formatting	2026-04-26T14:54:42.7920244Z ##[endgroup]
+Lint and Format Check	Check formatting	2026-04-26T14:54:42.8861215Z 
+Lint and Format Check	Check formatting	2026-04-26T14:54:42.8861823Z > my-package@0.9.0 format:check
+Lint and Format Check	Check formatting	2026-04-26T14:54:42.8862400Z > prettier --check .
+Lint and Format Check	Check formatting	2026-04-26T14:54:42.8862642Z 
+Lint and Format Check	Check formatting	2026-04-26T14:54:42.9726689Z Checking formatting...
+Lint and Format Check	Check formatting	2026-04-26T14:54:44.5861456Z All matched files use Prettier code style!
+Lint and Format Check	Check code duplication	﻿2026-04-26T14:54:44.6065265Z ##[group]Run npm run check:duplication
+Lint and Format Check	Check code duplication	2026-04-26T14:54:44.6065581Z [36;1mnpm run check:duplication[0m
+Lint and Format Check	Check code duplication	2026-04-26T14:54:44.6079090Z shell: /usr/bin/bash -e {0}
+Lint and Format Check	Check code duplication	2026-04-26T14:54:44.6079357Z ##[endgroup]
+Lint and Format Check	Check code duplication	2026-04-26T14:54:44.6950447Z 
+Lint and Format Check	Check code duplication	2026-04-26T14:54:44.6951191Z > my-package@0.9.0 check:duplication
+Lint and Format Check	Check code duplication	2026-04-26T14:54:44.6951761Z > jscpd .
+Lint and Format Check	Check code duplication	2026-04-26T14:54:44.6951948Z 
+Lint and Format Check	Check code duplication	2026-04-26T14:54:45.0627914Z Detection time:: 0.117ms
+Lint and Format Check	Check for secrets	﻿2026-04-26T14:54:45.0746539Z ##[group]Run npx --yes -p secretlint -p @secretlint/secretlint-rule-preset-recommend secretlint "**/*"
+Lint and Format Check	Check for secrets	2026-04-26T14:54:45.0747600Z [36;1mnpx --yes -p secretlint -p @secretlint/secretlint-rule-preset-recommend secretlint "**/*"[0m
+Lint and Format Check	Check for secrets	2026-04-26T14:54:45.0761515Z shell: /usr/bin/bash -e {0}
+Lint and Format Check	Check for secrets	2026-04-26T14:54:45.0761761Z ##[endgroup]
+Lint and Format Check	Post Setup Node.js	﻿2026-04-26T14:54:49.4330528Z Post job cleanup.
+Lint and Format Check	Post Run actions/checkout@v6	﻿2026-04-26T14:54:49.5629059Z Post job cleanup.
+Lint and Format Check	Post Run actions/checkout@v6	2026-04-26T14:54:49.6372800Z [command]/usr/bin/git version
+Lint and Format Check	Post Run actions/checkout@v6	2026-04-26T14:54:49.6406847Z git version 2.53.0
+Lint and Format Check	Post Run actions/checkout@v6	2026-04-26T14:54:49.6473194Z Temporarily overriding HOME='/home/runner/work/_temp/f642ac31-0561-4ca2-8dc1-bed1451c4f17' before making global git config changes
+Lint and Format Check	Post Run actions/checkout@v6	2026-04-26T14:54:49.6474003Z Adding repository directory to the temporary git global config as a safe directory
+Lint and Format Check	Post Run actions/checkout@v6	2026-04-26T14:54:49.6478758Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/meta-expression/meta-expression
+Lint and Format Check	Post Run actions/checkout@v6	2026-04-26T14:54:49.6504573Z Removing SSH command configuration
+Lint and Format Check	Post Run actions/checkout@v6	2026-04-26T14:54:49.6510864Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+Lint and Format Check	Post Run actions/checkout@v6	2026-04-26T14:54:49.6539448Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+Lint and Format Check	Post Run actions/checkout@v6	2026-04-26T14:54:49.6709032Z Removing HTTP extra header
+Lint and Format Check	Post Run actions/checkout@v6	2026-04-26T14:54:49.6713631Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+Lint and Format Check	Post Run actions/checkout@v6	2026-04-26T14:54:49.6743262Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+Lint and Format Check	Post Run actions/checkout@v6	2026-04-26T14:54:49.6909758Z Removing includeIf entries pointing to credentials config files
+Lint and Format Check	Post Run actions/checkout@v6	2026-04-26T14:54:49.6915931Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+Lint and Format Check	Post Run actions/checkout@v6	2026-04-26T14:54:49.6934897Z includeif.gitdir:/home/runner/work/meta-expression/meta-expression/.git.path
+Lint and Format Check	Post Run actions/checkout@v6	2026-04-26T14:54:49.6936002Z includeif.gitdir:/home/runner/work/meta-expression/meta-expression/.git/worktrees/*.path
+Lint and Format Check	Post Run actions/checkout@v6	2026-04-26T14:54:49.6936998Z includeif.gitdir:/github/workspace/.git.path
+Lint and Format Check	Post Run actions/checkout@v6	2026-04-26T14:54:49.6937645Z includeif.gitdir:/github/workspace/.git/worktrees/*.path
+Lint and Format Check	Post Run actions/checkout@v6	2026-04-26T14:54:49.6943635Z [command]/usr/bin/git config --local --get-all includeif.gitdir:/home/runner/work/meta-expression/meta-expression/.git.path
+Lint and Format Check	Post Run actions/checkout@v6	2026-04-26T14:54:49.6961022Z /home/runner/work/_temp/git-credentials-b8e743bc-5ed0-45a5-a1c9-d628c22a7acb.config
+Lint and Format Check	Post Run actions/checkout@v6	2026-04-26T14:54:49.6969986Z [command]/usr/bin/git config --local --unset includeif.gitdir:/home/runner/work/meta-expression/meta-expression/.git.path /home/runner/work/_temp/git-credentials-b8e743bc-5ed0-45a5-a1c9-d628c22a7acb.config
+Lint and Format Check	Post Run actions/checkout@v6	2026-04-26T14:54:49.6998490Z [command]/usr/bin/git config --local --get-all includeif.gitdir:/home/runner/work/meta-expression/meta-expression/.git/worktrees/*.path
+Lint and Format Check	Post Run actions/checkout@v6	2026-04-26T14:54:49.7015547Z /home/runner/work/_temp/git-credentials-b8e743bc-5ed0-45a5-a1c9-d628c22a7acb.config
+Lint and Format Check	Post Run actions/checkout@v6	2026-04-26T14:54:49.7023985Z [command]/usr/bin/git config --local --unset includeif.gitdir:/home/runner/work/meta-expression/meta-expression/.git/worktrees/*.path /home/runner/work/_temp/git-credentials-b8e743bc-5ed0-45a5-a1c9-d628c22a7acb.config
+Lint and Format Check	Post Run actions/checkout@v6	2026-04-26T14:54:49.7049067Z [command]/usr/bin/git config --local --get-all includeif.gitdir:/github/workspace/.git.path
+Lint and Format Check	Post Run actions/checkout@v6	2026-04-26T14:54:49.7065556Z /github/runner_temp/git-credentials-b8e743bc-5ed0-45a5-a1c9-d628c22a7acb.config
+Lint and Format Check	Post Run actions/checkout@v6	2026-04-26T14:54:49.7071170Z [command]/usr/bin/git config --local --unset includeif.gitdir:/github/workspace/.git.path /github/runner_temp/git-credentials-b8e743bc-5ed0-45a5-a1c9-d628c22a7acb.config
+Lint and Format Check	Post Run actions/checkout@v6	2026-04-26T14:54:49.7094627Z [command]/usr/bin/git config --local --get-all includeif.gitdir:/github/workspace/.git/worktrees/*.path
+Lint and Format Check	Post Run actions/checkout@v6	2026-04-26T14:54:49.7111022Z /github/runner_temp/git-credentials-b8e743bc-5ed0-45a5-a1c9-d628c22a7acb.config
+Lint and Format Check	Post Run actions/checkout@v6	2026-04-26T14:54:49.7117617Z [command]/usr/bin/git config --local --unset includeif.gitdir:/github/workspace/.git/worktrees/*.path /github/runner_temp/git-credentials-b8e743bc-5ed0-45a5-a1c9-d628c22a7acb.config
+Lint and Format Check	Post Run actions/checkout@v6	2026-04-26T14:54:49.7144460Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+Lint and Format Check	Post Run actions/checkout@v6	2026-04-26T14:54:49.7308058Z Removing credentials config '/home/runner/work/_temp/git-credentials-b8e743bc-5ed0-45a5-a1c9-d628c22a7acb.config'
+Lint and Format Check	Complete job	﻿2026-04-26T14:54:49.7424085Z Cleaning up orphan processes
+Test Compilation	Set up job	﻿2026-04-26T14:54:34.6501106Z Current runner version: '2.333.1'
+Test Compilation	Set up job	2026-04-26T14:54:34.6527290Z ##[group]Runner Image Provisioner
+Test Compilation	Set up job	2026-04-26T14:54:34.6528117Z Hosted Compute Agent
+Test Compilation	Set up job	2026-04-26T14:54:34.6528714Z Version: 20260213.493
+Test Compilation	Set up job	2026-04-26T14:54:34.6529451Z Commit: 5c115507f6dd24b8de37d8bbe0bb4509d0cc0fa3
+Test Compilation	Set up job	2026-04-26T14:54:34.6530270Z Build Date: 2026-02-13T00:28:41Z
+Test Compilation	Set up job	2026-04-26T14:54:34.6530945Z Worker ID: {37bec017-696a-46dd-8819-fef404fd6500}
+Test Compilation	Set up job	2026-04-26T14:54:34.6531740Z Azure Region: eastus
+Test Compilation	Set up job	2026-04-26T14:54:34.6532302Z ##[endgroup]
+Test Compilation	Set up job	2026-04-26T14:54:34.6534203Z ##[group]Operating System
+Test Compilation	Set up job	2026-04-26T14:54:34.6535029Z Ubuntu
+Test Compilation	Set up job	2026-04-26T14:54:34.6535622Z 24.04.4
+Test Compilation	Set up job	2026-04-26T14:54:34.6536620Z LTS
+Test Compilation	Set up job	2026-04-26T14:54:34.6537220Z ##[endgroup]
+Test Compilation	Set up job	2026-04-26T14:54:34.6537817Z ##[group]Runner Image
+Test Compilation	Set up job	2026-04-26T14:54:34.6538409Z Image: ubuntu-24.04
+Test Compilation	Set up job	2026-04-26T14:54:34.6539068Z Version: 20260413.86.1
+Test Compilation	Set up job	2026-04-26T14:54:34.6540169Z Included Software: https://github.com/actions/runner-images/blob/ubuntu24/20260413.86/images/ubuntu/Ubuntu2404-Readme.md
+Test Compilation	Set up job	2026-04-26T14:54:34.6542007Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu24%2F20260413.86
+Test Compilation	Set up job	2026-04-26T14:54:34.6542935Z ##[endgroup]
+Test Compilation	Set up job	2026-04-26T14:54:34.6545772Z ##[group]GITHUB_TOKEN Permissions
+Test Compilation	Set up job	2026-04-26T14:54:34.6548840Z Actions: write
+Test Compilation	Set up job	2026-04-26T14:54:34.6549505Z ArtifactMetadata: write
+Test Compilation	Set up job	2026-04-26T14:54:34.6550122Z Attestations: write
+Test Compilation	Set up job	2026-04-26T14:54:34.6550810Z Checks: write
+Test Compilation	Set up job	2026-04-26T14:54:34.6551337Z Contents: write
+Test Compilation	Set up job	2026-04-26T14:54:34.6551901Z Deployments: write
+Test Compilation	Set up job	2026-04-26T14:54:34.6552584Z Discussions: write
+Test Compilation	Set up job	2026-04-26T14:54:34.6553124Z Issues: write
+Test Compilation	Set up job	2026-04-26T14:54:34.6553654Z Metadata: read
+Test Compilation	Set up job	2026-04-26T14:54:34.6554226Z Models: read
+Test Compilation	Set up job	2026-04-26T14:54:34.6554779Z Packages: write
+Test Compilation	Set up job	2026-04-26T14:54:34.6555305Z Pages: write
+Test Compilation	Set up job	2026-04-26T14:54:34.6556294Z PullRequests: write
+Test Compilation	Set up job	2026-04-26T14:54:34.6556938Z RepositoryProjects: write
+Test Compilation	Set up job	2026-04-26T14:54:34.6557532Z SecurityEvents: write
+Test Compilation	Set up job	2026-04-26T14:54:34.6558192Z Statuses: write
+Test Compilation	Set up job	2026-04-26T14:54:34.6558744Z VulnerabilityAlerts: read
+Test Compilation	Set up job	2026-04-26T14:54:34.6559378Z ##[endgroup]
+Test Compilation	Set up job	2026-04-26T14:54:34.6561601Z Secret source: Actions
+Test Compilation	Set up job	2026-04-26T14:54:34.6562785Z Prepare workflow directory
+Test Compilation	Set up job	2026-04-26T14:54:34.6905298Z Prepare all required actions
+Test Compilation	Set up job	2026-04-26T14:54:34.6944188Z Getting action download info
+Test Compilation	Set up job	2026-04-26T14:54:34.9720567Z Download action repository 'actions/checkout@v6' (SHA:de0fac2e4500dabe0009e67214ff5f5447ce83dd)
+Test Compilation	Set up job	2026-04-26T14:54:35.2217397Z Complete job name: Test Compilation
+Test Compilation	Run actions/checkout@v6	﻿2026-04-26T14:54:35.2936544Z ##[group]Run actions/checkout@v6
+Test Compilation	Run actions/checkout@v6	2026-04-26T14:54:35.2937481Z with:
+Test Compilation	Run actions/checkout@v6	2026-04-26T14:54:35.2937946Z   repository: link-assistant/meta-expression
+Test Compilation	Run actions/checkout@v6	2026-04-26T14:54:35.2938803Z   token: ***
+Test Compilation	Run actions/checkout@v6	2026-04-26T14:54:35.2939387Z   ssh-strict: true
+Test Compilation	Run actions/checkout@v6	2026-04-26T14:54:35.2939803Z   ssh-user: git
+Test Compilation	Run actions/checkout@v6	2026-04-26T14:54:35.2940206Z   persist-credentials: true
+Test Compilation	Run actions/checkout@v6	2026-04-26T14:54:35.2940811Z   clean: true
+Test Compilation	Run actions/checkout@v6	2026-04-26T14:54:35.2941379Z   sparse-checkout-cone-mode: true
+Test Compilation	Run actions/checkout@v6	2026-04-26T14:54:35.2941925Z   fetch-depth: 1
+Test Compilation	Run actions/checkout@v6	2026-04-26T14:54:35.2942427Z   fetch-tags: false
+Test Compilation	Run actions/checkout@v6	2026-04-26T14:54:35.2942933Z   show-progress: true
+Test Compilation	Run actions/checkout@v6	2026-04-26T14:54:35.2943338Z   lfs: false
+Test Compilation	Run actions/checkout@v6	2026-04-26T14:54:35.2943716Z   submodules: false
+Test Compilation	Run actions/checkout@v6	2026-04-26T14:54:35.2944125Z   set-safe-directory: true
+Test Compilation	Run actions/checkout@v6	2026-04-26T14:54:35.2944921Z ##[endgroup]
+Test Compilation	Run actions/checkout@v6	2026-04-26T14:54:35.3920597Z Syncing repository: link-assistant/meta-expression
+Test Compilation	Run actions/checkout@v6	2026-04-26T14:54:35.3922492Z ##[group]Getting Git version info
+Test Compilation	Run actions/checkout@v6	2026-04-26T14:54:35.3923284Z Working directory is '/home/runner/work/meta-expression/meta-expression'
+Test Compilation	Run actions/checkout@v6	2026-04-26T14:54:35.3924371Z [command]/usr/bin/git version
+Test Compilation	Run actions/checkout@v6	2026-04-26T14:54:35.3978422Z git version 2.53.0
+Test Compilation	Run actions/checkout@v6	2026-04-26T14:54:35.4002170Z ##[endgroup]
+Test Compilation	Run actions/checkout@v6	2026-04-26T14:54:35.4017373Z Temporarily overriding HOME='/home/runner/work/_temp/ad90f59b-05a4-4b3b-aaf7-f2e8cf369365' before making global git config changes
+Test Compilation	Run actions/checkout@v6	2026-04-26T14:54:35.4018792Z Adding repository directory to the temporary git global config as a safe directory
+Test Compilation	Run actions/checkout@v6	2026-04-26T14:54:35.4022902Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/meta-expression/meta-expression
+Test Compilation	Run actions/checkout@v6	2026-04-26T14:54:35.4059341Z Deleting the contents of '/home/runner/work/meta-expression/meta-expression'
+Test Compilation	Run actions/checkout@v6	2026-04-26T14:54:35.4063275Z ##[group]Initializing the repository
+Test Compilation	Run actions/checkout@v6	2026-04-26T14:54:35.4068527Z [command]/usr/bin/git init /home/runner/work/meta-expression/meta-expression
+Test Compilation	Run actions/checkout@v6	2026-04-26T14:54:35.4168272Z hint: Using 'master' as the name for the initial branch. This default branch name
+Test Compilation	Run actions/checkout@v6	2026-04-26T14:54:35.4169890Z hint: will change to "main" in Git 3.0. To configure the initial branch name
+Test Compilation	Run actions/checkout@v6	2026-04-26T14:54:35.4171462Z hint: to use in all of your new repositories, which will suppress this warning,
+Test Compilation	Run actions/checkout@v6	2026-04-26T14:54:35.4172595Z hint: call:
+Test Compilation	Run actions/checkout@v6	2026-04-26T14:54:35.4173163Z hint:
+Test Compilation	Run actions/checkout@v6	2026-04-26T14:54:35.4173781Z hint: 	git config --global init.defaultBranch <name>
+Test Compilation	Run actions/checkout@v6	2026-04-26T14:54:35.4174625Z hint:
+Test Compilation	Run actions/checkout@v6	2026-04-26T14:54:35.4175626Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+Test Compilation	Run actions/checkout@v6	2026-04-26T14:54:35.4177651Z hint: 'development'. The just-created branch can be renamed via this command:
+Test Compilation	Run actions/checkout@v6	2026-04-26T14:54:35.4178424Z hint:
+Test Compilation	Run actions/checkout@v6	2026-04-26T14:54:35.4178945Z hint: 	git branch -m <name>
+Test Compilation	Run actions/checkout@v6	2026-04-26T14:54:35.4179718Z hint:
+Test Compilation	Run actions/checkout@v6	2026-04-26T14:54:35.4180539Z hint: Disable this message with "git config set advice.defaultBranchName false"
+Test Compilation	Run actions/checkout@v6	2026-04-26T14:54:35.4182278Z Initialized empty Git repository in /home/runner/work/meta-expression/meta-expression/.git/
+Test Compilation	Run actions/checkout@v6	2026-04-26T14:54:35.4184667Z [command]/usr/bin/git remote add origin https://github.com/link-assistant/meta-expression
+Test Compilation	Run actions/checkout@v6	2026-04-26T14:54:35.4244594Z ##[endgroup]
+Test Compilation	Run actions/checkout@v6	2026-04-26T14:54:35.4245723Z ##[group]Disabling automatic garbage collection
+Test Compilation	Run actions/checkout@v6	2026-04-26T14:54:35.4248714Z [command]/usr/bin/git config --local gc.auto 0
+Test Compilation	Run actions/checkout@v6	2026-04-26T14:54:35.4278525Z ##[endgroup]
+Test Compilation	Run actions/checkout@v6	2026-04-26T14:54:35.4279278Z ##[group]Setting up auth
+Test Compilation	Run actions/checkout@v6	2026-04-26T14:54:35.4280065Z Removing SSH command configuration
+Test Compilation	Run actions/checkout@v6	2026-04-26T14:54:35.4287675Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+Test Compilation	Run actions/checkout@v6	2026-04-26T14:54:35.4319927Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+Test Compilation	Run actions/checkout@v6	2026-04-26T14:54:35.4611255Z Removing HTTP extra header
+Test Compilation	Run actions/checkout@v6	2026-04-26T14:54:35.4618023Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+Test Compilation	Run actions/checkout@v6	2026-04-26T14:54:35.4649823Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+Test Compilation	Run actions/checkout@v6	2026-04-26T14:54:35.4863080Z Removing includeIf entries pointing to credentials config files
+Test Compilation	Run actions/checkout@v6	2026-04-26T14:54:35.4869640Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+Test Compilation	Run actions/checkout@v6	2026-04-26T14:54:35.4899980Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+Test Compilation	Run actions/checkout@v6	2026-04-26T14:54:35.5120319Z [command]/usr/bin/git config --file /home/runner/work/_temp/git-credentials-a5f89c82-a081-4885-a482-c3883bb35716.config http.https://github.com/.extraheader AUTHORIZATION: basic ***
+Test Compilation	Run actions/checkout@v6	2026-04-26T14:54:35.5160442Z [command]/usr/bin/git config --local includeIf.gitdir:/home/runner/work/meta-expression/meta-expression/.git.path /home/runner/work/_temp/git-credentials-a5f89c82-a081-4885-a482-c3883bb35716.config
+Test Compilation	Run actions/checkout@v6	2026-04-26T14:54:35.5192947Z [command]/usr/bin/git config --local includeIf.gitdir:/home/runner/work/meta-expression/meta-expression/.git/worktrees/*.path /home/runner/work/_temp/git-credentials-a5f89c82-a081-4885-a482-c3883bb35716.config
+Test Compilation	Run actions/checkout@v6	2026-04-26T14:54:35.5224422Z [command]/usr/bin/git config --local includeIf.gitdir:/github/workspace/.git.path /github/runner_temp/git-credentials-a5f89c82-a081-4885-a482-c3883bb35716.config
+Test Compilation	Run actions/checkout@v6	2026-04-26T14:54:35.5254718Z [command]/usr/bin/git config --local includeIf.gitdir:/github/workspace/.git/worktrees/*.path /github/runner_temp/git-credentials-a5f89c82-a081-4885-a482-c3883bb35716.config
+Test Compilation	Run actions/checkout@v6	2026-04-26T14:54:35.5284552Z ##[endgroup]
+Test Compilation	Run actions/checkout@v6	2026-04-26T14:54:35.5285795Z ##[group]Fetching the repository
+Test Compilation	Run actions/checkout@v6	2026-04-26T14:54:35.5293962Z [command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +7472003b096af09e6ebbf87db8006ed72928dbf3:refs/remotes/pull/6/merge
+Test Compilation	Run actions/checkout@v6	2026-04-26T14:54:35.9008584Z From https://github.com/link-assistant/meta-expression
+Test Compilation	Run actions/checkout@v6	2026-04-26T14:54:35.9009718Z  * [new ref]         7472003b096af09e6ebbf87db8006ed72928dbf3 -> pull/6/merge
+Test Compilation	Run actions/checkout@v6	2026-04-26T14:54:35.9039825Z ##[endgroup]
+Test Compilation	Run actions/checkout@v6	2026-04-26T14:54:35.9041543Z ##[group]Determining the checkout info
+Test Compilation	Run actions/checkout@v6	2026-04-26T14:54:35.9043159Z ##[endgroup]
+Test Compilation	Run actions/checkout@v6	2026-04-26T14:54:35.9048053Z [command]/usr/bin/git sparse-checkout disable
+Test Compilation	Run actions/checkout@v6	2026-04-26T14:54:35.9088024Z [command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+Test Compilation	Run actions/checkout@v6	2026-04-26T14:54:35.9116817Z ##[group]Checking out the ref
+Test Compilation	Run actions/checkout@v6	2026-04-26T14:54:35.9121417Z [command]/usr/bin/git checkout --progress --force refs/remotes/pull/6/merge
+Test Compilation	Run actions/checkout@v6	2026-04-26T14:54:35.9517530Z Note: switching to 'refs/remotes/pull/6/merge'.
+Test Compilation	Run actions/checkout@v6	2026-04-26T14:54:35.9518435Z 
+Test Compilation	Run actions/checkout@v6	2026-04-26T14:54:35.9518993Z You are in 'detached HEAD' state. You can look around, make experimental
+Test Compilation	Run actions/checkout@v6	2026-04-26T14:54:35.9520226Z changes and commit them, and you can discard any commits you make in this
+Test Compilation	Run actions/checkout@v6	2026-04-26T14:54:35.9521293Z state without impacting any branches by switching back to a branch.
+Test Compilation	Run actions/checkout@v6	2026-04-26T14:54:35.9521894Z 
+Test Compilation	Run actions/checkout@v6	2026-04-26T14:54:35.9522309Z If you want to create a new branch to retain commits you create, you may
+Test Compilation	Run actions/checkout@v6	2026-04-26T14:54:35.9523261Z do so (now or later) by using -c with the switch command. Example:
+Test Compilation	Run actions/checkout@v6	2026-04-26T14:54:35.9523813Z 
+Test Compilation	Run actions/checkout@v6	2026-04-26T14:54:35.9524040Z   git switch -c <new-branch-name>
+Test Compilation	Run actions/checkout@v6	2026-04-26T14:54:35.9524416Z 
+Test Compilation	Run actions/checkout@v6	2026-04-26T14:54:35.9524646Z Or undo this operation with:
+Test Compilation	Run actions/checkout@v6	2026-04-26T14:54:35.9525099Z 
+Test Compilation	Run actions/checkout@v6	2026-04-26T14:54:35.9525442Z   git switch -
+Test Compilation	Run actions/checkout@v6	2026-04-26T14:54:35.9526149Z 
+Test Compilation	Run actions/checkout@v6	2026-04-26T14:54:35.9526973Z Turn off this advice by setting config variable advice.detachedHead to false
+Test Compilation	Run actions/checkout@v6	2026-04-26T14:54:35.9527701Z 
+Test Compilation	Run actions/checkout@v6	2026-04-26T14:54:35.9528421Z HEAD is now at 7472003 Merge 8f800f1b2657da1d51104e04d0721227a3f11328 into 2fd354e49141e7eed85845cd8f441003abd7aa79
+Test Compilation	Run actions/checkout@v6	2026-04-26T14:54:35.9531017Z ##[endgroup]
+Test Compilation	Run actions/checkout@v6	2026-04-26T14:54:35.9567535Z [command]/usr/bin/git log -1 --format=%H
+Test Compilation	Run actions/checkout@v6	2026-04-26T14:54:35.9591035Z 7472003b096af09e6ebbf87db8006ed72928dbf3
+Test Compilation	Check .mjs syntax	﻿2026-04-26T14:54:35.9808290Z ##[group]Run bash scripts/check-mjs-syntax.sh
+Test Compilation	Check .mjs syntax	2026-04-26T14:54:35.9809094Z [36;1mbash scripts/check-mjs-syntax.sh[0m
+Test Compilation	Check .mjs syntax	2026-04-26T14:54:35.9835264Z shell: /usr/bin/bash -e {0}
+Test Compilation	Check .mjs syntax	2026-04-26T14:54:35.9836185Z ##[endgroup]
+Test Compilation	Check .mjs syntax	2026-04-26T14:54:35.9917314Z Checking syntax for all .mjs files...
+Test Compilation	Check .mjs syntax	2026-04-26T14:54:35.9918622Z Checking scripts/changeset-version.mjs...
+Test Compilation	Check .mjs syntax	2026-04-26T14:54:36.0736512Z Checking scripts/check-changesets.mjs...
+Test Compilation	Check .mjs syntax	2026-04-26T14:54:36.0985066Z Checking scripts/check-release-needed.mjs...
+Test Compilation	Check .mjs syntax	2026-04-26T14:54:36.1238090Z Checking scripts/check-version.mjs...
+Test Compilation	Check .mjs syntax	2026-04-26T14:54:36.1488711Z Checking scripts/check-web-archive.mjs...
+Test Compilation	Check .mjs syntax	2026-04-26T14:54:36.1726923Z Checking scripts/create-github-release.mjs...
+Test Compilation	Check .mjs syntax	2026-04-26T14:54:36.1962021Z Checking scripts/create-manual-changeset.mjs...
+Test Compilation	Check .mjs syntax	2026-04-26T14:54:36.2207556Z Checking scripts/detect-code-changes.mjs...
+Test Compilation	Check .mjs syntax	2026-04-26T14:54:36.2444195Z Checking scripts/format-github-release.mjs...
+Test Compilation	Check .mjs syntax	2026-04-26T14:54:36.2688413Z Checking scripts/format-release-notes.mjs...
+Test Compilation	Check .mjs syntax	2026-04-26T14:54:36.2914732Z Checking scripts/instant-version-bump.mjs...
+Test Compilation	Check .mjs syntax	2026-04-26T14:54:36.3152136Z Checking scripts/js-paths.mjs...
+Test Compilation	Check .mjs syntax	2026-04-26T14:54:36.3405464Z Checking scripts/merge-changesets.mjs...
+Test Compilation	Check .mjs syntax	2026-04-26T14:54:36.3672133Z Checking scripts/publish-to-npm.mjs...
+Test Compilation	Check .mjs syntax	2026-04-26T14:54:36.3918026Z Checking scripts/setup-npm.mjs...
+Test Compilation	Check .mjs syntax	2026-04-26T14:54:36.4168163Z Checking scripts/validate-changeset.mjs...
+Test Compilation	Check .mjs syntax	2026-04-26T14:54:36.4405155Z Checking scripts/version-and-commit.mjs...
+Test Compilation	Check .mjs syntax	2026-04-26T14:54:36.4661645Z 
+Test Compilation	Check .mjs syntax	2026-04-26T14:54:36.4662533Z Syntax check passed for 17 file(s).
+Test Compilation	Post Run actions/checkout@v6	﻿2026-04-26T14:54:36.4887193Z Post job cleanup.
+Test Compilation	Post Run actions/checkout@v6	2026-04-26T14:54:36.5714530Z [command]/usr/bin/git version
+Test Compilation	Post Run actions/checkout@v6	2026-04-26T14:54:36.5753329Z git version 2.53.0
+Test Compilation	Post Run actions/checkout@v6	2026-04-26T14:54:36.5828096Z Temporarily overriding HOME='/home/runner/work/_temp/470fbf00-f5bd-420d-93cc-5779f863f94a' before making global git config changes
+Test Compilation	Post Run actions/checkout@v6	2026-04-26T14:54:36.5834397Z Adding repository directory to the temporary git global config as a safe directory
+Test Compilation	Post Run actions/checkout@v6	2026-04-26T14:54:36.5837872Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/meta-expression/meta-expression
+Test Compilation	Post Run actions/checkout@v6	2026-04-26T14:54:36.5869151Z Removing SSH command configuration
+Test Compilation	Post Run actions/checkout@v6	2026-04-26T14:54:36.5876319Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+Test Compilation	Post Run actions/checkout@v6	2026-04-26T14:54:36.5915398Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+Test Compilation	Post Run actions/checkout@v6	2026-04-26T14:54:36.6142262Z Removing HTTP extra header
+Test Compilation	Post Run actions/checkout@v6	2026-04-26T14:54:36.6149761Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+Test Compilation	Post Run actions/checkout@v6	2026-04-26T14:54:36.6189883Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+Test Compilation	Post Run actions/checkout@v6	2026-04-26T14:54:36.6410376Z Removing includeIf entries pointing to credentials config files
+Test Compilation	Post Run actions/checkout@v6	2026-04-26T14:54:36.6417077Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+Test Compilation	Post Run actions/checkout@v6	2026-04-26T14:54:36.6441495Z includeif.gitdir:/home/runner/work/meta-expression/meta-expression/.git.path
+Test Compilation	Post Run actions/checkout@v6	2026-04-26T14:54:36.6445629Z includeif.gitdir:/home/runner/work/meta-expression/meta-expression/.git/worktrees/*.path
+Test Compilation	Post Run actions/checkout@v6	2026-04-26T14:54:36.6449291Z includeif.gitdir:/github/workspace/.git.path
+Test Compilation	Post Run actions/checkout@v6	2026-04-26T14:54:36.6451848Z includeif.gitdir:/github/workspace/.git/worktrees/*.path
+Test Compilation	Post Run actions/checkout@v6	2026-04-26T14:54:36.6458317Z [command]/usr/bin/git config --local --get-all includeif.gitdir:/home/runner/work/meta-expression/meta-expression/.git.path
+Test Compilation	Post Run actions/checkout@v6	2026-04-26T14:54:36.6476085Z /home/runner/work/_temp/git-credentials-a5f89c82-a081-4885-a482-c3883bb35716.config
+Test Compilation	Post Run actions/checkout@v6	2026-04-26T14:54:36.6488769Z [command]/usr/bin/git config --local --unset includeif.gitdir:/home/runner/work/meta-expression/meta-expression/.git.path /home/runner/work/_temp/git-credentials-a5f89c82-a081-4885-a482-c3883bb35716.config
+Test Compilation	Post Run actions/checkout@v6	2026-04-26T14:54:36.6523489Z [command]/usr/bin/git config --local --get-all includeif.gitdir:/home/runner/work/meta-expression/meta-expression/.git/worktrees/*.path
+Test Compilation	Post Run actions/checkout@v6	2026-04-26T14:54:36.6544806Z /home/runner/work/_temp/git-credentials-a5f89c82-a081-4885-a482-c3883bb35716.config
+Test Compilation	Post Run actions/checkout@v6	2026-04-26T14:54:36.6556948Z [command]/usr/bin/git config --local --unset includeif.gitdir:/home/runner/work/meta-expression/meta-expression/.git/worktrees/*.path /home/runner/work/_temp/git-credentials-a5f89c82-a081-4885-a482-c3883bb35716.config
+Test Compilation	Post Run actions/checkout@v6	2026-04-26T14:54:36.6587853Z [command]/usr/bin/git config --local --get-all includeif.gitdir:/github/workspace/.git.path
+Test Compilation	Post Run actions/checkout@v6	2026-04-26T14:54:36.6608891Z /github/runner_temp/git-credentials-a5f89c82-a081-4885-a482-c3883bb35716.config
+Test Compilation	Post Run actions/checkout@v6	2026-04-26T14:54:36.6619217Z [command]/usr/bin/git config --local --unset includeif.gitdir:/github/workspace/.git.path /github/runner_temp/git-credentials-a5f89c82-a081-4885-a482-c3883bb35716.config
+Test Compilation	Post Run actions/checkout@v6	2026-04-26T14:54:36.6650220Z [command]/usr/bin/git config --local --get-all includeif.gitdir:/github/workspace/.git/worktrees/*.path
+Test Compilation	Post Run actions/checkout@v6	2026-04-26T14:54:36.6670764Z /github/runner_temp/git-credentials-a5f89c82-a081-4885-a482-c3883bb35716.config
+Test Compilation	Post Run actions/checkout@v6	2026-04-26T14:54:36.6680913Z [command]/usr/bin/git config --local --unset includeif.gitdir:/github/workspace/.git/worktrees/*.path /github/runner_temp/git-credentials-a5f89c82-a081-4885-a482-c3883bb35716.config
+Test Compilation	Post Run actions/checkout@v6	2026-04-26T14:54:36.6712842Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+Test Compilation	Post Run actions/checkout@v6	2026-04-26T14:54:36.6928432Z Removing credentials config '/home/runner/work/_temp/git-credentials-a5f89c82-a081-4885-a482-c3883bb35716.config'
+Test Compilation	Complete job	﻿2026-04-26T14:54:36.7090422Z Cleaning up orphan processes

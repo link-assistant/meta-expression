@@ -1,6 +1,10 @@
 import { createServer } from 'node:http';
 import { URL, fileURLToPath } from 'node:url';
-import { analyzeStatement, serializeLinksNotation } from './index.js';
+import {
+  analyzeStatement,
+  analyzeStatementWithLiveEvidence,
+  serializeLinksNotation,
+} from './index.js';
 
 export function createMetaExpressionServer() {
   return createServer(async (request, response) => {
@@ -36,7 +40,7 @@ async function routeRequest(request, response) {
   const url = new URL(request.url ?? '/', `http://${host}`);
 
   if (request.method === 'GET') {
-    routeGetRequest(url, response);
+    await routeGetRequest(url, response);
     return;
   }
 
@@ -48,7 +52,7 @@ async function routeRequest(request, response) {
   sendNotFound(response);
 }
 
-function routeGetRequest(url, response) {
+async function routeGetRequest(url, response) {
   if (url.pathname === '/health') {
     sendJson(response, 200, { ok: true });
     return;
@@ -58,7 +62,8 @@ function routeGetRequest(url, response) {
     const input = url.searchParams.get('input') ?? '';
     const format = url.searchParams.get('format') ?? 'json';
     const interpretationIndex = Number(url.searchParams.get('select') ?? 0);
-    sendAnalysis(response, input, format, interpretationIndex);
+    const live = url.searchParams.get('live') === 'true';
+    await sendAnalysis(response, input, format, interpretationIndex, live);
     return;
   }
 
@@ -73,11 +78,12 @@ async function routePostRequest(url, request, response) {
 
   const body = await readRequestBody(request);
   const payload = body ? JSON.parse(body) : {};
-  sendAnalysis(
+  await sendAnalysis(
     response,
     payload.input ?? '',
     payload.format ?? 'json',
-    payload.interpretationIndex ?? 0
+    payload.interpretationIndex ?? 0,
+    payload.live === true
   );
 }
 
@@ -88,11 +94,20 @@ function sendNotFound(response) {
   });
 }
 
-function sendAnalysis(response, input, format, interpretationIndex) {
-  const analysis = analyzeStatement(input, {
+async function sendAnalysis(
+  response,
+  input,
+  format,
+  interpretationIndex,
+  live
+) {
+  const options = {
     interpretationIndex,
     selectedBy: 'service',
-  });
+  };
+  const analysis = live
+    ? await analyzeStatementWithLiveEvidence(input, options)
+    : analyzeStatement(input, options);
 
   if (format === 'links' || format === 'lino') {
     response.writeHead(200, {
