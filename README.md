@@ -62,6 +62,9 @@ python3 -m http.server 4173
 
 Then visit `http://127.0.0.1:4173/web/`.
 
+On `main`, CI publishes the same static prototype to the repository's GitHub
+Pages `/web/` path after tests pass.
+
 ## Development
 
 ```bash
