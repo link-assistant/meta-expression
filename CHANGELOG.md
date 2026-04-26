@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.9.0
+
+### Minor Changes
+
+- 1656e52: Add the first meta-expression prototype pipeline with links-network analysis,
+  CLI, microservice, and static web app surfaces.
+
 ## 0.8.0
 
 ### Minor Changes
