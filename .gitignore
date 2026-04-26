@@ -143,3 +143,6 @@ reports/
 
 # Rust build output
 target/
+
+# Playwright MCP scratch
+.playwright-mcp/
