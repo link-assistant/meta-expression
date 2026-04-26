@@ -91,6 +91,14 @@ export interface StatementAnalysis {
   result: EvaluationResult;
   resultLink: LinkRecord;
   linksNetwork: LinksNetwork;
+  reasoningStrategy: ReasoningStrategy;
+  reasoningSteps: ReasoningStep[];
+  alternatives: AlternativeStatement[];
+  dependencies: string[];
+  definitions: DefinitionEntry[];
+  confirmations: ConfirmationOrRefutation[];
+  refutations: ConfirmationOrRefutation[];
+  opposite: string | null;
 }
 
 export interface AnalysisOptions {
@@ -108,6 +116,7 @@ export interface AnalysisOptions {
   cache?: Map<string, unknown>;
   cacheTtlMs?: number;
   now?: () => number;
+  reasoningStrategyId?: string;
 }
 
 export interface PreparedExample {
@@ -115,6 +124,40 @@ export interface PreparedExample {
   label: string;
   category: string;
   description: string;
+  opposite: string | null;
+}
+
+export interface ReasoningStrategy {
+  id: string;
+  name: string;
+  summary: string;
+  order: string[];
+}
+
+export interface ReasoningStep extends LinkRecord {
+  reasoningPhase: string;
+  executionOrder: number;
+}
+
+export interface AlternativeStatement {
+  text: string;
+  reason: string;
+  confidence: number;
+}
+
+export interface DefinitionEntry {
+  phrase: string;
+  label: string;
+  wikidataId: string;
+  sourceUrl: string;
+  role: string;
+}
+
+export interface ConfirmationOrRefutation {
+  quote: string;
+  sourceType: string;
+  sourceUrl: string | null;
+  weight: number;
 }
 
 export interface FormalizationLevelDetail {
@@ -161,6 +204,73 @@ export declare const multiply: (a: number, b: number) => number;
 export declare const delay: (ms: number) => Promise<void>;
 
 export declare function getPreparedExamples(): PreparedExample[];
+
+export declare function getRandomExamples(
+  count?: number,
+  options?: {
+    random?: () => number;
+    pool?: PreparedExample[];
+  }
+): PreparedExample[];
+
+export declare function findExampleOpposite(input: string): string | null;
+
+export declare function createSeededRandom(seed: number): () => number;
+
+export declare const reasoningStrategies: Record<string, ReasoningStrategy>;
+
+export declare const defaultReasoningStrategyId: string;
+
+export declare function getReasoningStrategy(
+  strategyId: string
+): ReasoningStrategy;
+
+export declare function listReasoningStrategies(): ReasoningStrategy[];
+
+export declare function orderReasoningSteps(
+  links: LinkRecord[],
+  strategyId: string
+): ReasoningStep[];
+
+export declare function classifyReasoningPhase(role: string): string;
+
+export interface DisambiguationMatch {
+  kind: 'entity' | 'predicate';
+  phrase: string;
+  tokens: string[];
+  position: number;
+  wikidata: {
+    id: string;
+    label: string;
+    description?: string;
+    sourceUrl: string;
+  };
+}
+
+export interface DisambiguationResult {
+  text: string;
+  tokens: string[];
+  matches: DisambiguationMatch[];
+  candidates: Interpretation[];
+}
+
+export declare function disambiguatePhrases(
+  text: string,
+  options?: {
+    entities?: Record<string, unknown>;
+    predicates?: Record<string, unknown>;
+    maxNgramSize?: number;
+  }
+): DisambiguationResult;
+
+export declare function describeDisambiguation(text: string): Array<{
+  phrase: string;
+  role: string;
+  wikidataId: string;
+  label: string;
+  sourceUrl: string;
+  text: string;
+}>;
 
 export declare function describeFormalizationLevel(
   level: number

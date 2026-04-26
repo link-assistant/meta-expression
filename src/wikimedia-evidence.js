@@ -77,6 +77,22 @@ function createEvidenceQuery(text) {
       subjectLabel: cleanEntityLabel(liveness[1]),
       desiredState: liveness[2].toLowerCase(),
       property: 'P570',
+      negated: false,
+    };
+  }
+
+  const capitalNegated = text.match(
+    /^(.+?)\s+is\s+not\s+(?:the\s+)?capital\s+of\s+(.+?)\s*\.?$/i
+  );
+  if (capitalNegated) {
+    return {
+      kind: 'capital',
+      normalized,
+      originalText: text,
+      subjectLabel: cleanEntityLabel(capitalNegated[1]),
+      objectLabel: cleanEntityLabel(capitalNegated[2]),
+      property: 'P36',
+      negated: true,
     };
   }
 
@@ -91,10 +107,26 @@ function createEvidenceQuery(text) {
       subjectLabel: cleanEntityLabel(capital[1]),
       objectLabel: cleanEntityLabel(capital[2]),
       property: 'P36',
+      negated: false,
     };
   }
 
-  const orbit = text.match(/^(.+?)\s+orbits\s+(.+?)\s*\.?$/i);
+  const orbitNegated = text.match(
+    /^(.+?)\s+(?:does\s+not\s+orbit|do\s+not\s+orbit|doesn't\s+orbit)\s+(.+?)\s*\.?$/i
+  );
+  if (orbitNegated) {
+    return {
+      kind: 'orbit',
+      normalized,
+      originalText: text,
+      subjectLabel: cleanEntityLabel(orbitNegated[1]),
+      objectLabel: cleanEntityLabel(orbitNegated[2]),
+      property: 'P397',
+      negated: true,
+    };
+  }
+
+  const orbit = text.match(/^(.+?)\s+orbits?\s+(.+?)\s*\.?$/i);
   if (orbit) {
     return {
       kind: 'orbit',
@@ -103,6 +135,7 @@ function createEvidenceQuery(text) {
       subjectLabel: cleanEntityLabel(orbit[1]),
       objectLabel: cleanEntityLabel(orbit[2]),
       property: 'P397',
+      negated: false,
     };
   }
 
@@ -177,7 +210,10 @@ async function resolveCapitalEvidence(query, request) {
 
   const summary = await fetchWikipediaSummary(countryEntity, request);
   const capitalIds = getClaimEntityIds(countryEntity, query.property);
-  const supports = capitalIds.includes(capital.id);
+  const claimSupportsBaseStatement = capitalIds.includes(capital.id);
+  const supports = query.negated
+    ? !claimSupportsBaseStatement
+    : claimSupportsBaseStatement;
   const countryLabel = getEntityLabel(countryEntity, query.objectLabel);
 
   return [
@@ -185,7 +221,7 @@ async function resolveCapitalEvidence(query, request) {
       polarity: supports ? 'support' : 'refute',
       weight: 1,
       sourceUrl: wikidataEntityUrl(country.id, query.property),
-      claim: supports
+      claim: claimSupportsBaseStatement
         ? `Wikidata ${country.id} lists ${capital.id} as the capital (${query.property}) of ${countryLabel}.`
         : `Wikidata ${country.id} does not list ${capital.id} as the capital (${query.property}) of ${countryLabel} in the retrieved entity data.`,
       identifiers: {
@@ -228,7 +264,10 @@ async function resolveOrbitEvidence(query, request) {
     request
   );
   const directParentIds = getClaimEntityIds(subjectEntity, query.property);
-  const supports = orbitPath !== null;
+  const claimSupportsBaseStatement = orbitPath !== null;
+  const supports = query.negated
+    ? !claimSupportsBaseStatement
+    : claimSupportsBaseStatement;
   const subjectLabel = getEntityLabel(subjectEntity, query.subjectLabel);
   const objectLabel = getEntityLabel(objectEntity, query.objectLabel);
   const phraseMappings = createPhraseMappings(query, {
@@ -249,7 +288,7 @@ async function resolveOrbitEvidence(query, request) {
       polarity: supports ? 'support' : 'refute',
       weight: 1,
       sourceUrl: wikidataEntityUrl(subject.id, query.property),
-      claim: supports
+      claim: claimSupportsBaseStatement
         ? createOrbitSupportClaim(
             orbitPath,
             query.property,
