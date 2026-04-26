@@ -29,25 +29,22 @@ the structured evidence path works.
 
 ### Recommendation
 
-Keep reasoning and graph primitives in Rust, expose a WASM API for the web app,
+Keep reasoning and links-network primitives in Rust, expose a WASM API for the web app,
 and use TypeScript wrappers for UI integration. Use Web Workers for expensive
 operations or optional local model inference.
 
-## Graph UI and Graph Algorithms
+## Links-network UI and Algorithms
 
-| Source                                      | Notes for meta-expression                                                                                                                  |
-| ------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------ |
-| [React Flow](https://reactflow.dev/learn)   | React-native graph/editor toolkit with nodes, edges, controls, minimap, layout examples, and TypeScript-oriented API.                      |
-| [Cytoscape.js](https://js.cytoscape.org/)   | Mature interactive graph visualization and analysis library with gestures, layout ecosystem, and mobile/desktop browser support.           |
-| [Graphology](https://graphology.github.io/) | JavaScript/TypeScript graph object and standard library for graph algorithms, layouts, traversals, and renderer backends such as sigma.js. |
+| Source                                    | Notes for meta-expression                                                                                           |
+| ----------------------------------------- | ------------------------------------------------------------------------------------------------------------------- |
+| [React Flow](https://reactflow.dev/learn) | React-native visual editor toolkit that can render links-network views if adapted away from its native terminology. |
+| [Cytoscape.js](https://js.cytoscape.org/) | Mature interactive visualization and analysis library that can render links-network projections in browser views.   |
 
 ### Recommendation
 
-Use React Flow if the first UI is an editor/playground with selectable nodes and
-custom cards. Use Cytoscape.js if graph analysis/layout complexity becomes more
-important than React component composition. Use Graphology as an internal graph
-algorithm library if the UI renderer and graph data model should remain
-separate.
+Use React Flow if the first UI is an editor/playground with selectable links and
+custom cards. Use Cytoscape.js if links-network layout complexity becomes more
+important than React component composition.
 
 ## Controlled Natural Language and Formalization
 
@@ -88,7 +85,19 @@ WASM as design references or optional later engines for specific fragments.
 ### Recommendation
 
 Keep Links Notation as the native representation, but design import/export
-adapters so statement graphs can later interoperate with RDF/OWL tools.
+adapters so statement links networks can later interoperate with RDF/OWL tools.
+
+## Links Theory Terminology
+
+| Source                                                                          | Notes for meta-expression                                                                                         |
+| ------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------- |
+| [`link-foundation/meta-theory`](https://github.com/link-foundation/meta-theory) | The Links Theory archive defines links networks as the native model and treats other visual forms as projections. |
+
+### Recommendation
+
+Use "links network", "link", and "relation link" in product APIs and docs.
+External visualization or algorithm libraries can still be evaluated, but they
+must be hidden behind links-network adapters.
 
 ## In-Ecosystem Repository Captures
 
@@ -103,6 +112,7 @@ Raw metadata and READMEs were saved for:
 | [`link-assistant/human-language`](https://github.com/link-assistant/human-language)             | [`human-language.json`](./data/repositories/human-language.json), [`human-language-readme.md`](./data/repositories/human-language-readme.md)                     |
 | [`link-assistant/model-in-browser`](https://github.com/link-assistant/model-in-browser)         | [`model-in-browser.json`](./data/repositories/model-in-browser.json), [`model-in-browser-readme.md`](./data/repositories/model-in-browser-readme.md)             |
 | [`link-assistant/calculator`](https://github.com/link-assistant/calculator)                     | [`calculator.json`](./data/repositories/calculator.json), [`calculator-readme.md`](./data/repositories/calculator-readme.md)                                     |
+| [`link-foundation/meta-theory`](https://github.com/link-foundation/meta-theory)                 | [`meta-theory.json`](./data/repositories/meta-theory.json), [`meta-theory-readme.md`](./data/repositories/meta-theory-readme.md), archived article captures      |
 
 ## Search Gaps
 
