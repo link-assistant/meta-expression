@@ -1,5 +1,14 @@
 const arithmeticEqualityPattern =
   /^\s*(-?\d+(?:\.\d+)?)\s*([+*/-])\s*(-?\d+(?:\.\d+)?)\s*=\s*(-?\d+(?:\.\d+)?)\s*$/;
+const arithmeticQuestionPattern =
+  /^\s*(?:what\s+is\s+)?(-?\d+(?:\.\d+)?)\s*([+*/-])\s*(-?\d+(?:\.\d+)?)\??\s*$/i;
+const realWorldConfidenceEpsilon = 0.01;
+const issueReportRepoUrl = 'https://github.com/link-assistant/meta-expression';
+const selfReferentialFalseStatements = new Set([
+  'this statement is false',
+  'this sentence is false',
+  'this is false statement',
+]);
 
 const knownEvidence = [
   {
@@ -15,6 +24,21 @@ const knownEvidence = [
       subject: 'Q2',
       property: 'P397',
       object: 'Q525',
+    },
+  },
+  {
+    key: 'elon musk is alive',
+    polarity: 'support',
+    weight: 1,
+    sourceType: 'wikidata',
+    sourceUrl: 'https://www.wikidata.org/wiki/Q317521#P570',
+    retrievedAt: '2026-04-26',
+    claim:
+      'Wikidata Q317521 identifies Elon Musk as a human born in 1971 and does not expose a date of death (P570) statement in the captured entity data.',
+    identifiers: {
+      subject: 'Q317521',
+      property: 'P570',
+      object: 'missing',
     },
   },
 ];
@@ -37,6 +61,76 @@ export const FORMALIZATION_LEVELS = Object.freeze({
   PARTIAL_FORMAL_EXPRESSION: 3,
   FULLY_COMPUTABLE_EXPRESSION: 4,
 });
+
+export const FORMALIZATION_LEVEL_DETAILS = Object.freeze({
+  [FORMALIZATION_LEVELS.RAW_TEXT]: Object.freeze({
+    level: FORMALIZATION_LEVELS.RAW_TEXT,
+    name: 'Raw text',
+    summary: 'The input is preserved as text and still needs interpretation.',
+    executable: false,
+  }),
+  [FORMALIZATION_LEVELS.STRUCTURED_MEANING_LINKS]: Object.freeze({
+    level: FORMALIZATION_LEVELS.STRUCTURED_MEANING_LINKS,
+    name: 'Structured meaning links',
+    summary:
+      'The selected meaning is represented as links, but is not yet formal enough to execute.',
+    executable: false,
+  }),
+  [FORMALIZATION_LEVELS.PARTIAL_FORMAL_EXPRESSION]: Object.freeze({
+    level: FORMALIZATION_LEVELS.PARTIAL_FORMAL_EXPRESSION,
+    name: 'Partial formal expression',
+    summary:
+      'The expression has a structured formal shape with explicit unknowns or external evidence needs.',
+    executable: false,
+  }),
+  [FORMALIZATION_LEVELS.FULLY_COMPUTABLE_EXPRESSION]: Object.freeze({
+    level: FORMALIZATION_LEVELS.FULLY_COMPUTABLE_EXPRESSION,
+    name: 'Fully computable expression',
+    summary:
+      'The selected expression is specific enough for deterministic local evaluation.',
+    executable: true,
+  }),
+});
+
+const preparedExamples = Object.freeze([
+  Object.freeze({
+    input: '1 + 1 = 2',
+    label: 'Exact arithmetic truth',
+    category: 'calculator',
+    description: 'Fully computable equality with confidence 100%.',
+  }),
+  Object.freeze({
+    input: '1 + 1 = 1',
+    label: 'Exact arithmetic contradiction',
+    category: 'calculator',
+    description: 'Fully computable equality with confidence 0%.',
+  }),
+  Object.freeze({
+    input: '1 + 1',
+    label: 'Arithmetic question',
+    category: 'question',
+    description: 'Question-style expression asking for the computed result.',
+  }),
+  Object.freeze({
+    input: 'Earth orbits the Sun',
+    label: 'Wikidata astronomy claim',
+    category: 'evidence',
+    description: 'Real-world evidence with provenance and bounded confidence.',
+  }),
+  Object.freeze({
+    input: 'Elon Musk is alive',
+    label: 'Person alive claim',
+    category: 'evidence',
+    description:
+      'A person claim backed by Wikidata identifiers without absolute certainty.',
+  }),
+  Object.freeze({
+    input: 'this statement is false',
+    label: 'Self-reference',
+    category: 'logic',
+    description: 'A self-referential truth claim marked as undetermined.',
+  }),
+]);
 
 /**
  * Example function kept for backward compatibility with the template tests.
@@ -61,6 +155,21 @@ export const multiply = (a, b) => a * b;
  */
 export const delay = (ms) =>
   new Promise((resolve) => globalThis.setTimeout(resolve, ms));
+
+export function getPreparedExamples() {
+  return preparedExamples.map((example) => ({ ...example }));
+}
+
+export function describeFormalizationLevel(level) {
+  return (
+    FORMALIZATION_LEVEL_DETAILS[level] ?? {
+      level,
+      name: 'Unknown level',
+      summary: 'The formalization level is not recognized by this prototype.',
+      executable: false,
+    }
+  );
+}
 
 export function createStatementDraft(input, options = {}) {
   const text = normalizeInput(input);
@@ -130,9 +239,13 @@ export function analyzeStatement(input, options = {}) {
 
   addFormalizationDependencies(context, formalizationLink, formalization);
 
+  const evidence = [
+    ...(options.evidence ?? knownEvidence),
+    ...createUserBeliefEvidence(formalization, options.userBeliefs),
+  ];
   const result = formalization.computable
     ? evaluateComputableFormalization(formalization)
-    : estimateFromEvidence(formalization, options.evidence ?? knownEvidence);
+    : estimateFromEvidence(formalization, evidence, options);
 
   const resultLink = addResultLinks(
     context,
@@ -158,7 +271,11 @@ export function generateInterpretations(input, options = {}) {
   const topK = Math.max(1, Math.min(options.topK ?? 3, 10));
   const interpretations = arithmeticEqualityPattern.test(text)
     ? arithmeticInterpretations(text)
-    : realWorldInterpretations(text);
+    : arithmeticQuestionPattern.test(text)
+      ? arithmeticQuestionInterpretations(text)
+      : isSelfReferentialFalseStatement(text)
+        ? selfReferenceInterpretations(text)
+        : realWorldInterpretations(text);
 
   return interpretations.slice(0, topK);
 }
@@ -180,6 +297,105 @@ export function serializeLinksNotation(linksNetwork) {
     )} ${references} ${value})`;
   });
   return [...header, ...lines].join('\n');
+}
+
+export function createIssueReportUrl(analysis, options = {}) {
+  const repoUrl = options.repoUrl ?? issueReportRepoUrl;
+  const params = new globalThis.URLSearchParams({
+    title: createIssueReportTitle(analysis.statement.value.text),
+    body: createIssueReportBody(analysis, options),
+    labels: options.labels ?? 'bug',
+  });
+
+  return `${repoUrl.replace(/\/$/, '')}/issues/new?${params.toString()}`;
+}
+
+function createIssueReportTitle(statement) {
+  const text = normalizeInput(statement);
+  const shortened = text.length > 50 ? `${text.slice(0, 50)}...` : text;
+  return `Issue with statement: ${shortened}`;
+}
+
+function createIssueReportBody(analysis, options) {
+  const lines = [];
+  const level = describeFormalizationLevel(analysis.formalization.level);
+  const confidence =
+    analysis.result.confidence === null
+      ? 'unknown'
+      : `${Math.round(analysis.result.confidence * 100)}%`;
+
+  lines.push('## Environment');
+  lines.push('');
+  if (options.pageUrl) {
+    lines.push(`- **URL**: ${options.pageUrl}`);
+  }
+  if (options.userAgent) {
+    lines.push(`- **User Agent**: ${options.userAgent}`);
+  }
+  lines.push(
+    `- **Timestamp**: ${options.timestamp ?? new Date().toISOString()}`
+  );
+  lines.push('');
+  lines.push('## Statement');
+  lines.push('');
+  lines.push('```');
+  lines.push(analysis.statement.value.text);
+  lines.push('```');
+  lines.push('');
+  lines.push('## Interpretation');
+  lines.push('');
+  lines.push(analysis.selectedInterpretation.paraphrase);
+  lines.push('');
+  lines.push('## Result');
+  lines.push('');
+  lines.push(`- **Value**: ${analysis.result.value}`);
+  lines.push(`- **Confidence**: ${confidence}`);
+  lines.push(`- **Formalization level**: ${level.level} - ${level.name}`);
+  lines.push(`- **Explanation**: ${analysis.result.explanation}`);
+  lines.push('');
+  lines.push('## Evidence');
+  lines.push('');
+  appendEvidenceLines(
+    lines,
+    'Supporting evidence',
+    analysis.result.supportingEvidence
+  );
+  appendEvidenceLines(
+    lines,
+    'Refuting evidence',
+    analysis.result.refutingEvidence
+  );
+  lines.push('');
+  lines.push('## Links Notation');
+  lines.push('');
+  lines.push('```');
+  lines.push(serializeLinksNotation(analysis.linksNetwork));
+  lines.push('```');
+  lines.push('');
+  lines.push('## Description');
+  lines.push('');
+  lines.push('<!-- Please describe what looked wrong or incomplete. -->');
+  lines.push('');
+
+  return lines.join('\n');
+}
+
+function appendEvidenceLines(lines, heading, evidenceItems) {
+  lines.push(`### ${heading}`);
+  if (evidenceItems.length === 0) {
+    lines.push('');
+    lines.push('None.');
+    lines.push('');
+    return;
+  }
+
+  for (const evidence of evidenceItems) {
+    const source = evidence.sourceUrl
+      ? `[${evidence.sourceType}](${evidence.sourceUrl})`
+      : evidence.sourceType;
+    lines.push(`- ${source}: ${evidence.claim}`);
+  }
+  lines.push('');
 }
 
 export function computeEvidenceConfidence(evidenceItems) {
@@ -214,6 +430,86 @@ export function computeEvidenceConfidence(evidenceItems) {
   };
 }
 
+function applySourceWeights(evidenceItems, beliefSystem) {
+  return evidenceItems.map((evidence) => {
+    const sourceWeight = Number(
+      beliefSystem.sourceWeights?.[evidence.sourceType] ?? 1
+    );
+    return {
+      ...evidence,
+      weight: Number(evidence.weight ?? 0) * sourceWeight,
+    };
+  });
+}
+
+function boundRealWorldConfidence(confidence, uncertainty) {
+  if (confidence === null) {
+    return null;
+  }
+  const parsed = Number(uncertainty);
+  const epsilon = Number.isFinite(parsed)
+    ? clamp(parsed, 0, 0.49)
+    : realWorldConfidenceEpsilon;
+  return clamp(confidence, epsilon, 1 - epsilon);
+}
+
+function createUserBeliefEvidence(formalization, userBeliefs) {
+  const normalized = formalization.expression.normalized;
+  if (!normalized || !userBeliefs) {
+    return [];
+  }
+
+  const rawProbability = findUserBelief(userBeliefs, normalized);
+  if (rawProbability === undefined) {
+    return [];
+  }
+
+  const probability = clamp(Number(rawProbability), 0, 1);
+  if (!Number.isFinite(probability) || probability === 0.5) {
+    return [];
+  }
+
+  const polarity = probability > 0.5 ? 'support' : 'refute';
+  const weight = Math.abs(probability - 0.5) * 2;
+  const displayText = formalization.expression.text ?? normalized;
+
+  return [
+    {
+      id: `user-belief-${safeReference(normalized)}`,
+      key: normalized,
+      polarity,
+      weight,
+      sourceType: 'user',
+      sourceUrl: null,
+      retrievedAt: 'local-storage',
+      claim: `User configured "${displayText}" at ${Math.round(
+        probability * 100
+      )}% on the local belief slider.`,
+      identifiers: {
+        statement: normalized,
+      },
+    },
+  ];
+}
+
+function findUserBelief(userBeliefs, normalized) {
+  if (userBeliefs instanceof Map) {
+    for (const [key, value] of userBeliefs.entries()) {
+      if (normalizeKey(key) === normalized) {
+        return value;
+      }
+    }
+    return undefined;
+  }
+
+  for (const [key, value] of Object.entries(userBeliefs)) {
+    if (normalizeKey(key) === normalized) {
+      return value;
+    }
+  }
+  return undefined;
+}
+
 function arithmeticInterpretations(text) {
   return [
     {
@@ -245,23 +541,97 @@ function arithmeticInterpretations(text) {
   ];
 }
 
+function arithmeticQuestionInterpretations(text) {
+  return [
+    {
+      kind: 'arithmetic-question',
+      paraphrase: `Compute the value of "${text}".`,
+      examples: ['1 + 1 asks for the number 2', '6 / 3 asks for the number 2'],
+      confidence: 1,
+      source: 'deterministic-rule',
+      formalizationLevel: FORMALIZATION_LEVELS.FULLY_COMPUTABLE_EXPRESSION,
+    },
+    {
+      kind: 'notation-fragment',
+      paraphrase:
+        'Treat the input as a symbolic fragment that may need a surrounding statement.',
+      examples: ['The expression may be part of a larger equation'],
+      confidence: 0.3,
+      source: 'deterministic-rule',
+      formalizationLevel: FORMALIZATION_LEVELS.PARTIAL_FORMAL_EXPRESSION,
+    },
+    {
+      kind: 'raw-statement',
+      paraphrase:
+        'Preserve the text as an underspecified human-language statement.',
+      examples: ['Ask the user what the expression should mean'],
+      confidence: 0.2,
+      source: 'deterministic-rule',
+      formalizationLevel: FORMALIZATION_LEVELS.RAW_TEXT,
+    },
+  ];
+}
+
+function selfReferenceInterpretations() {
+  return [
+    {
+      kind: 'self-referential-truth-claim',
+      paraphrase: 'Treat the statement as referring to its own truth value.',
+      examples: [
+        'This statement is false cannot be assigned a stable truth value',
+      ],
+      confidence: 0.9,
+      source: 'deterministic-rule',
+      formalizationLevel: FORMALIZATION_LEVELS.PARTIAL_FORMAL_EXPRESSION,
+    },
+    {
+      kind: 'quoted-text',
+      paraphrase: 'Preserve the input as quoted text without evaluating it.',
+      examples: ['Useful for translation or later refinement'],
+      confidence: 0.25,
+      source: 'deterministic-rule',
+      formalizationLevel: FORMALIZATION_LEVELS.RAW_TEXT,
+    },
+    {
+      kind: 'real-world-claim',
+      paraphrase:
+        'Treat the words as an ordinary factual claim that needs evidence.',
+      examples: ['Evidence may support or refute the claim'],
+      confidence: 0.15,
+      source: 'deterministic-rule',
+      formalizationLevel: FORMALIZATION_LEVELS.STRUCTURED_MEANING_LINKS,
+    },
+  ];
+}
+
 function realWorldInterpretations(text) {
-  const known = normalizeKey(text) === 'earth orbits the sun';
+  const normalized = normalizeKey(text);
+  const knownEarth = normalized === 'earth orbits the sun';
+  const knownAlive = normalized === 'elon musk is alive';
 
   return [
     {
-      kind: known ? 'wikidata-astronomy-claim' : 'real-world-claim',
-      paraphrase: known
+      kind: knownEarth
+        ? 'wikidata-astronomy-claim'
+        : knownAlive
+          ? 'wikidata-person-liveness-claim'
+          : 'real-world-claim',
+      paraphrase: knownEarth
         ? 'Earth has the Sun as its parent astronomical body.'
-        : `Treat "${text}" as a factual claim that needs evidence.`,
-      examples: known
+        : knownAlive
+          ? 'Elon Musk is a person whose Wikidata item has no date of death statement in the captured data.'
+          : `Treat "${text}" as a factual claim that needs evidence.`,
+      examples: knownEarth
         ? ['Earth -> parent astronomical body -> Sun']
-        : ['Evidence may support or refute the claim'],
-      confidence: known ? 0.95 : 0.5,
+        : knownAlive
+          ? ['Elon Musk -> date of death -> missing']
+          : ['Evidence may support or refute the claim'],
+      confidence: knownEarth || knownAlive ? 0.95 : 0.5,
       source: 'deterministic-rule',
-      formalizationLevel: known
-        ? FORMALIZATION_LEVELS.PARTIAL_FORMAL_EXPRESSION
-        : FORMALIZATION_LEVELS.STRUCTURED_MEANING_LINKS,
+      formalizationLevel:
+        knownEarth || knownAlive
+          ? FORMALIZATION_LEVELS.PARTIAL_FORMAL_EXPRESSION
+          : FORMALIZATION_LEVELS.STRUCTURED_MEANING_LINKS,
     },
     {
       kind: 'ambiguous-claim',
@@ -302,36 +672,105 @@ function formalizeInterpretation(text, interpretation) {
       refinementSuggestions: [],
     };
   }
+  if (interpretation.kind === 'arithmetic-question') {
+    const match = text.match(arithmeticQuestionPattern);
+    const leftOperand = Number(match[1]);
+    const rightOperand = Number(match[3]);
+    return {
+      level: FORMALIZATION_LEVELS.FULLY_COMPUTABLE_EXPRESSION,
+      computable: true,
+      expression: {
+        type: 'arithmetic-question',
+        operator: match[2],
+        leftOperand,
+        rightOperand,
+      },
+      unknowns: [],
+      refinementSuggestions: [],
+    };
+  }
+  if (interpretation.kind === 'self-referential-truth-claim') {
+    return {
+      level: FORMALIZATION_LEVELS.PARTIAL_FORMAL_EXPRESSION,
+      computable: false,
+      expression: {
+        type: 'self-reference-paradox',
+        text,
+        normalized: normalizeKey(text),
+      },
+      unknowns: ['stable truth value'],
+      refinementSuggestions: [
+        'Quote the sentence if it should be treated as text.',
+        'Rewrite it as a non-self-referential claim if evidence should be checked.',
+      ],
+    };
+  }
 
   const normalized = normalizeKey(text);
-  const known = normalized === 'earth orbits the sun';
+  const knownEarth = normalized === 'earth orbits the sun';
+  const knownAlive = normalized === 'elon musk is alive';
 
   return {
-    level: known
-      ? FORMALIZATION_LEVELS.PARTIAL_FORMAL_EXPRESSION
-      : interpretation.formalizationLevel,
+    level:
+      knownEarth || knownAlive
+        ? FORMALIZATION_LEVELS.PARTIAL_FORMAL_EXPRESSION
+        : interpretation.formalizationLevel,
     computable: false,
     expression: {
-      type: known ? 'wikidata-claim' : 'partial-claim',
+      type: knownEarth
+        ? 'wikidata-claim'
+        : knownAlive
+          ? 'wikidata-person-liveness-claim'
+          : 'partial-claim',
       text,
       normalized,
-      wikidata: known
+      wikidata: knownEarth
         ? { subject: 'Q2', property: 'P397', object: 'Q525' }
-        : null,
+        : knownAlive
+          ? { subject: 'Q317521', property: 'P570', object: 'missing' }
+          : null,
     },
-    unknowns: known ? [] : ['formal predicate', 'evidence source mapping'],
-    refinementSuggestions: known
-      ? []
-      : [
-          'Choose a specific subject.',
-          'Choose a relation that can be checked against evidence.',
-        ],
+    unknowns:
+      knownEarth || knownAlive
+        ? []
+        : ['formal predicate', 'evidence source mapping'],
+    refinementSuggestions:
+      knownEarth || knownAlive
+        ? []
+        : [
+            'Choose a specific subject.',
+            'Choose a relation that can be checked against evidence.',
+          ],
   };
 }
 
 function evaluateComputableFormalization(formalization) {
   const expression = formalization.expression;
   const actual = evaluateArithmeticExpression(expression);
+  if (expression.type === 'arithmetic-question') {
+    const evidence = {
+      id: 'computed-evidence-1',
+      polarity: 'support',
+      weight: 1,
+      sourceType: 'computed',
+      sourceUrl: null,
+      retrievedAt: 'local',
+      claim: `${expression.leftOperand} ${expression.operator} ${expression.rightOperand} evaluates to ${actual}.`,
+    };
+
+    return {
+      kind: 'computed',
+      value: actual,
+      actual,
+      expected: undefined,
+      confidence: 1,
+      rawBalance: 1,
+      supportingEvidence: [evidence],
+      refutingEvidence: [],
+      explanation: 'The expression was computed locally.',
+    };
+  }
+
   const value = Object.is(actual, expression.expected);
   const evidence = {
     id: 'computed-evidence-1',
@@ -358,25 +797,54 @@ function evaluateComputableFormalization(formalization) {
   };
 }
 
-function estimateFromEvidence(formalization, evidenceFixtures) {
+function estimateFromEvidence(formalization, evidenceFixtures, options = {}) {
+  if (formalization.expression.type === 'self-reference-paradox') {
+    return {
+      kind: 'evidence-estimate',
+      value: 'undetermined',
+      confidence: 0.5,
+      rawBalance: 0,
+      supportWeight: 0,
+      refuteWeight: 0,
+      supportingEvidence: [],
+      refutingEvidence: [],
+      explanation:
+        'The selected interpretation is self-referential, so this prototype marks its truth value as undetermined instead of treating missing evidence as unknown.',
+    };
+  }
+
   const evidence = evidenceFixtures.filter(
     (item) => item.key === formalization.expression.normalized
   );
-  const confidence = computeEvidenceConfidence(evidence);
+  const weightedEvidence = applySourceWeights(
+    evidence,
+    options.beliefSystem ?? defaultBeliefSystem
+  );
+  const confidence = computeEvidenceConfidence(weightedEvidence);
+  const boundedConfidence = boundRealWorldConfidence(
+    confidence.confidence,
+    options.realWorldUncertainty ??
+      options.beliefSystem?.realWorldUncertainty ??
+      realWorldConfidenceEpsilon
+  );
 
   return {
     kind: 'evidence-estimate',
-    value: confidence.confidence === null ? 'unknown' : confidence.confidence,
-    confidence: confidence.confidence,
+    value: boundedConfidence === null ? 'unknown' : boundedConfidence,
+    confidence: boundedConfidence,
     rawBalance: confidence.rawBalance,
     supportWeight: confidence.supportWeight,
     refuteWeight: confidence.refuteWeight,
-    supportingEvidence: evidence.filter((item) => item.polarity === 'support'),
-    refutingEvidence: evidence.filter((item) => item.polarity === 'refute'),
+    supportingEvidence: weightedEvidence.filter(
+      (item) => item.polarity === 'support'
+    ),
+    refutingEvidence: weightedEvidence.filter(
+      (item) => item.polarity === 'refute'
+    ),
     explanation:
       confidence.confidence === null
         ? 'No configured evidence was found for the selected interpretation.'
-        : 'Confidence is the weighted support ratio over configured evidence.',
+        : 'Confidence is the weighted support ratio over configured evidence, bounded away from absolute certainty for real-world claims.',
   };
 }
 
@@ -385,7 +853,11 @@ function addFormalizationDependencies(
   formalizationLink,
   formalization
 ) {
-  if (formalization.expression.type !== 'arithmetic-equality') {
+  if (
+    !['arithmetic-equality', 'arithmetic-question'].includes(
+      formalization.expression.type
+    )
+  ) {
     addLink(context, {
       role: 'depends-on',
       references: [formalizationLink.id],
@@ -403,8 +875,10 @@ function addFormalizationDependencies(
     String(expression.leftOperand),
     expression.operator,
     String(expression.rightOperand),
-    String(expression.expected),
   ];
+  if (expression.type === 'arithmetic-equality') {
+    dependencyValues.push(String(expression.expected));
+  }
 
   for (const value of dependencyValues) {
     const dependency = addLink(context, {
@@ -610,6 +1084,10 @@ function normalizeKey(input) {
     .replace(/[^\p{Letter}\p{Number}]+/gu, ' ')
     .trim()
     .replace(/\s+/g, ' ');
+}
+
+function isSelfReferentialFalseStatement(input) {
+  return selfReferentialFalseStatements.has(normalizeKey(input));
 }
 
 function algorithmProvenance(method) {

@@ -30,6 +30,27 @@ Core exports:
   links network, formalization, result, confidence, and evidence.
 - `serializeLinksNotation(linksNetwork)` exports the selected links network in
   a Lino-style text form.
+- `getPreparedExamples()` returns the current examples shown by the static web
+  prototype.
+- `describeFormalizationLevel(level)` returns the level name, summary, and
+  executability flag.
+- `createIssueReportUrl(analysis, options)` creates a prefilled GitHub issue
+  URL with statement, result, evidence, and Links Notation.
+
+Current deterministic examples:
+
+- `1 + 1 = 2` -> computed `true`, confidence `1`.
+- `1 + 1 = 1` -> computed `false`, confidence `0`.
+- `1 + 1` -> arithmetic question result `2`.
+- `Earth orbits the Sun` -> Wikidata-backed evidence estimate, confidence
+  `0.99`.
+- `Elon Musk is alive` -> Wikidata-backed person-alive evidence estimate,
+  confidence `0.99`.
+- `this statement is false` -> self-reference status `undetermined`,
+  confidence `0.5`.
+
+Real-world confidence is intentionally bounded away from absolute `0%` and
+`100%`; exact certainty is reserved for deterministic computable expressions.
 
 ## CLI
 
@@ -64,6 +85,10 @@ Then visit `http://127.0.0.1:4173/web/`.
 
 On `main`, CI publishes the same static prototype to the repository's GitHub
 Pages `/web/` path after tests pass.
+
+The web prototype includes prepared examples, an interpretation selector, local
+belief slider saved in `localStorage`, confidence/result/evidence summaries,
+Links Notation output, and a prefilled GitHub issue report button.
 
 ## Development
 

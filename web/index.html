@@ -23,6 +23,31 @@
           </div>
         </form>
 
+        <section class="examples" aria-label="Prepared examples">
+          <h1>Examples</h1>
+          <div class="example-list" id="example-list"></div>
+        </section>
+
+        <section class="belief-panel" aria-label="Local belief">
+          <div class="belief-heading">
+            <h1>Belief</h1>
+            <output id="belief-value" for="belief-slider">50%</output>
+          </div>
+          <label for="belief-slider">Current statement</label>
+          <div class="belief-control">
+            <span>False</span>
+            <input
+              id="belief-slider"
+              type="range"
+              min="0"
+              max="100"
+              value="50"
+            />
+            <span>True</span>
+            <button type="button" id="reset-belief">Reset</button>
+          </div>
+        </section>
+
         <section class="interpretations" aria-label="Interpretations">
           <h1>Interpretations</h1>
           <div id="interpretation-list"></div>
@@ -36,10 +61,26 @@
           <div>
             <span class="eyebrow">Level</span>
             <strong id="formalization-level"></strong>
+            <small id="formalization-level-name"></small>
           </div>
           <div>
             <span class="eyebrow">Result</span>
             <strong id="result-value"></strong>
+          </div>
+        </section>
+
+        <section class="evidence-band" aria-label="Evidence summary">
+          <div>
+            <span class="eyebrow">Supports</span>
+            <strong id="support-count"></strong>
+          </div>
+          <div>
+            <span class="eyebrow">Refutes</span>
+            <strong id="refute-count"></strong>
+          </div>
+          <div>
+            <span class="eyebrow">Unknowns</span>
+            <strong id="unknown-count"></strong>
           </div>
         </section>
       </section>
@@ -47,7 +88,10 @@
       <section class="network-panel" aria-label="Links network">
         <div class="network-header">
           <h2>Links Network</h2>
-          <button type="button" id="copy-lino">Lino</button>
+          <div class="network-actions">
+            <button type="button" id="copy-lino">Lino</button>
+            <button type="button" id="report-issue">Report Issue</button>
+          </div>
         </div>
         <div class="link-lanes" id="link-lanes"></div>
         <pre id="lino-output"></pre>

@@ -1,0 +1,5 @@
+link-assistant/calculator:src/utils.rs: "https://github.com/link-assistant/calculator/issues/new?title={}&body={}",
+link-assistant/calculator:src/utils.rs: assert!(link.contains("issues/new"));
+link-assistant/calculator:web/src/utils/reportIssue.ts: const baseUrl = 'https://github.com/link-assistant/calculator/issues/new';
+link-assistant/calculator:web/src/utils/reportIssue.test.ts: expect(url).toContain('https://github.com/link-assistant/calculator/issues/new');
+link-assistant/calculator:tests/integration_test.rs: assert!(link.contains("issues/new"));
