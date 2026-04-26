@@ -1,8 +1,37 @@
 import { createWikimediaEvidenceClient } from './wikimedia-evidence.js';
+import {
+  disambiguatePhrases,
+  describeDisambiguation,
+} from './disambiguation.js';
+import {
+  defaultReasoningStrategyId,
+  getReasoningStrategy,
+  orderReasoningSteps,
+} from './reasoning-strategies.js';
+import { findExampleOpposite } from './examples.js';
+
 export {
   createWikimediaEvidenceClient,
   resolveLiveEvidence,
 } from './wikimedia-evidence.js';
+export {
+  disambiguatePhrases,
+  describeDisambiguation,
+} from './disambiguation.js';
+export {
+  reasoningStrategies,
+  defaultReasoningStrategyId,
+  getReasoningStrategy,
+  listReasoningStrategies,
+  orderReasoningSteps,
+  classifyReasoningPhase,
+} from './reasoning-strategies.js';
+export {
+  getPreparedExamples,
+  getRandomExamples,
+  findExampleOpposite,
+  createSeededRandom,
+} from './examples.js';
 
 const arithmeticEqualityPattern =
   /^\s*(-?\d+(?:\.\d+)?)\s*([+*/-])\s*(-?\d+(?:\.\d+)?)\s*=\s*(-?\d+(?:\.\d+)?)\s*$/;
@@ -195,59 +224,6 @@ export const FORMALIZATION_LEVEL_DETAILS = Object.freeze({
   }),
 });
 
-const preparedExamples = Object.freeze([
-  Object.freeze({
-    input: '1 + 1 = 2',
-    label: 'Exact arithmetic truth',
-    category: 'calculator',
-    description: 'Fully computable equality with confidence 100%.',
-  }),
-  Object.freeze({
-    input: '1 + 1 = 1',
-    label: 'Exact arithmetic contradiction',
-    category: 'calculator',
-    description: 'Fully computable equality with confidence 0%.',
-  }),
-  Object.freeze({
-    input: '1 + 1',
-    label: 'Arithmetic question',
-    category: 'question',
-    description: 'Question-style expression asking for the computed result.',
-  }),
-  Object.freeze({
-    input: 'Earth orbits the Sun',
-    label: 'Wikidata astronomy claim',
-    category: 'evidence',
-    description: 'Real-world evidence with provenance and bounded confidence.',
-  }),
-  Object.freeze({
-    input: 'Moon orbits the Sun',
-    label: 'Wikidata orbit chain',
-    category: 'evidence',
-    description:
-      'A real-world orbit claim that follows parent astronomical bodies.',
-  }),
-  Object.freeze({
-    input: 'Elon Musk is alive',
-    label: 'Person alive claim',
-    category: 'evidence',
-    description:
-      'A person claim backed by Wikidata identifiers without absolute certainty.',
-  }),
-  Object.freeze({
-    input: 'Paris is the capital of France',
-    label: 'Live capital claim',
-    category: 'evidence',
-    description: 'A live Wikimedia template for country-capital evidence.',
-  }),
-  Object.freeze({
-    input: 'this statement is false',
-    label: 'Self-reference',
-    category: 'logic',
-    description: 'A self-referential truth claim marked as undetermined.',
-  }),
-]);
-
 /**
  * Example function kept for backward compatibility with the template tests.
  * @param {number} a First number
@@ -271,10 +247,6 @@ export const multiply = (a, b) => a * b;
  */
 export const delay = (ms) =>
   new Promise((resolve) => globalThis.setTimeout(resolve, ms));
-
-export function getPreparedExamples() {
-  return preparedExamples.map((example) => ({ ...example }));
-}
 
 export function describeFormalizationLevel(level) {
   return (
@@ -370,6 +342,27 @@ export function analyzeStatement(input, options = {}) {
     result
   );
 
+  const strategyId = options.reasoningStrategyId ?? defaultReasoningStrategyId;
+  const reasoningStrategy = getReasoningStrategy(strategyId);
+  const reasoningSteps = orderReasoningSteps(
+    context.linksNetwork.links,
+    strategyId
+  );
+  const alternatives = buildAlternatives(
+    draft.statement.value.text,
+    selectedInterpretation,
+    formalization
+  );
+  const dependencies = buildDependencies(
+    draft.statement.value.text,
+    selectedInterpretation,
+    formalization
+  );
+  const definitions = buildDefinitions(draft.statement.value.text);
+  const confirmations = buildConfirmations(result);
+  const refutations = buildRefutations(result);
+  const opposite = findExampleOpposite(draft.statement.value.text);
+
   return {
     status: 'completed',
     statement,
@@ -379,7 +372,156 @@ export function analyzeStatement(input, options = {}) {
     result,
     resultLink,
     linksNetwork: context.linksNetwork,
+    reasoningStrategy,
+    reasoningSteps,
+    alternatives,
+    dependencies,
+    definitions,
+    confirmations,
+    refutations,
+    opposite,
   };
+}
+
+function buildAlternatives(text, interpretation, formalization) {
+  const alternatives = [];
+  const normalized = normalizeKey(text);
+  if (normalized === 'moon orbits the sun') {
+    alternatives.push({
+      text: 'Moon orbits Earth, which orbits the Sun',
+      reason:
+        'A more precise restatement that exposes the Moon -> Earth -> Sun parent astronomical body chain.',
+      confidence: 0.97,
+    });
+  }
+  if (normalized === 'moon does not orbit the sun') {
+    alternatives.push({
+      text: 'Moon orbits Earth, not the Sun directly',
+      reason:
+        'Distinguishes the indirect parent-body chain from a direct orbital relationship.',
+      confidence: 0.95,
+    });
+  }
+  if (normalized === 'earth orbits the sun') {
+    alternatives.push({
+      text: 'Earth has the Sun as its parent astronomical body',
+      reason: 'Restates the claim using the Wikidata relation explicitly.',
+      confidence: 0.97,
+    });
+  }
+  if (
+    interpretation.kind === 'wikidata-person-liveness-claim' ||
+    /\bis\s+(alive|dead)\b/i.test(text)
+  ) {
+    const positive = /alive/i.test(text);
+    alternatives.push({
+      text: positive
+        ? `${capitalizeFirstWord(text.replace(/\bis\s+alive\b/i, ''))} has no recorded date of death (P570)`
+        : `${capitalizeFirstWord(text.replace(/\bis\s+dead\b/i, ''))} has a recorded date of death (P570)`,
+      reason:
+        'Restates the claim using the Wikidata property that the prototype actually checks.',
+      confidence: 0.9,
+    });
+  }
+  if (formalization.expression?.type === 'arithmetic-equality') {
+    const expression = formalization.expression;
+    alternatives.push({
+      text: `Compute ${expression.leftOperand} ${expression.operator} ${expression.rightOperand} and compare with ${expression.expected}`,
+      reason: 'Splits the claim into a computation and a comparison.',
+      confidence: 1,
+    });
+  }
+  return alternatives;
+}
+
+function buildDependencies(text, interpretation, formalization) {
+  const dependencies = [];
+  const normalized = normalizeKey(text);
+  if (formalization.expression?.type === 'arithmetic-equality') {
+    const expression = formalization.expression;
+    dependencies.push(
+      `Operator "${expression.operator}" defined as standard arithmetic`
+    );
+    dependencies.push(`Operand "${expression.leftOperand}" parsed as a number`);
+    dependencies.push(
+      `Operand "${expression.rightOperand}" parsed as a number`
+    );
+    dependencies.push(
+      `Expected value "${expression.expected}" parsed as a number`
+    );
+    return dependencies;
+  }
+  if (formalization.expression?.type === 'arithmetic-question') {
+    const expression = formalization.expression;
+    dependencies.push(
+      `Operator "${expression.operator}" defined as standard arithmetic`
+    );
+    dependencies.push(`Operand "${expression.leftOperand}" parsed as a number`);
+    dependencies.push(
+      `Operand "${expression.rightOperand}" parsed as a number`
+    );
+    return dependencies;
+  }
+
+  const phraseMappings = describeDisambiguation(text);
+  for (const mapping of phraseMappings) {
+    if (mapping.role.includes('noun')) {
+      dependencies.push(`${mapping.label} (${mapping.wikidataId}) exists`);
+    }
+    if (mapping.role.includes('verb')) {
+      dependencies.push(
+        `${mapping.label} (${mapping.wikidataId}) defined as the relation`
+      );
+    }
+  }
+  if (dependencies.length === 0) {
+    dependencies.push('Selected interpretation can be mapped to evidence');
+  }
+  if (interpretation.kind === 'self-referential-truth-claim') {
+    dependencies.push(
+      'Self-reference resolution strategy (Tarski-style truth gap)'
+    );
+  }
+  if (normalized.includes('does not')) {
+    dependencies.push('Negation operator applied to the underlying claim');
+  }
+  return dependencies;
+}
+
+function buildDefinitions(text) {
+  return describeDisambiguation(text).map((mapping) => ({
+    phrase: mapping.phrase,
+    label: mapping.label,
+    wikidataId: mapping.wikidataId,
+    sourceUrl: mapping.sourceUrl,
+    role: mapping.role,
+  }));
+}
+
+function buildConfirmations(result) {
+  return (result.supportingEvidence ?? []).map((evidence) => ({
+    quote: evidence.claim,
+    sourceType: evidence.sourceType,
+    sourceUrl: evidence.sourceUrl,
+    weight: evidence.weight,
+  }));
+}
+
+function buildRefutations(result) {
+  return (result.refutingEvidence ?? []).map((evidence) => ({
+    quote: evidence.claim,
+    sourceType: evidence.sourceType,
+    sourceUrl: evidence.sourceUrl,
+    weight: evidence.weight,
+  }));
+}
+
+function capitalizeFirstWord(text) {
+  const trimmed = text.trim();
+  if (!trimmed) {
+    return trimmed;
+  }
+  return trimmed[0].toUpperCase() + trimmed.slice(1);
 }
 
 export async function analyzeStatementWithLiveEvidence(input, options = {}) {
@@ -793,8 +935,7 @@ function selfReferenceInterpretations() {
 
 function realWorldInterpretations(text) {
   const knownClaim = knownRealWorldClaims[normalizeKey(text)];
-
-  return [
+  const interpretations = [
     {
       kind: knownClaim?.interpretationKind ?? 'real-world-claim',
       paraphrase:
@@ -826,6 +967,12 @@ function realWorldInterpretations(text) {
       formalizationLevel: FORMALIZATION_LEVELS.RAW_TEXT,
     },
   ];
+
+  const subPhraseCandidates = disambiguatePhrases(text).candidates;
+  for (const candidate of subPhraseCandidates) {
+    interpretations.push(candidate);
+  }
+  return interpretations;
 }
 
 function formalizeInterpretation(text, interpretation) {

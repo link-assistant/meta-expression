@@ -108,9 +108,161 @@ h2 {
 
 .examples,
 .belief-panel,
-.interpretations {
+.interpretations,
+.alternatives,
+.dependencies,
+.definitions,
+.confirmations,
+.refutations,
+.opposite {
   display: grid;
   gap: 12px;
+}
+
+.examples-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.examples-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.examples-actions button {
+  background: transparent;
+  color: #1d4e89;
+  border-color: #1d4e89;
+}
+
+.examples-actions button:hover {
+  background: #e8f1fa;
+  color: #1d4e89;
+}
+
+.section-hint {
+  margin: 0;
+  color: #51636f;
+  font-size: 0.85rem;
+}
+
+.section-empty {
+  color: #61717d;
+  font-style: italic;
+  font-size: 0.85rem;
+}
+
+.alternative-button {
+  display: grid;
+  gap: 4px;
+  text-align: left;
+  background: #ffffff;
+  color: #172026;
+  border-color: #c6d0d8;
+}
+
+.alternative-button:hover {
+  border-color: #1d4e89;
+  background: #f1f6fb;
+  color: #172026;
+}
+
+.alternative-button span {
+  color: #51636f;
+  font-size: 0.85rem;
+  overflow-wrap: anywhere;
+}
+
+.dependencies ul,
+.definitions ul,
+.confirmations ul,
+.refutations ul {
+  display: grid;
+  gap: 8px;
+  margin: 0;
+  padding-left: 20px;
+}
+
+.confirmations li,
+.refutations li {
+  list-style: none;
+  border-left: 4px solid #c6d0d8;
+  padding: 6px 10px;
+  background: #f8fafc;
+  border-radius: 6px;
+}
+
+.confirmations li.confirmation {
+  border-left-color: #2f855a;
+}
+
+.refutations li.refutation {
+  border-left-color: #b83232;
+}
+
+.confirmations li blockquote,
+.refutations li blockquote {
+  margin: 0 0 6px;
+  font-style: italic;
+  color: #172026;
+}
+
+.confirmations li a,
+.refutations li a {
+  color: #1d4e89;
+  font-size: 0.85rem;
+  text-decoration: none;
+}
+
+.confirmations li a:hover,
+.refutations li a:hover {
+  text-decoration: underline;
+}
+
+.source-note {
+  color: #51636f;
+  font-size: 0.85rem;
+}
+
+.opposite-button {
+  background: transparent;
+  color: #1d4e89;
+  border-color: #1d4e89;
+  text-align: left;
+}
+
+.opposite-button:hover {
+  background: #f1f6fb;
+  color: #1d4e89;
+}
+
+.strategy-control {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: #51636f;
+  font-size: 0.85rem;
+}
+
+.strategy-control select {
+  padding: 6px 8px;
+  border-radius: 6px;
+  border: 1px solid #b9c4cd;
+  background: #ffffff;
+  color: #172026;
+}
+
+.strategy-summary {
+  margin: 0;
+  color: #51636f;
+  font-size: 0.85rem;
+}
+
+.link-order {
+  font-weight: 700;
+  color: #1d4e89;
 }
 
 .example-list {
@@ -292,7 +444,7 @@ h2 {
 
 .link-row {
   display: grid;
-  grid-template-columns: 120px 150px minmax(0, 1fr);
+  grid-template-columns: 32px 160px 150px minmax(0, 1fr);
   gap: 12px;
   align-items: center;
   min-height: 54px;
