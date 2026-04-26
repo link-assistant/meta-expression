@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>meta-expression prototype</title>
+    <link rel="icon" href="data:," />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <main class="app-shell">
+      <section class="workspace" aria-label="Statement workspace">
+        <form class="statement-form" id="statement-form">
+          <label for="statement-input">Statement</label>
+          <div class="input-row">
+            <input
+              id="statement-input"
+              name="statement"
+              value="Earth orbits the Sun"
+              autocomplete="off"
+            />
+            <button type="submit">Analyze</button>
+          </div>
+        </form>
+
+        <section class="interpretations" aria-label="Interpretations">
+          <h1>Interpretations</h1>
+          <div id="interpretation-list"></div>
+        </section>
+
+        <section class="result-band" aria-label="Result">
+          <div>
+            <span class="eyebrow">Confidence</span>
+            <strong id="confidence-value"></strong>
+          </div>
+          <div>
+            <span class="eyebrow">Level</span>
+            <strong id="formalization-level"></strong>
+          </div>
+          <div>
+            <span class="eyebrow">Result</span>
+            <strong id="result-value"></strong>
+          </div>
+        </section>
+      </section>
+
+      <section class="network-panel" aria-label="Links network">
+        <div class="network-header">
+          <h2>Links Network</h2>
+          <button type="button" id="copy-lino">Lino</button>
+        </div>
+        <div class="link-lanes" id="link-lanes"></div>
+        <pre id="lino-output"></pre>
+      </section>
+    </main>
+
+    <script type="module" src="./app.js"></script>
+  </body>
+</html>

@@ -1,241 +1,75 @@
-# js-ai-driven-development-pipeline-template
+# meta-expression
 
-A comprehensive template for AI-driven JavaScript/TypeScript development with full CI/CD pipeline support.
+First prototype for a links-network based reasoning playground. It accepts a
+human-language statement, generates selectable interpretations, formalizes the
+selected meaning when possible, evaluates computable fragments, and attaches
+evidence with provenance for non-computable claims.
 
-## Features
+The implementation in this PR is intentionally small and deterministic. It
+keeps the long-term Rust/WASM/React/Doublets direction documented in
+[`docs/case-studies/issue-1/ROADMAP.md`](docs/case-studies/issue-1/ROADMAP.md),
+while providing working library, CLI, microservice, and static web surfaces now.
 
-- **Multi-runtime support**: Works with Bun, Node.js, and Deno
-- **Universal testing**: Uses [test-anywhere](https://github.com/link-foundation/test-anywhere) for cross-runtime tests
-- **Automated releases**: Changesets-based versioning with GitHub Actions
-- **Code quality**: ESLint + Prettier with pre-commit hooks via Husky
-- **Package manager agnostic**: Works with bun, npm, yarn, pnpm, and deno
-- **Broken link checks**: Automated link validation with [lychee](https://github.com/lycheeverse/lychee-action) and Web Archive fallback suggestions
+## Library
 
-## Quick Start
+```js
+import { analyzeStatement, serializeLinksNotation } from './src/index.js';
 
-### Using This Template
+const analysis = analyzeStatement('1 + 1 = 2');
 
-1. Click "Use this template" on GitHub to create a new repository
-2. Clone your new repository
-3. Update `package.json` with your package name and description
-4. Update the `PACKAGE_NAME` constant in these scripts:
-   - `scripts/validate-changeset.mjs`
-   - `scripts/merge-changesets.mjs`
-   - `scripts/publish-to-npm.mjs`
-   - `scripts/format-release-notes.mjs`
-   - `scripts/create-manual-changeset.mjs`
-5. Install dependencies: `bun install`
-6. Start developing!
+console.log(analysis.result.value); // true
+console.log(analysis.result.confidence); // 1
+console.log(serializeLinksNotation(analysis.linksNetwork));
+```
 
-### Development
+Core exports:
+
+- `createStatementDraft(input)` returns three interpretations and stops before
+  formalization.
+- `analyzeStatement(input, options)` selects an interpretation and produces a
+  links network, formalization, result, confidence, and evidence.
+- `serializeLinksNotation(linksNetwork)` exports the selected links network in
+  a Lino-style text form.
+
+## CLI
 
 ```bash
-# Install dependencies
-bun install
+node src/cli.js analyze "1 + 1 = 2"
+node src/cli.js analyze --input "Earth orbits the Sun" --format links
+```
 
-# Run tests
-bun test
+## Microservice
 
-# Or with other runtimes:
+```bash
+npm start
+curl "http://127.0.0.1:3000/analyze?input=1%20%2B%201%20%3D%202"
+curl "http://127.0.0.1:3000/analyze?input=Earth%20orbits%20the%20Sun&format=links"
+```
+
+Routes:
+
+- `GET /health`
+- `GET /analyze?input=...&format=json|links&select=0`
+- `POST /analyze` with `{ "input": "...", "format": "json" }`
+
+## Static Web Prototype
+
+Serve the repository root and open [`web/index.html`](web/index.html):
+
+```bash
+python3 -m http.server 4173
+```
+
+Then visit `http://127.0.0.1:4173/web/`.
+
+## Development
+
+```bash
+npm install
 npm test
-deno test --allow-read
-
-# Lint code
-bun run lint
-
-# Format code
-bun run format
-
-# Check all (lint + format + file size)
-bun run check
+npm run check
+scripts/check-file-line-limits.sh
 ```
 
-## Project Structure
-
-```
-.
-├── .changeset/           # Changeset configuration
-├── .github/workflows/    # GitHub Actions CI/CD
-├── .husky/               # Git hooks (pre-commit)
-├── examples/             # Usage examples
-├── scripts/              # Build and release scripts
-├── src/                  # Source code
-│   ├── index.js          # Main entry point
-│   └── index.d.ts        # TypeScript definitions
-├── tests/                # Test files
-├── .eslintrc.js          # ESLint configuration
-├── .prettierrc           # Prettier configuration
-├── bunfig.toml           # Bun configuration
-├── deno.json             # Deno configuration
-└── package.json          # Node.js package manifest
-```
-
-## Design Choices
-
-### Multi-Runtime Support
-
-This template is designed to work seamlessly with all major JavaScript runtimes:
-
-- **Bun**: Primary runtime with highest performance, uses native test support (`bun test`)
-- **Node.js**: Alternative runtime, uses built-in test runner (`node --test`)
-- **Deno**: Secure runtime with built-in TypeScript support (`deno test`)
-
-The [test-anywhere](https://github.com/link-foundation/test-anywhere) framework provides a unified testing API that works identically across all runtimes.
-
-### Package Manager Agnostic
-
-While `package.json` is the source of truth for dependencies, the template supports:
-
-- **bun**: Primary choice, uses `bun.lockb`
-- **npm**: Uses `package-lock.json`
-- **yarn**: Uses `yarn.lock`
-- **pnpm**: Uses `pnpm-lock.yaml`
-- **deno**: Uses `deno.json` for configuration
-
-Note: `package-lock.json` is not committed by default to allow any package manager.
-
-### Code Quality
-
-- **ESLint**: Configured with recommended rules + Prettier integration
-- **Prettier**: Consistent code formatting
-- **Husky + lint-staged**: Pre-commit hooks ensure code quality
-- **File size limit**: Files must stay under 1500 lines for maintainability (enforced via ESLint and CI)
-
-### Release Workflow
-
-The release workflow uses [Changesets](https://github.com/changesets/changesets) for version management:
-
-1. **Creating a changeset**: Run `bun run changeset` to document changes
-2. **PR validation**: CI checks for valid changeset in each PR
-3. **Automated versioning**: Merging to `main` triggers version bump
-4. **npm publishing**: Automated via OIDC trusted publishing (no tokens needed)
-5. **GitHub releases**: Auto-created with formatted release notes
-
-#### Manual Releases
-
-Two manual release modes are available via GitHub Actions:
-
-- **Instant release**: Immediately bump version and publish
-- **Changeset PR**: Create a PR with changeset for review
-
-### CI/CD Pipeline
-
-The GitHub Actions workflow (`.github/workflows/release.yml`) implements a fast-fail pipeline:
-
-**Fast checks** (~7-30s each, run first for fastest feedback):
-
-1. **Test compilation**: Syntax-checks all `.mjs` files with `node --check`
-2. **Lint, format & secrets scan**: ESLint, Prettier, jscpd, and [secretlint](https://github.com/secretlint/secretlint) for credential leak detection
-3. **File line limits**: Enforces 1500-line limit on `.mjs` files and `release.yml`
-4. **Changeset check**: Validates PR has exactly one changeset (added by that PR)
-5. **Version check**: Blocks manual version changes in `package.json`
-6. **Documentation validation**: Checks doc file sizes and required files
-
-**Slow checks** (only run after all fast checks pass):
-
-7. **Test matrix**: 3 runtimes × 3 OS = 9 test combinations
-8. **Broken link checks**: Validates all links in Markdown/HTML files (separate workflow)
-
-**Release** (on merge to main):
-
-9. **Changeset merge**: Combines multiple pending changesets at release time
-10. **Release**: Automated versioning and npm publishing
-
-See [BEST-PRACTICES.md](docs/BEST-PRACTICES.md) for detailed explanations of each practice.
-
-#### Robust Changeset Handling
-
-The CI/CD pipeline is designed to handle concurrent PRs gracefully:
-
-- **PR Validation**: Only validates changesets **added by the current PR**, not pre-existing ones from other merged PRs. This prevents false failures when multiple PRs merge before a release cycle completes.
-
-- **Release-time Merging**: If multiple changesets exist when releasing, they are automatically merged into a single changeset with:
-  - The highest version bump type (major > minor > patch)
-  - All descriptions preserved in chronological order
-
-This design decouples PR validation from the need to pull changes from the default branch, reducing conflicts and ensuring that even if CI/CD fails, all unpublished changesets will still get published when the error is resolved.
-
-### Broken Link Checker
-
-The link checker workflow (`.github/workflows/links.yml`) validates all links in Markdown and HTML files:
-
-1. **Detection**: Uses [lychee](https://github.com/lycheeverse/lychee-action) to scan all `*.md` and `*.html` files
-2. **Web Archive fallback**: For any broken links found, automatically checks the [Wayback Machine](https://web.archive.org) for archived versions
-3. **Actionable suggestions**: Reports one of three outcomes for each broken link:
-   - **Archived**: Suggests the Web Archive URL as a replacement
-   - **Not archived**: Clearly reports the link is unrecoverable
-4. **Scheduled checks**: Runs weekly to catch links that break over time (even if no files changed)
-5. **Issue creation**: On scheduled runs, creates a GitHub Issue with the full broken links report
-
-Add regex patterns to `.lycheeignore` to exclude URLs from checks (e.g., local dev URLs, example.com, known rate-limited sites).
-
-## Configuration
-
-### Updating Package Name
-
-After creating a repository from this template, update the package name in:
-
-1. `package.json`: `"name": "your-package-name"`
-2. `.changeset/config.json`: Package references
-3. Scripts that reference the package name (see Quick Start)
-
-### ESLint Rules
-
-Customize ESLint in `eslint.config.js`. Current configuration:
-
-- ES Modules support
-- Prettier integration
-- No console restrictions (common in CLI tools)
-- Strict equality enforcement
-- Async/await best practices
-- **Strict unused variables rule**: No exceptions - all unused variables, arguments, and caught errors must be removed (no `_` prefix exceptions)
-
-### Prettier Options
-
-Configured in `.prettierrc`:
-
-- Single quotes
-- Semicolons
-- 2-space indentation
-- 80-character line width
-- ES5 trailing commas
-- LF line endings
-
-## Scripts Reference
-
-| Script                 | Description                             |
-| ---------------------- | --------------------------------------- |
-| `bun test`             | Run tests with Bun                      |
-| `bun run lint`         | Check code with ESLint                  |
-| `bun run lint:fix`     | Fix ESLint issues automatically         |
-| `bun run format`       | Format code with Prettier               |
-| `bun run format:check` | Check formatting without changing files |
-| `bun run check`        | Run all checks (lint + format)          |
-| `bun run changeset`    | Create a new changeset                  |
-
-## Contributing
-
-See [CONTRIBUTING.md](docs/CONTRIBUTING.md) for detailed contribution guidelines.
-
-Quick steps:
-
-1. Fork the repository
-2. Create a feature branch: `git checkout -b feature/my-feature`
-3. Make your changes
-4. Create a changeset: `bun run changeset`
-5. Commit your changes (pre-commit hooks will run automatically)
-6. Push and create a Pull Request
-
-## Best Practices
-
-This template implements CI/CD best practices for AI-driven development. See [BEST-PRACTICES.md](docs/BEST-PRACTICES.md) for details on:
-
-- File size limits for AI readability
-- Automated formatting and linting
-- Multi-runtime and cross-platform testing
-- Changeset-based versioning
-- Concurrency control for CI/CD pipelines
-
-## License
-
-[Unlicense](LICENSE) - Public Domain
+The package keeps the existing multi-runtime test setup based on
+`test-anywhere`, so tests should also pass under Bun and Deno in CI.
