@@ -111,14 +111,22 @@ Add support for custom configuration via config file
 
 ## Release Process
 
-The release process is fully automated:
+The release process is automated, with static web publication independent from
+npm package publication:
 
 1. **PR with changeset merged** - The changeset is added to `.changeset/`
 2. **CI detects changesets** - On push to main, CI checks for pending changesets
 3. **Version bump** - Package version is updated based on changeset type
 4. **Changelog update** - `CHANGELOG.md` is updated automatically
-5. **npm publish** - Package is published via OIDC trusted publishing
-6. **GitHub Release** - A release is created with formatted notes
+5. **GitHub Pages** - The static web prototype is published from `web/` and
+   `src/` after tests pass
+6. **npm publish** - Package publication runs only when repository variable
+   `NPM_PUBLISH_ENABLED` is set to `true`
+7. **GitHub Release** - A release is created with formatted notes after a
+   successful npm publish
+
+Before enabling npm publishing, make sure the package identity in
+`package.json` and the npm trusted publisher settings match this repository.
 
 ### Multiple Changesets
 
