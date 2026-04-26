@@ -39,20 +39,21 @@ than hidden inside this small deterministic prototype.
 
 Raw data and reference captures are stored under [`data/`](./data/):
 
-| File                                                                        | Purpose                                                                |
-| --------------------------------------------------------------------------- | ---------------------------------------------------------------------- |
-| [`issue-5.json`](./data/issue-5.json)                                       | Full issue title, body, labels, author, and timestamps                 |
-| [`issue-5-comments.json`](./data/issue-5-comments.json)                     | Issue comments; empty at analysis time                                 |
-| [`pr-6.json`](./data/pr-6.json)                                             | Prepared PR metadata before implementation                             |
-| [`pr-6-conversation-comments.json`](./data/pr-6-conversation-comments.json) | PR discussion comments; empty at analysis time                         |
-| [`pr-6-review-comments.json`](./data/pr-6-review-comments.json)             | PR inline comments; empty at analysis time                             |
-| [`pr-6-reviews.json`](./data/pr-6-reviews.json)                             | PR reviews; empty at analysis time                                     |
-| [`meta-expression-file-tree.txt`](./data/meta-expression-file-tree.txt)     | Local repository file inventory                                        |
-| [`wikidata-q317521.json`](./data/wikidata-q317521.json)                     | Captured Wikidata entity data for Elon Musk                            |
-| [`wikidata-q2.json`](./data/wikidata-q2.json)                               | Captured Wikidata entity data for Earth                                |
-| [`calculator-reportIssue.ts`](./data/calculator-reportIssue.ts)             | Reference issue-report implementation from `link-assistant/calculator` |
-| [`human-language-readme.md`](./data/human-language-readme.md)               | Reference Wikidata/Q-P project context                                 |
-| [`link-cli-readme.md`](./data/link-cli-readme.md)                           | Reference Links Notation and link-store CLI context                    |
+| File                                                                                         | Purpose                                                                |
+| -------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------- |
+| [`issue-5.json`](./data/issue-5.json)                                                        | Full issue title, body, labels, author, and timestamps                 |
+| [`issue-5-comments.json`](./data/issue-5-comments.json)                                      | Issue comments; empty at analysis time                                 |
+| [`pr-6.json`](./data/pr-6.json)                                                              | Prepared PR metadata before implementation                             |
+| [`pr-6-conversation-comments.json`](./data/pr-6-conversation-comments.json)                  | PR discussion comments; empty at analysis time                         |
+| [`pr-6-review-comments.json`](./data/pr-6-review-comments.json)                              | PR inline comments; empty at analysis time                             |
+| [`pr-6-reviews.json`](./data/pr-6-reviews.json)                                              | PR reviews; empty at analysis time                                     |
+| [`meta-expression-file-tree.txt`](./data/meta-expression-file-tree.txt)                      | Local repository file inventory                                        |
+| [`wikidata-q317521.json`](./data/wikidata-q317521.json)                                      | Captured Wikidata entity data for Elon Musk                            |
+| [`wikidata-q2.json`](./data/wikidata-q2.json)                                                | Captured Wikidata entity data for Earth                                |
+| [`calculator-reportIssue.ts`](./data/calculator-reportIssue.ts)                              | Reference issue-report implementation from `link-assistant/calculator` |
+| [`human-language-readme.md`](./data/human-language-readme.md)                                | Reference Wikidata/Q-P project context                                 |
+| [`link-cli-readme.md`](./data/link-cli-readme.md)                                            | Reference Links Notation and link-store CLI context                    |
+| [`ci-logs/checks-and-release-24959524749.txt`](./ci-logs/checks-and-release-24959524749.txt) | Failed CI run showing the missing-added-changeset validation error     |
 
 The issue screenshot was downloaded and verified as a PNG:
 

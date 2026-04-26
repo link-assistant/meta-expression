@@ -1,4 +1,5 @@
 ./.changeset/README.md
+./.changeset/bounded-beliefs-examples.md
 ./.changeset/config.json
 ./.changeset/static-pages-independent-release.md
 ./.github/workflows/links.yml
@@ -138,6 +139,7 @@
 ./docs/case-studies/issue-5/REQUIREMENTS.md
 ./docs/case-studies/issue-5/ROADMAP.md
 ./docs/case-studies/issue-5/assets/issue-screenshot.png
+./docs/case-studies/issue-5/ci-logs/checks-and-release-24959524749.txt
 ./docs/case-studies/issue-5/data/calculator-issue-report-code-search.txt
 ./docs/case-studies/issue-5/data/calculator-repo.json
 ./docs/case-studies/issue-5/data/calculator-reportIssue.test.ts
