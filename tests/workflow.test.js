@@ -1,7 +1,9 @@
 import { readFileSync } from 'node:fs';
 import { describe, it, expect } from 'test-anywhere';
 
-const releaseWorkflow = readFileSync('.github/workflows/release.yml', 'utf8');
+const releaseWorkflow = readFileSync('.github/workflows/release.yml', 'utf8')
+  .replace(/\r\n/g, '\n')
+  .replace(/\r/g, '\n');
 
 function getJobBlock(jobName) {
   const start = releaseWorkflow.indexOf(`\n  ${jobName}:\n`);

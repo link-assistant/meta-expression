@@ -20,11 +20,15 @@ The case-study evidence is stored in this folder:
 - `data/pr-4-conversation-comments.json`, `data/pr-4-review-comments.json`,
   `data/pr-4-reviews.json` - PR discussion/review data
 - `data/main-runs.json` and `data/branch-runs.json` - recent workflow runs
+- `data/checks-and-release-24957473839.json` - first PR verification run after
+  the workflow fix
 - `data/pages-config.json` - repository GitHub Pages configuration
 - `ci-logs/checks-and-release-24953081524.txt` - failed main run from
   2026-04-26 09:14:53 UTC
 - `ci-logs/checks-and-release-24957036729.txt` - failed main run from
   2026-04-26 12:49:45 UTC
+- `ci-logs/checks-and-release-24957473839.txt` - failed PR verification run
+  that exposed Windows line-ending sensitivity in the new workflow test
 - `data/npm-view-*.txt` - npm registry lookups used to confirm package-name
   state
 
@@ -57,6 +61,10 @@ The case-study evidence is stored in this folder:
   (`ci-logs/checks-and-release-24957036729.txt:6170`).
 - **2026-04-26 12:53:41 UTC** - Issue #3 is opened requesting CI/CD repair and
   independent web prototype publication.
+- **2026-04-26 13:12:12 UTC** - The first PR verification run
+  `24957473839` exposes that the new workflow regression test was sensitive to
+  Windows checkout line endings. The test was updated to normalize line endings
+  before inspecting the YAML text.
 
 ## Root Causes
 
