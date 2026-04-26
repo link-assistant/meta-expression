@@ -140,9 +140,10 @@
 ./docs/case-studies/issue-5/ROADMAP.md
 ./docs/case-studies/issue-5/assets/issue-screenshot.png
 ./docs/case-studies/issue-5/ci-logs/checks-and-release-24959524749.txt
+./docs/case-studies/issue-5/ci-logs/checks-and-release-24959654248.txt
 ./docs/case-studies/issue-5/data/calculator-issue-report-code-search.txt
 ./docs/case-studies/issue-5/data/calculator-repo.json
-./docs/case-studies/issue-5/data/calculator-reportIssue.test.ts
+./docs/case-studies/issue-5/data/calculator-reportIssue-test.ts.txt
 ./docs/case-studies/issue-5/data/calculator-reportIssue.ts
 ./docs/case-studies/issue-5/data/doublets-rs-repo.json
 ./docs/case-studies/issue-5/data/human-language-readme.md

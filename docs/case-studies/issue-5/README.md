@@ -51,9 +51,11 @@ Raw data and reference captures are stored under [`data/`](./data/):
 | [`wikidata-q317521.json`](./data/wikidata-q317521.json)                                      | Captured Wikidata entity data for Elon Musk                            |
 | [`wikidata-q2.json`](./data/wikidata-q2.json)                                                | Captured Wikidata entity data for Earth                                |
 | [`calculator-reportIssue.ts`](./data/calculator-reportIssue.ts)                              | Reference issue-report implementation from `link-assistant/calculator` |
+| [`calculator-reportIssue-test.ts.txt`](./data/calculator-reportIssue-test.ts.txt)            | Reference issue-report test fixture captured as inert data             |
 | [`human-language-readme.md`](./data/human-language-readme.md)                                | Reference Wikidata/Q-P project context                                 |
 | [`link-cli-readme.md`](./data/link-cli-readme.md)                                            | Reference Links Notation and link-store CLI context                    |
 | [`ci-logs/checks-and-release-24959524749.txt`](./ci-logs/checks-and-release-24959524749.txt) | Failed CI run showing the missing-added-changeset validation error     |
+| [`ci-logs/checks-and-release-24959654248.txt`](./ci-logs/checks-and-release-24959654248.txt) | Failed CI run showing Bun test discovery of the captured fixture       |
 
 The issue screenshot was downloaded and verified as a PNG:
 
@@ -119,6 +121,9 @@ The local check used during implementation:
 
 ```bash
 npm test
+npm run check
+bun test
+scripts/check-file-line-limits.sh
 ```
 
 ## Conclusion
