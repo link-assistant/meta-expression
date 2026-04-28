@@ -32,12 +32,13 @@ Screenshot from issue: shows rows 1 and 2 (MEANING/DISAMBIGUATION) appearing nea
 ```css
 .network-panel {
   display: grid;
-  grid-template-rows: auto 1fr auto;  /* only 3 rows */
+  grid-template-rows: auto 1fr auto; /* only 3 rows */
   gap: 18px;
 }
 ```
 
 `.network-panel` has **4 direct children** in `web/index.html`:
+
 1. `.network-header` → Row 1 (auto)
 2. `.strategy-summary` → Row 2 (**1fr** — gets all remaining height!)
 3. `.link-lanes` → Row 3 (auto — shrinks to content)
@@ -77,6 +78,7 @@ Change `grid-template-rows` from 3 rows to 4 rows to correctly map all four chil
 ```
 
 Row mapping after fix:
+
 1. `.network-header` → auto
 2. `.strategy-summary` → auto
 3. `.link-lanes` → **1fr** (correct — expands to fill space, content starts at top via `align-content: start`)
@@ -90,12 +92,12 @@ Row mapping after fix:
 
 ## Alternative Solutions Considered
 
-| Approach | Verdict |
-|---|---|
-| Add `align-self: start` to `.link-lanes` | Would not fix root cause; the element would still be in the wrong grid row |
-| Use `grid-auto-rows` | Would apply to implicit rows only; doesn't fix the explicit row mismatch |
-| Wrap header + summary in a single div | Reduces children to 3, matching the original template — works but adds unnecessary markup |
-| **Fix `grid-template-rows` to 4 rows** | **Correct, minimal, no markup changes** |
+| Approach                                 | Verdict                                                                                   |
+| ---------------------------------------- | ----------------------------------------------------------------------------------------- |
+| Add `align-self: start` to `.link-lanes` | Would not fix root cause; the element would still be in the wrong grid row                |
+| Use `grid-auto-rows`                     | Would apply to implicit rows only; doesn't fix the explicit row mismatch                  |
+| Wrap header + summary in a single div    | Reduces children to 3, matching the original template — works but adds unnecessary markup |
+| **Fix `grid-template-rows` to 4 rows**   | **Correct, minimal, no markup changes**                                                   |
 
 ---
 
