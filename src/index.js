@@ -1073,6 +1073,8 @@ function evaluateComputableFormalization(formalization) {
       actual,
       expected: undefined,
       confidence: 1,
+      correctness: 1,
+      signedConfidence: 1,
       rawBalance: 1,
       supportingEvidence: [evidence],
       refutingEvidence: [],
@@ -1097,6 +1099,8 @@ function evaluateComputableFormalization(formalization) {
     actual,
     expected: expression.expected,
     confidence: value ? 1 : 0,
+    correctness: value ? 1 : 0,
+    signedConfidence: value ? 1 : -1,
     rawBalance: value ? 1 : -1,
     supportingEvidence: value ? [evidence] : [],
     refutingEvidence: value ? [] : [evidence],
@@ -1112,6 +1116,8 @@ function estimateFromEvidence(formalization, evidenceFixtures, options = {}) {
       kind: 'evidence-estimate',
       value: 'undetermined',
       confidence: 0.5,
+      correctness: 0.5,
+      signedConfidence: 0,
       rawBalance: 0,
       supportWeight: 0,
       refuteWeight: 0,
@@ -1137,10 +1143,15 @@ function estimateFromEvidence(formalization, evidenceFixtures, options = {}) {
       realWorldConfidenceEpsilon
   );
 
+  const boundedSignedConfidence =
+    boundedConfidence === null ? null : 2 * boundedConfidence - 1;
+
   return {
     kind: 'evidence-estimate',
     value: boundedConfidence === null ? 'unknown' : boundedConfidence,
     confidence: boundedConfidence,
+    correctness: boundedConfidence,
+    signedConfidence: boundedSignedConfidence,
     rawBalance: confidence.rawBalance,
     supportWeight: confidence.supportWeight,
     refuteWeight: confidence.refuteWeight,

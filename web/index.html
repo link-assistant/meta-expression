@@ -8,7 +8,20 @@
     <link rel="stylesheet" href="./styles.css" />
   </head>
   <body>
-    <main class="app-shell">
+    <nav class="top-nav" aria-label="Pages">
+      <button
+        type="button"
+        id="nav-analyse"
+        class="top-nav-button"
+        aria-current="page"
+      >
+        Analyse
+      </button>
+      <button type="button" id="nav-compare" class="top-nav-button">
+        Compare
+      </button>
+    </nav>
+    <main class="app-shell" id="page-analyse">
       <section class="workspace" aria-label="Statement workspace">
         <form class="statement-form" id="statement-form">
           <label for="statement-input">Statement</label>
@@ -108,8 +121,14 @@
 
         <section class="result-band" aria-label="Result">
           <div>
+            <span class="eyebrow">Correctness</span>
+            <strong id="correctness-value"></strong>
+            <small>0% … 100%</small>
+          </div>
+          <div>
             <span class="eyebrow">Confidence</span>
             <strong id="confidence-value"></strong>
+            <small>-100% … +100%</small>
           </div>
           <div>
             <span class="eyebrow">Level</span>
@@ -161,6 +180,25 @@
         <p class="strategy-summary" id="strategy-summary"></p>
         <div class="link-lanes" id="link-lanes"></div>
         <pre id="lino-output"></pre>
+      </section>
+    </main>
+
+    <main class="compare-shell" id="page-compare" hidden>
+      <section class="compare-panel" aria-label="Compare statements">
+        <header class="compare-header">
+          <h1>Compare</h1>
+          <p class="section-hint">
+            Enter two or more claims about the same subject (for example
+            <em>Population of Russia is 100m</em> and
+            <em>Population of Russia is 200m</em>) to see how their Correctness
+            and Confidence stack up.
+          </p>
+        </header>
+        <div class="compare-rows" id="compare-rows"></div>
+        <div class="compare-actions">
+          <button type="button" id="compare-add">Add claim</button>
+          <button type="button" id="compare-run">Compare</button>
+        </div>
       </section>
     </main>
 
