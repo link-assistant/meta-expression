@@ -74,6 +74,8 @@ export interface EvaluationResult {
   actual?: number;
   expected?: number;
   confidence: number | null;
+  correctness: number | null;
+  signedConfidence: number | null;
   rawBalance: number | null;
   supportWeight?: number;
   refuteWeight?: number;

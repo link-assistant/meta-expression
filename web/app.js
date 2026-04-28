@@ -32,12 +32,20 @@ const definitionList = document.querySelector('#definition-list');
 const confirmationList = document.querySelector('#confirmation-list');
 const refutationList = document.querySelector('#refutation-list');
 const oppositeButton = document.querySelector('#opposite-button');
+const correctnessValue = document.querySelector('#correctness-value');
 const confidenceValue = document.querySelector('#confidence-value');
 const formalizationLevel = document.querySelector('#formalization-level');
 const formalizationLevelName = document.querySelector(
   '#formalization-level-name'
 );
 const resultValue = document.querySelector('#result-value');
+const navAnalyse = document.querySelector('#nav-analyse');
+const navCompare = document.querySelector('#nav-compare');
+const pageAnalyse = document.querySelector('#page-analyse');
+const pageCompare = document.querySelector('#page-compare');
+const compareRows = document.querySelector('#compare-rows');
+const compareAdd = document.querySelector('#compare-add');
+const compareRun = document.querySelector('#compare-run');
 const supportCount = document.querySelector('#support-count');
 const refuteCount = document.querySelector('#refute-count');
 const unknownCount = document.querySelector('#unknown-count');
@@ -319,17 +327,50 @@ function renderOpposite(statement, opposite) {
 }
 
 function renderResult(analysis) {
-  const confidence = analysis.result.confidence;
+  const correctness = analysis.result.correctness;
+  const signedConfidence = analysis.result.signedConfidence;
   const level = describeFormalizationLevel(analysis.formalization.level);
 
-  confidenceValue.textContent =
-    confidence === null ? 'unknown' : `${Math.round(confidence * 100)}%`;
+  correctnessValue.textContent = formatCorrectness(correctness);
+  confidenceValue.textContent = formatSignedConfidence(signedConfidence);
+  confidenceValue.dataset.sign = signOf(signedConfidence);
   formalizationLevel.textContent = String(analysis.formalization.level);
   formalizationLevelName.textContent = level.name;
   resultValue.textContent = formatResultValue(analysis.result);
   supportCount.textContent = String(analysis.result.supportingEvidence.length);
   refuteCount.textContent = String(analysis.result.refutingEvidence.length);
   unknownCount.textContent = String(analysis.formalization.unknowns.length);
+}
+
+function formatCorrectness(correctness) {
+  if (correctness === null || correctness === undefined) {
+    return 'unknown';
+  }
+  return `${Math.round(correctness * 100)}%`;
+}
+
+function formatSignedConfidence(signedConfidence) {
+  if (signedConfidence === null || signedConfidence === undefined) {
+    return 'unknown';
+  }
+  const percent = Math.round(signedConfidence * 100);
+  if (percent > 0) {
+    return `+${percent}%`;
+  }
+  return `${percent}%`;
+}
+
+function signOf(value) {
+  if (value === null || value === undefined) {
+    return 'unknown';
+  }
+  if (value > 0) {
+    return 'positive';
+  }
+  if (value < 0) {
+    return 'negative';
+  }
+  return 'zero';
 }
 
 function renderReasoningSteps(analysis) {
@@ -660,3 +701,148 @@ function persistWikimediaCache(map) {
 renderPreparedExamples();
 syncBeliefControl(input.value);
 render(input.value);
+
+// Top-nav page switching (Analyse / Compare)
+const analysePages = [pageAnalyse];
+const comparePages = [pageCompare];
+
+function showPage(pageId) {
+  const isCompare = pageId === 'compare';
+  for (const page of analysePages) {
+    page.hidden = isCompare;
+  }
+  for (const page of comparePages) {
+    page.hidden = !isCompare;
+  }
+  navAnalyse.setAttribute('aria-current', isCompare ? 'false' : 'page');
+  navCompare.setAttribute('aria-current', isCompare ? 'page' : 'false');
+  navAnalyse.classList.toggle('active', !isCompare);
+  navCompare.classList.toggle('active', isCompare);
+  if (isCompare) {
+    globalThis.location.hash = '#/compare';
+    if (compareRows.children.length === 0) {
+      seedCompareRows();
+    }
+  } else {
+    globalThis.location.hash = '#/analyse';
+  }
+}
+
+function pageFromHash() {
+  return globalThis.location.hash === '#/compare' ? 'compare' : 'analyse';
+}
+
+navAnalyse.addEventListener('click', () => showPage('analyse'));
+navCompare.addEventListener('click', () => showPage('compare'));
+globalThis.addEventListener('hashchange', () => showPage(pageFromHash()));
+
+// Compare page
+function seedCompareRows() {
+  appendCompareRow('Population of Russia is 100m');
+  appendCompareRow('Population of Russia is 200m');
+}
+
+function appendCompareRow(initialValue = '') {
+  const row = document.createElement('div');
+  row.className = 'compare-row';
+  row.innerHTML = `
+    <div class="compare-row-input">
+      <label>Claim</label>
+      <input type="text" class="compare-claim" value="${escapeHtml(initialValue)}" />
+    </div>
+    <div class="compare-metric" data-metric="correctness">
+      <span class="eyebrow">Correctness</span>
+      <strong class="compare-correctness">—</strong>
+      <div class="compare-bar"><div class="compare-bar-fill correctness"></div></div>
+    </div>
+    <div class="compare-metric" data-metric="confidence">
+      <span class="eyebrow">Confidence</span>
+      <strong class="compare-confidence">—</strong>
+      <div class="compare-bar signed"><div class="compare-bar-axis"></div><div class="compare-bar-fill signed-confidence"></div></div>
+    </div>
+    <button type="button" class="compare-remove" aria-label="Remove claim">×</button>
+  `;
+  row.querySelector('.compare-remove').addEventListener('click', () => {
+    if (compareRows.children.length > 2) {
+      row.remove();
+    }
+  });
+  row.querySelector('.compare-claim').addEventListener('change', () => {
+    runCompareRow(row);
+  });
+  compareRows.append(row);
+  if (initialValue) {
+    runCompareRow(row);
+  }
+}
+
+function runCompareRow(row) {
+  const claim = row.querySelector('.compare-claim').value.trim();
+  const correctnessEl = row.querySelector('.compare-correctness');
+  const confidenceEl = row.querySelector('.compare-confidence');
+  const correctnessFill = row.querySelector('.compare-bar-fill.correctness');
+  const signedFill = row.querySelector('.compare-bar-fill.signed-confidence');
+
+  if (!claim) {
+    correctnessEl.textContent = '—';
+    confidenceEl.textContent = '—';
+    correctnessFill.style.width = '0%';
+    signedFill.style.width = '0%';
+    signedFill.style.left = '50%';
+    return;
+  }
+
+  let analysis;
+  try {
+    analysis = analyzeStatement(claim, {
+      selectedBy: 'compare',
+      userBeliefs,
+      reasoningStrategyId: strategyId,
+    });
+  } catch {
+    correctnessEl.textContent = 'error';
+    confidenceEl.textContent = 'error';
+    correctnessFill.style.width = '0%';
+    signedFill.style.width = '0%';
+    signedFill.style.left = '50%';
+    return;
+  }
+
+  const correctness = analysis.result.correctness;
+  const signed = analysis.result.signedConfidence;
+
+  correctnessEl.textContent = formatCorrectness(correctness);
+  confidenceEl.textContent = formatSignedConfidence(signed);
+  confidenceEl.dataset.sign = signOf(signed);
+
+  correctnessFill.style.width =
+    correctness === null
+      ? '0%'
+      : `${Math.max(0, Math.min(100, correctness * 100))}%`;
+
+  signedFill.classList.remove('positive', 'negative');
+  if (signed === null || signed === undefined) {
+    signedFill.style.width = '0%';
+    signedFill.style.left = '50%';
+  } else if (signed >= 0) {
+    signedFill.style.left = '50%';
+    signedFill.style.width = `${Math.min(50, signed * 50)}%`;
+    signedFill.classList.add('positive');
+  } else {
+    const magnitude = Math.min(50, Math.abs(signed) * 50);
+    signedFill.style.left = `${50 - magnitude}%`;
+    signedFill.style.width = `${magnitude}%`;
+    signedFill.classList.add('negative');
+  }
+}
+
+function runAllCompareRows() {
+  for (const row of compareRows.querySelectorAll('.compare-row')) {
+    runCompareRow(row);
+  }
+}
+
+compareAdd.addEventListener('click', () => appendCompareRow(''));
+compareRun.addEventListener('click', runAllCompareRows);
+
+showPage(pageFromHash());

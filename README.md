@@ -96,9 +96,27 @@ On `main`, CI publishes the same static prototype to the repository's GitHub
 Pages `/web/` path after tests pass.
 
 The web prototype includes prepared examples, an interpretation selector, local
-belief slider saved in `localStorage`, confidence/result/evidence summaries,
-Q/P source links in the links network, Links Notation output, a live Wikimedia
-evidence worker, and a prefilled GitHub issue report link.
+belief slider saved in `localStorage`, two default metrics (Correctness and
+signed Confidence), result/evidence summaries, Q/P source links in the links
+network, Links Notation output, a live Wikimedia evidence worker, a prefilled
+GitHub issue report link, and a top-menu page switch between **Analyse**
+(default) and **Compare** for putting two or more competing claims side-by-side.
+
+### Default metrics
+
+Every analysis surfaces two complementary numbers (see
+[`docs/case-studies/issue-13/analysis.md`](docs/case-studies/issue-13/analysis.md)):
+
+- **Correctness** (`result.correctness`, `0% … 100%`) — how correct the claim is
+  in absolute terms. 100% means perfectly correct, 0% means perfectly wrong.
+- **Confidence** (`result.signedConfidence`, `-100% … +100%`) — net evidential
+  weight; positive points toward truth, negative points toward the negation,
+  zero is indecisive. Useful for ranking competing claims about the same
+  subject (e.g. `Population of Russia is 100m` vs `Population of Russia is 200m`).
+
+The two are linked by `signedConfidence ≈ 2 · correctness − 1`. The legacy
+`result.confidence` (`0..1`) and `result.rawBalance` (`-1..1`) properties are
+preserved unchanged for backwards compatibility.
 
 ## Rust Core
 
