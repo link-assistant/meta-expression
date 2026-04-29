@@ -968,3 +968,29 @@ describe('issue 15 — HTTP /formalize endpoint with persistent cache', () => {
     }
   });
 });
+
+describe('issue 15 — auto-generated formalize library docs', () => {
+  it('keeps docs/FORMALIZE.md in sync with src/formalize*.js JSDoc', async () => {
+    const docs = await readFile('docs/FORMALIZE.md', 'utf8');
+    expect(docs.length).toBeGreaterThan(0);
+    // Every documented public entry point must appear in the generated doc.
+    const publicSymbols = [
+      'formalizeText',
+      'formalizeTextWith',
+      'tokenize',
+      'generateNgrams',
+      'createWikidataSource',
+      'createWordNetSource',
+      'createFandomSource',
+      'parseSourceSpec',
+      'buildOverrideMap',
+      'lookupOverride',
+      'aggregateBigContexts',
+      'cacheKey',
+    ];
+    for (const symbol of publicSymbols) {
+      expect(docs).toContain(symbol);
+    }
+    expect(docs).toContain('Auto-generated from JSDoc');
+  });
+});

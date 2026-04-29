@@ -10,6 +10,10 @@ The implementation in this PR keeps the long-term direction documented in
 [`docs/ROADMAP.md`](docs/ROADMAP.md), while providing working library, CLI,
 microservice, and static web surfaces now.
 
+The text-formalization sub-system has its own auto-generated reference at
+[`docs/FORMALIZE.md`](docs/FORMALIZE.md) (regenerated from JSDoc with
+`npm run docs:formalize`).
+
 ## Library
 
 ```js
