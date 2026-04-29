@@ -32,6 +32,16 @@ export {
   findExampleOpposite,
   createSeededRandom,
 } from './examples.js';
+export {
+  formalizeText,
+  formalizeTextWith,
+  FORMALIZE_LINK_TARGETS,
+  tokenize as tokenizeForFormalize,
+  generateNgrams as generateFormalizeNgrams,
+  buildMarkdownLink as buildFormalizeMarkdownLink,
+  buildHtmlLink as buildFormalizeHtmlLink,
+  resolveLinkTarget as resolveFormalizeLinkTarget,
+} from './formalize.js';
 
 const arithmeticEqualityPattern =
   /^\s*(-?\d+(?:\.\d+)?)\s*([+*/-])\s*(-?\d+(?:\.\d+)?)\s*=\s*(-?\d+(?:\.\d+)?)\s*$/;
