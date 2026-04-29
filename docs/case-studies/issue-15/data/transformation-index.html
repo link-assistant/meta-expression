@@ -1,0 +1,738 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Text to Wikidata Q/P Transformer</title>
+  <style>
+    :root {
+      --primary-color: #2c3e50;
+      --secondary-color: #3498db;
+      --success-color: #27ae60;
+      --warning-color: #f39c12;
+      --error-color: #e74c3c;
+      --background-color: #ecf0f1;
+      --card-background: #ffffff;
+      --text-color: #34495e;
+      --border-color: #bdc3c7;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+      background-color: var(--background-color);
+      color: var(--text-color);
+      line-height: 1.6;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+
+    header {
+      background-color: var(--primary-color);
+      color: white;
+      padding: 30px 0;
+      text-align: center;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+
+    h1 {
+      font-size: 2.5em;
+      margin-bottom: 10px;
+    }
+
+    .subtitle {
+      font-size: 1.2em;
+      opacity: 0.9;
+    }
+
+    .main-content {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      margin-top: 30px;
+    }
+
+    .card {
+      background: var(--card-background);
+      border-radius: 8px;
+      padding: 25px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+
+    .input-section {
+      grid-column: 1 / -1;
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: 600;
+      color: var(--primary-color);
+    }
+
+    textarea {
+      width: 100%;
+      padding: 12px;
+      border: 2px solid var(--border-color);
+      border-radius: 6px;
+      font-size: 16px;
+      font-family: inherit;
+      resize: vertical;
+      min-height: 120px;
+      transition: border-color 0.3s;
+    }
+
+    textarea:focus {
+      outline: none;
+      border-color: var(--secondary-color);
+    }
+
+    .options {
+      display: flex;
+      gap: 20px;
+      flex-wrap: wrap;
+      margin-bottom: 20px;
+    }
+
+    .option {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    input[type="checkbox"], input[type="number"] {
+      cursor: pointer;
+    }
+
+    input[type="number"] {
+      width: 60px;
+      padding: 4px 8px;
+      border: 1px solid var(--border-color);
+      border-radius: 4px;
+    }
+
+    .button-group {
+      display: flex;
+      gap: 10px;
+    }
+
+    button {
+      padding: 12px 24px;
+      font-size: 16px;
+      font-weight: 600;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: all 0.3s;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .transform-button {
+      background-color: var(--secondary-color);
+      color: white;
+    }
+
+    .transform-button:hover {
+      background-color: #2980b9;
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(52, 152, 219, 0.3);
+    }
+
+    .clear-button {
+      background-color: var(--error-color);
+      color: white;
+    }
+
+    .clear-button:hover {
+      background-color: #c0392b;
+    }
+
+    .example-button {
+      background-color: var(--success-color);
+      color: white;
+    }
+
+    .example-button:hover {
+      background-color: #229954;
+    }
+
+    .results-section h2 {
+      color: var(--primary-color);
+      margin-bottom: 15px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .result-box {
+      background-color: #f8f9fa;
+      border: 1px solid var(--border-color);
+      border-radius: 6px;
+      padding: 15px;
+      margin-bottom: 15px;
+      font-family: 'Courier New', monospace;
+      word-break: break-all;
+      position: relative;
+    }
+
+    .copy-button {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      padding: 6px 12px;
+      font-size: 14px;
+      background-color: var(--secondary-color);
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    .copy-button:hover {
+      background-color: #2980b9;
+    }
+
+    .token-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 10px;
+    }
+
+    .token {
+      padding: 4px 12px;
+      background-color: var(--secondary-color);
+      color: white;
+      border-radius: 20px;
+      font-size: 14px;
+    }
+
+    .sequence-item {
+      display: inline-block;
+      margin: 4px;
+      padding: 6px 12px;
+      border-radius: 6px;
+      font-weight: 600;
+    }
+
+    .entity-item {
+      background-color: #e8f4fd;
+      border: 1px solid #3498db;
+      color: #2c3e50;
+    }
+
+    .property-item {
+      background-color: #fef5e7;
+      border: 1px solid #f39c12;
+      color: #935116;
+    }
+
+    .ambiguous-item {
+      background-color: #fadbd8;
+      border: 1px solid #e74c3c;
+      color: #922b21;
+    }
+
+    .alternatives {
+      margin-top: 15px;
+      padding: 15px;
+      background-color: #fef9e7;
+      border-radius: 6px;
+      border: 1px solid #f9e79f;
+    }
+
+    .loading {
+      text-align: center;
+      color: var(--secondary-color);
+      font-size: 18px;
+      padding: 20px;
+    }
+
+    .error {
+      background-color: #fadbd8;
+      color: var(--error-color);
+      padding: 15px;
+      border-radius: 6px;
+      margin-top: 15px;
+    }
+
+    .examples {
+      grid-column: 1 / -1;
+      margin-top: 20px;
+    }
+
+    .example-item {
+      padding: 15px;
+      background-color: #f8f9fa;
+      border-radius: 6px;
+      margin-bottom: 10px;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+
+    .example-item:hover {
+      background-color: #e9ecef;
+      transform: translateX(5px);
+    }
+
+    .example-title {
+      font-weight: 600;
+      color: var(--primary-color);
+      margin-bottom: 5px;
+    }
+
+    .example-text {
+      color: #6c757d;
+      font-style: italic;
+    }
+
+    @media (max-width: 768px) {
+      .main-content {
+        grid-template-columns: 1fr;
+      }
+      
+      .options {
+        flex-direction: column;
+      }
+    }
+    
+    /* Link styling for Q/P IDs */
+    .result-box a {
+      color: #0066cc;
+      text-decoration: none;
+      border-bottom: 1px dotted #0066cc;
+    }
+    
+    .result-box a:hover {
+      text-decoration: none;
+      border-bottom-style: solid;
+    }
+    
+    .sequence-item a {
+      border-bottom: 1px dotted currentColor;
+    }
+    
+    .sequence-item a:hover {
+      border-bottom-style: solid;
+    }
+    
+    /* Loading state */
+    .loading-spinner {
+      display: inline-block;
+      width: 16px;
+      height: 16px;
+      border: 2px solid #f3f3f3;
+      border-top: 2px solid #0066cc;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+      margin-right: 8px;
+      vertical-align: middle;
+    }
+    
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+    
+    button:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+    
+    button.loading {
+      position: relative;
+    }
+    
+    button.loading .button-text {
+      visibility: hidden;
+    }
+    
+    button.loading::after {
+      content: "";
+      position: absolute;
+      width: 16px;
+      height: 16px;
+      top: 50%;
+      left: 50%;
+      margin-left: -8px;
+      margin-top: -8px;
+      border: 2px solid #f3f3f3;
+      border-top: 2px solid currentColor;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container">
+      <h1>🔄 Text to Wikidata Q/P Transformer</h1>
+      <p class="subtitle">Transform English text into sequences of Wikidata entities (Q) and properties (P)</p>
+    </div>
+  </header>
+
+  <div class="container">
+    <div class="main-content">
+      <div class="card input-section">
+        <h2>📝 Input Text</h2>
+        <form id="transformForm">
+          <div class="form-group">
+            <label for="inputText">Enter English text to transform:</label>
+            <textarea 
+              id="inputText" 
+              name="inputText" 
+              placeholder="Example: Barack Obama was born in Hawaii"
+              required
+            ></textarea>
+          </div>
+
+          <div class="options">
+            <div class="option">
+              <input type="checkbox" id="includeLabels" name="includeLabels">
+              <label for="includeLabels">Include labels</label>
+            </div>
+            <div class="option">
+              <input type="checkbox" id="preferProperties" name="preferProperties">
+              <label for="preferProperties">Prefer properties</label>
+            </div>
+            <div class="option">
+              <label for="maxCandidates">Max candidates:</label>
+              <input type="number" id="maxCandidates" name="maxCandidates" min="1" max="10" value="3">
+            </div>
+            <div class="option">
+              <label for="searchLimit">Search limit:</label>
+              <input type="number" id="searchLimit" name="searchLimit" min="5" max="50" value="10">
+            </div>
+            <div class="option">
+              <label for="maxNgramSize">Max n-gram size:</label>
+              <input type="number" id="maxNgramSize" name="maxNgramSize" min="1" max="5" value="3">
+            </div>
+          </div>
+
+          <div class="button-group">
+            <button type="submit" class="transform-button" id="transformBtn">
+              <span class="button-text">🔄 Transform</span>
+            </button>
+            <button type="button" class="clear-button" id="clearBtn" onclick="clearForm()">
+              <span class="button-text">🗑️ Clear</span>
+            </button>
+            <button type="button" class="example-button" id="exampleBtn" onclick="loadRandomExample()">
+              <span class="button-text">💡 Load Example</span>
+            </button>
+          </div>
+        </form>
+      </div>
+
+      <div class="card results-section">
+        <h2>📊 Transformation Result</h2>
+        <div id="resultContent">
+          <div class="loading">Enter text and click "Transform" to see results</div>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2>🔍 Detailed Analysis</h2>
+        <div id="analysisContent">
+          <div class="loading">Analysis will appear here after transformation</div>
+        </div>
+      </div>
+
+      <div class="card examples">
+        <h2>📚 Example Texts</h2>
+        <div id="examplesList"></div>
+      </div>
+    </div>
+  </div>
+
+  <script type="module">
+    import { TextToQPTransformer } from './text-to-qp-transformer.js';
+
+    const transformer = new TextToQPTransformer();
+
+    // Example texts
+    const examples = [
+      {
+        title: "Person and Birthplace",
+        text: "Barack Obama was born in Hawaii"
+      },
+      {
+        title: "Scientific Discovery",
+        text: "Albert Einstein discovered the theory of relativity"
+      },
+      {
+        title: "Geographic Relation",
+        text: "Paris is the capital of France"
+      },
+      {
+        title: "Creative Work",
+        text: "Shakespeare wrote Romeo and Juliet"
+      },
+      {
+        title: "Company Founding",
+        text: "Steve Jobs founded Apple in California"
+      },
+      {
+        title: "Historical Event",
+        text: "World War II ended in 1945"
+      },
+      {
+        title: "Family Relation",
+        text: "Queen Elizabeth II was the mother of Prince Charles"
+      },
+      {
+        title: "Scientific Classification",
+        text: "A dolphin is a mammal that lives in the ocean"
+      }
+    ];
+
+    // Initialize examples
+    function initializeExamples() {
+      const examplesList = document.getElementById('examplesList');
+      examples.forEach(example => {
+        const item = document.createElement('div');
+        item.className = 'example-item';
+        item.innerHTML = `
+          <div class="example-title">${example.title}</div>
+          <div class="example-text">"${example.text}"</div>
+        `;
+        item.onclick = () => {
+          document.getElementById('inputText').value = example.text;
+        };
+        examplesList.appendChild(item);
+      });
+    }
+
+    // Load random example
+    window.loadRandomExample = function() {
+      const randomExample = examples[Math.floor(Math.random() * examples.length)];
+      document.getElementById('inputText').value = randomExample.text;
+      
+      // Auto-submit the form
+      document.getElementById('transformForm').dispatchEvent(new Event('submit'));
+    };
+
+    // Clear form
+    window.clearForm = function() {
+      document.getElementById('transformForm').reset();
+      document.getElementById('resultContent').innerHTML = '<div class="loading">Enter text and click "Transform" to see results</div>';
+      document.getElementById('analysisContent').innerHTML = '<div class="loading">Analysis will appear here after transformation</div>';
+    };
+
+    // Copy to clipboard
+    window.copyToClipboard = function(text, event) {
+      const button = event.target;
+      button.disabled = true;
+      
+      navigator.clipboard.writeText(text).then(() => {
+        const originalText = button.textContent;
+        button.textContent = '✓ Copied!';
+        setTimeout(() => {
+          button.textContent = originalText;
+          button.disabled = false;
+        }, 2000);
+      }).catch(err => {
+        console.error('Failed to copy:', err);
+        button.disabled = false;
+      });
+    };
+
+    // Transform text
+    async function transformText(event) {
+      event.preventDefault();
+      
+      const formData = new FormData(event.target);
+      const text = formData.get('inputText');
+      const options = {
+        includeLabels: formData.get('includeLabels') === 'on',
+        preferProperties: formData.get('preferProperties') === 'on',
+        maxCandidates: parseInt(formData.get('maxCandidates')),
+        searchLimit: parseInt(formData.get('searchLimit')),
+        maxNgramSize: parseInt(formData.get('maxNgramSize'))
+      };
+
+      // Get all buttons
+      const transformBtn = document.getElementById('transformBtn');
+      const clearBtn = document.getElementById('clearBtn');
+      const exampleBtn = document.getElementById('exampleBtn');
+      
+      // Disable buttons and show loading state
+      transformBtn.disabled = true;
+      clearBtn.disabled = true;
+      exampleBtn.disabled = true;
+      transformBtn.classList.add('loading');
+
+      // Show loading state
+      document.getElementById('resultContent').innerHTML = '<div class="loading"><span class="loading-spinner"></span>Transforming text...</div>';
+      document.getElementById('analysisContent').innerHTML = '<div class="loading"><span class="loading-spinner"></span>Analyzing...</div>';
+
+      try {
+        const result = await transformer.transform(text, options);
+        displayResults(result, options);
+        displayAnalysis(result);
+      } catch (error) {
+        console.error('Transformation error:', error);
+        document.getElementById('resultContent').innerHTML = `
+          <div class="error">
+            ❌ Error: ${error.message}
+          </div>
+        `;
+        document.getElementById('analysisContent').innerHTML = `
+          <div class="error">
+            Analysis failed due to transformation error
+          </div>
+        `;
+      } finally {
+        // Re-enable buttons and remove loading state
+        transformBtn.disabled = false;
+        clearBtn.disabled = false;
+        exampleBtn.disabled = false;
+        transformBtn.classList.remove('loading');
+      }
+    }
+
+    // Display results
+    function displayResults(result, options) {
+      let html = '';
+
+      // Main sequence
+      html += `
+        <h3>🎯 Q/P Sequence</h3>
+        <div class="result-box">
+          ${result.formattedWithLinks || result.formatted || 'No matches found'}
+          <button class="copy-button" onclick="copyToClipboard('${result.formatted}', event)">📋 Copy</button>
+        </div>
+      `;
+
+      // Visual sequence
+      if (result.sequence.length > 0) {
+        html += '<h3>🎨 Visual Representation</h3><div class="result-box">';
+        result.sequence.forEach(item => {
+          if (item) {
+            const typeClass = item.type === 'property' ? 'property-item' : 
+                            item.type === 'entity' ? 'entity-item' : 'ambiguous-item';
+            const label = options.includeLabels && item.label ? ` (${item.label})` : '';
+            
+            // Create linked version of the ID
+            let linkedId = item.id;
+            if (item.type === 'ambiguous') {
+              // Handle ambiguous items with multiple IDs
+              const ids = item.id.match(/[QP]\d+/g) || [];
+              const linkedIds = ids.map(id => {
+                if (id.startsWith('Q')) {
+                  return `<a href="../entities.html#${id}" target="_blank" style="color: inherit; text-decoration: none;">${id}</a>`;
+                } else if (id.startsWith('P')) {
+                  return `<a href="../properties.html#${id}" target="_blank" style="color: inherit; text-decoration: none;">${id}</a>`;
+                }
+                return id;
+              });
+              linkedId = `[${linkedIds.join(' or ')}]`;
+            } else if (item.id.startsWith('Q')) {
+              linkedId = `<a href="../entities.html#${item.id}" target="_blank" style="color: inherit; text-decoration: none;">${item.id}</a>`;
+            } else if (item.id.startsWith('P')) {
+              linkedId = `<a href="../properties.html#${item.id}" target="_blank" style="color: inherit; text-decoration: none;">${item.id}</a>`;
+            }
+            
+            html += `<span class="sequence-item ${typeClass}">${linkedId}${label}</span>`;
+          }
+        });
+        html += '</div>';
+      }
+
+      // Alternatives
+      if (result.alternatives && result.alternatives.length > 0) {
+        html += `
+          <div class="alternatives">
+            <h4>🔀 Alternative Sequences</h4>
+            ${result.alternatives.map(alt => `
+              <div class="result-box">
+                ${alt.sequence}
+                <small>(Confidence: ${alt.confidence})</small>
+              </div>
+            `).join('')}
+          </div>
+        `;
+      }
+
+      document.getElementById('resultContent').innerHTML = html;
+    }
+
+    // Display analysis
+    function displayAnalysis(result) {
+      let html = '';
+
+      // Tokens
+      html += '<h3>📝 Tokens</h3><div class="token-list">';
+      result.tokens.forEach(token => {
+        html += `<span class="token">${token}</span>`;
+      });
+      html += '</div>';
+
+      // Detailed matches
+      if (result.sequence.length > 0) {
+        html += '<h3>🔍 Detailed Matches</h3>';
+        result.sequence.forEach((item, index) => {
+          if (item) {
+            html += '<div class="result-box">';
+            if (item.type === 'ambiguous') {
+              html += `<strong>Ambiguous match:</strong><br>`;
+              item.alternatives.forEach(alt => {
+                html += `• ${alt.id}: ${alt.label} - ${alt.description || 'No description'}<br>`;
+              });
+            } else {
+              html += `<strong>${item.id}</strong>: ${item.label || 'No label'}<br>`;
+              html += `Type: ${item.type}<br>`;
+            }
+            if (item.ngramSize) {
+              html += `N-gram size: ${item.ngramSize}<br>`;
+            }
+            if (item.originalText) {
+              html += `Matched text: "${item.originalText}"<br>`;
+            }
+            html += '</div>';
+          }
+        });
+      }
+
+      // Statistics
+      const entityCount = result.sequence.filter(item => item && item.type === 'entity').length;
+      const propertyCount = result.sequence.filter(item => item && item.type === 'property').length;
+      const ambiguousCount = result.sequence.filter(item => item && item.type === 'ambiguous').length;
+
+      html += `
+        <h3>📈 Statistics</h3>
+        <div class="result-box">
+          <strong>Total matches:</strong> ${result.sequence.length}<br>
+          <strong>Entities:</strong> ${entityCount}<br>
+          <strong>Properties:</strong> ${propertyCount}<br>
+          <strong>Ambiguous:</strong> ${ambiguousCount}<br>
+          <strong>Original tokens:</strong> ${result.tokens.length}
+        </div>
+      `;
+
+      document.getElementById('analysisContent').innerHTML = html;
+    }
+
+    // Event listeners
+    document.getElementById('transformForm').addEventListener('submit', transformText);
+
+    // Initialize
+    initializeExamples();
+    console.log('Text to Q/P Transformer loaded successfully!');
+  </script>
+</body>
+</html>

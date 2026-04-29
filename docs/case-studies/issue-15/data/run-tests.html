@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Text Transformer Tests</title>
+  <style>
+    body {
+      font-family: 'Courier New', monospace;
+      background-color: #1a1a1a;
+      color: #00ff00;
+      padding: 20px;
+      margin: 0;
+    }
+    
+    .container {
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+    
+    h1 {
+      color: #ffffff;
+      text-align: center;
+      margin-bottom: 30px;
+    }
+    
+    .test-output {
+      background-color: #000;
+      border: 1px solid #333;
+      border-radius: 8px;
+      padding: 20px;
+      margin: 20px 0;
+      white-space: pre-wrap;
+      overflow-x: auto;
+      font-size: 14px;
+      line-height: 1.4;
+    }
+    
+    .button {
+      background-color: #333;
+      color: #00ff00;
+      border: 1px solid #555;
+      padding: 12px 24px;
+      margin: 10px 5px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-family: inherit;
+      font-size: 14px;
+    }
+    
+    .button:hover {
+      background-color: #444;
+    }
+    
+    .status {
+      padding: 10px;
+      margin: 10px 0;
+      border-radius: 4px;
+      font-weight: bold;
+    }
+    
+    .status.running {
+      background-color: #333300;
+      color: #ffff00;
+    }
+    
+    .status.success {
+      background-color: #003300;
+      color: #00ff00;
+    }
+    
+    .status.error {
+      background-color: #330000;
+      color: #ff0000;
+    }
+    
+    .controls {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>🧪 Text to Q/P Transformer Test Suite</h1>
+    
+    <div class="controls">
+      <button class="button" onclick="runAllTests()">Run All Tests</button>
+      <button class="button" onclick="runSpecificTests()">Run Feature Tests</button>
+      <button class="button" onclick="runPerformanceTest()">Run Performance Test</button>
+      <button class="button" onclick="runDemo()">Run Demo</button>
+      <button class="button" onclick="clearOutput()">Clear Output</button>
+    </div>
+    
+    <div id="status" class="status" style="display: none;"></div>
+    <div id="output" class="test-output"></div>
+  </div>
+
+  <script type="module">
+    import { TextTransformerTest, demonstrateTransformer } from './text-transformer-test.js';
+
+    let testSuite;
+    let output = document.getElementById('output');
+    let statusDiv = document.getElementById('status');
+
+    // Initialize
+    try {
+      testSuite = new TextTransformerTest();
+      updateStatus('Test suite initialized successfully', 'success');
+    } catch (error) {
+      updateStatus(`Failed to initialize test suite: ${error.message}`, 'error');
+    }
+
+    // Console override to capture output
+    const originalConsoleLog = console.log;
+    const originalConsoleError = console.error;
+
+    function captureConsole() {
+      console.log = function(...args) {
+        output.textContent += args.join(' ') + '\n';
+        output.scrollTop = output.scrollHeight;
+        originalConsoleLog.apply(console, args);
+      };
+      
+      console.error = function(...args) {
+        output.textContent += '[ERROR] ' + args.join(' ') + '\n';
+        output.scrollTop = output.scrollHeight;
+        originalConsoleError.apply(console, args);
+      };
+    }
+
+    function restoreConsole() {
+      console.log = originalConsoleLog;
+      console.error = originalConsoleError;
+    }
+
+    function updateStatus(message, type) {
+      statusDiv.textContent = message;
+      statusDiv.className = `status ${type}`;
+      statusDiv.style.display = 'block';
+    }
+
+    function clearOutput() {
+      output.textContent = '';
+      statusDiv.style.display = 'none';
+    }
+
+    // Test functions
+    window.runAllTests = async function() {
+      if (!testSuite) {
+        updateStatus('Test suite not initialized', 'error');
+        return;
+      }
+
+      updateStatus('Running all tests...', 'running');
+      output.textContent = '';
+      captureConsole();
+      
+      try {
+        const results = await testSuite.runAllTests();
+        updateStatus(`Tests completed: ${results.passed}/${results.total} passed (${results.successRate.toFixed(1)}%)`, 
+                    results.successRate === 100 ? 'success' : 'error');
+      } catch (error) {
+        updateStatus(`Test execution failed: ${error.message}`, 'error');
+        console.error('Test execution error:', error);
+      } finally {
+        restoreConsole();
+      }
+    };
+
+    window.runSpecificTests = async function() {
+      if (!testSuite) {
+        updateStatus('Test suite not initialized', 'error');
+        return;
+      }
+
+      updateStatus('Running feature tests...', 'running');
+      output.textContent = '';
+      captureConsole();
+      
+      try {
+        await testSuite.testSpecificFeatures();
+        updateStatus('Feature tests completed', 'success');
+      } catch (error) {
+        updateStatus(`Feature tests failed: ${error.message}`, 'error');
+        console.error('Feature test error:', error);
+      } finally {
+        restoreConsole();
+      }
+    };
+
+    window.runPerformanceTest = async function() {
+      if (!testSuite) {
+        updateStatus('Test suite not initialized', 'error');
+        return;
+      }
+
+      updateStatus('Running performance test...', 'running');
+      output.textContent = '';
+      captureConsole();
+      
+      try {
+        const avgTime = await testSuite.testPerformance();
+        updateStatus(`Performance test completed: ${avgTime.toFixed(2)}ms average`, 'success');
+      } catch (error) {
+        updateStatus(`Performance test failed: ${error.message}`, 'error');
+        console.error('Performance test error:', error);
+      } finally {
+        restoreConsole();
+      }
+    };
+
+    window.runDemo = async function() {
+      updateStatus('Running demo...', 'running');
+      output.textContent = '';
+      captureConsole();
+      
+      try {
+        await demonstrateTransformer();
+        updateStatus('Demo completed', 'success');
+      } catch (error) {
+        updateStatus(`Demo failed: ${error.message}`, 'error');
+        console.error('Demo error:', error);
+      } finally {
+        restoreConsole();
+      }
+    };
+
+    // Auto-run basic demo on load
+    window.addEventListener('load', () => {
+      setTimeout(() => {
+        output.textContent = 'Test suite ready! Click "Run All Tests" to execute the comprehensive test suite.\n\n';
+        output.textContent += 'Available tests:\n';
+        output.textContent += '• Barack Obama birthplace example\n';
+        output.textContent += '• Scientific discovery (Einstein)\n';
+        output.textContent += '• Capital city relation (Paris-France)\n';
+        output.textContent += '• Single entity test\n';
+        output.textContent += '• Empty input handling\n';
+        output.textContent += '• Stop words filtering\n';
+        output.textContent += '\nFeature tests include:\n';
+        output.textContent += '• Disambiguation syntax validation\n';
+        output.textContent += '• Multi-word phrase detection\n';
+        output.textContent += '• Property vs entity classification\n';
+        output.textContent += '• Performance benchmarking\n\n';
+        output.textContent += 'Click any button above to start testing!\n';
+      }, 1000);
+    });
+
+    console.log('Test runner loaded successfully!');
+  </script>
+</body>
+</html>
