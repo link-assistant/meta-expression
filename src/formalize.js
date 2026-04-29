@@ -2,19 +2,36 @@
 //
 // Pipeline (per docs/case-studies/issue-15/analysis.md):
 //   input -> tokenize -> n-grams (size 1..maxNgramSize, stop-only n-grams skipped)
-//   n-grams -> [parallel] wbsearchentities -> top-K candidates per n-gram
+//   n-grams -> [parallel] every registered source -> top-K candidates per n-gram
 //   n-grams -> longest-first non-overlapping cover -> phrases[]
 //   phrases -> wbgetentities (props=sitelinks|claims, sitefilter=enwiki)
 //              -> wikipedia URL when enwiki sitelink exists, else Wikidata URL
-//   phrases -> contexts via P31 / P279 / P106, weighted by frequency
+//   phrases -> contexts via P31/P279/P361/P137/P136/P425/P106 transitive
+//              walk (bounded depth) — surfaces broad worlds/categories
 //   phrases -> bounded cartesian product -> top-N interpretations
 //   render: HTML <a title="Q…">, Markdown [phrase](url "Q…"), Lino payload.
 //
 // Every link target must carry the Q/P id in the title attribute (issue F6).
-// Network calls are cache-injectable and fetch-injectable so unit tests don't
-// hit the network.
+// All network I/O is cache-injectable and fetch-injectable so unit tests
+// don't hit the network. The implementation is split across:
+//   - formalize.js          (this file: pipeline orchestration + rendering)
+//   - formalize-sources.js  (pluggable knowledge-graph sources)
+//   - formalize-contexts.js (big-context aggregation)
+//   - formalize-overrides.js (lazy override layer)
 
-const wikidataApiUrl = 'https://www.wikidata.org/w/api.php';
+import {
+  createSourceRegistry,
+  createWikidataSource,
+  SOURCE_KIND,
+} from './formalize-sources.js';
+import { aggregateBigContexts } from './formalize-contexts.js';
+import {
+  buildOverrideMap,
+  lookupOverride,
+  overrideToCandidate,
+  overrideToEntity,
+} from './formalize-overrides.js';
+
 const wikidataEntityBaseUrl = 'https://www.wikidata.org/wiki/';
 const wikidataPropertyBaseUrl = 'https://www.wikidata.org/wiki/Property:';
 const wikipediaArticleBaseUrl = 'https://en.wikipedia.org/wiki/';
@@ -31,79 +48,29 @@ const defaultInterpretationsCount = 10;
 // English glue words that must not anchor an n-gram on their own. They still
 // appear in the rendered output, just without a hyperlink.
 const stopWords = new Set([
-  'the',
-  'a',
-  'an',
-  'and',
-  'or',
-  'but',
-  'in',
-  'on',
-  'at',
-  'to',
-  'for',
-  'of',
-  'with',
-  'by',
-  'from',
-  'as',
-  'into',
-  'onto',
-  'than',
-  'that',
-  'this',
-  'these',
-  'those',
-  'it',
-  'its',
-  'be',
-  'so',
-]);
+  'the', 'a', 'an', 'and', 'or', 'but', 'in', 'on', 'at', 'to', 'for', 'of',
+  'with', 'by', 'from', 'as', 'into', 'onto', 'than', 'that', 'this',
+  'these', 'those', 'it', 'its', 'be', 'so',
+]); // prettier-ignore
 
 // English verbs / relation phrases that bias an n-gram toward properties.
 const propertyIndicators = new Set([
-  'is',
-  'was',
-  'are',
-  'were',
-  'has',
-  'have',
-  'had',
-  'born',
-  'died',
-  'located',
-  'created',
-  'founded',
-  'married',
-  'wrote',
-  'directed',
-  'invented',
-  'discovered',
-  'contains',
-  'belongs',
-  'relates',
-  'connects',
-  'instance of',
-  'subclass of',
-  'part of',
-  'member of',
-  'capital of',
-  'owned by',
-  'child of',
-  'parent of',
-  'spouse of',
-  'sibling of',
-  'place of birth',
-  'date of birth',
-  'date of death',
-  'was born in',
+  'is', 'was', 'are', 'were', 'has', 'have', 'had', 'born', 'died',
+  'located', 'created', 'founded', 'married', 'wrote', 'directed',
+  'invented', 'discovered', 'contains', 'belongs', 'relates', 'connects',
+  'instance of', 'subclass of', 'part of', 'member of', 'capital of',
+  'owned by', 'child of', 'parent of', 'spouse of', 'sibling of',
+  'place of birth', 'date of birth', 'date of death', 'was born in',
   'is located in',
-]);
+]); // prettier-ignore
 
-// Wikidata properties used to derive a context bag from each entity.
 const contextProperties = Object.freeze({
   P31: 'instance of',
   P279: 'subclass of',
+  P361: 'part of',
+  P137: 'operator',
+  P136: 'genre',
+  P425: 'field of work',
   P106: 'occupation',
 });
 
@@ -114,7 +81,17 @@ const linkTargetModes = Object.freeze({
 });
 
 export const FORMALIZE_LINK_TARGETS = linkTargetModes;
+export { SOURCE_KIND as FORMALIZE_SOURCE_KIND };
 
+/**
+ * Synchronous-friendly entry point used by older call sites. Always returns
+ * a Promise — fetch is intentionally null so callers without a resolver get
+ * a deterministic (no-network) result.
+ *
+ * @param {string} input
+ * @param {object} [options]
+ * @returns {Promise<object>}
+ */
 export function formalizeText(input, options = {}) {
   return formalizeTextWith(input, {
     fetch: null,
@@ -124,6 +101,30 @@ export function formalizeText(input, options = {}) {
   });
 }
 
+/**
+ * Formalize free-form text by tokenising, resolving each n-gram against
+ * one or more knowledge graphs, picking the longest non-overlapping
+ * cover, and producing renderings (Markdown, HTML, Links Notation) plus
+ * aggregated big contexts and ranked interpretations.
+ *
+ * @param {string} input
+ * @param {object} [options]
+ * @param {Function|null} [options.fetch]            — fetch implementation
+ * @param {Map<string,unknown>|null} [options.cache] — TTL cache
+ * @param {number} [options.cacheTtlMs]
+ * @param {Function} [options.now]
+ * @param {number} [options.maxNgramSize]
+ * @param {number} [options.searchLimit]
+ * @param {number} [options.topKCandidates]
+ * @param {number} [options.maxInterpretations]
+ * @param {string} [options.linkTargetMode]
+ * @param {string|object|null} [options.contextLens]
+ * @param {string} [options.language]
+ * @param {object[]} [options.sources]               — pluggable source list
+ * @param {object[]} [options.overrides]             — repo+user overrides
+ * @param {object} [options.contextOptions]          — passed to aggregator
+ * @returns {Promise<object>}
+ */
 export async function formalizeTextWith(input, options = {}) {
   const text = normalizeInput(input);
   const config = createConfig(options);
@@ -142,34 +143,52 @@ export async function formalizeTextWith(input, options = {}) {
   await Promise.all(
     phrases.map((phrase) => attachEntityDetails(phrase, config))
   );
-  const contexts = aggregateContexts(phrases);
-  const reranked = applyContextLens(phrases, config.contextLens, contexts);
+  const flatContexts = aggregateContexts(phrases);
+  const bigContexts = await aggregateBigContexts(phrases, {
+    fetchJson: (url) => fetchJson(url, config),
+    now: config.now,
+    language: config.language,
+    maxDepth: config.bigContextDepth,
+    perStepBranching: config.bigContextBranching,
+    topCategories: config.bigContextTop,
+  });
+  const reranked = applyContextLens(phrases, config.contextLens, flatContexts);
   const interpretations = generateFormalizeInterpretations(
     reranked,
-    contexts,
+    flatContexts,
     config
   );
-  const linksNetwork = buildLinksNetwork(text, reranked, contexts);
+  const linksNetwork = buildLinksNetwork(text, reranked, flatContexts);
   const markdown = renderMarkdown(reranked, config);
   const html = renderHtml(reranked, config);
-  const linksNotation = renderLinksNotation(text, reranked, contexts);
+  const linksNotation = renderLinksNotation(text, reranked, flatContexts);
 
   return {
     text,
     tokens,
     phrases: reranked,
-    contexts: contexts.all,
-    mainContext: contexts.main,
-    additionalContexts: contexts.additional,
+    contexts: flatContexts.all,
+    mainContext: flatContexts.main,
+    additionalContexts: flatContexts.additional,
+    bigContexts: bigContexts.all,
+    mainBigContext: bigContexts.main,
+    additionalBigContexts: bigContexts.additional,
     interpretations,
     markdown,
     html,
     linksNotation,
     linksNetwork,
     linkTargetMode: config.linkTargetMode,
+    sources: config.sources.all.map((source) => source.name),
   };
 }
 
+/**
+ * Tokenize input by stripping punctuation and splitting on whitespace.
+ *
+ * @param {string} text
+ * @returns {string[]}
+ */
 export function tokenize(text) {
   return String(text)
     .replace(/[.,!?;:"“”]/g, ' ')
@@ -177,6 +196,13 @@ export function tokenize(text) {
     .filter((token) => token.length > 0);
 }
 
+/**
+ * Build all n-grams up to `maxSize` tokens, skipping stop-only n-grams.
+ *
+ * @param {string[]} tokens
+ * @param {number} [maxSize]
+ * @returns {Array<{text:string,tokens:string[],start:number,end:number,size:number}>}
+ */
 export function generateNgrams(tokens, maxSize = defaultMaxNgramSize) {
   const ngrams = [];
   const max = Math.max(1, Math.min(maxSize, tokens.length));
@@ -198,6 +224,13 @@ export function generateNgrams(tokens, maxSize = defaultMaxNgramSize) {
   return ngrams;
 }
 
+/**
+ * Render a single phrase as Markdown link `[text](url "Qid")`.
+ *
+ * @param {object} phrase
+ * @param {object} [options]
+ * @returns {string}
+ */
 export function buildMarkdownLink(phrase, options = {}) {
   if (!phrase.entity) {
     return phrase.text;
@@ -206,6 +239,13 @@ export function buildMarkdownLink(phrase, options = {}) {
   return `[${escapeMarkdown(phrase.text)}](${url} "${phrase.entity.id}")`;
 }
 
+/**
+ * Render a single phrase as HTML `<a title="Qid">text</a>`.
+ *
+ * @param {object} phrase
+ * @param {object} [options]
+ * @returns {string}
+ */
 export function buildHtmlLink(phrase, options = {}) {
   if (!phrase.entity) {
     return escapeHtml(phrase.text);
@@ -216,6 +256,14 @@ export function buildHtmlLink(phrase, options = {}) {
   )}">${escapeHtml(phrase.text)}</a>`;
 }
 
+/**
+ * Resolve the URL the rendered link should point at, depending on the
+ * configured `linkTargetMode`. Supports any source-tagged entity.
+ *
+ * @param {object} phrase
+ * @param {object} [options]
+ * @returns {string|null}
+ */
 export function resolveLinkTarget(phrase, options = {}) {
   const mode = options.linkTargetMode ?? linkTargetModes.WIKIPEDIA;
   const entity = phrase.entity;
@@ -223,34 +271,58 @@ export function resolveLinkTarget(phrase, options = {}) {
     return null;
   }
 
-  if (mode === linkTargetModes.LOCAL) {
-    return entity.kind === 'property'
-      ? `${localPropertyViewerBaseUrl}#${entity.id}`
-      : `${localEntityViewerBaseUrl}#${entity.id}`;
+  // Non-Wikidata sources route through their own URL regardless of mode
+  // (we can't synthesise a Wikipedia article URL for a Fandom page).
+  const isWikidataLikeId = /^[QP]\d+$/.test(entity.id);
+  if (!isWikidataLikeId && entity.sourceUrl) {
+    if (mode === linkTargetModes.LOCAL) {
+      return localViewerUrl(entity);
+    }
+    return entity.sourceUrl;
   }
 
+  if (mode === linkTargetModes.LOCAL) {
+    return localViewerUrl(entity);
+  }
   if (mode === linkTargetModes.WIKIDATA) {
     return wikidataPageUrl(entity);
   }
-
   if (entity.wikipediaUrl) {
     return entity.wikipediaUrl;
   }
   return wikidataPageUrl(entity);
 }
 
+function localViewerUrl(entity) {
+  if (entity.kind === 'property') {
+    return `${localPropertyViewerBaseUrl}#${entity.id}`;
+  }
+  return `${localEntityViewerBaseUrl}#${entity.id}`;
+}
+
 function wikidataPageUrl(entity) {
-  return entity.kind === 'property'
-    ? `${wikidataPropertyBaseUrl}${entity.id}`
-    : `${wikidataEntityBaseUrl}${entity.id}`;
+  if (entity.kind === 'property') {
+    return `${wikidataPropertyBaseUrl}${entity.id}`;
+  }
+  return `${wikidataEntityBaseUrl}${entity.id}`;
 }
 
 function createConfig(options) {
-  const cache = options.cache ?? new Map();
   const fetchImpl = options.fetch ?? globalThis.fetch?.bind(globalThis) ?? null;
+  const sources = createSourceRegistry(
+    options.sources ?? [createWikidataSource({ language: options.language })]
+  );
   return {
     fetchImpl,
-    cache,
+    sources,
+    cache: options.cache ?? new Map(),
+    overrides: buildOverrideMap(options.overrides ?? []),
+    ...resolveScalarConfigDefaults(options),
+  };
+}
+
+function resolveScalarConfigDefaults(options) {
+  return {
     cacheTtlMs: options.cacheTtlMs ?? defaultCacheTtlMs,
     now: options.now ?? Date.now,
     maxNgramSize: options.maxNgramSize ?? defaultMaxNgramSize,
@@ -261,6 +333,9 @@ function createConfig(options) {
     linkTargetMode: options.linkTargetMode ?? linkTargetModes.WIKIPEDIA,
     contextLens: options.contextLens ?? null,
     language: options.language ?? 'en',
+    bigContextDepth: options.bigContextDepth,
+    bigContextBranching: options.bigContextBranching,
+    bigContextTop: options.bigContextTop,
   };
 }
 
@@ -269,20 +344,35 @@ function isStopOnly(tokens) {
 }
 
 async function searchNgramCandidates(ngram, config) {
+  // Overrides short-circuit live search entirely.
+  const override = lookupOverride(config.overrides, ngram.text);
+  if (override) {
+    return [overrideToCandidate(override)];
+  }
+  const sourceCtx = buildSourceContext(config);
   const propertyBias = isPropertyIndicator(ngram.text);
-  const types = propertyBias ? ['property', 'item'] : ['item', 'property'];
-  const searches = await Promise.all(
-    types.map((type) => searchWikidata(ngram.text, type, config))
+  const perSource = await Promise.all(
+    config.sources.all.map((source) =>
+      source.searchPhrase(ngram.text, sourceCtx).catch(() => [])
+    )
   );
-  const merged = mergeSearchResults(searches.flat(), propertyBias);
+  const merged = mergeSearchResults(perSource.flat(), propertyBias);
   return merged
     .map((candidate) => scoreCandidate(ngram, candidate, propertyBias))
     .sort((left, right) => right.score - left.score)
     .slice(0, config.topKCandidates);
 }
 
+function buildSourceContext(config) {
+  return {
+    fetchImpl: config.fetchImpl,
+    fetchJson: (url) => fetchJson(url, config),
+    isPropertyIndicator,
+  };
+}
+
 function isPropertyIndicator(text) {
-  const lowered = text.toLowerCase();
+  const lowered = String(text).toLowerCase();
   if (propertyIndicators.has(lowered)) {
     return true;
   }
@@ -292,35 +382,6 @@ function isPropertyIndicator(text) {
     }
   }
   return false;
-}
-
-async function searchWikidata(query, type, config) {
-  if (!config.fetchImpl) {
-    return [];
-  }
-  const url = new URL(wikidataApiUrl);
-  url.search = new URLSearchParams({
-    action: 'wbsearchentities',
-    format: 'json',
-    language: config.language,
-    origin: '*',
-    type,
-    limit: String(config.searchLimit),
-    search: query,
-  }).toString();
-  let payload;
-  try {
-    payload = await fetchJson(url, config);
-  } catch {
-    return [];
-  }
-  return (payload.search ?? []).map((entry) => ({
-    id: entry.id,
-    label: entry.label ?? query,
-    description: entry.description ?? '',
-    kind: type === 'property' ? 'property' : 'entity',
-    matchText: entry.match?.text ?? '',
-  }));
 }
 
 function mergeSearchResults(results, propertyBias) {
@@ -369,8 +430,15 @@ function scoreCandidate(ngram, candidate, propertyBias) {
   if (!propertyBias && candidate.kind === 'entity') {
     score += 2;
   }
-  // Prefer longer phrases (n-gram size folded into the candidate score so
-  // the cartesian-product interpretation ranking stays consistent).
+  // Wikidata is the primary schema (it's the only one carrying sitelinks
+  // for the Wikipedia fallback rule), so Wikidata candidates win ties even
+  // when a layered source happens to return a slightly more decorated
+  // match — without this bias a bare Wiktionary `matchText` hit can edge
+  // out the canonical Wikidata entry.
+  if (candidate.source === SOURCE_KIND.WIKIDATA) {
+    score += 8;
+  }
+  // Prefer longer phrases.
   score += ngram.size * 3;
   return { ...candidate, score, ngramSize: ngram.size };
 }
@@ -407,8 +475,6 @@ function coverTokensWithLongestMatch(tokens, ngramsWithCandidates) {
     claimed.push(ngram);
   }
 
-  // Build phrase list in sentence order. Tokens that no n-gram covered are
-  // emitted as link-less "raw" phrases so every word still appears.
   const claimedByStart = new Map();
   for (const ngram of claimed) {
     claimedByStart.set(ngram.start, ngram);
@@ -418,50 +484,76 @@ function coverTokensWithLongestMatch(tokens, ngramsWithCandidates) {
   while (cursor < tokens.length) {
     const ngram = claimedByStart.get(cursor);
     if (ngram) {
-      const best = ngram.candidates[0];
-      phrases.push({
-        text: ngram.text,
-        tokens: ngram.tokens,
-        start: ngram.start,
-        end: ngram.end,
-        size: ngram.size,
-        candidates: ngram.candidates,
-        entity: best
-          ? {
-              id: best.id,
-              label: best.label,
-              description: best.description,
-              kind: best.kind,
-              score: best.score,
-              wikipediaUrl: null,
-              wikipediaTitle: null,
-              contextLabels: [],
-            }
-          : null,
-      });
+      phrases.push(buildPhraseFromNgram(ngram));
       cursor = ngram.end + 1;
       continue;
     }
-    phrases.push({
-      text: tokens[cursor],
-      tokens: [tokens[cursor]],
-      start: cursor,
-      end: cursor,
-      size: 1,
-      candidates: [],
-      entity: null,
-    });
+    phrases.push(buildRawPhrase(tokens[cursor], cursor));
     cursor += 1;
   }
   return phrases;
 }
 
+function buildPhraseFromNgram(ngram) {
+  const best = ngram.candidates[0];
+  return {
+    text: ngram.text,
+    tokens: ngram.tokens,
+    start: ngram.start,
+    end: ngram.end,
+    size: ngram.size,
+    candidates: ngram.candidates,
+    entity: best
+      ? {
+          id: best.id,
+          label: best.label,
+          description: best.description,
+          kind: best.kind,
+          source: best.source ?? SOURCE_KIND.WIKIDATA,
+          sourceUrl: best.sourceUrl ?? null,
+          score: best.score,
+          wikipediaUrl: null,
+          wikipediaTitle: null,
+          contextLabels: [],
+          overrideEntry: best.overrideEntry ?? null,
+        }
+      : null,
+  };
+}
+
+function buildRawPhrase(token, position) {
+  return {
+    text: token,
+    tokens: [token],
+    start: position,
+    end: position,
+    size: 1,
+    candidates: [],
+    entity: null,
+  };
+}
+
 async function attachEntityDetails(phrase, config) {
-  if (!phrase.entity || !config.fetchImpl) {
+  if (!phrase.entity) {
     return;
   }
-  const id = phrase.entity.id;
-  const entity = await fetchEntity(id, config);
+  // Override entries already carry their final shape — promote it directly.
+  if (phrase.entity.overrideEntry) {
+    Object.assign(phrase.entity, overrideToEntity(phrase.entity.overrideEntry));
+    return;
+  }
+  if (!/^[QP]\d+$/.test(phrase.entity.id)) {
+    return; // non-Wikidata source — no sitelink lookup possible
+  }
+  if (!config.fetchImpl) {
+    return;
+  }
+  const wikidata = config.sources.byName.get(SOURCE_KIND.WIKIDATA);
+  if (!wikidata?.getEntity) {
+    return;
+  }
+  const sourceCtx = buildSourceContext(config);
+  const entity = await wikidata.getEntity(phrase.entity.id, sourceCtx);
   if (!entity) {
     return;
   }
@@ -473,30 +565,6 @@ async function attachEntityDetails(phrase, config) {
     )}`;
   }
   phrase.entity.contextLabels = extractContextLabels(entity);
-}
-
-async function fetchEntity(id, config) {
-  if (!config.fetchImpl) {
-    return null;
-  }
-  const url = new URL(wikidataApiUrl);
-  url.search = new URLSearchParams({
-    action: 'wbgetentities',
-    format: 'json',
-    ids: id,
-    languages: config.language,
-    origin: '*',
-    props: 'labels|descriptions|claims|sitelinks',
-    sitefilter: 'enwiki',
-  }).toString();
-  let payload;
-  try {
-    payload = await fetchJson(url, config);
-  } catch {
-    return null;
-  }
-  const entity = payload.entities?.[id];
-  return entity && !entity.missing ? entity : null;
 }
 
 function extractContextLabels(entity) {
@@ -628,6 +696,7 @@ function applyContextLens(phrases, contextLens, contexts) {
         label: best.label,
         description: best.description,
         kind: best.kind,
+        source: best.source ?? phrase.entity.source,
         score: best.score,
       },
     };
@@ -653,14 +722,10 @@ function generateFormalizeInterpretations(phrases, contexts, config) {
       },
     ];
   }
-
   const baseScore = phrases.reduce(
     (accumulator, phrase) => accumulator + (phrase.entity?.score ?? 0),
     0
   );
-
-  // Bounded cartesian product: for each ambiguous phrase, pick top-K, capped
-  // by maxInterpretations to keep the prototype deterministic.
   let combinations = [
     {
       score: baseScore,
@@ -692,11 +757,9 @@ function generateFormalizeInterpretations(phrases, contexts, config) {
       Math.max(config.maxInterpretations * 5, config.maxInterpretations)
     );
   }
-
   const mainContextPhraseIds = new Set(
     contexts.main?.phrases.map((entry) => entry.entityId) ?? []
   );
-
   return combinations
     .map((combo, index) => {
       const ordered = phrases
@@ -724,56 +787,22 @@ function generateFormalizeInterpretations(phrases, contexts, config) {
 }
 
 function buildLinksNetwork(text, phrases, contexts) {
-  const links = [];
   const inputId = 'formalize-input-1';
-  links.push({
-    id: inputId,
-    role: 'input',
-    references: [],
-    value: { text },
-    provenance: { sourceType: 'algorithm', method: 'formalize' },
+  const links = [
+    {
+      id: inputId,
+      role: 'input',
+      references: [],
+      value: { text },
+      provenance: { sourceType: 'algorithm', method: 'formalize' },
+    },
+  ];
+  phrases.forEach((phrase, index) => {
+    links.push(buildPhraseLink(phrase, index, inputId));
   });
-  for (let index = 0; index < phrases.length; index += 1) {
-    const phrase = phrases[index];
-    const phraseId = `formalize-phrase-${index + 1}`;
-    links.push({
-      id: phraseId,
-      role: 'phrase',
-      references: [inputId],
-      value: {
-        text: phrase.text,
-        position: phrase.start,
-        size: phrase.size,
-        wikidataId: phrase.entity?.id ?? null,
-        wikidataLabel: phrase.entity?.label ?? null,
-        wikidataKind: phrase.entity?.kind ?? null,
-        wikipediaUrl: phrase.entity?.wikipediaUrl ?? null,
-      },
-      provenance: {
-        sourceType: phrase.entity ? 'wikidata' : 'algorithm',
-        sourceUrl: phrase.entity ? wikidataPageUrl(phrase.entity) : null,
-      },
-    });
-  }
-  for (let index = 0; index < contexts.all.length; index += 1) {
-    const context = contexts.all[index];
-    links.push({
-      id: `formalize-context-${index + 1}`,
-      role: 'context',
-      references: [inputId],
-      value: {
-        wikidataId: context.id,
-        property: context.property,
-        propertyLabel: context.propertyLabel,
-        weight: context.weight,
-        probability: context.probability,
-      },
-      provenance: {
-        sourceType: 'wikidata',
-        sourceUrl: `${wikidataEntityBaseUrl}${context.id}`,
-      },
-    });
-  }
+  contexts.all.forEach((context, index) => {
+    links.push(buildContextLink(context, index, inputId));
+  });
   return {
     id: 'formalize-links-network',
     kind: 'links-network',
@@ -782,9 +811,62 @@ function buildLinksNetwork(text, phrases, contexts) {
       id: 'formalize-default',
       name: 'Formalize prototype',
       probabilityStrategy: 'frequency-weighted-context',
-      sourceWeights: { wikidata: 1, algorithm: 0.6 },
+      sourceWeights: { wikidata: 1, wordnet: 0.7, fandom: 0.6, algorithm: 0.5 },
     },
     links,
+  };
+}
+
+function buildPhraseLink(phrase, index, inputId) {
+  const entity = phrase.entity ?? null;
+  return {
+    id: `formalize-phrase-${index + 1}`,
+    role: 'phrase',
+    references: [inputId],
+    value: phraseLinkValue(phrase, entity),
+    provenance: phraseLinkProvenance(entity),
+  };
+}
+
+function phraseLinkValue(phrase, entity) {
+  return {
+    text: phrase.text,
+    position: phrase.start,
+    size: phrase.size,
+    wikidataId: entity?.id ?? null,
+    wikidataLabel: entity?.label ?? null,
+    wikidataKind: entity?.kind ?? null,
+    wikipediaUrl: entity?.wikipediaUrl ?? null,
+    source: entity?.source ?? null,
+  };
+}
+
+function phraseLinkProvenance(entity) {
+  if (!entity) {
+    return { sourceType: 'algorithm', sourceUrl: null };
+  }
+  return {
+    sourceType: entity.source ?? 'algorithm',
+    sourceUrl: entity.sourceUrl ?? wikidataPageUrl(entity),
+  };
+}
+
+function buildContextLink(context, index, inputId) {
+  return {
+    id: `formalize-context-${index + 1}`,
+    role: 'context',
+    references: [inputId],
+    value: {
+      wikidataId: context.id,
+      property: context.property,
+      propertyLabel: context.propertyLabel,
+      weight: context.weight,
+      probability: context.probability,
+    },
+    provenance: {
+      sourceType: 'wikidata',
+      sourceUrl: `${wikidataEntityBaseUrl}${context.id}`,
+    },
   };
 }
 

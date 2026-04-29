@@ -36,12 +36,33 @@ export {
   formalizeText,
   formalizeTextWith,
   FORMALIZE_LINK_TARGETS,
+  FORMALIZE_SOURCE_KIND,
   tokenize as tokenizeForFormalize,
   generateNgrams as generateFormalizeNgrams,
   buildMarkdownLink as buildFormalizeMarkdownLink,
   buildHtmlLink as buildFormalizeHtmlLink,
   resolveLinkTarget as resolveFormalizeLinkTarget,
 } from './formalize.js';
+export {
+  SOURCE_KIND as FORMALIZE_SOURCES,
+  createWikidataSource,
+  createWordNetSource,
+  createFandomSource,
+  createSourceRegistry,
+  parseSourceSpec,
+} from './formalize-sources.js';
+export {
+  aggregateBigContexts,
+  aggregateBigContextsFromGraph,
+} from './formalize-contexts.js';
+export {
+  buildOverrideMap,
+  lookupOverride,
+  overrideToCandidate,
+  overrideToEntity,
+  loadRepoOverrides,
+  loadUserOverrides,
+} from './formalize-overrides.js';
 
 const arithmeticEqualityPattern =
   /^\s*(-?\d+(?:\.\d+)?)\s*([+*/-])\s*(-?\d+(?:\.\d+)?)\s*=\s*(-?\d+(?:\.\d+)?)\s*$/;

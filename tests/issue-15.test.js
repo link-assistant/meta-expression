@@ -2,12 +2,26 @@ import { describe, it, expect } from 'test-anywhere';
 import {
   formalizeTextWith,
   FORMALIZE_LINK_TARGETS,
+  FORMALIZE_SOURCES,
   tokenizeForFormalize,
   generateFormalizeNgrams,
   buildFormalizeMarkdownLink,
   buildFormalizeHtmlLink,
   resolveFormalizeLinkTarget,
+  createWikidataSource,
+  createWordNetSource,
+  createFandomSource,
+  parseSourceSpec,
+  aggregateBigContextsFromGraph,
+  buildOverrideMap,
+  lookupOverride,
+  overrideToCandidate,
 } from '../src/index.js';
+import { parseCliArguments, runCliAsync } from '../src/cli.js';
+import { createMetaExpressionServer } from '../src/server.js';
+import { mkdtemp, readFile, rm } from 'node:fs/promises';
+import { tmpdir } from 'node:os';
+import { join } from 'node:path';
 
 const wikidataApiUrl = 'https://www.wikidata.org/w/api.php';
 
@@ -428,5 +442,529 @@ describe('issue 15 — formalize text into Wikipedia/Wikidata-anchored phrases',
     };
     await formalizeTextWith('test', { fetch: fetchImpl, now: () => 0 });
     expect(requested.every((url) => url.startsWith(wikidataApiUrl))).toBe(true);
+  });
+});
+
+// eslint-disable-next-line max-lines-per-function
+describe('issue 15 — layered sources, overrides, big contexts', () => {
+  it('parses source spec tokens into source instances', () => {
+    const sources = parseSourceSpec('wikidata,wordnet,fandom:genshin-impact');
+    expect(sources.length).toBe(3);
+    expect(sources[0].name).toBe(FORMALIZE_SOURCES.WIKIDATA);
+    expect(sources[1].name).toBe(FORMALIZE_SOURCES.WORDNET);
+    expect(sources[2].name.startsWith(FORMALIZE_SOURCES.FANDOM)).toBe(true);
+  });
+
+  it('layers WordNet + Wikidata candidates via createWordNetSource', async () => {
+    const fetchImpl = (url) => {
+      const parsed = new URL(url);
+      if (parsed.hostname === 'en.wiktionary.org') {
+        return jsonResponse([
+          'dog',
+          ['dog', 'doge'],
+          ['canine animal', 'medieval ruler'],
+          [
+            'https://en.wiktionary.org/wiki/dog',
+            'https://en.wiktionary.org/wiki/doge',
+          ],
+        ]);
+      }
+      if (parsed.searchParams.get('action') === 'wbsearchentities') {
+        return jsonResponse(
+          searchPayload([
+            { id: 'Q144', label: 'dog', description: 'domestic canine' },
+          ])
+        );
+      }
+      if (parsed.searchParams.get('action') === 'wbgetentities') {
+        return jsonResponse(
+          entityPayload([entity({ id: 'Q144', label: 'dog', sitelink: 'Dog' })])
+        );
+      }
+      return jsonResponse({});
+    };
+    const result = await formalizeTextWith('dog', {
+      fetch: fetchImpl,
+      sources: [createWikidataSource(), createWordNetSource()],
+      now: () => 0,
+    });
+    expect(result.sources.includes(FORMALIZE_SOURCES.WIKIDATA)).toBe(true);
+    expect(result.sources.includes(FORMALIZE_SOURCES.WORDNET)).toBe(true);
+    const phrase = result.phrases.find((entry) => entry.entity);
+    expect(phrase).not.toBe(undefined);
+    // Both Wikidata and WordNet candidates are present.
+    const sources = phrase.candidates.map((candidate) => candidate.source);
+    expect(sources.includes(FORMALIZE_SOURCES.WIKIDATA)).toBe(true);
+    expect(sources.includes(FORMALIZE_SOURCES.WORDNET)).toBe(true);
+    // Wikidata should win the tie due to its primary source bias.
+    expect(phrase.entity.id).toBe('Q144');
+  });
+
+  it('routes Fandom-only entities through their sourceUrl', async () => {
+    const fetchImpl = (url) => {
+      const parsed = new URL(url);
+      if (parsed.hostname.endsWith('.fandom.com')) {
+        return jsonResponse([
+          'Genshin Impact',
+          ['Genshin Impact'],
+          ['Action role-playing game'],
+          ['https://genshin-impact.fandom.com/wiki/Genshin_Impact'],
+        ]);
+      }
+      return jsonResponse({});
+    };
+    const result = await formalizeTextWith('Genshin Impact', {
+      fetch: fetchImpl,
+      sources: [createFandomSource({ wiki: 'genshin-impact' })],
+      now: () => 0,
+    });
+    const phrase = result.phrases.find((entry) => entry.entity);
+    expect(phrase).not.toBe(undefined);
+    expect(phrase.entity.source.startsWith(FORMALIZE_SOURCES.FANDOM)).toBe(
+      true
+    );
+    const url = resolveFormalizeLinkTarget(phrase, {
+      linkTargetMode: FORMALIZE_LINK_TARGETS.WIKIPEDIA,
+    });
+    expect(url).toBe('https://genshin-impact.fandom.com/wiki/Genshin_Impact');
+  });
+
+  it('builds an override map and short-circuits search to keep tests deterministic', () => {
+    const overrides = buildOverrideMap([
+      {
+        phrase: 'Genshin Impact',
+        entityId: 'Q70626251',
+        label: 'Genshin Impact',
+        kind: 'entity',
+        wikipediaUrl: 'https://en.wikipedia.org/wiki/Genshin_Impact',
+      },
+    ]);
+    const hit = lookupOverride(overrides, 'genshin  impact');
+    expect(hit?.entityId).toBe('Q70626251');
+    const candidate = overrideToCandidate(hit);
+    expect(candidate.score).toBeGreaterThan(100);
+    expect(candidate.id).toBe('Q70626251');
+  });
+
+  it('overrides outrank live Wikidata search candidates', async () => {
+    const fetchImpl = makeFetch({
+      search: {
+        'Genshin Impact|item': [
+          { id: 'Q999999', label: 'Some other entity', description: 'noise' },
+        ],
+      },
+      entities: {},
+    });
+    const result = await formalizeTextWith('Genshin Impact', {
+      fetch: fetchImpl,
+      maxNgramSize: 2,
+      overrides: [
+        {
+          phrase: 'Genshin Impact',
+          entityId: 'Q70626251',
+          label: 'Genshin Impact',
+          kind: 'entity',
+          wikipediaUrl: 'https://en.wikipedia.org/wiki/Genshin_Impact',
+        },
+      ],
+      now: () => 0,
+    });
+    const phrase = result.phrases.find((entry) => entry.entity);
+    expect(phrase.entity.id).toBe('Q70626251');
+    expect(phrase.entity.wikipediaUrl).toBe(
+      'https://en.wikipedia.org/wiki/Genshin_Impact'
+    );
+  });
+
+  it('aggregates big-context categories via transitive graph traversal', () => {
+    // Edges: Q937 (Einstein) -> Q5 (human); Q5 -> Q215627 (person);
+    //        Q937 -> Q169470 (physicist); Q169470 -> Q901 (scientist)
+    const edges = new Map([
+      ['Q937', [{ id: 'Q5', property: 'P31' }]],
+      ['Q5', [{ id: 'Q215627', property: 'P279' }]],
+      ['Q169470', [{ id: 'Q901', property: 'P279' }]],
+    ]);
+    const phrases = [
+      {
+        text: 'Albert Einstein',
+        entity: {
+          id: 'Q937',
+          contextLabels: [
+            { property: 'P31', propertyLabel: 'instance of', targetId: 'Q5' },
+            {
+              property: 'P106',
+              propertyLabel: 'occupation',
+              targetId: 'Q169470',
+            },
+          ],
+        },
+      },
+      {
+        text: 'Marie Curie',
+        entity: {
+          id: 'Q7186',
+          contextLabels: [
+            { property: 'P31', propertyLabel: 'instance of', targetId: 'Q5' },
+            {
+              property: 'P106',
+              propertyLabel: 'occupation',
+              targetId: 'Q169470',
+            },
+          ],
+        },
+      },
+    ];
+    const aggregate = aggregateBigContextsFromGraph(edges, phrases, {
+      maxDepth: 3,
+    });
+    const human = aggregate.all.find((entry) => entry.id === 'Q5');
+    const physicist = aggregate.all.find((entry) => entry.id === 'Q169470');
+    expect(human?.weight).toBe(2);
+    expect(physicist?.weight).toBe(2);
+    // Transitive: scientist (Q901) reachable from physicist via P279.
+    const scientist = aggregate.all.find((entry) => entry.id === 'Q901');
+    expect(scientist).not.toBe(undefined);
+    expect(scientist.weight).toBeGreaterThan(0);
+    // Closer ancestors weigh more than further ancestors.
+    expect(human.weight).toBeGreaterThan(scientist.weight);
+    expect(aggregate.main).not.toBe(null);
+    expect(typeof aggregate.main.id).toBe('string');
+  });
+
+  it('exposes bigContexts in formalize result alongside flat contexts', async () => {
+    const fetchImpl = makeFetch({
+      search: {
+        'Albert Einstein|item': [
+          { id: 'Q937', label: 'Albert Einstein', description: 'physicist' },
+        ],
+      },
+      entities: {
+        Q937: entity({
+          id: 'Q937',
+          label: 'Albert Einstein',
+          sitelink: 'Albert Einstein',
+          claims: { P31: ['Q5'], P106: ['Q169470'] },
+        }),
+      },
+    });
+    const result = await formalizeTextWith('Albert Einstein', {
+      fetch: fetchImpl,
+      maxNgramSize: 2,
+      now: () => 0,
+    });
+    expect(Array.isArray(result.bigContexts)).toBe(true);
+    expect(result.bigContexts.length).toBeGreaterThan(0);
+    expect(result.mainBigContext).not.toBe(null);
+    expect(typeof result.bigContexts[0].id).toBe('string');
+  });
+});
+
+describe('issue 15 — CLI: formalize subcommand', () => {
+  it('parses formalize-specific flags', () => {
+    const parsed = parseCliArguments([
+      'formalize',
+      '--input',
+      'Hawaii',
+      '--sources',
+      'wikidata,fandom:genshin-impact',
+      '--target',
+      'wikidata',
+      '--no-repo-overrides',
+      '--max-ngram',
+      '2',
+      '--format',
+      'markdown',
+    ]);
+    expect(parsed.command).toBe('formalize');
+    expect(parsed.input).toBe('Hawaii');
+    expect(parsed.sourcesSpec).toBe('wikidata,fandom:genshin-impact');
+    expect(parsed.target).toBe('wikidata');
+    expect(parsed.noRepoOverrides).toBe(true);
+    expect(parsed.maxNgramSize).toBe(2);
+    expect(parsed.format).toBe('markdown');
+  });
+
+  it('runs the formalize subcommand and emits markdown', async () => {
+    const previousFetch = globalThis.fetch;
+    const fetchImpl = makeFetch({
+      search: {
+        'Hawaii|item': [
+          { id: 'Q782', label: 'Hawaii', description: 'US state' },
+        ],
+      },
+      entities: {
+        Q782: entity({
+          id: 'Q782',
+          label: 'Hawaii',
+          sitelink: 'Hawaii',
+        }),
+      },
+    });
+    globalThis.fetch = fetchImpl;
+    try {
+      const messages = [];
+      const errors = [];
+      const out = {
+        log: (line) => messages.push(line),
+        error: (line) => errors.push(line),
+      };
+      const exit = await runCliAsync(
+        [
+          'formalize',
+          '--input',
+          'Hawaii',
+          '--format',
+          'markdown',
+          '--no-repo-overrides',
+        ],
+        out
+      );
+      expect(exit).toBe(0);
+      expect(errors.length).toBe(0);
+      expect(messages.length).toBe(1);
+      expect(messages[0].includes('https://en.wikipedia.org/wiki/Hawaii')).toBe(
+        true
+      );
+      expect(messages[0].includes('"Q782"')).toBe(true);
+    } finally {
+      globalThis.fetch = previousFetch;
+    }
+  });
+});
+
+function startServerWithCache(cacheRoot) {
+  return new Promise((resolve, reject) => {
+    const server = createMetaExpressionServer({ cacheRoot });
+    server.once('error', reject);
+    server.listen(0, '127.0.0.1', () => {
+      const address = server.address();
+      const port = typeof address === 'object' && address ? address.port : 0;
+      resolve({ server, port });
+    });
+  });
+}
+
+function stopServer(server) {
+  return new Promise((resolve) => server.close(() => resolve()));
+}
+
+async function fetchJson(url, init, fetchImpl = fetch) {
+  const response = await fetchImpl(url, init);
+  const text = await response.text();
+  let payload = null;
+  try {
+    payload = JSON.parse(text);
+  } catch {
+    payload = text;
+  }
+  return { response, payload };
+}
+
+// eslint-disable-next-line max-lines-per-function
+describe('issue 15 — HTTP /formalize endpoint with persistent cache', () => {
+  it('persists results to dual-format cache and reuses them on the next request', async () => {
+    const previousFetch = globalThis.fetch;
+    let upstreamCalls = 0;
+    globalThis.fetch = function trackedFetch(url, init) {
+      const target = String(url);
+      if (target.includes('wikidata.org') || target.includes('wikipedia.org')) {
+        upstreamCalls += 1;
+        const mock = makeFetch({
+          search: {
+            'Hawaii|item': [
+              { id: 'Q782', label: 'Hawaii', description: 'US state' },
+            ],
+          },
+          entities: {
+            Q782: entity({
+              id: 'Q782',
+              label: 'Hawaii',
+              sitelink: 'Hawaii',
+            }),
+          },
+        });
+        return mock(target);
+      }
+      return previousFetch(url, init);
+    };
+
+    const cacheRoot = await mkdtemp(join(tmpdir(), 'meta-expression-cache-'));
+    let started = null;
+    try {
+      started = await startServerWithCache(cacheRoot);
+      const base = `http://127.0.0.1:${started.port}`;
+      const url = `${base}/formalize?input=${encodeURIComponent('Hawaii')}&target=wikipedia&noRepoOverrides=true`;
+      const first = await fetchJson(url, undefined, previousFetch);
+      expect(first.response.status).toBe(200);
+      expect(first.response.headers.get('x-formalize-cache')).toBe('miss');
+      const cacheKeyValue = first.response.headers.get('x-formalize-cache-key');
+      expect(typeof cacheKeyValue).toBe('string');
+      expect(cacheKeyValue.length).toBeGreaterThan(0);
+      expect(Array.isArray(first.payload.phrases)).toBe(true);
+      expect(first.payload._cache.hit).toBe('miss');
+
+      const binBody = await readFile(
+        join(cacheRoot, cacheKeyValue, 'payload.bin'),
+        'utf8'
+      );
+      const linoBody = await readFile(
+        join(cacheRoot, cacheKeyValue, 'payload.lino'),
+        'utf8'
+      );
+      const parsedBin = JSON.parse(binBody);
+      expect(parsedBin.markdown.includes('Hawaii')).toBe(true);
+      expect(linoBody.startsWith(`(formalize-cache: ${cacheKeyValue}`)).toBe(
+        true
+      );
+
+      const callsAfterFirst = upstreamCalls;
+      const second = await fetchJson(url, undefined, previousFetch);
+      expect(second.response.status).toBe(200);
+      expect(second.response.headers.get('x-formalize-cache')).toBe('disk');
+      expect(second.response.headers.get('x-formalize-cache-key')).toBe(
+        cacheKeyValue
+      );
+      expect(second.payload._cache.hit).toBe('disk');
+      expect(upstreamCalls).toBe(callsAfterFirst);
+    } finally {
+      if (started) {
+        await stopServer(started.server);
+      }
+      await rm(cacheRoot, { recursive: true, force: true });
+      globalThis.fetch = previousFetch;
+    }
+  });
+
+  it('returns lino body via format=lino with cache headers', async () => {
+    const previousFetch = globalThis.fetch;
+    const mockUpstream = makeFetch({
+      search: {
+        'Hawaii|item': [
+          { id: 'Q782', label: 'Hawaii', description: 'US state' },
+        ],
+      },
+      entities: {
+        Q782: entity({ id: 'Q782', label: 'Hawaii', sitelink: 'Hawaii' }),
+      },
+    });
+    globalThis.fetch = function (url, init) {
+      const target = String(url);
+      if (target.includes('wikidata.org') || target.includes('wikipedia.org')) {
+        return mockUpstream(target);
+      }
+      return previousFetch(url, init);
+    };
+    const cacheRoot = await mkdtemp(join(tmpdir(), 'meta-expression-cache-'));
+    let started = null;
+    try {
+      started = await startServerWithCache(cacheRoot);
+      const url = `http://127.0.0.1:${started.port}/formalize?input=${encodeURIComponent('Hawaii')}&format=lino&noRepoOverrides=true`;
+      const response = await previousFetch(url);
+      expect(response.status).toBe(200);
+      expect(response.headers.get('content-type')).toMatch(/text\/plain/);
+      expect(response.headers.get('x-formalize-cache')).toBe('miss');
+      const body = await response.text();
+      expect(body.includes('Hawaii')).toBe(true);
+    } finally {
+      if (started) {
+        await stopServer(started.server);
+      }
+      await rm(cacheRoot, { recursive: true, force: true });
+      globalThis.fetch = previousFetch;
+    }
+  });
+
+  it('honours POST overrides and varies cache key by overrides payload', async () => {
+    const previousFetch = globalThis.fetch;
+    globalThis.fetch = function (url, init) {
+      const target = String(url);
+      if (target.includes('wikidata.org') || target.includes('wikipedia.org')) {
+        const mock = makeFetch({});
+        return mock(target);
+      }
+      return previousFetch(url, init);
+    };
+    const cacheRoot = await mkdtemp(join(tmpdir(), 'meta-expression-cache-'));
+    let started = null;
+    try {
+      started = await startServerWithCache(cacheRoot);
+      const url = `http://127.0.0.1:${started.port}/formalize`;
+      const post = await fetchJson(
+        url,
+        {
+          method: 'POST',
+          headers: { 'content-type': 'application/json' },
+          body: JSON.stringify({
+            input: 'Genshin Impact',
+            noRepoOverrides: true,
+            overrides: [
+              {
+                phrase: 'Genshin Impact',
+                entityId: 'OV1',
+                label: 'Genshin Impact (override)',
+                kind: 'video game',
+                source: 'override',
+              },
+            ],
+          }),
+        },
+        previousFetch
+      );
+      expect(post.response.status).toBe(200);
+      const overriddenPhrase = post.payload.phrases.find(
+        (phrase) => phrase.text === 'Genshin Impact'
+      );
+      expect(overriddenPhrase?.entity?.id).toBe('OV1');
+      const keyA = post.response.headers.get('x-formalize-cache-key');
+
+      const post2 = await fetchJson(
+        url,
+        {
+          method: 'POST',
+          headers: { 'content-type': 'application/json' },
+          body: JSON.stringify({
+            input: 'Genshin Impact',
+            noRepoOverrides: true,
+            overrides: [
+              {
+                phrase: 'Genshin Impact',
+                entityId: 'OV2',
+                label: 'Different override',
+                kind: 'video game',
+                source: 'override',
+              },
+            ],
+          }),
+        },
+        previousFetch
+      );
+      const keyB = post2.response.headers.get('x-formalize-cache-key');
+      expect(keyA).not.toBe(keyB);
+    } finally {
+      if (started) {
+        await stopServer(started.server);
+      }
+      await rm(cacheRoot, { recursive: true, force: true });
+      globalThis.fetch = previousFetch;
+    }
+  });
+
+  it('returns 400 when input parameter is missing', async () => {
+    const cacheRoot = await mkdtemp(join(tmpdir(), 'meta-expression-cache-'));
+    let started = null;
+    try {
+      started = await startServerWithCache(cacheRoot);
+      const response = await fetch(
+        `http://127.0.0.1:${started.port}/formalize`
+      );
+      expect(response.status).toBe(400);
+      const payload = await response.json();
+      expect(payload.error).toMatch(/Missing input/);
+    } finally {
+      if (started) {
+        await stopServer(started.server);
+      }
+      await rm(cacheRoot, { recursive: true, force: true });
+    }
   });
 });
