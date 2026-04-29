@@ -20,6 +20,15 @@ import { dirname, join } from 'node:path';
 const cacheRootEnv = 'META_EXPRESSION_FORMALIZE_CACHE';
 const defaultCacheRoot = '.cache/formalize';
 
+/**
+ * Resolve the on-disk cache root, preferring an explicit `options.cacheRoot`,
+ * falling back to the `META_EXPRESSION_FORMALIZE_CACHE` env var, then to
+ * `<cwd>/.cache/formalize`.
+ *
+ * @param {object} [options]
+ * @param {string} [options.cacheRoot]
+ * @returns {string}
+ */
 export function resolveCacheRoot(options = {}) {
   return (
     options.cacheRoot ??
@@ -28,6 +37,14 @@ export function resolveCacheRoot(options = {}) {
   );
 }
 
+/**
+ * Hash a formalize request descriptor into a stable cache key. The same input
+ * (text + sources + target + overrides + maxNgramSize + language) always maps
+ * to the same 32-char hex digest so cache entries collide deterministically.
+ *
+ * @param {object} input
+ * @returns {string}
+ */
 export function cacheKey(input) {
   const normalized = JSON.stringify({
     text: String(input.text ?? input.input ?? ''),

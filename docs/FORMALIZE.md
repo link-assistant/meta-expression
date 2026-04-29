@@ -129,38 +129,6 @@ Pluggable resolvers for Wikidata, WordNet (Wiktionary opensearch), and Fandom wi
 
 ### `createWikidataSource(options)`
 
-Pluggable source registry for `formalizeTextWith()`.
-
-Each source exposes:
-
-- `searchPhrase(text, ctx)` -> Promise<Candidate[]>
-- `getEntity(id, ctx)` -> Promise<Entity | null> (optional)
-
-Candidates carry a `source` tag so downstream code can dedupe and
-surface provenance. The default source is Wikidata (`wbsearchentities`
-
-- `wbgetentities`), matching the original prototype. WordNet and
-  Fandom (Wikia) are layered in on top so a single text pass can
-  draw on multiple knowledge graphs without changing call sites.
-  /
-
-const wikidataApiUrl = 'https://www.wikidata.org/w/api.php';
-const wikidataEntityBaseUrl = 'https://www.wikidata.org/wiki/';
-const wikidataPropertyBaseUrl = 'https://www.wikidata.org/wiki/Property:';
-const wikipediaArticleBaseUrl = 'https://en.wikipedia.org/wiki/';
-
-const wordnetApiUrl = 'https://en.wiktionary.org/w/api.php';
-
-export const SOURCE_KIND = Object.freeze({
-WIKIDATA: 'wikidata',
-WORDNET: 'wordnet',
-FANDOM: 'fandom',
-});
-
-/\*\*
-/
-
-/\*\*
 Build a Wikidata source resolver.
 
 | Parameter               | Type     | Description |
@@ -173,35 +141,6 @@ Build a Wikidata source resolver.
 
 ### `createWordNetSource(options)`
 
-@type {(text: string, ctx: object) => Promise<SourceCandidate[]>} \*/
-async searchPhrase(text, ctx) {
-const propertyBias = ctx.isPropertyIndicator?.(text) ?? false;
-const types = propertyBias ? ['property', 'item'] : ['item', 'property'];
-const settled = await Promise.all(
-types.map((type) =>
-searchWikidataEntities(text, type, ctx, language, searchLimit)
-)
-);
-return settled.flat();
-},
-getEntity(id, ctx) {
-return fetchWikidataEntity(id, ctx, language);
-},
-resolveUrl(entity) {
-if (entity?.kind === 'property') {
-return `${wikidataPropertyBaseUrl}${entity.id}`;
-}
-return `${wikidataEntityBaseUrl}${entity.id}`;
-},
-wikipediaArticleUrl(title) {
-return `${wikipediaArticleBaseUrl}${encodeURIComponent(
-        String(title).replace(/ /g, '_')
-      )}`;
-},
-};
-}
-
-/\*\*
 Build a WordNet source resolver via en.wiktionary's `wbgetentities`-free
 search API. WordNet itself ships no CORS endpoint we can call from the
 browser, but Wiktionary mirrors WordNet senses inside its own search API
@@ -273,34 +212,6 @@ Repository-level (`docs/formalize/overrides.json`) and user-level overrides that
 
 ### `buildOverrideMap(layers)`
 
-Lazy override layer for formalize.
-
-Two override sources are supported:
-
-1. Repository overrides — a JSON file under `config/formalize-overrides.json`
-   shipped with the repo. Loaded synchronously by Node call sites.
-2. User overrides — supplied per-call (browser uses `localStorage`,
-   Node CLI uses `--override <file>`).
-
-An override entry is:
-{
-"phrase": "Genshin Impact",
-"entityId": "Q70626251", // any source-scoped id
-"label": "Genshin Impact",
-"kind": "entity",
-"source": "wikidata",
-"wikipediaUrl": "https://...",
-"sourceUrl": "https://..."
-}
-
-Phrase keys are normalised (lowercased, whitespace collapsed) so
-"Genshin Impact" and "genshin impact" hit the same override.
-/
-
-/\*\*
-/
-
-/\*\*
 Build an override map from one or more lists.
 
 | Parameter | Type                                    | Description |
@@ -366,41 +277,6 @@ Walks `instance of` / `subclass of` / `part of` chains to surface broad worlds (
 
 ### `aggregateBigContexts(phrases, options)`
 
-Big-context aggregator.
-
-"Contexts" in the issue mean broad worlds / categories / domains
-(Math, Geography, Politics, Star Wars universe, …) — not raw
-`instance of` Q-ids. We treat the per-entity claims (P31, P279,
-P361, P361, P136, P137, P462, P425) as edges in a small graph,
-walk the graph up to `maxDepth` from each phrase, and accumulate
-weight on every node reached. Frequent ancestors (i.e. the
-shared "world" each phrase belongs to) bubble to the top.
-
-This deliberately uses bounded BFS with caching so we never
-hammer the public Wikidata endpoints — every traversal step
-goes through `ctx.fetchJson` which respects the existing TTL
-cache. A trickle of additional API calls per phrase is the
-cost of richer context grouping.
-/
-
-const wikidataApiUrl = 'https://www.wikidata.org/w/api.php';
-
-const traversalProperties = Object.freeze({
-P31: 'instance of',
-P279: 'subclass of',
-P361: 'part of',
-P137: 'operator/owner',
-P136: 'genre',
-P425: 'field of work',
-P462: 'color', // intentionally low signal but keeps domain breadth
-P106: 'occupation',
-});
-
-const defaultMaxDepth = 2;
-const defaultPerStepBranching = 4;
-const defaultTopCategories = 12;
-
-/\*\*
 Aggregate big-context categories from a list of resolved phrases.
 
 all: Array<{id:string, label:string, weight:number, probability:number,
@@ -438,53 +314,32 @@ Source: [`src/formalize-cache.js`](../src/formalize-cache.js)
 
 Filesystem cache used by the HTTP server. Each entry is written atomically as JSON (`<key>.json`) plus a Links Notation echo (`<key>.lino`) for cross-validation.
 
+### `resolveCacheRoot(options)`
+
+Resolve the on-disk cache root, preferring an explicit `options.cacheRoot`,
+falling back to the `META_EXPRESSION_FORMALIZE_CACHE` env var, then to
+`<cwd>/.cache/formalize`.
+
+| Parameter             | Type     | Description |
+| --------------------- | -------- | ----------- |
+| `[options]`           | `object` | —           |
+| `[options.cacheRoot]` | `string` | —           |
+
+**Returns** `string`
+
+### `cacheKey(input)`
+
+Hash a formalize request descriptor into a stable cache key. The same input
+(text + sources + target + overrides + maxNgramSize + language) always maps
+to the same 32-char hex digest so cache entries collide deterministically.
+
+| Parameter | Type     | Description |
+| --------- | -------- | ----------- |
+| `input`   | `object` | —           |
+
+**Returns** `string`
+
 ### `readCacheEntry(root, key)`
-
-Persistent dual-format cache for formalize results.
-
-Each cache entry is written twice on disk under `<root>/<hash>/`:
-
-- `payload.bin` — raw JSON bytes (forward-compatible "binary" view
-  analogous to link-cli's binary store)
-- `payload.lino` — links-notation rendering of the same payload
-  (text view analogous to links-notation files)
-
-Both files are written atomically (tmp file + rename). On read we
-cross-check that both representations agree on the cache key — if the
-.lino header doesn't match the requested key the entry is treated as
-corrupt and ignored, ensuring the binary and text views can vouch for
-each other ("comparison and reliability" in the issue follow-up).
-/
-import { createHash } from 'node:crypto';
-import { mkdir, readFile, rename, writeFile } from 'node:fs/promises';
-import { dirname, join } from 'node:path';
-
-const cacheRootEnv = 'META_EXPRESSION_FORMALIZE_CACHE';
-const defaultCacheRoot = '.cache/formalize';
-
-export function resolveCacheRoot(options = {}) {
-return (
-options.cacheRoot ??
-process.env[cacheRootEnv] ??
-join(process.cwd(), defaultCacheRoot)
-);
-}
-
-export function cacheKey(input) {
-const normalized = JSON.stringify({
-text: String(input.text ?? input.input ?? ''),
-sourcesSpec: String(input.sourcesSpec ?? ''),
-target: String(input.target ?? ''),
-overrides: input.overrides ?? null,
-overrideFile: String(input.overrideFile ?? ''),
-noRepoOverrides: Boolean(input.noRepoOverrides),
-maxNgramSize: input.maxNgramSize ?? null,
-language: input.language ?? 'en',
-});
-return createHash('sha256').update(normalized).digest('hex').slice(0, 32);
-}
-
-/\*\*
 
 | Parameter | Type     | Description |
 | --------- | -------- | ----------- |

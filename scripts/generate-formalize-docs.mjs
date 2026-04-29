@@ -51,8 +51,12 @@ const sources = [
   },
 ];
 
+// Match a single JSDoc block (no nested `*/`) immediately followed by an
+// `export` declaration. The inner group `((?:\*(?!\/)|[^*])*)` consumes any
+// character except a `*/` terminator so the regex never bridges across two
+// JSDoc blocks (which would leak source code into the rendered docs).
 const exportPattern =
-  /\/\*\*([\s\S]*?)\*\/\s*export\s+(?:(async)\s+)?(function|const|class)\s+([A-Za-z0-9_$]+)/g;
+  /\/\*\*((?:\*(?!\/)|[^*])*)\*\/\s*export\s+(?:(async)\s+)?(function|const|class)\s+([A-Za-z0-9_$]+)/g;
 
 function readSource(path) {
   return readFile(join(repoRoot, path), 'utf8');
