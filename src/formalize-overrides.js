@@ -2,8 +2,8 @@
  * Lazy override layer for formalize.
  *
  * Two override sources are supported:
- *   1. Repository overrides — a JSON file under `config/formalize-overrides.json`
- *      shipped with the repo. Loaded synchronously by Node call sites.
+ *   1. Repository overrides — a JSON file under `docs/formalize/overrides.json`
+ *      shipped with the repo. Loaded asynchronously by Node call sites.
  *   2. User overrides — supplied per-call (browser uses `localStorage`,
  *      Node CLI uses `--override <file>`).
  *
@@ -137,7 +137,7 @@ export async function loadRepoOverrides() {
     const path = await import('node:path');
     const repoPath = path.resolve(
       process.cwd(),
-      'config/formalize-overrides.json'
+      'docs/formalize/overrides.json'
     );
     const raw = await fs.readFile(repoPath, 'utf8');
     const parsed = JSON.parse(raw);
