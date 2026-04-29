@@ -324,3 +324,134 @@ export declare function computeEvidenceConfidence(
   supportWeight: number;
   refuteWeight: number;
 };
+
+export type FormalizeLinkTargetMode = 'wikipedia' | 'wikidata' | 'local-viewer';
+
+export declare const FORMALIZE_LINK_TARGETS: {
+  readonly WIKIPEDIA: 'wikipedia';
+  readonly WIKIDATA: 'wikidata';
+  readonly LOCAL: 'local-viewer';
+};
+
+export interface FormalizeNgram {
+  text: string;
+  tokens: string[];
+  start: number;
+  end: number;
+  size: number;
+}
+
+export interface FormalizeCandidate {
+  id: string;
+  label: string;
+  description: string;
+  kind: 'entity' | 'property';
+  matchText?: string;
+  score: number;
+  ngramSize: number;
+}
+
+export interface FormalizePhraseEntity {
+  id: string;
+  label: string;
+  description: string;
+  kind: 'entity' | 'property';
+  score: number;
+  wikipediaUrl: string | null;
+  wikipediaTitle: string | null;
+  contextLabels: Array<{
+    property: string;
+    propertyLabel: string;
+    targetId: string;
+  }>;
+}
+
+export interface FormalizePhrase {
+  text: string;
+  tokens: string[];
+  start: number;
+  end: number;
+  size: number;
+  candidates: FormalizeCandidate[];
+  entity: FormalizePhraseEntity | null;
+}
+
+export interface FormalizeContext {
+  id: string;
+  property: string;
+  propertyLabel: string;
+  weight: number;
+  probability: number;
+  phrases: Array<{ text: string; entityId: string }>;
+}
+
+export interface FormalizeInterpretation {
+  rank: number;
+  score: number;
+  phrases: Array<{
+    text: string;
+    entityId: string | null;
+    kind?: 'entity' | 'property';
+  }>;
+}
+
+export interface FormalizeOptions {
+  fetch?: typeof fetch | null;
+  cache?: Map<string, unknown>;
+  cacheTtlMs?: number;
+  now?: () => number;
+  maxNgramSize?: number;
+  searchLimit?: number;
+  topKCandidates?: number;
+  maxInterpretations?: number;
+  linkTargetMode?: FormalizeLinkTargetMode;
+  contextLens?: string | { id: string } | null;
+  language?: string;
+}
+
+export interface FormalizeResult {
+  text: string;
+  tokens: string[];
+  phrases: FormalizePhrase[];
+  contexts: FormalizeContext[];
+  mainContext: FormalizeContext | null;
+  additionalContexts: FormalizeContext[];
+  interpretations: FormalizeInterpretation[];
+  markdown: string;
+  html: string;
+  linksNotation: string;
+  linksNetwork: LinksNetwork;
+  linkTargetMode: FormalizeLinkTargetMode;
+}
+
+export declare function formalizeText(
+  input: string,
+  options?: FormalizeOptions
+): Promise<FormalizeResult>;
+
+export declare function formalizeTextWith(
+  input: string,
+  options?: FormalizeOptions
+): Promise<FormalizeResult>;
+
+export declare function tokenizeForFormalize(text: string): string[];
+
+export declare function generateFormalizeNgrams(
+  tokens: string[],
+  maxSize?: number
+): FormalizeNgram[];
+
+export declare function buildFormalizeMarkdownLink(
+  phrase: FormalizePhrase,
+  options?: { linkTargetMode?: FormalizeLinkTargetMode }
+): string;
+
+export declare function buildFormalizeHtmlLink(
+  phrase: FormalizePhrase,
+  options?: { linkTargetMode?: FormalizeLinkTargetMode }
+): string;
+
+export declare function resolveFormalizeLinkTarget(
+  phrase: FormalizePhrase,
+  options?: { linkTargetMode?: FormalizeLinkTargetMode }
+): string | null;

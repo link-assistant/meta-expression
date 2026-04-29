@@ -20,6 +20,9 @@
       <button type="button" id="nav-compare" class="top-nav-button">
         Compare
       </button>
+      <button type="button" id="nav-formalize" class="top-nav-button">
+        Formalize
+      </button>
     </nav>
     <main class="app-shell" id="page-analyse">
       <section class="workspace" aria-label="Statement workspace">
@@ -199,6 +202,182 @@
           <button type="button" id="compare-add">Add claim</button>
           <button type="button" id="compare-run">Compare</button>
         </div>
+      </section>
+    </main>
+
+    <main class="formalize-shell" id="page-formalize" hidden>
+      <section class="formalize-panel" aria-label="Formalize text">
+        <header class="formalize-header">
+          <h1>Formalize</h1>
+          <p class="section-hint">
+            Paste any text. Each phrase becomes a Wikipedia-or-Wikidata link
+            whose <code>title</code> carries the Q/P id. Toggle the link target
+            mode, then copy the result as Markdown or Links Notation.
+          </p>
+        </header>
+
+        <label class="formalize-input-label" for="formalize-input">Text</label>
+        <textarea
+          id="formalize-input"
+          rows="6"
+          placeholder="Barack Obama was born in Hawaii."
+        >
+Barack Obama was born in Hawaii.</textarea
+        >
+
+        <div class="formalize-options">
+          <label class="formalize-option">
+            <span>Max n-gram size</span>
+            <input
+              id="formalize-ngram-size"
+              type="number"
+              min="1"
+              max="5"
+              value="3"
+            />
+          </label>
+          <fieldset class="formalize-target">
+            <legend>Link target</legend>
+            <label>
+              <input
+                type="radio"
+                name="formalize-target"
+                value="wikipedia"
+                checked
+              />
+              Wikipedia (fallback Wikidata)
+            </label>
+            <label>
+              <input type="radio" name="formalize-target" value="wikidata" />
+              Wikidata only
+            </label>
+            <label>
+              <input
+                type="radio"
+                name="formalize-target"
+                value="local-viewer"
+              />
+              Local viewer
+            </label>
+          </fieldset>
+          <fieldset class="formalize-sources">
+            <legend>Sources</legend>
+            <label>
+              <input
+                type="checkbox"
+                name="formalize-source"
+                value="wikidata"
+                checked
+              />
+              Wikidata
+            </label>
+            <label>
+              <input type="checkbox" name="formalize-source" value="wordnet" />
+              WordNet (Wiktionary)
+            </label>
+            <label class="formalize-source-fandom">
+              <input
+                type="checkbox"
+                name="formalize-source"
+                value="fandom"
+                id="formalize-source-fandom"
+              />
+              Fandom wiki:
+              <input
+                type="text"
+                id="formalize-fandom-slug"
+                placeholder="e.g. genshin-impact"
+                disabled
+              />
+            </label>
+          </fieldset>
+        </div>
+
+        <details class="formalize-overrides">
+          <summary>Lazy overrides (Links Notation)</summary>
+          <p class="section-hint">
+            Each entry pins a phrase to a specific entity, bypassing live
+            lookups. Useful for reproducible demos and to fill gaps the
+            knowledge graphs miss. Indented Links Notation (.lino) is preferred;
+            legacy JSON arrays are still accepted.
+          </p>
+          <textarea
+            id="formalize-overrides"
+            rows="8"
+            placeholder='overrides
+  entries
+    -
+      phrase "Genshin Impact"
+      entityId "Q70626251"
+      label "Genshin Impact"
+      kind "entity"'
+          ></textarea>
+          <p
+            class="formalize-overrides-error"
+            id="formalize-overrides-error"
+          ></p>
+        </details>
+
+        <div class="formalize-actions">
+          <button type="button" id="formalize-run">Formalize</button>
+          <button type="button" id="formalize-copy-markdown">
+            Copy as Markdown
+          </button>
+          <button type="button" id="formalize-copy-lino">
+            Copy as Links Notation
+          </button>
+          <span class="formalize-status" id="formalize-status"></span>
+        </div>
+
+        <section class="formalize-result" aria-label="Formalized output">
+          <h2>Result</h2>
+          <div id="formalize-output" class="formalize-output">
+            Click Formalize to see the wikified output here.
+          </div>
+        </section>
+
+        <section class="formalize-contexts" aria-label="Detected contexts">
+          <h2>Contexts</h2>
+          <p class="section-hint">
+            Click a context to reinterpret the same text through that lens.
+          </p>
+          <div id="formalize-contexts" class="formalize-context-list"></div>
+        </section>
+
+        <section
+          class="formalize-big-contexts"
+          aria-label="Big context categories"
+        >
+          <h2>Big-context categories</h2>
+          <p class="section-hint">
+            Worlds and domains the text touches (Math, Geography, Star Wars,
+            Genshin Impact, ...). The first item is the dominant world.
+          </p>
+          <div
+            id="formalize-big-contexts"
+            class="formalize-big-context-list"
+          ></div>
+        </section>
+
+        <section
+          class="formalize-interpretations"
+          aria-label="Top interpretations"
+        >
+          <h2>Top 10 Interpretations</h2>
+          <ol
+            id="formalize-interpretations"
+            class="formalize-interpretation-list"
+          ></ol>
+        </section>
+
+        <details class="formalize-payload">
+          <summary>Markdown</summary>
+          <pre id="formalize-markdown"></pre>
+        </details>
+        <details class="formalize-payload">
+          <summary>Links Notation</summary>
+          <pre id="formalize-lino"></pre>
+        </details>
       </section>
     </main>
 

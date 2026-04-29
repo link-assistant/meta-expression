@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>N-gram Transformer Test</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      max-width: 800px;
+      margin: 40px auto;
+      padding: 20px;
+      background-color: #f5f5f5;
+    }
+    .test-case {
+      background: white;
+      padding: 20px;
+      margin: 20px 0;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+    .test-title {
+      font-weight: bold;
+      color: #333;
+      margin-bottom: 10px;
+    }
+    .test-input {
+      color: #666;
+      margin-bottom: 10px;
+    }
+    .test-output {
+      color: #0066cc;
+      font-family: monospace;
+      background: #f0f0f0;
+      padding: 10px;
+      border-radius: 4px;
+      margin: 10px 0;
+    }
+    .pass {
+      color: green;
+    }
+    .fail {
+      color: red;
+    }
+    button {
+      background: #0066cc;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    button:hover {
+      background: #0052a3;
+    }
+  </style>
+</head>
+<body>
+  <h1>N-gram Transformer Test Suite</h1>
+  <button onclick="runTests()">Run All Tests</button>
+  <div id="results"></div>
+
+  <script type="module">
+    import { TextToQPTransformer } from './text-to-qp-transformer.js';
+
+    window.runTests = async function() {
+      const results = document.getElementById('results');
+      results.innerHTML = '<h2>Running tests...</h2>';
+      
+      const transformer = new TextToQPTransformer();
+      
+      const testCases = [
+        {
+          title: "Test 1: Barack Obama as single entity",
+          input: "Barack Obama visited Washington",
+          options: { maxNgramSize: 2 },
+          expected: "Should match 'Barack Obama' as one entity, not two"
+        },
+        {
+          title: "Test 2: United States of America",
+          input: "United States of America capital",
+          options: { maxNgramSize: 4 },
+          expected: "Should match 'United States of America' as one entity"
+        },
+        {
+          title: "Test 3: Theory of Relativity",
+          input: "theory of relativity discovered",
+          options: { maxNgramSize: 3 },
+          expected: "Should match 'theory of relativity' as one concept"
+        },
+        {
+          title: "Test 4: Priority test - longer match first",
+          input: "World Health Organization headquarters",
+          options: { maxNgramSize: 3 },
+          expected: "Should match 'World Health Organization' as one, not separate words"
+        },
+        {
+          title: "Test 5: Single words when n-gram size is 1",
+          input: "Barack Obama visited",
+          options: { maxNgramSize: 1 },
+          expected: "Should match 'Barack' and 'Obama' separately"
+        }
+      ];
+      
+      let html = '';
+      
+      for (const test of testCases) {
+        try {
+          const result = await transformer.transform(test.input, test.options);
+          
+          const passed = (test.options.maxNgramSize > 1 && result.sequence.length < test.input.split(' ').length) ||
+                        (test.options.maxNgramSize === 1 && result.sequence.length >= 2);
+          
+          html += `
+            <div class="test-case">
+              <div class="test-title">${test.title}</div>
+              <div class="test-input">Input: "${test.input}"</div>
+              <div class="test-input">Options: maxNgramSize=${test.options.maxNgramSize}</div>
+              <div class="test-output">Output: ${result.formatted}</div>
+              <div class="test-output">Sequence length: ${result.sequence.length}</div>
+              <div class="test-output">N-grams found: ${result.sequence.map(s => s.ngramSize || 1).join(', ')}</div>
+              <div class="${passed ? 'pass' : 'fail'}">
+                ${passed ? '✓ PASSED' : '✗ FAILED'}: ${test.expected}
+              </div>
+            </div>
+          `;
+        } catch (error) {
+          html += `
+            <div class="test-case">
+              <div class="test-title">${test.title}</div>
+              <div class="fail">Error: ${error.message}</div>
+            </div>
+          `;
+        }
+      }
+      
+      results.innerHTML = '<h2>Test Results</h2>' + html;
+    };
+  </script>
+</body>
+</html>

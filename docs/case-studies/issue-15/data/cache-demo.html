@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Unified Cache System Demo</title>
+  <style>
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 20px;
+      background: #f5f5f5;
+    }
+    
+    .header {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+    
+    .cache-type-selector {
+      background: white;
+      padding: 20px;
+      border-radius: 8px;
+      margin-bottom: 20px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+    
+    .cache-type-selector h3 {
+      margin-top: 0;
+      color: #333;
+    }
+    
+    .cache-options {
+      display: flex;
+      gap: 15px;
+      flex-wrap: wrap;
+    }
+    
+    .cache-option {
+      padding: 10px 20px;
+      border: 2px solid #ddd;
+      border-radius: 6px;
+      cursor: pointer;
+      background: white;
+      transition: all 0.3s;
+    }
+    
+    .cache-option:hover {
+      border-color: #007bff;
+    }
+    
+    .cache-option.active {
+      border-color: #007bff;
+      background: #007bff;
+      color: white;
+    }
+    
+    .test-section {
+      background: white;
+      padding: 20px;
+      border-radius: 8px;
+      margin-bottom: 20px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+    
+    .test-controls {
+      margin-bottom: 20px;
+    }
+    
+    .test-input {
+      width: 300px;
+      padding: 10px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      margin-right: 10px;
+    }
+    
+    .btn {
+      padding: 10px 20px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-weight: 600;
+      margin-right: 10px;
+    }
+    
+    .btn-primary { background: #007bff; color: white; }
+    .btn-success { background: #28a745; color: white; }
+    .btn-warning { background: #ffc107; color: black; }
+    .btn-danger { background: #dc3545; color: white; }
+    
+    .btn:hover { opacity: 0.9; }
+    
+    .results {
+      background: #f8f9fa;
+      border: 1px solid #dee2e6;
+      border-radius: 4px;
+      padding: 15px;
+      margin-top: 15px;
+      font-family: 'Courier New', monospace;
+      font-size: 14px;
+      max-height: 300px;
+      overflow-y: auto;
+    }
+    
+    .stats {
+      background: #e7f3ff;
+      border: 1px solid #b3d9ff;
+      border-radius: 4px;
+      padding: 15px;
+      margin-top: 15px;
+    }
+    
+    .loading {
+      color: #007bff;
+      font-style: italic;
+    }
+    
+    .error {
+      color: #dc3545;
+      font-weight: bold;
+    }
+    
+    .success {
+      color: #28a745;
+      font-weight: bold;
+    }
+    
+    .performance-comparison {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      margin-top: 20px;
+    }
+    
+    .performance-card {
+      background: white;
+      padding: 15px;
+      border-radius: 6px;
+      border-left: 4px solid #007bff;
+    }
+    
+    .performance-card h4 {
+      margin-top: 0;
+      color: #333;
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <h1>🗄️ Unified Cache System Demo</h1>
+    <p>Test different cache backends: Auto-detect, File-based, IndexedDB, or No Cache</p>
+  </div>
+
+  <div class="cache-type-selector">
+    <h3>Select Cache Type</h3>
+    <div class="cache-options">
+      <div class="cache-option active" data-cache-type="auto">
+        🔄 Auto-Detect
+        <small><br>Automatically choose best cache for environment</small>
+      </div>
+      <div class="cache-option" data-cache-type="indexeddb">
+        🌐 IndexedDB
+        <small><br>Browser persistent storage</small>
+      </div>
+      <div class="cache-option" data-cache-type="file">
+        📁 File Cache
+        <small><br>Node.js file system (will fail in browser)</small>
+      </div>
+      <div class="cache-option" data-cache-type="none">
+        🚫 No Cache
+        <small><br>Disable caching completely</small>
+      </div>
+    </div>
+  </div>
+
+  <div class="test-section">
+    <h3>🧪 Cache Performance Test</h3>
+    <div class="test-controls">
+      <input type="text" id="testQuery" class="test-input" placeholder="Enter search query (e.g., Einstein)" value="Einstein">
+      <button class="btn btn-primary" onclick="runSingleTest()">🔍 Test Query</button>
+      <button class="btn btn-success" onclick="runPerformanceTest()">⚡ Performance Test</button>
+      <button class="btn btn-warning" onclick="showCacheStats()">📊 Cache Stats</button>
+      <button class="btn btn-danger" onclick="clearCache()">🗑️ Clear Cache</button>
+    </div>
+    <div id="testResults" class="results" style="display: none;"></div>
+    <div id="cacheStats" class="stats" style="display: none;"></div>
+  </div>
+
+  <div class="performance-comparison" id="performanceComparison" style="display: none;">
+    <div class="performance-card">
+      <h4>📈 First Run (Cold Cache)</h4>
+      <div id="coldResults"></div>
+    </div>
+    <div class="performance-card">
+      <h4>⚡ Second Run (Warm Cache)</h4>
+      <div id="warmResults"></div>
+    </div>
+  </div>
+
+  <script type="module">
+    import { TextToQPTransformer } from './text-to-qp-transformer.js';
+    import { CacheFactory } from './unified-cache.js';
+
+    let currentTransformer = new TextToQPTransformer();
+    let currentCacheType = 'auto';
+
+    // Initialize cache type selector
+    document.querySelectorAll('.cache-option').forEach(option => {
+      option.addEventListener('click', () => {
+        // Update active state
+        document.querySelectorAll('.cache-option').forEach(opt => opt.classList.remove('active'));
+        option.classList.add('active');
+        
+        // Update cache type
+        currentCacheType = option.dataset.cacheType;
+        updateCacheType(currentCacheType);
+      });
+    });
+
+    function updateCacheType(cacheType) {
+      console.log(`Switching to cache type: ${cacheType}`);
+      
+      try {
+        // Create new API client with selected cache type
+        currentTransformer.searchUtility.apiClient.setCacheType(cacheType);
+        
+        showResult(`✅ Switched to ${cacheType} cache`, 'success');
+      } catch (error) {
+        showResult(`❌ Error switching cache: ${error.message}`, 'error');
+      }
+    }
+
+    window.runSingleTest = async function() {
+      const query = document.getElementById('testQuery').value.trim();
+      if (!query) {
+        showResult('Please enter a search query', 'error');
+        return;
+      }
+
+      showResult('🔄 Testing query...', 'loading');
+      
+      const startTime = Date.now();
+      
+      try {
+        const result = await currentTransformer.transform(query, {
+          maxCandidates: 3,
+          includeLabels: false,
+          searchLimit: 8
+        });
+        
+        const endTime = Date.now();
+        const duration = endTime - startTime;
+        
+        const output = `
+Query: "${query}"
+Cache Type: ${currentCacheType}
+Result: "${result.formatted}"
+Duration: ${duration}ms
+Sequence Length: ${result.sequence.length}
+Tokens: [${result.tokens.join(', ')}]
+        `.trim();
+        
+        showResult(output, 'success');
+        
+      } catch (error) {
+        showResult(`❌ Error: ${error.message}`, 'error');
+      }
+    };
+
+    window.runPerformanceTest = async function() {
+      const query = document.getElementById('testQuery').value.trim();
+      if (!query) {
+        showResult('Please enter a search query', 'error');
+        return;
+      }
+
+      showResult('🔄 Running performance test (2 runs)...', 'loading');
+      document.getElementById('performanceComparison').style.display = 'none';
+      
+      const testOptions = {
+        maxCandidates: 3,
+        includeLabels: false,
+        searchLimit: 8
+      };
+
+      try {
+        // First run (cold cache)
+        console.log('Starting cold run...');
+        const coldStart = Date.now();
+        const coldResult = await currentTransformer.transform(query, testOptions);
+        const coldEnd = Date.now();
+        const coldDuration = coldEnd - coldStart;
+        
+        // Small delay between runs
+        await new Promise(resolve => setTimeout(resolve, 500));
+        
+        // Second run (warm cache)
+        console.log('Starting warm run...');
+        const warmStart = Date.now();
+        const warmResult = await currentTransformer.transform(query, testOptions);
+        const warmEnd = Date.now();
+        const warmDuration = warmEnd - warmStart;
+        
+        // Calculate speedup
+        const speedup = coldDuration / Math.max(warmDuration, 1);
+        const timeSaved = coldDuration - warmDuration;
+        const percentSaved = ((timeSaved / coldDuration) * 100);
+        
+        // Display results
+        document.getElementById('coldResults').innerHTML = `
+          <strong>Duration:</strong> ${coldDuration}ms<br>
+          <strong>Result:</strong> "${coldResult.formatted}"<br>
+          <strong>Sequence:</strong> ${coldResult.sequence.length} items
+        `;
+        
+        document.getElementById('warmResults').innerHTML = `
+          <strong>Duration:</strong> ${warmDuration}ms<br>
+          <strong>Result:</strong> "${warmResult.formatted}"<br>
+          <strong>Sequence:</strong> ${warmResult.sequence.length} items<br>
+          <br>
+          <strong>🚀 Speedup:</strong> ${speedup.toFixed(1)}x faster<br>
+          <strong>⏱️ Time Saved:</strong> ${timeSaved}ms (${percentSaved.toFixed(1)}%)
+        `;
+        
+        document.getElementById('performanceComparison').style.display = 'grid';
+        
+        showResult(`✅ Performance test completed! Speedup: ${speedup.toFixed(1)}x`, 'success');
+        
+      } catch (error) {
+        showResult(`❌ Performance test failed: ${error.message}`, 'error');
+      }
+    };
+
+    window.showCacheStats = async function() {
+      try {
+        showResult('📊 Getting cache statistics...', 'loading');
+        
+        const apiClient = currentTransformer.searchUtility.apiClient;
+        const stats = await apiClient.cache.getStats();
+        
+        let statsHtml = `<h4>Cache Statistics (${currentCacheType})</h4>`;
+        
+        if (stats.memoryCache) {
+          statsHtml += `
+            <strong>Memory Cache:</strong><br>
+            • Items: ${stats.memoryCache.size}/${stats.memoryCache.maxSize}<br>
+            • Usage: ${((stats.memoryCache.size/stats.memoryCache.maxSize)*100).toFixed(1)}%<br><br>
+          `;
+        }
+        
+        if (stats.fileCache) {
+          statsHtml += `
+            <strong>File Cache:</strong><br>
+            • Files: ${stats.fileCache.fileCount}<br>
+            • Size: ${stats.fileCache.totalSizeMB} MB<br>
+          `;
+          if (stats.fileCache.oldestFile) {
+            const ageMinutes = Math.round(stats.fileCache.oldestFile.age / (1000 * 60));
+            statsHtml += `• Oldest: ${ageMinutes} minutes ago<br>`;
+          }
+        }
+        
+        if (stats.dbCache) {
+          statsHtml += `
+            <strong>Database Cache (${stats.dbCache.type}):</strong><br>
+            • Entries: ${stats.dbCache.size}<br>
+          `;
+          if (stats.dbCache.oldestEntry) {
+            const ageMinutes = Math.round(stats.dbCache.oldestEntry.age / (1000 * 60));
+            statsHtml += `• Oldest: ${ageMinutes} minutes ago<br>`;
+          }
+        }
+        
+        document.getElementById('cacheStats').innerHTML = statsHtml;
+        document.getElementById('cacheStats').style.display = 'block';
+        showResult('✅ Cache statistics updated', 'success');
+        
+      } catch (error) {
+        showResult(`❌ Error getting cache stats: ${error.message}`, 'error');
+      }
+    };
+
+    window.clearCache = async function() {
+      try {
+        showResult('🗑️ Clearing cache...', 'loading');
+        
+        const apiClient = currentTransformer.searchUtility.apiClient;
+        await apiClient.cache.clear();
+        
+        document.getElementById('cacheStats').style.display = 'none';
+        showResult('✅ Cache cleared successfully', 'success');
+        
+      } catch (error) {
+        showResult(`❌ Error clearing cache: ${error.message}`, 'error');
+      }
+    };
+
+    function showResult(message, type = 'info') {
+      const resultsDiv = document.getElementById('testResults');
+      resultsDiv.style.display = 'block';
+      resultsDiv.className = `results ${type}`;
+      resultsDiv.textContent = message;
+    }
+
+    // Initialize with auto-detect
+    console.log('🗄️ Unified Cache Demo initialized');
+    console.log('Current environment:', typeof window !== 'undefined' ? 'Browser' : 'Node.js');
+    console.log('IndexedDB available:', typeof indexedDB !== 'undefined');
+  </script>
+</body>
+</html>

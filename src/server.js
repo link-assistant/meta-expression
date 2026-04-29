@@ -5,11 +5,22 @@ import {
   analyzeStatementWithLiveEvidence,
   serializeLinksNotation,
 } from './index.js';
+import { formalizeTextWith, FORMALIZE_LINK_TARGETS } from './formalize.js';
+import { parseSourceSpec } from './formalize-sources.js';
+import { loadRepoOverrides, loadUserOverrides } from './formalize-overrides.js';
+import {
+  cacheKey,
+  readCacheEntry,
+  resolveCacheRoot,
+  writeCacheEntry,
+} from './formalize-cache.js';
 
-export function createMetaExpressionServer() {
+export function createMetaExpressionServer(options = {}) {
+  const cacheRoot = resolveCacheRoot(options);
+  const liveCache = new Map();
   return createServer(async (request, response) => {
     try {
-      await routeRequest(request, response);
+      await routeRequest(request, response, { cacheRoot, liveCache });
     } catch (error) {
       sendJson(response, 500, {
         error: error instanceof Error ? error.message : String(error),
@@ -21,7 +32,7 @@ export function createMetaExpressionServer() {
 export function startMetaExpressionServer(options = {}) {
   const host = options.host ?? '127.0.0.1';
   const port = options.port ?? 3000;
-  const server = createMetaExpressionServer();
+  const server = createMetaExpressionServer(options);
 
   return new Promise((resolve, reject) => {
     server.once('error', reject);
@@ -35,24 +46,24 @@ export function startMetaExpressionServer(options = {}) {
   });
 }
 
-async function routeRequest(request, response) {
+async function routeRequest(request, response, ctx) {
   const host = request.headers.host ?? '127.0.0.1';
   const url = new URL(request.url ?? '/', `http://${host}`);
 
   if (request.method === 'GET') {
-    await routeGetRequest(url, response);
+    await routeGetRequest(url, response, ctx);
     return;
   }
 
   if (request.method === 'POST') {
-    await routePostRequest(url, request, response);
+    await routePostRequest(url, request, response, ctx);
     return;
   }
 
   sendNotFound(response);
 }
 
-async function routeGetRequest(url, response) {
+async function routeGetRequest(url, response, ctx) {
   if (url.pathname === '/health') {
     sendJson(response, 200, { ok: true });
     return;
@@ -67,30 +78,72 @@ async function routeGetRequest(url, response) {
     return;
   }
 
-  sendNotFound(response);
-}
-
-async function routePostRequest(url, request, response) {
-  if (url.pathname !== '/analyze') {
-    sendNotFound(response);
+  if (url.pathname === '/formalize') {
+    await sendFormalize(
+      response,
+      {
+        input: url.searchParams.get('input') ?? '',
+        format: url.searchParams.get('format') ?? 'json',
+        sourcesSpec: url.searchParams.get('sources') ?? '',
+        target: url.searchParams.get('target') ?? 'wikipedia',
+        maxNgramSize: numberParam(url.searchParams.get('maxNgram')),
+        overrideFile: url.searchParams.get('override') ?? '',
+        noRepoOverrides: url.searchParams.get('noRepoOverrides') === 'true',
+      },
+      ctx
+    );
     return;
   }
 
+  sendNotFound(response);
+}
+
+async function routePostRequest(url, request, response, ctx) {
   const body = await readRequestBody(request);
   const payload = body ? JSON.parse(body) : {};
-  await sendAnalysis(
-    response,
-    payload.input ?? '',
-    payload.format ?? 'json',
-    payload.interpretationIndex ?? 0,
-    payload.live === true
-  );
+
+  if (url.pathname === '/analyze') {
+    await sendAnalysis(
+      response,
+      payload.input ?? '',
+      payload.format ?? 'json',
+      payload.interpretationIndex ?? 0,
+      payload.live === true
+    );
+    return;
+  }
+
+  if (url.pathname === '/formalize') {
+    await sendFormalize(
+      response,
+      {
+        input: payload.input ?? '',
+        format: payload.format ?? 'json',
+        sourcesSpec: payload.sources ?? '',
+        target: payload.target ?? 'wikipedia',
+        maxNgramSize: payload.maxNgramSize,
+        overrideFile: payload.overrideFile ?? '',
+        noRepoOverrides: payload.noRepoOverrides === true,
+        overrides: payload.overrides,
+      },
+      ctx
+    );
+    return;
+  }
+
+  sendNotFound(response);
 }
 
 function sendNotFound(response) {
   sendJson(response, 404, {
     error: 'Not found',
-    routes: ['GET /health', 'GET /analyze?input=...', 'POST /analyze'],
+    routes: [
+      'GET /health',
+      'GET /analyze?input=...',
+      'POST /analyze',
+      'GET /formalize?input=...',
+      'POST /formalize',
+    ],
   });
 }
 
@@ -118,6 +171,115 @@ async function sendAnalysis(
   }
 
   sendJson(response, 200, analysis);
+}
+
+async function sendFormalize(response, params, ctx) {
+  if (!params.input) {
+    sendJson(response, 400, { error: 'Missing input parameter.' });
+    return;
+  }
+  const key = cacheKey(params);
+  const fromDisk = await readCacheEntry(ctx.cacheRoot, key);
+  if (fromDisk) {
+    return emitFormalizeResponse(response, params.format, fromDisk.json, {
+      cacheKey: key,
+      cacheHit: 'disk',
+      lino: fromDisk.lino,
+    });
+  }
+  const sources = params.sourcesSpec
+    ? parseSourceSpec(params.sourcesSpec)
+    : undefined;
+  const repoOverrides = params.noRepoOverrides ? [] : await loadRepoOverrides();
+  const userOverrides = Array.isArray(params.overrides)
+    ? params.overrides
+    : params.overrideFile
+      ? await loadUserOverrides(params.overrideFile)
+      : [];
+  const linkTargetMode = resolveLinkTargetParam(params.target);
+  const result = await formalizeTextWith(params.input, {
+    fetch: globalThis.fetch?.bind(globalThis),
+    cache: ctx.liveCache,
+    linkTargetMode,
+    sources,
+    overrides: [...repoOverrides, ...userOverrides],
+    maxNgramSize: params.maxNgramSize,
+  });
+  const stored = await writeCacheEntry(
+    ctx.cacheRoot,
+    key,
+    result,
+    result.linksNotation
+  );
+  emitFormalizeResponse(response, params.format, result, {
+    cacheKey: key,
+    cacheHit: 'miss',
+    lino: result.linksNotation,
+    binPath: stored.binPath,
+    linoPath: stored.linoPath,
+  });
+}
+
+function resolveLinkTargetParam(token) {
+  const normalized = String(token ?? '').toLowerCase();
+  if (normalized === 'wikidata') {
+    return FORMALIZE_LINK_TARGETS.WIKIDATA;
+  }
+  if (normalized === 'local' || normalized === 'local-viewer') {
+    return FORMALIZE_LINK_TARGETS.LOCAL;
+  }
+  return FORMALIZE_LINK_TARGETS.WIKIPEDIA;
+}
+
+function numberParam(raw) {
+  if (raw === null || raw === undefined || raw === '') {
+    return undefined;
+  }
+  const parsed = Number(raw);
+  return Number.isFinite(parsed) ? parsed : undefined;
+}
+
+function emitFormalizeResponse(response, format, payload, meta) {
+  if (format === 'links' || format === 'lino') {
+    response.writeHead(200, {
+      'content-type': 'text/plain; charset=utf-8',
+      'x-formalize-cache': meta.cacheHit,
+      'x-formalize-cache-key': meta.cacheKey,
+    });
+    response.end(meta.lino);
+    return 0;
+  }
+  if (format === 'markdown' || format === 'md') {
+    response.writeHead(200, {
+      'content-type': 'text/markdown; charset=utf-8',
+      'x-formalize-cache': meta.cacheHit,
+      'x-formalize-cache-key': meta.cacheKey,
+    });
+    response.end(payload.markdown);
+    return 0;
+  }
+  if (format === 'html') {
+    response.writeHead(200, {
+      'content-type': 'text/html; charset=utf-8',
+      'x-formalize-cache': meta.cacheHit,
+      'x-formalize-cache-key': meta.cacheKey,
+    });
+    response.end(payload.html);
+    return 0;
+  }
+  response.writeHead(200, {
+    'content-type': 'application/json; charset=utf-8',
+    'x-formalize-cache': meta.cacheHit,
+    'x-formalize-cache-key': meta.cacheKey,
+  });
+  response.end(
+    JSON.stringify(
+      { ...payload, _cache: { hit: meta.cacheHit, key: meta.cacheKey } },
+      null,
+      2
+    )
+  );
+  return 0;
 }
 
 function sendJson(response, status, payload) {

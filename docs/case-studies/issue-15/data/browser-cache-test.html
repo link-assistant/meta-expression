@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Browser Cache Test</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+    
+    .test-section {
+      background: #f5f5f5;
+      padding: 20px;
+      margin: 20px 0;
+      border-radius: 8px;
+    }
+    
+    button {
+      padding: 10px 20px;
+      margin: 5px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      background: #007bff;
+      color: white;
+    }
+    
+    button:hover {
+      background: #0056b3;
+    }
+    
+    .results {
+      background: white;
+      padding: 15px;
+      margin-top: 15px;
+      border-radius: 4px;
+      border: 1px solid #ddd;
+      font-family: monospace;
+      white-space: pre-wrap;
+    }
+    
+    .error {
+      background: #f8d7da;
+      color: #721c24;
+    }
+    
+    .success {
+      background: #d4edda;
+      color: #155724;
+    }
+  </style>
+</head>
+<body>
+  <h1>🌐 Browser Cache Test</h1>
+  <p>Testing the browser-compatible Wikidata API with unified caching</p>
+
+  <div class="test-section">
+    <h3>Basic API Test</h3>
+    <button onclick="testBasicAPI()">Test Basic API</button>
+    <button onclick="testCachePerformance()">Test Cache Performance</button>
+    <button onclick="showCacheStats()">Show Cache Stats</button>
+    <button onclick="clearCache()">Clear Cache</button>
+    <div id="basicResults" class="results" style="display: none;"></div>
+  </div>
+
+  <div class="test-section">
+    <h3>Text Transformer Test</h3>
+    <input type="text" id="transformInput" placeholder="Enter text to transform" value="Einstein">
+    <button onclick="testTransformer()">Transform Text</button>
+    <div id="transformResults" class="results" style="display: none;"></div>
+  </div>
+
+  <script type="module">
+    import { WikidataAPIClient, WikidataSearchUtility } from './wikidata-api-browser.js';
+
+    // Create global instances for testing
+    window.apiClient = new WikidataAPIClient('indexeddb');
+    window.searchUtility = new WikidataSearchUtility(window.apiClient, null, null);
+
+    console.log('✅ Browser cache test loaded successfully');
+    console.log('API Client:', window.apiClient);
+    console.log('Search Utility:', window.searchUtility);
+
+    window.testBasicAPI = async function() {
+      const resultsDiv = document.getElementById('basicResults');
+      resultsDiv.style.display = 'block';
+      resultsDiv.className = 'results';
+      resultsDiv.textContent = 'Testing basic API functionality...\n';
+
+      try {
+        const startTime = Date.now();
+        const results = await window.apiClient.searchExactMatch('Einstein', 'en', 10, 'both');
+        const endTime = Date.now();
+
+        resultsDiv.textContent += `✅ Search completed in ${endTime - startTime}ms\n`;
+        resultsDiv.textContent += `📊 Found ${results.total} results\n`;
+        resultsDiv.textContent += `   Entities: ${results.entities.length}\n`;
+        resultsDiv.textContent += `   Properties: ${results.properties.length}\n`;
+
+        if (results.entities.length > 0) {
+          resultsDiv.textContent += `\nTop entity: ${results.entities[0].id} - ${results.entities[0].label}\n`;
+        }
+
+        resultsDiv.className = 'results success';
+      } catch (error) {
+        resultsDiv.textContent += `❌ Error: ${error.message}\n`;
+        resultsDiv.className = 'results error';
+      }
+    };
+
+    window.testCachePerformance = async function() {
+      const resultsDiv = document.getElementById('basicResults');
+      resultsDiv.style.display = 'block';
+      resultsDiv.className = 'results';
+      resultsDiv.textContent = 'Testing cache performance...\n';
+
+      try {
+        // First call (cold)
+        resultsDiv.textContent += '🧊 Cold call...\n';
+        const coldStart = Date.now();
+        const coldResult = await window.apiClient.searchExactMatch('Paris', 'en', 5, 'both');
+        const coldEnd = Date.now();
+        const coldTime = coldEnd - coldStart;
+
+        resultsDiv.textContent += `   Cold result: ${coldResult.total} items in ${coldTime}ms\n`;
+
+        // Second call (warm)
+        resultsDiv.textContent += '🔥 Warm call...\n';
+        const warmStart = Date.now();
+        const warmResult = await window.apiClient.searchExactMatch('Paris', 'en', 5, 'both');
+        const warmEnd = Date.now();
+        const warmTime = warmEnd - warmStart;
+
+        resultsDiv.textContent += `   Warm result: ${warmResult.total} items in ${warmTime}ms\n`;
+
+        const speedup = coldTime / Math.max(warmTime, 1);
+        resultsDiv.textContent += `\n🚀 Speedup: ${speedup.toFixed(1)}x faster\n`;
+
+        resultsDiv.className = 'results success';
+      } catch (error) {
+        resultsDiv.textContent += `❌ Error: ${error.message}\n`;
+        resultsDiv.className = 'results error';
+      }
+    };
+
+    window.showCacheStats = async function() {
+      const resultsDiv = document.getElementById('basicResults');
+      resultsDiv.style.display = 'block';
+      resultsDiv.className = 'results';
+      resultsDiv.textContent = 'Getting cache statistics...\n';
+
+      try {
+        const stats = await window.apiClient.cache.getStats();
+        
+        resultsDiv.textContent += '📊 Cache Statistics:\n';
+        resultsDiv.textContent += `Memory Cache: ${stats.memoryCache.size}/${stats.memoryCache.maxSize} items\n`;
+        resultsDiv.textContent += `DB Cache: ${stats.dbCache.size} items (${stats.dbCache.type})\n`;
+        
+        if (stats.dbCache.oldestEntry) {
+          const ageMinutes = Math.round(stats.dbCache.oldestEntry.age / (1000 * 60));
+          resultsDiv.textContent += `Oldest entry: ${ageMinutes} minutes ago\n`;
+        }
+        
+        resultsDiv.className = 'results success';
+      } catch (error) {
+        resultsDiv.textContent += `❌ Error: ${error.message}\n`;
+        resultsDiv.className = 'results error';
+      }
+    };
+
+    window.clearCache = async function() {
+      const resultsDiv = document.getElementById('basicResults');
+      resultsDiv.style.display = 'block';
+      resultsDiv.className = 'results';
+      resultsDiv.textContent = 'Clearing cache...\n';
+
+      try {
+        await window.apiClient.cache.clear();
+        resultsDiv.textContent += '✅ Cache cleared successfully\n';
+        resultsDiv.className = 'results success';
+      } catch (error) {
+        resultsDiv.textContent += `❌ Error: ${error.message}\n`;
+        resultsDiv.className = 'results error';
+      }
+    };
+
+    // Test text transformer (simplified version for browser)
+    window.testTransformer = async function() {
+      const input = document.getElementById('transformInput').value;
+      const resultsDiv = document.getElementById('transformResults');
+      
+      if (!input.trim()) {
+        resultsDiv.style.display = 'block';
+        resultsDiv.className = 'results error';
+        resultsDiv.textContent = 'Please enter some text to transform';
+        return;
+      }
+
+      resultsDiv.style.display = 'block';
+      resultsDiv.className = 'results';
+      resultsDiv.textContent = `Transforming: "${input}"\n`;
+
+      try {
+        const startTime = Date.now();
+        
+        // Simple transformation: just search for the input as a single term
+        const searchResults = await window.searchUtility.disambiguateSearch(input, 'en', 10, 'both');
+        
+        const endTime = Date.now();
+
+        resultsDiv.textContent += `✅ Transformation completed in ${endTime - startTime}ms\n`;
+        resultsDiv.textContent += `📊 Found ${searchResults.total} total matches\n`;
+        resultsDiv.textContent += `   Exact matches: ${searchResults.exact.length}\n`;
+        resultsDiv.textContent += `   Fuzzy matches: ${searchResults.fuzzy.length}\n`;
+
+        if (searchResults.exact.length > 0) {
+          resultsDiv.textContent += '\nTop exact matches:\n';
+          searchResults.exact.slice(0, 3).forEach((item, i) => {
+            resultsDiv.textContent += `  ${i + 1}. ${item.id} - ${item.label}\n`;
+          });
+        }
+
+        // Simple Q/P transformation
+        const qpItems = searchResults.combined.slice(0, 3).map(item => item.id);
+        if (qpItems.length > 0) {
+          resultsDiv.textContent += `\nSimple Q/P format: ${qpItems.join(' ')}\n`;
+        }
+
+        resultsDiv.className = 'results success';
+      } catch (error) {
+        resultsDiv.textContent += `❌ Error: ${error.message}\n`;
+        resultsDiv.className = 'results error';
+      }
+    };
+  </script>
+</body>
+</html>

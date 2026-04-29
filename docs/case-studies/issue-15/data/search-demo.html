@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wikidata Search Demo</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 10px;
+        }
+
+        .search-container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+
+        .search-form {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .search-input {
+            flex: 1;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+            min-width: 200px;
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .search-button {
+            padding: 12px 24px;
+            background: #667eea;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s;
+        }
+
+        .search-button:hover {
+            background: #5a6fd8;
+        }
+
+        .search-options {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .option-group {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        .option-group label {
+            font-weight: bold;
+            color: #333;
+        }
+
+        .option-group select {
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+
+        .results-container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .results-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #eee;
+        }
+
+        .results-count {
+            font-size: 18px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 20px;
+            color: #666;
+        }
+
+        .result-item {
+            background: #f8f9fa;
+            padding: 15px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+            border-left: 4px solid #667eea;
+        }
+
+        .result-item:hover {
+            background: #e9ecef;
+        }
+
+        .result-title {
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 5px;
+        }
+
+        .result-id {
+            color: #666;
+            font-family: monospace;
+            font-size: 14px;
+        }
+
+        .result-description {
+            color: #555;
+            margin-top: 5px;
+            font-size: 14px;
+        }
+
+        .result-type {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: bold;
+            margin-left: 10px;
+        }
+
+        .type-entity {
+            background: #28a745;
+            color: white;
+        }
+
+        .type-property {
+            background: #007bff;
+            color: white;
+        }
+
+        .match-exact {
+            background: #ffc107;
+            color: #212529;
+        }
+
+        .match-fuzzy {
+            background: #6c757d;
+            color: white;
+        }
+
+        .error {
+            background: #f8d7da;
+            color: #721c24;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+
+        .demo-buttons {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .demo-button {
+            padding: 10px 20px;
+            background: #28a745;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: background-color 0.3s;
+        }
+
+        .demo-button:hover {
+            background: #218838;
+        }
+
+        .demo-button.secondary {
+            background: #6c757d;
+        }
+
+        .demo-button.secondary:hover {
+            background: #545b62;
+        }
+
+        @media (max-width: 768px) {
+            .search-form {
+                flex-direction: column;
+            }
+            
+            .search-options {
+                flex-direction: column;
+            }
+            
+            .demo-buttons {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>🔍 Wikidata Search & Disambiguation Demo</h1>
+        <p>Search for entities and properties with exact matching and fuzzy search capabilities</p>
+    </div>
+
+    <div class="search-container">
+        <h2>Search Interface</h2>
+        
+        <div class="demo-buttons">
+            <button class="demo-button" onclick="loadDemoQueries()">Load Demo Queries</button>
+            <button class="demo-button secondary" onclick="runTests()">Run Tests</button>
+            <button class="demo-button secondary" onclick="clearResults()">Clear Results</button>
+        </div>
+
+        <form class="search-form" onsubmit="performSearch(event)">
+            <input 
+                type="text" 
+                id="searchQuery" 
+                class="search-input" 
+                placeholder="Enter search term (e.g., 'Albert Einstein', 'Paris', 'instance of')"
+                required
+            >
+            <button type="submit" class="search-button">Search</button>
+        </form>
+
+        <div class="search-options">
+            <div class="option-group">
+                <label for="searchType">Search Type:</label>
+                <select id="searchType">
+                    <option value="both">Both Entities & Properties</option>
+                    <option value="item">Entities Only</option>
+                    <option value="property">Properties Only</option>
+                </select>
+            </div>
+
+            <div class="option-group">
+                <label for="searchMethod">Search Method:</label>
+                <select id="searchMethod">
+                    <option value="exact">Exact Match</option>
+                    <option value="fuzzy">Fuzzy Search</option>
+                    <option value="disambiguation">Disambiguation</option>
+                    <option value="context">Context-Aware</option>
+                </select>
+            </div>
+
+            <div class="option-group">
+                <label for="language">Language:</label>
+                <select id="language">
+                    <option value="en">English</option>
+                    <option value="de">German</option>
+                    <option value="fr">French</option>
+                    <option value="es">Spanish</option>
+                    <option value="it">Italian</option>
+                </select>
+            </div>
+
+            <div class="option-group">
+                <label for="limit">Result Limit:</label>
+                <select id="limit">
+                    <option value="10">10</option>
+                    <option value="20">20</option>
+                    <option value="50">50</option>
+                </select>
+            </div>
+        </div>
+    </div>
+
+    <div class="results-container">
+        <div class="results-header">
+            <h2>Search Results</h2>
+            <div class="results-count" id="resultsCount">No results yet</div>
+        </div>
+        
+        <div id="resultsContent">
+            <div class="loading">Enter a search term and click "Search" to get started</div>
+        </div>
+    </div>
+
+    <script type="module">
+        import { searchUtility } from './wikidata-api.js';
+        import { WikidataSearchTest, demonstrateSearchFeatures } from './search-test.js';
+
+        // Make functions globally available
+        window.searchUtility = searchUtility;
+        window.WikidataSearchTest = WikidataSearchTest;
+        window.demonstrateSearchFeatures = demonstrateSearchFeatures;
+
+        // Demo queries for quick testing
+        window.loadDemoQueries = function() {
+            const queries = [
+                'Albert Einstein',
+                'Paris',
+                'instance of',
+                'Douglas Adams',
+                'Marie Curie',
+                'New York'
+            ];
+            
+            const query = queries[Math.floor(Math.random() * queries.length)];
+            document.getElementById('searchQuery').value = query;
+        };
+
+        // Perform search function
+        window.performSearch = async function(event) {
+            event.preventDefault();
+            
+            const query = document.getElementById('searchQuery').value.trim();
+            const type = document.getElementById('searchType').value;
+            const method = document.getElementById('searchMethod').value;
+            const language = document.getElementById('language').value;
+            const limit = parseInt(document.getElementById('limit').value);
+
+            if (!query) {
+                showError('Please enter a search term');
+                return;
+            }
+
+            showLoading();
+            
+            try {
+                let results;
+                
+                switch (method) {
+                    case 'exact':
+                        results = await searchUtility.searchExactMatch(query, language, limit, type);
+                        break;
+                    case 'fuzzy':
+                        results = await searchUtility.searchFuzzy(query, language, limit, type);
+                        break;
+                    case 'disambiguation':
+                        results = await searchUtility.disambiguateSearch(query, language, limit, type);
+                        break;
+                    case 'context':
+                        const context = {
+                            domain: 'science',
+                            preferredTypes: type === 'item' ? ['item'] : type === 'property' ? ['property'] : ['item', 'property']
+                        };
+                        results = await searchUtility.searchWithContext(query, context, language, limit, type);
+                        break;
+                    default:
+                        results = await searchUtility.searchExactMatch(query, language, limit, type);
+                }
+
+                displayResults(results, method);
+            } catch (error) {
+                showError(`Search failed: ${error.message}`);
+            }
+        };
+
+        // Display results
+        function displayResults(results, method) {
+            const resultsContent = document.getElementById('resultsContent');
+            const resultsCount = document.getElementById('resultsCount');
+            
+            let items = [];
+            
+            if (method === 'disambiguation') {
+                items = results.combined || [];
+                resultsCount.textContent = `${results.total} results (${results.exact.length} exact, ${results.fuzzy.length} fuzzy)`;
+            } else {
+                items = [...(results.entities || []), ...(results.properties || [])];
+                resultsCount.textContent = `${items.length} results`;
+            }
+
+            if (items.length === 0) {
+                resultsContent.innerHTML = '<div class="loading">No results found</div>';
+                return;
+            }
+
+            const resultsHtml = items.map(item => {
+                const typeClass = item.id.startsWith('P') ? 'type-property' : 'type-entity';
+                const typeText = item.id.startsWith('P') ? 'Property' : 'Entity';
+                const matchClass = item.matchType === 'exact' ? 'match-exact' : 'match-fuzzy';
+                const matchText = item.matchType || '';
+
+                return `
+                    <div class="result-item">
+                        <div class="result-title">
+                            ${item.label}
+                            <span class="result-type ${typeClass}">${typeText}</span>
+                            ${matchText ? `<span class="result-type ${matchClass}">${matchText}</span>` : ''}
+                        </div>
+                        <div class="result-id">${item.id}</div>
+                        ${item.description ? `<div class="result-description">${item.description}</div>` : ''}
+                    </div>
+                `;
+            }).join('');
+
+            resultsContent.innerHTML = resultsHtml;
+        }
+
+        // Show loading state
+        function showLoading() {
+            const resultsContent = document.getElementById('resultsContent');
+            const resultsCount = document.getElementById('resultsCount');
+            
+            resultsContent.innerHTML = '<div class="loading">Searching...</div>';
+            resultsCount.textContent = 'Searching...';
+        }
+
+        // Show error
+        function showError(message) {
+            const resultsContent = document.getElementById('resultsContent');
+            const resultsCount = document.getElementById('resultsCount');
+            
+            resultsContent.innerHTML = `<div class="error">${message}</div>`;
+            resultsCount.textContent = 'Error';
+        }
+
+        // Run tests
+        window.runTests = function() {
+            const testSuite = new WikidataSearchTest();
+            testSuite.runAllTests();
+        };
+
+        // Clear results
+        window.clearResults = function() {
+            const resultsContent = document.getElementById('resultsContent');
+            const resultsCount = document.getElementById('resultsCount');
+            
+            resultsContent.innerHTML = '<div class="loading">Enter a search term and click "Search" to get started</div>';
+            resultsCount.textContent = 'No results yet';
+        };
+
+        console.log('Wikidata Search Demo loaded successfully!');
+    </script>
+</body>
+</html> 

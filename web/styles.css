@@ -65,7 +65,8 @@ input {
   min-height: calc(100vh - 60px);
 }
 
-.compare-shell {
+.compare-shell,
+.formalize-shell {
   display: grid;
   padding: 28px;
   background: #ffffff;
@@ -73,7 +74,8 @@ input {
 }
 
 .app-shell[hidden],
-.compare-shell[hidden] {
+.compare-shell[hidden],
+.formalize-shell[hidden] {
   display: none;
 }
 
@@ -672,6 +674,315 @@ pre {
   gap: 8px;
 }
 
+.formalize-panel {
+  display: grid;
+  gap: 18px;
+  align-content: start;
+  max-width: 1100px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+.formalize-header {
+  display: grid;
+  gap: 6px;
+}
+
+.formalize-input-label {
+  color: #61717d;
+  font-size: 0.78rem;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+#formalize-input {
+  width: 100%;
+  min-height: 120px;
+  border: 1px solid #b9c4cd;
+  border-radius: 6px;
+  padding: 12px 14px;
+  font-family: inherit;
+  font-size: 1rem;
+  color: #172026;
+  resize: vertical;
+}
+
+.formalize-options {
+  display: grid;
+  gap: 14px;
+  grid-template-columns: minmax(180px, 1fr) minmax(220px, 2fr);
+  align-items: center;
+}
+
+.formalize-option {
+  display: grid;
+  gap: 6px;
+}
+
+.formalize-option span {
+  color: #61717d;
+  font-size: 0.78rem;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.formalize-option input {
+  width: 100%;
+}
+
+.formalize-target {
+  display: grid;
+  gap: 6px;
+  border: 1px solid #d9e0e6;
+  border-radius: 6px;
+  padding: 10px 12px;
+  margin: 0;
+}
+
+.formalize-target legend {
+  color: #61717d;
+  font-size: 0.78rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  padding: 0 6px;
+}
+
+.formalize-target label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.95rem;
+}
+
+.formalize-sources {
+  display: grid;
+  gap: 6px;
+  border: 1px solid #d9e0e6;
+  border-radius: 6px;
+  padding: 10px 12px;
+  margin: 0;
+}
+
+.formalize-sources legend {
+  color: #61717d;
+  font-size: 0.78rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  padding: 0 6px;
+}
+
+.formalize-sources label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.95rem;
+}
+
+.formalize-sources .formalize-source-fandom input[type='text'] {
+  flex: 1;
+  min-width: 140px;
+}
+
+.formalize-overrides {
+  display: grid;
+  gap: 8px;
+  border: 1px solid #d9e0e6;
+  border-radius: 6px;
+  padding: 10px 12px;
+  background: #fbfcfd;
+}
+
+.formalize-overrides summary {
+  cursor: pointer;
+  font-weight: 600;
+  color: #1d4e89;
+}
+
+.formalize-overrides textarea {
+  width: 100%;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 0.85rem;
+  padding: 8px 10px;
+  border: 1px solid #d9e0e6;
+  border-radius: 4px;
+  resize: vertical;
+}
+
+.formalize-overrides-error {
+  color: #b03030;
+  font-size: 0.85rem;
+  min-height: 1.2em;
+  margin: 0;
+}
+
+.formalize-big-contexts {
+  display: grid;
+  gap: 8px;
+}
+
+.formalize-big-context-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.formalize-big-context {
+  background: #ffffff;
+  border: 1px solid #b9c4cd;
+  border-radius: 6px;
+  padding: 6px 10px;
+  font-size: 0.9rem;
+}
+
+.formalize-big-context.main {
+  border-color: #1d4e89;
+  background: #eaf1fb;
+}
+
+.formalize-big-context a {
+  color: #1d4e89;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.formalize-big-context-meta {
+  color: #61717d;
+  font-size: 0.8rem;
+}
+
+.formalize-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+}
+
+.formalize-status {
+  color: #61717d;
+  font-size: 0.85rem;
+}
+
+.formalize-result {
+  display: grid;
+  gap: 8px;
+}
+
+.formalize-output {
+  border: 1px solid #d9e0e6;
+  border-radius: 6px;
+  padding: 14px 16px;
+  background: #f8fafc;
+  line-height: 1.5;
+  font-size: 1rem;
+}
+
+.formalize-output a {
+  color: #1d4e89;
+  text-decoration: underline;
+}
+
+.formalize-output a:hover {
+  color: #163d6c;
+}
+
+.formalize-output-plain {
+  color: #61717d;
+}
+
+.formalize-contexts,
+.formalize-interpretations {
+  display: grid;
+  gap: 8px;
+}
+
+.formalize-context-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.formalize-context {
+  display: grid;
+  gap: 4px;
+  text-align: left;
+  background: #ffffff;
+  color: #172026;
+  border: 1px solid #b9c4cd;
+  padding: 8px 12px;
+}
+
+.formalize-context strong {
+  font-size: 0.95rem;
+}
+
+.formalize-context span {
+  font-size: 0.8rem;
+  color: #61717d;
+}
+
+.formalize-context.main {
+  border-color: #1d4e89;
+}
+
+.formalize-context.active {
+  background: #1d4e89;
+  color: #ffffff;
+}
+
+.formalize-context.active span {
+  color: #d6e3f0;
+}
+
+.formalize-interpretation-list {
+  display: grid;
+  gap: 6px;
+  margin: 0;
+  padding-left: 20px;
+}
+
+.formalize-interpretation {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  gap: 10px;
+  align-items: baseline;
+  border: 1px solid #d9e0e6;
+  border-radius: 6px;
+  padding: 8px 10px;
+  background: #ffffff;
+}
+
+.formalize-interpretation strong {
+  color: #1d4e89;
+}
+
+.formalize-interpretation small {
+  color: #61717d;
+}
+
+.formalize-payload {
+  border: 1px solid #d9e0e6;
+  border-radius: 6px;
+  padding: 8px 12px;
+  background: #f8fafc;
+}
+
+.formalize-payload summary {
+  cursor: pointer;
+  font-weight: 700;
+  color: #1d4e89;
+}
+
+.formalize-payload pre {
+  margin: 8px 0 0;
+  white-space: pre-wrap;
+  word-break: break-word;
+  background: #ffffff;
+  border: 1px solid #d9e0e6;
+  border-radius: 4px;
+  padding: 8px 10px;
+  font-size: 0.85rem;
+}
+
 @media (max-width: 820px) {
   .app-shell {
     grid-template-columns: 1fr;
@@ -703,6 +1014,14 @@ pre {
 
   .example-list,
   .belief-control {
+    grid-template-columns: 1fr;
+  }
+
+  .formalize-options {
+    grid-template-columns: 1fr;
+  }
+
+  .formalize-interpretation {
     grid-template-columns: 1fr;
   }
 }

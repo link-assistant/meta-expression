@@ -32,6 +32,53 @@ export {
   findExampleOpposite,
   createSeededRandom,
 } from './examples.js';
+export {
+  formalizeText,
+  formalizeTextWith,
+  FORMALIZE_LINK_TARGETS,
+  FORMALIZE_SOURCE_KIND,
+  tokenize as tokenizeForFormalize,
+  generateNgrams as generateFormalizeNgrams,
+  buildMarkdownLink as buildFormalizeMarkdownLink,
+  buildHtmlLink as buildFormalizeHtmlLink,
+  resolveLinkTarget as resolveFormalizeLinkTarget,
+} from './formalize.js';
+export {
+  SOURCE_KIND as FORMALIZE_SOURCES,
+  createWikidataSource,
+  createWordNetSource,
+  createFandomSource,
+  createSourceRegistry,
+  parseSourceSpec,
+} from './formalize-sources.js';
+export {
+  aggregateBigContexts,
+  aggregateBigContextsFromGraph,
+} from './formalize-contexts.js';
+export {
+  buildOverrideMap,
+  lookupOverride,
+  overrideToCandidate,
+  overrideToEntity,
+  loadRepoOverrides,
+  loadUserOverrides,
+  decodeOverridesText,
+  encodeOverridesAsLino,
+} from './formalize-overrides.js';
+export {
+  parseLino,
+  serializeLino,
+  parseLinoEntries,
+  serializeLinoEntries,
+  decodeToken as decodeLinoToken,
+  tokenizeLino,
+} from './lino.js';
+export {
+  createDoubletStore,
+  encodeAsDoublets,
+  decodeFromDoublets,
+  DOUBLET_TAGS,
+} from './doublets.js';
 
 const arithmeticEqualityPattern =
   /^\s*(-?\d+(?:\.\d+)?)\s*([+*/-])\s*(-?\d+(?:\.\d+)?)\s*=\s*(-?\d+(?:\.\d+)?)\s*$/;
