@@ -7,9 +7,12 @@ import {
   defaultReasoningStrategyId,
   describeFormalizationLevel,
   findExampleOpposite,
+  formalizeTextWith,
+  FORMALIZE_LINK_TARGETS,
   getPreparedExamples,
   getRandomExamples,
   listReasoningStrategies,
+  resolveFormalizeLinkTarget,
   serializeLinksNotation,
 } from '../src/index.js';
 
@@ -41,8 +44,10 @@ const formalizationLevelName = document.querySelector(
 const resultValue = document.querySelector('#result-value');
 const navAnalyse = document.querySelector('#nav-analyse');
 const navCompare = document.querySelector('#nav-compare');
+const navFormalize = document.querySelector('#nav-formalize');
 const pageAnalyse = document.querySelector('#page-analyse');
 const pageCompare = document.querySelector('#page-compare');
+const pageFormalize = document.querySelector('#page-formalize');
 const compareRows = document.querySelector('#compare-rows');
 const compareAdd = document.querySelector('#compare-add');
 const compareRun = document.querySelector('#compare-run');
@@ -702,38 +707,42 @@ renderPreparedExamples();
 syncBeliefControl(input.value);
 render(input.value);
 
-// Top-nav page switching (Analyse / Compare)
-const analysePages = [pageAnalyse];
-const comparePages = [pageCompare];
+// Top-nav page switching (Analyse / Compare / Formalize)
+const navButtons = {
+  analyse: navAnalyse,
+  compare: navCompare,
+  formalize: navFormalize,
+};
+const pageElements = {
+  analyse: pageAnalyse,
+  compare: pageCompare,
+  formalize: pageFormalize,
+};
 
 function showPage(pageId) {
-  const isCompare = pageId === 'compare';
-  for (const page of analysePages) {
-    page.hidden = isCompare;
+  const known = pageElements[pageId] ? pageId : 'analyse';
+  for (const [id, element] of Object.entries(pageElements)) {
+    element.hidden = id !== known;
   }
-  for (const page of comparePages) {
-    page.hidden = !isCompare;
+  for (const [id, button] of Object.entries(navButtons)) {
+    const active = id === known;
+    button.setAttribute('aria-current', active ? 'page' : 'false');
+    button.classList.toggle('active', active);
   }
-  navAnalyse.setAttribute('aria-current', isCompare ? 'false' : 'page');
-  navCompare.setAttribute('aria-current', isCompare ? 'page' : 'false');
-  navAnalyse.classList.toggle('active', !isCompare);
-  navCompare.classList.toggle('active', isCompare);
-  if (isCompare) {
-    globalThis.location.hash = '#/compare';
-    if (compareRows.children.length === 0) {
-      seedCompareRows();
-    }
-  } else {
-    globalThis.location.hash = '#/analyse';
+  if (known === 'compare' && compareRows.children.length === 0) {
+    seedCompareRows();
   }
+  globalThis.location.hash = `#/${known}`;
 }
 
 function pageFromHash() {
-  return globalThis.location.hash === '#/compare' ? 'compare' : 'analyse';
+  const fragment = globalThis.location.hash.replace('#/', '');
+  return pageElements[fragment] ? fragment : 'analyse';
 }
 
 navAnalyse.addEventListener('click', () => showPage('analyse'));
 navCompare.addEventListener('click', () => showPage('compare'));
+navFormalize.addEventListener('click', () => showPage('formalize'));
 globalThis.addEventListener('hashchange', () => showPage(pageFromHash()));
 
 // Compare page
@@ -844,5 +853,262 @@ function runAllCompareRows() {
 
 compareAdd.addEventListener('click', () => appendCompareRow(''));
 compareRun.addEventListener('click', runAllCompareRows);
+
+// Formalize page
+const formalizeInput = document.querySelector('#formalize-input');
+const formalizeNgramSize = document.querySelector('#formalize-ngram-size');
+const formalizeTargetRadios = document.querySelectorAll(
+  'input[name="formalize-target"]'
+);
+const formalizeRun = document.querySelector('#formalize-run');
+const formalizeCopyMarkdown = document.querySelector(
+  '#formalize-copy-markdown'
+);
+const formalizeCopyLino = document.querySelector('#formalize-copy-lino');
+const formalizeStatus = document.querySelector('#formalize-status');
+const formalizeOutput = document.querySelector('#formalize-output');
+const formalizeContexts = document.querySelector('#formalize-contexts');
+const formalizeInterpretations = document.querySelector(
+  '#formalize-interpretations'
+);
+const formalizeMarkdownPre = document.querySelector('#formalize-markdown');
+const formalizeLinoPre = document.querySelector('#formalize-lino');
+
+let formalizeRequestId = 0;
+let currentFormalizeResult = null;
+let activeContextLensId = null;
+const formalizeWorker = createFormalizeWorker();
+
+if (formalizeWorker) {
+  formalizeWorker.addEventListener('message', (event) => {
+    applyFormalizeResult(event.data);
+  });
+}
+
+function createFormalizeWorker() {
+  if (!('Worker' in globalThis)) {
+    return null;
+  }
+  try {
+    return new Worker('./formalize-worker.js', { type: 'module' });
+  } catch {
+    return null;
+  }
+}
+
+function selectedLinkTargetMode() {
+  for (const radio of formalizeTargetRadios) {
+    if (radio.checked) {
+      return radio.value;
+    }
+  }
+  return FORMALIZE_LINK_TARGETS.WIKIPEDIA;
+}
+
+function runFormalize({ contextLensId = null } = {}) {
+  const text = formalizeInput.value.trim();
+  if (!text) {
+    formalizeStatus.textContent = 'Enter some text first.';
+    return;
+  }
+  const linkTargetMode = selectedLinkTargetMode();
+  const maxNgramSize = Math.max(
+    1,
+    Math.min(5, Number(formalizeNgramSize.value) || 3)
+  );
+  activeContextLensId = contextLensId;
+  formalizeStatus.textContent = 'Formalizing…';
+  const id = String((formalizeRequestId += 1));
+  formalizeStatus.dataset.requestId = id;
+
+  const options = {
+    maxNgramSize,
+    linkTargetMode,
+    contextLens: contextLensId ? { id: contextLensId } : null,
+  };
+
+  if (formalizeWorker) {
+    formalizeWorker.postMessage({ id, text, options });
+    return;
+  }
+
+  formalizeTextWith(text, {
+    ...options,
+    cache: wikimediaCache,
+    fetch: globalThis.fetch?.bind(globalThis),
+  })
+    .then((result) => applyFormalizeResult({ id, result }))
+    .catch((error) =>
+      applyFormalizeResult({
+        id,
+        error: error instanceof Error ? error.message : String(error),
+      })
+    );
+}
+
+function applyFormalizeResult(data) {
+  if (!data || data.id !== formalizeStatus.dataset.requestId) {
+    return;
+  }
+  if (data.error) {
+    formalizeStatus.textContent = `Formalize failed: ${data.error}`;
+    return;
+  }
+  const result = data.result;
+  if (!result) {
+    formalizeStatus.textContent = 'Formalize returned no result.';
+    return;
+  }
+  currentFormalizeResult = result;
+  renderFormalizeOutput(result);
+  renderFormalizeContexts(result);
+  renderFormalizeInterpretations(result);
+  formalizeMarkdownPre.textContent = result.markdown;
+  formalizeLinoPre.textContent = result.linksNotation;
+  const matched = result.phrases.filter((phrase) => phrase.entity).length;
+  const total = result.phrases.length;
+  formalizeStatus.textContent = `Linked ${matched}/${total} phrase${
+    total === 1 ? '' : 's'
+  } via Wikidata.`;
+}
+
+function renderFormalizeOutput(result) {
+  formalizeOutput.replaceChildren();
+  const wrapper = document.createElement('div');
+  wrapper.className = 'formalize-output-text';
+  for (const [index, phrase] of result.phrases.entries()) {
+    if (index > 0) {
+      wrapper.append(' ');
+    }
+    if (phrase.entity) {
+      const link = document.createElement('a');
+      link.href =
+        resolveFormalizeLinkTarget(phrase, {
+          linkTargetMode: result.linkTargetMode,
+        }) ?? '#';
+      link.title = phrase.entity.id;
+      link.target = '_blank';
+      link.rel = 'noopener noreferrer';
+      link.textContent = phrase.text;
+      link.dataset.wikidataId = phrase.entity.id;
+      wrapper.append(link);
+    } else {
+      const span = document.createElement('span');
+      span.className = 'formalize-output-plain';
+      span.textContent = phrase.text;
+      wrapper.append(span);
+    }
+  }
+  formalizeOutput.append(wrapper);
+}
+
+function renderFormalizeContexts(result) {
+  formalizeContexts.replaceChildren();
+  const list = result.contexts ?? [];
+  if (list.length === 0) {
+    const empty = document.createElement('p');
+    empty.className = 'section-empty';
+    empty.textContent = 'No shared contexts inferred.';
+    formalizeContexts.append(empty);
+    return;
+  }
+  for (const context of list) {
+    const button = document.createElement('button');
+    button.type = 'button';
+    button.className = 'formalize-context';
+    if (context.id === activeContextLensId) {
+      button.classList.add('active');
+    }
+    if (
+      activeContextLensId === null &&
+      result.mainContext &&
+      context.id === result.mainContext.id
+    ) {
+      button.classList.add('main');
+    }
+    const label = context.propertyLabel
+      ? `${context.propertyLabel} → ${context.id}`
+      : context.id;
+    const probabilityPercent = Math.round((context.probability ?? 0) * 100);
+    button.innerHTML = `
+      <strong>${escapeHtml(label)}</strong>
+      <span>weight ${context.weight} · ${probabilityPercent}%</span>
+    `;
+    button.addEventListener('click', () => {
+      const nextLens = activeContextLensId === context.id ? null : context.id;
+      runFormalize({ contextLensId: nextLens });
+    });
+    formalizeContexts.append(button);
+  }
+}
+
+function renderFormalizeInterpretations(result) {
+  formalizeInterpretations.replaceChildren();
+  const items = result.interpretations ?? [];
+  if (items.length === 0) {
+    const empty = document.createElement('li');
+    empty.className = 'section-empty';
+    empty.textContent = 'No alternative interpretations.';
+    formalizeInterpretations.append(empty);
+    return;
+  }
+  for (const interpretation of items) {
+    const item = document.createElement('li');
+    item.className = 'formalize-interpretation';
+    const score = (interpretation.score ?? 0).toFixed(1);
+    const phrases = interpretation.phrases
+      .map((phrase) => {
+        if (phrase.entityId) {
+          return `${phrase.text} [${phrase.entityId}]`;
+        }
+        return phrase.text;
+      })
+      .join(' ');
+    item.innerHTML = `
+      <strong>#${interpretation.rank}</strong>
+      <span>${escapeHtml(phrases)}</span>
+      <small>score ${score}</small>
+    `;
+    formalizeInterpretations.append(item);
+  }
+}
+
+formalizeRun.addEventListener('click', () => runFormalize());
+
+for (const radio of formalizeTargetRadios) {
+  radio.addEventListener('change', () => {
+    if (currentFormalizeResult) {
+      runFormalize({ contextLensId: activeContextLensId });
+    }
+  });
+}
+
+formalizeCopyMarkdown.addEventListener('click', async () => {
+  if (!currentFormalizeResult) {
+    formalizeStatus.textContent = 'Formalize the text first.';
+    return;
+  }
+  await copyToClipboard(currentFormalizeResult.markdown);
+  formalizeStatus.textContent = 'Markdown copied to clipboard.';
+});
+
+formalizeCopyLino.addEventListener('click', async () => {
+  if (!currentFormalizeResult) {
+    formalizeStatus.textContent = 'Formalize the text first.';
+    return;
+  }
+  await copyToClipboard(currentFormalizeResult.linksNotation);
+  formalizeStatus.textContent = 'Links Notation copied to clipboard.';
+});
+
+async function copyToClipboard(text) {
+  if (globalThis.navigator?.clipboard) {
+    try {
+      await globalThis.navigator.clipboard.writeText(text);
+    } catch {
+      // Clipboard may be blocked; the textarea still shows the value.
+    }
+  }
+}
 
 showPage(pageFromHash());
