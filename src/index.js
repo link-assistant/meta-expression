@@ -62,7 +62,23 @@ export {
   overrideToEntity,
   loadRepoOverrides,
   loadUserOverrides,
+  decodeOverridesText,
+  encodeOverridesAsLino,
 } from './formalize-overrides.js';
+export {
+  parseLino,
+  serializeLino,
+  parseLinoEntries,
+  serializeLinoEntries,
+  decodeToken as decodeLinoToken,
+  tokenizeLino,
+} from './lino.js';
+export {
+  createDoubletStore,
+  encodeAsDoublets,
+  decodeFromDoublets,
+  DOUBLET_TAGS,
+} from './doublets.js';
 
 const arithmeticEqualityPattern =
   /^\s*(-?\d+(?:\.\d+)?)\s*([+*/-])\s*(-?\d+(?:\.\d+)?)\s*=\s*(-?\d+(?:\.\d+)?)\s*$/;

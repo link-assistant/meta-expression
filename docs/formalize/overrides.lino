@@ -1,0 +1,21 @@
+// Repository-level overrides shipped with meta-expression.
+// See docs/FORMALIZE.md (Lazy overrides) for the full schema.
+// Each entry pins a phrase to a specific entity and short-circuits
+// live API lookups for that phrase. Indented Links Notation (.lino)
+// keeps this file close to JSON in shape but reads as link-graph
+// statements rather than punctuation noise.
+overrides
+  entries
+    -
+      phrase "Genshin Impact"
+      entityId "Q70626251"
+      label "Genshin Impact"
+      kind "entity"
+      source "wikidata"
+      description "2020 action role-playing game by miHoYo"
+      wikipediaUrl "https://en.wikipedia.org/wiki/Genshin_Impact"
+      sourceUrl "https://www.wikidata.org/wiki/Q70626251"
+      contextLabels
+        - "video game"
+        - "role-playing game"
+        - "Genshin Impact"

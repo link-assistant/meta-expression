@@ -230,8 +230,8 @@ Options:
                                  formalize: link target style
   --sources <spec>               formalize: comma-separated sources
                                    (wikidata,wordnet,fandom:<slug>,fandom-host:<host>)
-  --override <file.json>         formalize: extra user override file
-  --no-repo-overrides            formalize: ignore config/formalize-overrides.json
+  --override <file.lino|.json>   formalize: extra user override file (.lino preferred)
+  --no-repo-overrides            formalize: ignore docs/formalize/overrides.lino
   --max-ngram <n>                formalize: maximum n-gram size (default 3)
   -h, --help                     Show this help`;
 }

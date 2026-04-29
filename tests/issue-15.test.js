@@ -16,6 +16,14 @@ import {
   buildOverrideMap,
   lookupOverride,
   overrideToCandidate,
+  parseLino,
+  serializeLino,
+  parseLinoEntries,
+  serializeLinoEntries,
+  encodeAsDoublets,
+  decodeFromDoublets,
+  decodeOverridesText,
+  encodeOverridesAsLino,
 } from '../src/index.js';
 import { parseCliArguments, runCliAsync } from '../src/cli.js';
 import { createMetaExpressionServer } from '../src/server.js';
@@ -822,19 +830,21 @@ describe('issue 15 — HTTP /formalize endpoint with persistent cache', () => {
       expect(Array.isArray(first.payload.phrases)).toBe(true);
       expect(first.payload._cache.hit).toBe('miss');
 
-      const binBody = await readFile(
-        join(cacheRoot, cacheKeyValue, 'payload.bin'),
-        'utf8'
+      const binBytes = await readFile(
+        join(cacheRoot, cacheKeyValue, 'payload.bin')
       );
       const linoBody = await readFile(
         join(cacheRoot, cacheKeyValue, 'payload.lino'),
         'utf8'
       );
-      const parsedBin = JSON.parse(binBody);
+      const parsedBin = decodeFromDoublets(new Uint8Array(binBytes));
+      expect(parsedBin && typeof parsedBin === 'object').toBe(true);
+      expect(typeof parsedBin.markdown === 'string').toBe(true);
       expect(parsedBin.markdown.includes('Hawaii')).toBe(true);
       expect(linoBody.startsWith(`(formalize-cache: ${cacheKeyValue}`)).toBe(
         true
       );
+      expect(linoBody.includes('formalize-cache')).toBe(true);
 
       const callsAfterFirst = upstreamCalls;
       const second = await fetchJson(url, undefined, previousFetch);
@@ -1020,5 +1030,96 @@ describe('issue 15 — auto-generated formalize library docs', () => {
       expect(docs).toContain(symbol);
     }
     expect(docs).toContain('Auto-generated from JSDoc');
+  });
+});
+
+describe('issue 15 — Links Notation codec', () => {
+  it('round-trips a nested object through indented .lino', () => {
+    const value = {
+      payload: {
+        text: 'Genshin Impact',
+        scores: [1, 2.5, -3.25],
+        meta: { kind: 'entity', source: 'wikidata' },
+        flags: [true, false, null],
+      },
+    };
+    const lino = serializeLino(value, { rootIdentifier: 'formalize-cache' });
+    const parsed = parseLino(lino);
+    expect(parsed.payload.text).toBe('Genshin Impact');
+    expect(parsed.payload.scores).toEqual([1, 2.5, -3.25]);
+    expect(parsed.payload.meta.kind).toBe('entity');
+    expect(parsed.payload.flags).toEqual([true, false, null]);
+  });
+
+  it('parses the repository overrides.lino format', () => {
+    const sample = `overrides
+  entries
+    -
+      phrase "Genshin Impact"
+      entityId "Q70626251"
+      label "Genshin Impact"
+      kind "entity"
+`;
+    const entries = parseLinoEntries(sample);
+    expect(Array.isArray(entries)).toBe(true);
+    expect(entries.length).toBe(1);
+    expect(entries[0].phrase).toBe('Genshin Impact');
+    expect(entries[0].entityId).toBe('Q70626251');
+    const reSerialized = serializeLinoEntries(entries, {
+      rootIdentifier: 'overrides',
+    });
+    expect(typeof reSerialized).toBe('string');
+    expect(reSerialized.length).toBeGreaterThan(0);
+  });
+
+  it('accepts both .lino and legacy JSON via decodeOverridesText', () => {
+    const json = JSON.stringify([
+      {
+        phrase: 'Genshin Impact',
+        entityId: 'Q70626251',
+        label: 'Genshin Impact',
+      },
+    ]);
+    const fromJson = decodeOverridesText(json);
+    expect(fromJson.length).toBe(1);
+    expect(fromJson[0].entityId).toBe('Q70626251');
+    const lino = encodeOverridesAsLino(fromJson);
+    const fromLino = decodeOverridesText(lino);
+    expect(fromLino.length).toBe(1);
+    expect(fromLino[0].entityId).toBe('Q70626251');
+  });
+});
+
+describe('issue 15 — doublets binary store', () => {
+  it('round-trips primitives, arrays, and objects', () => {
+    const value = {
+      str: 'Genshin Impact',
+      n: 12,
+      neg: -3.25,
+      flag: true,
+      list: [1, 'two', null, false],
+      nested: { a: 1, b: [true, 'hello'] },
+    };
+    const { binary } = encodeAsDoublets(value);
+    expect(binary instanceof Uint8Array).toBe(true);
+    expect(binary.length % 12).toBe(0);
+    const decoded = decodeFromDoublets(binary);
+    expect(decoded.str).toBe('Genshin Impact');
+    expect(decoded.n).toBe(12);
+    expect(decoded.neg).toBe(-3.25);
+    expect(decoded.flag).toBe(true);
+    expect(decoded.list).toEqual([1, 'two', null, false]);
+    expect(decoded.nested.a).toBe(1);
+    expect(decoded.nested.b).toEqual([true, 'hello']);
+  });
+
+  it('encodes strings as unicode-sequence chains', () => {
+    const { binary } = encodeAsDoublets('hi');
+    const decoded = decodeFromDoublets(binary);
+    expect(decoded).toBe('hi');
+    // Each codepoint becomes a leaf link plus a chain link, plus a string
+    // root: 'h' + 'i' = 4 chain doublets + 2 codepoint doublets + 1 root.
+    const total = binary.length / 12;
+    expect(total).toBeGreaterThan(2);
   });
 });

@@ -208,7 +208,7 @@ fandom-host:<host> e.g. `fandom-host:tolkiengateway.net`
 
 Source: [`src/formalize-overrides.js`](../src/formalize-overrides.js)
 
-Repository-level (`docs/formalize/overrides.json`) and user-level overrides that pin a phrase to a specific entity, bypassing live lookups.
+Repository-level (`docs/formalize/overrides.lino`, JSON accepted as legacy fallback) and user-level overrides that pin a phrase to a specific entity, bypassing live lookups.
 
 ### `buildOverrideMap(layers)`
 
@@ -252,16 +252,41 @@ Convert an override entry into the entity shape attached to a phrase.
 
 **Returns** `object`
 
+### `decodeOverridesText(raw)`
+
+Decode an override file's raw text. Detects `.lino` content by the
+absence of a leading `{` / `[` and falls back to JSON otherwise.
+Returns an empty array on any parse failure so callers can keep going.
+
+| Parameter | Type     | Description |
+| --------- | -------- | ----------- |
+| `raw`     | `string` | —           |
+
+**Returns** `OverrideEntry[]`
+
+### `encodeOverridesAsLino(entries)`
+
+Encode an array of overrides as Links Notation text.
+
+| Parameter | Type              | Description |
+| --------- | ----------------- | ----------- |
+| `entries` | `OverrideEntry[]` | —           |
+
+**Returns** `string`
+
 ### `loadRepoOverrides()`
 
 Load repository-level overrides from disk (Node-only).
-Returns an empty array on any IO/parse failure so the caller can keep going.
+Tries `docs/formalize/overrides.lino` first, then falls back to
+`docs/formalize/overrides.json` for legacy checkouts. Returns an empty
+array on any IO/parse failure so the caller can keep going.
 
 **Returns** `Promise<OverrideEntry[]>`
 
 ### `loadUserOverrides(source)`
 
 Load user overrides from a file path or already-parsed list.
+Auto-detects `.lino` vs `.json` by file content.
 
 | Parameter | Type                      | Description |
 | --------- | ------------------------- | ----------- |
@@ -312,7 +337,7 @@ graph in memory (no network needed). Same shape as the async version.
 
 Source: [`src/formalize-cache.js`](../src/formalize-cache.js)
 
-Filesystem cache used by the HTTP server. Each entry is written atomically as JSON (`<key>.json`) plus a Links Notation echo (`<key>.lino`) for cross-validation.
+Filesystem cache used by the HTTP server. Each entry is written atomically as a binary doublets blob (`payload.bin`, the same shape used by `linksplatform/doublets-rs` / `link-foundation/link-cli`) plus a Links Notation echo (`payload.lino`) for cross-validation.
 
 ### `resolveCacheRoot(options)`
 
@@ -348,13 +373,130 @@ to the same 32-char hex digest so cache entries collide deterministically.
 
 **Returns** `Promise<{json: object, lino: string` — | null>}
 
-### `writeCacheEntry(root, key, payload, linoBody)`
+### `writeCacheEntry(root, key, payload, formalizeLino)`
 
-| Parameter  | Type     | Description |
-| ---------- | -------- | ----------- |
-| `root`     | `string` | —           |
-| `key`      | `string` | —           |
-| `payload`  | `object` | —           |
-| `linoBody` | `string` | —           |
+| Parameter       | Type     | Description |
+| --------------- | -------- | ----------- |
+| `root`          | `string` | —           |
+| `key`           | `string` | —           |
+| `payload`       | `object` | —           |
+| `formalizeLino` | `string` | —           |
 
 **Returns** `Promise<{ binPath: string, linoPath: string` — >}
+
+## Links Notation codec
+
+Source: [`src/lino.js`](../src/lino.js)
+
+Pure JS parser/serializer for indented Links Notation (`.lino`). Used for the repository overrides file, cache echo files, and any future configuration we want to keep in link-graph form rather than JSON.
+
+### `parseLino(text)`
+
+Parse an indented .lino document into a JS value.
+
+- Top-level identifier with no children → that identifier (string).
+- Top-level identifier with children → object/list per child shape.
+- Multiple top-level identifiers → ordered array of parsed entries.
+
+| Parameter | Type     | Description |
+| --------- | -------- | ----------- |
+| `text`    | `string` | —           |
+
+**Returns** `unknown`
+
+### `tokenizeLino(content)`
+
+Tokenize a single .lino content line into a sequence of raw tokens.
+Quoted strings are kept as a single token (with the quotes preserved
+so `decodeToken` can detect them).
+
+| Parameter | Type     | Description |
+| --------- | -------- | ----------- |
+| `content` | `string` | —           |
+
+**Returns** `string[]`
+
+### `decodeToken(token)`
+
+Decode a raw token into its typed value:
+
+- "quoted" → string with escapes resolved
+- true/false/null → booleans / null
+- finite numeric literals → number
+- everything else → bare string token (e.g. an identifier)
+
+| Parameter | Type     | Description |
+| --------- | -------- | ----------- |
+| `token`   | `string` | —           |
+
+**Returns** `string|number|boolean|null`
+
+### `serializeLino(value)`
+
+Serialize a JS value into indented .lino. Always produces deterministic
+key ordering (insertion order is preserved, matching JSON.stringify).
+
+Top-level rules:
+
+- string/number/boolean/null → bare scalar line
+- array → list under a synthetic root (each item indented as `-`)
+- object → root identifier when caller passes `{ rootIdentifier }`,
+  otherwise a flat block of `key value` lines.
+
+| Parameter | Type      | Description |
+| --------- | --------- | ----------- |
+| `value`   | `unknown` | —           |
+
+**Returns** `string`
+
+### `parseLinoEntries(text)`
+
+Convenience: parse an array-of-entries .lino document into a flat array.
+Accepts both indented `entries` block and an inline list at the root.
+
+| Parameter | Type     | Description |
+| --------- | -------- | ----------- |
+| `text`    | `string` | —           |
+
+**Returns** `unknown[]`
+
+### `serializeLinoEntries(entries)`
+
+Convenience: serialize a list of entries as `entries:` block. Used for
+overrides files so the document is always rooted under a stable name.
+
+| Parameter | Type        | Description |
+| --------- | ----------- | ----------- |
+| `entries` | `unknown[]` | —           |
+
+**Returns** `string`
+
+## Doublets binary store
+
+Source: [`src/doublets.js`](../src/doublets.js)
+
+In-memory port of the link primitives used by `linksplatform/doublets-rs` / `link-foundation/link-cli`. Encodes arbitrary JS values as chains of `(index source target)` doublets — strings via unicode-sequence chains — and serializes the resulting graph as a flat `Uint8Array` blob ready for a future WebAssembly bridge.
+
+### `encodeAsDoublets(value)`
+
+Encode a JS value into a binary doublets blob. Convenience wrapper for
+cache writers that just want round-trippable bytes.
+
+| Parameter | Type      | Description |
+| --------- | --------- | ----------- |
+| `value`   | `unknown` | —           |
+
+**Returns** `{ binary: Uint8Array, rootIndex: number, store: ReturnType<typeof createDoubletStore>` — }
+
+### `decodeFromDoublets(binary, rootIndex)`
+
+Decode a binary doublets blob produced by `encodeAsDoublets` back to a JS
+value. The root index defaults to the last created link, matching how
+`encodeAsDoublets` returns it.
+
+| Parameter     | Type         | Description |
+| ------------- | ------------ | ----------- |
+| `binary`      | `Uint8Array` | —           |
+| `[rootIndex]` | `number`     | —           |
+
+**Returns** `unknown`

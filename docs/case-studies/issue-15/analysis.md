@@ -270,11 +270,13 @@ worker so the same string travels end-to-end.
 
 `src/formalize-overrides.js` merges two override layers:
 
-- repo-level: `docs/formalize/overrides.json` is read by
+- repo-level: `docs/formalize/overrides.lino` (indented Links Notation;
+  legacy `overrides.json` still accepted as a fallback) is read by
   `loadRepoOverrides()` and shipped with the codebase to lock in
   examples that the live knowledge graphs miss,
-- user-level: arbitrary JSON arrays passed through the CLI (`--overrides
-path.json`), the HTTP `overrides` field, or the web textarea.
+- user-level: `.lino` or `.json` lists passed through the CLI
+  (`--override path.lino`), the HTTP `overrides` field, or the web
+  textarea (`decodeOverridesText` auto-detects the format).
 
 Each override pins a phrase to a specific entity (`{phrase, entityId,
 label, kind, sourceUrl}`) and short-circuits the live lookup for that
@@ -295,12 +297,17 @@ Links Notation depending on `--format`.
 target, overrides…)` combination hashes (sha-256, truncated) into a
 filesystem cache root, where two files are written **atomically**:
 
-- `<key>.json` — the full result payload that the API returns, and
-- `<key>.lino` — a Links Notation echo of the same payload.
+- `payload.bin` — a binary doublets blob. Each cache entry is encoded
+  through `src/doublets.js` (a JS port of the link primitives used by
+  `linksplatform/doublets-rs` and `link-foundation/link-cli`) so the
+  on-disk representation is forward-compatible with a future
+  WebAssembly doublets-rs backend. Strings are stored as
+  unicode-sequence chains, exactly like link-cli does.
+- `payload.lino` — a Links Notation echo of the same payload.
 
-A subsequent request reads the JSON file directly and the Lino file is
-read back too as a cross-validation step (mismatch ⇒ cache miss + log
-warning). The intent matches the brief: "API microservice with
+A subsequent request decodes the binary blob, re-parses the lino echo,
+and cross-checks the two views agree on the cache key (mismatch ⇒
+cache miss). The intent matches the brief: "API microservice with
 persistent cache backed by both link-cli (binary) and links-notation
 (text) for comparison/reliability."
 
@@ -309,7 +316,8 @@ persistent cache backed by both link-cli (binary) and links-notation
 The Formalize tab now exposes:
 
 - a sources picker (Wikidata / WordNet / Fandom-with-slug),
-- a JSON overrides editor,
+- a Links Notation overrides editor (`.lino` indented, with legacy
+  JSON still accepted),
 - a big-context display section (dominant world + secondary worlds with
   weights).
 

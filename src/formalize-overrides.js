@@ -2,25 +2,30 @@
  * Lazy override layer for formalize.
  *
  * Two override sources are supported:
- *   1. Repository overrides — a JSON file under `docs/formalize/overrides.json`
- *      shipped with the repo. Loaded asynchronously by Node call sites.
+ *   1. Repository overrides — a Links Notation file under
+ *      `docs/formalize/overrides.lino` shipped with the repo. Loaded
+ *      asynchronously by Node call sites. JSON is still accepted as a
+ *      legacy fallback so existing checkouts keep working.
  *   2. User overrides — supplied per-call (browser uses `localStorage`,
- *      Node CLI uses `--override <file>`).
+ *      Node CLI uses `--override <file>`). Both `.lino` and `.json`
+ *      paths are auto-detected.
  *
  * An override entry is:
- *   {
- *     "phrase": "Genshin Impact",
- *     "entityId": "Q70626251",          // any source-scoped id
- *     "label": "Genshin Impact",
- *     "kind": "entity",
- *     "source": "wikidata",
- *     "wikipediaUrl": "https://...",
- *     "sourceUrl":   "https://..."
- *   }
+ *
+ *     entry
+ *       phrase "Genshin Impact"
+ *       entityId "Q70626251"
+ *       label "Genshin Impact"
+ *       kind "entity"
+ *       source "wikidata"
+ *       wikipediaUrl "https://..."
+ *       sourceUrl "https://..."
  *
  * Phrase keys are normalised (lowercased, whitespace collapsed) so
  * "Genshin Impact" and "genshin  impact" hit the same override.
  */
+
+import { parseLinoEntries, serializeLinoEntries } from './lino.js';
 
 /**
  * @typedef {Object} OverrideEntry
@@ -123,8 +128,54 @@ function normalizePhraseKey(phrase) {
 }
 
 /**
+ * Decode an override file's raw text. Detects `.lino` content by the
+ * absence of a leading `{` / `[` and falls back to JSON otherwise.
+ * Returns an empty array on any parse failure so callers can keep going.
+ *
+ * @param {string} raw
+ * @returns {OverrideEntry[]}
+ */
+export function decodeOverridesText(raw) {
+  if (typeof raw !== 'string' || raw.trim().length === 0) {
+    return [];
+  }
+  const trimmed = raw.trim();
+  if (trimmed.startsWith('{') || trimmed.startsWith('[')) {
+    try {
+      const parsed = JSON.parse(raw);
+      if (Array.isArray(parsed)) {
+        return parsed;
+      }
+      if (Array.isArray(parsed?.entries)) {
+        return parsed.entries;
+      }
+      return [];
+    } catch {
+      return [];
+    }
+  }
+  try {
+    return parseLinoEntries(raw);
+  } catch {
+    return [];
+  }
+}
+
+/**
+ * Encode an array of overrides as Links Notation text.
+ *
+ * @param {OverrideEntry[]} entries
+ * @returns {string}
+ */
+export function encodeOverridesAsLino(entries) {
+  return serializeLinoEntries(entries, { rootIdentifier: 'overrides' });
+}
+
+/**
  * Load repository-level overrides from disk (Node-only).
- * Returns an empty array on any IO/parse failure so the caller can keep going.
+ * Tries `docs/formalize/overrides.lino` first, then falls back to
+ * `docs/formalize/overrides.json` for legacy checkouts. Returns an empty
+ * array on any IO/parse failure so the caller can keep going.
  *
  * @returns {Promise<OverrideEntry[]>}
  */
@@ -132,29 +183,30 @@ export async function loadRepoOverrides() {
   if (typeof process === 'undefined' || !process.versions?.node) {
     return [];
   }
-  try {
-    const fs = await import('node:fs/promises');
-    const path = await import('node:path');
-    const repoPath = path.resolve(
-      process.cwd(),
-      'docs/formalize/overrides.json'
-    );
-    const raw = await fs.readFile(repoPath, 'utf8');
-    const parsed = JSON.parse(raw);
-    if (Array.isArray(parsed)) {
-      return parsed;
+  const fs = await import('node:fs/promises');
+  const path = await import('node:path');
+  const candidates = [
+    'docs/formalize/overrides.lino',
+    'docs/formalize/overrides.json',
+  ];
+  for (const relative of candidates) {
+    try {
+      const resolved = path.resolve(process.cwd(), relative);
+      const raw = await fs.readFile(resolved, 'utf8');
+      const entries = decodeOverridesText(raw);
+      if (entries.length > 0) {
+        return entries;
+      }
+    } catch {
+      // try next candidate
     }
-    if (Array.isArray(parsed?.entries)) {
-      return parsed.entries;
-    }
-    return [];
-  } catch {
-    return [];
   }
+  return [];
 }
 
 /**
  * Load user overrides from a file path or already-parsed list.
+ * Auto-detects `.lino` vs `.json` by file content.
  *
  * @param {string|OverrideEntry[]} source
  * @returns {Promise<OverrideEntry[]>}
@@ -169,14 +221,7 @@ export async function loadUserOverrides(source) {
   try {
     const fs = await import('node:fs/promises');
     const raw = await fs.readFile(source, 'utf8');
-    const parsed = JSON.parse(raw);
-    if (Array.isArray(parsed)) {
-      return parsed;
-    }
-    if (Array.isArray(parsed?.entries)) {
-      return parsed.entries;
-    }
-    return [];
+    return decodeOverridesText(raw);
   } catch {
     return [];
   }

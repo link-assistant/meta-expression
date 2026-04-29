@@ -35,7 +35,7 @@ const sources = [
     path: 'src/formalize-overrides.js',
     title: 'Lazy overrides',
     summary:
-      'Repository-level (`docs/formalize/overrides.json`) and user-level overrides that pin a phrase to a specific entity, bypassing live lookups.',
+      'Repository-level (`docs/formalize/overrides.lino`, JSON accepted as legacy fallback) and user-level overrides that pin a phrase to a specific entity, bypassing live lookups.',
   },
   {
     path: 'src/formalize-contexts.js',
@@ -47,7 +47,19 @@ const sources = [
     path: 'src/formalize-cache.js',
     title: 'Persistent cache',
     summary:
-      'Filesystem cache used by the HTTP server. Each entry is written atomically as JSON (`<key>.json`) plus a Links Notation echo (`<key>.lino`) for cross-validation.',
+      'Filesystem cache used by the HTTP server. Each entry is written atomically as a binary doublets blob (`payload.bin`, the same shape used by `linksplatform/doublets-rs` / `link-foundation/link-cli`) plus a Links Notation echo (`payload.lino`) for cross-validation.',
+  },
+  {
+    path: 'src/lino.js',
+    title: 'Links Notation codec',
+    summary:
+      'Pure JS parser/serializer for indented Links Notation (`.lino`). Used for the repository overrides file, cache echo files, and any future configuration we want to keep in link-graph form rather than JSON.',
+  },
+  {
+    path: 'src/doublets.js',
+    title: 'Doublets binary store',
+    summary:
+      'In-memory port of the link primitives used by `linksplatform/doublets-rs` / `link-foundation/link-cli`. Encodes arbitrary JS values as chains of `(index source target)` doublets — strings via unicode-sequence chains — and serializes the resulting graph as a flat `Uint8Array` blob ready for a future WebAssembly bridge.',
   },
 ];
 

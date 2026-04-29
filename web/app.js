@@ -4,6 +4,7 @@ import {
   createStatementDraft,
   createSeededRandom,
   createWikimediaEvidenceClient,
+  decodeOverridesText,
   defaultReasoningStrategyId,
   describeFormalizationLevel,
   findExampleOpposite,
@@ -1006,9 +1007,14 @@ function readFormalizeOverrides() {
     return [];
   }
   try {
-    const parsed = JSON.parse(raw);
+    const parsed = decodeOverridesText(raw);
     if (!Array.isArray(parsed)) {
-      throw new Error('Overrides must be a JSON array.');
+      throw new Error('Overrides must decode to a list of entries.');
+    }
+    if (parsed.length === 0 && raw.length > 0) {
+      throw new Error(
+        'Overrides could not be parsed as Links Notation or JSON.'
+      );
     }
     if (formalizeOverridesError) {
       formalizeOverridesError.textContent = '';

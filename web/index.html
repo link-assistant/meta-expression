@@ -294,16 +294,23 @@ Barack Obama was born in Hawaii.</textarea
         </div>
 
         <details class="formalize-overrides">
-          <summary>Lazy overrides (JSON array)</summary>
+          <summary>Lazy overrides (Links Notation)</summary>
           <p class="section-hint">
             Each entry pins a phrase to a specific entity, bypassing live
             lookups. Useful for reproducible demos and to fill gaps the
-            knowledge graphs miss.
+            knowledge graphs miss. Indented Links Notation (.lino) is preferred;
+            legacy JSON arrays are still accepted.
           </p>
           <textarea
             id="formalize-overrides"
-            rows="6"
-            placeholder='[{"phrase": "Genshin Impact", "entityId": "Q63653160", "label": "Genshin Impact", "kind": "video game"}]'
+            rows="8"
+            placeholder='overrides
+  entries
+    -
+      phrase "Genshin Impact"
+      entityId "Q70626251"
+      label "Genshin Impact"
+      kind "entity"'
           ></textarea>
           <p
             class="formalize-overrides-error"
