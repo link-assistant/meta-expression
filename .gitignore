@@ -146,3 +146,6 @@ target/
 
 # Playwright MCP scratch
 .playwright-mcp/
+
+# Deno lockfile (regenerated on every test run)
+deno.lock
