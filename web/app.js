@@ -12,6 +12,7 @@ import {
   getPreparedExamples,
   getRandomExamples,
   listReasoningStrategies,
+  parseSourceSpec,
   resolveFormalizeLinkTarget,
   serializeLinksNotation,
 } from '../src/index.js';
@@ -873,6 +874,24 @@ const formalizeInterpretations = document.querySelector(
 );
 const formalizeMarkdownPre = document.querySelector('#formalize-markdown');
 const formalizeLinoPre = document.querySelector('#formalize-lino');
+const formalizeBigContexts = document.querySelector('#formalize-big-contexts');
+const formalizeSourceCheckboxes = document.querySelectorAll(
+  'input[name="formalize-source"]'
+);
+const formalizeFandomCheckbox = document.querySelector(
+  '#formalize-source-fandom'
+);
+const formalizeFandomSlug = document.querySelector('#formalize-fandom-slug');
+const formalizeOverridesText = document.querySelector('#formalize-overrides');
+const formalizeOverridesError = document.querySelector(
+  '#formalize-overrides-error'
+);
+
+if (formalizeFandomCheckbox && formalizeFandomSlug) {
+  formalizeFandomCheckbox.addEventListener('change', () => {
+    formalizeFandomSlug.disabled = !formalizeFandomCheckbox.checked;
+  });
+}
 
 let formalizeRequestId = 0;
 let currentFormalizeResult = null;
@@ -921,10 +940,18 @@ function runFormalize({ contextLensId = null } = {}) {
   const id = String((formalizeRequestId += 1));
   formalizeStatus.dataset.requestId = id;
 
+  const overrides = readFormalizeOverrides();
+  if (overrides === null) {
+    formalizeStatus.textContent =
+      'Overrides JSON could not be parsed; fix it or clear the field.';
+    return;
+  }
   const options = {
     maxNgramSize,
     linkTargetMode,
     contextLens: contextLensId ? { id: contextLensId } : null,
+    sourcesSpec: collectFormalizeSourcesSpec(),
+    overrides,
   };
 
   if (formalizeWorker) {
@@ -934,6 +961,9 @@ function runFormalize({ contextLensId = null } = {}) {
 
   formalizeTextWith(text, {
     ...options,
+    sources: options.sourcesSpec
+      ? parseSourceSpec(options.sourcesSpec)
+      : undefined,
     cache: wikimediaCache,
     fetch: globalThis.fetch?.bind(globalThis),
   })
@@ -944,6 +974,88 @@ function runFormalize({ contextLensId = null } = {}) {
         error: error instanceof Error ? error.message : String(error),
       })
     );
+}
+
+function collectFormalizeSourcesSpec() {
+  const tokens = [];
+  for (const checkbox of formalizeSourceCheckboxes) {
+    if (!checkbox.checked) {
+      continue;
+    }
+    if (checkbox.value === 'fandom') {
+      const slug = formalizeFandomSlug?.value.trim();
+      if (slug) {
+        tokens.push(`fandom:${slug}`);
+      }
+      continue;
+    }
+    tokens.push(checkbox.value);
+  }
+  return tokens.join(',');
+}
+
+function readFormalizeOverrides() {
+  if (!formalizeOverridesText) {
+    return [];
+  }
+  const raw = formalizeOverridesText.value.trim();
+  if (!raw) {
+    if (formalizeOverridesError) {
+      formalizeOverridesError.textContent = '';
+    }
+    return [];
+  }
+  try {
+    const parsed = JSON.parse(raw);
+    if (!Array.isArray(parsed)) {
+      throw new Error('Overrides must be a JSON array.');
+    }
+    if (formalizeOverridesError) {
+      formalizeOverridesError.textContent = '';
+    }
+    return parsed;
+  } catch (error) {
+    if (formalizeOverridesError) {
+      formalizeOverridesError.textContent =
+        error instanceof Error ? error.message : String(error);
+    }
+    return null;
+  }
+}
+
+function renderFormalizeBigContexts(result) {
+  if (!formalizeBigContexts) {
+    return;
+  }
+  formalizeBigContexts.replaceChildren();
+  const list = result.bigContexts ?? [];
+  if (list.length === 0) {
+    const empty = document.createElement('p');
+    empty.className = 'section-empty';
+    empty.textContent = 'No big-context categories detected.';
+    formalizeBigContexts.append(empty);
+    return;
+  }
+  for (const context of list) {
+    const item = document.createElement('div');
+    item.className = 'formalize-big-context';
+    if (result.mainBigContext && context.id === result.mainBigContext.id) {
+      item.classList.add('main');
+    }
+    const probabilityPercent = Math.round((context.probability ?? 0) * 100);
+    const link = document.createElement('a');
+    link.href = `https://www.wikidata.org/wiki/${context.id}`;
+    link.title = context.id;
+    link.target = '_blank';
+    link.rel = 'noopener noreferrer';
+    link.textContent = context.label ?? context.id;
+    item.append(link);
+    const meta = document.createElement('span');
+    meta.className = 'formalize-big-context-meta';
+    meta.textContent = ` weight ${context.weight} · ${probabilityPercent}%`;
+    item.append(meta);
+    formalizeBigContexts.append(item);
+  }
 }
 
 function applyFormalizeResult(data) {
@@ -962,6 +1074,7 @@ function applyFormalizeResult(data) {
   currentFormalizeResult = result;
   renderFormalizeOutput(result);
   renderFormalizeContexts(result);
+  renderFormalizeBigContexts(result);
   renderFormalizeInterpretations(result);
   formalizeMarkdownPre.textContent = result.markdown;
   formalizeLinoPre.textContent = result.linksNotation;

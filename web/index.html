@@ -260,7 +260,57 @@ Barack Obama was born in Hawaii.</textarea
               Local viewer
             </label>
           </fieldset>
+          <fieldset class="formalize-sources">
+            <legend>Sources</legend>
+            <label>
+              <input
+                type="checkbox"
+                name="formalize-source"
+                value="wikidata"
+                checked
+              />
+              Wikidata
+            </label>
+            <label>
+              <input
+                type="checkbox"
+                name="formalize-source"
+                value="wordnet"
+              />
+              WordNet (Wiktionary)
+            </label>
+            <label class="formalize-source-fandom">
+              <input
+                type="checkbox"
+                name="formalize-source"
+                value="fandom"
+                id="formalize-source-fandom"
+              />
+              Fandom wiki:
+              <input
+                type="text"
+                id="formalize-fandom-slug"
+                placeholder="e.g. genshin-impact"
+                disabled
+              />
+            </label>
+          </fieldset>
         </div>
+
+        <details class="formalize-overrides">
+          <summary>Lazy overrides (JSON array)</summary>
+          <p class="section-hint">
+            Each entry pins a phrase to a specific entity, bypassing live
+            lookups. Useful for reproducible demos and to fill gaps the
+            knowledge graphs miss.
+          </p>
+          <textarea
+            id="formalize-overrides"
+            rows="6"
+            placeholder='[{"phrase": "Genshin Impact", "entityId": "Q63653160", "label": "Genshin Impact", "kind": "video game"}]'
+          ></textarea>
+          <p class="formalize-overrides-error" id="formalize-overrides-error"></p>
+        </details>
 
         <div class="formalize-actions">
           <button type="button" id="formalize-run">Formalize</button>
@@ -286,6 +336,21 @@ Barack Obama was born in Hawaii.</textarea
             Click a context to reinterpret the same text through that lens.
           </p>
           <div id="formalize-contexts" class="formalize-context-list"></div>
+        </section>
+
+        <section
+          class="formalize-big-contexts"
+          aria-label="Big context categories"
+        >
+          <h2>Big-context categories</h2>
+          <p class="section-hint">
+            Worlds and domains the text touches (Math, Geography, Star Wars,
+            Genshin Impact, ...). The first item is the dominant world.
+          </p>
+          <div
+            id="formalize-big-contexts"
+            class="formalize-big-context-list"
+          ></div>
         </section>
 
         <section

@@ -1,4 +1,8 @@
-import { formalizeTextWith } from '../src/index.js';
+import {
+  formalizeTextWith,
+  parseSourceSpec,
+  createWikidataSource,
+} from '../src/index.js';
 
 const wikimediaCacheStorageKey = 'meta-expression.wikimedia-cache.v1';
 const cache = new Map();
@@ -12,8 +16,9 @@ self.addEventListener('message', async (event) => {
   }
 
   try {
+    const finalOptions = resolveOptions(options ?? {});
     const result = await formalizeTextWith(text, {
-      ...(options ?? {}),
+      ...finalOptions,
       cache,
       fetch: self.fetch?.bind(self),
     });
@@ -27,6 +32,19 @@ self.addEventListener('message', async (event) => {
   }
 });
 
+function resolveOptions(options) {
+  const final = { ...options };
+  if (typeof options.sourcesSpec === 'string' && options.sourcesSpec.trim()) {
+    try {
+      final.sources = parseSourceSpec(options.sourcesSpec);
+    } catch {
+      final.sources = [createWikidataSource()];
+    }
+  }
+  delete final.sourcesSpec;
+  return final;
+}
+
 function serializeResult(result) {
   return {
     text: result.text,
@@ -35,6 +53,9 @@ function serializeResult(result) {
     contexts: result.contexts,
     mainContext: result.mainContext,
     additionalContexts: result.additionalContexts,
+    bigContexts: result.bigContexts,
+    mainBigContext: result.mainBigContext,
+    additionalBigContexts: result.additionalBigContexts,
     interpretations: result.interpretations,
     markdown: result.markdown,
     html: result.html,

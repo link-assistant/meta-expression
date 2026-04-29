@@ -754,6 +754,102 @@ pre {
   font-size: 0.95rem;
 }
 
+.formalize-sources {
+  display: grid;
+  gap: 6px;
+  border: 1px solid #d9e0e6;
+  border-radius: 6px;
+  padding: 10px 12px;
+  margin: 0;
+}
+
+.formalize-sources legend {
+  color: #61717d;
+  font-size: 0.78rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  padding: 0 6px;
+}
+
+.formalize-sources label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.95rem;
+}
+
+.formalize-sources .formalize-source-fandom input[type='text'] {
+  flex: 1;
+  min-width: 140px;
+}
+
+.formalize-overrides {
+  display: grid;
+  gap: 8px;
+  border: 1px solid #d9e0e6;
+  border-radius: 6px;
+  padding: 10px 12px;
+  background: #fbfcfd;
+}
+
+.formalize-overrides summary {
+  cursor: pointer;
+  font-weight: 600;
+  color: #1d4e89;
+}
+
+.formalize-overrides textarea {
+  width: 100%;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 0.85rem;
+  padding: 8px 10px;
+  border: 1px solid #d9e0e6;
+  border-radius: 4px;
+  resize: vertical;
+}
+
+.formalize-overrides-error {
+  color: #b03030;
+  font-size: 0.85rem;
+  min-height: 1.2em;
+  margin: 0;
+}
+
+.formalize-big-contexts {
+  display: grid;
+  gap: 8px;
+}
+
+.formalize-big-context-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.formalize-big-context {
+  background: #ffffff;
+  border: 1px solid #b9c4cd;
+  border-radius: 6px;
+  padding: 6px 10px;
+  font-size: 0.9rem;
+}
+
+.formalize-big-context.main {
+  border-color: #1d4e89;
+  background: #eaf1fb;
+}
+
+.formalize-big-context a {
+  color: #1d4e89;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.formalize-big-context-meta {
+  color: #61717d;
+  font-size: 0.8rem;
+}
+
 .formalize-actions {
   display: flex;
   flex-wrap: wrap;
