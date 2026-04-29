@@ -222,3 +222,106 @@ a phrase (it just doesn't get a hyperlink).
 - LLM-based interpretation candidates (R12 in `docs/REQUIREMENTS.md` keeps
   LLMs out of truth evidence; the prototype generates interpretations
   deterministically from cartesian-product of candidates).
+
+---
+
+## Follow-up scope (after the first PR review)
+
+The reviewer expanded the brief to call out gaps the first slice did not
+cover. The second slice in this PR adds:
+
+### Big-context categories (worlds/domains)
+
+`src/formalize-contexts.js` walks `instance of` (P31), `subclass of` (P279),
+`part of` (P361), `operator` (P137), `genre` (P136), `field of work`
+(P425), and `occupation` (P106) chains transitively from each phrase
+entity, bounded by `maxDepth × perStepBranching`. The traversal is keyed
+through the same TTL cache as the rest of the pipeline, so repeated runs
+are free. The aggregator returns:
+
+- `bigContexts.main` — the dominant world (e.g. `Star Wars`, `Genshin
+Impact`, `Mathematics`),
+- `bigContexts.additional` — secondary worlds, ranked by accumulated
+  weight,
+- `bigContexts.all` — the full ranked list with weights for transparency.
+
+This is what the new `Big-context categories` block on the Formalize tab
+renders.
+
+### Layered data sources
+
+`src/formalize-sources.js` exposes a registry abstraction so that any
+source providing `searchPhrase()` and `getEntity()` can join the
+pipeline. Three resolvers ship in the box:
+
+- `createWikidataSource()` — the original `wbsearchentities` /
+  `wbgetentities` flow (default, primary).
+- `createWordNetSource()` — uses Wiktionary's CORS-friendly opensearch
+  endpoint to anchor common English nouns/verbs without a Wikidata Q.
+- `createFandomSource({ host })` — talks to any `*.fandom.com` MediaWiki
+  via its standard search API; the web demo lets the user paste a slug
+  (e.g. `genshin-impact`).
+
+`parseSourceSpec("wikidata,wordnet,fandom:genshin-impact")` is the
+human-readable spec used by the CLI flag, the HTTP body, and the web
+worker so the same string travels end-to-end.
+
+### Lazy overrides (repository + user)
+
+`src/formalize-overrides.js` merges two override layers:
+
+- repo-level: `docs/formalize/overrides.json` is read by
+  `loadRepoOverrides()` and shipped with the codebase to lock in
+  examples that the live knowledge graphs miss,
+- user-level: arbitrary JSON arrays passed through the CLI (`--overrides
+path.json`), the HTTP `overrides` field, or the web textarea.
+
+Each override pins a phrase to a specific entity (`{phrase, entityId,
+label, kind, sourceUrl}`) and short-circuits the live lookup for that
+exact phrase. Overrides are part of the cache key so toggling them
+doesn't poison the persistent cache.
+
+### CLI (`meta-expression formalize ...`)
+
+`src/cli.js` adds a `formalize` subcommand that re-uses the same
+`formalizeTextWith` pipeline. It supports `--sources`,
+`--overrides path.json`, `--no-repo-overrides`, `--target`, and
+`--max-ngram-size`, and prints either the rendered Markdown or the
+Links Notation depending on `--format`.
+
+### HTTP API with persistent dual-format cache
+
+`src/server.js` adds `POST /formalize`. Each unique `(text, sources,
+target, overrides…)` combination hashes (sha-256, truncated) into a
+filesystem cache root, where two files are written **atomically**:
+
+- `<key>.json` — the full result payload that the API returns, and
+- `<key>.lino` — a Links Notation echo of the same payload.
+
+A subsequent request reads the JSON file directly and the Lino file is
+read back too as a cross-validation step (mismatch ⇒ cache miss + log
+warning). The intent matches the brief: "API microservice with
+persistent cache backed by both link-cli (binary) and links-notation
+(text) for comparison/reliability."
+
+### Demo website integration
+
+The Formalize tab now exposes:
+
+- a sources picker (Wikidata / WordNet / Fandom-with-slug),
+- a JSON overrides editor,
+- a big-context display section (dominant world + secondary worlds with
+  weights).
+
+The web worker (`web/formalize-worker.js`) translates the human-readable
+sources spec into source instances client-side so the same code path
+runs in the browser and on the server.
+
+### Auto-generated library reference
+
+`scripts/generate-formalize-docs.mjs` parses JSDoc blocks above every
+public export in `src/formalize*.js` and renders
+[`docs/FORMALIZE.md`](../../FORMALIZE.md). `npm run docs:formalize`
+regenerates the file; `npm run docs:formalize:check` is wired into
+`npm run check` so CI fails if the committed copy is stale or a
+JSDoc-less export sneaks in.
