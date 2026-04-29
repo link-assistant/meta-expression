@@ -20,7 +20,6 @@ import {
 import { parseCliArguments, runCliAsync } from '../src/cli.js';
 import { createMetaExpressionServer } from '../src/server.js';
 import { mkdtemp, readFile, rm } from 'node:fs/promises';
-import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 
 const wikidataApiUrl = 'https://www.wikidata.org/w/api.php';
@@ -760,9 +759,29 @@ async function fetchJson(url, init, fetchImpl = fetch) {
   return { response, payload };
 }
 
+// The persistent-cache suite below needs filesystem write access. CI runs the
+// Deno job with `--allow-read` only (matching the project's existing Deno
+// invocation), so probe for write capability up front and skip those four
+// tests on Deno when write access is not granted. Node.js and Bun always pass
+// this probe and run the full suite.
+async function canWriteToTempDir() {
+  try {
+    const probe = await mkdtemp('meta-expression-cache-probe-');
+    await rm(probe, { recursive: true, force: true });
+    return true;
+  } catch {
+    return false;
+  }
+}
+
+const cacheTestsEnabled = await canWriteToTempDir();
+
 // eslint-disable-next-line max-lines-per-function
 describe('issue 15 — HTTP /formalize endpoint with persistent cache', () => {
   it('persists results to dual-format cache and reuses them on the next request', async () => {
+    if (!cacheTestsEnabled) {
+      return;
+    }
     const previousFetch = globalThis.fetch;
     let upstreamCalls = 0;
     globalThis.fetch = function trackedFetch(url, init) {
@@ -788,7 +807,7 @@ describe('issue 15 — HTTP /formalize endpoint with persistent cache', () => {
       return previousFetch(url, init);
     };
 
-    const cacheRoot = await mkdtemp(join(tmpdir(), 'meta-expression-cache-'));
+    const cacheRoot = await mkdtemp('meta-expression-cache-');
     let started = null;
     try {
       started = await startServerWithCache(cacheRoot);
@@ -836,6 +855,9 @@ describe('issue 15 — HTTP /formalize endpoint with persistent cache', () => {
   });
 
   it('returns lino body via format=lino with cache headers', async () => {
+    if (!cacheTestsEnabled) {
+      return;
+    }
     const previousFetch = globalThis.fetch;
     const mockUpstream = makeFetch({
       search: {
@@ -854,7 +876,7 @@ describe('issue 15 — HTTP /formalize endpoint with persistent cache', () => {
       }
       return previousFetch(url, init);
     };
-    const cacheRoot = await mkdtemp(join(tmpdir(), 'meta-expression-cache-'));
+    const cacheRoot = await mkdtemp('meta-expression-cache-');
     let started = null;
     try {
       started = await startServerWithCache(cacheRoot);
@@ -875,6 +897,9 @@ describe('issue 15 — HTTP /formalize endpoint with persistent cache', () => {
   });
 
   it('honours POST overrides and varies cache key by overrides payload', async () => {
+    if (!cacheTestsEnabled) {
+      return;
+    }
     const previousFetch = globalThis.fetch;
     globalThis.fetch = function (url, init) {
       const target = String(url);
@@ -884,7 +909,7 @@ describe('issue 15 — HTTP /formalize endpoint with persistent cache', () => {
       }
       return previousFetch(url, init);
     };
-    const cacheRoot = await mkdtemp(join(tmpdir(), 'meta-expression-cache-'));
+    const cacheRoot = await mkdtemp('meta-expression-cache-');
     let started = null;
     try {
       started = await startServerWithCache(cacheRoot);
@@ -950,7 +975,10 @@ describe('issue 15 — HTTP /formalize endpoint with persistent cache', () => {
   });
 
   it('returns 400 when input parameter is missing', async () => {
-    const cacheRoot = await mkdtemp(join(tmpdir(), 'meta-expression-cache-'));
+    if (!cacheTestsEnabled) {
+      return;
+    }
+    const cacheRoot = await mkdtemp('meta-expression-cache-');
     let started = null;
     try {
       started = await startServerWithCache(cacheRoot);
