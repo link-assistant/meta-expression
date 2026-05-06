@@ -695,6 +695,35 @@ pre {
   text-transform: uppercase;
 }
 
+.formalize-input-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.formalize-sample-label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #61717d;
+  font-size: 0.78rem;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.formalize-sample-label select {
+  font: inherit;
+  text-transform: none;
+  color: #172026;
+  font-weight: 500;
+  padding: 4px 8px;
+  border: 1px solid #b9c4cd;
+  border-radius: 4px;
+  background: #fff;
+}
+
 #formalize-input {
   width: 100%;
   min-height: 120px;

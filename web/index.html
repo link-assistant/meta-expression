@@ -216,7 +216,15 @@
           </p>
         </header>
 
-        <label class="formalize-input-label" for="formalize-input">Text</label>
+        <div class="formalize-input-row">
+          <label class="formalize-input-label" for="formalize-input">Text</label>
+          <label class="formalize-sample-label" for="formalize-sample">
+            <span>Load repo sample</span>
+            <select id="formalize-sample">
+              <option value="">— pick an example —</option>
+            </select>
+          </label>
+        </div>
         <textarea
           id="formalize-input"
           rows="6"

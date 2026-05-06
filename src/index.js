@@ -82,16 +82,6 @@ export {
   decodeFromDoublets,
   DOUBLET_TAGS,
 } from './doublets.js';
-export {
-  SNAPSHOT_MODES,
-  snapshotKey,
-  loadSnapshotMap,
-  createSnapshotCache,
-  createSnapshotFetch,
-  createSnapshotLayer,
-  writeSnapshot,
-} from './formalize-snapshots.js';
-
 const arithmeticEqualityPattern =
   /^\s*(-?\d+(?:\.\d+)?)\s*([+*/-])\s*(-?\d+(?:\.\d+)?)\s*=\s*(-?\d+(?:\.\d+)?)\s*$/;
 const arithmeticQuestionPattern =
