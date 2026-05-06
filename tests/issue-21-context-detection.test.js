@@ -19,6 +19,13 @@ import { describe, it, expect } from 'test-anywhere';
 import {
   formalizeTextWith,
   aggregateBigContextsFromGraph,
+  createWikipediaSource,
+  createWiktionarySource,
+  createWikidataSource,
+  createDefaultSourceTiers,
+  FORMALIZE_SOURCES,
+  generateFormalizeNgrams,
+  tokenizeForFormalize,
 } from '../src/index.js';
 
 const wikidataApiUrl = 'https://www.wikidata.org/w/api.php';
@@ -314,5 +321,273 @@ describe('issue 21 — multi-candidate context aggregation', () => {
     );
     // Per-candidate weights sum to 1 across a single phrase.
     expect(Math.abs(total - 1) < 1e-9).toBe(true);
+  });
+});
+
+describe('issue 21 — disambiguation tier registry', () => {
+  it('exposes the three default tiers in priority order', () => {
+    const tiers = createDefaultSourceTiers('en');
+    expect(tiers.length).toBe(3);
+    expect(tiers[0].name).toBe(FORMALIZE_SOURCES.WIKIPEDIA);
+    expect(tiers[1].name).toBe(FORMALIZE_SOURCES.WIKIDATA);
+    expect(tiers[2].name).toBe(FORMALIZE_SOURCES.WIKTIONARY);
+  });
+
+  it('keeps single-token stop words in the n-gram list with stopOnly=true', () => {
+    const tokens = tokenizeForFormalize('the cat');
+    const ngrams = generateFormalizeNgrams(tokens, 2);
+    const the = ngrams.find((entry) => entry.text === 'the');
+    expect(the).not.toBe(undefined);
+    expect(the.stopOnly).toBe(true);
+    const cat = ngrams.find((entry) => entry.text === 'cat');
+    expect(cat).not.toBe(undefined);
+    expect(cat.stopOnly).toBe(false);
+  });
+});
+
+describe('issue 21 — Wikipedia tier', () => {
+  it('Wikipedia source backfills wikibase_item Q-ids onto its candidates', async () => {
+    const wikipediaApi = 'https://en.wikipedia.org/w/api.php';
+    function mockFetch(url) {
+      const parsed = new URL(url);
+      const action = parsed.searchParams.get('action');
+      if (parsed.origin + parsed.pathname !== wikipediaApi) {
+        return jsonResponse({});
+      }
+      if (action === 'query' && parsed.searchParams.get('list') === 'search') {
+        return jsonResponse({
+          query: {
+            search: [
+              { title: 'Hawaii', snippet: '<em>Hawaii</em> is a US state.' },
+            ],
+          },
+        });
+      }
+      if (
+        action === 'query' &&
+        parsed.searchParams.get('prop') === 'pageprops'
+      ) {
+        return jsonResponse({
+          query: {
+            pages: {
+              123: {
+                title: 'Hawaii',
+                pageprops: { wikibase_item: 'Q782' },
+              },
+            },
+          },
+        });
+      }
+      return jsonResponse({});
+    }
+    const source = createWikipediaSource();
+    const candidates = await source.searchPhrase('Hawaii', {
+      fetchImpl: mockFetch,
+      fetchJson: async (url) => (await mockFetch(url)).json(),
+    });
+    expect(candidates.length).toBe(1);
+    expect(candidates[0].id).toBe('Q782');
+    expect(candidates[0].wikipediaTitle).toBe('Hawaii');
+    expect(candidates[0].source).toBe(FORMALIZE_SOURCES.WIKIPEDIA);
+  });
+
+  it('falls back to a wp:<slug> id when Wikipedia returns no wikibase_item', async () => {
+    function mockFetch(url) {
+      const parsed = new URL(url);
+      if (parsed.searchParams.get('list') === 'search') {
+        return jsonResponse({
+          query: { search: [{ title: 'Local Page', snippet: 'page' }] },
+        });
+      }
+      return jsonResponse({ query: { pages: { 0: { title: 'Local Page' } } } });
+    }
+    const source = createWikipediaSource();
+    const candidates = await source.searchPhrase('local page', {
+      fetchImpl: mockFetch,
+      fetchJson: async (url) => (await mockFetch(url)).json(),
+    });
+    expect(candidates.length).toBe(1);
+    expect(candidates[0].id).toBe('wp:en:local_page');
+    expect(candidates[0].wikibaseId).toBe(null);
+  });
+});
+
+describe('issue 21 — Wiktionary tier', () => {
+  it('Wiktionary source returns one candidate per definition for single tokens', async () => {
+    const wiktionaryEndpoint =
+      'https://en.wiktionary.org/api/rest_v1/page/definition/the';
+    function mockFetch(url) {
+      if (String(url) !== wiktionaryEndpoint) {
+        return jsonResponse({});
+      }
+      return jsonResponse({
+        en: [
+          {
+            partOfSpeech: 'Article',
+            definitions: [
+              { definition: '<b>The</b> definite article.' },
+              { definition: 'Used to refer to a specific item.' },
+            ],
+          },
+        ],
+      });
+    }
+    const source = createWiktionarySource();
+    const candidates = await source.searchPhrase('the', {
+      fetchImpl: mockFetch,
+      fetchJson: async (url) => (await mockFetch(url)).json(),
+    });
+    expect(candidates.length).toBe(2);
+    expect(candidates[0].partOfSpeech).toBe('Article');
+    expect(candidates[0].definition.includes('<b>')).toBe(false);
+    expect(candidates[0].source).toBe(FORMALIZE_SOURCES.WIKTIONARY);
+    expect(candidates[0].id.startsWith('wikt:en:the')).toBe(true);
+  });
+
+  it('skips Wiktionary lookups for multi-token phrases', async () => {
+    let called = false;
+    function mockFetch() {
+      called = true;
+      return jsonResponse({});
+    }
+    const source = createWiktionarySource();
+    const candidates = await source.searchPhrase('Hawaii archipelago', {
+      fetchImpl: mockFetch,
+      fetchJson: async (url) => (await mockFetch(url)).json(),
+    });
+    expect(candidates.length).toBe(0);
+    expect(called).toBe(false);
+  });
+});
+
+describe('issue 21 — pipeline integration of new tiers', () => {
+  it('routes stop words ONLY to the Wiktionary tier in the full pipeline', async () => {
+    // The full pipeline must NOT spend Wikipedia / Wikidata calls on
+    // glue words. Only Wiktionary should fire for `the`.
+    const calls = [];
+    function recordingFetch(url) {
+      calls.push(String(url));
+      const parsed = new URL(url);
+      if (parsed.host === 'en.wiktionary.org') {
+        return jsonResponse({
+          en: [
+            {
+              partOfSpeech: 'Article',
+              definitions: [{ definition: 'definite article' }],
+            },
+          ],
+        });
+      }
+      return jsonResponse({ search: [], query: { search: [], pages: {} } });
+    }
+    const result = await formalizeTextWith('the', {
+      fetch: recordingFetch,
+      now: () => 0,
+    });
+    const wiktionaryHits = calls.filter((url) =>
+      url.startsWith('https://en.wiktionary.org/api/rest_v1/page/definition/')
+    );
+    const wikipediaHits = calls.filter((url) =>
+      url.startsWith('https://en.wikipedia.org/w/api.php')
+    );
+    const wikidataHits = calls.filter((url) =>
+      url.startsWith('https://www.wikidata.org/w/api.php')
+    );
+    expect(wiktionaryHits.length > 0).toBe(true);
+    expect(wikipediaHits.length).toBe(0);
+    expect(wikidataHits.length).toBe(0);
+    const phrase = result.phrases.find((entry) => entry.text === 'the');
+    expect(phrase).not.toBe(undefined);
+    expect(phrase.candidates.length > 0).toBe(true);
+    expect(phrase.candidates[0].source).toBe(FORMALIZE_SOURCES.WIKTIONARY);
+  });
+
+  it('Wikipedia-confirmed Wikidata Q-id outranks a bare Wikidata-only hit', async () => {
+    // Two distinct Q-ids surface for `Hawaii`. Q782 is confirmed by
+    // BOTH Wikipedia (via wikibase_item) and Wikidata search; Q500
+    // shows up only on Wikidata. The Wikipedia-confirmed candidate
+    // should win because Wikipedia is the FIRST tier per issue #21.
+    function mockFetch(url) {
+      const parsed = new URL(url);
+      if (parsed.host === 'en.wikipedia.org') {
+        if (parsed.searchParams.get('list') === 'search') {
+          return jsonResponse({
+            query: { search: [{ title: 'Hawaii', snippet: 'state' }] },
+          });
+        }
+        return jsonResponse({
+          query: {
+            pages: {
+              1: { title: 'Hawaii', pageprops: { wikibase_item: 'Q782' } },
+            },
+          },
+        });
+      }
+      if (parsed.host === 'www.wikidata.org') {
+        if (parsed.searchParams.get('action') === 'wbsearchentities') {
+          return jsonResponse({
+            search: [
+              { id: 'Q500', label: 'Hawaii (other)', description: 'misc' },
+              { id: 'Q782', label: 'Hawaii', description: 'US state' },
+            ],
+          });
+        }
+        if (parsed.searchParams.get('action') === 'wbgetentities') {
+          const ids = parsed.searchParams.get('ids') ?? '';
+          const entities = {};
+          for (const id of ids.split('|').filter(Boolean)) {
+            entities[id] = {
+              id,
+              type: 'item',
+              labels: {
+                en: { value: id === 'Q782' ? 'Hawaii' : 'Hawaii (other)' },
+              },
+              descriptions: {},
+              claims: {},
+              sitelinks:
+                id === 'Q782'
+                  ? { enwiki: { site: 'enwiki', title: 'Hawaii' } }
+                  : {},
+            };
+          }
+          return jsonResponse({ entities });
+        }
+      }
+      return jsonResponse({});
+    }
+    const result = await formalizeTextWith('Hawaii', {
+      fetch: mockFetch,
+      now: () => 0,
+      maxNgramSize: 1,
+    });
+    const phrase = result.phrases.find((entry) => entry.text === 'Hawaii');
+    expect(phrase).not.toBe(undefined);
+    expect(phrase.entity?.id).toBe('Q782');
+    // Q782 candidate must carry both source tags so future scorers /
+    // UI tooltips can attribute the hit correctly.
+    const merged = phrase.candidates.find((entry) => entry.id === 'Q782');
+    expect(merged).not.toBe(undefined);
+    expect(
+      Array.isArray(merged.sources) &&
+        merged.sources.includes(FORMALIZE_SOURCES.WIKIPEDIA) &&
+        merged.sources.includes(FORMALIZE_SOURCES.WIKIDATA)
+    ).toBe(true);
+  });
+
+  it('still allows callers to disable the new tiers by passing explicit sources', async () => {
+    const calls = [];
+    function recordingFetch(url) {
+      calls.push(String(url));
+      return jsonResponse({ search: [] });
+    }
+    await formalizeTextWith('test', {
+      fetch: recordingFetch,
+      now: () => 0,
+      sources: [createWikidataSource()],
+    });
+    const offWikidata = calls.filter(
+      (url) => !url.startsWith('https://www.wikidata.org/w/api.php')
+    );
+    expect(offWikidata.length).toBe(0);
   });
 });

@@ -46,9 +46,12 @@ export {
 export {
   SOURCE_KIND as FORMALIZE_SOURCES,
   createWikidataSource,
+  createWikipediaSource,
+  createWiktionarySource,
   createWordNetSource,
   createFandomSource,
   createSourceRegistry,
+  createDefaultSourceTiers,
   parseSourceSpec,
 } from './formalize-sources.js';
 export {
