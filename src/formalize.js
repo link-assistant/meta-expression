@@ -542,29 +542,74 @@ async function attachEntityDetails(phrase, config) {
     Object.assign(phrase.entity, overrideToEntity(phrase.entity.overrideEntry));
     return;
   }
-  if (!/^[QP]\d+$/.test(phrase.entity.id)) {
-    return; // non-Wikidata source — no sitelink lookup possible
+  // Hydrate the chosen entity AND every Wikidata-shaped candidate so the
+  // context aggregator can see which categories each alternative
+  // belongs to (issue #21 — without this the contexts panel says
+  // "No shared contexts inferred." even when the alternatives clearly
+  // cluster around the same world).
+  await Promise.all(
+    phrase.candidates.map((candidate) =>
+      hydrateCandidateDetails(candidate, config)
+    )
+  );
+  // Sync the top hydrated candidate back into the phrase entity so
+  // existing renderers keep their wikipediaUrl / contextLabels fields.
+  const top = phrase.candidates[0];
+  if (top?.contextLabels) {
+    phrase.entity.contextLabels = top.contextLabels;
+  }
+  if (top?.wikipediaUrl) {
+    phrase.entity.wikipediaUrl = top.wikipediaUrl;
+    phrase.entity.wikipediaTitle = top.wikipediaTitle ?? null;
+  }
+}
+
+async function hydrateCandidateDetails(candidate, config) {
+  if (!candidate) {
+    return;
+  }
+  if (candidate.overrideEntry) {
+    Object.assign(candidate, overrideToEntity(candidate.overrideEntry));
+    candidate.contextLabels = candidate.contextLabels ?? [];
+    return;
+  }
+  const wikidata = pickWikidataResolver(candidate, config);
+  if (!wikidata) {
+    candidate.contextLabels = candidate.contextLabels ?? [];
+    return;
+  }
+  const entity = await wikidata.getEntity(
+    candidate.id,
+    buildSourceContext(config)
+  );
+  if (!entity) {
+    candidate.contextLabels = candidate.contextLabels ?? [];
+    return;
+  }
+  applyEntityHydration(candidate, entity);
+}
+
+function pickWikidataResolver(candidate, config) {
+  if (!/^[QP]\d+$/.test(candidate.id)) {
+    return null;
   }
   if (!config.fetchImpl) {
-    return;
+    return null;
   }
   const wikidata = config.sources.byName.get(SOURCE_KIND.WIKIDATA);
-  if (!wikidata?.getEntity) {
-    return;
-  }
-  const sourceCtx = buildSourceContext(config);
-  const entity = await wikidata.getEntity(phrase.entity.id, sourceCtx);
-  if (!entity) {
-    return;
-  }
+  return wikidata?.getEntity ? wikidata : null;
+}
+
+function applyEntityHydration(candidate, entity) {
   const sitelink = entity.sitelinks?.enwiki?.title;
   if (sitelink) {
-    phrase.entity.wikipediaTitle = sitelink;
-    phrase.entity.wikipediaUrl = `${wikipediaArticleBaseUrl}${encodeURIComponent(
+    candidate.wikipediaTitle = sitelink;
+    candidate.wikipediaUrl = `${wikipediaArticleBaseUrl}${encodeURIComponent(
       sitelink.replace(/ /g, '_')
     )}`;
   }
-  phrase.entity.contextLabels = extractContextLabels(entity);
+  candidate.contextLabels = extractContextLabels(entity);
+  candidate.aliases = extractAliases(entity);
 }
 
 function extractContextLabels(entity) {
@@ -597,6 +642,19 @@ function wikidataIdFromNumericValue(value) {
   return value['numeric-id'] ? `Q${value['numeric-id']}` : null;
 }
 
+// Surface every alias the entity carries so the candidate matcher can
+// snap "to formalize" → Q115492965 even when the canonical label is
+// "formalizing" (issue #21).
+function extractAliases(entity) {
+  const aliases = entity?.aliases?.en;
+  if (!Array.isArray(aliases)) {
+    return [];
+  }
+  return aliases
+    .map((alias) => alias?.value)
+    .filter((value) => typeof value === 'string' && value.length > 0);
+}
+
 async function fetchJson(url, config) {
   const key = String(url);
   const now = Number(config.now());
@@ -624,18 +682,56 @@ function aggregateContexts(phrases) {
     if (!phrase.entity) {
       continue;
     }
-    for (const label of phrase.entity.contextLabels ?? []) {
-      const key = label.targetId;
-      const entry = counts.get(key) ?? {
-        id: key,
-        property: label.property,
-        propertyLabel: label.propertyLabel,
-        weight: 0,
-        phrases: [],
-      };
-      entry.weight += 1;
-      entry.phrases.push({ text: phrase.text, entityId: phrase.entity.id });
-      counts.set(key, entry);
+    // Walk every candidate (not just the chosen entity) so words with
+    // multiple senses contribute their alternative contexts to the
+    // shared-context election (issue #21 R21.5/R21.6). Each candidate
+    // votes proportional to its share of the phrase's total score so
+    // a strong winner still dominates while weaker alternatives keep
+    // a voice in the aggregate.
+    const candidates = phrase.candidates?.length
+      ? phrase.candidates
+      : [phrase.entity];
+    const totalScore = candidates.reduce(
+      (sum, candidate) => sum + Math.max(candidate?.score ?? 0, 1),
+      0
+    );
+    for (const candidate of candidates) {
+      const candidateWeight =
+        totalScore > 0
+          ? Math.max(candidate?.score ?? 0, 1) / totalScore
+          : 1 / candidates.length;
+      const labels = candidate?.contextLabels ?? [];
+      for (const label of labels) {
+        const key = label.targetId;
+        const entry = counts.get(key) ?? {
+          id: key,
+          property: label.property,
+          propertyLabel: label.propertyLabel,
+          weight: 0,
+          phrases: [],
+          candidates: [],
+        };
+        entry.weight += candidateWeight;
+        entry.candidates.push({
+          phrase: phrase.text,
+          candidateId: candidate.id,
+          candidateLabel: candidate.label,
+          weight: candidateWeight,
+        });
+        if (
+          !entry.phrases.some(
+            (existing) =>
+              existing.text === phrase.text &&
+              existing.entityId === phrase.entity.id
+          )
+        ) {
+          entry.phrases.push({
+            text: phrase.text,
+            entityId: phrase.entity.id,
+          });
+        }
+        counts.set(key, entry);
+      }
     }
   }
   const total = [...counts.values()].reduce(

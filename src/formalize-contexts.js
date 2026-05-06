@@ -63,14 +63,7 @@ export async function aggregateBigContexts(phrases, options = {}) {
 
   const counts = new Map();
   for (const phrase of phrases) {
-    if (!phrase?.entity) {
-      continue;
-    }
-    const seeds = collectSeedTargets(phrase);
-    if (seeds.length === 0) {
-      continue;
-    }
-    await traverseFromPhrase(phrase, seeds, counts, config);
+    await aggregatePhraseAsync(phrase, counts, config);
   }
 
   const total = [...counts.values()].reduce(
@@ -95,6 +88,47 @@ export async function aggregateBigContexts(phrases, options = {}) {
   };
 }
 
+async function aggregatePhraseAsync(phrase, counts, config) {
+  for (const slice of iteratePhraseCandidates(phrase)) {
+    await traverseFromPhrase(
+      phrase,
+      slice.seeds,
+      counts,
+      config,
+      slice.weight,
+      slice.candidate
+    );
+  }
+}
+
+// Walk seeds from every Wikidata-shaped candidate, not just the chosen
+// entity. Each candidate's seeds receive a weight share proportional
+// to their score so the chosen sense still dominates while alternative
+// senses still nudge the world graph.
+function* iteratePhraseCandidates(phrase) {
+  if (!phrase?.entity) {
+    return;
+  }
+  const candidates = phrase.candidates?.length
+    ? phrase.candidates
+    : [phrase.entity];
+  const totalScore = candidates.reduce(
+    (sum, candidate) => sum + Math.max(candidate?.score ?? 0, 1),
+    0
+  );
+  for (const candidate of candidates) {
+    const seeds = collectSeedTargets({ entity: candidate });
+    if (seeds.length === 0) {
+      continue;
+    }
+    const weight =
+      totalScore > 0
+        ? Math.max(candidate?.score ?? 0, 1) / totalScore
+        : 1 / candidates.length;
+    yield { candidate, seeds, weight };
+  }
+}
+
 function collectSeedTargets(phrase) {
   const labels = phrase.entity.contextLabels ?? [];
   return labels
@@ -106,7 +140,14 @@ function collectSeedTargets(phrase) {
     }));
 }
 
-async function traverseFromPhrase(phrase, seeds, counts, config) {
+async function traverseFromPhrase(
+  phrase,
+  seeds,
+  counts,
+  config,
+  candidateWeight = 1,
+  candidate = null
+) {
   const visited = new Set();
   const queue = seeds.map((seed) => ({
     id: seed.id,
@@ -121,7 +162,7 @@ async function traverseFromPhrase(phrase, seeds, counts, config) {
       continue;
     }
     visited.add(node.id);
-    addCount(counts, node, phrase);
+    addCount(counts, node, phrase, candidateWeight, candidate);
     if (node.depth >= config.maxDepth) {
       continue;
     }
@@ -141,7 +182,7 @@ async function traverseFromPhrase(phrase, seeds, counts, config) {
   }
 }
 
-function addCount(counts, node, phrase) {
+function addCount(counts, node, phrase, candidateWeight = 1, candidate = null) {
   const entry = counts.get(node.id) ?? {
     id: node.id,
     label: null,
@@ -150,15 +191,33 @@ function addCount(counts, node, phrase) {
     paths: [],
     propertyTrail: node.propertyTrail,
     sourcePhrases: [],
+    sourceCandidates: [],
   };
   // Closer ancestors weigh more — depth 1 = 1.0, depth 2 = 0.5, depth 3 = 0.33.
-  entry.weight += 1 / node.depth;
+  // Multi-candidate input also scales the weight by `candidateWeight`
+  // (the candidate's share of its phrase's total score), so a strong
+  // winner still dominates while weaker alternatives keep a voice.
+  entry.weight += (1 / node.depth) * candidateWeight;
   entry.depth = Math.min(entry.depth, node.depth);
   entry.paths.push(node.path);
-  entry.sourcePhrases.push({
-    text: phrase.text,
-    entityId: phrase.entity?.id,
-  });
+  if (
+    !entry.sourcePhrases.some(
+      (existing) => existing.entityId === phrase.entity?.id
+    )
+  ) {
+    entry.sourcePhrases.push({
+      text: phrase.text,
+      entityId: phrase.entity?.id,
+    });
+  }
+  if (candidate?.id) {
+    entry.sourceCandidates.push({
+      phrase: phrase.text,
+      candidateId: candidate.id,
+      candidateLabel: candidate.label,
+      weight: candidateWeight,
+    });
+  }
   counts.set(node.id, entry);
 }
 
@@ -233,40 +292,7 @@ export function aggregateBigContextsFromGraph(edges, phrases, options = {}) {
   const maxDepth = options.maxDepth ?? defaultMaxDepth;
   const counts = new Map();
   for (const phrase of phrases) {
-    if (!phrase?.entity) {
-      continue;
-    }
-    const seeds = collectSeedTargets(phrase);
-    const visited = new Set();
-    const queue = seeds.map((seed) => ({
-      id: seed.id,
-      depth: 1,
-      path: [seed.id],
-      propertyTrail: [seed.property],
-    }));
-    while (queue.length > 0) {
-      const node = queue.shift();
-      if (visited.has(node.id)) {
-        continue;
-      }
-      visited.add(node.id);
-      addCount(counts, node, phrase);
-      if (node.depth >= maxDepth) {
-        continue;
-      }
-      const ancestors = edges.get(node.id) ?? [];
-      for (const ancestor of ancestors) {
-        if (visited.has(ancestor.id)) {
-          continue;
-        }
-        queue.push({
-          id: ancestor.id,
-          depth: node.depth + 1,
-          path: [...node.path, ancestor.id],
-          propertyTrail: [...node.propertyTrail, ancestor.property],
-        });
-      }
-    }
+    aggregatePhraseSync(phrase, counts, edges, maxDepth);
   }
   const total = [...counts.values()].reduce(
     (sum, entry) => sum + entry.weight,
@@ -286,4 +312,43 @@ export function aggregateBigContextsFromGraph(edges, phrases, options = {}) {
     main: all[0] ?? null,
     additional: all.slice(1),
   };
+}
+
+function aggregatePhraseSync(phrase, counts, edges, maxDepth) {
+  for (const slice of iteratePhraseCandidates(phrase)) {
+    traverseFromGraph(phrase, slice, counts, edges, maxDepth);
+  }
+}
+
+function traverseFromGraph(phrase, slice, counts, edges, maxDepth) {
+  const { seeds, weight: candidateWeight, candidate } = slice;
+  const visited = new Set();
+  const queue = seeds.map((seed) => ({
+    id: seed.id,
+    depth: 1,
+    path: [seed.id],
+    propertyTrail: [seed.property],
+  }));
+  while (queue.length > 0) {
+    const node = queue.shift();
+    if (visited.has(node.id)) {
+      continue;
+    }
+    visited.add(node.id);
+    addCount(counts, node, phrase, candidateWeight, candidate);
+    if (node.depth >= maxDepth) {
+      continue;
+    }
+    for (const ancestor of edges.get(node.id) ?? []) {
+      if (visited.has(ancestor.id)) {
+        continue;
+      }
+      queue.push({
+        id: ancestor.id,
+        depth: node.depth + 1,
+        path: [...node.path, ancestor.id],
+        propertyTrail: [...node.propertyTrail, ancestor.property],
+      });
+    }
+  }
 }

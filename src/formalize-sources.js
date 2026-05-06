@@ -54,9 +54,19 @@ export function createWikidataSource({
     async searchPhrase(text, ctx) {
       const propertyBias = ctx.isPropertyIndicator?.(text) ?? false;
       const types = propertyBias ? ['property', 'item'] : ['item', 'property'];
+      // For single-token candidates that look like English verbs we ALSO
+      // search the bare-infinitive form ("to <word>"). Without this the
+      // Wikidata search ranks `formalize` against pages that contain the
+      // word in their label (Formalized Mathematics, Formalized Music…)
+      // and never surfaces Q115492965 whose canonical label is the
+      // gerund ("formalizing") and whose alias is "to formalize" — see
+      // issue #21.
+      const variants = collectQueryVariants(text);
       const settled = await Promise.all(
-        types.map((type) =>
-          searchWikidataEntities(text, type, ctx, language, searchLimit)
+        types.flatMap((type) =>
+          variants.map((variant) =>
+            searchWikidataEntities(variant, type, ctx, language, searchLimit)
+          )
         )
       );
       return settled.flat();
@@ -212,6 +222,37 @@ export function createFandomSource({
   };
 }
 
+// English verbs whose Wikidata gerund is the canonical label can only be
+// reached by also searching for the bare-infinitive form. We prepend
+// "to " for single-token queries that look verb-like (end in -ize, -ise,
+// -ate, -ify, -en, -ed, or are short enough to plausibly be an
+// infinitive). Multi-token phrases skip the expansion.
+const verbLikeSuffixes = ['ize', 'ise', 'ate', 'ify', 'en', 'ed'];
+
+function collectQueryVariants(text) {
+  const trimmed = String(text).trim();
+  if (!trimmed) {
+    return [trimmed];
+  }
+  const variants = [trimmed];
+  const lower = trimmed.toLowerCase();
+  if (
+    !lower.includes(' ') &&
+    !lower.startsWith('to ') &&
+    looksLikeVerb(lower)
+  ) {
+    variants.push(`to ${lower}`);
+  }
+  return variants;
+}
+
+function looksLikeVerb(token) {
+  if (token.length < 3) {
+    return false;
+  }
+  return verbLikeSuffixes.some((suffix) => token.endsWith(suffix));
+}
+
 async function searchWikidataEntities(query, type, ctx, language, searchLimit) {
   if (!ctx.fetchImpl) {
     return [];
@@ -243,6 +284,10 @@ async function searchWikidataEntities(query, type, ctx, language, searchLimit) {
         ? `${wikidataPropertyBaseUrl}${entry.id}`
         : `${wikidataEntityBaseUrl}${entry.id}`,
     matchText: entry.match?.text ?? '',
+    matchType: entry.match?.type ?? null,
+    aliases: Array.isArray(entry.aliases)
+      ? entry.aliases.filter((value) => typeof value === 'string')
+      : [],
   }));
 }
 
@@ -257,7 +302,7 @@ async function fetchWikidataEntity(id, ctx, language) {
     ids: id,
     languages: language,
     origin: '*',
-    props: 'labels|descriptions|claims|sitelinks',
+    props: 'labels|aliases|descriptions|claims|sitelinks',
     sitefilter: 'enwiki',
   }).toString();
   let payload;
