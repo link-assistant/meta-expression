@@ -10,18 +10,54 @@ import {
   describeFormalizationLevel,
   findExampleOpposite,
   formalizeTextWith,
+  formatInterpretationPhrase,
   FORMALIZE_LINK_TARGETS,
   getPreparedExamples,
   getRandomExamples,
+  interpretationKey,
+  INTERPRETATION_DISPLAY_MODES,
   listReasoningStrategies,
   parseSourceSpec,
   resolveFormalizeLinkTarget,
   serializeLinksNotation,
 } from '../src/index.js';
+import {
+  applyTranslations,
+  listLocales,
+  loadLocale,
+  persistLocale,
+  translate,
+} from './i18n.js';
+import {
+  applyTheme,
+  loadTheme,
+  nextTheme,
+  persistTheme,
+  themeIcon,
+  watchSystemTheme,
+} from './theme.js';
+import { formalizeRepoSamples } from './formalize-samples.js';
+import {
+  escapeHtml,
+  formatCorrectness,
+  formatResultValue,
+  formatSignedConfidence,
+  signOf,
+  sourceLabelFor,
+  sourceUrlFor,
+  summary,
+} from './format-helpers.js';
+import { createPersistentWikimediaCache } from './persistent-cache.js';
 
 const beliefStorageKey = 'meta-expression.user-beliefs.v1';
 const wikimediaCacheStorageKey = 'meta-expression.wikimedia-cache.v1';
 const defaultRandomExampleCount = 4;
+const topInterpretationCount = 10;
+
+let currentLocale = loadLocale();
+let currentThemePreference = loadTheme();
+let activeInterpretationKey = null;
+let interpretationDisplayMode = INTERPRETATION_DISPLAY_MODES.NAME;
 
 const form = document.querySelector('#statement-form');
 const input = document.querySelector('#statement-input');
@@ -64,6 +100,10 @@ const copyLino = document.querySelector('#copy-lino');
 const reportIssue = document.querySelector('#report-issue');
 const strategySelect = document.querySelector('#strategy-select');
 const strategySummary = document.querySelector('#strategy-summary');
+const localeSelect = document.querySelector('#locale-select');
+const themeToggle = document.querySelector('#theme-toggle');
+const themeToggleIcon = document.querySelector('#theme-toggle-icon');
+const themeToggleLabel = document.querySelector('#theme-toggle-label');
 
 let selectedIndex = 0;
 let currentAnalysis = null;
@@ -72,7 +112,7 @@ let showAllExamples = false;
 let randomSeed = Date.now();
 let strategyId = defaultReasoningStrategyId;
 const userBeliefs = loadUserBeliefs();
-const wikimediaCache = createPersistentWikimediaCache();
+const wikimediaCache = createPersistentWikimediaCache(wikimediaCacheStorageKey);
 const liveEvidenceWorker = createLiveEvidenceWorker();
 const liveEvidenceClientFallback = liveEvidenceWorker
   ? null
@@ -129,7 +169,9 @@ shuffleExamples.addEventListener('click', () => {
 toggleShowAll.addEventListener('click', () => {
   showAllExamples = !showAllExamples;
   toggleShowAll.setAttribute('aria-pressed', String(showAllExamples));
-  toggleShowAll.textContent = showAllExamples ? 'Show 4 random' : 'Show all';
+  toggleShowAll.textContent = showAllExamples
+    ? t('analyse.showLess')
+    : t('analyse.showAll');
   renderPreparedExamples();
 });
 
@@ -350,37 +392,6 @@ function renderResult(analysis) {
   unknownCount.textContent = String(analysis.formalization.unknowns.length);
 }
 
-function formatCorrectness(correctness) {
-  if (correctness === null || correctness === undefined) {
-    return 'unknown';
-  }
-  return `${Math.round(correctness * 100)}%`;
-}
-
-function formatSignedConfidence(signedConfidence) {
-  if (signedConfidence === null || signedConfidence === undefined) {
-    return 'unknown';
-  }
-  const percent = Math.round(signedConfidence * 100);
-  if (percent > 0) {
-    return `+${percent}%`;
-  }
-  return `${percent}%`;
-}
-
-function signOf(value) {
-  if (value === null || value === undefined) {
-    return 'unknown';
-  }
-  if (value > 0) {
-    return 'positive';
-  }
-  if (value < 0) {
-    return 'negative';
-  }
-  return 'zero';
-}
-
 function renderReasoningSteps(analysis) {
   const steps = analysis.reasoningSteps ?? analysis.linksNetwork.links;
   const strategy = analysis.reasoningStrategy;
@@ -515,53 +526,6 @@ function updateReportIssueLink() {
   });
 }
 
-function summary(value) {
-  if (value === null) {
-    return '';
-  }
-  if (typeof value === 'string' || typeof value === 'number') {
-    return String(value);
-  }
-  return (
-    value.text ??
-    value.paraphrase ??
-    value.claim ??
-    value.relation ??
-    value.kind ??
-    value.expression?.type ??
-    ''
-  );
-}
-
-function sourceUrlFor(value) {
-  if (value === null || typeof value !== 'object') {
-    return null;
-  }
-  return value.sourceUrl ?? value.context?.wikidataEntityUrl ?? null;
-}
-
-function sourceLabelFor(value) {
-  if (value === null || typeof value !== 'object') {
-    return 'source';
-  }
-  return value.wikidataId ?? value.sourceType ?? 'source';
-}
-
-function escapeHtml(value) {
-  return String(value)
-    .replace(/&/g, '&amp;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;')
-    .replace(/"/g, '&quot;');
-}
-
-function formatResultValue(result) {
-  if (result.kind === 'evidence-estimate' && typeof result.value === 'number') {
-    return `${Math.round(result.value * 100)}%`;
-  }
-  return String(result.value);
-}
-
 function renderPreparedExamples() {
   exampleList.replaceChildren();
   const allExamples = getPreparedExamples();
@@ -653,59 +617,106 @@ function findStoredBelief(statement) {
   return undefined;
 }
 
-function createPersistentWikimediaCache() {
-  const map = new Map();
-  hydrateWikimediaCache(map);
-  const originalSet = map.set.bind(map);
-  map.set = (key, value) => {
-    const result = originalSet(key, value);
-    persistWikimediaCache(map);
-    return result;
-  };
-  const originalDelete = map.delete.bind(map);
-  map.delete = (key) => {
-    const result = originalDelete(key);
-    persistWikimediaCache(map);
-    return result;
-  };
-  const originalClear = map.clear.bind(map);
-  map.clear = () => {
-    originalClear();
-    persistWikimediaCache(map);
-  };
-  return map;
+function t(key) {
+  return translate(currentLocale, key);
 }
 
-function hydrateWikimediaCache(map) {
-  try {
-    const raw = globalThis.localStorage.getItem(wikimediaCacheStorageKey);
-    if (!raw) {
-      return;
+function applyLocale(locale) {
+  currentLocale = locale;
+  applyTranslations(document, currentLocale);
+  if (localeSelect && localeSelect.value !== currentLocale) {
+    localeSelect.value = currentLocale;
+  }
+  if (toggleShowAll) {
+    toggleShowAll.textContent = showAllExamples
+      ? t('analyse.showLess')
+      : t('analyse.showAll');
+  }
+  refreshThemeLabel();
+  document.title = `${t('formalize.heading')} · meta-expression`;
+}
+
+function refreshThemeLabel() {
+  if (!themeToggleIcon || !themeToggleLabel) {
+    return;
+  }
+  themeToggleIcon.textContent = themeIcon(currentThemePreference);
+  themeToggleLabel.textContent = t(`prefs.theme.${currentThemePreference}`);
+  themeToggle?.setAttribute(
+    'aria-label',
+    t(`prefs.theme.${currentThemePreference}`)
+  );
+}
+
+function setTheme(theme) {
+  currentThemePreference = theme;
+  applyTheme(currentThemePreference);
+  persistTheme(currentThemePreference);
+  refreshThemeLabel();
+}
+
+function setupLocale() {
+  if (!localeSelect) {
+    return;
+  }
+  localeSelect.replaceChildren();
+  for (const { code, label } of listLocales()) {
+    const option = document.createElement('option');
+    option.value = code;
+    option.textContent = label;
+    if (code === currentLocale) {
+      option.selected = true;
     }
-    const entries = JSON.parse(raw);
-    if (!Array.isArray(entries)) {
-      return;
+    localeSelect.append(option);
+  }
+  localeSelect.addEventListener('change', () => {
+    persistLocale(localeSelect.value);
+    applyLocale(localeSelect.value);
+    if (currentFormalizeResult) {
+      renderFormalizeInterpretations(currentFormalizeResult);
     }
-    for (const [key, value] of entries) {
-      map.set(key, value);
+  });
+}
+
+function setupTheme() {
+  applyTheme(currentThemePreference);
+  refreshThemeLabel();
+  if (themeToggle) {
+    themeToggle.addEventListener('click', () => {
+      setTheme(nextTheme(currentThemePreference));
+    });
+  }
+  watchSystemTheme(() => {
+    if (currentThemePreference === 'auto') {
+      applyTheme(currentThemePreference);
     }
-  } catch {
-    // Cache is best-effort and survives storage problems silently.
+  });
+}
+
+function setupFormalizeDisplayMode() {
+  const radios = document.querySelectorAll(
+    'input[name="formalize-display-mode"]'
+  );
+  for (const radio of radios) {
+    if (radio.checked) {
+      interpretationDisplayMode = radio.value;
+    }
+    radio.addEventListener('change', () => {
+      if (!radio.checked) {
+        return;
+      }
+      interpretationDisplayMode = radio.value;
+      if (currentFormalizeResult) {
+        renderFormalizeInterpretations(currentFormalizeResult);
+      }
+    });
   }
 }
 
-function persistWikimediaCache(map) {
-  try {
-    const entries = [...map.entries()].slice(-200);
-    globalThis.localStorage.setItem(
-      wikimediaCacheStorageKey,
-      JSON.stringify(entries)
-    );
-  } catch {
-    // Storage may be unavailable; the in-memory cache still works for this page.
-  }
-}
-
+setupLocale();
+setupTheme();
+setupFormalizeDisplayMode();
+applyLocale(currentLocale);
 renderPreparedExamples();
 syncBeliefControl(input.value);
 render(input.value);
@@ -1244,6 +1255,7 @@ function applyFormalizeResult(data) {
     return;
   }
   currentFormalizeResult = result;
+  activeInterpretationKey = null;
   renderFormalizeOutput(result);
   renderFormalizeContexts(result);
   renderFormalizeBigContexts(result);
@@ -1335,71 +1347,109 @@ function renderFormalizeContexts(result) {
 
 function renderFormalizeInterpretations(result) {
   formalizeInterpretations.replaceChildren();
-  const items = result.interpretations ?? [];
-  if (items.length === 0) {
+  const all = result.interpretations ?? [];
+  if (all.length === 0) {
     const empty = document.createElement('li');
     empty.className = 'section-empty';
-    empty.textContent = 'No alternative interpretations.';
+    empty.textContent = t('formalize.empty');
     formalizeInterpretations.append(empty);
     return;
   }
+
+  if (!activeInterpretationKey && all[0]) {
+    activeInterpretationKey = interpretationKey(all[0]);
+  }
+
+  const top = all.slice(0, topInterpretationCount);
+  const activeIndex = all.findIndex(
+    (entry) => interpretationKey(entry) === activeInterpretationKey
+  );
+  const items =
+    activeIndex >= 0 && activeIndex >= top.length
+      ? [...top.slice(0, top.length - 1), all[activeIndex]]
+      : top;
+
   for (const interpretation of items) {
     const item = document.createElement('li');
     item.className = 'formalize-interpretation';
+    const key = interpretationKey(interpretation);
+    const isActive = key === activeInterpretationKey;
+    if (isActive) {
+      item.classList.add('active');
+    }
+    item.setAttribute('role', 'button');
+    item.setAttribute('tabindex', '0');
+    item.dataset.interpretationKey = key;
     const score = (interpretation.score ?? 0).toFixed(1);
     const phrases = interpretation.phrases
-      .map((phrase) => {
-        if (phrase.entityId) {
-          return `${phrase.text} [${phrase.entityId}]`;
-        }
-        return phrase.text;
-      })
+      .map((phrase) =>
+        formatInterpretationPhrase(phrase, interpretationDisplayMode)
+      )
       .join(' ');
+    const badge = isActive
+      ? `<span class="formalize-interpretation-active-badge">${escapeHtml(t('formalize.activeBadge'))}</span>`
+      : '';
     item.innerHTML = `
       <strong>#${interpretation.rank}</strong>
       <span>${escapeHtml(phrases)}</span>
-      <small>score ${score}</small>
+      <small>${escapeHtml(t('formalize.score'))} ${score}${badge ? ' · ' : ''}${badge}</small>
     `;
+    item.addEventListener('click', () => {
+      activeInterpretationKey = key;
+      renderFormalizeInterpretations(result);
+      applyActiveInterpretationToOutput(result);
+    });
+    item.addEventListener('keydown', (event) => {
+      if (event.key === 'Enter' || event.key === ' ') {
+        event.preventDefault();
+        item.click();
+      }
+    });
     formalizeInterpretations.append(item);
   }
 }
 
-formalizeRun.addEventListener('click', () => runFormalize());
+function applyActiveInterpretationToOutput(result) {
+  const all = result.interpretations ?? [];
+  const active = all.find(
+    (entry) => interpretationKey(entry) === activeInterpretationKey
+  );
+  if (!active) {
+    return;
+  }
+  const phrasesByText = new Map();
+  for (const phrase of active.phrases) {
+    if (phrase?.text) {
+      phrasesByText.set(phrase.text, phrase);
+    }
+  }
+  for (const phrase of result.phrases) {
+    const override = phrasesByText.get(phrase.text);
+    if (!override || !override.entityId) {
+      continue;
+    }
+    phrase.entity = phrase.entity
+      ? {
+          ...phrase.entity,
+          id: override.entityId,
+          label: override.entityLabel ?? phrase.entity.label,
+          description: override.entityDescription ?? phrase.entity.description,
+        }
+      : {
+          id: override.entityId,
+          label: override.entityLabel ?? phrase.text,
+          description: override.entityDescription ?? '',
+          kind: override.kind ?? 'entity',
+          score: 0,
+          wikipediaUrl: null,
+          wikipediaTitle: null,
+          contextLabels: [],
+        };
+  }
+  renderFormalizeOutput(result);
+}
 
-const formalizeRepoSamples = [
-  {
-    label: 'README — project pitch',
-    text: 'A links-network based reasoning playground that accepts a human-language statement, generates selectable interpretations, and formalizes the selected meaning when possible.',
-  },
-  {
-    label: 'README — astronomy claim',
-    text: 'Earth orbits the Sun.',
-  },
-  {
-    label: 'README — Wikidata example',
-    text: 'Barack Obama was born in Hawaii.',
-  },
-  {
-    label: 'docs/REQUIREMENTS — formalize pipeline',
-    text: 'The formalize pipeline turns each phrase into a Wikipedia or Wikidata link whose title carries the Q or P id.',
-  },
-  {
-    label: 'docs/ROADMAP — disambiguation',
-    text: 'Disambiguation should prefer Wikipedia, then Wikidata, then Wiktionary so common words like the still resolve.',
-  },
-  {
-    label: 'package.json — description',
-    text: 'A JavaScript or TypeScript package template for AI-driven development.',
-  },
-  {
-    label: 'Issue 21 — verb forms',
-    text: 'formalize',
-  },
-  {
-    label: 'Issue 21 — single token',
-    text: 'Hawaii',
-  },
-];
+formalizeRun.addEventListener('click', () => runFormalize());
 
 if (formalizeSampleSelect) {
   for (const sample of formalizeRepoSamples) {

@@ -3,31 +3,65 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="color-scheme" content="light dark" />
     <title>meta-expression prototype</title>
     <link rel="icon" href="data:," />
     <link rel="stylesheet" href="./styles.css" />
   </head>
   <body>
     <nav class="top-nav" aria-label="Pages">
-      <button
-        type="button"
-        id="nav-analyse"
-        class="top-nav-button"
-        aria-current="page"
-      >
-        Analyse
-      </button>
-      <button type="button" id="nav-compare" class="top-nav-button">
-        Compare
-      </button>
-      <button type="button" id="nav-formalize" class="top-nav-button">
-        Formalize
-      </button>
+      <div class="top-nav-pages">
+        <button
+          type="button"
+          id="nav-analyse"
+          class="top-nav-button"
+          aria-current="page"
+          data-i18n="nav.analyse"
+        >
+          Analyse
+        </button>
+        <button
+          type="button"
+          id="nav-compare"
+          class="top-nav-button"
+          data-i18n="nav.compare"
+        >
+          Compare
+        </button>
+        <button
+          type="button"
+          id="nav-formalize"
+          class="top-nav-button"
+          data-i18n="nav.formalize"
+        >
+          Formalize
+        </button>
+      </div>
+      <div class="top-nav-prefs">
+        <label class="top-nav-locale">
+          <span class="visually-hidden" data-i18n="prefs.locale">Language</span>
+          <select id="locale-select" aria-label="Language"></select>
+        </label>
+        <button
+          type="button"
+          id="theme-toggle"
+          class="top-nav-button top-nav-icon-button"
+          aria-label="Theme"
+          data-i18n-aria="prefs.theme"
+        >
+          <span id="theme-toggle-icon" aria-hidden="true">◐</span>
+          <span class="visually-hidden" id="theme-toggle-label"
+            >Theme: auto</span
+          >
+        </button>
+      </div>
     </nav>
     <main class="app-shell" id="page-analyse">
       <section class="workspace" aria-label="Statement workspace">
         <form class="statement-form" id="statement-form">
-          <label for="statement-input">Statement</label>
+          <label for="statement-input" data-i18n="analyse.statement"
+            >Statement</label
+          >
           <div class="input-row">
             <input
               id="statement-input"
@@ -35,16 +69,27 @@
               value="Earth orbits the Sun"
               autocomplete="off"
             />
-            <button type="submit">Analyze</button>
+            <button type="submit" data-i18n="analyse.analyze">Analyze</button>
           </div>
         </form>
 
         <section class="examples" aria-label="Prepared examples">
           <div class="examples-heading">
-            <h1>Examples</h1>
+            <h1 data-i18n="analyse.examples">Examples</h1>
             <div class="examples-actions">
-              <button type="button" id="shuffle-examples">Shuffle</button>
-              <button type="button" id="toggle-show-all" aria-pressed="false">
+              <button
+                type="button"
+                id="shuffle-examples"
+                data-i18n="analyse.shuffle"
+              >
+                Shuffle
+              </button>
+              <button
+                type="button"
+                id="toggle-show-all"
+                aria-pressed="false"
+                data-i18n="analyse.showAll"
+              >
                 Show all
               </button>
             </div>
@@ -54,12 +99,14 @@
 
         <section class="belief-panel" aria-label="Local belief">
           <div class="belief-heading">
-            <h1>Belief</h1>
+            <h1 data-i18n="analyse.belief">Belief</h1>
             <output id="belief-value" for="belief-slider">50%</output>
           </div>
-          <label for="belief-slider">Current statement</label>
+          <label for="belief-slider" data-i18n="analyse.beliefCurrent"
+            >Current statement</label
+          >
           <div class="belief-control">
-            <span>False</span>
+            <span data-i18n="analyse.beliefFalse">False</span>
             <input
               id="belief-slider"
               type="range"
@@ -67,27 +114,33 @@
               max="100"
               value="50"
             />
-            <span>True</span>
-            <button type="button" id="reset-belief">Reset</button>
+            <span data-i18n="analyse.beliefTrue">True</span>
+            <button
+              type="button"
+              id="reset-belief"
+              data-i18n="analyse.beliefReset"
+            >
+              Reset
+            </button>
           </div>
         </section>
 
         <section class="interpretations" aria-label="Interpretations">
-          <h1>Interpretations</h1>
+          <h1 data-i18n="analyse.interpretations">Interpretations</h1>
           <div id="interpretation-list"></div>
         </section>
 
         <section class="alternatives" aria-label="Alternatives">
-          <h1>Alternatives</h1>
-          <p class="section-hint">
+          <h1 data-i18n="analyse.alternatives">Alternatives</h1>
+          <p class="section-hint" data-i18n="analyse.alternativesHint">
             More precise rephrasings of the current statement.
           </p>
           <div id="alternative-list"></div>
         </section>
 
         <section class="dependencies" aria-label="Dependencies">
-          <h1>Dependencies</h1>
-          <p class="section-hint">
+          <h1 data-i18n="analyse.dependencies">Dependencies</h1>
+          <p class="section-hint" data-i18n="analyse.dependenciesHint">
             The selected interpretation may only be true if these conditions
             hold.
           </p>
@@ -95,26 +148,26 @@
         </section>
 
         <section class="definitions" aria-label="Definitions">
-          <h1>Definitions</h1>
-          <p class="section-hint">
+          <h1 data-i18n="analyse.definitions">Definitions</h1>
+          <p class="section-hint" data-i18n="analyse.definitionsHint">
             Wikidata-backed definitions for each phrase in the statement.
           </p>
           <ul id="definition-list"></ul>
         </section>
 
         <section class="confirmations" aria-label="Confirmations">
-          <h1>Confirmations</h1>
+          <h1 data-i18n="analyse.confirmations">Confirmations</h1>
           <ul id="confirmation-list"></ul>
         </section>
 
         <section class="refutations" aria-label="Refutations">
-          <h1>Refutations</h1>
+          <h1 data-i18n="analyse.refutations">Refutations</h1>
           <ul id="refutation-list"></ul>
         </section>
 
         <section class="opposite" aria-label="Opposite statement">
-          <h1>Opposite</h1>
-          <p class="section-hint">
+          <h1 data-i18n="analyse.opposite">Opposite</h1>
+          <p class="section-hint" data-i18n="analyse.oppositeHint">
             Click to analyze the negation of the current statement.
           </p>
           <button type="button" id="opposite-button" class="opposite-button">
@@ -124,58 +177,67 @@
 
         <section class="result-band" aria-label="Result">
           <div>
-            <span class="eyebrow">Correctness</span>
+            <span class="eyebrow" data-i18n="analyse.correctness"
+              >Correctness</span
+            >
             <strong id="correctness-value"></strong>
             <small>0% … 100%</small>
           </div>
           <div>
-            <span class="eyebrow">Confidence</span>
+            <span class="eyebrow" data-i18n="analyse.confidence"
+              >Confidence</span
+            >
             <strong id="confidence-value"></strong>
             <small>-100% … +100%</small>
           </div>
           <div>
-            <span class="eyebrow">Level</span>
+            <span class="eyebrow" data-i18n="analyse.level">Level</span>
             <strong id="formalization-level"></strong>
             <small id="formalization-level-name"></small>
           </div>
           <div>
-            <span class="eyebrow">Result</span>
+            <span class="eyebrow" data-i18n="analyse.result">Result</span>
             <strong id="result-value"></strong>
           </div>
         </section>
 
         <section class="evidence-band" aria-label="Evidence summary">
           <div>
-            <span class="eyebrow">Supports</span>
+            <span class="eyebrow" data-i18n="analyse.supports">Supports</span>
             <strong id="support-count"></strong>
           </div>
           <div>
-            <span class="eyebrow">Refutes</span>
+            <span class="eyebrow" data-i18n="analyse.refutes">Refutes</span>
             <strong id="refute-count"></strong>
           </div>
           <div>
-            <span class="eyebrow">Unknowns</span>
+            <span class="eyebrow" data-i18n="analyse.unknowns">Unknowns</span>
             <strong id="unknown-count"></strong>
           </div>
-          <small id="live-evidence-status">Fixture evidence</small>
+          <small id="live-evidence-status" data-i18n="analyse.fixtureEvidence"
+            >Fixture evidence</small
+          >
         </section>
       </section>
 
       <section class="network-panel" aria-label="Reasoning steps">
         <div class="network-header">
-          <h2>Reasoning Steps</h2>
+          <h2 data-i18n="analyse.reasoningSteps">Reasoning Steps</h2>
           <div class="network-actions">
             <label class="strategy-control">
-              <span>Strategy</span>
+              <span data-i18n="analyse.strategy">Strategy</span>
               <select id="strategy-select"></select>
             </label>
-            <button type="button" id="copy-lino">Lino</button>
+            <button type="button" id="copy-lino" data-i18n="analyse.lino">
+              Lino
+            </button>
             <a
               class="button-link"
               id="report-issue"
               href="https://github.com/link-assistant/meta-expression/issues/new"
               target="_blank"
               rel="noopener noreferrer"
+              data-i18n="analyse.reportIssue"
               >Report Issue</a
             >
           </div>
@@ -189,8 +251,8 @@
     <main class="compare-shell" id="page-compare" hidden>
       <section class="compare-panel" aria-label="Compare statements">
         <header class="compare-header">
-          <h1>Compare</h1>
-          <p class="section-hint">
+          <h1 data-i18n="compare.heading">Compare</h1>
+          <p class="section-hint" data-i18n="compare.hint">
             Enter two or more claims about the same subject (for example
             <em>Population of Russia is 100m</em> and
             <em>Population of Russia is 200m</em>) to see how their Correctness
@@ -199,8 +261,12 @@
         </header>
         <div class="compare-rows" id="compare-rows"></div>
         <div class="compare-actions">
-          <button type="button" id="compare-add">Add claim</button>
-          <button type="button" id="compare-run">Compare</button>
+          <button type="button" id="compare-add" data-i18n="compare.add">
+            Add claim
+          </button>
+          <button type="button" id="compare-run" data-i18n="compare.run">
+            Compare
+          </button>
         </div>
       </section>
     </main>
@@ -208,8 +274,8 @@
     <main class="formalize-shell" id="page-formalize" hidden>
       <section class="formalize-panel" aria-label="Formalize text">
         <header class="formalize-header">
-          <h1>Formalize</h1>
-          <p class="section-hint">
+          <h1 data-i18n="formalize.heading">Formalize</h1>
+          <p class="section-hint" data-i18n="formalize.hint">
             Paste any text. Each phrase becomes a Wikipedia-or-Wikidata link
             whose <code>title</code> carries the Q/P id. Toggle the link target
             mode, then copy the result as Markdown or Links Notation.
@@ -218,12 +284,14 @@
 
         <div class="formalize-input-row">
           <label class="formalize-input-label" for="formalize-input"
-            >Text</label
+            ><span data-i18n="formalize.text">Text</span></label
           >
           <label class="formalize-sample-label" for="formalize-sample">
-            <span>Load repo sample</span>
+            <span data-i18n="formalize.loadSample">Load repo sample</span>
             <select id="formalize-sample">
-              <option value="">— pick an example —</option>
+              <option value="" data-i18n="formalize.pickExample">
+                — pick an example —
+              </option>
             </select>
           </label>
         </div>
@@ -237,7 +305,7 @@ Barack Obama was born in Hawaii.</textarea
 
         <div class="formalize-options">
           <label class="formalize-option">
-            <span>Max n-gram size</span>
+            <span data-i18n="formalize.maxNgram">Max n-gram size</span>
             <input
               id="formalize-ngram-size"
               type="number"
@@ -247,32 +315,34 @@ Barack Obama was born in Hawaii.</textarea
             />
           </label>
           <fieldset class="formalize-target">
-            <legend>Link target</legend>
-            <label>
+            <legend data-i18n="formalize.linkTarget">Link target</legend>
+            <label class="formalize-target-option">
               <input
                 type="radio"
                 name="formalize-target"
                 value="wikipedia"
                 checked
               />
-              Wikipedia (fallback Wikidata)
+              <span data-i18n="formalize.linkWikipedia"
+                >Wikipedia (fallback Wikidata)</span
+              >
             </label>
-            <label>
+            <label class="formalize-target-option">
               <input type="radio" name="formalize-target" value="wikidata" />
-              Wikidata only
+              <span data-i18n="formalize.linkWikidata">Wikidata only</span>
             </label>
-            <label>
+            <label class="formalize-target-option">
               <input
                 type="radio"
                 name="formalize-target"
                 value="local-viewer"
               />
-              Local viewer
+              <span data-i18n="formalize.linkLocal">Local viewer</span>
             </label>
           </fieldset>
           <fieldset class="formalize-sources">
-            <legend>Sources</legend>
-            <label>
+            <legend data-i18n="formalize.sources">Sources</legend>
+            <label class="formalize-source-option">
               <input
                 type="checkbox"
                 name="formalize-source"
@@ -288,35 +358,83 @@ Barack Obama was born in Hawaii.</textarea
                 value="wikidata"
                 checked
               />
-              Wikidata
+              <span data-i18n="formalize.sourceWikidata">Wikidata</span>
             </label>
-            <label>
+            <label class="formalize-source-option">
               <input
                 type="checkbox"
                 name="formalize-source"
                 value="wiktionary"
                 checked
               />
-              Wiktionary (definitions)
+              <span data-i18n="formalize.sourceWiktionary"
+                >Wiktionary (definitions)</span
+              >
             </label>
-            <label>
+            <label class="formalize-source-option">
               <input type="checkbox" name="formalize-source" value="wordnet" />
-              WordNet (Wiktionary search)
+              <span data-i18n="formalize.sourceWordnet"
+                >WordNet (Wiktionary)</span
+              >
             </label>
-            <label class="formalize-source-fandom">
+            <label class="formalize-source-option formalize-source-fandom">
               <input
                 type="checkbox"
                 name="formalize-source"
                 value="fandom"
                 id="formalize-source-fandom"
               />
-              Fandom wiki:
+              <span data-i18n="formalize.sourceFandom">Fandom wiki:</span>
               <input
                 type="text"
                 id="formalize-fandom-slug"
                 placeholder="e.g. genshin-impact"
                 disabled
               />
+            </label>
+          </fieldset>
+          <fieldset class="formalize-display-mode">
+            <legend data-i18n="formalize.displayMode">
+              Interpretation display
+            </legend>
+            <label class="formalize-display-mode-option">
+              <input
+                type="radio"
+                name="formalize-display-mode"
+                value="name"
+                checked
+              />
+              <span data-i18n="formalize.displayName">Name</span>
+            </label>
+            <label class="formalize-display-mode-option">
+              <input
+                type="radio"
+                name="formalize-display-mode"
+                value="meaning"
+              />
+              <span data-i18n="formalize.displayMeaning">Meaning</span>
+            </label>
+            <label class="formalize-display-mode-option">
+              <input
+                type="radio"
+                name="formalize-display-mode"
+                value="name+meaning"
+              />
+              <span data-i18n="formalize.displayNameMeaning"
+                >Name + meaning</span
+              >
+            </label>
+            <label class="formalize-display-mode-option">
+              <input type="radio" name="formalize-display-mode" value="id" />
+              <span data-i18n="formalize.displayId">Id only</span>
+            </label>
+            <label class="formalize-display-mode-option">
+              <input
+                type="radio"
+                name="formalize-display-mode"
+                value="replace"
+              />
+              <span data-i18n="formalize.displayReplace">Replace</span>
             </label>
           </fieldset>
         </div>
@@ -354,8 +472,10 @@ Barack Obama was born in Hawaii.</textarea
         </details>
 
         <details class="formalize-overrides">
-          <summary>Lazy overrides (Links Notation)</summary>
-          <p class="section-hint">
+          <summary data-i18n="formalize.overrides">
+            Lazy overrides (Links Notation)
+          </summary>
+          <p class="section-hint" data-i18n="formalize.overridesHint">
             Each entry pins a phrase to a specific entity, bypassing live
             lookups. Useful for reproducible demos and to fill gaps the
             knowledge graphs miss. Indented Links Notation (.lino) is preferred;
@@ -379,26 +499,42 @@ Barack Obama was born in Hawaii.</textarea
         </details>
 
         <div class="formalize-actions">
-          <button type="button" id="formalize-run">Formalize</button>
-          <button type="button" id="formalize-copy-markdown">
+          <button
+            type="button"
+            id="formalize-run"
+            data-i18n="formalize.runButton"
+          >
+            Formalize
+          </button>
+          <button
+            type="button"
+            id="formalize-copy-markdown"
+            data-i18n="formalize.copyMarkdown"
+          >
             Copy as Markdown
           </button>
-          <button type="button" id="formalize-copy-lino">
+          <button
+            type="button"
+            id="formalize-copy-lino"
+            data-i18n="formalize.copyLino"
+          >
             Copy as Links Notation
           </button>
           <span class="formalize-status" id="formalize-status"></span>
         </div>
 
         <section class="formalize-result" aria-label="Formalized output">
-          <h2>Result</h2>
+          <h2 data-i18n="formalize.result">Result</h2>
           <div id="formalize-output" class="formalize-output">
-            Click Formalize to see the wikified output here.
+            <span data-i18n="formalize.resultPlaceholder"
+              >Click Formalize to see the wikified output here.</span
+            >
           </div>
         </section>
 
         <section class="formalize-contexts" aria-label="Detected contexts">
-          <h2>Contexts</h2>
-          <p class="section-hint">
+          <h2 data-i18n="formalize.contexts">Contexts</h2>
+          <p class="section-hint" data-i18n="formalize.contextsHint">
             Click a context to reinterpret the same text through that lens.
           </p>
           <div id="formalize-contexts" class="formalize-context-list"></div>
@@ -408,8 +544,8 @@ Barack Obama was born in Hawaii.</textarea
           class="formalize-big-contexts"
           aria-label="Big context categories"
         >
-          <h2>Big-context categories</h2>
-          <p class="section-hint">
+          <h2 data-i18n="formalize.bigContexts">Big-context categories</h2>
+          <p class="section-hint" data-i18n="formalize.bigContextsHint">
             Worlds and domains the text touches (Math, Geography, Star Wars,
             Genshin Impact, ...). The top 5 are auto-selected — uncheck a world
             to dim phrases that only contribute to it. Hover a phrase or a world
@@ -425,7 +561,13 @@ Barack Obama was born in Hawaii.</textarea
           class="formalize-interpretations"
           aria-label="Top interpretations"
         >
-          <h2>Top 10 Interpretations</h2>
+          <h2 data-i18n="formalize.topInterpretations">
+            Top 10 Interpretations
+          </h2>
+          <p class="section-hint" data-i18n="formalize.topInterpretationsHint">
+            Click an interpretation to use it as the active result. The current
+            choice is always present in the list and highlighted.
+          </p>
           <ol
             id="formalize-interpretations"
             class="formalize-interpretation-list"
@@ -433,11 +575,11 @@ Barack Obama was born in Hawaii.</textarea
         </section>
 
         <details class="formalize-payload">
-          <summary>Markdown</summary>
+          <summary data-i18n="formalize.markdownPayload">Markdown</summary>
           <pre id="formalize-markdown"></pre>
         </details>
         <details class="formalize-payload">
-          <summary>Links Notation</summary>
+          <summary data-i18n="formalize.linoPayload">Links Notation</summary>
           <pre id="formalize-lino"></pre>
         </details>
       </section>

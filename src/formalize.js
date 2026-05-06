@@ -83,6 +83,93 @@ const linkTargetModes = Object.freeze({
 export const FORMALIZE_LINK_TARGETS = linkTargetModes;
 export { SOURCE_KIND as FORMALIZE_SOURCE_KIND };
 
+const interpretationDisplayModes = Object.freeze({
+  ID: 'id',
+  NAME: 'name',
+  NAME_AND_MEANING: 'name+meaning',
+  MEANING: 'meaning',
+  REPLACE: 'replace',
+});
+
+export const INTERPRETATION_DISPLAY_MODES = interpretationDisplayModes;
+
+const defaultInterpretationDisplayMode = interpretationDisplayModes.NAME;
+
+/**
+ * Format a single interpretation phrase for display. Supports five modes
+ * documented in docs/case-studies/issue-23/README.md (R3):
+ *   - 'id'           → "Hawaii [Q782]"
+ *   - 'name'         → "Hawaii (Hawaii)"   (entity full name in parens; default)
+ *   - 'name+meaning' → "Hawaii (Hawaii — state of the United States)"
+ *   - 'meaning'      → "Hawaii (state of the United States)"
+ *   - 'replace'      → "Hawaii"            (replaces source token with entity label)
+ *
+ * Falls back to the original phrase text when the entity has no label/id.
+ *
+ * @param {{text: string, entityId?: string|null, entityLabel?: string|null,
+ *          entityDescription?: string|null}} phrase
+ * @param {string} [mode]
+ * @returns {string}
+ */
+const interpretationFormatters = {
+  [interpretationDisplayModes.ID]: ({ text, entityId }) =>
+    entityId ? `${text} [${entityId}]` : text,
+  [interpretationDisplayModes.MEANING]: ({ text, description }) =>
+    description ? `${text} (${description})` : text,
+  [interpretationDisplayModes.NAME_AND_MEANING]: ({
+    text,
+    label,
+    description,
+  }) => {
+    if (label && description) {
+      return `${text} (${label} — ${description})`;
+    }
+    if (label) {
+      return `${text} (${label})`;
+    }
+    return description ? `${text} (${description})` : text;
+  },
+  [interpretationDisplayModes.REPLACE]: ({ text, label }) => label || text,
+  [interpretationDisplayModes.NAME]: ({ text, label }) =>
+    label ? `${text} (${label})` : text,
+};
+
+export function formatInterpretationPhrase(
+  phrase,
+  mode = defaultInterpretationDisplayMode
+) {
+  const parts = {
+    text: phrase?.text ?? '',
+    entityId: phrase?.entityId ?? null,
+    label: phrase?.entityLabel ?? null,
+    description: phrase?.entityDescription ?? null,
+  };
+  if (!parts.entityId && !parts.label) {
+    return parts.text;
+  }
+  const formatter =
+    interpretationFormatters[mode] ??
+    interpretationFormatters[interpretationDisplayModes.NAME];
+  return formatter(parts);
+}
+
+/**
+ * Build a stable identity key for an interpretation based on its phrase
+ * entity ids. Used by the web layer to detect whether the currently
+ * selected interpretation is already among the top‑N (R4).
+ *
+ * @param {{phrases?: Array<{entityId?: string|null}>}} interpretation
+ * @returns {string}
+ */
+export function interpretationKey(interpretation) {
+  if (!interpretation || !Array.isArray(interpretation.phrases)) {
+    return '';
+  }
+  return interpretation.phrases
+    .map((phrase) => phrase.entityId ?? '∅')
+    .join('|');
+}
+
 /**
  * Synchronous-friendly entry point used by older call sites. Always returns
  * a Promise — fetch is intentionally null so callers without a resolver get
@@ -898,6 +985,9 @@ function generateFormalizeInterpretations(phrases, contexts, config) {
         phrases: phrases.map((phrase) => ({
           text: phrase.text,
           entityId: phrase.entity?.id ?? null,
+          kind: phrase.entity?.kind ?? null,
+          entityLabel: phrase.entity?.label ?? null,
+          entityDescription: phrase.entity?.description ?? null,
         })),
       },
     ];
@@ -946,10 +1036,14 @@ function generateFormalizeInterpretations(phrases, contexts, config) {
         .filter((phrase) => phrase.entity)
         .map((phrase) => {
           const choice = combo.assignments.get(phrase.start);
+          const candidate = choice?.candidate ?? phrase.entity;
           return {
             text: phrase.text,
-            entityId: choice?.candidate.id ?? phrase.entity.id,
-            kind: choice?.candidate.kind ?? phrase.entity.kind,
+            entityId: candidate.id ?? phrase.entity.id,
+            kind: candidate.kind ?? phrase.entity.kind,
+            entityLabel: candidate.label ?? phrase.entity.label ?? null,
+            entityDescription:
+              candidate.description ?? phrase.entity.description ?? null,
           };
         });
       const contextBonus = ordered.filter((entry) =>

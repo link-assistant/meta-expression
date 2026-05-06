@@ -333,6 +333,35 @@ export declare const FORMALIZE_LINK_TARGETS: {
   readonly LOCAL: 'local-viewer';
 };
 
+export type InterpretationDisplayMode =
+  | 'id'
+  | 'name'
+  | 'name+meaning'
+  | 'meaning'
+  | 'replace';
+
+export declare const INTERPRETATION_DISPLAY_MODES: {
+  readonly ID: 'id';
+  readonly NAME: 'name';
+  readonly NAME_AND_MEANING: 'name+meaning';
+  readonly MEANING: 'meaning';
+  readonly REPLACE: 'replace';
+};
+
+export declare function formatInterpretationPhrase(
+  phrase: {
+    text: string;
+    entityId?: string | null;
+    entityLabel?: string | null;
+    entityDescription?: string | null;
+  },
+  mode?: InterpretationDisplayMode
+): string;
+
+export declare function interpretationKey(interpretation: {
+  phrases?: Array<{ entityId?: string | null }>;
+}): string;
+
 export interface FormalizeNgram {
   text: string;
   tokens: string[];
@@ -391,7 +420,9 @@ export interface FormalizeInterpretation {
   phrases: Array<{
     text: string;
     entityId: string | null;
-    kind?: 'entity' | 'property';
+    kind?: 'entity' | 'property' | null;
+    entityLabel?: string | null;
+    entityDescription?: string | null;
   }>;
 }
 
