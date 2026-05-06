@@ -1,0 +1,11 @@
+{
+  "url": "https://www.wikidata.org/w/api.php?action=wbsearchentities&format=json&language=en&origin=*&type=property&limit=5&search=formalize",
+  "recordedAt": "2026-05-06T19:38:15.314Z",
+  "value": {
+    "searchinfo": {
+      "search": "formalize"
+    },
+    "search": [],
+    "success": 1
+  }
+}

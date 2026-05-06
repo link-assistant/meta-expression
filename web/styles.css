@@ -817,6 +817,35 @@ pre {
   text-transform: uppercase;
 }
 
+.formalize-input-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.formalize-sample-label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #61717d;
+  font-size: 0.78rem;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.formalize-sample-label select {
+  font: inherit;
+  text-transform: none;
+  color: #172026;
+  font-weight: 500;
+  padding: 4px 8px;
+  border: 1px solid #b9c4cd;
+  border-radius: 4px;
+  background: #fff;
+}
+
 #formalize-input {
   width: 100%;
   min-height: 120px;
@@ -963,11 +992,27 @@ pre {
   padding: 6px 10px;
   font-size: 0.9rem;
   color: var(--ink);
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+  transition:
+    background 120ms ease,
+    border-color 120ms ease;
+}
+
+.formalize-big-context input[type='checkbox'] {
+  margin: 0;
 }
 
 .formalize-big-context.main {
   border-color: var(--accent);
   background: var(--accent-softer);
+}
+
+.formalize-big-context.formalize-big-context-hover {
+  border-color: #1d4e89;
+  background: #fff5cc;
 }
 
 .formalize-big-context a {
@@ -979,6 +1024,68 @@ pre {
 .formalize-big-context-meta {
   color: var(--ink-soft);
   font-size: 0.8rem;
+}
+
+.formalize-output [data-phrase-text] {
+  border-radius: 3px;
+  padding: 0 2px;
+  transition:
+    background 120ms ease,
+    opacity 120ms ease;
+}
+
+.formalize-output .formalize-output-hover {
+  background: #fff5cc;
+}
+
+.formalize-output .formalize-output-dim {
+  opacity: 0.35;
+}
+
+.formalize-manual-pin {
+  display: grid;
+  gap: 8px;
+  border: 1px solid #d9e0e6;
+  border-radius: 6px;
+  padding: 10px 12px;
+  background: #fbfcfd;
+}
+
+.formalize-manual-pin summary {
+  cursor: pointer;
+  font-weight: 600;
+  color: #1d4e89;
+}
+
+.formalize-manual-pin-row {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr 1fr auto;
+  gap: 8px;
+  align-items: center;
+}
+
+.formalize-manual-pin-row input[type='text'] {
+  padding: 6px 8px;
+  border: 1px solid #d9e0e6;
+  border-radius: 4px;
+  font-size: 0.9rem;
+}
+
+.formalize-manual-pin-row button {
+  padding: 6px 12px;
+}
+
+.formalize-pin-error {
+  color: #b03030;
+  font-size: 0.85rem;
+  min-height: 1.2em;
+  margin: 0;
+}
+
+@media (max-width: 720px) {
+  .formalize-manual-pin-row {
+    grid-template-columns: 1fr;
+  }
 }
 
 .formalize-actions {

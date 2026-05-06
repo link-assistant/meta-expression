@@ -5,6 +5,7 @@ import {
   createSeededRandom,
   createWikimediaEvidenceClient,
   decodeOverridesText,
+  encodeOverridesAsLino,
   defaultReasoningStrategyId,
   describeFormalizationLevel,
   findExampleOpposite,
@@ -35,6 +36,18 @@ import {
   themeIcon,
   watchSystemTheme,
 } from './theme.js';
+import { formalizeRepoSamples } from './formalize-samples.js';
+import {
+  escapeHtml,
+  formatCorrectness,
+  formatResultValue,
+  formatSignedConfidence,
+  signOf,
+  sourceLabelFor,
+  sourceUrlFor,
+  summary,
+} from './format-helpers.js';
+import { createPersistentWikimediaCache } from './persistent-cache.js';
 
 const beliefStorageKey = 'meta-expression.user-beliefs.v1';
 const wikimediaCacheStorageKey = 'meta-expression.wikimedia-cache.v1';
@@ -99,7 +112,7 @@ let showAllExamples = false;
 let randomSeed = Date.now();
 let strategyId = defaultReasoningStrategyId;
 const userBeliefs = loadUserBeliefs();
-const wikimediaCache = createPersistentWikimediaCache();
+const wikimediaCache = createPersistentWikimediaCache(wikimediaCacheStorageKey);
 const liveEvidenceWorker = createLiveEvidenceWorker();
 const liveEvidenceClientFallback = liveEvidenceWorker
   ? null
@@ -379,37 +392,6 @@ function renderResult(analysis) {
   unknownCount.textContent = String(analysis.formalization.unknowns.length);
 }
 
-function formatCorrectness(correctness) {
-  if (correctness === null || correctness === undefined) {
-    return 'unknown';
-  }
-  return `${Math.round(correctness * 100)}%`;
-}
-
-function formatSignedConfidence(signedConfidence) {
-  if (signedConfidence === null || signedConfidence === undefined) {
-    return 'unknown';
-  }
-  const percent = Math.round(signedConfidence * 100);
-  if (percent > 0) {
-    return `+${percent}%`;
-  }
-  return `${percent}%`;
-}
-
-function signOf(value) {
-  if (value === null || value === undefined) {
-    return 'unknown';
-  }
-  if (value > 0) {
-    return 'positive';
-  }
-  if (value < 0) {
-    return 'negative';
-  }
-  return 'zero';
-}
-
 function renderReasoningSteps(analysis) {
   const steps = analysis.reasoningSteps ?? analysis.linksNetwork.links;
   const strategy = analysis.reasoningStrategy;
@@ -544,53 +526,6 @@ function updateReportIssueLink() {
   });
 }
 
-function summary(value) {
-  if (value === null) {
-    return '';
-  }
-  if (typeof value === 'string' || typeof value === 'number') {
-    return String(value);
-  }
-  return (
-    value.text ??
-    value.paraphrase ??
-    value.claim ??
-    value.relation ??
-    value.kind ??
-    value.expression?.type ??
-    ''
-  );
-}
-
-function sourceUrlFor(value) {
-  if (value === null || typeof value !== 'object') {
-    return null;
-  }
-  return value.sourceUrl ?? value.context?.wikidataEntityUrl ?? null;
-}
-
-function sourceLabelFor(value) {
-  if (value === null || typeof value !== 'object') {
-    return 'source';
-  }
-  return value.wikidataId ?? value.sourceType ?? 'source';
-}
-
-function escapeHtml(value) {
-  return String(value)
-    .replace(/&/g, '&amp;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;')
-    .replace(/"/g, '&quot;');
-}
-
-function formatResultValue(result) {
-  if (result.kind === 'evidence-estimate' && typeof result.value === 'number') {
-    return `${Math.round(result.value * 100)}%`;
-  }
-  return String(result.value);
-}
-
 function renderPreparedExamples() {
   exampleList.replaceChildren();
   const allExamples = getPreparedExamples();
@@ -680,59 +615,6 @@ function findStoredBelief(statement) {
     }
   }
   return undefined;
-}
-
-function createPersistentWikimediaCache() {
-  const map = new Map();
-  hydrateWikimediaCache(map);
-  const originalSet = map.set.bind(map);
-  map.set = (key, value) => {
-    const result = originalSet(key, value);
-    persistWikimediaCache(map);
-    return result;
-  };
-  const originalDelete = map.delete.bind(map);
-  map.delete = (key) => {
-    const result = originalDelete(key);
-    persistWikimediaCache(map);
-    return result;
-  };
-  const originalClear = map.clear.bind(map);
-  map.clear = () => {
-    originalClear();
-    persistWikimediaCache(map);
-  };
-  return map;
-}
-
-function hydrateWikimediaCache(map) {
-  try {
-    const raw = globalThis.localStorage.getItem(wikimediaCacheStorageKey);
-    if (!raw) {
-      return;
-    }
-    const entries = JSON.parse(raw);
-    if (!Array.isArray(entries)) {
-      return;
-    }
-    for (const [key, value] of entries) {
-      map.set(key, value);
-    }
-  } catch {
-    // Cache is best-effort and survives storage problems silently.
-  }
-}
-
-function persistWikimediaCache(map) {
-  try {
-    const entries = [...map.entries()].slice(-200);
-    globalThis.localStorage.setItem(
-      wikimediaCacheStorageKey,
-      JSON.stringify(entries)
-    );
-  } catch {
-    // Storage may be unavailable; the in-memory cache still works for this page.
-  }
 }
 
 function t(key) {
@@ -988,6 +870,7 @@ compareRun.addEventListener('click', runAllCompareRows);
 
 // Formalize page
 const formalizeInput = document.querySelector('#formalize-input');
+const formalizeSampleSelect = document.querySelector('#formalize-sample');
 const formalizeNgramSize = document.querySelector('#formalize-ngram-size');
 const formalizeTargetRadios = document.querySelectorAll(
   'input[name="formalize-target"]'
@@ -1017,6 +900,16 @@ const formalizeOverridesText = document.querySelector('#formalize-overrides');
 const formalizeOverridesError = document.querySelector(
   '#formalize-overrides-error'
 );
+const formalizePinPhrase = document.querySelector('#formalize-pin-phrase');
+const formalizePinId = document.querySelector('#formalize-pin-id');
+const formalizePinLabel = document.querySelector('#formalize-pin-label');
+const formalizePinAdd = document.querySelector('#formalize-pin-add');
+const formalizePinError = document.querySelector('#formalize-pin-error');
+
+const defaultBigContextAutoSelectCount = 5;
+let selectedBigContextIds = null;
+let bigContextPhraseIndex = new Map();
+let bigContextEntityIndex = new Map();
 
 if (formalizeFandomCheckbox && formalizeFandomSlug) {
   formalizeFandomCheckbox.addEventListener('change', () => {
@@ -1067,6 +960,7 @@ function runFormalize({ contextLensId = null } = {}) {
     Math.min(5, Number(formalizeNgramSize.value) || 3)
   );
   activeContextLensId = contextLensId;
+  selectedBigContextIds = null;
   formalizeStatus.textContent = 'Formalizing…';
   const id = String((formalizeRequestId += 1));
   formalizeStatus.dataset.requestId = id;
@@ -1159,12 +1053,42 @@ function readFormalizeOverrides() {
   }
 }
 
+function rebuildBigContextIndices(list) {
+  bigContextPhraseIndex = new Map();
+  bigContextEntityIndex = new Map();
+  for (const context of list) {
+    const sourceList = context.sourcePhrases ?? [];
+    for (const source of sourceList) {
+      if (source?.entityId) {
+        const bucket = bigContextEntityIndex.get(source.entityId) ?? new Set();
+        bucket.add(context.id);
+        bigContextEntityIndex.set(source.entityId, bucket);
+      }
+      if (source?.text) {
+        const bucket = bigContextPhraseIndex.get(source.text) ?? new Set();
+        bucket.add(context.id);
+        bigContextPhraseIndex.set(source.text, bucket);
+      }
+    }
+  }
+}
+
+function autoSelectBigContextIds(list) {
+  return new Set(
+    list.slice(0, defaultBigContextAutoSelectCount).map((context) => context.id)
+  );
+}
+
 function renderFormalizeBigContexts(result) {
   if (!formalizeBigContexts) {
     return;
   }
   formalizeBigContexts.replaceChildren();
   const list = result.bigContexts ?? [];
+  rebuildBigContextIndices(list);
+  if (selectedBigContextIds === null) {
+    selectedBigContextIds = autoSelectBigContextIds(list);
+  }
   if (list.length === 0) {
     const empty = document.createElement('p');
     empty.className = 'section-empty';
@@ -1172,25 +1096,148 @@ function renderFormalizeBigContexts(result) {
     formalizeBigContexts.append(empty);
     return;
   }
-  for (const context of list) {
-    const item = document.createElement('div');
-    item.className = 'formalize-big-context';
-    if (result.mainBigContext && context.id === result.mainBigContext.id) {
-      item.classList.add('main');
+  for (const [index, context] of list.entries()) {
+    formalizeBigContexts.append(
+      buildBigContextItem(context, index, result.mainBigContext)
+    );
+  }
+}
+
+function buildBigContextItem(context, index, mainBigContext) {
+  const item = document.createElement('label');
+  item.className = 'formalize-big-context';
+  item.dataset.bigContextId = context.id;
+  if (mainBigContext && context.id === mainBigContext.id) {
+    item.classList.add('main');
+  }
+  const checkbox = document.createElement('input');
+  checkbox.type = 'checkbox';
+  checkbox.checked = selectedBigContextIds.has(context.id);
+  checkbox.addEventListener('change', () => {
+    if (checkbox.checked) {
+      selectedBigContextIds.add(context.id);
+    } else {
+      selectedBigContextIds.delete(context.id);
     }
-    const probabilityPercent = Math.round((context.probability ?? 0) * 100);
-    const link = document.createElement('a');
-    link.href = `https://www.wikidata.org/wiki/${context.id}`;
-    link.title = context.id;
-    link.target = '_blank';
-    link.rel = 'noopener noreferrer';
-    link.textContent = context.label ?? context.id;
-    item.append(link);
-    const meta = document.createElement('span');
-    meta.className = 'formalize-big-context-meta';
-    meta.textContent = ` weight ${context.weight} · ${probabilityPercent}%`;
-    item.append(meta);
-    formalizeBigContexts.append(item);
+    applyBigContextSelectionDimming();
+  });
+  item.append(checkbox);
+  const link = document.createElement('a');
+  link.href = `https://www.wikidata.org/wiki/${context.id}`;
+  link.title = `${context.id}${
+    context.label ? ` — ${context.label}` : ''
+  } (rank ${index + 1})`;
+  link.target = '_blank';
+  link.rel = 'noopener noreferrer';
+  link.textContent = context.label ?? context.id;
+  item.append(link);
+  const probabilityPercent = Math.round((context.probability ?? 0) * 100);
+  const meta = document.createElement('span');
+  meta.className = 'formalize-big-context-meta';
+  meta.textContent = ` weight ${context.weight} · ${probabilityPercent}%`;
+  item.append(meta);
+  attachBigContextHover(item, context);
+  return item;
+}
+
+function attachBigContextHover(item, context) {
+  const phraseTexts = new Set(
+    (context.sourcePhrases ?? [])
+      .map((source) => source?.text)
+      .filter((text) => typeof text === 'string')
+  );
+  const entityIds = new Set(
+    (context.sourcePhrases ?? [])
+      .map((source) => source?.entityId)
+      .filter((id) => typeof id === 'string')
+  );
+  item.addEventListener('mouseenter', () => {
+    highlightPhrasesForBigContext(phraseTexts, entityIds);
+  });
+  item.addEventListener('mouseleave', clearPhraseHighlights);
+}
+
+function highlightPhrasesForBigContext(phraseTexts, entityIds) {
+  if (!formalizeOutput) {
+    return;
+  }
+  for (const node of formalizeOutput.querySelectorAll('[data-phrase-text]')) {
+    const text = node.dataset.phraseText;
+    const id = node.dataset.wikidataId;
+    if ((text && phraseTexts.has(text)) || (id && entityIds.has(id))) {
+      node.classList.add('formalize-output-hover');
+    }
+  }
+}
+
+function clearPhraseHighlights() {
+  if (!formalizeOutput) {
+    return;
+  }
+  for (const node of formalizeOutput.querySelectorAll(
+    '.formalize-output-hover'
+  )) {
+    node.classList.remove('formalize-output-hover');
+  }
+}
+
+function highlightBigContextsForPhrase(phraseText, entityId) {
+  if (!formalizeBigContexts) {
+    return;
+  }
+  const ids = new Set();
+  if (phraseText && bigContextPhraseIndex.has(phraseText)) {
+    for (const id of bigContextPhraseIndex.get(phraseText)) {
+      ids.add(id);
+    }
+  }
+  if (entityId && bigContextEntityIndex.has(entityId)) {
+    for (const id of bigContextEntityIndex.get(entityId)) {
+      ids.add(id);
+    }
+  }
+  for (const node of formalizeBigContexts.querySelectorAll(
+    '[data-big-context-id]'
+  )) {
+    if (ids.has(node.dataset.bigContextId)) {
+      node.classList.add('formalize-big-context-hover');
+    }
+  }
+}
+
+function clearBigContextHighlights() {
+  if (!formalizeBigContexts) {
+    return;
+  }
+  for (const node of formalizeBigContexts.querySelectorAll(
+    '.formalize-big-context-hover'
+  )) {
+    node.classList.remove('formalize-big-context-hover');
+  }
+}
+
+function applyBigContextSelectionDimming() {
+  if (!formalizeOutput || !selectedBigContextIds) {
+    return;
+  }
+  const total = bigContextEntityIndex.size + bigContextPhraseIndex.size;
+  for (const node of formalizeOutput.querySelectorAll('[data-phrase-text]')) {
+    const phraseText = node.dataset.phraseText;
+    const entityId = node.dataset.wikidataId;
+    const ids = new Set();
+    if (phraseText && bigContextPhraseIndex.has(phraseText)) {
+      for (const id of bigContextPhraseIndex.get(phraseText)) {
+        ids.add(id);
+      }
+    }
+    if (entityId && bigContextEntityIndex.has(entityId)) {
+      for (const id of bigContextEntityIndex.get(entityId)) {
+        ids.add(id);
+      }
+    }
+    const hasSelected = [...ids].some((id) => selectedBigContextIds.has(id));
+    const dim = ids.size > 0 && !hasSelected && total > 0;
+    node.classList.toggle('formalize-output-dim', dim);
   }
 }
 
@@ -1212,6 +1259,7 @@ function applyFormalizeResult(data) {
   renderFormalizeOutput(result);
   renderFormalizeContexts(result);
   renderFormalizeBigContexts(result);
+  applyBigContextSelectionDimming();
   renderFormalizeInterpretations(result);
   formalizeMarkdownPre.textContent = result.markdown;
   formalizeLinoPre.textContent = result.linksNotation;
@@ -1230,26 +1278,31 @@ function renderFormalizeOutput(result) {
     if (index > 0) {
       wrapper.append(' ');
     }
-    if (phrase.entity) {
-      const link = document.createElement('a');
-      link.href =
-        resolveFormalizeLinkTarget(phrase, {
-          linkTargetMode: result.linkTargetMode,
-        }) ?? '#';
-      link.title = phrase.entity.id;
-      link.target = '_blank';
-      link.rel = 'noopener noreferrer';
-      link.textContent = phrase.text;
-      link.dataset.wikidataId = phrase.entity.id;
-      wrapper.append(link);
-    } else {
-      const span = document.createElement('span');
-      span.className = 'formalize-output-plain';
-      span.textContent = phrase.text;
-      wrapper.append(span);
-    }
+    wrapper.append(buildFormalizeOutputNode(phrase, result.linkTargetMode));
   }
   formalizeOutput.append(wrapper);
+}
+
+function buildFormalizeOutputNode(phrase, linkTargetMode) {
+  const node = phrase.entity
+    ? document.createElement('a')
+    : document.createElement('span');
+  node.dataset.phraseText = phrase.text;
+  if (phrase.entity) {
+    node.href = resolveFormalizeLinkTarget(phrase, { linkTargetMode }) ?? '#';
+    node.title = phrase.entity.id;
+    node.target = '_blank';
+    node.rel = 'noopener noreferrer';
+    node.dataset.wikidataId = phrase.entity.id;
+  } else {
+    node.className = 'formalize-output-plain';
+  }
+  node.textContent = phrase.text;
+  node.addEventListener('mouseenter', () => {
+    highlightBigContextsForPhrase(phrase.text, phrase.entity?.id);
+  });
+  node.addEventListener('mouseleave', clearBigContextHighlights);
+  return node;
 }
 
 function renderFormalizeContexts(result) {
@@ -1397,6 +1450,95 @@ function applyActiveInterpretationToOutput(result) {
 }
 
 formalizeRun.addEventListener('click', () => runFormalize());
+
+if (formalizeSampleSelect) {
+  for (const sample of formalizeRepoSamples) {
+    const option = document.createElement('option');
+    option.value = sample.text;
+    option.textContent = sample.label;
+    formalizeSampleSelect.append(option);
+  }
+  formalizeSampleSelect.addEventListener('change', () => {
+    const value = formalizeSampleSelect.value;
+    if (!value) {
+      return;
+    }
+    formalizeInput.value = value;
+    formalizeSampleSelect.value = '';
+    runFormalize();
+  });
+}
+
+if (formalizePinAdd) {
+  formalizePinAdd.addEventListener('click', addManualPinFromForm);
+}
+
+function addManualPinFromForm() {
+  if (!formalizePinPhrase || !formalizePinId) {
+    return;
+  }
+  const phrase = formalizePinPhrase.value.trim();
+  const id = formalizePinId.value.trim();
+  const label = formalizePinLabel?.value.trim() ?? '';
+  if (formalizePinError) {
+    formalizePinError.textContent = '';
+  }
+  if (!phrase) {
+    setPinError('Phrase is required.');
+    return;
+  }
+  if (!/^[QP]\d+$/.test(id)) {
+    setPinError('Id must look like Q123 or P31.');
+    return;
+  }
+  const kind = id.startsWith('P') ? 'property' : 'entity';
+  const existing = readExistingOverridesForMerge();
+  if (existing === null) {
+    setPinError('Existing overrides cannot be parsed; fix them first.');
+    return;
+  }
+  const filtered = existing.filter(
+    (entry) =>
+      !(entry?.phrase === phrase && (!entry?.kind || entry.kind === kind))
+  );
+  filtered.push({
+    phrase,
+    entityId: id,
+    label: label || phrase,
+    kind,
+  });
+  if (formalizeOverridesText) {
+    formalizeOverridesText.value = encodeOverridesAsLino(filtered);
+  }
+  formalizePinPhrase.value = '';
+  formalizePinId.value = '';
+  if (formalizePinLabel) {
+    formalizePinLabel.value = '';
+  }
+  runFormalize({ contextLensId: activeContextLensId });
+}
+
+function readExistingOverridesForMerge() {
+  if (!formalizeOverridesText) {
+    return [];
+  }
+  const raw = formalizeOverridesText.value.trim();
+  if (!raw) {
+    return [];
+  }
+  try {
+    const parsed = decodeOverridesText(raw);
+    return Array.isArray(parsed) ? parsed : [];
+  } catch {
+    return null;
+  }
+}
+
+function setPinError(message) {
+  if (formalizePinError) {
+    formalizePinError.textContent = message;
+  }
+}
 
 for (const radio of formalizeTargetRadios) {
   radio.addEventListener('change', () => {

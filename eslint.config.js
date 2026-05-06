@@ -22,6 +22,9 @@ export default [
         __filename: 'readonly',
         // Node.js 18+ globals
         fetch: 'readonly',
+        Response: 'readonly',
+        Request: 'readonly',
+        Headers: 'readonly',
         AbortController: 'readonly',
         document: 'readonly',
         navigator: 'readonly',

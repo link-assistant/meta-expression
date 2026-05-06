@@ -18,10 +18,14 @@ const wikidataPropertyBaseUrl = 'https://www.wikidata.org/wiki/Property:';
 const wikipediaArticleBaseUrl = 'https://en.wikipedia.org/wiki/';
 
 const wordnetApiUrl = 'https://en.wiktionary.org/w/api.php';
+const wiktionaryDefinitionApiUrl =
+  'https://en.wiktionary.org/api/rest_v1/page/definition/';
 
 export const SOURCE_KIND = Object.freeze({
+  WIKIPEDIA: 'wikipedia',
   WIKIDATA: 'wikidata',
   WORDNET: 'wordnet',
+  WIKTIONARY: 'wiktionary',
   FANDOM: 'fandom',
 });
 
@@ -54,9 +58,19 @@ export function createWikidataSource({
     async searchPhrase(text, ctx) {
       const propertyBias = ctx.isPropertyIndicator?.(text) ?? false;
       const types = propertyBias ? ['property', 'item'] : ['item', 'property'];
+      // For single-token candidates that look like English verbs we ALSO
+      // search the bare-infinitive form ("to <word>"). Without this the
+      // Wikidata search ranks `formalize` against pages that contain the
+      // word in their label (Formalized Mathematics, Formalized Music…)
+      // and never surfaces Q115492965 whose canonical label is the
+      // gerund ("formalizing") and whose alias is "to formalize" — see
+      // issue #21.
+      const variants = collectQueryVariants(text);
       const settled = await Promise.all(
-        types.map((type) =>
-          searchWikidataEntities(text, type, ctx, language, searchLimit)
+        types.flatMap((type) =>
+          variants.map((variant) =>
+            searchWikidataEntities(variant, type, ctx, language, searchLimit)
+          )
         )
       );
       return settled.flat();
@@ -75,6 +89,268 @@ export function createWikidataSource({
         String(title).replace(/ /g, '_')
       )}`;
     },
+  };
+}
+
+/**
+ * Build a Wikipedia source resolver.
+ *
+ * The issue mandates Wikipedia as the FIRST disambiguation tier — it
+ * carries the richest article context per phrase and (via
+ * `pageprops.wikibase_item`) tells us which Wikidata Q-id each title
+ * actually points at, so downstream context-walking still works.
+ *
+ * Implementation:
+ *   - `action=query&list=search` for a candidate list (one MediaWiki
+ *     round-trip per phrase).
+ *   - `action=query&prop=pageprops` to backfill the wikibase_item for
+ *     every returned title (one batch round-trip).
+ *
+ * Each candidate carries the canonical Wikidata id as its `.id` so the
+ * existing entity-hydration path (wbgetentities -> claims/sitelinks)
+ * still applies. When a Wikipedia hit has no wikibase_item we fall back
+ * to a `wp:<title>` id so the candidate is at least linkable in the UI.
+ *
+ * @param {object} options
+ * @param {string} [options.language]
+ * @param {number} [options.searchLimit]
+ * @returns {object}
+ */
+export function createWikipediaSource({
+  language = 'en',
+  searchLimit = 5,
+} = {}) {
+  const apiBase = `https://${language}.wikipedia.org/w/api.php`;
+  const articleBase = `https://${language}.wikipedia.org/wiki/`;
+  return {
+    name: SOURCE_KIND.WIKIPEDIA,
+    async searchPhrase(text, ctx) {
+      if (!ctx.fetchImpl) {
+        return [];
+      }
+      const titles = await searchWikipediaTitles(
+        apiBase,
+        text,
+        ctx,
+        searchLimit
+      );
+      if (titles.length === 0) {
+        return [];
+      }
+      const wikibaseIds = await fetchWikipediaWikibaseIds(
+        apiBase,
+        titles.map((entry) => entry.title),
+        ctx
+      );
+      return titles.map((entry) => {
+        const wikibaseId = wikibaseIds.get(entry.title) ?? null;
+        return {
+          id: wikibaseId ?? `wp:${language}:${slugifyTitle(entry.title)}`,
+          label: entry.title,
+          description: entry.snippet ?? '',
+          kind: 'entity',
+          source: SOURCE_KIND.WIKIPEDIA,
+          sourceUrl: `${articleBase}${encodeURIComponent(
+            entry.title.replace(/ /g, '_')
+          )}`,
+          matchText: entry.title,
+          matchType: wikibaseId ? 'label' : null,
+          wikipediaTitle: entry.title,
+          wikipediaUrl: `${articleBase}${encodeURIComponent(
+            entry.title.replace(/ /g, '_')
+          )}`,
+          wikibaseId,
+        };
+      });
+    },
+    getEntity() {
+      return null;
+    },
+    resolveUrl(entity) {
+      return entity?.wikipediaUrl ?? entity?.sourceUrl ?? null;
+    },
+  };
+}
+
+async function searchWikipediaTitles(apiBase, text, ctx, limit) {
+  const url = new URL(apiBase);
+  url.search = new URLSearchParams({
+    action: 'query',
+    format: 'json',
+    list: 'search',
+    srsearch: text,
+    srlimit: String(limit),
+    origin: '*',
+  }).toString();
+  let payload;
+  try {
+    payload = await ctx.fetchJson(url);
+  } catch {
+    return [];
+  }
+  const search = payload?.query?.search;
+  if (!Array.isArray(search)) {
+    return [];
+  }
+  return search
+    .filter((entry) => typeof entry?.title === 'string')
+    .map((entry) => ({
+      title: entry.title,
+      snippet: stripHtml(entry.snippet ?? ''),
+    }));
+}
+
+async function fetchWikipediaWikibaseIds(apiBase, titles, ctx) {
+  const result = new Map();
+  if (titles.length === 0) {
+    return result;
+  }
+  const url = new URL(apiBase);
+  url.search = new URLSearchParams({
+    action: 'query',
+    format: 'json',
+    prop: 'pageprops',
+    titles: titles.join('|'),
+    ppprop: 'wikibase_item',
+    origin: '*',
+  }).toString();
+  let payload;
+  try {
+    payload = await ctx.fetchJson(url);
+  } catch {
+    return result;
+  }
+  const pages = payload?.query?.pages;
+  if (!pages || typeof pages !== 'object') {
+    return result;
+  }
+  for (const page of Object.values(pages)) {
+    const wikibaseId = page?.pageprops?.wikibase_item;
+    if (typeof page?.title === 'string' && typeof wikibaseId === 'string') {
+      result.set(page.title, wikibaseId);
+    }
+  }
+  return result;
+}
+
+function stripHtml(text) {
+  return String(text).replace(/<[^>]+>/g, '');
+}
+
+function slugifyTitle(text) {
+  return String(text).toLowerCase().replace(/\s+/g, '_');
+}
+
+/**
+ * Build a Wiktionary fallback resolver.
+ *
+ * Wiktionary's REST-v1 definition endpoint returns clean per-PoS
+ * definitions for a single token. This is the LAST disambiguation
+ * tier per issue #21 — it ensures even glue words (`the`, `of`,
+ * `and`) get a tooltip-worthy hit when Wikipedia and Wikidata return
+ * nothing.
+ *
+ * @param {object} options
+ * @param {string} [options.language]
+ * @param {number} [options.maxDefinitions]
+ * @returns {object}
+ */
+export function createWiktionarySource({
+  language = 'en',
+  maxDefinitions = 3,
+} = {}) {
+  return {
+    name: SOURCE_KIND.WIKTIONARY,
+    async searchPhrase(text, ctx) {
+      const trimmed = normalizeWiktionaryQuery(text);
+      if (!trimmed || !ctx.fetchImpl) {
+        return [];
+      }
+      const payload = await fetchWiktionaryDefinitions(trimmed, ctx);
+      return buildWiktionaryCandidates(
+        payload?.[language],
+        trimmed,
+        language,
+        maxDefinitions
+      );
+    },
+    getEntity() {
+      return null;
+    },
+    resolveUrl(entity) {
+      return entity?.sourceUrl ?? null;
+    },
+  };
+}
+
+function normalizeWiktionaryQuery(text) {
+  const trimmed = String(text).trim();
+  if (!trimmed || /\s/.test(trimmed)) {
+    return null;
+  }
+  return trimmed;
+}
+
+async function fetchWiktionaryDefinitions(trimmed, ctx) {
+  const url = new URL(
+    `${wiktionaryDefinitionApiUrl}${encodeURIComponent(trimmed)}`
+  );
+  try {
+    return await ctx.fetchJson(url);
+  } catch {
+    return null;
+  }
+}
+
+function buildWiktionaryCandidates(entries, trimmed, language, maxDefinitions) {
+  if (!Array.isArray(entries)) {
+    return [];
+  }
+  const candidates = [];
+  for (const entry of entries) {
+    const definitions = Array.isArray(entry?.definitions)
+      ? entry.definitions.slice(0, maxDefinitions)
+      : [];
+    for (const definition of definitions) {
+      const definitionText = stripHtml(definition?.definition ?? '');
+      if (!definitionText) {
+        continue;
+      }
+      candidates.push(
+        makeWiktionaryCandidate(
+          entry,
+          definitionText,
+          trimmed,
+          language,
+          candidates.length
+        )
+      );
+    }
+  }
+  return candidates;
+}
+
+function makeWiktionaryCandidate(
+  entry,
+  definitionText,
+  trimmed,
+  language,
+  index
+) {
+  const partOfSpeech = entry.partOfSpeech ?? 'definition';
+  return {
+    id: `wikt:${language}:${slugifyTitle(trimmed)}#${partOfSpeech}:${index}`,
+    label: trimmed,
+    description: definitionText,
+    kind: 'entity',
+    source: SOURCE_KIND.WIKTIONARY,
+    sourceUrl: `https://${language}.wiktionary.org/wiki/${encodeURIComponent(
+      trimmed
+    )}`,
+    matchText: trimmed,
+    matchType: 'definition',
+    partOfSpeech: entry.partOfSpeech ?? null,
+    definition: definitionText,
   };
 }
 
@@ -212,6 +488,37 @@ export function createFandomSource({
   };
 }
 
+// English verbs whose Wikidata gerund is the canonical label can only be
+// reached by also searching for the bare-infinitive form. We prepend
+// "to " for single-token queries that look verb-like (end in -ize, -ise,
+// -ate, -ify, -en, -ed, or are short enough to plausibly be an
+// infinitive). Multi-token phrases skip the expansion.
+const verbLikeSuffixes = ['ize', 'ise', 'ate', 'ify', 'en', 'ed'];
+
+function collectQueryVariants(text) {
+  const trimmed = String(text).trim();
+  if (!trimmed) {
+    return [trimmed];
+  }
+  const variants = [trimmed];
+  const lower = trimmed.toLowerCase();
+  if (
+    !lower.includes(' ') &&
+    !lower.startsWith('to ') &&
+    looksLikeVerb(lower)
+  ) {
+    variants.push(`to ${lower}`);
+  }
+  return variants;
+}
+
+function looksLikeVerb(token) {
+  if (token.length < 3) {
+    return false;
+  }
+  return verbLikeSuffixes.some((suffix) => token.endsWith(suffix));
+}
+
 async function searchWikidataEntities(query, type, ctx, language, searchLimit) {
   if (!ctx.fetchImpl) {
     return [];
@@ -243,6 +550,10 @@ async function searchWikidataEntities(query, type, ctx, language, searchLimit) {
         ? `${wikidataPropertyBaseUrl}${entry.id}`
         : `${wikidataEntityBaseUrl}${entry.id}`,
     matchText: entry.match?.text ?? '',
+    matchType: entry.match?.type ?? null,
+    aliases: Array.isArray(entry.aliases)
+      ? entry.aliases.filter((value) => typeof value === 'string')
+      : [],
   }));
 }
 
@@ -257,7 +568,7 @@ async function fetchWikidataEntity(id, ctx, language) {
     ids: id,
     languages: language,
     origin: '*',
-    props: 'labels|descriptions|claims|sitelinks',
+    props: 'labels|aliases|descriptions|claims|sitelinks',
     sitefilter: 'enwiki',
   }).toString();
   let payload;
@@ -323,8 +634,16 @@ export function parseSourceSpec(spec) {
   }
   const sources = [];
   for (const token of tokens) {
+    if (token === SOURCE_KIND.WIKIPEDIA) {
+      sources.push(createWikipediaSource());
+      continue;
+    }
     if (token === SOURCE_KIND.WIKIDATA) {
       sources.push(createWikidataSource());
+      continue;
+    }
+    if (token === SOURCE_KIND.WIKTIONARY) {
+      sources.push(createWiktionarySource());
       continue;
     }
     if (token === SOURCE_KIND.WORDNET) {
@@ -344,4 +663,21 @@ export function parseSourceSpec(spec) {
     throw new Error(`Unknown formalize source: ${token}`);
   }
   return sources;
+}
+
+/**
+ * Default tier order per issue #21:
+ *   1. Wikipedia (richest article context, carries wikibase_item)
+ *   2. Wikidata  (canonical Q/P graph, holds claims for context BFS)
+ *   3. Wiktionary (last-resort lexical fallback for stop words / verbs)
+ *
+ * @param {string} [language]
+ * @returns {object[]}
+ */
+export function createDefaultSourceTiers(language = 'en') {
+  return [
+    createWikipediaSource({ language }),
+    createWikidataSource({ language }),
+    createWiktionarySource({ language }),
+  ];
 }

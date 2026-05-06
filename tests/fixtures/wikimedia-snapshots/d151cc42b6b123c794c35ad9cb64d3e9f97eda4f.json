@@ -1,0 +1,51 @@
+{
+  "url": "https://en.wikipedia.org/w/api.php?action=query&format=json&prop=pageprops&titles=Hawaii%7CHawaiian%7CHawaii+%28disambiguation%29%7CHawaiian+Kingdom%7CHawai%CA%BBi+%28island%29&ppprop=wikibase_item&origin=*",
+  "recordedAt": "2026-05-06T19:36:52.039Z",
+  "value": {
+    "batchcomplete": "",
+    "query": {
+      "pages": {
+        "13270": {
+          "pageid": 13270,
+          "ns": 0,
+          "title": "Hawaii",
+          "pageprops": {
+            "wikibase_item": "Q782"
+          }
+        },
+        "70962": {
+          "pageid": 70962,
+          "ns": 0,
+          "title": "Hawaiʻi (island)",
+          "pageprops": {
+            "wikibase_item": "Q68740"
+          }
+        },
+        "361860": {
+          "pageid": 361860,
+          "ns": 0,
+          "title": "Hawaiian",
+          "pageprops": {
+            "wikibase_item": "Q1179153"
+          }
+        },
+        "2428332": {
+          "pageid": 2428332,
+          "ns": 0,
+          "title": "Hawaii (disambiguation)",
+          "pageprops": {
+            "wikibase_item": "Q68392"
+          }
+        },
+        "23363583": {
+          "pageid": 23363583,
+          "ns": 0,
+          "title": "Hawaiian Kingdom",
+          "pageprops": {
+            "wikibase_item": "Q156418"
+          }
+        }
+      }
+    }
+  }
+}

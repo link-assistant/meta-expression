@@ -102,14 +102,22 @@ function makeFetch(routes) {
 
 // eslint-disable-next-line max-lines-per-function
 describe('issue 15 — formalize text into Wikipedia/Wikidata-anchored phrases', () => {
-  it('tokenizes input and skips stop-only n-grams', () => {
-    const tokens = tokenizeForFormalize('Barack Obama was born in Hawaii.');
-    expect(tokens.join(' ')).toBe('Barack Obama was born in Hawaii');
+  it('tokenizes input and tags stop-only single-token n-grams (issue #21)', () => {
+    // Issue #21: single-token stop words like `in` must survive n-gram
+    // generation so the Wiktionary fallback can attach a definition to
+    // them. Multi-token stop-only spans (`in the`, `to the`) remain
+    // useless and are still skipped.
+    const tokens = tokenizeForFormalize('Barack Obama was born in the Hawaii.');
+    expect(tokens.join(' ')).toBe('Barack Obama was born in the Hawaii');
     const ngrams = generateFormalizeNgrams(tokens, 3);
     const stopOnly = ngrams.find((entry) => entry.text === 'in');
-    expect(stopOnly).toBe(undefined);
+    expect(stopOnly).not.toBe(undefined);
+    expect(stopOnly.stopOnly).toBe(true);
+    const multiStop = ngrams.find((entry) => entry.text === 'in the');
+    expect(multiStop).toBe(undefined);
     const longest = ngrams.find((entry) => entry.text === 'Barack Obama was');
     expect(longest).not.toBe(undefined);
+    expect(longest.stopOnly).toBe(false);
   });
 
   it('prefers the longest non-overlapping match (Barack Obama as one entity)', async () => {
@@ -441,13 +449,40 @@ describe('issue 15 — formalize text into Wikipedia/Wikidata-anchored phrases',
     );
   });
 
-  it('always includes the configured Wikidata API endpoint when fetching', async () => {
+  it('routes default-tier traffic to Wikipedia, Wikidata, and Wiktionary endpoints', async () => {
+    // Issue #21 changed the default source list to the three-tier stack
+    // (Wikipedia → Wikidata → Wiktionary). Each tier owns a different
+    // hostname; this test pins those hostnames so a future regression
+    // that drops a tier (or fetches some unexpected origin) trips fast.
     const requested = [];
     const fetchImpl = (url) => {
-      requested.push(url);
+      requested.push(String(url));
       return jsonResponse({ search: [] });
     };
     await formalizeTextWith('test', { fetch: fetchImpl, now: () => 0 });
+    const allowedOrigins = [
+      'https://www.wikidata.org/w/api.php',
+      'https://en.wikipedia.org/w/api.php',
+      'https://en.wiktionary.org/api/rest_v1/page/definition/',
+    ];
+    expect(
+      requested.every((url) =>
+        allowedOrigins.some((origin) => url.startsWith(origin))
+      )
+    ).toBe(true);
+  });
+
+  it('still uses only the Wikidata endpoint when sources are explicitly set to Wikidata', async () => {
+    const requested = [];
+    const fetchImpl = (url) => {
+      requested.push(String(url));
+      return jsonResponse({ search: [] });
+    };
+    await formalizeTextWith('test', {
+      fetch: fetchImpl,
+      now: () => 0,
+      sources: [createWikidataSource()],
+    });
     expect(requested.every((url) => url.startsWith(wikidataApiUrl))).toBe(true);
   });
 });
@@ -794,6 +829,9 @@ describe('issue 15 — HTTP /formalize endpoint with persistent cache', () => {
     let upstreamCalls = 0;
     globalThis.fetch = function trackedFetch(url, init) {
       const target = String(url);
+      if (target.includes('wiktionary.org')) {
+        return jsonResponse({});
+      }
       if (target.includes('wikidata.org') || target.includes('wikipedia.org')) {
         upstreamCalls += 1;
         const mock = makeFetch({
@@ -881,6 +919,9 @@ describe('issue 15 — HTTP /formalize endpoint with persistent cache', () => {
     });
     globalThis.fetch = function (url, init) {
       const target = String(url);
+      if (target.includes('wiktionary.org')) {
+        return jsonResponse({});
+      }
       if (target.includes('wikidata.org') || target.includes('wikipedia.org')) {
         return mockUpstream(target);
       }
@@ -913,6 +954,9 @@ describe('issue 15 — HTTP /formalize endpoint with persistent cache', () => {
     const previousFetch = globalThis.fetch;
     globalThis.fetch = function (url, init) {
       const target = String(url);
+      if (target.includes('wiktionary.org')) {
+        return jsonResponse({});
+      }
       if (target.includes('wikidata.org') || target.includes('wikipedia.org')) {
         const mock = makeFetch({});
         return mock(target);

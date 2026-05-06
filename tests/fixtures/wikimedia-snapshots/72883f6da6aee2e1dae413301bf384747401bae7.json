@@ -1,0 +1,123 @@
+{
+  "url": "https://www.wikidata.org/w/api.php?action=wbsearchentities&format=json&language=en&origin=*&type=item&limit=5&search=formalize",
+  "recordedAt": "2026-05-06T19:38:15.260Z",
+  "value": {
+    "searchinfo": {
+      "search": "formalize"
+    },
+    "search": [
+      {
+        "id": "Q50814811",
+        "title": "Q50814811",
+        "pageid": 51754111,
+        "concepturi": "http://www.wikidata.org/entity/Q50814811",
+        "repository": "wikidata",
+        "url": "//www.wikidata.org/wiki/Q50814811",
+        "display": {
+          "label": {
+            "value": "Formalized Mathematics",
+            "language": "en"
+          },
+          "description": {
+            "value": "Academic journal published by De Gruyter Open, covering the subjects: Science: Mathematics",
+            "language": "en"
+          }
+        },
+        "label": "Formalized Mathematics",
+        "description": "Academic journal published by De Gruyter Open, covering the subjects: Science: Mathematics",
+        "match": {
+          "type": "label",
+          "language": "en",
+          "text": "Formalized Mathematics"
+        }
+      },
+      {
+        "id": "Q11688701",
+        "title": "Q11688701",
+        "pageid": 12826969,
+        "concepturi": "http://www.wikidata.org/entity/Q11688701",
+        "repository": "wikidata",
+        "url": "//www.wikidata.org/wiki/Q11688701",
+        "display": {
+          "label": {
+            "value": "formalized language",
+            "language": "en"
+          }
+        },
+        "label": "formalized language",
+        "match": {
+          "type": "label",
+          "language": "en",
+          "text": "formalized language"
+        }
+      },
+      {
+        "id": "Q111180325",
+        "title": "Q111180325",
+        "pageid": 106169480,
+        "concepturi": "http://www.wikidata.org/entity/Q111180325",
+        "repository": "wikidata",
+        "url": "//www.wikidata.org/wiki/Q111180325",
+        "display": {
+          "label": {
+            "value": "Formalized, Complex, and Costly",
+            "language": "en"
+          },
+          "description": {
+            "value": "episode of Orphan Black",
+            "language": "en"
+          }
+        },
+        "label": "Formalized, Complex, and Costly",
+        "description": "episode of Orphan Black",
+        "match": {
+          "type": "label",
+          "language": "en",
+          "text": "Formalized, Complex, and Costly"
+        }
+      },
+      {
+        "id": "Q5469987",
+        "title": "Q5469987",
+        "pageid": 5231059,
+        "concepturi": "http://www.wikidata.org/entity/Q5469987",
+        "repository": "wikidata",
+        "url": "//www.wikidata.org/wiki/Q5469987",
+        "display": {
+          "label": {
+            "value": "Formalized Music",
+            "language": "en"
+          }
+        },
+        "label": "Formalized Music",
+        "match": {
+          "type": "label",
+          "language": "en",
+          "text": "Formalized Music"
+        }
+      },
+      {
+        "id": "Q25339778",
+        "title": "Q25339778",
+        "pageid": 27292735,
+        "concepturi": "http://www.wikidata.org/entity/Q25339778",
+        "repository": "wikidata",
+        "url": "//www.wikidata.org/wiki/Q25339778",
+        "display": {
+          "label": {
+            "value": "Formalized Administrative Notation",
+            "language": "en"
+          }
+        },
+        "label": "Formalized Administrative Notation",
+        "match": {
+          "type": "label",
+          "language": "en",
+          "text": "Formalized Administrative Notation"
+        }
+      }
+    ],
+    "search-continue": 5,
+    "success": 1
+  }
+}

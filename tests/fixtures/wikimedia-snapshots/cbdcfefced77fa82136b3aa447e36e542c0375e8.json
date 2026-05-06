@@ -1,0 +1,650 @@
+{
+  "url": "https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&ids=Q20442589&languages=en&origin=*&props=labels%7Cclaims",
+  "recordedAt": "2026-05-06T19:38:14.768Z",
+  "value": {
+    "entities": {
+      "Q20442589": {
+        "type": "item",
+        "id": "Q20442589",
+        "labels": {
+          "en": {
+            "language": "en",
+            "value": "LGBTQ-related film"
+          }
+        },
+        "claims": {
+          "P31": [
+            {
+              "mainsnak": {
+                "snaktype": "value",
+                "property": "P31",
+                "hash": "8b0fd4d1ae47b58babd96ac22711828a48f6f7e1",
+                "datavalue": {
+                  "value": {
+                    "entity-type": "item",
+                    "numeric-id": 201658,
+                    "id": "Q201658"
+                  },
+                  "type": "wikibase-entityid"
+                },
+                "datatype": "wikibase-item"
+              },
+              "type": "statement",
+              "id": "Q20442589$4e1a7bfd-497b-babf-79e1-03c7c3b7ca86",
+              "rank": "normal"
+            },
+            {
+              "mainsnak": {
+                "snaktype": "value",
+                "property": "P31",
+                "hash": "241f09cf1862913571669dc24bd817efb18a620d",
+                "datavalue": {
+                  "value": {
+                    "entity-type": "item",
+                    "numeric-id": 59825918,
+                    "id": "Q59825918"
+                  },
+                  "type": "wikibase-entityid"
+                },
+                "datatype": "wikibase-item"
+              },
+              "type": "statement",
+              "id": "Q20442589$56a84a61-45c1-1f3d-e4ea-cdc61654bf37",
+              "rank": "normal"
+            }
+          ],
+          "P910": [
+            {
+              "mainsnak": {
+                "snaktype": "value",
+                "property": "P910",
+                "hash": "c31f3427741442d29ea9969698803dddd1c610ac",
+                "datavalue": {
+                  "value": {
+                    "entity-type": "item",
+                    "numeric-id": 6206659,
+                    "id": "Q6206659"
+                  },
+                  "type": "wikibase-entityid"
+                },
+                "datatype": "wikibase-item"
+              },
+              "type": "statement",
+              "id": "Q20442589$8fa8a3e0-4a73-32e1-1dd7-3437b8c73da9",
+              "rank": "normal"
+            }
+          ],
+          "P373": [
+            {
+              "mainsnak": {
+                "snaktype": "value",
+                "property": "P373",
+                "hash": "37c0e4f9349d8a621843f876eddfa72c118273bb",
+                "datavalue": {
+                  "value": "LGBT-related films",
+                  "type": "string"
+                },
+                "datatype": "string"
+              },
+              "type": "statement",
+              "id": "Q20442589$54697E4D-A67E-4EB0-A70E-34B577DC5B87",
+              "rank": "normal",
+              "references": [
+                {
+                  "hash": "bec393fc869e2bae5ffd830355ad9895188cfaa4",
+                  "snaks": {
+                    "P3452": [
+                      {
+                        "snaktype": "value",
+                        "property": "P3452",
+                        "hash": "bc5de16a4a14c2d29a0d9decc14455cde2fee24a",
+                        "datavalue": {
+                          "value": {
+                            "entity-type": "item",
+                            "numeric-id": 6206659,
+                            "id": "Q6206659"
+                          },
+                          "type": "wikibase-entityid"
+                        },
+                        "datatype": "wikibase-item"
+                      }
+                    ]
+                  },
+                  "snaks-order": ["P3452"]
+                }
+              ]
+            }
+          ],
+          "P1269": [
+            {
+              "mainsnak": {
+                "snaktype": "value",
+                "property": "P1269",
+                "hash": "48569a179c5a573d6ac6c342c38ce758e56040bb",
+                "datavalue": {
+                  "value": {
+                    "entity-type": "item",
+                    "numeric-id": 51389,
+                    "id": "Q51389"
+                  },
+                  "type": "wikibase-entityid"
+                },
+                "datatype": "wikibase-item"
+              },
+              "type": "statement",
+              "id": "Q20442589$efbbbbba-49dd-b6e4-85e7-9f5bd8e4317c",
+              "rank": "normal"
+            },
+            {
+              "mainsnak": {
+                "snaktype": "value",
+                "property": "P1269",
+                "hash": "3dcbabd7352cb20423309f8abb723f3c2f50a355",
+                "datavalue": {
+                  "value": {
+                    "entity-type": "item",
+                    "numeric-id": 17897,
+                    "id": "Q17897"
+                  },
+                  "type": "wikibase-entityid"
+                },
+                "datatype": "wikibase-item"
+              },
+              "type": "statement",
+              "id": "Q20442589$c6f2478b-4317-78b0-99ba-b066deb22931",
+              "rank": "normal"
+            }
+          ],
+          "P279": [
+            {
+              "mainsnak": {
+                "snaktype": "value",
+                "property": "P279",
+                "hash": "e833407ccc6d55db8cddd35dd97583a95e09171e",
+                "datavalue": {
+                  "value": {
+                    "entity-type": "item",
+                    "numeric-id": 11424,
+                    "id": "Q11424"
+                  },
+                  "type": "wikibase-entityid"
+                },
+                "datatype": "wikibase-item"
+              },
+              "type": "statement",
+              "id": "Q20442589$82cc7bf7-4a64-4575-8b00-f8b58da946cb",
+              "rank": "normal"
+            }
+          ],
+          "P2671": [
+            {
+              "mainsnak": {
+                "snaktype": "value",
+                "property": "P2671",
+                "hash": "55b84c40a4091bc4bf590be2a9100a1a3c77a82c",
+                "datavalue": {
+                  "value": "/g/122gwnqd",
+                  "type": "string"
+                },
+                "datatype": "external-id"
+              },
+              "type": "statement",
+              "id": "Q20442589$A3EA8B0D-2089-40C3-BEAC-2711F8A953E0",
+              "rank": "normal"
+            }
+          ],
+          "P4953": [
+            {
+              "mainsnak": {
+                "snaktype": "value",
+                "property": "P4953",
+                "hash": "270cf26210a0014b869d7cc5be0182c96024e0e0",
+                "datavalue": {
+                  "value": "gf2022026039",
+                  "type": "string"
+                },
+                "datatype": "external-id"
+              },
+              "type": "statement",
+              "qualifiers": {
+                "P1810": [
+                  {
+                    "snaktype": "value",
+                    "property": "P1810",
+                    "hash": "322331eb67114636fb860ae0d0eb5e58118b8b2a",
+                    "datavalue": {
+                      "value": "Queer films",
+                      "type": "string"
+                    },
+                    "datatype": "string"
+                  }
+                ],
+                "P4970": [
+                  {
+                    "snaktype": "value",
+                    "property": "P4970",
+                    "hash": "29668cbcb9f8479f8ff99819cf64f955cd3860b8",
+                    "datavalue": {
+                      "value": "GLBTQ+ films",
+                      "type": "string"
+                    },
+                    "datatype": "string"
+                  },
+                  {
+                    "snaktype": "value",
+                    "property": "P4970",
+                    "hash": "4e8c71e4be4b6a94df0baf59143897d01c81a153",
+                    "datavalue": {
+                      "value": "LGBT films",
+                      "type": "string"
+                    },
+                    "datatype": "string"
+                  },
+                  {
+                    "snaktype": "value",
+                    "property": "P4970",
+                    "hash": "d99c492f75575c6b64fc77f2337eeca71c56489e",
+                    "datavalue": {
+                      "value": "LGBTQ+ films",
+                      "type": "string"
+                    },
+                    "datatype": "string"
+                  },
+                  {
+                    "snaktype": "value",
+                    "property": "P4970",
+                    "hash": "b7b8118392ee9e8cd45d11058e91cf10ca5b06e7",
+                    "datavalue": {
+                      "value": "Sexual minority films",
+                      "type": "string"
+                    },
+                    "datatype": "string"
+                  }
+                ],
+                "P9570": [
+                  {
+                    "snaktype": "value",
+                    "property": "P9570",
+                    "hash": "87668a33ab135d3d1b994a8a0dd57502475e6824",
+                    "datavalue": {
+                      "value": {
+                        "text": "Films about the queer experience.",
+                        "language": "en"
+                      },
+                      "type": "monolingualtext"
+                    },
+                    "datatype": "monolingualtext"
+                  }
+                ]
+              },
+              "qualifiers-order": ["P1810", "P4970", "P9570"],
+              "id": "Q20442589$1815f997-4992-d7df-dc03-60f6429dab52",
+              "rank": "normal"
+            }
+          ],
+          "P10192": [
+            {
+              "mainsnak": {
+                "snaktype": "value",
+                "property": "P10192",
+                "hash": "27b2bebf34c4341f8bb76315367db48eebd1ca89",
+                "datavalue": {
+                  "value": "homoit0000869",
+                  "type": "string"
+                },
+                "datatype": "external-id"
+              },
+              "type": "statement",
+              "qualifiers": {
+                "P1810": [
+                  {
+                    "snaktype": "value",
+                    "property": "P1810",
+                    "hash": "ad695b583df386d99262d95f15dd5fd5a9bfe5a7",
+                    "datavalue": {
+                      "value": "LGBTQ+ films",
+                      "type": "string"
+                    },
+                    "datatype": "string"
+                  }
+                ],
+                "P4970": [
+                  {
+                    "snaktype": "value",
+                    "property": "P4970",
+                    "hash": "bc54d8caecea5246d6519905af10b5bc1269593b",
+                    "datavalue": {
+                      "value": "LGBTQ films",
+                      "type": "string"
+                    },
+                    "datatype": "string"
+                  }
+                ]
+              },
+              "qualifiers-order": ["P1810", "P4970"],
+              "id": "Q20442589$0286033E-C832-48F8-965F-1AB852258CB8",
+              "rank": "normal"
+            }
+          ],
+          "P6417": [
+            {
+              "mainsnak": {
+                "snaktype": "value",
+                "property": "P6417",
+                "hash": "2894f402c13fa35e8a3a936bebb7b7539c530eca",
+                "datavalue": {
+                  "value": "LGBTQFilms",
+                  "type": "string"
+                },
+                "datatype": "external-id"
+              },
+              "type": "statement",
+              "id": "Q20442589$96771abf-4f2f-f0fb-375e-57beb47d3ad7",
+              "rank": "normal"
+            }
+          ],
+          "P11137": [
+            {
+              "mainsnak": {
+                "snaktype": "value",
+                "property": "P11137",
+                "hash": "e78b3635e348911081efb5b8b653b310d477492e",
+                "datavalue": {
+                  "value": "lgbt_movie",
+                  "type": "string"
+                },
+                "datatype": "external-id"
+              },
+              "type": "statement",
+              "id": "Q20442589$92642181-5604-4934-9A51-EED5728374BC",
+              "rank": "normal"
+            }
+          ],
+          "P11588": [
+            {
+              "mainsnak": {
+                "snaktype": "value",
+                "property": "P11588",
+                "hash": "b21f832876bd308636865fb0383bb36687f90f64",
+                "datavalue": {
+                  "value": "LGBTQ",
+                  "type": "string"
+                },
+                "datatype": "external-id"
+              },
+              "type": "statement",
+              "id": "Q20442589$EEE3D93B-DD65-4420-8595-E327635CE513",
+              "rank": "normal"
+            }
+          ],
+          "P11564": [
+            {
+              "mainsnak": {
+                "snaktype": "value",
+                "property": "P11564",
+                "hash": "e4c2778599902a682b587797f41f5da2de1e0a28",
+                "datavalue": {
+                  "value": "subgenre/ag1118",
+                  "type": "string"
+                },
+                "datatype": "external-id"
+              },
+              "type": "statement",
+              "qualifiers": {
+                "P1810": [
+                  {
+                    "snaktype": "value",
+                    "property": "P1810",
+                    "hash": "498141e16b3d48983e3d0b4e86f593982290bce9",
+                    "datavalue": {
+                      "value": "LGBT-Related Film",
+                      "type": "string"
+                    },
+                    "datatype": "string"
+                  }
+                ]
+              },
+              "qualifiers-order": ["P1810"],
+              "id": "Q20442589$6017F4D9-E28B-485C-A374-823F45676556",
+              "rank": "normal"
+            }
+          ],
+          "P2354": [
+            {
+              "mainsnak": {
+                "snaktype": "value",
+                "property": "P2354",
+                "hash": "4ba50b74cec15db2db41f37eae6a13b0424c5fdc",
+                "datavalue": {
+                  "value": {
+                    "entity-type": "item",
+                    "numeric-id": 1091334,
+                    "id": "Q1091334"
+                  },
+                  "type": "wikibase-entityid"
+                },
+                "datatype": "wikibase-item"
+              },
+              "type": "statement",
+              "id": "Q20442589$8a95c652-4422-cea6-c899-28ab2ebc941f",
+              "rank": "normal"
+            }
+          ],
+          "P1382": [
+            {
+              "mainsnak": {
+                "snaktype": "value",
+                "property": "P1382",
+                "hash": "bd603a7f0be6ce90632904c0c6a1b28296d2ca25",
+                "datavalue": {
+                  "value": {
+                    "entity-type": "item",
+                    "numeric-id": 102141681,
+                    "id": "Q102141681"
+                  },
+                  "type": "wikibase-entityid"
+                },
+                "datatype": "wikibase-item"
+              },
+              "type": "statement",
+              "id": "Q20442589$085ebb8c-4bb9-9b34-05d9-a56b4b528527",
+              "rank": "normal"
+            },
+            {
+              "mainsnak": {
+                "snaktype": "value",
+                "property": "P1382",
+                "hash": "87d8f5b4b8cc08244947193a48d80b6c7ccd550e",
+                "datavalue": {
+                  "value": {
+                    "entity-type": "item",
+                    "numeric-id": 128149892,
+                    "id": "Q128149892"
+                  },
+                  "type": "wikibase-entityid"
+                },
+                "datatype": "wikibase-item"
+              },
+              "type": "statement",
+              "id": "Q20442589$8f28b4a6-47a0-886f-6e26-3647a7a20da6",
+              "rank": "normal"
+            }
+          ],
+          "P13438": [
+            {
+              "mainsnak": {
+                "snaktype": "value",
+                "property": "P13438",
+                "hash": "ca95ca6dbb92ecb74c62542d4a6158b44e2f28ed",
+                "datavalue": {
+                  "value": "homoit0000869",
+                  "type": "string"
+                },
+                "datatype": "external-id"
+              },
+              "type": "statement",
+              "qualifiers": {
+                "P1810": [
+                  {
+                    "snaktype": "value",
+                    "property": "P1810",
+                    "hash": "ad695b583df386d99262d95f15dd5fd5a9bfe5a7",
+                    "datavalue": {
+                      "value": "LGBTQ+ films",
+                      "type": "string"
+                    },
+                    "datatype": "string"
+                  },
+                  {
+                    "snaktype": "value",
+                    "property": "P1810",
+                    "hash": "5095bb72896590297106c7afa0160ecbd1fb7127",
+                    "datavalue": {
+                      "value": "Películas LGBTQ+",
+                      "type": "string"
+                    },
+                    "datatype": "string"
+                  }
+                ],
+                "P4970": [
+                  {
+                    "snaktype": "value",
+                    "property": "P4970",
+                    "hash": "bc54d8caecea5246d6519905af10b5bc1269593b",
+                    "datavalue": {
+                      "value": "LGBTQ films",
+                      "type": "string"
+                    },
+                    "datatype": "string"
+                  }
+                ],
+                "P4390": [
+                  {
+                    "snaktype": "value",
+                    "property": "P4390",
+                    "hash": "97a9b264c1cbc8ac9d7b66aad848f24c10d8c118",
+                    "datavalue": {
+                      "value": {
+                        "entity-type": "item",
+                        "numeric-id": 39893184,
+                        "id": "Q39893184"
+                      },
+                      "type": "wikibase-entityid"
+                    },
+                    "datatype": "wikibase-item"
+                  }
+                ],
+                "P9570": [
+                  {
+                    "snaktype": "value",
+                    "property": "P9570",
+                    "hash": "de2d368838c5971ff119315c1033292f3716cb2f",
+                    "datavalue": {
+                      "value": {
+                        "text": "Series of moving images edited to tell a story or capture an event; use in reference to films focusing on LGBTQ+ characters or themes.",
+                        "language": "en"
+                      },
+                      "type": "monolingualtext"
+                    },
+                    "datatype": "monolingualtext"
+                  },
+                  {
+                    "snaktype": "value",
+                    "property": "P9570",
+                    "hash": "768cd8136b9f36510b383b8dbee63104aeb5d128",
+                    "datavalue": {
+                      "value": {
+                        "text": "Serie de imágenes en movimiento editadas para contar una historia o capturar un evento; utilícese en referencia a películas centradas en personajes o temas LGBTQ+.",
+                        "language": "es"
+                      },
+                      "type": "monolingualtext"
+                    },
+                    "datatype": "monolingualtext"
+                  }
+                ],
+                "P4900": [
+                  {
+                    "snaktype": "somevalue",
+                    "property": "P4900",
+                    "hash": "1e4ebf0abbf381be1dd61c8600bcdaa3d10a474d",
+                    "datatype": "wikibase-item"
+                  }
+                ]
+              },
+              "qualifiers-order": ["P1810", "P4970", "P4390", "P9570", "P4900"],
+              "id": "Q20442589$7FE9AC6A-93E9-45D4-BC9A-099E76F17C96",
+              "rank": "normal"
+            }
+          ],
+          "P11924": [
+            {
+              "mainsnak": {
+                "snaktype": "value",
+                "property": "P11924",
+                "hash": "b3ae90180f5333393a43974d192be57f7ac842e4",
+                "datavalue": {
+                  "value": "lgbt-cinema",
+                  "type": "string"
+                },
+                "datatype": "external-id"
+              },
+              "type": "statement",
+              "id": "Q20442589$4B5942F4-4BA6-448D-AE21-937124A86E24",
+              "rank": "normal"
+            }
+          ],
+          "P14003": [
+            {
+              "mainsnak": {
+                "snaktype": "value",
+                "property": "P14003",
+                "hash": "8ffac502a4cb6ecabb085b93fbd52dedd41f70bc",
+                "datavalue": {
+                  "value": "lgbtq-film",
+                  "type": "string"
+                },
+                "datatype": "external-id"
+              },
+              "type": "statement",
+              "id": "Q20442589$C24C4EB3-EA8A-4188-AEDB-BE94628A4C8D",
+              "rank": "normal"
+            },
+            {
+              "mainsnak": {
+                "snaktype": "value",
+                "property": "P14003",
+                "hash": "2a28cca77c58a0e30e9ba5a728aa8c66a7e3764b",
+                "datavalue": {
+                  "value": "lgbtq-films",
+                  "type": "string"
+                },
+                "datatype": "external-id"
+              },
+              "type": "statement",
+              "id": "Q20442589$0D2956D8-9079-4B41-B1D4-DE029142E8D4",
+              "rank": "normal"
+            }
+          ],
+          "P18": [
+            {
+              "mainsnak": {
+                "snaktype": "value",
+                "property": "P18",
+                "hash": "48c003458bf53fdab83ee0eebd4d1a39f4333e53",
+                "datavalue": {
+                  "value": "\"Over Da Rainbow\" (Film) One-Sheet.jpg",
+                  "type": "string"
+                },
+                "datatype": "commonsMedia"
+              },
+              "type": "statement",
+              "id": "Q20442589$752a6da2-4761-0ac7-89ad-118acc5232ec",
+              "rank": "normal"
+            }
+          ]
+        }
+      }
+    },
+    "success": 1
+  }
+}

@@ -282,9 +282,19 @@
           </p>
         </header>
 
-        <label class="formalize-input-label" for="formalize-input"
-          ><span data-i18n="formalize.text">Text</span></label
-        >
+        <div class="formalize-input-row">
+          <label class="formalize-input-label" for="formalize-input"
+            ><span data-i18n="formalize.text">Text</span></label
+          >
+          <label class="formalize-sample-label" for="formalize-sample">
+            <span data-i18n="formalize.loadSample">Load repo sample</span>
+            <select id="formalize-sample">
+              <option value="" data-i18n="formalize.pickExample">
+                — pick an example —
+              </option>
+            </select>
+          </label>
+        </div>
         <textarea
           id="formalize-input"
           rows="6"
@@ -336,10 +346,30 @@ Barack Obama was born in Hawaii.</textarea
               <input
                 type="checkbox"
                 name="formalize-source"
+                value="wikipedia"
+                checked
+              />
+              Wikipedia
+            </label>
+            <label>
+              <input
+                type="checkbox"
+                name="formalize-source"
                 value="wikidata"
                 checked
               />
               <span data-i18n="formalize.sourceWikidata">Wikidata</span>
+            </label>
+            <label class="formalize-source-option">
+              <input
+                type="checkbox"
+                name="formalize-source"
+                value="wiktionary"
+                checked
+              />
+              <span data-i18n="formalize.sourceWiktionary"
+                >Wiktionary (definitions)</span
+              >
             </label>
             <label class="formalize-source-option">
               <input type="checkbox" name="formalize-source" value="wordnet" />
@@ -408,6 +438,38 @@ Barack Obama was born in Hawaii.</textarea
             </label>
           </fieldset>
         </div>
+
+        <details class="formalize-manual-pin">
+          <summary>Pin a phrase to a Q/P id</summary>
+          <p class="section-hint">
+            Type a phrase from your text plus the exact Wikidata Q-id (entity)
+            or P-id (property) you want it to resolve to. The pin is appended to
+            the lazy overrides below and re-runs the formalization.
+          </p>
+          <div class="formalize-manual-pin-row">
+            <input
+              type="text"
+              id="formalize-pin-phrase"
+              placeholder="phrase (e.g. formalize)"
+            />
+            <input
+              type="text"
+              id="formalize-pin-id"
+              placeholder="Q-id or P-id (e.g. Q115492965)"
+            />
+            <input
+              type="text"
+              id="formalize-pin-label"
+              placeholder="label (optional)"
+            />
+            <button type="button" id="formalize-pin-add">Pin</button>
+          </div>
+          <p
+            class="formalize-pin-error"
+            id="formalize-pin-error"
+            aria-live="polite"
+          ></p>
+        </details>
 
         <details class="formalize-overrides">
           <summary data-i18n="formalize.overrides">
@@ -485,7 +547,9 @@ Barack Obama was born in Hawaii.</textarea
           <h2 data-i18n="formalize.bigContexts">Big-context categories</h2>
           <p class="section-hint" data-i18n="formalize.bigContextsHint">
             Worlds and domains the text touches (Math, Geography, Star Wars,
-            Genshin Impact, ...). The first item is the dominant world.
+            Genshin Impact, ...). The top 5 are auto-selected — uncheck a world
+            to dim phrases that only contribute to it. Hover a phrase or a world
+            to see the two-way mapping.
           </p>
           <div
             id="formalize-big-contexts"

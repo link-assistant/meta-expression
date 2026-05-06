@@ -49,9 +49,12 @@ export {
 export {
   SOURCE_KIND as FORMALIZE_SOURCES,
   createWikidataSource,
+  createWikipediaSource,
+  createWiktionarySource,
   createWordNetSource,
   createFandomSource,
   createSourceRegistry,
+  createDefaultSourceTiers,
   parseSourceSpec,
 } from './formalize-sources.js';
 export {
@@ -82,7 +85,6 @@ export {
   decodeFromDoublets,
   DOUBLET_TAGS,
 } from './doublets.js';
-
 const arithmeticEqualityPattern =
   /^\s*(-?\d+(?:\.\d+)?)\s*([+*/-])\s*(-?\d+(?:\.\d+)?)\s*=\s*(-?\d+(?:\.\d+)?)\s*$/;
 const arithmeticQuestionPattern =

@@ -21,7 +21,7 @@
 
 import {
   createSourceRegistry,
-  createWikidataSource,
+  createDefaultSourceTiers,
   SOURCE_KIND,
 } from './formalize-sources.js';
 import { aggregateBigContexts } from './formalize-contexts.js';
@@ -284,11 +284,15 @@ export function tokenize(text) {
 }
 
 /**
- * Build all n-grams up to `maxSize` tokens, skipping stop-only n-grams.
+ * Build all n-grams up to `maxSize` tokens. Multi-token stop-only
+ * n-grams are skipped (they're useless on their own), but single-token
+ * stop words are kept and tagged with `stopOnly: true` so the issue
+ * #21 Wiktionary fallback can resolve a definition for `the`, `of`,
+ * etc. Non-stop-word n-grams remain unchanged.
  *
  * @param {string[]} tokens
  * @param {number} [maxSize]
- * @returns {Array<{text:string,tokens:string[],start:number,end:number,size:number}>}
+ * @returns {Array<{text:string,tokens:string[],start:number,end:number,size:number,stopOnly:boolean}>}
  */
 export function generateNgrams(tokens, maxSize = defaultMaxNgramSize) {
   const ngrams = [];
@@ -296,7 +300,8 @@ export function generateNgrams(tokens, maxSize = defaultMaxNgramSize) {
   for (let size = 1; size <= max; size += 1) {
     for (let start = 0; start + size <= tokens.length; start += 1) {
       const slice = tokens.slice(start, start + size);
-      if (isStopOnly(slice)) {
+      const stopOnly = isStopOnly(slice);
+      if (stopOnly && size > 1) {
         continue;
       }
       ngrams.push({
@@ -305,6 +310,7 @@ export function generateNgrams(tokens, maxSize = defaultMaxNgramSize) {
         start,
         end: start + size - 1,
         size,
+        stopOnly,
       });
     }
   }
@@ -396,8 +402,12 @@ function wikidataPageUrl(entity) {
 
 function createConfig(options) {
   const fetchImpl = options.fetch ?? globalThis.fetch?.bind(globalThis) ?? null;
+  // Issue #21: default tier order is Wikipedia → Wikidata → Wiktionary so
+  // every phrase — including stop words like `the` — has at least one
+  // resolver willing to answer. Callers can still override `sources`
+  // explicitly (legacy callers and unit tests do).
   const sources = createSourceRegistry(
-    options.sources ?? [createWikidataSource({ language: options.language })]
+    options.sources ?? createDefaultSourceTiers(options.language ?? 'en')
   );
   return {
     fetchImpl,
@@ -438,8 +448,16 @@ async function searchNgramCandidates(ngram, config) {
   }
   const sourceCtx = buildSourceContext(config);
   const propertyBias = isPropertyIndicator(ngram.text);
+  // Stop-only single-token n-grams go ONLY to Wiktionary so we never
+  // burn Wikipedia/Wikidata calls on `the`, `and`, etc. but still
+  // have a definition to attach for tooltips.
+  const eligibleSources = ngram.stopOnly
+    ? config.sources.all.filter(
+        (source) => source.name === SOURCE_KIND.WIKTIONARY
+      )
+    : config.sources.all;
   const perSource = await Promise.all(
-    config.sources.all.map((source) =>
+    eligibleSources.map((source) =>
       source.searchPhrase(ngram.text, sourceCtx).catch(() => [])
     )
   );
@@ -472,14 +490,24 @@ function isPropertyIndicator(text) {
 }
 
 function mergeSearchResults(results, propertyBias) {
+  // When the same Q-id surfaces from Wikipedia AND Wikidata we want a
+  // single combined candidate that keeps Wikipedia's article URL +
+  // snippet (richer description for tooltips) while preserving the
+  // Wikidata graph hooks (sitelink/claims hydrated later via
+  // wbgetentities). The merge favours non-empty fields from later
+  // results — Wikidata always runs after Wikipedia in the default
+  // tier order, so its `kind`/`source` annotations layer on top.
   const seen = new Map();
   for (const result of results) {
     if (!result?.id) {
       continue;
     }
-    if (!seen.has(result.id)) {
-      seen.set(result.id, result);
+    const previous = seen.get(result.id);
+    if (!previous) {
+      seen.set(result.id, { ...result });
+      continue;
     }
+    seen.set(result.id, mergeCandidatePair(previous, result));
   }
   const merged = [...seen.values()];
   if (propertyBias) {
@@ -489,6 +517,45 @@ function mergeSearchResults(results, propertyBias) {
       }
       return left.kind === 'property' ? -1 : 1;
     });
+  }
+  return merged;
+}
+
+function mergeCandidatePair(previous, next) {
+  const merged = { ...previous };
+  for (const [key, value] of Object.entries(next)) {
+    if (value === undefined || value === null || value === '') {
+      continue;
+    }
+    if (key === 'sources') {
+      const all = new Set(
+        [
+          ...(Array.isArray(previous.sources) ? previous.sources : []),
+          ...(previous.source ? [previous.source] : []),
+          ...(Array.isArray(value) ? value : []),
+          next.source,
+        ].filter(Boolean)
+      );
+      merged.sources = [...all];
+      continue;
+    }
+    merged[key] = value;
+  }
+  // Preserve every contributing source name on the candidate so the
+  // scorer can boost Wikipedia-confirmed Wikidata hits.
+  const allSources = new Set(
+    [previous.source, next.source, ...(merged.sources ?? [])].filter(Boolean)
+  );
+  merged.sources = [...allSources];
+  // Wikipedia titles tend to be plain ("Hawaii"); Wikidata labels
+  // sometimes carry disambiguators ("Hawaii (state)"). Keep the
+  // shortest non-empty label for cleaner UX.
+  if (
+    previous.label &&
+    next.label &&
+    previous.label.length < next.label.length
+  ) {
+    merged.label = previous.label;
   }
   return merged;
 }
@@ -517,17 +584,34 @@ function scoreCandidate(ngram, candidate, propertyBias) {
   if (!propertyBias && candidate.kind === 'entity') {
     score += 2;
   }
-  // Wikidata is the primary schema (it's the only one carrying sitelinks
-  // for the Wikipedia fallback rule), so Wikidata candidates win ties even
-  // when a layered source happens to return a slightly more decorated
-  // match — without this bias a bare Wiktionary `matchText` hit can edge
-  // out the canonical Wikidata entry.
-  if (candidate.source === SOURCE_KIND.WIKIDATA) {
+  // Issue #21: Wikipedia is the FIRST disambiguation tier — its
+  // article-driven hit usually reflects the most common reading of a
+  // phrase. Wikidata still gets a smaller boost because it carries the
+  // canonical Q-id graph used for context BFS. Wiktionary is intentionally
+  // unboosted; it's the last-resort lexical fallback for stop words.
+  const sourceTags = collectSourceTags(candidate);
+  if (sourceTags.has(SOURCE_KIND.WIKIPEDIA)) {
+    score += 12;
+  }
+  if (sourceTags.has(SOURCE_KIND.WIKIDATA)) {
     score += 8;
   }
   // Prefer longer phrases.
   score += ngram.size * 3;
   return { ...candidate, score, ngramSize: ngram.size };
+}
+
+function collectSourceTags(candidate) {
+  const tags = new Set();
+  if (candidate.source) {
+    tags.add(candidate.source);
+  }
+  if (Array.isArray(candidate.sources)) {
+    for (const source of candidate.sources) {
+      tags.add(source);
+    }
+  }
+  return tags;
 }
 
 function normalizeLabel(value) {
@@ -629,29 +713,74 @@ async function attachEntityDetails(phrase, config) {
     Object.assign(phrase.entity, overrideToEntity(phrase.entity.overrideEntry));
     return;
   }
-  if (!/^[QP]\d+$/.test(phrase.entity.id)) {
-    return; // non-Wikidata source — no sitelink lookup possible
+  // Hydrate the chosen entity AND every Wikidata-shaped candidate so the
+  // context aggregator can see which categories each alternative
+  // belongs to (issue #21 — without this the contexts panel says
+  // "No shared contexts inferred." even when the alternatives clearly
+  // cluster around the same world).
+  await Promise.all(
+    phrase.candidates.map((candidate) =>
+      hydrateCandidateDetails(candidate, config)
+    )
+  );
+  // Sync the top hydrated candidate back into the phrase entity so
+  // existing renderers keep their wikipediaUrl / contextLabels fields.
+  const top = phrase.candidates[0];
+  if (top?.contextLabels) {
+    phrase.entity.contextLabels = top.contextLabels;
+  }
+  if (top?.wikipediaUrl) {
+    phrase.entity.wikipediaUrl = top.wikipediaUrl;
+    phrase.entity.wikipediaTitle = top.wikipediaTitle ?? null;
+  }
+}
+
+async function hydrateCandidateDetails(candidate, config) {
+  if (!candidate) {
+    return;
+  }
+  if (candidate.overrideEntry) {
+    Object.assign(candidate, overrideToEntity(candidate.overrideEntry));
+    candidate.contextLabels = candidate.contextLabels ?? [];
+    return;
+  }
+  const wikidata = pickWikidataResolver(candidate, config);
+  if (!wikidata) {
+    candidate.contextLabels = candidate.contextLabels ?? [];
+    return;
+  }
+  const entity = await wikidata.getEntity(
+    candidate.id,
+    buildSourceContext(config)
+  );
+  if (!entity) {
+    candidate.contextLabels = candidate.contextLabels ?? [];
+    return;
+  }
+  applyEntityHydration(candidate, entity);
+}
+
+function pickWikidataResolver(candidate, config) {
+  if (!/^[QP]\d+$/.test(candidate.id)) {
+    return null;
   }
   if (!config.fetchImpl) {
-    return;
+    return null;
   }
   const wikidata = config.sources.byName.get(SOURCE_KIND.WIKIDATA);
-  if (!wikidata?.getEntity) {
-    return;
-  }
-  const sourceCtx = buildSourceContext(config);
-  const entity = await wikidata.getEntity(phrase.entity.id, sourceCtx);
-  if (!entity) {
-    return;
-  }
+  return wikidata?.getEntity ? wikidata : null;
+}
+
+function applyEntityHydration(candidate, entity) {
   const sitelink = entity.sitelinks?.enwiki?.title;
   if (sitelink) {
-    phrase.entity.wikipediaTitle = sitelink;
-    phrase.entity.wikipediaUrl = `${wikipediaArticleBaseUrl}${encodeURIComponent(
+    candidate.wikipediaTitle = sitelink;
+    candidate.wikipediaUrl = `${wikipediaArticleBaseUrl}${encodeURIComponent(
       sitelink.replace(/ /g, '_')
     )}`;
   }
-  phrase.entity.contextLabels = extractContextLabels(entity);
+  candidate.contextLabels = extractContextLabels(entity);
+  candidate.aliases = extractAliases(entity);
 }
 
 function extractContextLabels(entity) {
@@ -684,6 +813,19 @@ function wikidataIdFromNumericValue(value) {
   return value['numeric-id'] ? `Q${value['numeric-id']}` : null;
 }
 
+// Surface every alias the entity carries so the candidate matcher can
+// snap "to formalize" → Q115492965 even when the canonical label is
+// "formalizing" (issue #21).
+function extractAliases(entity) {
+  const aliases = entity?.aliases?.en;
+  if (!Array.isArray(aliases)) {
+    return [];
+  }
+  return aliases
+    .map((alias) => alias?.value)
+    .filter((value) => typeof value === 'string' && value.length > 0);
+}
+
 async function fetchJson(url, config) {
   const key = String(url);
   const now = Number(config.now());
@@ -711,18 +853,56 @@ function aggregateContexts(phrases) {
     if (!phrase.entity) {
       continue;
     }
-    for (const label of phrase.entity.contextLabels ?? []) {
-      const key = label.targetId;
-      const entry = counts.get(key) ?? {
-        id: key,
-        property: label.property,
-        propertyLabel: label.propertyLabel,
-        weight: 0,
-        phrases: [],
-      };
-      entry.weight += 1;
-      entry.phrases.push({ text: phrase.text, entityId: phrase.entity.id });
-      counts.set(key, entry);
+    // Walk every candidate (not just the chosen entity) so words with
+    // multiple senses contribute their alternative contexts to the
+    // shared-context election (issue #21 R21.5/R21.6). Each candidate
+    // votes proportional to its share of the phrase's total score so
+    // a strong winner still dominates while weaker alternatives keep
+    // a voice in the aggregate.
+    const candidates = phrase.candidates?.length
+      ? phrase.candidates
+      : [phrase.entity];
+    const totalScore = candidates.reduce(
+      (sum, candidate) => sum + Math.max(candidate?.score ?? 0, 1),
+      0
+    );
+    for (const candidate of candidates) {
+      const candidateWeight =
+        totalScore > 0
+          ? Math.max(candidate?.score ?? 0, 1) / totalScore
+          : 1 / candidates.length;
+      const labels = candidate?.contextLabels ?? [];
+      for (const label of labels) {
+        const key = label.targetId;
+        const entry = counts.get(key) ?? {
+          id: key,
+          property: label.property,
+          propertyLabel: label.propertyLabel,
+          weight: 0,
+          phrases: [],
+          candidates: [],
+        };
+        entry.weight += candidateWeight;
+        entry.candidates.push({
+          phrase: phrase.text,
+          candidateId: candidate.id,
+          candidateLabel: candidate.label,
+          weight: candidateWeight,
+        });
+        if (
+          !entry.phrases.some(
+            (existing) =>
+              existing.text === phrase.text &&
+              existing.entityId === phrase.entity.id
+          )
+        ) {
+          entry.phrases.push({
+            text: phrase.text,
+            entityId: phrase.entity.id,
+          });
+        }
+        counts.set(key, entry);
+      }
     }
   }
   const total = [...counts.values()].reduce(

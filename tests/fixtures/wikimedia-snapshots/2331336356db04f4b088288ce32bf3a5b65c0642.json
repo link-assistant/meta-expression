@@ -1,0 +1,2582 @@
+{
+  "url": "https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&ids=Q35657&languages=en&origin=*&props=labels%7Cclaims",
+  "recordedAt": "2026-05-06T19:36:52.784Z",
+  "value": {
+    "entities": {
+      "Q35657": {
+        "type": "item",
+        "id": "Q35657",
+        "labels": {
+          "en": {
+            "language": "en",
+            "value": "U.S. state"
+          }
+        },
+        "claims": {
+          "P17": [
+            {
+              "mainsnak": {
+                "snaktype": "value",
+                "property": "P17",
+                "hash": "be4c6eafa2984964f04be85667263f5642ba1a72",
+                "datavalue": {
+                  "value": {
+                    "entity-type": "item",
+                    "numeric-id": 30,
+                    "id": "Q30"
+                  },
+                  "type": "wikibase-entityid"
+                },
+                "datatype": "wikibase-item"
+              },
+              "type": "statement",
+              "id": "q35657$B34FBF05-4EA7-4831-B72F-BF236F8D6E82",
+              "rank": "normal",
+              "references": [
+                {
+                  "hash": "393bdc82e4acc41678dbf8c4103a2e4f032a2dd4",
+                  "snaks": {
+                    "P248": [
+                      {
+                        "snaktype": "value",
+                        "property": "P248",
+                        "hash": "d1d1b10a05a8f3fc5d26bb4aeb6849617ad81fc7",
+                        "datavalue": {
+                          "value": {
+                            "entity-type": "item",
+                            "numeric-id": 5375741,
+                            "id": "Q5375741"
+                          },
+                          "type": "wikibase-entityid"
+                        },
+                        "datatype": "wikibase-item"
+                      }
+                    ],
+                    "P1417": [
+                      {
+                        "snaktype": "value",
+                        "property": "P1417",
+                        "hash": "e9ba7953f25e984aba276b2ed8a1252353d0bfc0",
+                        "datavalue": {
+                          "value": "topic/state-United-States-political-subdivision",
+                          "type": "string"
+                        },
+                        "datatype": "external-id"
+                      }
+                    ],
+                    "P813": [
+                      {
+                        "snaktype": "value",
+                        "property": "P813",
+                        "hash": "5c2ed54d404b83559a339feec7c2268a9c1a4ea2",
+                        "datavalue": {
+                          "value": {
+                            "time": "+2023-11-16T00:00:00Z",
+                            "timezone": 0,
+                            "before": 0,
+                            "after": 0,
+                            "precision": 11,
+                            "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                          },
+                          "type": "time"
+                        },
+                        "datatype": "time"
+                      }
+                    ]
+                  },
+                  "snaks-order": ["P248", "P1417", "P813"]
+                }
+              ]
+            }
+          ],
+          "P373": [
+            {
+              "mainsnak": {
+                "snaktype": "value",
+                "property": "P373",
+                "hash": "53aa5d545b6c6060b4af437d33ae6f732317c47d",
+                "datavalue": {
+                  "value": "States of the United States",
+                  "type": "string"
+                },
+                "datatype": "string"
+              },
+              "type": "statement",
+              "id": "q35657$502B172F-BB94-41F1-A673-ADA1BB7E1FCC",
+              "rank": "normal"
+            }
+          ],
+          "P279": [
+            {
+              "mainsnak": {
+                "snaktype": "value",
+                "property": "P279",
+                "hash": "18697814f5524fed76c500c4007d4d43d99bbf10",
+                "datavalue": {
+                  "value": {
+                    "entity-type": "item",
+                    "numeric-id": 852446,
+                    "id": "Q852446"
+                  },
+                  "type": "wikibase-entityid"
+                },
+                "datatype": "wikibase-item"
+              },
+              "type": "statement",
+              "id": "q35657$fe14ac51-41d7-259c-ebbc-d8bdb32081bb",
+              "rank": "normal"
+            },
+            {
+              "mainsnak": {
+                "snaktype": "value",
+                "property": "P279",
+                "hash": "ee777de50384bfb2848324abd8211d417f2b2fc3",
+                "datavalue": {
+                  "value": {
+                    "entity-type": "item",
+                    "numeric-id": 107390,
+                    "id": "Q107390"
+                  },
+                  "type": "wikibase-entityid"
+                },
+                "datatype": "wikibase-item"
+              },
+              "type": "statement",
+              "id": "Q35657$1d8efb24-484e-91f5-ec11-03640585efad",
+              "rank": "normal"
+            },
+            {
+              "mainsnak": {
+                "snaktype": "value",
+                "property": "P279",
+                "hash": "56a24defcf3adcdf32eda3c7cef3cd1472ec6956",
+                "datavalue": {
+                  "value": {
+                    "entity-type": "item",
+                    "numeric-id": 106458883,
+                    "id": "Q106458883"
+                  },
+                  "type": "wikibase-entityid"
+                },
+                "datatype": "wikibase-item"
+              },
+              "type": "statement",
+              "id": "Q35657$f2236fc8-48ee-99fd-e456-5e74ae3d789d",
+              "rank": "normal"
+            },
+            {
+              "mainsnak": {
+                "snaktype": "value",
+                "property": "P279",
+                "hash": "6f3fcd113e8b9c3c717a709ed4086180a6541653",
+                "datavalue": {
+                  "value": {
+                    "entity-type": "item",
+                    "numeric-id": 192611,
+                    "id": "Q192611"
+                  },
+                  "type": "wikibase-entityid"
+                },
+                "datatype": "wikibase-item"
+              },
+              "type": "statement",
+              "id": "Q35657$2b0c67e5-483b-9e5d-3ff8-492c6802c3c1",
+              "rank": "normal"
+            },
+            {
+              "mainsnak": {
+                "snaktype": "value",
+                "property": "P279",
+                "hash": "3b22f05ed51facc47edcb2740ed65fd120c4196e",
+                "datavalue": {
+                  "value": {
+                    "entity-type": "item",
+                    "numeric-id": 10864048,
+                    "id": "Q10864048"
+                  },
+                  "type": "wikibase-entityid"
+                },
+                "datatype": "wikibase-item"
+              },
+              "type": "statement",
+              "id": "Q35657$b99a96af-4152-a23a-6c67-523de8a6135e",
+              "rank": "normal",
+              "references": [
+                {
+                  "hash": "393bdc82e4acc41678dbf8c4103a2e4f032a2dd4",
+                  "snaks": {
+                    "P248": [
+                      {
+                        "snaktype": "value",
+                        "property": "P248",
+                        "hash": "d1d1b10a05a8f3fc5d26bb4aeb6849617ad81fc7",
+                        "datavalue": {
+                          "value": {
+                            "entity-type": "item",
+                            "numeric-id": 5375741,
+                            "id": "Q5375741"
+                          },
+                          "type": "wikibase-entityid"
+                        },
+                        "datatype": "wikibase-item"
+                      }
+                    ],
+                    "P1417": [
+                      {
+                        "snaktype": "value",
+                        "property": "P1417",
+                        "hash": "e9ba7953f25e984aba276b2ed8a1252353d0bfc0",
+                        "datavalue": {
+                          "value": "topic/state-United-States-political-subdivision",
+                          "type": "string"
+                        },
+                        "datatype": "external-id"
+                      }
+                    ],
+                    "P813": [
+                      {
+                        "snaktype": "value",
+                        "property": "P813",
+                        "hash": "5c2ed54d404b83559a339feec7c2268a9c1a4ea2",
+                        "datavalue": {
+                          "value": {
+                            "time": "+2023-11-16T00:00:00Z",
+                            "timezone": 0,
+                            "before": 0,
+                            "after": 0,
+                            "precision": 11,
+                            "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                          },
+                          "type": "time"
+                        },
+                        "datatype": "time"
+                      }
+                    ]
+                  },
+                  "snaks-order": ["P248", "P1417", "P813"]
+                }
+              ]
+            },
+            {
+              "mainsnak": {
+                "snaktype": "value",
+                "property": "P279",
+                "hash": "ce05c4598648eb34423120c2ac6e94bcb2a18a74",
+                "datavalue": {
+                  "value": {
+                    "entity-type": "item",
+                    "numeric-id": 155076,
+                    "id": "Q155076"
+                  },
+                  "type": "wikibase-entityid"
+                },
+                "datatype": "wikibase-item"
+              },
+              "type": "statement",
+              "id": "Q35657$cb1d8ba7-404b-a9e7-dbe8-f54053eda653",
+              "rank": "normal"
+            }
+          ],
+          "P1114": [
+            {
+              "mainsnak": {
+                "snaktype": "value",
+                "property": "P1114",
+                "hash": "712034468b37ecb7ea98cd93a2b7c2b482b45547",
+                "datavalue": {
+                  "value": {
+                    "amount": "+50",
+                    "unit": "1"
+                  },
+                  "type": "quantity"
+                },
+                "datatype": "quantity"
+              },
+              "type": "statement",
+              "qualifiers": {
+                "P580": [
+                  {
+                    "snaktype": "value",
+                    "property": "P580",
+                    "hash": "7ca2805b44fe93019569c626d4b3e9332b8bfaba",
+                    "datavalue": {
+                      "value": {
+                        "time": "+1959-08-21T00:00:00Z",
+                        "timezone": 0,
+                        "before": 0,
+                        "after": 0,
+                        "precision": 11,
+                        "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                      },
+                      "type": "time"
+                    },
+                    "datatype": "time"
+                  }
+                ]
+              },
+              "qualifiers-order": ["P580"],
+              "id": "Q35657$55db1936-493b-3a32-a911-56aceb8dd74a",
+              "rank": "preferred"
+            },
+            {
+              "mainsnak": {
+                "snaktype": "value",
+                "property": "P1114",
+                "hash": "47f24d08591664d6d3a8d7966ddd37ac09acf6c5",
+                "datavalue": {
+                  "value": {
+                    "amount": "+49",
+                    "unit": "1"
+                  },
+                  "type": "quantity"
+                },
+                "datatype": "quantity"
+              },
+              "type": "statement",
+              "qualifiers": {
+                "P580": [
+                  {
+                    "snaktype": "value",
+                    "property": "P580",
+                    "hash": "f327ed0af8032f65f713cf46404c28d8de3e8095",
+                    "datavalue": {
+                      "value": {
+                        "time": "+1959-01-03T00:00:00Z",
+                        "timezone": 0,
+                        "before": 0,
+                        "after": 0,
+                        "precision": 11,
+                        "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                      },
+                      "type": "time"
+                    },
+                    "datatype": "time"
+                  }
+                ],
+                "P582": [
+                  {
+                    "snaktype": "value",
+                    "property": "P582",
+                    "hash": "fc67b7e58ca90e057d92d8f85925a36a715a1b94",
+                    "datavalue": {
+                      "value": {
+                        "time": "+1959-08-21T00:00:00Z",
+                        "timezone": 0,
+                        "before": 0,
+                        "after": 0,
+                        "precision": 11,
+                        "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                      },
+                      "type": "time"
+                    },
+                    "datatype": "time"
+                  }
+                ]
+              },
+              "qualifiers-order": ["P580", "P582"],
+              "id": "Q35657$b2bd7594-4c6a-aa31-f4d2-890c41860ddc",
+              "rank": "normal"
+            },
+            {
+              "mainsnak": {
+                "snaktype": "value",
+                "property": "P1114",
+                "hash": "f730c7b60e8f109784993eb25d33bf5f9bfcceb5",
+                "datavalue": {
+                  "value": {
+                    "amount": "+48",
+                    "unit": "1"
+                  },
+                  "type": "quantity"
+                },
+                "datatype": "quantity"
+              },
+              "type": "statement",
+              "qualifiers": {
+                "P580": [
+                  {
+                    "snaktype": "value",
+                    "property": "P580",
+                    "hash": "23984c1c9eb5bd786db542b788d66ce318630ca6",
+                    "datavalue": {
+                      "value": {
+                        "time": "+1912-02-14T00:00:00Z",
+                        "timezone": 0,
+                        "before": 0,
+                        "after": 0,
+                        "precision": 11,
+                        "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                      },
+                      "type": "time"
+                    },
+                    "datatype": "time"
+                  }
+                ],
+                "P582": [
+                  {
+                    "snaktype": "value",
+                    "property": "P582",
+                    "hash": "2a21262f784e6658c3f915092aa85d4f8d29a40c",
+                    "datavalue": {
+                      "value": {
+                        "time": "+1959-01-03T00:00:00Z",
+                        "timezone": 0,
+                        "before": 0,
+                        "after": 0,
+                        "precision": 11,
+                        "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                      },
+                      "type": "time"
+                    },
+                    "datatype": "time"
+                  }
+                ]
+              },
+              "qualifiers-order": ["P580", "P582"],
+              "id": "Q35657$fcd056a3-4237-b644-c7f1-02102d2cdff7",
+              "rank": "normal"
+            },
+            {
+              "mainsnak": {
+                "snaktype": "value",
+                "property": "P1114",
+                "hash": "fd0a7e0ce34ba026871a72058af1e571bd225333",
+                "datavalue": {
+                  "value": {
+                    "amount": "+13",
+                    "unit": "1"
+                  },
+                  "type": "quantity"
+                },
+                "datatype": "quantity"
+              },
+              "type": "statement",
+              "qualifiers": {
+                "P585": [
+                  {
+                    "snaktype": "value",
+                    "property": "P585",
+                    "hash": "ddf7592381bb3501c8b1d0ca172a744d25d809c2",
+                    "datavalue": {
+                      "value": {
+                        "time": "+1776-07-04T00:00:00Z",
+                        "timezone": 0,
+                        "before": 0,
+                        "after": 0,
+                        "precision": 11,
+                        "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                      },
+                      "type": "time"
+                    },
+                    "datatype": "time"
+                  }
+                ]
+              },
+              "qualifiers-order": ["P585"],
+              "id": "Q35657$2cb333e6-48f1-5e49-521d-4112569d99e3",
+              "rank": "normal"
+            }
+          ],
+          "P646": [
+            {
+              "mainsnak": {
+                "snaktype": "value",
+                "property": "P646",
+                "hash": "d2e14966ae95d6f4bbe24f606444aa053ff39ba9",
+                "datavalue": {
+                  "value": "/m/0d0xs",
+                  "type": "string"
+                },
+                "datatype": "external-id"
+              },
+              "type": "statement",
+              "id": "Q35657$4FA44915-A464-42BB-988B-DD5CA7EC6DEA",
+              "rank": "normal",
+              "references": [
+                {
+                  "hash": "2b00cb481cddcac7623114367489b5c194901c4a",
+                  "snaks": {
+                    "P248": [
+                      {
+                        "snaktype": "value",
+                        "property": "P248",
+                        "hash": "a94b740202b097dd33355e0e6c00e54b9395e5e0",
+                        "datavalue": {
+                          "value": {
+                            "entity-type": "item",
+                            "numeric-id": 15241312,
+                            "id": "Q15241312"
+                          },
+                          "type": "wikibase-entityid"
+                        },
+                        "datatype": "wikibase-item"
+                      }
+                    ],
+                    "P577": [
+                      {
+                        "snaktype": "value",
+                        "property": "P577",
+                        "hash": "fde79ecb015112d2f29229ccc1ec514ed3e71fa2",
+                        "datavalue": {
+                          "value": {
+                            "time": "+2013-10-28T00:00:00Z",
+                            "timezone": 0,
+                            "before": 0,
+                            "after": 0,
+                            "precision": 11,
+                            "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                          },
+                          "type": "time"
+                        },
+                        "datatype": "time"
+                      }
+                    ]
+                  },
+                  "snaks-order": ["P248", "P577"]
+                }
+              ]
+            }
+          ],
+          "P910": [
+            {
+              "mainsnak": {
+                "snaktype": "value",
+                "property": "P910",
+                "hash": "fd3351e9bf02c79d7263ecd73f19e768435950c2",
+                "datavalue": {
+                  "value": {
+                    "entity-type": "item",
+                    "numeric-id": 6447755,
+                    "id": "Q6447755"
+                  },
+                  "type": "wikibase-entityid"
+                },
+                "datatype": "wikibase-item"
+              },
+              "type": "statement",
+              "id": "Q35657$711CAEE5-84B0-4E48-97FD-AE1F49895FC7",
+              "rank": "normal"
+            }
+          ],
+          "P3417": [
+            {
+              "mainsnak": {
+                "snaktype": "value",
+                "property": "P3417",
+                "hash": "cb6ecb315b41ffadeec971f908ed6696963a8c5a",
+                "datavalue": {
+                  "value": "States-of-the-USA",
+                  "type": "string"
+                },
+                "datatype": "external-id"
+              },
+              "type": "statement",
+              "qualifiers": {
+                "P2241": [
+                  {
+                    "snaktype": "value",
+                    "property": "P2241",
+                    "hash": "74bd46d0bbe97d05804856f1f73b6a7480c68cec",
+                    "datavalue": {
+                      "value": {
+                        "entity-type": "item",
+                        "numeric-id": 45403344,
+                        "id": "Q45403344"
+                      },
+                      "type": "wikibase-entityid"
+                    },
+                    "datatype": "wikibase-item"
+                  }
+                ]
+              },
+              "qualifiers-order": ["P2241"],
+              "id": "Q35657$d3c77062-46de-8e5f-0488-9829babd9fdd",
+              "rank": "deprecated",
+              "references": [
+                {
+                  "hash": "3b0a5bb3c1f955edce73740124f7d935698092ad",
+                  "snaks": {
+                    "P248": [
+                      {
+                        "snaktype": "value",
+                        "property": "P248",
+                        "hash": "3ac9682e789a3a3791d4fd088b265ea03abef101",
+                        "datavalue": {
+                          "value": {
+                            "entity-type": "item",
+                            "numeric-id": 51711,
+                            "id": "Q51711"
+                          },
+                          "type": "wikibase-entityid"
+                        },
+                        "datatype": "wikibase-item"
+                      }
+                    ]
+                  },
+                  "snaks-order": ["P248"]
+                }
+              ]
+            },
+            {
+              "mainsnak": {
+                "snaktype": "value",
+                "property": "P3417",
+                "hash": "892bc99c43fcdf3606306f94e70760bfe80e0ff0",
+                "datavalue": {
+                  "value": "States-and-Territories-of-the-USA",
+                  "type": "string"
+                },
+                "datatype": "external-id"
+              },
+              "type": "statement",
+              "id": "Q35657$000d42f0-498f-d982-7258-697659bb0344",
+              "rank": "normal",
+              "references": [
+                {
+                  "hash": "8d9788168af700e97b130cfd5f18679396b78277",
+                  "snaks": {
+                    "P248": [
+                      {
+                        "snaktype": "value",
+                        "property": "P248",
+                        "hash": "3ac9682e789a3a3791d4fd088b265ea03abef101",
+                        "datavalue": {
+                          "value": {
+                            "entity-type": "item",
+                            "numeric-id": 51711,
+                            "id": "Q51711"
+                          },
+                          "type": "wikibase-entityid"
+                        },
+                        "datatype": "wikibase-item"
+                      }
+                    ],
+                    "P3417": [
+                      {
+                        "snaktype": "value",
+                        "property": "P3417",
+                        "hash": "cb6ecb315b41ffadeec971f908ed6696963a8c5a",
+                        "datavalue": {
+                          "value": "States-of-the-USA",
+                          "type": "string"
+                        },
+                        "datatype": "external-id"
+                      }
+                    ],
+                    "P813": [
+                      {
+                        "snaktype": "value",
+                        "property": "P813",
+                        "hash": "4c570e5172e7b5c9240de49935409fdfef402980",
+                        "datavalue": {
+                          "value": {
+                            "time": "+2021-10-20T00:00:00Z",
+                            "timezone": 0,
+                            "before": 0,
+                            "after": 0,
+                            "precision": 11,
+                            "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                          },
+                          "type": "time"
+                        },
+                        "datatype": "time"
+                      }
+                    ]
+                  },
+                  "snaks-order": ["P248", "P3417", "P813"]
+                }
+              ]
+            },
+            {
+              "mainsnak": {
+                "snaktype": "value",
+                "property": "P3417",
+                "hash": "daca81faae5698fe5e721e52f66b2b819bb41a9f",
+                "datavalue": {
+                  "value": "U-S-State",
+                  "type": "string"
+                },
+                "datatype": "external-id"
+              },
+              "type": "statement",
+              "id": "Q35657$1A1FFFDF-80B5-4983-A378-DC7225FDFEDC",
+              "rank": "normal"
+            },
+            {
+              "mainsnak": {
+                "snaktype": "value",
+                "property": "P3417",
+                "hash": "e096e2ec335044545303d0b3ae62fde28b1c8794",
+                "datavalue": {
+                  "value": "50-States",
+                  "type": "string"
+                },
+                "datatype": "external-id"
+              },
+              "type": "statement",
+              "id": "Q35657$FC1D2C50-753B-465A-BFF0-EC452487DFB3",
+              "rank": "normal"
+            }
+          ],
+          "P2354": [
+            {
+              "mainsnak": {
+                "snaktype": "value",
+                "property": "P2354",
+                "hash": "0c33221acf771e752a991b7b44533500f25d6d71",
+                "datavalue": {
+                  "value": {
+                    "entity-type": "item",
+                    "numeric-id": 150340,
+                    "id": "Q150340"
+                  },
+                  "type": "wikibase-entityid"
+                },
+                "datatype": "wikibase-item"
+              },
+              "type": "statement",
+              "id": "Q35657$25a977e3-4c95-7a68-b22a-12094ee6101c",
+              "rank": "normal"
+            },
+            {
+              "mainsnak": {
+                "snaktype": "value",
+                "property": "P2354",
+                "hash": "f82ba95f206635581fb4a40afae15c2bf9c9e660",
+                "datavalue": {
+                  "value": {
+                    "entity-type": "item",
+                    "numeric-id": 906228,
+                    "id": "Q906228"
+                  },
+                  "type": "wikibase-entityid"
+                },
+                "datatype": "wikibase-item"
+              },
+              "type": "statement",
+              "id": "Q35657$137af365-47f4-4313-4d7c-f73e3beaa436",
+              "rank": "normal"
+            },
+            {
+              "mainsnak": {
+                "snaktype": "value",
+                "property": "P2354",
+                "hash": "436bc6afaa8d367e391361c185492b2f772333db",
+                "datavalue": {
+                  "value": {
+                    "entity-type": "item",
+                    "numeric-id": 6600984,
+                    "id": "Q6600984"
+                  },
+                  "type": "wikibase-entityid"
+                },
+                "datatype": "wikibase-item"
+              },
+              "type": "statement",
+              "id": "Q35657$bb1fc245-4a47-8c6a-0e0e-97f4791bc93f",
+              "rank": "normal"
+            },
+            {
+              "mainsnak": {
+                "snaktype": "value",
+                "property": "P2354",
+                "hash": "227aac90afb11693bfd6400618d75327c491bc79",
+                "datavalue": {
+                  "value": {
+                    "entity-type": "item",
+                    "numeric-id": 6600994,
+                    "id": "Q6600994"
+                  },
+                  "type": "wikibase-entityid"
+                },
+                "datatype": "wikibase-item"
+              },
+              "type": "statement",
+              "id": "Q35657$11ce168e-47a8-030f-eab8-beaebe471756",
+              "rank": "normal"
+            },
+            {
+              "mainsnak": {
+                "snaktype": "value",
+                "property": "P2354",
+                "hash": "4e9fc47be2eaae04294ff5c0c7a7077e1c1c2e5a",
+                "datavalue": {
+                  "value": {
+                    "entity-type": "item",
+                    "numeric-id": 1682357,
+                    "id": "Q1682357"
+                  },
+                  "type": "wikibase-entityid"
+                },
+                "datatype": "wikibase-item"
+              },
+              "type": "statement",
+              "id": "Q35657$4fa46b2b-4ffc-2397-727c-028698578f7b",
+              "rank": "normal"
+            },
+            {
+              "mainsnak": {
+                "snaktype": "value",
+                "property": "P2354",
+                "hash": "c161520c33b9969df28c3eab410aaa53c6357eaf",
+                "datavalue": {
+                  "value": {
+                    "entity-type": "item",
+                    "numeric-id": 125503,
+                    "id": "Q125503"
+                  },
+                  "type": "wikibase-entityid"
+                },
+                "datatype": "wikibase-item"
+              },
+              "type": "statement",
+              "id": "Q35657$3004ff03-49ab-f797-46b7-c9bf75051ec4",
+              "rank": "normal"
+            }
+          ],
+          "P31": [
+            {
+              "mainsnak": {
+                "snaktype": "value",
+                "property": "P31",
+                "hash": "54df2f642bae108ad45d691dac950bc8dd350fe7",
+                "datavalue": {
+                  "value": {
+                    "entity-type": "item",
+                    "numeric-id": 28872924,
+                    "id": "Q28872924"
+                  },
+                  "type": "wikibase-entityid"
+                },
+                "datatype": "wikibase-item"
+              },
+              "type": "statement",
+              "id": "Q35657$695225bf-4579-e5cc-1603-61644928b6fe",
+              "rank": "normal"
+            },
+            {
+              "mainsnak": {
+                "snaktype": "value",
+                "property": "P31",
+                "hash": "ded837f6a03bce26b2c7f879b70faa1a854324dd",
+                "datavalue": {
+                  "value": {
+                    "entity-type": "item",
+                    "numeric-id": 135236673,
+                    "id": "Q135236673"
+                  },
+                  "type": "wikibase-entityid"
+                },
+                "datatype": "wikibase-item"
+              },
+              "type": "statement",
+              "id": "Q35657$B28BC5CD-3B4F-420F-ACCF-5A126FC992C1",
+              "rank": "normal"
+            }
+          ],
+          "P1424": [
+            {
+              "mainsnak": {
+                "snaktype": "value",
+                "property": "P1424",
+                "hash": "5b26e39fe9ff7beb1d23721282260bbe07a8208d",
+                "datavalue": {
+                  "value": {
+                    "entity-type": "item",
+                    "numeric-id": 6192209,
+                    "id": "Q6192209"
+                  },
+                  "type": "wikibase-entityid"
+                },
+                "datatype": "wikibase-item"
+              },
+              "type": "statement",
+              "id": "Q35657$9a2f4b44-4f8f-2e8f-08c4-413f8bdee6e9",
+              "rank": "normal"
+            }
+          ],
+          "P18": [
+            {
+              "mainsnak": {
+                "snaktype": "value",
+                "property": "P18",
+                "hash": "a1094cd6eb3609e1dc5a4cc8afe56aeec073eb3b",
+                "datavalue": {
+                  "value": "Map of USA with state names.svg",
+                  "type": "string"
+                },
+                "datatype": "commonsMedia"
+              },
+              "type": "statement",
+              "id": "Q35657$F835B864-0987-4565-B74D-D3EE1BBF560D",
+              "rank": "normal",
+              "references": [
+                {
+                  "hash": "8bfbbf3f3ac28784bb3c64e3d2f9800c8287ad83",
+                  "snaks": {
+                    "P143": [
+                      {
+                        "snaktype": "value",
+                        "property": "P143",
+                        "hash": "20a8b25f7352ee6995e2d64f982aab88086c1a27",
+                        "datavalue": {
+                          "value": {
+                            "entity-type": "item",
+                            "numeric-id": 3181422,
+                            "id": "Q3181422"
+                          },
+                          "type": "wikibase-entityid"
+                        },
+                        "datatype": "wikibase-item"
+                      }
+                    ]
+                  },
+                  "snaks-order": ["P143"]
+                }
+              ]
+            }
+          ],
+          "P2581": [
+            {
+              "mainsnak": {
+                "snaktype": "value",
+                "property": "P2581",
+                "hash": "5f3e82dc253db1918f989d9c0269d49552217f37",
+                "datavalue": {
+                  "value": "01110993n",
+                  "type": "string"
+                },
+                "datatype": "external-id"
+              },
+              "type": "statement",
+              "id": "Q35657$D31FBA75-1F55-4AE5-AA7B-4620A4D9BACF",
+              "rank": "normal",
+              "references": [
+                {
+                  "hash": "248ac337a217a5f5eed7139a82a4e60931611af0",
+                  "snaks": {
+                    "P248": [
+                      {
+                        "snaktype": "value",
+                        "property": "P248",
+                        "hash": "25b816aab41db18565946259c950aed6de05dd1e",
+                        "datavalue": {
+                          "value": {
+                            "entity-type": "item",
+                            "numeric-id": 4837690,
+                            "id": "Q4837690"
+                          },
+                          "type": "wikibase-entityid"
+                        },
+                        "datatype": "wikibase-item"
+                      }
+                    ]
+                  },
+                  "snaks-order": ["P248"]
+                }
+              ]
+            }
+          ],
+          "P1813": [
+            {
+              "mainsnak": {
+                "snaktype": "value",
+                "property": "P1813",
+                "hash": "2e451458ad7612ce1203a4cf9f503d413b538df8",
+                "datavalue": {
+                  "value": {
+                    "text": "U.S. state",
+                    "language": "en"
+                  },
+                  "type": "monolingualtext"
+                },
+                "datatype": "monolingualtext"
+              },
+              "type": "statement",
+              "qualifiers": {
+                "P2241": [
+                  {
+                    "snaktype": "value",
+                    "property": "P2241",
+                    "hash": "767281f01c61ebfde2eaf444f67021a00862e289",
+                    "datavalue": {
+                      "value": {
+                        "entity-type": "item",
+                        "numeric-id": 21655367,
+                        "id": "Q21655367"
+                      },
+                      "type": "wikibase-entityid"
+                    },
+                    "datatype": "wikibase-item"
+                  }
+                ]
+              },
+              "qualifiers-order": ["P2241"],
+              "id": "Q35657$242c5aa0-45d1-8e26-54a0-0ad3aa6fc055",
+              "rank": "deprecated"
+            }
+          ],
+          "P1705": [
+            {
+              "mainsnak": {
+                "snaktype": "value",
+                "property": "P1705",
+                "hash": "04843d0fc20b028034967fe225f680ef289ba07c",
+                "datavalue": {
+                  "value": {
+                    "text": "state of the United States",
+                    "language": "en"
+                  },
+                  "type": "monolingualtext"
+                },
+                "datatype": "monolingualtext"
+              },
+              "type": "statement",
+              "id": "Q35657$0482c16b-4aa7-49a7-cceb-2c298e4656d5",
+              "rank": "normal"
+            },
+            {
+              "mainsnak": {
+                "snaktype": "value",
+                "property": "P1705",
+                "hash": "496c165fc616d99308ecebf3af9d97da49e10851",
+                "datavalue": {
+                  "value": {
+                    "text": "U.S. state",
+                    "language": "en"
+                  },
+                  "type": "monolingualtext"
+                },
+                "datatype": "monolingualtext"
+              },
+              "type": "statement",
+              "id": "Q35657$17597c00-4113-7d32-d90b-52f7d5014929",
+              "rank": "preferred",
+              "references": [
+                {
+                  "hash": "6b4920654e327fa8ece83d17b4e8d022f06847df",
+                  "snaks": {
+                    "P248": [
+                      {
+                        "snaktype": "value",
+                        "property": "P248",
+                        "hash": "85f38548b219245e3f613c704218efd0595de8da",
+                        "datavalue": {
+                          "value": {
+                            "entity-type": "item",
+                            "numeric-id": 13219454,
+                            "id": "Q13219454"
+                          },
+                          "type": "wikibase-entityid"
+                        },
+                        "datatype": "wikibase-item"
+                      }
+                    ],
+                    "P244": [
+                      {
+                        "snaktype": "value",
+                        "property": "P244",
+                        "hash": "26d9937c9679c0ce37f04d123187acc5e4f754a7",
+                        "datavalue": {
+                          "value": "sh96008759",
+                          "type": "string"
+                        },
+                        "datatype": "external-id"
+                      }
+                    ],
+                    "P1810": [
+                      {
+                        "snaktype": "value",
+                        "property": "P1810",
+                        "hash": "52b26a8e7fdacb3b27a226f164fb4822beaf49e6",
+                        "datavalue": {
+                          "value": "U.S. states",
+                          "type": "string"
+                        },
+                        "datatype": "string"
+                      }
+                    ],
+                    "P813": [
+                      {
+                        "snaktype": "value",
+                        "property": "P813",
+                        "hash": "75962c5ebda92508bd39e83289cb897fdcf218ad",
+                        "datavalue": {
+                          "value": {
+                            "time": "+2022-05-27T00:00:00Z",
+                            "timezone": 0,
+                            "before": 0,
+                            "after": 0,
+                            "precision": 11,
+                            "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                          },
+                          "type": "time"
+                        },
+                        "datatype": "time"
+                      }
+                    ]
+                  },
+                  "snaks-order": ["P248", "P244", "P1810", "P813"]
+                },
+                {
+                  "hash": "e2a537b7325eae4aab704dc22f03fd5715d375e9",
+                  "snaks": {
+                    "P248": [
+                      {
+                        "snaktype": "value",
+                        "property": "P248",
+                        "hash": "9f758f3982c26c78e6bd5138e553ba46bf106a52",
+                        "datavalue": {
+                          "value": {
+                            "entity-type": "item",
+                            "numeric-id": 455338,
+                            "id": "Q455338"
+                          },
+                          "type": "wikibase-entityid"
+                        },
+                        "datatype": "wikibase-item"
+                      }
+                    ],
+                    "P2892": [
+                      {
+                        "snaktype": "value",
+                        "property": "P2892",
+                        "hash": "7f603af0a8591f8fad230470b5b80a4ca1290391",
+                        "datavalue": {
+                          "value": "C1301808",
+                          "type": "string"
+                        },
+                        "datatype": "external-id"
+                      }
+                    ],
+                    "P1810": [
+                      {
+                        "snaktype": "value",
+                        "property": "P1810",
+                        "hash": "8085a776290e7c698ae38654044b559e936194f0",
+                        "datavalue": {
+                          "value": "US state",
+                          "type": "string"
+                        },
+                        "datatype": "string"
+                      }
+                    ],
+                    "P813": [
+                      {
+                        "snaktype": "value",
+                        "property": "P813",
+                        "hash": "75962c5ebda92508bd39e83289cb897fdcf218ad",
+                        "datavalue": {
+                          "value": {
+                            "time": "+2022-05-27T00:00:00Z",
+                            "timezone": 0,
+                            "before": 0,
+                            "after": 0,
+                            "precision": 11,
+                            "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                          },
+                          "type": "time"
+                        },
+                        "datatype": "time"
+                      }
+                    ]
+                  },
+                  "snaks-order": ["P248", "P2892", "P1810", "P813"]
+                },
+                {
+                  "hash": "f1f949afc9a72c99f316d98bb576b9c243f26776",
+                  "snaks": {
+                    "P248": [
+                      {
+                        "snaktype": "value",
+                        "property": "P248",
+                        "hash": "5d51ab630eefb6fc4e034e74da10b3d975c42b55",
+                        "datavalue": {
+                          "value": {
+                            "entity-type": "item",
+                            "numeric-id": 19404626,
+                            "id": "Q19404626"
+                          },
+                          "type": "wikibase-entityid"
+                        },
+                        "datatype": "wikibase-item"
+                      }
+                    ],
+                    "P1748": [
+                      {
+                        "snaktype": "value",
+                        "property": "P1748",
+                        "hash": "d74abaf95669e135eee5f1bb14ed5d8b182bd452",
+                        "datavalue": {
+                          "value": "C30010",
+                          "type": "string"
+                        },
+                        "datatype": "string"
+                      }
+                    ],
+                    "P1810": [
+                      {
+                        "snaktype": "value",
+                        "property": "P1810",
+                        "hash": "33aa29a3a52c93d7d8bc542054a0b3548b69e7ca",
+                        "datavalue": {
+                          "value": "US State",
+                          "type": "string"
+                        },
+                        "datatype": "string"
+                      }
+                    ],
+                    "P1683": [
+                      {
+                        "snaktype": "value",
+                        "property": "P1683",
+                        "hash": "16dba725c3ab74abf177ab7033e176786264d71c",
+                        "datavalue": {
+                          "value": {
+                            "text": "Preferred Name: US State",
+                            "language": "en"
+                          },
+                          "type": "monolingualtext"
+                        },
+                        "datatype": "monolingualtext"
+                      },
+                      {
+                        "snaktype": "value",
+                        "property": "P1683",
+                        "hash": "19686e8d679b27a9c300b724058b25f2880b1d83",
+                        "datavalue": {
+                          "value": {
+                            "text": "Label: US State",
+                            "language": "en"
+                          },
+                          "type": "monolingualtext"
+                        },
+                        "datatype": "monolingualtext"
+                      }
+                    ],
+                    "P813": [
+                      {
+                        "snaktype": "value",
+                        "property": "P813",
+                        "hash": "75962c5ebda92508bd39e83289cb897fdcf218ad",
+                        "datavalue": {
+                          "value": {
+                            "time": "+2022-05-27T00:00:00Z",
+                            "timezone": 0,
+                            "before": 0,
+                            "after": 0,
+                            "precision": 11,
+                            "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                          },
+                          "type": "time"
+                        },
+                        "datatype": "time"
+                      }
+                    ]
+                  },
+                  "snaks-order": ["P248", "P1748", "P1810", "P1683", "P813"]
+                },
+                {
+                  "hash": "7162400f1104401956b963c16745b0c924d4d6e0",
+                  "snaks": {
+                    "P248": [
+                      {
+                        "snaktype": "value",
+                        "property": "P248",
+                        "hash": "ec891e25f36a3590a8f59f93d053be70161ac784",
+                        "datavalue": {
+                          "value": {
+                            "entity-type": "item",
+                            "numeric-id": 4851899,
+                            "id": "Q4851899"
+                          },
+                          "type": "wikibase-entityid"
+                        },
+                        "datatype": "wikibase-item"
+                      }
+                    ],
+                    "P2390": [
+                      {
+                        "snaktype": "value",
+                        "property": "P2390",
+                        "hash": "08acb2c777d05f5b5a455c00b8947a6a298dc535",
+                        "datavalue": {
+                          "value": "States",
+                          "type": "string"
+                        },
+                        "datatype": "external-id"
+                      }
+                    ],
+                    "P1810": [
+                      {
+                        "snaktype": "value",
+                        "property": "P1810",
+                        "hash": "74bd50d84dafcd947afae6f6025c04b4faaab231",
+                        "datavalue": {
+                          "value": "U.S. state",
+                          "type": "string"
+                        },
+                        "datatype": "string"
+                      }
+                    ],
+                    "P813": [
+                      {
+                        "snaktype": "value",
+                        "property": "P813",
+                        "hash": "75962c5ebda92508bd39e83289cb897fdcf218ad",
+                        "datavalue": {
+                          "value": {
+                            "time": "+2022-05-27T00:00:00Z",
+                            "timezone": 0,
+                            "before": 0,
+                            "after": 0,
+                            "precision": 11,
+                            "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                          },
+                          "type": "time"
+                        },
+                        "datatype": "time"
+                      }
+                    ]
+                  },
+                  "snaks-order": ["P248", "P2390", "P1810", "P813"]
+                },
+                {
+                  "hash": "8b63fad1c25208303e181887303353b69f2a9b00",
+                  "snaks": {
+                    "P248": [
+                      {
+                        "snaktype": "value",
+                        "property": "P248",
+                        "hash": "bf1111ee06ddb8b2e3995bae0181d1720ebf4bbd",
+                        "datavalue": {
+                          "value": {
+                            "entity-type": "item",
+                            "numeric-id": 17109002,
+                            "id": "Q17109002"
+                          },
+                          "type": "wikibase-entityid"
+                        },
+                        "datatype": "wikibase-item"
+                      }
+                    ],
+                    "P1149": [
+                      {
+                        "snaktype": "value",
+                        "property": "P1149",
+                        "hash": "b01fbe56f071c3bd02d2eca5015ecb1c30ade8ab",
+                        "datavalue": {
+                          "value": "KF4545.S7",
+                          "type": "string"
+                        },
+                        "datatype": "external-id"
+                      }
+                    ],
+                    "P1810": [
+                      {
+                        "snaktype": "value",
+                        "property": "P1810",
+                        "hash": "ef3650a0843b18b11df1cf51a640aa22cbaa0b1b",
+                        "datavalue": {
+                          "value": "Statehood (U.S. states). Admission to the Union",
+                          "type": "string"
+                        },
+                        "datatype": "string"
+                      }
+                    ],
+                    "P813": [
+                      {
+                        "snaktype": "value",
+                        "property": "P813",
+                        "hash": "75962c5ebda92508bd39e83289cb897fdcf218ad",
+                        "datavalue": {
+                          "value": {
+                            "time": "+2022-05-27T00:00:00Z",
+                            "timezone": 0,
+                            "before": 0,
+                            "after": 0,
+                            "precision": 11,
+                            "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                          },
+                          "type": "time"
+                        },
+                        "datatype": "time"
+                      }
+                    ]
+                  },
+                  "snaks-order": ["P248", "P1149", "P1810", "P813"]
+                }
+              ]
+            }
+          ],
+          "P244": [
+            {
+              "mainsnak": {
+                "snaktype": "value",
+                "property": "P244",
+                "hash": "26d9937c9679c0ce37f04d123187acc5e4f754a7",
+                "datavalue": {
+                  "value": "sh96008759",
+                  "type": "string"
+                },
+                "datatype": "external-id"
+              },
+              "type": "statement",
+              "qualifiers": {
+                "P1810": [
+                  {
+                    "snaktype": "value",
+                    "property": "P1810",
+                    "hash": "52b26a8e7fdacb3b27a226f164fb4822beaf49e6",
+                    "datavalue": {
+                      "value": "U.S. states",
+                      "type": "string"
+                    },
+                    "datatype": "string"
+                  }
+                ],
+                "P4970": [
+                  {
+                    "snaktype": "value",
+                    "property": "P4970",
+                    "hash": "c996dd5bdd7e2a2351b39cfd91c1060e747b09fe",
+                    "datavalue": {
+                      "value": "American states (United States)",
+                      "type": "string"
+                    },
+                    "datatype": "string"
+                  },
+                  {
+                    "snaktype": "value",
+                    "property": "P4970",
+                    "hash": "19ee75a27da5691585cccad05f6c9c5dcd4bd4b9",
+                    "datavalue": {
+                      "value": "States of the United States",
+                      "type": "string"
+                    },
+                    "datatype": "string"
+                  },
+                  {
+                    "snaktype": "value",
+                    "property": "P4970",
+                    "hash": "14df0e78f805a2a75bc0d66395af2168ee6826b9",
+                    "datavalue": {
+                      "value": "United States--States",
+                      "type": "string"
+                    },
+                    "datatype": "string"
+                  },
+                  {
+                    "snaktype": "value",
+                    "property": "P4970",
+                    "hash": "57ed9034ab002ab6650303a3eece23e350c1ca91",
+                    "datavalue": {
+                      "value": "United States states",
+                      "type": "string"
+                    },
+                    "datatype": "string"
+                  }
+                ]
+              },
+              "qualifiers-order": ["P1810", "P4970"],
+              "id": "Q35657$1A8861F3-2AE8-4B69-8D06-A4B9379DC55D",
+              "rank": "normal",
+              "references": [
+                {
+                  "hash": "2eafeacd8a2c31d8d399b47d04aab5d09e577f87",
+                  "snaks": {
+                    "P248": [
+                      {
+                        "snaktype": "value",
+                        "property": "P248",
+                        "hash": "5d6eabb2681ad16965f1108044de41cc6ee6e4fe",
+                        "datavalue": {
+                          "value": {
+                            "entity-type": "item",
+                            "numeric-id": 1823134,
+                            "id": "Q1823134"
+                          },
+                          "type": "wikibase-entityid"
+                        },
+                        "datatype": "wikibase-item"
+                      }
+                    ],
+                    "P813": [
+                      {
+                        "snaktype": "value",
+                        "property": "P813",
+                        "hash": "5382ff24e64c9081c889469fded6bd09874875e5",
+                        "datavalue": {
+                          "value": {
+                            "time": "+2019-09-08T00:00:00Z",
+                            "timezone": 0,
+                            "before": 0,
+                            "after": 0,
+                            "precision": 11,
+                            "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                          },
+                          "type": "time"
+                        },
+                        "datatype": "time"
+                      }
+                    ]
+                  },
+                  "snaks-order": ["P248", "P813"]
+                }
+              ]
+            }
+          ],
+          "P2163": [
+            {
+              "mainsnak": {
+                "snaktype": "value",
+                "property": "P2163",
+                "hash": "7efbbadaac59c2044e678a882d10b2fbf2f4eaa2",
+                "datavalue": {
+                  "value": "1160235",
+                  "type": "string"
+                },
+                "datatype": "external-id"
+              },
+              "type": "statement",
+              "qualifiers": {
+                "P1810": [
+                  {
+                    "snaktype": "value",
+                    "property": "P1810",
+                    "hash": "52b26a8e7fdacb3b27a226f164fb4822beaf49e6",
+                    "datavalue": {
+                      "value": "U.S. states",
+                      "type": "string"
+                    },
+                    "datatype": "string"
+                  }
+                ]
+              },
+              "qualifiers-order": ["P1810"],
+              "id": "Q35657$6db18ea3-4289-c846-5e30-f7e596d9191b",
+              "rank": "normal",
+              "references": [
+                {
+                  "hash": "ce4021219585ee97daa62b8aece3b61f0831ae34",
+                  "snaks": {
+                    "P248": [
+                      {
+                        "snaktype": "value",
+                        "property": "P248",
+                        "hash": "f28a9304d55e82ae25cafad8c74e5c351bcd2732",
+                        "datavalue": {
+                          "value": {
+                            "entity-type": "item",
+                            "numeric-id": 3294867,
+                            "id": "Q3294867"
+                          },
+                          "type": "wikibase-entityid"
+                        },
+                        "datatype": "wikibase-item"
+                      }
+                    ],
+                    "P813": [
+                      {
+                        "snaktype": "value",
+                        "property": "P813",
+                        "hash": "5382ff24e64c9081c889469fded6bd09874875e5",
+                        "datavalue": {
+                          "value": {
+                            "time": "+2019-09-08T00:00:00Z",
+                            "timezone": 0,
+                            "before": 0,
+                            "after": 0,
+                            "precision": 11,
+                            "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                          },
+                          "type": "time"
+                        },
+                        "datatype": "time"
+                      }
+                    ]
+                  },
+                  "snaks-order": ["P248", "P813"]
+                }
+              ]
+            }
+          ],
+          "P268": [
+            {
+              "mainsnak": {
+                "snaktype": "value",
+                "property": "P268",
+                "hash": "93a1ee94326c6a1f260906edd43c42037ce6b4d5",
+                "datavalue": {
+                  "value": "12182520r",
+                  "type": "string"
+                },
+                "datatype": "external-id"
+              },
+              "type": "statement",
+              "qualifiers": {
+                "P1810": [
+                  {
+                    "snaktype": "value",
+                    "property": "P1810",
+                    "hash": "3a5b5d364d84f10910f716116f60c9425f446502",
+                    "datavalue": {
+                      "value": "États-Unis -- États",
+                      "type": "string"
+                    },
+                    "datatype": "string"
+                  }
+                ]
+              },
+              "qualifiers-order": ["P1810"],
+              "id": "Q35657$5507e2ea-48f0-982c-3112-704c42b80ed5",
+              "rank": "normal",
+              "references": [
+                {
+                  "hash": "500ce4e8f6b80a16a8ef897c0ffac4a641de153d",
+                  "snaks": {
+                    "P248": [
+                      {
+                        "snaktype": "value",
+                        "property": "P248",
+                        "hash": "ff83fef26747ccafd09bfb1d90cb6c5a98d01318",
+                        "datavalue": {
+                          "value": {
+                            "entity-type": "item",
+                            "numeric-id": 13421502,
+                            "id": "Q13421502"
+                          },
+                          "type": "wikibase-entityid"
+                        },
+                        "datatype": "wikibase-item"
+                      }
+                    ],
+                    "P813": [
+                      {
+                        "snaktype": "value",
+                        "property": "P813",
+                        "hash": "5382ff24e64c9081c889469fded6bd09874875e5",
+                        "datavalue": {
+                          "value": {
+                            "time": "+2019-09-08T00:00:00Z",
+                            "timezone": 0,
+                            "before": 0,
+                            "after": 0,
+                            "precision": 11,
+                            "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                          },
+                          "type": "time"
+                        },
+                        "datatype": "time"
+                      }
+                    ]
+                  },
+                  "snaks-order": ["P248", "P813"]
+                }
+              ]
+            }
+          ],
+          "P8408": [
+            {
+              "mainsnak": {
+                "snaktype": "value",
+                "property": "P8408",
+                "hash": "43252b8f9a3100059c15e6ff3d24449f491cba1f",
+                "datavalue": {
+                  "value": "State-UnitedStates",
+                  "type": "string"
+                },
+                "datatype": "external-id"
+              },
+              "type": "statement",
+              "id": "Q35657$57848311-C4F4-4AF3-AE5E-9953CCBA49FC",
+              "rank": "normal",
+              "references": [
+                {
+                  "hash": "9a681f9dd95c90224547c404e11295f4f7dcf54e",
+                  "snaks": {
+                    "P248": [
+                      {
+                        "snaktype": "value",
+                        "property": "P248",
+                        "hash": "9d5780dddffa8746637a9929a936ab6b0f601e24",
+                        "datavalue": {
+                          "value": {
+                            "entity-type": "item",
+                            "numeric-id": 64139102,
+                            "id": "Q64139102"
+                          },
+                          "type": "wikibase-entityid"
+                        },
+                        "datatype": "wikibase-item"
+                      }
+                    ],
+                    "P813": [
+                      {
+                        "snaktype": "value",
+                        "property": "P813",
+                        "hash": "622a5a27fa5b25e7e7984974e9db494cf8460990",
+                        "datavalue": {
+                          "value": {
+                            "time": "+2020-07-09T00:00:00Z",
+                            "timezone": 0,
+                            "before": 0,
+                            "after": 0,
+                            "precision": 11,
+                            "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                          },
+                          "type": "time"
+                        },
+                        "datatype": "time"
+                      }
+                    ]
+                  },
+                  "snaks-order": ["P248", "P813"]
+                }
+              ]
+            }
+          ],
+          "P4342": [
+            {
+              "mainsnak": {
+                "snaktype": "value",
+                "property": "P4342",
+                "hash": "224a2fb2e56eebb054e3a8cb9bdd93889ed95f2d",
+                "datavalue": {
+                  "value": "Delstater_i_USA",
+                  "type": "string"
+                },
+                "datatype": "external-id"
+              },
+              "type": "statement",
+              "id": "Q35657$47C9C228-84F5-4A63-AD1B-7D97E02221F3",
+              "rank": "normal"
+            }
+          ],
+          "P2390": [
+            {
+              "mainsnak": {
+                "snaktype": "value",
+                "property": "P2390",
+                "hash": "08acb2c777d05f5b5a455c00b8947a6a298dc535",
+                "datavalue": {
+                  "value": "States",
+                  "type": "string"
+                },
+                "datatype": "external-id"
+              },
+              "type": "statement",
+              "qualifiers": {
+                "P1810": [
+                  {
+                    "snaktype": "value",
+                    "property": "P1810",
+                    "hash": "c9c1200193438fe917c54aacacb23587ee7882f0",
+                    "datavalue": {
+                      "value": "States",
+                      "type": "string"
+                    },
+                    "datatype": "string"
+                  }
+                ],
+                "P9675": [
+                  {
+                    "snaktype": "value",
+                    "property": "P9675",
+                    "hash": "faea90d168815b74765e52c136b9c669f3928d1b",
+                    "datavalue": {
+                      "value": "4824",
+                      "type": "string"
+                    },
+                    "datatype": "string"
+                  }
+                ]
+              },
+              "qualifiers-order": ["P1810", "P9675"],
+              "id": "Q35657$6ad402e0-489f-150d-1ad0-f307a0f9f19e",
+              "rank": "normal"
+            }
+          ],
+          "P1748": [
+            {
+              "mainsnak": {
+                "snaktype": "value",
+                "property": "P1748",
+                "hash": "d74abaf95669e135eee5f1bb14ed5d8b182bd452",
+                "datavalue": {
+                  "value": "C30010",
+                  "type": "string"
+                },
+                "datatype": "string"
+              },
+              "type": "statement",
+              "id": "Q35657$906440b3-41bb-e227-206a-bffa9f816fc4",
+              "rank": "normal"
+            }
+          ],
+          "P2892": [
+            {
+              "mainsnak": {
+                "snaktype": "value",
+                "property": "P2892",
+                "hash": "7f603af0a8591f8fad230470b5b80a4ca1290391",
+                "datavalue": {
+                  "value": "C1301808",
+                  "type": "string"
+                },
+                "datatype": "external-id"
+              },
+              "type": "statement",
+              "id": "Q35657$34989b14-4b78-03a5-7214-c08a627a6f8f",
+              "rank": "normal"
+            }
+          ],
+          "P2888": [
+            {
+              "mainsnak": {
+                "snaktype": "value",
+                "property": "P2888",
+                "hash": "5287f053ee3a3c21d8f9b6a5c425adb8f47030b4",
+                "datavalue": {
+                  "value": "http://dbpedia.org/resource/U.S._State",
+                  "type": "string"
+                },
+                "datatype": "url"
+              },
+              "type": "statement",
+              "id": "Q35657$5d199267-4401-5e4b-9b58-e765df0250eb",
+              "rank": "normal"
+            },
+            {
+              "mainsnak": {
+                "snaktype": "value",
+                "property": "P2888",
+                "hash": "1444c3b6d0514be98542b2fe96d6562a9bcff08e",
+                "datavalue": {
+                  "value": "http://fr.dbpedia.org/resource/États_des_États-Unis",
+                  "type": "string"
+                },
+                "datatype": "url"
+              },
+              "type": "statement",
+              "id": "Q35657$dc7b9c77-4b26-5d5b-25a3-cc524f8eb0e2",
+              "rank": "normal"
+            }
+          ],
+          "P7502": [
+            {
+              "mainsnak": {
+                "snaktype": "value",
+                "property": "P7502",
+                "hash": "3c42585a99d52cea9c2e4bb34c859890e57ebde4",
+                "datavalue": {
+                  "value": "U.S._state",
+                  "type": "string"
+                },
+                "datatype": "external-id"
+              },
+              "type": "statement",
+              "id": "Q35657$291f1bac-4605-62a6-727b-d2c938b17df3",
+              "rank": "normal",
+              "references": [
+                {
+                  "hash": "36397eeac569644cb4a17447790303ec092cc033",
+                  "snaks": {
+                    "P854": [
+                      {
+                        "snaktype": "value",
+                        "property": "P854",
+                        "hash": "6cd800d89bd6c0f07b26a35d8bdcef70f19f4e16",
+                        "datavalue": {
+                          "value": "https://golden.com/wiki/U.S._state-KEY584",
+                          "type": "string"
+                        },
+                        "datatype": "url"
+                      }
+                    ],
+                    "P813": [
+                      {
+                        "snaktype": "value",
+                        "property": "P813",
+                        "hash": "4c570e5172e7b5c9240de49935409fdfef402980",
+                        "datavalue": {
+                          "value": {
+                            "time": "+2021-10-20T00:00:00Z",
+                            "timezone": 0,
+                            "before": 0,
+                            "after": 0,
+                            "precision": 11,
+                            "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                          },
+                          "type": "time"
+                        },
+                        "datatype": "time"
+                      }
+                    ]
+                  },
+                  "snaks-order": ["P854", "P813"]
+                }
+              ]
+            }
+          ],
+          "P1368": [
+            {
+              "mainsnak": {
+                "snaktype": "value",
+                "property": "P1368",
+                "hash": "90c4e4ce9a5f546204a529e3844be77c5e3b9849",
+                "datavalue": {
+                  "value": "000070767",
+                  "type": "string"
+                },
+                "datatype": "external-id"
+              },
+              "type": "statement",
+              "id": "Q35657$7ea17497-4ac2-5dfb-e6ae-817a78f1806f",
+              "rank": "normal"
+            }
+          ],
+          "P8189": [
+            {
+              "mainsnak": {
+                "snaktype": "value",
+                "property": "P8189",
+                "hash": "69af5116305dabdcad2fe1fdb946c42e9d052e02",
+                "datavalue": {
+                  "value": "987007563647805171",
+                  "type": "string"
+                },
+                "datatype": "external-id"
+              },
+              "type": "statement",
+              "id": "Q35657$A2C8E1B1-A6D3-4A2F-9DDD-34FE1CF37ADE",
+              "rank": "normal",
+              "references": [
+                {
+                  "hash": "c8a47202c92936005b390eb36ddd267921b51f43",
+                  "snaks": {
+                    "P248": [
+                      {
+                        "snaktype": "value",
+                        "property": "P248",
+                        "hash": "0ea73b3596b49258a7b7ec6495950779b99e875d",
+                        "datavalue": {
+                          "value": {
+                            "entity-type": "item",
+                            "numeric-id": 188915,
+                            "id": "Q188915"
+                          },
+                          "type": "wikibase-entityid"
+                        },
+                        "datatype": "wikibase-item"
+                      }
+                    ]
+                  },
+                  "snaks-order": ["P248"]
+                }
+              ]
+            }
+          ],
+          "P10329": [
+            {
+              "mainsnak": {
+                "snaktype": "value",
+                "property": "P10329",
+                "hash": "4c24e3e3aa666ff84c5e33170c4b5eb95867b72a",
+                "datavalue": {
+                  "value": "23368",
+                  "type": "string"
+                },
+                "datatype": "external-id"
+              },
+              "type": "statement",
+              "qualifiers": {
+                "P1810": [
+                  {
+                    "snaktype": "value",
+                    "property": "P1810",
+                    "hash": "1bc0a6ab1f86f53511ecf3c784a494d81e5f9aa8",
+                    "datavalue": {
+                      "value": "states (USA)",
+                      "type": "string"
+                    },
+                    "datatype": "string"
+                  }
+                ],
+                "P2241": [
+                  {
+                    "snaktype": "value",
+                    "property": "P2241",
+                    "hash": "98b26a1a943d6e058e53849ded191e13012a38b8",
+                    "datavalue": {
+                      "value": {
+                        "entity-type": "item",
+                        "numeric-id": 21441764,
+                        "id": "Q21441764"
+                      },
+                      "type": "wikibase-entityid"
+                    },
+                    "datatype": "wikibase-item"
+                  }
+                ]
+              },
+              "qualifiers-order": ["P1810", "P2241"],
+              "id": "Q35657$790929ee-4071-a575-fc56-b163fd1ef3a1",
+              "rank": "deprecated"
+            },
+            {
+              "mainsnak": {
+                "snaktype": "value",
+                "property": "P10329",
+                "hash": "52bba82f9e692c0401551f17556203e32d35b4cd",
+                "datavalue": {
+                  "value": "27334",
+                  "type": "string"
+                },
+                "datatype": "external-id"
+              },
+              "type": "statement",
+              "id": "Q35657$0d38260b-4ebc-cda5-aea7-15c06a87a9ba",
+              "rank": "normal",
+              "references": [
+                {
+                  "hash": "dd189e6094151e7c3a0ddead1a663848573b61d1",
+                  "snaks": {
+                    "P854": [
+                      {
+                        "snaktype": "value",
+                        "property": "P854",
+                        "hash": "7789148f4560ccdcf8d1376b279d47d8014ba005",
+                        "datavalue": {
+                          "value": "https://www.icpsr.umich.edu/web/ICPSR/thesaurus/10001/terms/27334",
+                          "type": "string"
+                        },
+                        "datatype": "url"
+                      }
+                    ],
+                    "P813": [
+                      {
+                        "snaktype": "value",
+                        "property": "P813",
+                        "hash": "43a7708c7df91eb6332c27ac333cd381773b1c79",
+                        "datavalue": {
+                          "value": {
+                            "time": "+2024-02-17T00:00:00Z",
+                            "timezone": 0,
+                            "before": 0,
+                            "after": 0,
+                            "precision": 11,
+                            "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                          },
+                          "type": "time"
+                        },
+                        "datatype": "time"
+                      }
+                    ]
+                  },
+                  "snaks-order": ["P854", "P813"]
+                }
+              ]
+            }
+          ],
+          "P4272": [
+            {
+              "mainsnak": {
+                "snaktype": "value",
+                "property": "P4272",
+                "hash": "237dc779394383dc0240a96f8d4f8e1e6f6b1830",
+                "datavalue": {
+                  "value": "U.S. states",
+                  "type": "string"
+                },
+                "datatype": "external-id"
+              },
+              "type": "statement",
+              "id": "Q35657$b4360392-4ac8-e923-2631-65c2cd988fc2",
+              "rank": "normal"
+            }
+          ],
+          "P3847": [
+            {
+              "mainsnak": {
+                "snaktype": "value",
+                "property": "P3847",
+                "hash": "4314d9d1b70a53c9b108b991e04c33541677b7ee",
+                "datavalue": {
+                  "value": "u.s._states",
+                  "type": "string"
+                },
+                "datatype": "external-id"
+              },
+              "type": "statement",
+              "id": "Q35657$a7ad561f-4e2d-5da9-0353-d2eb637ed9c6",
+              "rank": "normal"
+            }
+          ],
+          "P9885": [
+            {
+              "mainsnak": {
+                "snaktype": "value",
+                "property": "P9885",
+                "hash": "7f087adf143ba1393436eff91e124d80a0465b39",
+                "datavalue": {
+                  "value": "3fdbbecc-bf86-6288-0b5e-30f770429af0",
+                  "type": "string"
+                },
+                "datatype": "external-id"
+              },
+              "type": "statement",
+              "id": "Q35657$9b5b653f-4a77-7a72-12ad-ae6d7aa48490",
+              "rank": "normal"
+            }
+          ],
+          "P1151": [
+            {
+              "mainsnak": {
+                "snaktype": "value",
+                "property": "P1151",
+                "hash": "562c40dd3ef29d0548cb2550a8051162b97254f0",
+                "datavalue": {
+                  "value": {
+                    "entity-type": "item",
+                    "numeric-id": 123398580,
+                    "id": "Q123398580"
+                  },
+                  "type": "wikibase-entityid"
+                },
+                "datatype": "wikibase-item"
+              },
+              "type": "statement",
+              "id": "Q35657$a3741525-46f3-ba1d-1441-6ba440bf1dfd",
+              "rank": "normal"
+            }
+          ],
+          "P1417": [
+            {
+              "mainsnak": {
+                "snaktype": "value",
+                "property": "P1417",
+                "hash": "e9ba7953f25e984aba276b2ed8a1252353d0bfc0",
+                "datavalue": {
+                  "value": "topic/state-United-States-political-subdivision",
+                  "type": "string"
+                },
+                "datatype": "external-id"
+              },
+              "type": "statement",
+              "qualifiers": {
+                "P1810": [
+                  {
+                    "snaktype": "value",
+                    "property": "P1810",
+                    "hash": "413977f601f72db7187ff7eaf7a222b5059d1ac0",
+                    "datavalue": {
+                      "value": "state",
+                      "type": "string"
+                    },
+                    "datatype": "string"
+                  }
+                ]
+              },
+              "qualifiers-order": ["P1810"],
+              "id": "Q35657$d6f1bf48-4c0c-b626-6d5b-fa85da1a0631",
+              "rank": "normal",
+              "references": [
+                {
+                  "hash": "f281602b614d0ed18335ac4b1dff109a6964ac02",
+                  "snaks": {
+                    "P248": [
+                      {
+                        "snaktype": "value",
+                        "property": "P248",
+                        "hash": "d1d1b10a05a8f3fc5d26bb4aeb6849617ad81fc7",
+                        "datavalue": {
+                          "value": {
+                            "entity-type": "item",
+                            "numeric-id": 5375741,
+                            "id": "Q5375741"
+                          },
+                          "type": "wikibase-entityid"
+                        },
+                        "datatype": "wikibase-item"
+                      }
+                    ],
+                    "P854": [
+                      {
+                        "snaktype": "value",
+                        "property": "P854",
+                        "hash": "5c2d9d9af08a96c2644aa97b6a32213a7bea6953",
+                        "datavalue": {
+                          "value": "https://www.britannica.com/topic/state-United-States-political-subdivision",
+                          "type": "string"
+                        },
+                        "datatype": "url"
+                      }
+                    ],
+                    "P1476": [
+                      {
+                        "snaktype": "value",
+                        "property": "P1476",
+                        "hash": "f79fbf4b874972dea6de1bf4fa64018c4d5a731c",
+                        "datavalue": {
+                          "value": {
+                            "text": "state",
+                            "language": "en"
+                          },
+                          "type": "monolingualtext"
+                        },
+                        "datatype": "monolingualtext"
+                      }
+                    ],
+                    "P1680": [
+                      {
+                        "snaktype": "value",
+                        "property": "P1680",
+                        "hash": "77e5ef693352b67edf7445ec7d182103b9ddc08c",
+                        "datavalue": {
+                          "value": {
+                            "text": "United States political subdivision",
+                            "language": "en"
+                          },
+                          "type": "monolingualtext"
+                        },
+                        "datatype": "monolingualtext"
+                      }
+                    ],
+                    "P813": [
+                      {
+                        "snaktype": "value",
+                        "property": "P813",
+                        "hash": "5c2ed54d404b83559a339feec7c2268a9c1a4ea2",
+                        "datavalue": {
+                          "value": {
+                            "time": "+2023-11-16T00:00:00Z",
+                            "timezone": 0,
+                            "before": 0,
+                            "after": 0,
+                            "precision": 11,
+                            "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                          },
+                          "type": "time"
+                        },
+                        "datatype": "time"
+                      }
+                    ]
+                  },
+                  "snaks-order": ["P248", "P854", "P1476", "P1680", "P813"]
+                }
+              ]
+            }
+          ],
+          "P11762": [
+            {
+              "mainsnak": {
+                "snaktype": "value",
+                "property": "P11762",
+                "hash": "f795b803c143db9dbb7642339a4ecd2110dcf144",
+                "datavalue": {
+                  "value": "609367",
+                  "type": "string"
+                },
+                "datatype": "external-id"
+              },
+              "type": "statement",
+              "id": "Q35657$8eee2a04-4169-b0bc-e7ae-ea9bac6e5777",
+              "rank": "normal"
+            }
+          ],
+          "P950": [
+            {
+              "mainsnak": {
+                "snaktype": "value",
+                "property": "P950",
+                "hash": "71704bebf32bbe62251894dd43b6a39362249b03",
+                "datavalue": {
+                  "value": "XX5301051",
+                  "type": "string"
+                },
+                "datatype": "external-id"
+              },
+              "type": "statement",
+              "qualifiers": {
+                "P1810": [
+                  {
+                    "snaktype": "value",
+                    "property": "P1810",
+                    "hash": "375a4b427508df3a45d34052fa5c9a7897dc26ad",
+                    "datavalue": {
+                      "value": "Estados Unidos--Estados",
+                      "type": "string"
+                    },
+                    "datatype": "string"
+                  }
+                ]
+              },
+              "qualifiers-order": ["P1810"],
+              "id": "Q35657$b7f6d950-4a02-7cca-e4d1-1b17dd1720da",
+              "rank": "normal",
+              "references": [
+                {
+                  "hash": "259d2dc6ce97f7ac2eae3fa3df2ffe2c62d57392",
+                  "snaks": {
+                    "P248": [
+                      {
+                        "snaktype": "value",
+                        "property": "P248",
+                        "hash": "45037a2d1d89deebcdfc5840e9adbaa4b64cebc6",
+                        "datavalue": {
+                          "value": {
+                            "entity-type": "item",
+                            "numeric-id": 50358336,
+                            "id": "Q50358336"
+                          },
+                          "type": "wikibase-entityid"
+                        },
+                        "datatype": "wikibase-item"
+                      }
+                    ],
+                    "P854": [
+                      {
+                        "snaktype": "value",
+                        "property": "P854",
+                        "hash": "a1314062c36e5ec03e07fef9ed5745cfc77f3bad",
+                        "datavalue": {
+                          "value": "https://datos.bne.es/tema/XX5301051.html",
+                          "type": "string"
+                        },
+                        "datatype": "url"
+                      }
+                    ],
+                    "P813": [
+                      {
+                        "snaktype": "value",
+                        "property": "P813",
+                        "hash": "5c2ed54d404b83559a339feec7c2268a9c1a4ea2",
+                        "datavalue": {
+                          "value": {
+                            "time": "+2023-11-16T00:00:00Z",
+                            "timezone": 0,
+                            "before": 0,
+                            "after": 0,
+                            "precision": 11,
+                            "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                          },
+                          "type": "time"
+                        },
+                        "datatype": "time"
+                      }
+                    ]
+                  },
+                  "snaks-order": ["P248", "P854", "P813"]
+                }
+              ]
+            }
+          ],
+          "P8313": [
+            {
+              "mainsnak": {
+                "snaktype": "value",
+                "property": "P8313",
+                "hash": "d2769a0dc592201c5cc0e31cd968e6a60309a001",
+                "datavalue": {
+                  "value": "amerikanske_delstater",
+                  "type": "string"
+                },
+                "datatype": "external-id"
+              },
+              "type": "statement",
+              "id": "Q35657$65ca8f5e-4e7a-e55c-837a-a392dbed6234",
+              "rank": "normal"
+            }
+          ],
+          "P12800": [
+            {
+              "mainsnak": {
+                "snaktype": "value",
+                "property": "P12800",
+                "hash": "6dcba34cc25995f0fa78a7628a8cd2e572845b06",
+                "datavalue": {
+                  "value": "en:List_of_U.S._states_and_territories",
+                  "type": "string"
+                },
+                "datatype": "external-id"
+              },
+              "type": "statement",
+              "id": "Q35657$BC347E86-5691-4FAE-BD1C-1C2781321FBE",
+              "rank": "normal"
+            },
+            {
+              "mainsnak": {
+                "snaktype": "value",
+                "property": "P12800",
+                "hash": "e84de435c54ea1f6867cfcf2d9e12085c7f0b099",
+                "datavalue": {
+                  "value": "fr:États_des_États-Unis",
+                  "type": "string"
+                },
+                "datatype": "external-id"
+              },
+              "type": "statement",
+              "id": "Q35657$AB0FB946-2C1B-403A-9931-3887A7CA6039",
+              "rank": "normal"
+            }
+          ],
+          "P12844": [
+            {
+              "mainsnak": {
+                "snaktype": "value",
+                "property": "P12844",
+                "hash": "a1195f1ecb7f4da1e8f27056b4ae65d683fdb7ac",
+                "datavalue": {
+                  "value": "5399",
+                  "type": "string"
+                },
+                "datatype": "external-id"
+              },
+              "type": "statement",
+              "id": "Q35657$416330ae-463a-3258-0a26-68fce481abae",
+              "rank": "normal"
+            }
+          ],
+          "P8885": [
+            {
+              "mainsnak": {
+                "snaktype": "value",
+                "property": "P8885",
+                "hash": "4469e3ce59a386786e03cc3e553306eaa6d15808",
+                "datavalue": {
+                  "value": "미국/주",
+                  "type": "string"
+                },
+                "datatype": "external-id"
+              },
+              "type": "statement",
+              "id": "Q35657$88cc388a-41db-e71e-98d9-dad8b6bccc3d",
+              "rank": "normal"
+            }
+          ],
+          "P8168": [
+            {
+              "mainsnak": {
+                "snaktype": "value",
+                "property": "P8168",
+                "hash": "ef02f89710c948c9eb9939a2e6cd27f08a687cbb",
+                "datavalue": {
+                  "value": "Q164454",
+                  "type": "string"
+                },
+                "datatype": "external-id"
+              },
+              "type": "statement",
+              "id": "Q35657$2408754A-AB6C-444F-8F01-035481C19D2F",
+              "rank": "normal",
+              "references": [
+                {
+                  "hash": "cb1895b3a45e6e5ed53b718028ae95421f279b92",
+                  "snaks": {
+                    "P248": [
+                      {
+                        "snaktype": "value",
+                        "property": "P248",
+                        "hash": "e4afc4ad60f2160201385d29d076e0794f815f1e",
+                        "datavalue": {
+                          "value": {
+                            "entity-type": "item",
+                            "numeric-id": 90405608,
+                            "id": "Q90405608"
+                          },
+                          "type": "wikibase-entityid"
+                        },
+                        "datatype": "wikibase-item"
+                      }
+                    ],
+                    "P813": [
+                      {
+                        "snaktype": "value",
+                        "property": "P813",
+                        "hash": "538edc500badadebd9438c0d808836a806ebbab7",
+                        "datavalue": {
+                          "value": {
+                            "time": "+2024-12-11T00:00:00Z",
+                            "timezone": 0,
+                            "before": 0,
+                            "after": 0,
+                            "precision": 11,
+                            "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                          },
+                          "type": "time"
+                        },
+                        "datatype": "time"
+                      }
+                    ]
+                  },
+                  "snaks-order": ["P248", "P813"]
+                }
+              ]
+            }
+          ],
+          "P13591": [
+            {
+              "mainsnak": {
+                "snaktype": "value",
+                "property": "P13591",
+                "hash": "609ebba23d219f5429eb5b2d3678944bd56316eb",
+                "datavalue": {
+                  "value": "concept/6edf2b3b-9b03-460d-9ed6-c54cf03cc735",
+                  "type": "string"
+                },
+                "datatype": "external-id"
+              },
+              "type": "statement",
+              "id": "Q35657$069B1884-ACB2-45FE-A21F-04E8E683AA70",
+              "rank": "normal"
+            }
+          ],
+          "P13906": [
+            {
+              "mainsnak": {
+                "snaktype": "value",
+                "property": "P13906",
+                "hash": "6b1155b753b1862a5d6f7c2cc0ec9ecce264b807",
+                "datavalue": {
+                  "value": "176489",
+                  "type": "string"
+                },
+                "datatype": "external-id"
+              },
+              "type": "statement",
+              "qualifiers": {
+                "P1810": [
+                  {
+                    "snaktype": "value",
+                    "property": "P1810",
+                    "hash": "4522780a4487ac2c544cff142ca78ace72e7cd90",
+                    "datavalue": {
+                      "value": "ایالات متحده -- ایالات",
+                      "type": "string"
+                    },
+                    "datatype": "string"
+                  },
+                  {
+                    "snaktype": "value",
+                    "property": "P1810",
+                    "hash": "1e2bc068060d95d0fcba3d272ca4c8d6007b9af0",
+                    "datavalue": {
+                      "value": "U. S. states",
+                      "type": "string"
+                    },
+                    "datatype": "string"
+                  }
+                ]
+              },
+              "qualifiers-order": ["P1810"],
+              "id": "Q35657$3E3D4487-256D-4FFD-881D-1F1189FF960E",
+              "rank": "normal"
+            }
+          ]
+        }
+      }
+    },
+    "success": 1
+  }
+}
