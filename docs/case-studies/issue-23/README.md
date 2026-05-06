@@ -1,218 +1,184 @@
-# Case Study: Issue #23 - Best CI/CD Practices from Hive Mind Repository
+# Case Study: Issue #23 — UI/UX improvements
 
-## Summary
+> Source issue: [link-assistant/meta-expression #23](https://github.com/link-assistant/meta-expression/issues/23)
 
-This case study documents the incorporation of best CI/CD practices from the [hive-mind repository](https://github.com/link-assistant/hive-mind), specifically addressing the critical issue of **stale merge preview** in GitHub Actions. The key insight comes from [hive-mind issue #1141](https://github.com/link-assistant/hive-mind/issues/1141) and its fix in [PR #1142](https://github.com/link-assistant/hive-mind/pull/1142).
+## 1. Problem statement
 
-## The Problem: GitHub's Stale Merge Preview Architecture
+The static web prototype (`web/index.html` + `web/styles.css` + `web/app.js`)
+shipped with three concrete UI/UX defects on the **Formalize** page and one
+broader request to make the whole UI mobile-first, themeable, and language-aware.
 
-### How GitHub Actions Handles Pull Requests
+The original issue body lists the problems with screenshots. We mirror the
+screenshots into [`./data/`](./data/) so the case study is self-contained.
 
-When a PR triggers a GitHub Actions workflow (`on: pull_request`), GitHub performs these steps:
+| #   | Defect / Request                                                                                                                                                                                                                                                                 | Screenshot                                                                                                                 |
+| --- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------- |
+| 1   | Text contrast inside the **Markdown** and **Links Notation** `<details>` panels is far too low — the content is almost invisible against the panel background.                                                                                                                   | [`data/issue-original-image-1-low-contrast-panels.png`](./data/issue-original-image-1-low-contrast-panels.png)             |
+| 2   | The **Link target** and **Sources** radio/checkbox fieldsets render with a buggy whitespace arrangement: the label text floats far to the right of the input, lines wrap awkwardly, and the layout uses too much vertical space.                                                 | [`data/issue-original-image-2-radio-whitespace.png`](./data/issue-original-image-2-radio-whitespace.png)                   |
+| 3   | The **Top 10 Interpretations** list dumps `[Q…]` ids for every phrase, making it almost unreadable, and there is no way to switch to a more compact / human-friendly form. The currently selected interpretation is also missing from the top‑10 and the rows are not clickable. | [`data/issue-original-image-3-cluttered-interpretations.png`](./data/issue-original-image-3-cluttered-interpretations.png) |
+| 4   | The UI must support **language switching** _and_ detection.                                                                                                                                                                                                                      | n/a                                                                                                                        |
+| 5   | The UI must support **theme switching** _and_ detection.                                                                                                                                                                                                                         | n/a                                                                                                                        |
+| 6   | The UI must be **mobile-first friendly** but use desktop space wisely.                                                                                                                                                                                                           | n/a                                                                                                                        |
 
-1. Creates a synthetic merge commit at `refs/pull/{number}/merge`
-2. This merge commit represents what the merge **would look like** at the moment of creation
-3. `actions/checkout@v4` checks out this merge preview by default
-4. **The merge preview does NOT automatically update** when the base branch changes
+## 2. Decomposed requirements
 
-### The Critical Gap
+Each requirement is given an ID we reference from commits and tests.
+
+### R1 — Contrast inside expandable panels (`<details class="formalize-payload">`)
+
+- The `<pre>` content uses `background: #172026; color: #f5f7f9` from the global
+  `pre` rule, but the `.formalize-payload pre` rule overrides the background to
+  `#ffffff` _without_ overriding the color, leaving near-white text on white. (See
+  [`web/styles.css:962-984`](../../../web/styles.css) before the fix.)
+- **Acceptance:** Markdown and Links Notation panel bodies must reach
+  WCAG 2.1 AA contrast (≥4.5:1) in both light and dark themes.
+
+### R2 — Radio / checkbox fieldsets (`<fieldset class="formalize-target">`, `<fieldset class="formalize-sources">`)
+
+- Default browser fieldset styles plus `display: grid; gap: 6px;` cause the
+  control + text to be split onto two visual columns when the parent grid widens,
+  producing the “whitespace bug”.
+- **Acceptance:** the radio/checkbox sits flush left, the label text is close to
+  it (≤8px), the rows do not wrap awkwardly on desktop or mobile, and the
+  fieldset is no taller than the sum of its rows + 8px padding.
+
+### R3 — Switchable interpretation display modes
+
+- A user must be able to choose how each interpretation row is rendered. Modes:
+  - `id` — `Hawaii [Q782]` (current behaviour, kept as opt-in)
+  - `name` — `Hawaii (Hawaii)` — entity full name only, replaces the source token
+  - `name+meaning` — `Hawaii (state of the United States)`
+  - `meaning` — `state of the United States`
+  - `replace` — show only the entity label, no parens, no original token
+- **Acceptance:** a single radio control on the Formalize page toggles all
+  interpretation rows live, with the choice persisted in `localStorage`.
+
+### R4 — Clickable interpretations + “current is in the top 10”
+
+- Clicking an interpretation row must replace the main rendered output with that
+  interpretation’s phrases and re-render the Markdown/Links Notation payloads.
+- The currently active interpretation must always be present in the list (its
+  rank is preserved when it’s already in the top‑N, otherwise it is appended at
+  position 10 and visually marked as `active`).
+- **Acceptance:** each row is a real `<button>`, has `aria-pressed`,
+  keyboard-focuses, and the active row is visually distinct.
+
+### R5 — Language switching + detection
+
+- The web prototype hard-codes English UI strings. We need
+  - a small i18n table with at least `en` and `ru`,
+  - automatic detection from `navigator.language`,
+  - a manual `<select>` in the top nav that overrides detection and persists to
+    `localStorage`.
+- **Acceptance:** all visible UI strings (nav, headings, buttons, hints) come
+  from the table; switching the language updates the page without a reload.
+
+### R6 — Theme switching + detection
+
+- Detect `prefers-color-scheme` on first load. Provide a manual “Light / Dark /
+  Auto” toggle in the top nav that persists to `localStorage`. Wire dark mode
+  through CSS custom properties so every screen (Analyse, Compare, Formalize)
+  picks it up.
+- **Acceptance:** light + dark themes both pass AA contrast on every component
+  touched in R1–R4.
+
+### R7 — Mobile-first / wise desktop space
+
+- The current `@media (max-width: 820px)` block is too coarse. We need:
+  - a fluid `clamp()`-based `max-width` for the formalize panel so it doesn’t
+    feel lost on 1440px+ displays but still fills small phones,
+  - the radio/checkbox fieldsets switch to single-column on `<480px`,
+  - the top nav becomes scrollable horizontally on narrow widths instead of
+    wrapping into multiple rows.
+- **Acceptance:** Lighthouse mobile audit passes, and desktop screenshots show
+  the formalize panel filling a sensible reading column rather than a 1100px
+  hard cap whose corners feel empty.
+
+## 3. Root-cause analysis
+
+| Defect          | Root cause                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  |
+| --------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| R1 low contrast | Specificity + cascade order: the global `pre { color: #f5f7f9 }` selector matches `.formalize-payload pre`, so when `.formalize-payload pre` resets the background to white the text colour is _not_ reset.                                                                                                                                                                                                                                                                                                                 |
+| R2 whitespace   | `.formalize-target label { display: flex; align-items: center; gap: 6px; }` is correct in isolation, but the parent `.formalize-options` is a 2-column grid (`minmax(180px, 1fr) minmax(220px, 2fr)`) which forces the fieldset to share its row with `<input id="formalize-ngram-size">`. Inside the fieldset, the labels then stretch to the full grid track. The legacy WebKit default of `display: list-item` on `<legend>` plus an implicit `padding` on `<fieldset>` add the extra whitespace seen in the screenshot. |
+| R3 / R4         | The interpretation list is rendered as static `<li>` rows with phrase IDs hard-coded into the template. There is no display mode state, no click handler, and no concept of an “active interpretation”.                                                                                                                                                                                                                                                                                                                     |
+| R5 / R6 / R7    | The prototype was built with a single `:root` light palette and no i18n layer. Theme + locale state live nowhere.                                                                                                                                                                                                                                                                                                                                                                                                           |
+
+## 4. Existing components / libraries surveyed
+
+We deliberately stay zero-dependency to keep the prototype small and offline-friendly. The patterns below were referenced when designing the fix.
+
+| Concern                    | Reference component / pattern                                                                                                                                   | Why we didn’t adopt it                                                                                                             |
+| -------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------- |
+| Theme toggling             | [`@radix-ui/react-toggle-group`](https://www.radix-ui.com/primitives/docs/components/toggle-group), [`next-themes`](https://github.com/pacocoursey/next-themes) | React-only and pulls a runtime; we only need ~30 lines of vanilla JS + CSS variables.                                              |
+| i18n                       | [`i18next`](https://www.i18next.com/), [`@formatjs/intl`](https://formatjs.io/)                                                                                 | Heavy for a prototype; for two locales a 1-file dictionary is enough and keeps the bundle empty.                                   |
+| Accessible radio fieldsets | [GOV.UK Design System — Radios](https://design-system.service.gov.uk/components/radios/)                                                                        | We only need its layout rules (icon + label, 8px gap, 16px row gap), reproduced inline.                                            |
+| `<details>` styling        | [Open UI: Customizable details/summary](https://open-ui.org/components/disclosure.research/)                                                                    | We only need a colour change + cursor; native works fine.                                                                          |
+| Mobile-first grid          | [Every Layout — Switcher](https://every-layout.dev/layouts/switcher/)                                                                                           | We adopt the _idea_ (single CSS rule that flips between row and column based on container width) without depending on the library. |
+
+## 5. Solution plan (executed in this PR)
+
+1. **R1 — Contrast.** Move all colours into CSS custom properties on `:root` and
+   `:root[data-theme='dark']`. Re-style `.formalize-payload pre` to use
+   `var(--surface)` + `var(--ink)` so it inherits theme automatically. Confirm
+   AA contrast for both themes.
+2. **R2 — Radio whitespace.** Strip default `<fieldset>` padding, give each
+   `<label>` `display: inline-flex; align-items: center; gap: 8px;` and put the
+   fieldsets in their own auto-fitting grid (`grid-template-columns:
+repeat(auto-fit, minmax(220px, 1fr))`).
+3. **R3 — Display modes.** Introduce a `<fieldset class="formalize-display-mode">`
+   with five radios (id / name / name+meaning / meaning / replace). Persist the
+   selection in `localStorage` (`meta-expression.interpretation-display.v1`).
+   Refactor the interpretation row renderer to format each phrase based on the
+   mode and on `entityLabel` / `entityDescription` carried from the formalize
+   pipeline. Surface those fields from `generateFormalizeInterpretations` in
+   `src/formalize.js`.
+4. **R4 — Clickability + “active in top 10”.** Compute an `activeInterpretationKey`
+   from the selected entity ids. Render the interpretation list as
+   `<button class="formalize-interpretation-row">` elements; clicking one calls
+   the same renderer the toggle uses. If the active interpretation is missing
+   from the top‑N, push it as rank 10 and tag it `data-active="true"`.
+5. **R5 — Language.** Add `web/i18n.js` with two dictionaries (`en`, `ru`).
+   Replace every static UI string in `index.html` with a `data-i18n` attribute
+   the dictionary fills in on `DOMContentLoaded`. Add a `<select id="locale">`
+   in the top nav. Auto-pick from `navigator.language`, persist overrides.
+6. **R6 — Theme.** Add a `<button id="theme-toggle">` cycling Auto → Light →
+   Dark. Default to `Auto` which obeys `prefers-color-scheme`. Persist override
+   to `localStorage`. All component colours move to CSS custom properties.
+7. **R7 — Mobile-first / wise desktop.** Replace the single hard `820px`
+   breakpoint with a small mobile-first reset (single column under 720px,
+   fluid `clamp(320px, 100%, 1200px)` shell over 720px, scrollable nav under
+   560px). Verify with Playwright at 375×812 (iPhone SE), 768×1024 (iPad), and
+   1440×900 (desktop).
+
+## 6. Verification matrix
+
+| Requirement | Automated test                                                                            | Visual evidence                                                                                             |
+| ----------- | ----------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------- |
+| R1          | `tests/issue-23.test.js` — contrast tokens come from theme                                | `docs/screenshots/issue-23/after-formalize-light.png`, `docs/screenshots/issue-23/after-formalize-dark.png` |
+| R2          | `tests/issue-23.test.js` — fieldsets render with no leftover padding                      | same screenshots above                                                                                      |
+| R3          | `tests/issue-23.test.js` — `formatInterpretationPhrase` covers all five modes             | `docs/screenshots/issue-23/after-display-mode-meaning.png`                                                  |
+| R4          | `tests/issue-23.test.js` — current interpretation is always included and tagged active    | `docs/screenshots/issue-23/after-active-interpretation.png`                                                 |
+| R5          | `tests/issue-23.test.js` — i18n dictionary exposes the same set of keys for `en` and `ru` | `docs/screenshots/issue-23/after-locale-ru.png`                                                             |
+| R6          | `tests/issue-23.test.js` — theme tokens are defined for both light and dark               | `docs/screenshots/issue-23/after-formalize-dark.png`                                                        |
+| R7          | manual Playwright sweep at 375 / 768 / 1440                                               | `docs/screenshots/issue-23/after-mobile-375.png`                                                            |
+
+## 7. Files in this case study
 
 ```
-Day 1: PR opened/synced
-       -> GitHub creates merge preview (validates correctly)
-       -> CI runs on merge preview -> PASSES
-
-[Time passes - other PRs merge to main, changing the codebase]
-
-Day N: PR merged (without re-running CI)
-       -> Actual merge result differs from stale preview
-       -> Push CI runs on actual merge -> FAILS
+docs/case-studies/issue-23/
+├── README.md                                                  # this file
+└── data/
+    ├── issue-23-details.json                                  # raw GitHub issue payload
+    ├── issue-original-image-1-low-contrast-panels.png         # original screenshot 1
+    ├── issue-original-image-2-radio-whitespace.png            # original screenshot 2
+    └── issue-original-image-3-cluttered-interpretations.png   # original screenshot 3
 ```
 
-This is exactly what happened in hive-mind issue #1141, where:
+## 8. References
 
-- Jan 11: PR #1105 CI passed (merge preview showed file at 1495 lines)
-- Jan 19: PR merged (actual result was 1506 lines due to intervening changes)
-- Push CI failed because the actual merge exceeded the 1500-line limit
-
-### Why This Matters
-
-The stale merge preview issue creates a **false sense of security**:
-
-- Developers see green CI checks on their PR
-- They merge confidently
-- Main branch CI fails after merge
-- The team scrambles to fix a broken main branch
-
-## Solutions Implemented
-
-### 1. Fresh Merge Simulation in CI Workflow
-
-Added to both `lint` and `test` jobs in `.github/workflows/release.yml`:
-
-```yaml
-- name: Simulate fresh merge with base branch (PR only)
-  if: github.event_name == 'pull_request'
-  env:
-    BASE_REF: ${{ github.base_ref }}
-  run: |
-    # Fetch the latest base branch
-    git fetch origin "$BASE_REF"
-
-    # Check if base branch has new commits
-    BEHIND_COUNT=$(git rev-list --count HEAD..origin/$BASE_REF)
-
-    if [ "$BEHIND_COUNT" -gt 0 ]; then
-      # Merge latest base branch to simulate actual merge result
-      git merge origin/$BASE_REF --no-edit || exit 1
-    fi
-```
-
-This ensures PR CI validates the **actual** merge result, not a stale snapshot.
-
-### 2. ESLint max-lines Rule
-
-Already configured in `eslint.config.js`:
-
-```javascript
-'max-lines': ['error', 1500]
-```
-
-This provides:
-
-- Local development feedback via editor integration
-- CI enforcement via `npm run lint`
-- Early warning before files become unmaintainable
-
-### 3. Version Check CI Job
-
-Already configured in `.github/workflows/release.yml`:
-
-```yaml
-version-check:
-  name: Check for Manual Version Changes
-  runs-on: ubuntu-latest
-  if: github.event_name == 'pull_request'
-  steps:
-    - uses: actions/checkout@v4
-      with:
-        fetch-depth: 0
-    - name: Check for version changes in package.json
-      run: node scripts/check-version.mjs
-```
-
-This prevents manual version changes in PRs - versions should only be changed by the CI/CD pipeline using changesets.
-
-## Root Cause Analysis
-
-### Primary Root Cause: GitHub's Merge Preview Design
-
-The fundamental issue is architectural:
-
-1. GitHub's `refs/pull/{number}/merge` is a **snapshot**, not a live reference
-2. It's created when the PR is opened or synchronized
-3. It does **not** update when the base branch receives new commits
-4. Long-lived PRs are particularly vulnerable
-
-### Contributing Factors
-
-1. **No automatic re-validation**: GitHub doesn't automatically re-run CI when the base branch changes
-2. **Time gap vulnerability**: The longer a PR sits open, the more likely it is to have a stale merge preview
-3. **Silent desynchronization**: There's no warning that the merge preview is outdated
-
-## Evidence from CI Logs
-
-### From hive-mind Issue #1141
-
-**Passed CI Run #20889393003 (PR Branch - January 11):**
-
-```
-check-file-line-limits: [command]/usr/bin/git checkout --progress --force refs/remotes/pull/1105/merge
-check-file-line-limits: ./src/claude.lib.mjs: 1495 lines
-```
-
-**Failed CI Run #21128634082 (Main Branch - January 19):**
-
-```
-detect-changes: Comparing HEAD^ to HEAD
-check-file-line-limits: ./src/claude.lib.mjs: 1506 lines
-check-file-line-limits: ERROR: ./src/claude.lib.mjs has 1506 lines, which exceeds the 1500 line limit!
-```
-
-The 8-day gap between PR CI pass and merge allowed other changes to accumulate, causing the actual merge to exceed the limit.
-
-## Prevention Recommendations
-
-### Implemented in This Template
-
-1. **Fresh Merge Simulation**: CI simulates a fresh merge before running checks
-2. **ESLint max-lines Rule**: Enforces file size limits at lint time
-3. **Version Check**: Prevents manual version changes
-
-### Additional Protection Options
-
-For teams wanting extra protection:
-
-1. **Enable GitHub Merge Queue**: Tests PRs against the latest main before merge
-2. **Require Branches Up-to-Date**: Force PRs to be rebased before merging
-3. **Add Pre-commit Hooks**: Check constraints locally before pushing
-4. **Branch Protection Rules**: Require status checks to pass before merging
-
-## Research: Online Sources
-
-### GitHub's Merge Preview Behavior
-
-According to [GitHub Actions and Merge Conflicts analysis](https://medium.com/@FartsyRainbowOctopus/github-actions-and-merge-conflicts-a-comprehensive-analysis-and-definitive-guide-to-unlocking-54fa45a38886):
-
-> For "on: pull_request" workflows to accurately validate code in its merged state, GitHub executes a crucial preliminary step: it attempts to create a temporary merge commit by merging the pull request's head branch into its base branch.
-
-### GitHub Merge Queue Benefits
-
-According to [GitHub Docs on Merge Queue](https://docs.github.com/en/repositories/configuring-branches-and-merges-in-your-repository/configuring-pull-request-merges/managing-a-merge-queue):
-
-> The merge queue will ensure the pull request's changes pass all required status checks when applied to the latest version of the target branch and any pull requests already in the queue.
-
-### Best Practices for CI
-
-According to [Graphite's best practices guide](https://graphite.com/guides/best-practices-managing-merge-queue):
-
-> How well your GitHub merge queue works really comes down to the status checks you mark as required. These are the automated tasks – think CI builds, tests, linters, or security scans – that absolutely must pass on those temporary merge branches before a PR gets merged.
-
-## Timeline of Events
-
-| Date       | Event                                                   | Result               |
-| ---------- | ------------------------------------------------------- | -------------------- |
-| 2026-01-11 | PR #1105 CI passes in hive-mind (merge preview at 1495) | Green checkmark      |
-| 2026-01-14 | Other PRs add lines to file                             | File grows           |
-| 2026-01-15 | More changes push file to 1512 lines                    | Still over limit     |
-| 2026-01-15 | Attempt to fix brings it to 1498 lines                  | Back under limit     |
-| 2026-01-19 | PR #1105 merged (actual merge at 1506 lines)            | Main branch CI fails |
-| 2026-01-19 | Issue #1141 created in hive-mind                        | Investigation begins |
-| 2026-01-19 | PR #1142 implements fresh merge simulation fix          | Solution implemented |
-| 2026-01-19 | Issue #23 created to port fixes to this template        | Current case study   |
-
-## Files in This Case Study
-
-- `README.md` - This documentation
-- `data/` - Downloaded logs and data from hive-mind repository
-  - `pr-1142-diff.txt` - Full diff of the fix PR
-  - `pr-1127-diff.txt` - Diff of version-check addition
-  - `issue-1141-details.txt` - Original issue description
-  - `hive-mind-release.yml` - Reference workflow file
-
-## Related Issues and PRs
-
-- [hive-mind Issue #1141](https://github.com/link-assistant/hive-mind/issues/1141): Make sure our lines count checks are synchronized in CI/CD
-- [hive-mind PR #1142](https://github.com/link-assistant/hive-mind/pull/1142): fix: synchronize line count checks in CI/CD
-- [hive-mind PR #1127](https://github.com/link-assistant/hive-mind/pull/1127): Add --prompt-subagents-via-agent-commander option (includes version-check CI job)
-
-## Conclusion
-
-The stale merge preview issue is a fundamental architectural limitation of GitHub's pull request CI system. By implementing fresh merge simulation in our CI workflows, we ensure that:
-
-1. PR CI validates the **actual** merge result, not a stale snapshot
-2. Developers get accurate feedback before merging
-3. Main branch CI failures due to stale previews are prevented
-4. Team productivity is maintained by avoiding post-merge firefighting
-
-This solution has been proven effective in the hive-mind repository and is now incorporated into this template for all projects to benefit from.
+- WCAG 2.1 — [SC 1.4.3 Contrast (Minimum)](https://www.w3.org/TR/WCAG21/#contrast-minimum)
+- MDN — [`prefers-color-scheme`](https://developer.mozilla.org/en-US/docs/Web/CSS/@media/prefers-color-scheme)
+- MDN — [`<fieldset>` and `<legend>` styling pitfalls](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/fieldset)
+- MDN — [`navigator.language` / `navigator.languages`](https://developer.mozilla.org/en-US/docs/Web/API/Navigator/language)
+- Every Layout — [Switcher pattern](https://every-layout.dev/layouts/switcher/)
+- GOV.UK Design System — [Radios component](https://design-system.service.gov.uk/components/radios/)
