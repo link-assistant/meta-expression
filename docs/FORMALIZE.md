@@ -25,6 +25,14 @@ Source: [`src/formalize.js`](../src/formalize.js)
 
 High-level entry points (`formalizeText`, `formalizeTextWith`), tokenization, n-gram generation, and link/markdown/HTML rendering.
 
+### `interpretationKey()`
+
+Build a stable identity key for an interpretation based on its phrase
+entity ids. Used by the web layer to detect whether the currently
+selected interpretation is already among the top‑N (R4).
+
+**Returns** `string`
+
 ### `formalizeText(input, options)`
 
 Synchronous-friendly entry point used by older call sites. Always returns

@@ -152,26 +152,34 @@ repeat(auto-fit, minmax(220px, 1fr))`).
 
 ## 6. Verification matrix
 
-| Requirement | Automated test                                                                            | Visual evidence                                                                                             |
-| ----------- | ----------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------- |
-| R1          | `tests/issue-23.test.js` — contrast tokens come from theme                                | `docs/screenshots/issue-23/after-formalize-light.png`, `docs/screenshots/issue-23/after-formalize-dark.png` |
-| R2          | `tests/issue-23.test.js` — fieldsets render with no leftover padding                      | same screenshots above                                                                                      |
-| R3          | `tests/issue-23.test.js` — `formatInterpretationPhrase` covers all five modes             | `docs/screenshots/issue-23/after-display-mode-meaning.png`                                                  |
-| R4          | `tests/issue-23.test.js` — current interpretation is always included and tagged active    | `docs/screenshots/issue-23/after-active-interpretation.png`                                                 |
-| R5          | `tests/issue-23.test.js` — i18n dictionary exposes the same set of keys for `en` and `ru` | `docs/screenshots/issue-23/after-locale-ru.png`                                                             |
-| R6          | `tests/issue-23.test.js` — theme tokens are defined for both light and dark               | `docs/screenshots/issue-23/after-formalize-dark.png`                                                        |
-| R7          | manual Playwright sweep at 375 / 768 / 1440                                               | `docs/screenshots/issue-23/after-mobile-375.png`                                                            |
+| Requirement | Automated test                                                                         | Visual evidence                                                                                                                                                                          |
+| ----------- | -------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| R1          | `tests/issue-23.test.js` — contrast tokens come from theme                             | [`screenshots/03-formalize-payload-light.png`](./screenshots/03-formalize-payload-light.png), [`screenshots/04-formalize-payload-dark.png`](./screenshots/04-formalize-payload-dark.png) |
+| R2          | `tests/issue-23.test.js` — fieldsets render inline-flex with `flex-wrap: wrap`         | [`screenshots/02-formalize-light.png`](./screenshots/02-formalize-light.png)                                                                                                             |
+| R3          | `tests/issue-23.test.js` — `formatInterpretationPhrase` covers all five modes          | [`screenshots/07-formalize-name-meaning.png`](./screenshots/07-formalize-name-meaning.png)                                                                                               |
+| R4          | `tests/issue-23.test.js` — `interpretationKey` identifies the active choice            | [`screenshots/03-formalize-payload-light.png`](./screenshots/03-formalize-payload-light.png) (rank #1 marked `ACTIVE`)                                                                   |
+| R5          | `tests/issue-23.test.js` — `detectLocale`, `translate`, `listLocales` for `en`/`ru`    | [`screenshots/05-formalize-russian-dark.png`](./screenshots/05-formalize-russian-dark.png)                                                                                               |
+| R6          | `tests/issue-23.test.js` — `nextTheme` cycle, `effectiveTheme`, `themeIcon`            | [`screenshots/04-formalize-payload-dark.png`](./screenshots/04-formalize-payload-dark.png)                                                                                               |
+| R7          | `tests/issue-23.test.js` — `min-width: 640px` / `960px` breakpoints, no legacy `820px` | [`screenshots/06-analyse-mobile-light.png`](./screenshots/06-analyse-mobile-light.png) (390×844)                                                                                         |
 
 ## 7. Files in this case study
 
 ```
 docs/case-studies/issue-23/
 ├── README.md                                                  # this file
-└── data/
-    ├── issue-23-details.json                                  # raw GitHub issue payload
-    ├── issue-original-image-1-low-contrast-panels.png         # original screenshot 1
-    ├── issue-original-image-2-radio-whitespace.png            # original screenshot 2
-    └── issue-original-image-3-cluttered-interpretations.png   # original screenshot 3
+├── data/
+│   ├── issue-23-details.json                                  # raw GitHub issue payload
+│   ├── issue-original-image-1-low-contrast-panels.png         # original screenshot 1
+│   ├── issue-original-image-2-radio-whitespace.png            # original screenshot 2
+│   └── issue-original-image-3-cluttered-interpretations.png   # original screenshot 3
+└── screenshots/
+    ├── 01-analyse-light.png                                   # Analyse page after the rewrite
+    ├── 02-formalize-light.png                                 # Formalize options panel (R2 fix)
+    ├── 03-formalize-payload-light.png                         # Open Markdown / Lino (R1 + R4)
+    ├── 04-formalize-payload-dark.png                          # Same view in dark theme (R6)
+    ├── 05-formalize-russian-dark.png                          # Russian locale + dark theme (R5)
+    ├── 06-analyse-mobile-light.png                            # 390×844 mobile layout (R7)
+    └── 07-formalize-name-meaning.png                          # `name+meaning` display mode (R3)
 ```
 
 ## 8. References
