@@ -56,26 +56,26 @@ correctness scoring both depend on a stable interpretation graph.
 
 ## 3. Source material
 
-| Path | Purpose |
-| --- | --- |
-| [`data/issue-21.json`](./data/issue-21.json) | `gh issue view --json` snapshot for reproducibility |
-| [`data/issue-21-body.md`](./data/issue-21-body.md) | Plain-markdown copy of the issue body |
-| [`REQUIREMENTS.md`](./REQUIREMENTS.md) | Numbered, atomic requirements derived from the issue |
-| [`SOLUTION-PLAN.md`](./SOLUTION-PLAN.md) | Per-requirement solution plan with file pointers |
-| [`ONLINE-RESEARCH.md`](./ONLINE-RESEARCH.md) | External evidence + library survey |
-| [`SAMPLE-STATEMENTS.md`](./SAMPLE-STATEMENTS.md) | First-party statements harvested from this repo |
-| [`_archived-misplaced/`](./_archived-misplaced/) | The folder that previously lived here, kept for audit |
+| Path                                               | Purpose                                               |
+| -------------------------------------------------- | ----------------------------------------------------- |
+| [`data/issue-21.json`](./data/issue-21.json)       | `gh issue view --json` snapshot for reproducibility   |
+| [`data/issue-21-body.md`](./data/issue-21-body.md) | Plain-markdown copy of the issue body                 |
+| [`REQUIREMENTS.md`](./REQUIREMENTS.md)             | Numbered, atomic requirements derived from the issue  |
+| [`SOLUTION-PLAN.md`](./SOLUTION-PLAN.md)           | Per-requirement solution plan with file pointers      |
+| [`ONLINE-RESEARCH.md`](./ONLINE-RESEARCH.md)       | External evidence + library survey                    |
+| [`SAMPLE-STATEMENTS.md`](./SAMPLE-STATEMENTS.md)   | First-party statements harvested from this repo       |
+| [`_archived-misplaced/`](./_archived-misplaced/)   | The folder that previously lived here, kept for audit |
 
 ## 4. Interpretation example used throughout this study
 
 The issue calls out _reasoning_ as the canonical disambiguation problem:
 
-| QID | Wikidata label | Why it matters |
-| --- | --- | --- |
-| [Q1156402](https://www.wikidata.org/wiki/Q1156402) | reasoning (philosophy) | The default sense, "use of reason to draw inferences" |
-| [Q484284](https://www.wikidata.org/wiki/Q484284) | automated reasoning | Computer-science sense; via P910 → Category:Automated reasoning (Q2555318 → Q52701496) |
-| [Q1151406](https://www.wikidata.org/wiki/Q1151406) | reasoning system | Engineering sense |
-| [Q3478658](https://www.wikidata.org/wiki/Q3478658) | reasoning (cognitive process) | Psychology sense |
+| QID                                                | Wikidata label                | Why it matters                                                                         |
+| -------------------------------------------------- | ----------------------------- | -------------------------------------------------------------------------------------- |
+| [Q1156402](https://www.wikidata.org/wiki/Q1156402) | reasoning (philosophy)        | The default sense, "use of reason to draw inferences"                                  |
+| [Q484284](https://www.wikidata.org/wiki/Q484284)   | automated reasoning           | Computer-science sense; via P910 → Category:Automated reasoning (Q2555318 → Q52701496) |
+| [Q1151406](https://www.wikidata.org/wiki/Q1151406) | reasoning system              | Engineering sense                                                                      |
+| [Q3478658](https://www.wikidata.org/wiki/Q3478658) | reasoning (cognitive process) | Psychology sense                                                                       |
 
 The shared category between several of these is **automated reasoning** /
 **logic**, so we expect those to win the “Big context” election when a

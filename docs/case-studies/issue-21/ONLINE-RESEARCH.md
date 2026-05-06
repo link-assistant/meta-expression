@@ -11,8 +11,8 @@ contains "to formalize" as one of its forms. After fetching
 <https://www.wikidata.org/wiki/Q115492965> the actual situation is:
 
 - **Q115492965 is an Item, not a Lexeme.** Its English label is
-  `formalizing` and its description is *"act of describing something in a
-  strict form (often using a formal language or formal system)"*.
+  `formalizing` and its description is _"act of describing something in a
+  strict form (often using a formal language or formal system)"_.
 - Its **aliases** include `to formalize` and `formalization`, which is what
   the issue is referring to.
 - Wikidata stores verb conjugations as **Lexemes** (`L<id>`) with **Forms**
@@ -23,7 +23,7 @@ contains "to formalize" as one of its forms. After fetching
 **Implication for the implementation:** the resolver does not need a
 separate `forms` query for Q115492965 specifically — adding `aliases` to the
 candidate-matching step (in addition to `label`) will pick it up. We should
-*also* add a Wikidata-Lexemes search tier so future verb forms (e.g.
+_also_ add a Wikidata-Lexemes search tier so future verb forms (e.g.
 _running_, _swam_) snap to their lexeme parents.
 
 ### 2. Property P910 and inverse P301
@@ -39,8 +39,8 @@ _running_, _swam_) snap to their lexeme parents.
 
 The issue body links each phrase in the project README to a Wikidata Q-id.
 Spot-checking shows that some of those ids point to the **wrong sense** —
-e.g. the phrase "meta-expression" links to Q42778339 which is *a 2017
-research article about rice gene expression*. This is not noise; it is
+e.g. the phrase "meta-expression" links to Q42778339 which is _a 2017
+research article about rice gene expression_. This is not noise; it is
 direct evidence that the current single-source, top-1 resolver picks
 spurious candidates for compound technical phrases. After this PR, the
 context aggregator should down-weight Q42778339 because its `instance of`
@@ -75,13 +75,13 @@ use it as the canonical Wiktionary backend.
 
 ## D. Library survey
 
-| Candidate | License | Verdict |
-| --- | --- | --- |
-| [`wikibase-sdk`](https://github.com/maxlath/wikibase-sdk) | MIT | Skip. Convenient but adds another dep for endpoints we already speak directly. |
-| [`wikipedia`](https://www.npmjs.com/package/wikipedia) (npm) | MIT | Skip. Single-API helper, no streaming, and our snapshot layer needs to control caching itself. |
-| [`@wikimedia/codex`](https://www.npmjs.com/package/@wikimedia/codex) | GPL-2.0-or-later | Skip. License clash with our MIT codebase; we'll roll our own tooltip in plain DOM. |
-| [`nock`](https://github.com/nock/nock) / [`msw`](https://mswjs.io/) | MIT | Skip. Our existing `makeFetch(routes)` test fixture already gives deterministic mocks; adding either would just bloat installs. |
-| [`@xenova/transformers`](https://www.npmjs.com/package/@xenova/transformers) (for word-form embeddings) | Apache-2.0 | Skip for now. Out of scope; mention in the ROADMAP as a future option for fuzzy candidate scoring. |
+| Candidate                                                                                               | License          | Verdict                                                                                                                         |
+| ------------------------------------------------------------------------------------------------------- | ---------------- | ------------------------------------------------------------------------------------------------------------------------------- |
+| [`wikibase-sdk`](https://github.com/maxlath/wikibase-sdk)                                               | MIT              | Skip. Convenient but adds another dep for endpoints we already speak directly.                                                  |
+| [`wikipedia`](https://www.npmjs.com/package/wikipedia) (npm)                                            | MIT              | Skip. Single-API helper, no streaming, and our snapshot layer needs to control caching itself.                                  |
+| [`@wikimedia/codex`](https://www.npmjs.com/package/@wikimedia/codex)                                    | GPL-2.0-or-later | Skip. License clash with our MIT codebase; we'll roll our own tooltip in plain DOM.                                             |
+| [`nock`](https://github.com/nock/nock) / [`msw`](https://mswjs.io/)                                     | MIT              | Skip. Our existing `makeFetch(routes)` test fixture already gives deterministic mocks; adding either would just bloat installs. |
+| [`@xenova/transformers`](https://www.npmjs.com/package/@xenova/transformers) (for word-form embeddings) | Apache-2.0       | Skip for now. Out of scope; mention in the ROADMAP as a future option for fuzzy candidate scoring.                              |
 
 ## E. Snapshot test pattern references
 
@@ -96,7 +96,7 @@ use it as the canonical Wiktionary backend.
 1. Should manual overrides created via the tooltip auto-persist to
    `docs/formalize/overrides.lino`, or should we keep them session-local
    until the user explicitly hits "Save"?
-2. Do we want a Wikidata-Lexeme tier *before* Wiktionary in the resolver
+2. Do we want a Wikidata-Lexeme tier _before_ Wiktionary in the resolver
    chain when the phrase is a single token? (Probably yes; tracked in the
    follow-up.)
 3. Should the snapshot recorder normalize transient timestamps in API

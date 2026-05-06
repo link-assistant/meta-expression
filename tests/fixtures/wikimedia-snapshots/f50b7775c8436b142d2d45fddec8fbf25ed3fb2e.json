@@ -108,10 +108,7 @@
                   }
                 ]
               },
-              "qualifiers-order": [
-                "P580",
-                "P582"
-              ],
+              "qualifiers-order": ["P580", "P582"],
               "id": "Q782$2d865fd7-46ef-cef1-5cbc-8808daffe95d",
               "rank": "normal"
             },
@@ -171,10 +168,7 @@
                   }
                 ]
               },
-              "qualifiers-order": [
-                "P580",
-                "P582"
-              ],
+              "qualifiers-order": ["P580", "P582"],
               "id": "Q782$de48057a-4e8d-467f-8060-34484fed4210",
               "rank": "normal"
             },
@@ -234,10 +228,7 @@
                   }
                 ]
               },
-              "qualifiers-order": [
-                "P580",
-                "P582"
-              ],
+              "qualifiers-order": ["P580", "P582"],
               "id": "Q782$ca07e3a6-4ac4-6566-ef67-4fe846e140e5",
               "rank": "normal"
             },
@@ -297,10 +288,7 @@
                   }
                 ]
               },
-              "qualifiers-order": [
-                "P580",
-                "P582"
-              ],
+              "qualifiers-order": ["P580", "P582"],
               "id": "Q782$c5533a45-478d-49a5-afb0-0ae64833d134",
               "rank": "normal"
             },
@@ -360,10 +348,7 @@
                   }
                 ]
               },
-              "qualifiers-order": [
-                "P582",
-                "P580"
-              ],
+              "qualifiers-order": ["P582", "P580"],
               "id": "Q782$22bb40bc-4efb-6fae-c31f-050b6a0f5c5a",
               "rank": "normal"
             },
@@ -423,10 +408,7 @@
                   }
                 ]
               },
-              "qualifiers-order": [
-                "P582",
-                "P580"
-              ],
+              "qualifiers-order": ["P582", "P580"],
               "id": "Q782$051d3da1-48a1-df03-89ba-ec1df5865d18",
               "rank": "normal"
             },
@@ -486,10 +468,7 @@
                   }
                 ]
               },
-              "qualifiers-order": [
-                "P582",
-                "P580"
-              ],
+              "qualifiers-order": ["P582", "P580"],
               "id": "Q782$929be470-4467-d413-b1f5-ce4e8182dab6",
               "rank": "normal"
             },
@@ -549,10 +528,7 @@
                   }
                 ]
               },
-              "qualifiers-order": [
-                "P580",
-                "P582"
-              ],
+              "qualifiers-order": ["P580", "P582"],
               "id": "Q782$896d6ebc-43f8-4e4d-17e5-a69add03c196",
               "rank": "normal"
             },
@@ -593,9 +569,7 @@
                   }
                 ]
               },
-              "qualifiers-order": [
-                "P580"
-              ],
+              "qualifiers-order": ["P580"],
               "id": "Q782$d897cf50-4944-2df5-ac3f-b690eab316b5",
               "rank": "preferred"
             }
@@ -806,11 +780,7 @@
                       }
                     ]
                   },
-                  "snaks-order": [
-                    "P5573",
-                    "P248",
-                    "P813"
-                  ]
+                  "snaks-order": ["P5573", "P248", "P813"]
                 }
               ]
             }
@@ -920,11 +890,7 @@
                       }
                     ]
                   },
-                  "snaks-order": [
-                    "P1683",
-                    "P248",
-                    "P958"
-                  ]
+                  "snaks-order": ["P1683", "P248", "P958"]
                 }
               ]
             },
@@ -994,11 +960,7 @@
                       }
                     ]
                   },
-                  "snaks-order": [
-                    "P1683",
-                    "P248",
-                    "P958"
-                  ]
+                  "snaks-order": ["P1683", "P248", "P958"]
                 }
               ]
             }
@@ -1039,9 +1001,7 @@
                       }
                     ]
                   },
-                  "snaks-order": [
-                    "P143"
-                  ]
+                  "snaks-order": ["P143"]
                 }
               ]
             }
@@ -1231,11 +1191,7 @@
                       }
                     ]
                   },
-                  "snaks-order": [
-                    "P143",
-                    "P4656",
-                    "P813"
-                  ]
+                  "snaks-order": ["P143", "P4656", "P813"]
                 }
               ]
             }
@@ -1292,9 +1248,7 @@
                   }
                 ]
               },
-              "qualifiers-order": [
-                "P407"
-              ],
+              "qualifiers-order": ["P407"],
               "id": "Q782$AA85E3AD-DB08-4339-8B3A-231CFB2BFEAC",
               "rank": "normal"
             }
@@ -1373,9 +1327,7 @@
                       }
                     ]
                   },
-                  "snaks-order": [
-                    "P143"
-                  ]
+                  "snaks-order": ["P143"]
                 },
                 {
                   "hash": "b8720f61b53cf1b7681f992fb69921c869d48f79",
@@ -1397,9 +1349,7 @@
                       }
                     ]
                   },
-                  "snaks-order": [
-                    "P143"
-                  ]
+                  "snaks-order": ["P143"]
                 }
               ]
             }
@@ -1474,9 +1424,7 @@
                       }
                     ]
                   },
-                  "snaks-order": [
-                    "P248"
-                  ]
+                  "snaks-order": ["P248"]
                 }
               ]
             }
@@ -1531,10 +1479,7 @@
                   }
                 ]
               },
-              "qualifiers-order": [
-                "P580",
-                "P1545"
-              ],
+              "qualifiers-order": ["P580", "P1545"],
               "id": "Q782$C19F5AD1-E32B-4F31-8427-6DC4746C908E",
               "rank": "normal"
             }
@@ -1605,9 +1550,7 @@
                   }
                 ]
               },
-              "qualifiers-order": [
-                "P527"
-              ],
+              "qualifiers-order": ["P527"],
               "id": "q782$23FE9FCA-5215-47D2-83AB-865937A85450",
               "rank": "normal"
             }
@@ -1667,10 +1610,7 @@
                       }
                     ]
                   },
-                  "snaks-order": [
-                    "P248",
-                    "P577"
-                  ]
+                  "snaks-order": ["P248", "P577"]
                 }
               ]
             }
@@ -1711,9 +1651,7 @@
                       }
                     ]
                   },
-                  "snaks-order": [
-                    "P248"
-                  ]
+                  "snaks-order": ["P248"]
                 }
               ]
             }
@@ -1766,10 +1704,7 @@
                       }
                     ]
                   },
-                  "snaks-order": [
-                    "P248",
-                    "P1065"
-                  ]
+                  "snaks-order": ["P248", "P1065"]
                 }
               ]
             }
@@ -1827,10 +1762,7 @@
                   }
                 ]
               },
-              "qualifiers-order": [
-                "P585",
-                "P459"
-              ],
+              "qualifiers-order": ["P585", "P459"],
               "id": "Q782$878b2491-437b-4c6e-8738-d98702dac741",
               "rank": "normal"
             },
@@ -1900,10 +1832,7 @@
                   }
                 ]
               },
-              "qualifiers-order": [
-                "P459",
-                "P585"
-              ],
+              "qualifiers-order": ["P459", "P585"],
               "id": "Q782$b6aa793c-4c6a-8e37-5b3b-1602fe323514",
               "rank": "normal",
               "references": [
@@ -1973,12 +1902,7 @@
                       }
                     ]
                   },
-                  "snaks-order": [
-                    "P854",
-                    "P813",
-                    "P50",
-                    "P1476"
-                  ]
+                  "snaks-order": ["P854", "P813", "P50", "P1476"]
                 },
                 {
                   "hash": "e177b19954af6f92bbd97c8c1b002e49d9339ae3",
@@ -2047,12 +1971,7 @@
                       }
                     ]
                   },
-                  "snaks-order": [
-                    "P248",
-                    "P813",
-                    "P854",
-                    "P98"
-                  ]
+                  "snaks-order": ["P248", "P813", "P854", "P98"]
                 }
               ]
             },
@@ -2092,9 +2011,7 @@
                   }
                 ]
               },
-              "qualifiers-order": [
-                "P585"
-              ],
+              "qualifiers-order": ["P585"],
               "id": "Q782$41593770-3A6F-4825-B6B0-5D4F2E81ECFA",
               "rank": "normal"
             },
@@ -2150,10 +2067,7 @@
                   }
                 ]
               },
-              "qualifiers-order": [
-                "P585",
-                "P459"
-              ],
+              "qualifiers-order": ["P585", "P459"],
               "id": "Q782$645c7b91-4e7f-6d02-44e1-8271bd668798",
               "rank": "normal",
               "references": [
@@ -2173,9 +2087,7 @@
                       }
                     ]
                   },
-                  "snaks-order": [
-                    "P1065"
-                  ]
+                  "snaks-order": ["P1065"]
                 }
               ]
             },
@@ -2231,10 +2143,7 @@
                   }
                 ]
               },
-              "qualifiers-order": [
-                "P585",
-                "P459"
-              ],
+              "qualifiers-order": ["P585", "P459"],
               "id": "Q782$dce19668-4c6f-68b7-868e-f1f6f6dda90a",
               "rank": "normal",
               "references": [
@@ -2254,9 +2163,7 @@
                       }
                     ]
                   },
-                  "snaks-order": [
-                    "P1065"
-                  ]
+                  "snaks-order": ["P1065"]
                 }
               ]
             },
@@ -2312,10 +2219,7 @@
                   }
                 ]
               },
-              "qualifiers-order": [
-                "P585",
-                "P459"
-              ],
+              "qualifiers-order": ["P585", "P459"],
               "id": "Q782$04bd2e1a-4fcf-7d0e-78f3-73b9a4e34c1d",
               "rank": "normal",
               "references": [
@@ -2335,9 +2239,7 @@
                       }
                     ]
                   },
-                  "snaks-order": [
-                    "P1065"
-                  ]
+                  "snaks-order": ["P1065"]
                 }
               ]
             },
@@ -2393,10 +2295,7 @@
                   }
                 ]
               },
-              "qualifiers-order": [
-                "P585",
-                "P459"
-              ],
+              "qualifiers-order": ["P585", "P459"],
               "id": "Q782$dc37ed18-4e6a-6a7f-f497-58e5ef6e95ea",
               "rank": "normal",
               "references": [
@@ -2416,9 +2315,7 @@
                       }
                     ]
                   },
-                  "snaks-order": [
-                    "P1065"
-                  ]
+                  "snaks-order": ["P1065"]
                 }
               ]
             },
@@ -2474,10 +2371,7 @@
                   }
                 ]
               },
-              "qualifiers-order": [
-                "P585",
-                "P459"
-              ],
+              "qualifiers-order": ["P585", "P459"],
               "id": "Q782$369e41f0-46aa-78a9-0af0-59cf070c38be",
               "rank": "normal",
               "references": [
@@ -2497,9 +2391,7 @@
                       }
                     ]
                   },
-                  "snaks-order": [
-                    "P1065"
-                  ]
+                  "snaks-order": ["P1065"]
                 }
               ]
             },
@@ -2555,10 +2447,7 @@
                   }
                 ]
               },
-              "qualifiers-order": [
-                "P585",
-                "P459"
-              ],
+              "qualifiers-order": ["P585", "P459"],
               "id": "Q782$8cf3a5cc-413f-5472-4d93-ecb631fb3b48",
               "rank": "normal",
               "references": [
@@ -2578,9 +2467,7 @@
                       }
                     ]
                   },
-                  "snaks-order": [
-                    "P1065"
-                  ]
+                  "snaks-order": ["P1065"]
                 }
               ]
             },
@@ -2636,10 +2523,7 @@
                   }
                 ]
               },
-              "qualifiers-order": [
-                "P585",
-                "P459"
-              ],
+              "qualifiers-order": ["P585", "P459"],
               "id": "Q782$cf78189a-4e4c-aea8-6e6d-fbb5b8bb6108",
               "rank": "normal",
               "references": [
@@ -2659,9 +2543,7 @@
                       }
                     ]
                   },
-                  "snaks-order": [
-                    "P1065"
-                  ]
+                  "snaks-order": ["P1065"]
                 }
               ]
             },
@@ -2717,10 +2599,7 @@
                   }
                 ]
               },
-              "qualifiers-order": [
-                "P585",
-                "P459"
-              ],
+              "qualifiers-order": ["P585", "P459"],
               "id": "Q782$0e32a9b3-4b5b-3480-1e53-1e4430ba30eb",
               "rank": "normal",
               "references": [
@@ -2740,9 +2619,7 @@
                       }
                     ]
                   },
-                  "snaks-order": [
-                    "P1065"
-                  ]
+                  "snaks-order": ["P1065"]
                 }
               ]
             },
@@ -2798,10 +2675,7 @@
                   }
                 ]
               },
-              "qualifiers-order": [
-                "P585",
-                "P459"
-              ],
+              "qualifiers-order": ["P585", "P459"],
               "id": "Q782$2f61d7f4-4497-7706-4934-95ffa58a8d6f",
               "rank": "normal",
               "references": [
@@ -2821,9 +2695,7 @@
                       }
                     ]
                   },
-                  "snaks-order": [
-                    "P1065"
-                  ]
+                  "snaks-order": ["P1065"]
                 }
               ]
             },
@@ -2879,10 +2751,7 @@
                   }
                 ]
               },
-              "qualifiers-order": [
-                "P585",
-                "P459"
-              ],
+              "qualifiers-order": ["P585", "P459"],
               "id": "Q782$afa178b6-4273-cd83-7b3c-4c398dc305e8",
               "rank": "normal",
               "references": [
@@ -2902,9 +2771,7 @@
                       }
                     ]
                   },
-                  "snaks-order": [
-                    "P1065"
-                  ]
+                  "snaks-order": ["P1065"]
                 }
               ]
             },
@@ -2960,10 +2827,7 @@
                   }
                 ]
               },
-              "qualifiers-order": [
-                "P585",
-                "P459"
-              ],
+              "qualifiers-order": ["P585", "P459"],
               "id": "Q782$AD31C399-0039-4F26-8F82-9501C0D333B5",
               "rank": "normal",
               "references": [
@@ -2999,10 +2863,7 @@
                       }
                     ]
                   },
-                  "snaks-order": [
-                    "P854",
-                    "P248"
-                  ]
+                  "snaks-order": ["P854", "P248"]
                 }
               ]
             },
@@ -3058,10 +2919,7 @@
                   }
                 ]
               },
-              "qualifiers-order": [
-                "P585",
-                "P459"
-              ],
+              "qualifiers-order": ["P585", "P459"],
               "id": "Q782$d28f02a9-4deb-fabc-b1a2-9c975a304db5",
               "rank": "normal",
               "references": [
@@ -3081,9 +2939,7 @@
                       }
                     ]
                   },
-                  "snaks-order": [
-                    "P854"
-                  ]
+                  "snaks-order": ["P854"]
                 }
               ]
             },
@@ -3155,11 +3011,7 @@
                   }
                 ]
               },
-              "qualifiers-order": [
-                "P459",
-                "P3680",
-                "P585"
-              ],
+              "qualifiers-order": ["P459", "P3680", "P585"],
               "id": "Q782$5D809A88-DFB1-4E47-9A4E-20195D4F85D2",
               "rank": "preferred",
               "references": [
@@ -3230,12 +3082,7 @@
                       }
                     ]
                   },
-                  "snaks-order": [
-                    "P248",
-                    "P813",
-                    "P854",
-                    "P98"
-                  ]
+                  "snaks-order": ["P248", "P813", "P854", "P98"]
                 }
               ]
             }
@@ -3276,9 +3123,7 @@
                       }
                     ]
                   },
-                  "snaks-order": [
-                    "P248"
-                  ]
+                  "snaks-order": ["P248"]
                 }
               ]
             }
@@ -3323,9 +3168,7 @@
                       }
                     ]
                   },
-                  "snaks-order": [
-                    "P143"
-                  ]
+                  "snaks-order": ["P143"]
                 }
               ]
             }
@@ -3370,9 +3213,7 @@
                       }
                     ]
                   },
-                  "snaks-order": [
-                    "P143"
-                  ]
+                  "snaks-order": ["P143"]
                 }
               ]
             }
@@ -3459,9 +3300,7 @@
                       }
                     ]
                   },
-                  "snaks-order": [
-                    "P143"
-                  ]
+                  "snaks-order": ["P143"]
                 }
               ]
             }
@@ -3559,9 +3398,7 @@
                   }
                 ]
               },
-              "qualifiers-order": [
-                "P828"
-              ],
+              "qualifiers-order": ["P828"],
               "id": "Q782$e7dd681b-47ab-83d9-a91e-3f439a6556d8",
               "rank": "normal",
               "references": [
@@ -3585,9 +3422,7 @@
                       }
                     ]
                   },
-                  "snaks-order": [
-                    "P143"
-                  ]
+                  "snaks-order": ["P143"]
                 }
               ]
             }
@@ -3685,9 +3520,7 @@
                   }
                 ]
               },
-              "qualifiers-order": [
-                "P407"
-              ],
+              "qualifiers-order": ["P407"],
               "id": "Q782$58061674-704D-4B78-A586-9F486BC178C0",
               "rank": "normal",
               "references": [
@@ -3711,9 +3544,7 @@
                       }
                     ]
                   },
-                  "snaks-order": [
-                    "P143"
-                  ]
+                  "snaks-order": ["P143"]
                 }
               ]
             }
@@ -3757,9 +3588,7 @@
                       }
                     ]
                   },
-                  "snaks-order": [
-                    "P143"
-                  ]
+                  "snaks-order": ["P143"]
                 }
               ]
             }
@@ -3800,9 +3629,7 @@
                       }
                     ]
                   },
-                  "snaks-order": [
-                    "P143"
-                  ]
+                  "snaks-order": ["P143"]
                 }
               ]
             }
@@ -3834,9 +3661,7 @@
                   }
                 ]
               },
-              "qualifiers-order": [
-                "P1810"
-              ],
+              "qualifiers-order": ["P1810"],
               "id": "Q782$4c435301-4d6b-d076-d827-c6e4c607dff6",
               "rank": "normal"
             }
@@ -3877,9 +3702,7 @@
                       }
                     ]
                   },
-                  "snaks-order": [
-                    "P248"
-                  ]
+                  "snaks-order": ["P248"]
                 }
               ]
             },
@@ -3943,9 +3766,7 @@
                   }
                 ]
               },
-              "qualifiers-order": [
-                "P1810"
-              ],
+              "qualifiers-order": ["P1810"],
               "id": "Q782$86418dfa-478a-7ec8-2b2e-5817ff36bc2b",
               "rank": "normal"
             }
@@ -3986,9 +3807,7 @@
                       }
                     ]
                   },
-                  "snaks-order": [
-                    "P248"
-                  ]
+                  "snaks-order": ["P248"]
                 }
               ]
             }
@@ -4025,9 +3844,7 @@
                       }
                     ]
                   },
-                  "snaks-order": [
-                    "P854"
-                  ]
+                  "snaks-order": ["P854"]
                 }
               ]
             },
@@ -4140,10 +3957,7 @@
                   }
                 ]
               },
-              "qualifiers-order": [
-                "P1810",
-                "P2093"
-              ],
+              "qualifiers-order": ["P1810", "P2093"],
               "id": "Q782$7874feb1-48e0-7f7d-d545-7393d2ec7225",
               "rank": "normal",
               "references": [
@@ -4167,9 +3981,7 @@
                       }
                     ]
                   },
-                  "snaks-order": [
-                    "P248"
-                  ]
+                  "snaks-order": ["P248"]
                 }
               ]
             }
@@ -4209,9 +4021,7 @@
                   }
                 ]
               },
-              "qualifiers-order": [
-                "P805"
-              ],
+              "qualifiers-order": ["P805"],
               "id": "Q782$F94C3085-FEF6-4122-87DE-DEACBB907C9A",
               "rank": "normal"
             }
@@ -4278,11 +4088,7 @@
                   }
                 ]
               },
-              "qualifiers-order": [
-                "P407",
-                "P580",
-                "P1810"
-              ],
+              "qualifiers-order": ["P407", "P580", "P1810"],
               "id": "Q782$97E107E1-4C4F-493C-920B-619716BC0495",
               "rank": "normal",
               "references": [
@@ -4309,9 +4115,7 @@
                       }
                     ]
                   },
-                  "snaks-order": [
-                    "P813"
-                  ]
+                  "snaks-order": ["P813"]
                 }
               ]
             }
@@ -4369,10 +4173,7 @@
                   }
                 ]
               },
-              "qualifiers-order": [
-                "P580",
-                "P3831"
-              ],
+              "qualifiers-order": ["P580", "P3831"],
               "id": "Q782$497AA9E8-C4F9-4CB6-B59D-EE73ED2371DA",
               "rank": "normal"
             }
@@ -4475,9 +4276,7 @@
                       }
                     ]
                   },
-                  "snaks-order": [
-                    "P143"
-                  ]
+                  "snaks-order": ["P143"]
                 }
               ]
             }
@@ -4543,9 +4342,7 @@
                   }
                 ]
               },
-              "qualifiers-order": [
-                "P1810"
-              ],
+              "qualifiers-order": ["P1810"],
               "id": "Q782$B406FF3D-87DB-42D7-B74D-090279D17A1C",
               "rank": "normal"
             }
@@ -4603,9 +4400,7 @@
                       }
                     ]
                   },
-                  "snaks-order": [
-                    "P248"
-                  ]
+                  "snaks-order": ["P248"]
                 }
               ]
             }
@@ -4648,9 +4443,7 @@
                   }
                 ]
               },
-              "qualifiers-order": [
-                "P580"
-              ],
+              "qualifiers-order": ["P580"],
               "id": "Q782$E490C07F-1CF5-4D9F-8748-53B09495C943",
               "rank": "normal"
             },
@@ -4691,9 +4484,7 @@
                   }
                 ]
               },
-              "qualifiers-order": [
-                "P580"
-              ],
+              "qualifiers-order": ["P580"],
               "id": "Q782$42FD57F3-1149-45E6-9BB5-9C2521FDAF65",
               "rank": "normal"
             },
@@ -4734,9 +4525,7 @@
                   }
                 ]
               },
-              "qualifiers-order": [
-                "P580"
-              ],
+              "qualifiers-order": ["P580"],
               "id": "Q782$331F1042-F6DD-4918-BACD-A119FEC9C37D",
               "rank": "normal"
             },
@@ -4777,9 +4566,7 @@
                   }
                 ]
               },
-              "qualifiers-order": [
-                "P580"
-              ],
+              "qualifiers-order": ["P580"],
               "id": "Q782$07A734C3-2646-484C-8D8D-51364453DE07",
               "rank": "normal"
             }
@@ -4811,9 +4598,7 @@
                   }
                 ]
               },
-              "qualifiers-order": [
-                "P1810"
-              ],
+              "qualifiers-order": ["P1810"],
               "id": "Q782$c6042f62-4cf2-4e0e-c6f2-76f00790494c",
               "rank": "normal"
             }
@@ -4908,9 +4693,7 @@
                       }
                     ]
                   },
-                  "snaks-order": [
-                    "P4656"
-                  ]
+                  "snaks-order": ["P4656"]
                 }
               ]
             },
@@ -4964,10 +4747,7 @@
                       }
                     ]
                   },
-                  "snaks-order": [
-                    "P143",
-                    "P4656"
-                  ]
+                  "snaks-order": ["P143", "P4656"]
                 }
               ]
             },
@@ -5004,9 +4784,7 @@
                   }
                 ]
               },
-              "qualifiers-order": [
-                "P518"
-              ],
+              "qualifiers-order": ["P518"],
               "id": "Q782$BCCD0547-648D-4890-AD26-74281D849B6E",
               "rank": "normal",
               "references": [
@@ -5030,9 +4808,7 @@
                       }
                     ]
                   },
-                  "snaks-order": [
-                    "P143"
-                  ]
+                  "snaks-order": ["P143"]
                 }
               ]
             },
@@ -5069,9 +4845,7 @@
                   }
                 ]
               },
-              "qualifiers-order": [
-                "P518"
-              ],
+              "qualifiers-order": ["P518"],
               "id": "Q782$65710FF1-A1AA-495B-A7E9-47402D2DEBCD",
               "rank": "normal",
               "references": [
@@ -5095,9 +4869,7 @@
                       }
                     ]
                   },
-                  "snaks-order": [
-                    "P143"
-                  ]
+                  "snaks-order": ["P143"]
                 }
               ]
             },
@@ -5134,9 +4906,7 @@
                   }
                 ]
               },
-              "qualifiers-order": [
-                "P518"
-              ],
+              "qualifiers-order": ["P518"],
               "id": "Q782$373dfd74-47e2-bf8a-45dc-7cdf5d9a2bfb",
               "rank": "normal"
             },
@@ -5173,9 +4943,7 @@
                   }
                 ]
               },
-              "qualifiers-order": [
-                "P518"
-              ],
+              "qualifiers-order": ["P518"],
               "id": "Q782$3c72db8e-4e6f-b3ae-69cb-7a5cc60f7c41",
               "rank": "normal"
             }
@@ -5240,9 +5008,7 @@
                       }
                     ]
                   },
-                  "snaks-order": [
-                    "P143"
-                  ]
+                  "snaks-order": ["P143"]
                 },
                 {
                   "hash": "5f3e28e462dc8dcdf154987b5fe1dc206ebcdf97",
@@ -5264,9 +5030,7 @@
                       }
                     ]
                   },
-                  "snaks-order": [
-                    "P248"
-                  ]
+                  "snaks-order": ["P248"]
                 }
               ]
             }
@@ -5537,11 +5301,7 @@
                   }
                 ]
               },
-              "qualifiers-order": [
-                "P2441",
-                "P580",
-                "P805"
-              ],
+              "qualifiers-order": ["P2441", "P580", "P805"],
               "id": "Q782$bc31bc6e-41ab-1bbf-118e-96e732932ea4",
               "rank": "normal"
             }
@@ -5622,10 +5382,7 @@
                       }
                     ]
                   },
-                  "snaks-order": [
-                    "P248",
-                    "P813"
-                  ]
+                  "snaks-order": ["P248", "P813"]
                 }
               ]
             }
@@ -5701,9 +5458,7 @@
                   }
                 ]
               },
-              "qualifiers-order": [
-                "P276"
-              ],
+              "qualifiers-order": ["P276"],
               "id": "Q782$b1c89c06-498c-2e94-c4ba-69032996ca05",
               "rank": "normal"
             }
@@ -5818,10 +5573,7 @@
                       }
                     ]
                   },
-                  "snaks-order": [
-                    "P248",
-                    "P813"
-                  ]
+                  "snaks-order": ["P248", "P813"]
                 }
               ]
             }
@@ -5893,11 +5645,7 @@
                       }
                     ]
                   },
-                  "snaks-order": [
-                    "P854",
-                    "P248",
-                    "P813"
-                  ]
+                  "snaks-order": ["P854", "P248", "P813"]
                 }
               ]
             }
@@ -5969,11 +5717,7 @@
                       }
                     ]
                   },
-                  "snaks-order": [
-                    "P248",
-                    "P214",
-                    "P813"
-                  ]
+                  "snaks-order": ["P248", "P214", "P813"]
                 }
               ]
             }
@@ -6039,9 +5783,7 @@
                   }
                 ]
               },
-              "qualifiers-order": [
-                "P1810"
-              ],
+              "qualifiers-order": ["P1810"],
               "id": "Q782$1aec3dfc-47ac-d8e4-d490-b9e08e50e02c",
               "rank": "normal"
             }
@@ -6081,9 +5823,7 @@
                   }
                 ]
               },
-              "qualifiers-order": [
-                "P3831"
-              ],
+              "qualifiers-order": ["P3831"],
               "id": "Q782$22dbd854-41a8-c2bc-6346-96eaaca87fdf",
               "rank": "normal"
             },
@@ -6121,9 +5861,7 @@
                   }
                 ]
               },
-              "qualifiers-order": [
-                "P3831"
-              ],
+              "qualifiers-order": ["P3831"],
               "id": "Q782$7f03fd15-446e-73db-b2ec-451a4f02daa0",
               "rank": "normal"
             }
@@ -6198,10 +5936,7 @@
                   }
                 ]
               },
-              "qualifiers-order": [
-                "P585",
-                "P276"
-              ],
+              "qualifiers-order": ["P585", "P276"],
               "id": "Q782$E937356A-10F2-436F-8E27-CF5FEE890968",
               "rank": "normal",
               "references": [
@@ -6225,9 +5960,7 @@
                       }
                     ]
                   },
-                  "snaks-order": [
-                    "P143"
-                  ]
+                  "snaks-order": ["P143"]
                 }
               ]
             }
@@ -6371,10 +6104,7 @@
                       }
                     ]
                   },
-                  "snaks-order": [
-                    "P248",
-                    "P213"
-                  ]
+                  "snaks-order": ["P248", "P213"]
                 }
               ]
             }
@@ -6520,9 +6250,7 @@
                   }
                 ]
               },
-              "qualifiers-order": [
-                "P4900"
-              ],
+              "qualifiers-order": ["P4900"],
               "id": "Q782$bd66e1b0-4b01-20bd-427f-5a9d9063e8bd",
               "rank": "normal"
             },
@@ -6556,9 +6284,7 @@
                   }
                 ]
               },
-              "qualifiers-order": [
-                "P4900"
-              ],
+              "qualifiers-order": ["P4900"],
               "id": "Q782$3ec23db2-4cf9-47df-e524-bee6266469d3",
               "rank": "normal"
             }
@@ -6654,10 +6380,7 @@
                   }
                 ]
               },
-              "qualifiers-order": [
-                "P585",
-                "P276"
-              ],
+              "qualifiers-order": ["P585", "P276"],
               "id": "Q782$56fed9fc-4790-b89a-04e8-ac1ca9f980f7",
               "rank": "normal"
             }
@@ -6763,10 +6486,7 @@
                   }
                 ]
               },
-              "qualifiers-order": [
-                "P1810",
-                "P577"
-              ],
+              "qualifiers-order": ["P1810", "P577"],
               "id": "Q782$E3FD83CB-E092-4A65-AFFB-8E252FD2FDAF",
               "rank": "normal"
             }
@@ -6911,10 +6631,7 @@
                       }
                     ]
                   },
-                  "snaks-order": [
-                    "P854",
-                    "P813"
-                  ]
+                  "snaks-order": ["P854", "P813"]
                 }
               ]
             }
@@ -6995,10 +6712,7 @@
                       }
                     ]
                   },
-                  "snaks-order": [
-                    "P248",
-                    "P813"
-                  ]
+                  "snaks-order": ["P248", "P813"]
                 }
               ]
             }
@@ -7115,13 +6829,7 @@
                   }
                 ]
               },
-              "qualifiers-order": [
-                "P1810",
-                "P4390",
-                "P5592",
-                "P3740",
-                "P1545"
-              ],
+              "qualifiers-order": ["P1810", "P4390", "P5592", "P3740", "P1545"],
               "id": "Q782$54242A50-FCDA-47F2-8A42-CB48571B79A7",
               "rank": "normal"
             }
@@ -7276,9 +6984,7 @@
                   }
                 ]
               },
-              "qualifiers-order": [
-                "P1810"
-              ],
+              "qualifiers-order": ["P1810"],
               "id": "Q782$D521DBD6-EC85-4162-8BD2-EDC02467B3BC",
               "rank": "normal"
             }
@@ -7315,9 +7021,7 @@
                       }
                     ]
                   },
-                  "snaks-order": [
-                    "P854"
-                  ]
+                  "snaks-order": ["P854"]
                 }
               ]
             }
@@ -7377,10 +7081,7 @@
                       }
                     ]
                   },
-                  "snaks-order": [
-                    "P248",
-                    "P813"
-                  ]
+                  "snaks-order": ["P248", "P813"]
                 }
               ]
             }
@@ -7550,9 +7251,7 @@
                   }
                 ]
               },
-              "qualifiers-order": [
-                "P580"
-              ],
+              "qualifiers-order": ["P580"],
               "id": "Q782$60fc3000-4af8-f7ee-ec26-7473ae2c9ccd",
               "rank": "normal"
             }
@@ -7596,10 +7295,7 @@
                   }
                 ]
               },
-              "qualifiers-order": [
-                "P1810",
-                "P9675"
-              ],
+              "qualifiers-order": ["P1810", "P9675"],
               "id": "Q782$80d10e92-421e-9d9a-8792-4cd58da96038",
               "rank": "normal"
             }
@@ -7641,9 +7337,7 @@
                   }
                 ]
               },
-              "qualifiers-order": [
-                "P805"
-              ],
+              "qualifiers-order": ["P805"],
               "id": "Q782$827f9995-4573-cc9c-3b24-e34a5d8628d4",
               "rank": "normal"
             }
@@ -7685,9 +7379,7 @@
                   }
                 ]
               },
-              "qualifiers-order": [
-                "P805"
-              ],
+              "qualifiers-order": ["P805"],
               "id": "Q782$32f5c92c-473a-1dd4-d8fa-014aa06dbd2f",
               "rank": "normal"
             }
@@ -7729,9 +7421,7 @@
                   }
                 ]
               },
-              "qualifiers-order": [
-                "P805"
-              ],
+              "qualifiers-order": ["P805"],
               "id": "Q782$70b8018c-4052-c151-ead3-63064307f095",
               "rank": "normal"
             }
@@ -7803,11 +7493,7 @@
                       }
                     ]
                   },
-                  "snaks-order": [
-                    "P248",
-                    "P813",
-                    "P854"
-                  ]
+                  "snaks-order": ["P248", "P813", "P854"]
                 }
               ]
             }
@@ -7934,10 +7620,7 @@
                   }
                 ]
               },
-              "qualifiers-order": [
-                "P518",
-                "P1013"
-              ],
+              "qualifiers-order": ["P518", "P1013"],
               "id": "Q782$05C15155-D979-4960-8056-49C0BA48968E",
               "rank": "normal",
               "references": [
@@ -7957,9 +7640,7 @@
                       }
                     ]
                   },
-                  "snaks-order": [
-                    "P4656"
-                  ]
+                  "snaks-order": ["P4656"]
                 }
               ]
             }
@@ -7999,9 +7680,7 @@
                       }
                     ]
                   },
-                  "snaks-order": [
-                    "P4656"
-                  ]
+                  "snaks-order": ["P4656"]
                 }
               ]
             }
@@ -8034,9 +7713,7 @@
                       }
                     ]
                   },
-                  "snaks-order": [
-                    "P4656"
-                  ]
+                  "snaks-order": ["P4656"]
                 }
               ]
             }
@@ -8112,9 +7789,7 @@
                   }
                 ]
               },
-              "qualifiers-order": [
-                "P585"
-              ],
+              "qualifiers-order": ["P585"],
               "id": "Q782$03231e57-4653-32a6-1d89-26b2695923e5",
               "rank": "preferred"
             },
@@ -8154,9 +7829,7 @@
                   }
                 ]
               },
-              "qualifiers-order": [
-                "P585"
-              ],
+              "qualifiers-order": ["P585"],
               "id": "Q782$4e14395e-48df-02bd-00ec-2bb28879f5b1",
               "rank": "normal"
             }
@@ -8285,11 +7958,7 @@
                   }
                 ]
               },
-              "qualifiers-order": [
-                "P1013",
-                "P3831",
-                "P580"
-              ],
+              "qualifiers-order": ["P1013", "P3831", "P580"],
               "id": "Q782$F7B86C23-D284-4B45-ADA9-AEE24786708E",
               "rank": "normal",
               "references": [
@@ -8309,9 +7978,7 @@
                       }
                     ]
                   },
-                  "snaks-order": [
-                    "P4656"
-                  ]
+                  "snaks-order": ["P4656"]
                 }
               ]
             },
@@ -8383,11 +8050,7 @@
                   }
                 ]
               },
-              "qualifiers-order": [
-                "P1013",
-                "P3831",
-                "P580"
-              ],
+              "qualifiers-order": ["P1013", "P3831", "P580"],
               "id": "Q782$9A5A1A61-C540-4CDE-82E2-AD3E2E2533E6",
               "rank": "normal",
               "references": [
@@ -8407,9 +8070,7 @@
                       }
                     ]
                   },
-                  "snaks-order": [
-                    "P4656"
-                  ]
+                  "snaks-order": ["P4656"]
                 }
               ]
             }
@@ -8444,9 +8105,7 @@
                   }
                 ]
               },
-              "qualifiers-order": [
-                "P1476"
-              ],
+              "qualifiers-order": ["P1476"],
               "id": "Q782$daedb61b-4b0b-3347-6e24-2dff96a0abe5",
               "rank": "normal"
             }
@@ -8516,9 +8175,7 @@
                   }
                 ]
               },
-              "qualifiers-order": [
-                "P747"
-              ],
+              "qualifiers-order": ["P747"],
               "id": "Q782$18507DC8-3706-4F28-8B68-99ABA1B79245",
               "rank": "normal",
               "references": [
@@ -8542,9 +8199,7 @@
                       }
                     ]
                   },
-                  "snaks-order": [
-                    "P248"
-                  ]
+                  "snaks-order": ["P248"]
                 }
               ]
             }
@@ -8619,9 +8274,7 @@
                       }
                     ]
                   },
-                  "snaks-order": [
-                    "P248"
-                  ]
+                  "snaks-order": ["P248"]
                 }
               ]
             }
@@ -8674,9 +8327,7 @@
                   }
                 ]
               },
-              "qualifiers-order": [
-                "P2241"
-              ],
+              "qualifiers-order": ["P2241"],
               "id": "Q782$c22601b1-4124-5555-67ed-62df8e59b41d",
               "rank": "deprecated",
               "references": [
@@ -8696,9 +8347,7 @@
                       }
                     ]
                   },
-                  "snaks-order": [
-                    "P1065"
-                  ]
+                  "snaks-order": ["P1065"]
                 }
               ]
             },
@@ -8753,9 +8402,7 @@
                   }
                 ]
               },
-              "qualifiers-order": [
-                "P4224"
-              ],
+              "qualifiers-order": ["P4224"],
               "id": "Q782$5E073B35-94C9-4880-BE16-CD3B966B30EE",
               "rank": "normal"
             }
@@ -8897,11 +8544,7 @@
                   }
                 ]
               },
-              "qualifiers-order": [
-                "P459",
-                "P3680",
-                "P585"
-              ],
+              "qualifiers-order": ["P459", "P3680", "P585"],
               "id": "Q782$AA4DDDE8-BE62-4871-8890-2EF9755C2EB1",
               "rank": "normal",
               "references": [
@@ -8972,12 +8615,7 @@
                       }
                     ]
                   },
-                  "snaks-order": [
-                    "P248",
-                    "P813",
-                    "P854",
-                    "P98"
-                  ]
+                  "snaks-order": ["P248", "P813", "P854", "P98"]
                 }
               ]
             }
@@ -9053,11 +8691,7 @@
                   }
                 ]
               },
-              "qualifiers-order": [
-                "P459",
-                "P3680",
-                "P585"
-              ],
+              "qualifiers-order": ["P459", "P3680", "P585"],
               "id": "Q782$3A9C4FE3-4835-4516-B3AA-7637EC9F76EE",
               "rank": "normal",
               "references": [
@@ -9128,12 +8762,7 @@
                       }
                     ]
                   },
-                  "snaks-order": [
-                    "P248",
-                    "P98",
-                    "P854",
-                    "P813"
-                  ]
+                  "snaks-order": ["P248", "P98", "P854", "P813"]
                 }
               ]
             }
@@ -9209,11 +8838,7 @@
                   }
                 ]
               },
-              "qualifiers-order": [
-                "P459",
-                "P3680",
-                "P585"
-              ],
+              "qualifiers-order": ["P459", "P3680", "P585"],
               "id": "Q782$25F45237-C7B6-4B9D-9CF2-B92811E65905",
               "rank": "normal",
               "references": [
@@ -9284,12 +8909,7 @@
                       }
                     ]
                   },
-                  "snaks-order": [
-                    "P248",
-                    "P98",
-                    "P854",
-                    "P813"
-                  ]
+                  "snaks-order": ["P248", "P98", "P854", "P813"]
                 }
               ]
             }
@@ -9396,11 +9016,7 @@
                       }
                     ]
                   },
-                  "snaks-order": [
-                    "P248",
-                    "P1476",
-                    "P813"
-                  ]
+                  "snaks-order": ["P248", "P1476", "P813"]
                 }
               ]
             }
@@ -9459,9 +9075,7 @@
                   }
                 ]
               },
-              "qualifiers-order": [
-                "P585"
-              ],
+              "qualifiers-order": ["P585"],
               "id": "Q782$D1185AE8-AA0E-4C7B-9CAD-52012118BF8E",
               "rank": "normal",
               "references": [
@@ -9481,9 +9095,7 @@
                       }
                     ]
                   },
-                  "snaks-order": [
-                    "P854"
-                  ]
+                  "snaks-order": ["P854"]
                 }
               ]
             }
@@ -9537,9 +9149,7 @@
                       }
                     ]
                   },
-                  "snaks-order": [
-                    "P214"
-                  ]
+                  "snaks-order": ["P214"]
                 }
               ]
             }
@@ -9576,9 +9186,7 @@
                       }
                     ]
                   },
-                  "snaks-order": [
-                    "P214"
-                  ]
+                  "snaks-order": ["P214"]
                 }
               ]
             }
@@ -9667,11 +9275,7 @@
                       }
                     ]
                   },
-                  "snaks-order": [
-                    "P248",
-                    "P813",
-                    "P958"
-                  ]
+                  "snaks-order": ["P248", "P813", "P958"]
                 }
               ]
             }
@@ -9776,10 +9380,7 @@
                   }
                 ]
               },
-              "qualifiers-order": [
-                "P585",
-                "P3984"
-              ],
+              "qualifiers-order": ["P585", "P3984"],
               "id": "Q782$69879808-d0eb-48d6-8007-50377af08ca2",
               "rank": "preferred"
             }
@@ -9855,11 +9456,7 @@
                       }
                     ]
                   },
-                  "snaks-order": [
-                    "P887",
-                    "P248",
-                    "P813"
-                  ]
+                  "snaks-order": ["P887", "P248", "P813"]
                 }
               ]
             }
@@ -10004,10 +9601,7 @@
                       }
                     ]
                   },
-                  "snaks-order": [
-                    "P248",
-                    "P813"
-                  ]
+                  "snaks-order": ["P248", "P813"]
                 }
               ]
             }
@@ -10100,11 +9694,7 @@
                       }
                     ]
                   },
-                  "snaks-order": [
-                    "P248",
-                    "P214",
-                    "P813"
-                  ]
+                  "snaks-order": ["P248", "P214", "P813"]
                 }
               ]
             }
@@ -10176,11 +9766,7 @@
                       }
                     ]
                   },
-                  "snaks-order": [
-                    "P248",
-                    "P214",
-                    "P813"
-                  ]
+                  "snaks-order": ["P248", "P214", "P813"]
                 }
               ]
             }
@@ -10252,11 +9838,7 @@
                       }
                     ]
                   },
-                  "snaks-order": [
-                    "P248",
-                    "P214",
-                    "P813"
-                  ]
+                  "snaks-order": ["P248", "P214", "P813"]
                 }
               ]
             }
@@ -10328,11 +9910,7 @@
                       }
                     ]
                   },
-                  "snaks-order": [
-                    "P248",
-                    "P214",
-                    "P813"
-                  ]
+                  "snaks-order": ["P248", "P214", "P813"]
                 }
               ]
             }
@@ -10404,11 +9982,7 @@
                       }
                     ]
                   },
-                  "snaks-order": [
-                    "P248",
-                    "P214",
-                    "P813"
-                  ]
+                  "snaks-order": ["P248", "P214", "P813"]
                 }
               ]
             }
@@ -10480,11 +10054,7 @@
                       }
                     ]
                   },
-                  "snaks-order": [
-                    "P248",
-                    "P214",
-                    "P813"
-                  ]
+                  "snaks-order": ["P248", "P214", "P813"]
                 }
               ]
             }
@@ -10556,11 +10126,7 @@
                       }
                     ]
                   },
-                  "snaks-order": [
-                    "P248",
-                    "P214",
-                    "P813"
-                  ]
+                  "snaks-order": ["P248", "P214", "P813"]
                 }
               ]
             }
@@ -10632,11 +10198,7 @@
                       }
                     ]
                   },
-                  "snaks-order": [
-                    "P248",
-                    "P214",
-                    "P813"
-                  ]
+                  "snaks-order": ["P248", "P214", "P813"]
                 }
               ]
             }
@@ -10693,9 +10255,7 @@
                   }
                 ]
               },
-              "qualifiers-order": [
-                "P805"
-              ],
+              "qualifiers-order": ["P805"],
               "id": "Q782$63359728-FFDD-42D6-A1E6-442A432DF599",
               "rank": "normal"
             },
@@ -10733,9 +10293,7 @@
                   }
                 ]
               },
-              "qualifiers-order": [
-                "P805"
-              ],
+              "qualifiers-order": ["P805"],
               "id": "Q782$ECE8CB66-93FC-4F1C-976F-3BCB00D729DD",
               "rank": "normal"
             },
@@ -10773,9 +10331,7 @@
                   }
                 ]
               },
-              "qualifiers-order": [
-                "P805"
-              ],
+              "qualifiers-order": ["P805"],
               "id": "Q782$79787B90-3B8E-4D25-9630-D136C6A8DC86",
               "rank": "normal"
             },
@@ -10813,9 +10369,7 @@
                   }
                 ]
               },
-              "qualifiers-order": [
-                "P805"
-              ],
+              "qualifiers-order": ["P805"],
               "id": "Q782$6E811130-4C36-4AF9-8C34-4FE0B3A0C38D",
               "rank": "normal"
             },
@@ -10853,9 +10407,7 @@
                   }
                 ]
               },
-              "qualifiers-order": [
-                "P805"
-              ],
+              "qualifiers-order": ["P805"],
               "id": "Q782$CC652823-F920-492E-B3B4-E4535302DAEA",
               "rank": "normal"
             },
@@ -10893,9 +10445,7 @@
                   }
                 ]
               },
-              "qualifiers-order": [
-                "P805"
-              ],
+              "qualifiers-order": ["P805"],
               "id": "Q782$00F684C8-4D5D-4339-9312-0A3AFBD39EDB",
               "rank": "normal"
             },
@@ -10933,9 +10483,7 @@
                   }
                 ]
               },
-              "qualifiers-order": [
-                "P805"
-              ],
+              "qualifiers-order": ["P805"],
               "id": "Q782$e0d96712-e633-4689-8760-b7fe80761fda",
               "rank": "normal"
             }
@@ -10967,9 +10515,7 @@
                   }
                 ]
               },
-              "qualifiers-order": [
-                "P9675"
-              ],
+              "qualifiers-order": ["P9675"],
               "id": "Q782$79BD5F6C-CA0A-4B49-8E42-3D57C27D02C3",
               "rank": "normal"
             }
@@ -11092,10 +10638,7 @@
                   }
                 ]
               },
-              "qualifiers-order": [
-                "P6954",
-                "P585"
-              ],
+              "qualifiers-order": ["P6954", "P585"],
               "id": "Q782$53d80162-4b24-bb39-90e4-687a208c263f",
               "rank": "normal"
             }
@@ -11136,9 +10679,7 @@
                       }
                     ]
                   },
-                  "snaks-order": [
-                    "P248"
-                  ]
+                  "snaks-order": ["P248"]
                 }
               ]
             }
@@ -11255,9 +10796,7 @@
                       }
                     ]
                   },
-                  "snaks-order": [
-                    "P143"
-                  ]
+                  "snaks-order": ["P143"]
                 }
               ]
             }
@@ -11423,9 +10962,7 @@
                   }
                 ]
               },
-              "qualifiers-order": [
-                "P805"
-              ],
+              "qualifiers-order": ["P805"],
               "id": "Q782$3ABB82D5-C9CB-4F5F-BA33-E458E5113932",
               "rank": "normal"
             }
@@ -11704,9 +11241,7 @@
                       }
                     ]
                   },
-                  "snaks-order": [
-                    "P3452"
-                  ]
+                  "snaks-order": ["P3452"]
                 }
               ]
             }

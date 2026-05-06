@@ -865,7 +865,9 @@ pre {
   align-items: center;
   gap: 6px;
   cursor: pointer;
-  transition: background 120ms ease, border-color 120ms ease;
+  transition:
+    background 120ms ease,
+    border-color 120ms ease;
 }
 
 .formalize-big-context input[type='checkbox'] {
@@ -896,7 +898,9 @@ pre {
 .formalize-output [data-phrase-text] {
   border-radius: 3px;
   padding: 0 2px;
-  transition: background 120ms ease, opacity 120ms ease;
+  transition:
+    background 120ms ease,
+    opacity 120ms ease;
 }
 
 .formalize-output .formalize-output-hover {

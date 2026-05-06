@@ -405,9 +405,7 @@
                 "example": "<i>That apple pie was <b>the</b> best.</i>"
               }
             ],
-            "examples": [
-              "<i>That apple pie was <b>the</b> best.</i>"
-            ]
+            "examples": ["<i>That apple pie was <b>the</b> best.</i>"]
           },
           {
             "definition": "<span class=\"use-with-mention\" about=\"#mwt121\" typeof=\"mw:Transclusion\">Used before an adjective, indicating all things (especially persons) described by that adjective.</span> <link rel=\"mw-deduplicated-inline-style\" href=\"mw-data:TemplateStyles:r90144991\" about=\"#mwt122\" typeof=\"mw:Extension/templatestyles mw:Transclusion\">",

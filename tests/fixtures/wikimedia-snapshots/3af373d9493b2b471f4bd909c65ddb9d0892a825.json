@@ -110,10 +110,7 @@
                       }
                     ]
                   },
-                  "snaks-order": [
-                    "P248",
-                    "P577"
-                  ]
+                  "snaks-order": ["P248", "P577"]
                 }
               ]
             },
@@ -184,9 +181,7 @@
                       }
                     ]
                   },
-                  "snaks-order": [
-                    "P143"
-                  ]
+                  "snaks-order": ["P143"]
                 }
               ]
             }
@@ -227,9 +222,7 @@
                       }
                     ]
                   },
-                  "snaks-order": [
-                    "P143"
-                  ]
+                  "snaks-order": ["P143"]
                 }
               ]
             }
@@ -421,10 +414,7 @@
                   }
                 ]
               },
-              "qualifiers-order": [
-                "P1810",
-                "P4970"
-              ],
+              "qualifiers-order": ["P1810", "P4970"],
               "id": "Q1054574$E840CC79-0772-4416-98D8-F9AB15FF99B6",
               "rank": "normal"
             }
@@ -499,9 +489,7 @@
                       }
                     ]
                   },
-                  "snaks-order": [
-                    "P248"
-                  ]
+                  "snaks-order": ["P248"]
                 }
               ]
             }
@@ -578,10 +566,7 @@
                       }
                     ]
                   },
-                  "snaks-order": [
-                    "P248",
-                    "P813"
-                  ]
+                  "snaks-order": ["P248", "P813"]
                 }
               ]
             }
@@ -634,9 +619,7 @@
                   }
                 ]
               },
-              "qualifiers-order": [
-                "P1810"
-              ],
+              "qualifiers-order": ["P1810"],
               "id": "Q1054574$96AE083D-D9A8-4C64-8741-03FFE18FB2E2",
               "rank": "normal",
               "references": [
@@ -675,10 +658,7 @@
                       }
                     ]
                   },
-                  "snaks-order": [
-                    "P1065",
-                    "P2960"
-                  ]
+                  "snaks-order": ["P1065", "P2960"]
                 }
               ]
             }
@@ -719,9 +699,7 @@
                       }
                     ]
                   },
-                  "snaks-order": [
-                    "P248"
-                  ]
+                  "snaks-order": ["P248"]
                 }
               ]
             }
@@ -841,13 +819,7 @@
                       }
                     ]
                   },
-                  "snaks-order": [
-                    "P248",
-                    "P813",
-                    "P854",
-                    "P1065",
-                    "P2960"
-                  ]
+                  "snaks-order": ["P248", "P813", "P854", "P1065", "P2960"]
                 }
               ]
             }
@@ -946,10 +918,7 @@
                   }
                 ]
               },
-              "qualifiers-order": [
-                "P1810",
-                "P2241"
-              ],
+              "qualifiers-order": ["P1810", "P2241"],
               "id": "Q1054574$230A59FF-C87D-4021-9753-80F97C3822A4",
               "rank": "deprecated"
             },
@@ -979,9 +948,7 @@
                   }
                 ]
               },
-              "qualifiers-order": [
-                "P1810"
-              ],
+              "qualifiers-order": ["P1810"],
               "id": "Q1054574$A0DF74A3-0D9A-43E5-AC82-C2665445736D",
               "rank": "normal"
             }
@@ -1064,9 +1031,7 @@
                   }
                 ]
               },
-              "qualifiers-order": [
-                "P9675"
-              ],
+              "qualifiers-order": ["P9675"],
               "id": "Q1054574$E7A46D71-1A23-4C3A-A60D-E05D883023ED",
               "rank": "normal"
             }

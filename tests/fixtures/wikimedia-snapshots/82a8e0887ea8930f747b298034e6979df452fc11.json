@@ -167,10 +167,7 @@
                       }
                     ]
                   },
-                  "snaks-order": [
-                    "P248",
-                    "P577"
-                  ]
+                  "snaks-order": ["P248", "P577"]
                 }
               ]
             }
@@ -270,9 +267,7 @@
                       }
                     ]
                   },
-                  "snaks-order": [
-                    "P248"
-                  ]
+                  "snaks-order": ["P248"]
                 }
               ]
             }
@@ -349,11 +344,7 @@
                   }
                 ]
               },
-              "qualifiers-order": [
-                "P407",
-                "P1810",
-                "P9675"
-              ],
+              "qualifiers-order": ["P407", "P1810", "P9675"],
               "id": "Q130232$6e697a62-42fe-8031-6832-37f61fca371c",
               "rank": "normal"
             }
@@ -413,10 +404,7 @@
                       }
                     ]
                   },
-                  "snaks-order": [
-                    "P248",
-                    "P813"
-                  ]
+                  "snaks-order": ["P248", "P813"]
                 }
               ]
             }
@@ -582,9 +570,7 @@
                   }
                 ]
               },
-              "qualifiers-order": [
-                "P1810"
-              ],
+              "qualifiers-order": ["P1810"],
               "id": "Q130232$B4463B94-2AB0-4556-B1F5-2DD9776B1AB5",
               "rank": "normal",
               "references": [
@@ -627,10 +613,7 @@
                       }
                     ]
                   },
-                  "snaks-order": [
-                    "P248",
-                    "P813"
-                  ]
+                  "snaks-order": ["P248", "P813"]
                 }
               ]
             }
@@ -720,10 +703,7 @@
                       }
                     ]
                   },
-                  "snaks-order": [
-                    "P813",
-                    "P854"
-                  ]
+                  "snaks-order": ["P813", "P854"]
                 }
               ]
             }
@@ -771,10 +751,7 @@
                   }
                 ]
               },
-              "qualifiers-order": [
-                "P1810",
-                "P2241"
-              ],
+              "qualifiers-order": ["P1810", "P2241"],
               "id": "Q130232$86f9fcf7-45a4-4515-960e-f9b771efda9c",
               "rank": "deprecated",
               "references": [
@@ -794,9 +771,7 @@
                       }
                     ]
                   },
-                  "snaks-order": [
-                    "P4656"
-                  ]
+                  "snaks-order": ["P4656"]
                 }
               ]
             },
@@ -826,9 +801,7 @@
                   }
                 ]
               },
-              "qualifiers-order": [
-                "P1810"
-              ],
+              "qualifiers-order": ["P1810"],
               "id": "Q130232$CAC30DFC-6614-486D-81F8-30C94BE60C92",
               "rank": "normal"
             }
@@ -911,9 +884,7 @@
                   }
                 ]
               },
-              "qualifiers-order": [
-                "P9675"
-              ],
+              "qualifiers-order": ["P9675"],
               "id": "Q130232$D9F6DC8B-3A7F-4DBD-B1A6-C6FEC4EDDB83",
               "rank": "normal"
             }
