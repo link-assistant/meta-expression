@@ -16,7 +16,6 @@ import {
   assertRejects,
 } from 'test-anywhere';
 import { mkdtemp, readFile, rm } from 'node:fs/promises';
-import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { formalizeTextWith } from '../src/index.js';
 import {
@@ -34,9 +33,28 @@ const fixturesRoot = new URL(
   import.meta.url
 ).pathname;
 
+// Mirrors the issue-15 cache suite: probe write access to a relative temp
+// dir up front. CI runs Deno with `--allow-read` only, so any test that
+// needs to mkdtemp/write is skipped on Deno when the probe fails. Node.js
+// and Bun always pass the probe and run the full suite.
+async function canWriteToTempDir() {
+  try {
+    const probe = await mkdtemp('me-snap-probe-');
+    await rm(probe, { recursive: true, force: true });
+    return true;
+  } catch {
+    return false;
+  }
+}
+
+const writableTmp = await canWriteToTempDir();
+
 describe('issue 21 — snapshot store', () => {
   it('round-trips a snapshot: write → load → cache.get returns the same value', async () => {
-    const dir = await mkdtemp(join(tmpdir(), 'me-snap-'));
+    if (!writableTmp) {
+      return;
+    }
+    const dir = await mkdtemp('me-snap-');
     try {
       const url = 'https://example.test/api?q=cat';
       const value = { search: [{ id: 'Q146', label: 'cat' }] };
@@ -53,7 +71,10 @@ describe('issue 21 — snapshot store', () => {
   });
 
   it('writes a manifest.lino entry alongside every recorded snapshot', async () => {
-    const dir = await mkdtemp(join(tmpdir(), 'me-snap-'));
+    if (!writableTmp) {
+      return;
+    }
+    const dir = await mkdtemp('me-snap-');
     try {
       const url = 'https://example.test/wikidata?title=Cat';
       const key = snapshotKey(url);
@@ -67,7 +88,10 @@ describe('issue 21 — snapshot store', () => {
   });
 
   it('skips duplicate manifest entries when the same URL is rewritten', async () => {
-    const dir = await mkdtemp(join(tmpdir(), 'me-snap-'));
+    if (!writableTmp) {
+      return;
+    }
+    const dir = await mkdtemp('me-snap-');
     try {
       const url = 'https://example.test/dup?x=1';
       await writeSnapshot(dir, url, { v: 1 });
@@ -115,7 +139,10 @@ describe('issue 21 — snapshot fetch modes', () => {
   });
 
   it('record mode always calls the live fetch and persists the response', async () => {
-    const dir = await mkdtemp(join(tmpdir(), 'me-snap-'));
+    if (!writableTmp) {
+      return;
+    }
+    const dir = await mkdtemp('me-snap-');
     try {
       const url = 'https://example.test/api?q=fresh';
       const liveValue = { fresh: true };
@@ -149,7 +176,10 @@ describe('issue 21 — snapshot fetch modes', () => {
   });
 
   it('overlay mode prefers cached snapshots and only records misses', async () => {
-    const dir = await mkdtemp(join(tmpdir(), 'me-snap-'));
+    if (!writableTmp) {
+      return;
+    }
+    const dir = await mkdtemp('me-snap-');
     try {
       const cachedUrl = 'https://example.test/api?q=cached';
       const missUrl = 'https://example.test/api?q=miss';
@@ -204,7 +234,10 @@ describe('issue 21 — snapshot layer wired into formalizeTextWith', () => {
   };
 
   beforeAll(async () => {
-    dir = await mkdtemp(join(tmpdir(), 'me-snap-pipe-'));
+    if (!writableTmp) {
+      return;
+    }
+    dir = await mkdtemp('me-snap-pipe-');
     await writeSnapshot(dir, url, cachedSearchPayload);
   });
 
@@ -215,6 +248,9 @@ describe('issue 21 — snapshot layer wired into formalizeTextWith', () => {
   });
 
   it('replays the cached search response without touching the network', async () => {
+    if (!writableTmp) {
+      return;
+    }
     const layer = await createSnapshotLayer({
       dir,
       mode: SNAPSHOT_MODES.REPLAY,
@@ -224,6 +260,9 @@ describe('issue 21 — snapshot layer wired into formalizeTextWith', () => {
   });
 
   it('overlay mode lets formalize fall back to a stub fetch on a miss', async () => {
+    if (!writableTmp) {
+      return;
+    }
     let liveHits = 0;
     const stubFetch = async (input) => {
       liveHits += 1;
@@ -233,7 +272,7 @@ describe('issue 21 — snapshot layer wired into formalizeTextWith', () => {
       }
       return new Response('{}', { status: 200 });
     };
-    const recordDir = await mkdtemp(join(tmpdir(), 'me-snap-overlay-'));
+    const recordDir = await mkdtemp('me-snap-overlay-');
     try {
       const layer = await createSnapshotLayer({
         dir: recordDir,

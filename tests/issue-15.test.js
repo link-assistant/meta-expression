@@ -829,6 +829,9 @@ describe('issue 15 — HTTP /formalize endpoint with persistent cache', () => {
     let upstreamCalls = 0;
     globalThis.fetch = function trackedFetch(url, init) {
       const target = String(url);
+      if (target.includes('wiktionary.org')) {
+        return jsonResponse({});
+      }
       if (target.includes('wikidata.org') || target.includes('wikipedia.org')) {
         upstreamCalls += 1;
         const mock = makeFetch({
@@ -916,6 +919,9 @@ describe('issue 15 — HTTP /formalize endpoint with persistent cache', () => {
     });
     globalThis.fetch = function (url, init) {
       const target = String(url);
+      if (target.includes('wiktionary.org')) {
+        return jsonResponse({});
+      }
       if (target.includes('wikidata.org') || target.includes('wikipedia.org')) {
         return mockUpstream(target);
       }
@@ -948,6 +954,9 @@ describe('issue 15 — HTTP /formalize endpoint with persistent cache', () => {
     const previousFetch = globalThis.fetch;
     globalThis.fetch = function (url, init) {
       const target = String(url);
+      if (target.includes('wiktionary.org')) {
+        return jsonResponse({});
+      }
       if (target.includes('wikidata.org') || target.includes('wikipedia.org')) {
         const mock = makeFetch({});
         return mock(target);
