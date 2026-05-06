@@ -1,0 +1,65 @@
+{
+  "url": "https://en.wikipedia.org/w/api.php?action=query&format=json&list=search&srsearch=formalize&srlimit=5&origin=*",
+  "recordedAt": "2026-05-06T19:38:15.371Z",
+  "value": {
+    "batchcomplete": "",
+    "continue": {
+      "sroffset": 5,
+      "continue": "-||"
+    },
+    "query": {
+      "searchinfo": {
+        "totalhits": 13392,
+        "suggestion": "focalize",
+        "suggestionsnippet": "focalize"
+      },
+      "search": [
+        {
+          "ns": 0,
+          "title": "Formalization",
+          "pageid": 396103,
+          "size": 268,
+          "wordcount": 67,
+          "snippet": "Look up <span class=\"searchmatch\">formalization</span> or formalisation in Wiktionary, the free dictionary. <span class=\"searchmatch\">Formalization</span> or formalisation may refer to Logic translation of a natural language",
+          "timestamp": "2025-04-20T07:37:04Z"
+        },
+        {
+          "ns": 0,
+          "title": "Formalized Music",
+          "pageid": 17799610,
+          "size": 2359,
+          "wordcount": 283,
+          "snippet": "<span class=\"searchmatch\">Formalized</span> Music: Thought and Mathematics in Composition is a book by Greek composer, architect, and engineer Iannis Xenakis in which he explains his motivation",
+          "timestamp": "2024-12-14T18:47:39Z"
+        },
+        {
+          "ns": 0,
+          "title": "Proof assistant",
+          "pageid": 1258607,
+          "size": 20942,
+          "wordcount": 1658,
+          "snippet": "field is making these tools use artificial intelligence to automate the <span class=\"searchmatch\">formalization</span> of ordinary mathematics. Automated proof checking is the process of",
+          "timestamp": "2026-04-23T23:30:09Z"
+        },
+        {
+          "ns": 0,
+          "title": "Breed",
+          "pageid": 267933,
+          "size": 8390,
+          "wordcount": 749,
+          "snippet": "A breed is a specific group of breedable domestic animals having homogeneous appearance (phenotype), homogeneous behavior, and/or other characteristics",
+          "timestamp": "2026-03-31T13:33:09Z"
+        },
+        {
+          "ns": 0,
+          "title": "Pragmatics",
+          "pageid": 44816,
+          "size": 68556,
+          "wordcount": 8337,
+          "snippet": "boundary between semantics and pragmatics and there are many different <span class=\"searchmatch\">formalizations</span> of aspects of pragmatics linked to context dependence. Particularly",
+          "timestamp": "2026-04-18T19:44:08Z"
+        }
+      ]
+    }
+  }
+}

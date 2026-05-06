@@ -1,0 +1,1031 @@
+{
+  "url": "https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&ids=Q130232&languages=en&origin=*&props=labels%7Cclaims",
+  "recordedAt": "2026-05-06T19:38:14.601Z",
+  "value": {
+    "entities": {
+      "Q130232": {
+        "type": "item",
+        "id": "Q130232",
+        "labels": {
+          "en": {
+            "language": "en",
+            "value": "drama film"
+          }
+        },
+        "claims": {
+          "P279": [
+            {
+              "mainsnak": {
+                "snaktype": "value",
+                "property": "P279",
+                "hash": "883328fe3b4cfc2d0f7c5146e2acce39a13a4898",
+                "datavalue": {
+                  "value": {
+                    "entity-type": "item",
+                    "numeric-id": 21010853,
+                    "id": "Q21010853"
+                  },
+                  "type": "wikibase-entityid"
+                },
+                "datatype": "wikibase-item"
+              },
+              "type": "statement",
+              "id": "Q130232$7f989473-4237-73ee-bbff-e1b48e6e908d",
+              "rank": "normal"
+            },
+            {
+              "mainsnak": {
+                "snaktype": "value",
+                "property": "P279",
+                "hash": "e833407ccc6d55db8cddd35dd97583a95e09171e",
+                "datavalue": {
+                  "value": {
+                    "entity-type": "item",
+                    "numeric-id": 11424,
+                    "id": "Q11424"
+                  },
+                  "type": "wikibase-entityid"
+                },
+                "datatype": "wikibase-item"
+              },
+              "type": "statement",
+              "id": "Q130232$d66ef8ba-4104-03bd-da26-3370ca4346ba",
+              "rank": "normal"
+            }
+          ],
+          "P31": [
+            {
+              "mainsnak": {
+                "snaktype": "value",
+                "property": "P31",
+                "hash": "8b0fd4d1ae47b58babd96ac22711828a48f6f7e1",
+                "datavalue": {
+                  "value": {
+                    "entity-type": "item",
+                    "numeric-id": 201658,
+                    "id": "Q201658"
+                  },
+                  "type": "wikibase-entityid"
+                },
+                "datatype": "wikibase-item"
+              },
+              "type": "statement",
+              "id": "q130232$FE11FA2D-4030-459D-80B6-7638558AC569",
+              "rank": "normal"
+            }
+          ],
+          "P373": [
+            {
+              "mainsnak": {
+                "snaktype": "value",
+                "property": "P373",
+                "hash": "39bd1f1aa8a3c6a5fec25868b4c3fe8a919a3bd8",
+                "datavalue": {
+                  "value": "Drama films",
+                  "type": "string"
+                },
+                "datatype": "string"
+              },
+              "type": "statement",
+              "id": "q130232$13BC5601-09FB-4296-9325-73A736C6D11A",
+              "rank": "normal"
+            }
+          ],
+          "P910": [
+            {
+              "mainsnak": {
+                "snaktype": "value",
+                "property": "P910",
+                "hash": "3cbab88c1eb44118de0f711b4d604142f2590c8b",
+                "datavalue": {
+                  "value": {
+                    "entity-type": "item",
+                    "numeric-id": 7140139,
+                    "id": "Q7140139"
+                  },
+                  "type": "wikibase-entityid"
+                },
+                "datatype": "wikibase-item"
+              },
+              "type": "statement",
+              "id": "Q130232$DF0CC36A-23E5-4184-9580-2389B6F50984",
+              "rank": "normal"
+            }
+          ],
+          "P646": [
+            {
+              "mainsnak": {
+                "snaktype": "value",
+                "property": "P646",
+                "hash": "44888095735d0b8ea69387f9caabbb7108b3df0d",
+                "datavalue": {
+                  "value": "/m/07s9rl0",
+                  "type": "string"
+                },
+                "datatype": "external-id"
+              },
+              "type": "statement",
+              "id": "Q130232$8F894428-BFF4-4DB6-A06B-996DE0A72228",
+              "rank": "normal",
+              "references": [
+                {
+                  "hash": "2b00cb481cddcac7623114367489b5c194901c4a",
+                  "snaks": {
+                    "P248": [
+                      {
+                        "snaktype": "value",
+                        "property": "P248",
+                        "hash": "a94b740202b097dd33355e0e6c00e54b9395e5e0",
+                        "datavalue": {
+                          "value": {
+                            "entity-type": "item",
+                            "numeric-id": 15241312,
+                            "id": "Q15241312"
+                          },
+                          "type": "wikibase-entityid"
+                        },
+                        "datatype": "wikibase-item"
+                      }
+                    ],
+                    "P577": [
+                      {
+                        "snaktype": "value",
+                        "property": "P577",
+                        "hash": "fde79ecb015112d2f29229ccc1ec514ed3e71fa2",
+                        "datavalue": {
+                          "value": {
+                            "time": "+2013-10-28T00:00:00Z",
+                            "timezone": 0,
+                            "before": 0,
+                            "after": 0,
+                            "precision": 11,
+                            "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                          },
+                          "type": "time"
+                        },
+                        "datatype": "time"
+                      }
+                    ]
+                  },
+                  "snaks-order": [
+                    "P248",
+                    "P577"
+                  ]
+                }
+              ]
+            }
+          ],
+          "P18": [
+            {
+              "mainsnak": {
+                "snaktype": "value",
+                "property": "P18",
+                "hash": "57ad3b343b2dcf6b517a2606008a7bcc2a43891d",
+                "datavalue": {
+                  "value": "Gone With The Wind 1967 re-release (cropped).jpg",
+                  "type": "string"
+                },
+                "datatype": "commonsMedia"
+              },
+              "type": "statement",
+              "id": "Q130232$58EA9472-5569-481F-8094-19DD6CA76176",
+              "rank": "normal"
+            }
+          ],
+          "P1269": [
+            {
+              "mainsnak": {
+                "snaktype": "value",
+                "property": "P1269",
+                "hash": "c6109d4482fe1292ee79c0817cab010e58ce6133",
+                "datavalue": {
+                  "value": {
+                    "entity-type": "item",
+                    "numeric-id": 4220884,
+                    "id": "Q4220884"
+                  },
+                  "type": "wikibase-entityid"
+                },
+                "datatype": "wikibase-item"
+              },
+              "type": "statement",
+              "id": "Q130232$22cf7609-48de-dd90-d5f0-67e341170862",
+              "rank": "normal"
+            }
+          ],
+          "P2354": [
+            {
+              "mainsnak": {
+                "snaktype": "value",
+                "property": "P2354",
+                "hash": "0c50be78664408971da88064f1ec65e1610241d0",
+                "datavalue": {
+                  "value": {
+                    "entity-type": "item",
+                    "numeric-id": 4816436,
+                    "id": "Q4816436"
+                  },
+                  "type": "wikibase-entityid"
+                },
+                "datatype": "wikibase-item"
+              },
+              "type": "statement",
+              "id": "Q130232$cbe9429d-4c1f-901a-3fe7-eb56017fa7f7",
+              "rank": "normal"
+            }
+          ],
+          "P2581": [
+            {
+              "mainsnak": {
+                "snaktype": "value",
+                "property": "P2581",
+                "hash": "587b1dd71947bc654b94cb0ac45a802385d8feeb",
+                "datavalue": {
+                  "value": "03688355n",
+                  "type": "string"
+                },
+                "datatype": "external-id"
+              },
+              "type": "statement",
+              "id": "Q130232$D0C007AF-D7D7-472A-8F74-73307831A336",
+              "rank": "normal",
+              "references": [
+                {
+                  "hash": "248ac337a217a5f5eed7139a82a4e60931611af0",
+                  "snaks": {
+                    "P248": [
+                      {
+                        "snaktype": "value",
+                        "property": "P248",
+                        "hash": "25b816aab41db18565946259c950aed6de05dd1e",
+                        "datavalue": {
+                          "value": {
+                            "entity-type": "item",
+                            "numeric-id": 4837690,
+                            "id": "Q4837690"
+                          },
+                          "type": "wikibase-entityid"
+                        },
+                        "datatype": "wikibase-item"
+                      }
+                    ]
+                  },
+                  "snaks-order": [
+                    "P248"
+                  ]
+                }
+              ]
+            }
+          ],
+          "P5250": [
+            {
+              "mainsnak": {
+                "snaktype": "value",
+                "property": "P5250",
+                "hash": "31790dc39f74d43f45482d80d77e1d581a8520d5",
+                "datavalue": {
+                  "value": "333",
+                  "type": "string"
+                },
+                "datatype": "external-id"
+              },
+              "type": "statement",
+              "id": "Q130232$D7006346-A7B4-4CB3-959B-48A1AAD41726",
+              "rank": "normal"
+            }
+          ],
+          "P6262": [
+            {
+              "mainsnak": {
+                "snaktype": "value",
+                "property": "P6262",
+                "hash": "14dde503987fa71c0c060cc261e2ed01f81d47ad",
+                "datavalue": {
+                  "value": "movies:drama_film",
+                  "type": "string"
+                },
+                "datatype": "external-id"
+              },
+              "type": "statement",
+              "qualifiers": {
+                "P407": [
+                  {
+                    "snaktype": "value",
+                    "property": "P407",
+                    "hash": "daf1c4fcb58181b02dff9cc89deb084004ddae4b",
+                    "datavalue": {
+                      "value": {
+                        "entity-type": "item",
+                        "numeric-id": 1860,
+                        "id": "Q1860"
+                      },
+                      "type": "wikibase-entityid"
+                    },
+                    "datatype": "wikibase-item"
+                  }
+                ],
+                "P1810": [
+                  {
+                    "snaktype": "value",
+                    "property": "P1810",
+                    "hash": "648978d3ddd81f61380122c8095daf00f3137e57",
+                    "datavalue": {
+                      "value": "Drama film",
+                      "type": "string"
+                    },
+                    "datatype": "string"
+                  }
+                ],
+                "P9675": [
+                  {
+                    "snaktype": "value",
+                    "property": "P9675",
+                    "hash": "3796d479f5cee8187eb8e06925704dbc36bc388e",
+                    "datavalue": {
+                      "value": "54933",
+                      "type": "string"
+                    },
+                    "datatype": "string"
+                  }
+                ]
+              },
+              "qualifiers-order": [
+                "P407",
+                "P1810",
+                "P9675"
+              ],
+              "id": "Q130232$6e697a62-42fe-8031-6832-37f61fca371c",
+              "rank": "normal"
+            }
+          ],
+          "P8408": [
+            {
+              "mainsnak": {
+                "snaktype": "value",
+                "property": "P8408",
+                "hash": "518982f52faf0ec03f056c0e213b4e7ed3caad50",
+                "datavalue": {
+                  "value": "DramaticMovie",
+                  "type": "string"
+                },
+                "datatype": "external-id"
+              },
+              "type": "statement",
+              "id": "Q130232$C9906A84-0BF1-4D2D-BBB0-4ED96A98D786",
+              "rank": "normal",
+              "references": [
+                {
+                  "hash": "9a681f9dd95c90224547c404e11295f4f7dcf54e",
+                  "snaks": {
+                    "P248": [
+                      {
+                        "snaktype": "value",
+                        "property": "P248",
+                        "hash": "9d5780dddffa8746637a9929a936ab6b0f601e24",
+                        "datavalue": {
+                          "value": {
+                            "entity-type": "item",
+                            "numeric-id": 64139102,
+                            "id": "Q64139102"
+                          },
+                          "type": "wikibase-entityid"
+                        },
+                        "datatype": "wikibase-item"
+                      }
+                    ],
+                    "P813": [
+                      {
+                        "snaktype": "value",
+                        "property": "P813",
+                        "hash": "622a5a27fa5b25e7e7984974e9db494cf8460990",
+                        "datavalue": {
+                          "value": {
+                            "time": "+2020-07-09T00:00:00Z",
+                            "timezone": 0,
+                            "before": 0,
+                            "after": 0,
+                            "precision": 11,
+                            "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                          },
+                          "type": "time"
+                        },
+                        "datatype": "time"
+                      }
+                    ]
+                  },
+                  "snaks-order": [
+                    "P248",
+                    "P813"
+                  ]
+                }
+              ]
+            }
+          ],
+          "P1889": [
+            {
+              "mainsnak": {
+                "snaktype": "value",
+                "property": "P1889",
+                "hash": "0e47c4614256376d6f98847978537f55a479cfe8",
+                "datavalue": {
+                  "value": {
+                    "entity-type": "item",
+                    "numeric-id": 21010853,
+                    "id": "Q21010853"
+                  },
+                  "type": "wikibase-entityid"
+                },
+                "datatype": "wikibase-item"
+              },
+              "type": "statement",
+              "id": "Q130232$a67d751f-4e71-d89c-be23-170c5435c33c",
+              "rank": "normal"
+            },
+            {
+              "mainsnak": {
+                "snaktype": "value",
+                "property": "P1889",
+                "hash": "d4ce0181b9c7a1f1f241156f0a07347e56c8e3dd",
+                "datavalue": {
+                  "value": {
+                    "entity-type": "item",
+                    "numeric-id": 25372,
+                    "id": "Q25372"
+                  },
+                  "type": "wikibase-entityid"
+                },
+                "datatype": "wikibase-item"
+              },
+              "type": "statement",
+              "id": "Q130232$91db89c9-4859-ee53-b22e-34bfba757402",
+              "rank": "normal"
+            },
+            {
+              "mainsnak": {
+                "snaktype": "value",
+                "property": "P1889",
+                "hash": "a8c18e6d755510612e352dedb81f8ff409378162",
+                "datavalue": {
+                  "value": {
+                    "entity-type": "item",
+                    "numeric-id": 1366112,
+                    "id": "Q1366112"
+                  },
+                  "type": "wikibase-entityid"
+                },
+                "datatype": "wikibase-item"
+              },
+              "type": "statement",
+              "id": "Q130232$a175b192-4235-10b5-ba28-f9c809f9d709",
+              "rank": "normal"
+            },
+            {
+              "mainsnak": {
+                "snaktype": "value",
+                "property": "P1889",
+                "hash": "4417de34512f5454b2f6022bcdfa83c78ec15f68",
+                "datavalue": {
+                  "value": {
+                    "entity-type": "item",
+                    "numeric-id": 1287716,
+                    "id": "Q1287716"
+                  },
+                  "type": "wikibase-entityid"
+                },
+                "datatype": "wikibase-item"
+              },
+              "type": "statement",
+              "id": "Q130232$1939cc35-42c1-77cf-efe9-5c32042cb847",
+              "rank": "normal"
+            },
+            {
+              "mainsnak": {
+                "snaktype": "value",
+                "property": "P1889",
+                "hash": "5f10bc104e3ea1e7f117a8959a143deb6ae17e3c",
+                "datavalue": {
+                  "value": {
+                    "entity-type": "item",
+                    "numeric-id": 19309749,
+                    "id": "Q19309749"
+                  },
+                  "type": "wikibase-entityid"
+                },
+                "datatype": "wikibase-item"
+              },
+              "type": "statement",
+              "id": "Q130232$e6b715f6-4715-6efd-7629-0782ef091cc0",
+              "rank": "normal"
+            }
+          ],
+          "P2671": [
+            {
+              "mainsnak": {
+                "snaktype": "value",
+                "property": "P2671",
+                "hash": "bb4d013faa3c2126b5a5a24ce1f070451390d4ab",
+                "datavalue": {
+                  "value": "/g/11bwdpgj8t",
+                  "type": "string"
+                },
+                "datatype": "external-id"
+              },
+              "type": "statement",
+              "id": "Q130232$8DFAC0A9-E39C-4360-8186-5F4BC8FFF772",
+              "rank": "normal"
+            }
+          ],
+          "P2347": [
+            {
+              "mainsnak": {
+                "snaktype": "value",
+                "property": "P2347",
+                "hash": "d6e31715d43d030583f2accf472f6ca2dcb08a55",
+                "datavalue": {
+                  "value": "26500",
+                  "type": "string"
+                },
+                "datatype": "external-id"
+              },
+              "type": "statement",
+              "qualifiers": {
+                "P1810": [
+                  {
+                    "snaktype": "value",
+                    "property": "P1810",
+                    "hash": "fa16232f5af870e5f76d19c682d50c31e02bc147",
+                    "datavalue": {
+                      "value": "draamaelokuvat",
+                      "type": "string"
+                    },
+                    "datatype": "string"
+                  },
+                  {
+                    "snaktype": "value",
+                    "property": "P1810",
+                    "hash": "424c48d383305d4f974a7b79499bd89c2a9dc9ee",
+                    "datavalue": {
+                      "value": "dramafilmer",
+                      "type": "string"
+                    },
+                    "datatype": "string"
+                  },
+                  {
+                    "snaktype": "value",
+                    "property": "P1810",
+                    "hash": "8b7a027e1a02d37bb899901223c7515c4457f5ce",
+                    "datavalue": {
+                      "value": "drama movies",
+                      "type": "string"
+                    },
+                    "datatype": "string"
+                  }
+                ]
+              },
+              "qualifiers-order": [
+                "P1810"
+              ],
+              "id": "Q130232$B4463B94-2AB0-4556-B1F5-2DD9776B1AB5",
+              "rank": "normal",
+              "references": [
+                {
+                  "hash": "e5fe28150ece4f5cad8ddd10a83cb85e350db185",
+                  "snaks": {
+                    "P248": [
+                      {
+                        "snaktype": "value",
+                        "property": "P248",
+                        "hash": "7133f11674741f52cadaae6029068fad9cbb52e3",
+                        "datavalue": {
+                          "value": {
+                            "entity-type": "item",
+                            "numeric-id": 89345680,
+                            "id": "Q89345680"
+                          },
+                          "type": "wikibase-entityid"
+                        },
+                        "datatype": "wikibase-item"
+                      }
+                    ],
+                    "P813": [
+                      {
+                        "snaktype": "value",
+                        "property": "P813",
+                        "hash": "9b7001794325f108a52dd793e905d11557d0ae63",
+                        "datavalue": {
+                          "value": {
+                            "time": "+2021-11-29T00:00:00Z",
+                            "timezone": 0,
+                            "before": 0,
+                            "after": 0,
+                            "precision": 11,
+                            "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                          },
+                          "type": "time"
+                        },
+                        "datatype": "time"
+                      }
+                    ]
+                  },
+                  "snaks-order": [
+                    "P248",
+                    "P813"
+                  ]
+                }
+              ]
+            }
+          ],
+          "P8672": [
+            {
+              "mainsnak": {
+                "snaktype": "value",
+                "property": "P8672",
+                "hash": "9fef2e433776353a4f2c05ffbbabfd9a20791c85",
+                "datavalue": {
+                  "value": "856976804749258752",
+                  "type": "string"
+                },
+                "datatype": "external-id"
+              },
+              "type": "statement",
+              "id": "Q130232$F54CF286-6FF2-4C67-BC76-90318F03CB0F",
+              "rank": "normal"
+            }
+          ],
+          "P10916": [
+            {
+              "mainsnak": {
+                "snaktype": "value",
+                "property": "P10916",
+                "hash": "b11346a8fe57178e1609b34fcdae84b0cbb81314",
+                "datavalue": {
+                  "value": "Filmdramen",
+                  "type": "string"
+                },
+                "datatype": "external-id"
+              },
+              "type": "statement",
+              "id": "Q130232$41c3d39f-483e-a87b-8498-4b6811921aaf",
+              "rank": "normal"
+            }
+          ],
+          "P7502": [
+            {
+              "mainsnak": {
+                "snaktype": "value",
+                "property": "P7502",
+                "hash": "8c84bf718cdaea1cf217857329097b57b1616cac",
+                "datavalue": {
+                  "value": "Drama-YMG4ZY",
+                  "type": "string"
+                },
+                "datatype": "external-id"
+              },
+              "type": "statement",
+              "id": "Q130232$D7C6821B-D9C1-48B6-AD2E-CC44A0765863",
+              "rank": "normal",
+              "references": [
+                {
+                  "hash": "b0843cc52aaad1d07ed10fe883421d13dabce290",
+                  "snaks": {
+                    "P813": [
+                      {
+                        "snaktype": "value",
+                        "property": "P813",
+                        "hash": "849bf31a75ee81eef52deceed6ee34b2f429e12c",
+                        "datavalue": {
+                          "value": {
+                            "time": "+2022-09-10T00:00:00Z",
+                            "timezone": 0,
+                            "before": 0,
+                            "after": 0,
+                            "precision": 11,
+                            "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                          },
+                          "type": "time"
+                        },
+                        "datatype": "time"
+                      }
+                    ],
+                    "P854": [
+                      {
+                        "snaktype": "value",
+                        "property": "P854",
+                        "hash": "f9a9a9bc72b55cbdccdc13ef48e2ecca8ee1fe8c",
+                        "datavalue": {
+                          "value": "https://golden.com/wiki/Drama-YMG4ZY",
+                          "type": "string"
+                        },
+                        "datatype": "url"
+                      }
+                    ]
+                  },
+                  "snaks-order": [
+                    "P813",
+                    "P854"
+                  ]
+                }
+              ]
+            }
+          ],
+          "P11564": [
+            {
+              "mainsnak": {
+                "snaktype": "value",
+                "property": "P11564",
+                "hash": "8f25f518e4928f95bd2657989f1bfb48d86610d8",
+                "datavalue": {
+                  "value": "genre/d649",
+                  "type": "string"
+                },
+                "datatype": "external-id"
+              },
+              "type": "statement",
+              "qualifiers": {
+                "P1810": [
+                  {
+                    "snaktype": "value",
+                    "property": "P1810",
+                    "hash": "b23e0d987744e566fd0fce6ed17825cc4b50f711",
+                    "datavalue": {
+                      "value": "Drama",
+                      "type": "string"
+                    },
+                    "datatype": "string"
+                  }
+                ],
+                "P2241": [
+                  {
+                    "snaktype": "value",
+                    "property": "P2241",
+                    "hash": "74bd46d0bbe97d05804856f1f73b6a7480c68cec",
+                    "datavalue": {
+                      "value": {
+                        "entity-type": "item",
+                        "numeric-id": 45403344,
+                        "id": "Q45403344"
+                      },
+                      "type": "wikibase-entityid"
+                    },
+                    "datatype": "wikibase-item"
+                  }
+                ]
+              },
+              "qualifiers-order": [
+                "P1810",
+                "P2241"
+              ],
+              "id": "Q130232$86f9fcf7-45a4-4515-960e-f9b771efda9c",
+              "rank": "deprecated",
+              "references": [
+                {
+                  "hash": "1a0f32589d718d86b6b241166e67c3d3b23570fa",
+                  "snaks": {
+                    "P4656": [
+                      {
+                        "snaktype": "value",
+                        "property": "P4656",
+                        "hash": "6a3de0835b495da03b6b6714e46e1e0f52521bd1",
+                        "datavalue": {
+                          "value": "https://www.wikidata.org/wiki/Wikidata:Property_proposal/AllMovie_genre_ID",
+                          "type": "string"
+                        },
+                        "datatype": "url"
+                      }
+                    ]
+                  },
+                  "snaks-order": [
+                    "P4656"
+                  ]
+                }
+              ]
+            },
+            {
+              "mainsnak": {
+                "snaktype": "value",
+                "property": "P11564",
+                "hash": "df5107b6da9fbe3f2685c4659dee15c446058605",
+                "datavalue": {
+                  "value": "genre/ag111",
+                  "type": "string"
+                },
+                "datatype": "external-id"
+              },
+              "type": "statement",
+              "qualifiers": {
+                "P1810": [
+                  {
+                    "snaktype": "value",
+                    "property": "P1810",
+                    "hash": "b23e0d987744e566fd0fce6ed17825cc4b50f711",
+                    "datavalue": {
+                      "value": "Drama",
+                      "type": "string"
+                    },
+                    "datatype": "string"
+                  }
+                ]
+              },
+              "qualifiers-order": [
+                "P1810"
+              ],
+              "id": "Q130232$CAC30DFC-6614-486D-81F8-30C94BE60C92",
+              "rank": "normal"
+            }
+          ],
+          "P11588": [
+            {
+              "mainsnak": {
+                "snaktype": "value",
+                "property": "P11588",
+                "hash": "880fabb66a77b5db118da6f45937bfaf3056cd74",
+                "datavalue": {
+                  "value": "Drama",
+                  "type": "string"
+                },
+                "datatype": "external-id"
+              },
+              "type": "statement",
+              "id": "Q130232$D64E27D4-4892-4885-9696-A1363D46E7A6",
+              "rank": "normal"
+            }
+          ],
+          "P10151": [
+            {
+              "mainsnak": {
+                "snaktype": "value",
+                "property": "P10151",
+                "hash": "74551a407c70d73dd68ecc07880d288739de72bb",
+                "datavalue": {
+                  "value": "4406",
+                  "type": "string"
+                },
+                "datatype": "external-id"
+              },
+              "type": "statement",
+              "id": "Q130232$30917394-E246-444A-B859-EC735C10DDD4",
+              "rank": "normal"
+            }
+          ],
+          "P11137": [
+            {
+              "mainsnak": {
+                "snaktype": "value",
+                "property": "P11137",
+                "hash": "550de53d634879c10f1da35ff927c75232e3caa2",
+                "datavalue": {
+                  "value": "drama_movie",
+                  "type": "string"
+                },
+                "datatype": "external-id"
+              },
+              "type": "statement",
+              "id": "Q130232$2B6D706E-415D-400A-8F33-B62B3F156A14",
+              "rank": "normal"
+            }
+          ],
+          "P12086": [
+            {
+              "mainsnak": {
+                "snaktype": "value",
+                "property": "P12086",
+                "hash": "44f73104df6c2c2e5493897d51a7a5d2f7c4e4c1",
+                "datavalue": {
+                  "value": "Dramafilm",
+                  "type": "string"
+                },
+                "datatype": "external-id"
+              },
+              "type": "statement",
+              "qualifiers": {
+                "P9675": [
+                  {
+                    "snaktype": "value",
+                    "property": "P9675",
+                    "hash": "7fb1f539e707d9331bb6264e0f222bf3762638ee",
+                    "datavalue": {
+                      "value": "160089",
+                      "type": "string"
+                    },
+                    "datatype": "string"
+                  }
+                ]
+              },
+              "qualifiers-order": [
+                "P9675"
+              ],
+              "id": "Q130232$D9F6DC8B-3A7F-4DBD-B1A6-C6FEC4EDDB83",
+              "rank": "normal"
+            }
+          ],
+          "P9475": [
+            {
+              "mainsnak": {
+                "snaktype": "value",
+                "property": "P9475",
+                "hash": "14c2961b5ea374a1c92fa1a9b1ea3eab49d9cdba",
+                "datavalue": {
+                  "value": "E0007364",
+                  "type": "string"
+                },
+                "datatype": "external-id"
+              },
+              "type": "statement",
+              "id": "Q130232$23D5B8D6-28A3-4C31-A1EB-A3D8E93FCD9A",
+              "rank": "normal"
+            }
+          ],
+          "P12800": [
+            {
+              "mainsnak": {
+                "snaktype": "value",
+                "property": "P12800",
+                "hash": "3d1ee2e965871416e8766276c82e137abbe42055",
+                "datavalue": {
+                  "value": "fr:Drame",
+                  "type": "string"
+                },
+                "datatype": "external-id"
+              },
+              "type": "statement",
+              "id": "Q130232$4E7E6D9A-4FF6-4CF6-8A99-E168A185A854",
+              "rank": "normal"
+            }
+          ],
+          "P1813": [
+            {
+              "mainsnak": {
+                "snaktype": "value",
+                "property": "P1813",
+                "hash": "655a1f39d4cfb440c8d5d5edc5fbe8f1d7d1798f",
+                "datavalue": {
+                  "value": {
+                    "text": "драма",
+                    "language": "ru"
+                  },
+                  "type": "monolingualtext"
+                },
+                "datatype": "monolingualtext"
+              },
+              "type": "statement",
+              "id": "Q130232$342da134-4f70-29d5-ac00-3e74b3414951",
+              "rank": "normal"
+            }
+          ],
+          "P13636": [
+            {
+              "mainsnak": {
+                "snaktype": "value",
+                "property": "P13636",
+                "hash": "5584d4956778a045810b08e1f2da13f1054f801d",
+                "datavalue": {
+                  "value": "in0000076",
+                  "type": "string"
+                },
+                "datatype": "external-id"
+              },
+              "type": "statement",
+              "id": "Q130232$2EAF16BA-78D8-4F0D-92DC-A7935A9314DA",
+              "rank": "normal"
+            }
+          ],
+          "P13703": [
+            {
+              "mainsnak": {
+                "snaktype": "value",
+                "property": "P13703",
+                "hash": "b69c77d0e52ec07715fafa4587b95d3e1dbe6cd1",
+                "datavalue": {
+                  "value": "drama",
+                  "type": "string"
+                },
+                "datatype": "external-id"
+              },
+              "type": "statement",
+              "id": "Q130232$90ffc54b-477f-c80a-26bb-10bd852906bb",
+              "rank": "normal"
+            }
+          ],
+          "P3106": [
+            {
+              "mainsnak": {
+                "snaktype": "value",
+                "property": "P3106",
+                "hash": "1190ff314578c11e7ba7d141fbd4dc6eecc18288",
+                "datavalue": {
+                  "value": "film/drama",
+                  "type": "string"
+                },
+                "datatype": "external-id"
+              },
+              "type": "statement",
+              "id": "Q130232$53F2EC80-3B68-4F64-BFB3-AE588BCC9691",
+              "rank": "normal"
+            }
+          ]
+        }
+      }
+    },
+    "success": 1
+  }
+}

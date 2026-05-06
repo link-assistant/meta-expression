@@ -1,0 +1,46 @@
+{
+  "url": "https://en.wiktionary.org/api/rest_v1/page/definition/formalize",
+  "recordedAt": "2026-05-06T19:38:15.245Z",
+  "value": {
+    "en": [
+      {
+        "partOfSpeech": "Verb",
+        "language": "English",
+        "definitions": [
+          {
+            "definition": "<span class=\"usage-label-sense\" about=\"#mwt9\" typeof=\"mw:Transclusion\"></span> To give something a definite <a rel=\"mw:WikiLink\" href=\"/wiki/form\" title=\"form\">form</a>; to <a rel=\"mw:WikiLink\" href=\"/wiki/shape\" title=\"shape\">shape</a>."
+          },
+          {
+            "definition": "<span class=\"usage-label-sense\" about=\"#mwt10\" typeof=\"mw:Transclusion\"></span> To develop into a definite <a rel=\"mw:WikiLink\" href=\"/wiki/form\" title=\"form\">form</a>."
+          },
+          {
+            "definition": "To give something a <a rel=\"mw:WikiLink\" href=\"/wiki/formal\" title=\"formal\">formal</a> or <a rel=\"mw:WikiLink\" href=\"/wiki/official\" title=\"official\">official</a> standing."
+          },
+          {
+            "definition": "To act with <a rel=\"mw:WikiLink\" href=\"/wiki/formality\" title=\"formality\">formality</a>."
+          },
+          {
+            "definition": "<span class=\"usage-label-sense\" about=\"#mwt12\" typeof=\"mw:Transclusion\"></span> To rigorously prove a mathematical result."
+          }
+        ]
+      }
+    ],
+    "pt": [
+      {
+        "partOfSpeech": "Verb",
+        "language": "Portuguese",
+        "definitions": [
+          {
+            "definition": "<span class=\"form-of-definition use-with-mention\" about=\"#mwt53\" typeof=\"mw:Transclusion\">inflection of <span class=\"form-of-definition-link\"><i class=\"Latn mention\" lang=\"pt\"><a rel=\"mw:WikiLink\" href=\"/wiki/formalizar#Portuguese\" title=\"formalizar\">formalizar</a></i></span>:</span><span about=\"#mwt53\">\n</span><ol about=\"#mwt53\"><li><span class=\"form-of-definition use-with-mention\"><span class=\"inflection-of-conjoined\"><a rel=\"mw:WikiLink\" href=\"/wiki/Appendix:Glossary#first_person\" title=\"Appendix:Glossary\">first</a><span class=\"inflection-of-sep\">/</span><a rel=\"mw:WikiLink\" href=\"/wiki/Appendix:Glossary#third_person\" title=\"Appendix:Glossary\">third-person</a></span> <a rel=\"mw:WikiLink\" href=\"/wiki/Appendix:Glossary#singular_number\" title=\"Appendix:Glossary\">singular</a> <a rel=\"mw:WikiLink\" href=\"/wiki/Appendix:Glossary#present_tense\" title=\"Appendix:Glossary\">present</a> <a rel=\"mw:WikiLink\" href=\"/wiki/Appendix:Glossary#subjunctive_mood\" title=\"Appendix:Glossary\">subjunctive</a></span></li>\n<li><span class=\"form-of-definition use-with-mention\"><a rel=\"mw:WikiLink\" href=\"/wiki/Appendix:Glossary#third_person\" title=\"Appendix:Glossary\">third-person</a> <a rel=\"mw:WikiLink\" href=\"/wiki/Appendix:Glossary#singular_number\" title=\"Appendix:Glossary\">singular</a> <a rel=\"mw:WikiLink\" href=\"/wiki/Appendix:Glossary#imperative_mood\" title=\"Appendix:Glossary\">imperative</a></span></li></ol>"
+          },
+          {
+            "definition": "<span class=\"form-of-definition use-with-mention\"><span class=\"inflection-of-conjoined\"><a rel=\"mw:WikiLink\" href=\"/wiki/Appendix:Glossary#first_person\" title=\"Appendix:Glossary\">first</a><span class=\"inflection-of-sep\">/</span><a rel=\"mw:WikiLink\" href=\"/wiki/Appendix:Glossary#third_person\" title=\"Appendix:Glossary\">third-person</a></span> <a rel=\"mw:WikiLink\" href=\"/wiki/Appendix:Glossary#singular_number\" title=\"Appendix:Glossary\">singular</a> <a rel=\"mw:WikiLink\" href=\"/wiki/Appendix:Glossary#present_tense\" title=\"Appendix:Glossary\">present</a> <a rel=\"mw:WikiLink\" href=\"/wiki/Appendix:Glossary#subjunctive_mood\" title=\"Appendix:Glossary\">subjunctive</a></span>"
+          },
+          {
+            "definition": "<span class=\"form-of-definition use-with-mention\"><a rel=\"mw:WikiLink\" href=\"/wiki/Appendix:Glossary#third_person\" title=\"Appendix:Glossary\">third-person</a> <a rel=\"mw:WikiLink\" href=\"/wiki/Appendix:Glossary#singular_number\" title=\"Appendix:Glossary\">singular</a> <a rel=\"mw:WikiLink\" href=\"/wiki/Appendix:Glossary#imperative_mood\" title=\"Appendix:Glossary\">imperative</a></span>"
+          }
+        ]
+      }
+    ]
+  }
+}

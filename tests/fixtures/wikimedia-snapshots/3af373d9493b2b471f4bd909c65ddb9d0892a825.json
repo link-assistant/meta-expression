@@ -1,0 +1,1147 @@
+{
+  "url": "https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&ids=Q1054574&languages=en&origin=*&props=labels%7Cclaims",
+  "recordedAt": "2026-05-06T19:38:15.035Z",
+  "value": {
+    "entities": {
+      "Q1054574": {
+        "type": "item",
+        "id": "Q1054574",
+        "labels": {
+          "en": {
+            "language": "en",
+            "value": "romance film"
+          }
+        },
+        "claims": {
+          "P31": [
+            {
+              "mainsnak": {
+                "snaktype": "value",
+                "property": "P31",
+                "hash": "8b0fd4d1ae47b58babd96ac22711828a48f6f7e1",
+                "datavalue": {
+                  "value": {
+                    "entity-type": "item",
+                    "numeric-id": 201658,
+                    "id": "Q201658"
+                  },
+                  "type": "wikibase-entityid"
+                },
+                "datatype": "wikibase-item"
+              },
+              "type": "statement",
+              "id": "Q1054574$373C510C-A403-40CD-8473-41C5203ABA13",
+              "rank": "normal"
+            }
+          ],
+          "P910": [
+            {
+              "mainsnak": {
+                "snaktype": "value",
+                "property": "P910",
+                "hash": "84d98b73aa67eb82355e9f2920174ea5fba3f8cf",
+                "datavalue": {
+                  "value": {
+                    "entity-type": "item",
+                    "numeric-id": 7141720,
+                    "id": "Q7141720"
+                  },
+                  "type": "wikibase-entityid"
+                },
+                "datatype": "wikibase-item"
+              },
+              "type": "statement",
+              "id": "Q1054574$8F7345C5-BD45-4FA6-BB5F-78F517A4439F",
+              "rank": "normal"
+            }
+          ],
+          "P646": [
+            {
+              "mainsnak": {
+                "snaktype": "value",
+                "property": "P646",
+                "hash": "62c680667fa64bc1ab2ef2ed267b79098a6fb446",
+                "datavalue": {
+                  "value": "/m/02l7c8",
+                  "type": "string"
+                },
+                "datatype": "external-id"
+              },
+              "type": "statement",
+              "id": "Q1054574$4507AEFD-1D72-4EFB-B070-074485B6C7DF",
+              "rank": "normal",
+              "references": [
+                {
+                  "hash": "2b00cb481cddcac7623114367489b5c194901c4a",
+                  "snaks": {
+                    "P248": [
+                      {
+                        "snaktype": "value",
+                        "property": "P248",
+                        "hash": "a94b740202b097dd33355e0e6c00e54b9395e5e0",
+                        "datavalue": {
+                          "value": {
+                            "entity-type": "item",
+                            "numeric-id": 15241312,
+                            "id": "Q15241312"
+                          },
+                          "type": "wikibase-entityid"
+                        },
+                        "datatype": "wikibase-item"
+                      }
+                    ],
+                    "P577": [
+                      {
+                        "snaktype": "value",
+                        "property": "P577",
+                        "hash": "fde79ecb015112d2f29229ccc1ec514ed3e71fa2",
+                        "datavalue": {
+                          "value": {
+                            "time": "+2013-10-28T00:00:00Z",
+                            "timezone": 0,
+                            "before": 0,
+                            "after": 0,
+                            "precision": 11,
+                            "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                          },
+                          "type": "time"
+                        },
+                        "datatype": "time"
+                      }
+                    ]
+                  },
+                  "snaks-order": [
+                    "P248",
+                    "P577"
+                  ]
+                }
+              ]
+            },
+            {
+              "mainsnak": {
+                "snaktype": "value",
+                "property": "P646",
+                "hash": "df6c59fc59fe61ef9295a8291b5e88d76c10ff7d",
+                "datavalue": {
+                  "value": "/m/0gw5m91",
+                  "type": "string"
+                },
+                "datatype": "external-id"
+              },
+              "type": "statement",
+              "id": "Q1054574$22ce2638-43e4-33e0-0b48-9f352caaa6e3",
+              "rank": "normal"
+            },
+            {
+              "mainsnak": {
+                "snaktype": "value",
+                "property": "P646",
+                "hash": "097831ea040fa8d0f25d7e7dd4d8594567793c0b",
+                "datavalue": {
+                  "value": "/m/0cq22f2",
+                  "type": "string"
+                },
+                "datatype": "external-id"
+              },
+              "type": "statement",
+              "id": "Q1054574$877f697c-4247-463a-4cbe-03bcdbf8c98b",
+              "rank": "normal"
+            }
+          ],
+          "P227": [
+            {
+              "mainsnak": {
+                "snaktype": "value",
+                "property": "P227",
+                "hash": "041b26402267f990dd27270d2d6ebce2643eb994",
+                "datavalue": {
+                  "value": "4261643-8",
+                  "type": "string"
+                },
+                "datatype": "external-id"
+              },
+              "type": "statement",
+              "id": "Q1054574$7BFEC292-F21E-4CEA-8C20-3871D0D3D904",
+              "rank": "normal",
+              "references": [
+                {
+                  "hash": "9a24f7c0208b05d6be97077d855671d1dfdbc0dd",
+                  "snaks": {
+                    "P143": [
+                      {
+                        "snaktype": "value",
+                        "property": "P143",
+                        "hash": "d38375ffe6fe142663ff55cd783aa4df4301d83d",
+                        "datavalue": {
+                          "value": {
+                            "entity-type": "item",
+                            "numeric-id": 48183,
+                            "id": "Q48183"
+                          },
+                          "type": "wikibase-entityid"
+                        },
+                        "datatype": "wikibase-item"
+                      }
+                    ]
+                  },
+                  "snaks-order": [
+                    "P143"
+                  ]
+                }
+              ]
+            }
+          ],
+          "P18": [
+            {
+              "mainsnak": {
+                "snaktype": "value",
+                "property": "P18",
+                "hash": "90a43e2b33cfb884397e43fe18c76df588683cd1",
+                "datavalue": {
+                  "value": "Casablanca, Trailer Screenshot.JPG",
+                  "type": "string"
+                },
+                "datatype": "commonsMedia"
+              },
+              "type": "statement",
+              "id": "Q1054574$1B4CC07D-C892-43C3-8778-9CABADC74001",
+              "rank": "normal",
+              "references": [
+                {
+                  "hash": "732ec1c90a6f0694c7db9a71bf09fe7f2b674172",
+                  "snaks": {
+                    "P143": [
+                      {
+                        "snaktype": "value",
+                        "property": "P143",
+                        "hash": "9123b0de1cc9c3954366ba797d598e4e1ea4146f",
+                        "datavalue": {
+                          "value": {
+                            "entity-type": "item",
+                            "numeric-id": 10000,
+                            "id": "Q10000"
+                          },
+                          "type": "wikibase-entityid"
+                        },
+                        "datatype": "wikibase-item"
+                      }
+                    ]
+                  },
+                  "snaks-order": [
+                    "P143"
+                  ]
+                }
+              ]
+            }
+          ],
+          "P921": [
+            {
+              "mainsnak": {
+                "snaktype": "value",
+                "property": "P921",
+                "hash": "3f1ab27229ae9a299a4da324d7c499e4d9a70480",
+                "datavalue": {
+                  "value": {
+                    "entity-type": "item",
+                    "numeric-id": 316,
+                    "id": "Q316"
+                  },
+                  "type": "wikibase-entityid"
+                },
+                "datatype": "wikibase-item"
+              },
+              "type": "statement",
+              "id": "Q1054574$32e2e401-44c6-e390-3ce6-4d6fb07358b7",
+              "rank": "normal"
+            }
+          ],
+          "P373": [
+            {
+              "mainsnak": {
+                "snaktype": "value",
+                "property": "P373",
+                "hash": "52802eec127d44efb639b1d3c073d5d3f1750da8",
+                "datavalue": {
+                  "value": "Romance films",
+                  "type": "string"
+                },
+                "datatype": "string"
+              },
+              "type": "statement",
+              "id": "Q1054574$D4687032-A7C0-4129-9D61-93B8636648D2",
+              "rank": "normal"
+            }
+          ],
+          "P279": [
+            {
+              "mainsnak": {
+                "snaktype": "value",
+                "property": "P279",
+                "hash": "bfbc2e1cf17304dff05af9e21752b0c8cce23516",
+                "datavalue": {
+                  "value": {
+                    "entity-type": "item",
+                    "numeric-id": 19765983,
+                    "id": "Q19765983"
+                  },
+                  "type": "wikibase-entityid"
+                },
+                "datatype": "wikibase-item"
+              },
+              "type": "statement",
+              "id": "Q1054574$ef673f2a-4dcd-569d-7931-7492bbe0ff94",
+              "rank": "normal"
+            },
+            {
+              "mainsnak": {
+                "snaktype": "value",
+                "property": "P279",
+                "hash": "e833407ccc6d55db8cddd35dd97583a95e09171e",
+                "datavalue": {
+                  "value": {
+                    "entity-type": "item",
+                    "numeric-id": 11424,
+                    "id": "Q11424"
+                  },
+                  "type": "wikibase-entityid"
+                },
+                "datatype": "wikibase-item"
+              },
+              "type": "statement",
+              "id": "Q1054574$7e3d4c98-4ae0-7b77-4c47-c89ef1b1b419",
+              "rank": "normal"
+            }
+          ],
+          "P4953": [
+            {
+              "mainsnak": {
+                "snaktype": "value",
+                "property": "P4953",
+                "hash": "0250e0b252b28b77e274fc034742ebc830ae9cae",
+                "datavalue": {
+                  "value": "gf2011026543",
+                  "type": "string"
+                },
+                "datatype": "external-id"
+              },
+              "type": "statement",
+              "qualifiers": {
+                "P1810": [
+                  {
+                    "snaktype": "value",
+                    "property": "P1810",
+                    "hash": "2fda0cf63b715e525cfa6a344861fc0d2d593ccb",
+                    "datavalue": {
+                      "value": "Romance films",
+                      "type": "string"
+                    },
+                    "datatype": "string"
+                  }
+                ],
+                "P4970": [
+                  {
+                    "snaktype": "value",
+                    "property": "P4970",
+                    "hash": "73d353b64901ad766e8c91c790bc09157551f8f4",
+                    "datavalue": {
+                      "value": "Romance movies",
+                      "type": "string"
+                    },
+                    "datatype": "string"
+                  },
+                  {
+                    "snaktype": "value",
+                    "property": "P4970",
+                    "hash": "f4aac85686110f7d7a940d66c8502a64bc109ff5",
+                    "datavalue": {
+                      "value": "Chick flicks",
+                      "type": "string"
+                    },
+                    "datatype": "string"
+                  },
+                  {
+                    "snaktype": "value",
+                    "property": "P4970",
+                    "hash": "43e6c889041359f02d3450150f806d394e9444c9",
+                    "datavalue": {
+                      "value": "Hollywood romance films",
+                      "type": "string"
+                    },
+                    "datatype": "string"
+                  },
+                  {
+                    "snaktype": "value",
+                    "property": "P4970",
+                    "hash": "54a45a82b532f0aa2fc70c81387895a5b7a63d41",
+                    "datavalue": {
+                      "value": "Love films",
+                      "type": "string"
+                    },
+                    "datatype": "string"
+                  },
+                  {
+                    "snaktype": "value",
+                    "property": "P4970",
+                    "hash": "6e0df0bb51cc6c376914d084b157871525a3eddf",
+                    "datavalue": {
+                      "value": "Romance (Motion pictures)",
+                      "type": "string"
+                    },
+                    "datatype": "string"
+                  },
+                  {
+                    "snaktype": "value",
+                    "property": "P4970",
+                    "hash": "5d7c4d0631b0318067b87860e013ad724c79e09c",
+                    "datavalue": {
+                      "value": "Romance pictures (Motion pictures)",
+                      "type": "string"
+                    },
+                    "datatype": "string"
+                  },
+                  {
+                    "snaktype": "value",
+                    "property": "P4970",
+                    "hash": "76fb4efaac2862c4a0379da1a857ca630e09f390",
+                    "datavalue": {
+                      "value": "Romantic films",
+                      "type": "string"
+                    },
+                    "datatype": "string"
+                  },
+                  {
+                    "snaktype": "value",
+                    "property": "P4970",
+                    "hash": "29b56b7c449e571fed88e2b848e74c2198d67063",
+                    "datavalue": {
+                      "value": "Romantic movies",
+                      "type": "string"
+                    },
+                    "datatype": "string"
+                  }
+                ]
+              },
+              "qualifiers-order": [
+                "P1810",
+                "P4970"
+              ],
+              "id": "Q1054574$E840CC79-0772-4416-98D8-F9AB15FF99B6",
+              "rank": "normal"
+            }
+          ],
+          "P244": [
+            {
+              "mainsnak": {
+                "snaktype": "value",
+                "property": "P244",
+                "hash": "c7422d8ddb974cdb389ed11bab0c865f774cdc55",
+                "datavalue": {
+                  "value": "sh2009003320",
+                  "type": "string"
+                },
+                "datatype": "external-id"
+              },
+              "type": "statement",
+              "id": "Q1054574$A53D077C-0E98-4B1E-A494-10939C7F4A2B",
+              "rank": "normal"
+            }
+          ],
+          "P6366": [
+            {
+              "mainsnak": {
+                "snaktype": "value",
+                "property": "P6366",
+                "hash": "2988e00fd8d99f751d8219f3626fc69f43d78f53",
+                "datavalue": {
+                  "value": "518914266",
+                  "type": "string"
+                },
+                "datatype": "external-id"
+              },
+              "type": "statement",
+              "id": "Q1054574$DBD853F1-CE61-4CFD-AF60-0A937DAD9B2D",
+              "rank": "normal"
+            }
+          ],
+          "P2347": [
+            {
+              "mainsnak": {
+                "snaktype": "value",
+                "property": "P2347",
+                "hash": "fe267b1bef557d273c01ef1145bc74f82272005e",
+                "datavalue": {
+                  "value": "15767",
+                  "type": "string"
+                },
+                "datatype": "external-id"
+              },
+              "type": "statement",
+              "id": "Q1054574$FA38B572-5ADF-48B3-83D7-B2530653ACF8",
+              "rank": "normal",
+              "references": [
+                {
+                  "hash": "f9bf1a1f034ddd51bd9928ac535e0f57d748e2cf",
+                  "snaks": {
+                    "P248": [
+                      {
+                        "snaktype": "value",
+                        "property": "P248",
+                        "hash": "7133f11674741f52cadaae6029068fad9cbb52e3",
+                        "datavalue": {
+                          "value": {
+                            "entity-type": "item",
+                            "numeric-id": 89345680,
+                            "id": "Q89345680"
+                          },
+                          "type": "wikibase-entityid"
+                        },
+                        "datatype": "wikibase-item"
+                      }
+                    ]
+                  },
+                  "snaks-order": [
+                    "P248"
+                  ]
+                }
+              ]
+            }
+          ],
+          "P268": [
+            {
+              "mainsnak": {
+                "snaktype": "value",
+                "property": "P268",
+                "hash": "b358ab875bfda80a49068491b275d5e8ed8b716e",
+                "datavalue": {
+                  "value": "145489793",
+                  "type": "string"
+                },
+                "datatype": "external-id"
+              },
+              "type": "statement",
+              "id": "Q1054574$2132caaf-4972-a4f7-61c0-cdf0f49c3290",
+              "rank": "normal"
+            }
+          ],
+          "P8408": [
+            {
+              "mainsnak": {
+                "snaktype": "value",
+                "property": "P8408",
+                "hash": "7e23f22988f566d2f5b60ba03fdabae0081eafd6",
+                "datavalue": {
+                  "value": "RomanceMovie",
+                  "type": "string"
+                },
+                "datatype": "external-id"
+              },
+              "type": "statement",
+              "id": "Q1054574$824FE464-D3BD-4794-8968-EEA95C53F94A",
+              "rank": "normal",
+              "references": [
+                {
+                  "hash": "9a681f9dd95c90224547c404e11295f4f7dcf54e",
+                  "snaks": {
+                    "P248": [
+                      {
+                        "snaktype": "value",
+                        "property": "P248",
+                        "hash": "9d5780dddffa8746637a9929a936ab6b0f601e24",
+                        "datavalue": {
+                          "value": {
+                            "entity-type": "item",
+                            "numeric-id": 64139102,
+                            "id": "Q64139102"
+                          },
+                          "type": "wikibase-entityid"
+                        },
+                        "datatype": "wikibase-item"
+                      }
+                    ],
+                    "P813": [
+                      {
+                        "snaktype": "value",
+                        "property": "P813",
+                        "hash": "622a5a27fa5b25e7e7984974e9db494cf8460990",
+                        "datavalue": {
+                          "value": {
+                            "time": "+2020-07-09T00:00:00Z",
+                            "timezone": 0,
+                            "before": 0,
+                            "after": 0,
+                            "precision": 11,
+                            "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                          },
+                          "type": "time"
+                        },
+                        "datatype": "time"
+                      }
+                    ]
+                  },
+                  "snaks-order": [
+                    "P248",
+                    "P813"
+                  ]
+                }
+              ]
+            }
+          ],
+          "P1889": [
+            {
+              "mainsnak": {
+                "snaktype": "value",
+                "property": "P1889",
+                "hash": "6120d1dbf0aa209a0563e4f8ad44f34f0300d420",
+                "datavalue": {
+                  "value": {
+                    "entity-type": "item",
+                    "numeric-id": 4397399,
+                    "id": "Q4397399"
+                  },
+                  "type": "wikibase-entityid"
+                },
+                "datatype": "wikibase-item"
+              },
+              "type": "statement",
+              "id": "Q1054574$7d5ebecf-4f64-308f-7a47-51afeef5ec22",
+              "rank": "normal"
+            }
+          ],
+          "P8672": [
+            {
+              "mainsnak": {
+                "snaktype": "value",
+                "property": "P8672",
+                "hash": "6164b37d8374e39089b14c3d057a4826a05a385e",
+                "datavalue": {
+                  "value": "856977050619363328",
+                  "type": "string"
+                },
+                "datatype": "external-id"
+              },
+              "type": "statement",
+              "qualifiers": {
+                "P1810": [
+                  {
+                    "snaktype": "value",
+                    "property": "P1810",
+                    "hash": "2fda0cf63b715e525cfa6a344861fc0d2d593ccb",
+                    "datavalue": {
+                      "value": "Romance films",
+                      "type": "string"
+                    },
+                    "datatype": "string"
+                  }
+                ]
+              },
+              "qualifiers-order": [
+                "P1810"
+              ],
+              "id": "Q1054574$96AE083D-D9A8-4C64-8741-03FFE18FB2E2",
+              "rank": "normal",
+              "references": [
+                {
+                  "hash": "751960851fa235edaddbc9b689395740c56c71e1",
+                  "snaks": {
+                    "P1065": [
+                      {
+                        "snaktype": "value",
+                        "property": "P1065",
+                        "hash": "cd432ccb4c173858e960ad05696c85162d5669ba",
+                        "datavalue": {
+                          "value": "https://web.archive.org/web/20210221120801/https://twitter.com/i/api/1.1/onboarding/task.json?flow_name=topics_selector",
+                          "type": "string"
+                        },
+                        "datatype": "url"
+                      }
+                    ],
+                    "P2960": [
+                      {
+                        "snaktype": "value",
+                        "property": "P2960",
+                        "hash": "2f6cd8fdfa49e076c77e12f032eca37d5dbd8aea",
+                        "datavalue": {
+                          "value": {
+                            "time": "+2021-02-21T00:00:00Z",
+                            "timezone": 0,
+                            "before": 0,
+                            "after": 0,
+                            "precision": 11,
+                            "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                          },
+                          "type": "time"
+                        },
+                        "datatype": "time"
+                      }
+                    ]
+                  },
+                  "snaks-order": [
+                    "P1065",
+                    "P2960"
+                  ]
+                }
+              ]
+            }
+          ],
+          "P8189": [
+            {
+              "mainsnak": {
+                "snaktype": "value",
+                "property": "P8189",
+                "hash": "3921dee9ab398e0f468342c0a73b96f32d825d68",
+                "datavalue": {
+                  "value": "987007545370705171",
+                  "type": "string"
+                },
+                "datatype": "external-id"
+              },
+              "type": "statement",
+              "id": "Q1054574$3B9086B4-BAB6-40BD-8B76-ECB3516F741F",
+              "rank": "normal",
+              "references": [
+                {
+                  "hash": "c8a47202c92936005b390eb36ddd267921b51f43",
+                  "snaks": {
+                    "P248": [
+                      {
+                        "snaktype": "value",
+                        "property": "P248",
+                        "hash": "0ea73b3596b49258a7b7ec6495950779b99e875d",
+                        "datavalue": {
+                          "value": {
+                            "entity-type": "item",
+                            "numeric-id": 188915,
+                            "id": "Q188915"
+                          },
+                          "type": "wikibase-entityid"
+                        },
+                        "datatype": "wikibase-item"
+                      }
+                    ]
+                  },
+                  "snaks-order": [
+                    "P248"
+                  ]
+                }
+              ]
+            }
+          ],
+          "P9084": [
+            {
+              "mainsnak": {
+                "snaktype": "value",
+                "property": "P9084",
+                "hash": "89a5b1df3d10e04a1118d0c9d8c4498c0a57dc09",
+                "datavalue": {
+                  "value": "romance-films",
+                  "type": "string"
+                },
+                "datatype": "external-id"
+              },
+              "type": "statement",
+              "id": "Q1054574$9C602474-4DBF-4C83-A6B7-9917846FC622",
+              "rank": "normal"
+            }
+          ],
+          "P10283": [
+            {
+              "mainsnak": {
+                "snaktype": "value",
+                "property": "P10283",
+                "hash": "134d4fb366ae2204da0abe8db49504f13d1b3932",
+                "datavalue": {
+                  "value": "C518914266",
+                  "type": "string"
+                },
+                "datatype": "external-id"
+              },
+              "type": "statement",
+              "id": "Q1054574$1E6283D3-FA5A-4A18-B219-39517780551D",
+              "rank": "normal",
+              "references": [
+                {
+                  "hash": "e0b27d817c9a9b3247df341000fc490bafcba862",
+                  "snaks": {
+                    "P248": [
+                      {
+                        "snaktype": "value",
+                        "property": "P248",
+                        "hash": "4a4f26a5361b5707266e48e425bf2be2f99fd2ab",
+                        "datavalue": {
+                          "value": {
+                            "entity-type": "item",
+                            "numeric-id": 107507571,
+                            "id": "Q107507571"
+                          },
+                          "type": "wikibase-entityid"
+                        },
+                        "datatype": "wikibase-item"
+                      }
+                    ],
+                    "P813": [
+                      {
+                        "snaktype": "value",
+                        "property": "P813",
+                        "hash": "435834d08182bb9f3dbe974ba9840af0f12899cc",
+                        "datavalue": {
+                          "value": {
+                            "time": "+2022-01-26T00:00:00Z",
+                            "timezone": 0,
+                            "before": 0,
+                            "after": 0,
+                            "precision": 11,
+                            "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                          },
+                          "type": "time"
+                        },
+                        "datatype": "time"
+                      }
+                    ],
+                    "P854": [
+                      {
+                        "snaktype": "value",
+                        "property": "P854",
+                        "hash": "a4a4bf53f22268815c51ec10fed608da703c9c7f",
+                        "datavalue": {
+                          "value": "https://docs.openalex.org/download-snapshot/snapshot-data-format",
+                          "type": "string"
+                        },
+                        "datatype": "url"
+                      }
+                    ],
+                    "P1065": [
+                      {
+                        "snaktype": "value",
+                        "property": "P1065",
+                        "hash": "3134281f51e2490f88272d53c56ee95d9cc24e2c",
+                        "datavalue": {
+                          "value": "https://web.archive.org/web/20220125070108/https://docs.openalex.org/download-snapshot/snapshot-data-format",
+                          "type": "string"
+                        },
+                        "datatype": "url"
+                      }
+                    ],
+                    "P2960": [
+                      {
+                        "snaktype": "value",
+                        "property": "P2960",
+                        "hash": "f7ff3a0de7f9571ecb5e0740cba4122c6703e1ec",
+                        "datavalue": {
+                          "value": {
+                            "time": "+2022-01-25T00:00:00Z",
+                            "timezone": 0,
+                            "before": 0,
+                            "after": 0,
+                            "precision": 11,
+                            "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                          },
+                          "type": "time"
+                        },
+                        "datatype": "time"
+                      }
+                    ]
+                  },
+                  "snaks-order": [
+                    "P248",
+                    "P813",
+                    "P854",
+                    "P1065",
+                    "P2960"
+                  ]
+                }
+              ]
+            }
+          ],
+          "P10438": [
+            {
+              "mainsnak": {
+                "snaktype": "value",
+                "property": "P10438",
+                "hash": "9f7b0f50d61ff9d87224d385b14b2fc37f71d4d9",
+                "datavalue": {
+                  "value": "1169",
+                  "type": "string"
+                },
+                "datatype": "external-id"
+              },
+              "type": "statement",
+              "id": "Q1054574$162cae63-fe78-45a7-b48e-ad08fe49ac71",
+              "rank": "normal"
+            }
+          ],
+          "P10916": [
+            {
+              "mainsnak": {
+                "snaktype": "value",
+                "property": "P10916",
+                "hash": "290accdda36a315adf52145cdcc5b6abb966ad5b",
+                "datavalue": {
+                  "value": "Liebesfilme",
+                  "type": "string"
+                },
+                "datatype": "external-id"
+              },
+              "type": "statement",
+              "id": "Q1054574$bad2bc96-4d97-6533-c5a1-7a978e4802f9",
+              "rank": "normal"
+            }
+          ],
+          "P11408": [
+            {
+              "mainsnak": {
+                "snaktype": "value",
+                "property": "P11408",
+                "hash": "51a967d47780bd04dde8c795e8d475ea96254ffd",
+                "datavalue": {
+                  "value": "恋愛映画",
+                  "type": "string"
+                },
+                "datatype": "external-id"
+              },
+              "type": "statement",
+              "id": "Q1054574$0062d86b-3f54-443c-86af-6bad651adbfd",
+              "rank": "normal"
+            }
+          ],
+          "P11564": [
+            {
+              "mainsnak": {
+                "snaktype": "value",
+                "property": "P11564",
+                "hash": "8d5812cee4a1f51c553db2f8c2ddf70c6794a75a",
+                "datavalue": {
+                  "value": "genre/d948",
+                  "type": "string"
+                },
+                "datatype": "external-id"
+              },
+              "type": "statement",
+              "qualifiers": {
+                "P1810": [
+                  {
+                    "snaktype": "value",
+                    "property": "P1810",
+                    "hash": "f6f767d0c8f70fb2669552fd1767bb11f3835383",
+                    "datavalue": {
+                      "value": "Romance",
+                      "type": "string"
+                    },
+                    "datatype": "string"
+                  }
+                ],
+                "P2241": [
+                  {
+                    "snaktype": "value",
+                    "property": "P2241",
+                    "hash": "74bd46d0bbe97d05804856f1f73b6a7480c68cec",
+                    "datavalue": {
+                      "value": {
+                        "entity-type": "item",
+                        "numeric-id": 45403344,
+                        "id": "Q45403344"
+                      },
+                      "type": "wikibase-entityid"
+                    },
+                    "datatype": "wikibase-item"
+                  }
+                ]
+              },
+              "qualifiers-order": [
+                "P1810",
+                "P2241"
+              ],
+              "id": "Q1054574$230A59FF-C87D-4021-9753-80F97C3822A4",
+              "rank": "deprecated"
+            },
+            {
+              "mainsnak": {
+                "snaktype": "value",
+                "property": "P11564",
+                "hash": "9de3815d4440d34a7cce007c6d2e84c4bd416c07",
+                "datavalue": {
+                  "value": "genre/ag120",
+                  "type": "string"
+                },
+                "datatype": "external-id"
+              },
+              "type": "statement",
+              "qualifiers": {
+                "P1810": [
+                  {
+                    "snaktype": "value",
+                    "property": "P1810",
+                    "hash": "f6f767d0c8f70fb2669552fd1767bb11f3835383",
+                    "datavalue": {
+                      "value": "Romance",
+                      "type": "string"
+                    },
+                    "datatype": "string"
+                  }
+                ]
+              },
+              "qualifiers-order": [
+                "P1810"
+              ],
+              "id": "Q1054574$A0DF74A3-0D9A-43E5-AC82-C2665445736D",
+              "rank": "normal"
+            }
+          ],
+          "P11588": [
+            {
+              "mainsnak": {
+                "snaktype": "value",
+                "property": "P11588",
+                "hash": "76b992b72b66187bf773ae8fca1b368aab599885",
+                "datavalue": {
+                  "value": "Romance",
+                  "type": "string"
+                },
+                "datatype": "external-id"
+              },
+              "type": "statement",
+              "id": "Q1054574$4C3CCBEA-534C-4236-A50C-EE97B3061B69",
+              "rank": "normal"
+            }
+          ],
+          "P10151": [
+            {
+              "mainsnak": {
+                "snaktype": "value",
+                "property": "P10151",
+                "hash": "5a795422f5e8e23ce22057f59a8f63de4b7173a6",
+                "datavalue": {
+                  "value": "4412",
+                  "type": "string"
+                },
+                "datatype": "external-id"
+              },
+              "type": "statement",
+              "id": "Q1054574$6BFEB89F-5ED3-4F36-8686-27D707FC0074",
+              "rank": "normal"
+            }
+          ],
+          "P10565": [
+            {
+              "mainsnak": {
+                "snaktype": "value",
+                "property": "P10565",
+                "hash": "b865c3a16e50059038789ecdfa38e915e5302635",
+                "datavalue": {
+                  "value": "36171",
+                  "type": "string"
+                },
+                "datatype": "external-id"
+              },
+              "type": "statement",
+              "id": "Q1054574$191DB1A1-66A5-4F1F-A580-B6A61B15F536",
+              "rank": "normal"
+            }
+          ],
+          "P12086": [
+            {
+              "mainsnak": {
+                "snaktype": "value",
+                "property": "P12086",
+                "hash": "eacaa5d125c147eb65d7054d405c6329299d917f",
+                "datavalue": {
+                  "value": "Romantische_film",
+                  "type": "string"
+                },
+                "datatype": "external-id"
+              },
+              "type": "statement",
+              "qualifiers": {
+                "P9675": [
+                  {
+                    "snaktype": "value",
+                    "property": "P9675",
+                    "hash": "b70e40f563e175d821cdc42c15beb8b87592f847",
+                    "datavalue": {
+                      "value": "79694",
+                      "type": "string"
+                    },
+                    "datatype": "string"
+                  }
+                ]
+              },
+              "qualifiers-order": [
+                "P9675"
+              ],
+              "id": "Q1054574$E7A46D71-1A23-4C3A-A60D-E05D883023ED",
+              "rank": "normal"
+            }
+          ],
+          "P11137": [
+            {
+              "mainsnak": {
+                "snaktype": "value",
+                "property": "P11137",
+                "hash": "b803d25598c4b2002464fe648f09f1e35d702e68",
+                "datavalue": {
+                  "value": "romance_movie",
+                  "type": "string"
+                },
+                "datatype": "external-id"
+              },
+              "type": "statement",
+              "id": "Q1054574$C3589282-1E4C-408C-B1E1-E1363CD062AB",
+              "rank": "normal"
+            }
+          ],
+          "P13591": [
+            {
+              "mainsnak": {
+                "snaktype": "value",
+                "property": "P13591",
+                "hash": "cfcc97e6176526a1262e54038b349af031f0b023",
+                "datavalue": {
+                  "value": "concept/cd92cd79-8da2-44f7-8c98-6116308c4dad",
+                  "type": "string"
+                },
+                "datatype": "external-id"
+              },
+              "type": "statement",
+              "id": "Q1054574$57BCA037-4FEC-451D-B397-4F9705DED7F6",
+              "rank": "normal"
+            }
+          ],
+          "P13636": [
+            {
+              "mainsnak": {
+                "snaktype": "value",
+                "property": "P13636",
+                "hash": "6655419b6561bcf030f959eadfee1e8fffc163cb",
+                "datavalue": {
+                  "value": "in0000152",
+                  "type": "string"
+                },
+                "datatype": "external-id"
+              },
+              "type": "statement",
+              "id": "Q1054574$927054C6-56CE-4ED2-830A-0AE0C8B4DB7F",
+              "rank": "normal"
+            }
+          ],
+          "P13703": [
+            {
+              "mainsnak": {
+                "snaktype": "value",
+                "property": "P13703",
+                "hash": "fb0709996c78dd3c9234d574d6d1989794857a8f",
+                "datavalue": {
+                  "value": "romance",
+                  "type": "string"
+                },
+                "datatype": "external-id"
+              },
+              "type": "statement",
+              "id": "Q1054574$83256b20-47ff-3fae-8d52-b1f4406b1ebd",
+              "rank": "normal"
+            }
+          ]
+        }
+      }
+    },
+    "success": 1
+  }
+}

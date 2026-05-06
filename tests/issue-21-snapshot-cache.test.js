@@ -259,9 +259,65 @@ describe('issue 21 — snapshot layer wired into formalizeTextWith', () => {
 describe('issue 21 — committed Wikipedia/Wikidata snapshots replay offline', () => {
   it('loads every snapshot under tests/fixtures/wikimedia-snapshots without error', async () => {
     const snapshots = await loadSnapshotMap(fixturesRoot);
-    // The fixtures directory may be empty in a fresh checkout; the loader
-    // must still return a Map (not throw), so downstream tests that expect
-    // an empty replay simply skip.
     expect(snapshots instanceof Map).toBe(true);
+  });
+
+  it('formalizes "Hawaii" entirely from snapshots in REPLAY mode', async () => {
+    const layer = await createSnapshotLayer({
+      dir: fixturesRoot,
+      mode: SNAPSHOT_MODES.REPLAY,
+    });
+    if (layer.snapshots.size === 0) {
+      // Fresh checkout without recorded fixtures — skip.
+      return;
+    }
+    const result = await formalizeTextWith('Hawaii', {
+      fetch: layer.fetch,
+      cache: layer.cache,
+      maxNgramSize: 1,
+      now: () => 0,
+    });
+    const phrase = result.phrases.find((p) => p.text === 'Hawaii');
+    expect(phrase).toBeTruthy();
+    const ids = phrase.candidates.map((c) => c.id);
+    expect(ids).toContain('Q782');
+  });
+
+  it('formalizes "formalize" entirely from snapshots in REPLAY mode', async () => {
+    const layer = await createSnapshotLayer({
+      dir: fixturesRoot,
+      mode: SNAPSHOT_MODES.REPLAY,
+    });
+    if (layer.snapshots.size === 0) {
+      return;
+    }
+    const result = await formalizeTextWith('formalize', {
+      fetch: layer.fetch,
+      cache: layer.cache,
+      maxNgramSize: 1,
+      now: () => 0,
+    });
+    const phrase = result.phrases.find((p) => p.text === 'formalize');
+    expect(phrase).toBeTruthy();
+    expect(phrase.candidates.length).toBeGreaterThan(0);
+  });
+
+  it('resolves "the" via Wiktionary fallback when Wikidata has no item', async () => {
+    const layer = await createSnapshotLayer({
+      dir: fixturesRoot,
+      mode: SNAPSHOT_MODES.REPLAY,
+    });
+    if (layer.snapshots.size === 0) {
+      return;
+    }
+    const result = await formalizeTextWith('the', {
+      fetch: layer.fetch,
+      cache: layer.cache,
+      maxNgramSize: 1,
+      now: () => 0,
+    });
+    const phrase = result.phrases.find((p) => p.text === 'the');
+    expect(phrase).toBeTruthy();
+    expect(phrase.candidates.length).toBeGreaterThan(0);
   });
 });

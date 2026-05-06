@@ -1,0 +1,63 @@
+{
+  "url": "https://en.wikipedia.org/w/api.php?action=query&format=json&list=search&srsearch=Hawaii&srlimit=5&origin=*",
+  "recordedAt": "2026-05-06T19:36:51.877Z",
+  "value": {
+    "batchcomplete": "",
+    "continue": {
+      "sroffset": 5,
+      "continue": "-||"
+    },
+    "query": {
+      "searchinfo": {
+        "totalhits": 114891
+      },
+      "search": [
+        {
+          "ns": 0,
+          "title": "Hawaii",
+          "pageid": 13270,
+          "size": 258299,
+          "wordcount": 23456,
+          "snippet": "<span class=\"searchmatch\">Hawaii</span> (/həˈwaɪ.i/ hə-WY-ee; <span class=\"searchmatch\">Hawaiian</span>: <span class=\"searchmatch\">Hawaiʻi</span> [həˈvɐjʔi, həˈwɐjʔi]) is an island state of the United States, in the Pacific Ocean about 2,000 miles (3",
+          "timestamp": "2026-04-30T07:24:36Z"
+        },
+        {
+          "ns": 0,
+          "title": "Hawaiian",
+          "pageid": 361860,
+          "size": 1245,
+          "wordcount": 198,
+          "snippet": "up <span class=\"searchmatch\">Hawaiian</span> in Wiktionary, the free dictionary. <span class=\"searchmatch\">Hawaiian</span> may refer to: Native <span class=\"searchmatch\">Hawaiians</span>, the current term for the indigenous people of the <span class=\"searchmatch\">Hawaiian</span> Islands",
+          "timestamp": "2025-05-11T23:55:05Z"
+        },
+        {
+          "ns": 0,
+          "title": "Hawaii (disambiguation)",
+          "pageid": 2428332,
+          "size": 3450,
+          "wordcount": 433,
+          "snippet": "Hawaii, an asteroid <span class=\"searchmatch\">Hawaiian</span> Islands, the archipelago <span class=\"searchmatch\">Hawaii</span> (island), the largest island in the <span class=\"searchmatch\">Hawaiian</span> Islands <span class=\"searchmatch\">Hawaii</span> County, <span class=\"searchmatch\">Hawaii</span>, coextensive with",
+          "timestamp": "2026-01-11T23:20:41Z"
+        },
+        {
+          "ns": 0,
+          "title": "Hawaiian Kingdom",
+          "pageid": 23363583,
+          "size": 67949,
+          "wordcount": 7155,
+          "snippet": "The <span class=\"searchmatch\">Hawaiian</span> Kingdom, also known as the Kingdom of <span class=\"searchmatch\">Hawaiʻi</span> (<span class=\"searchmatch\">Hawaiian</span>: Ke Aupuni <span class=\"searchmatch\">Hawaiʻi</span> [kɛ ɐwˈpuni həˈvɐjʔi]), was an archipelagic country from 1795",
+          "timestamp": "2026-05-01T02:33:16Z"
+        },
+        {
+          "ns": 0,
+          "title": "Hawaiʻi (island)",
+          "pageid": 70962,
+          "size": 55522,
+          "wordcount": 4839,
+          "snippet": "<span class=\"searchmatch\">Hawaiʻi</span>, sometimes written <span class=\"searchmatch\">Hawaii</span>, is the largest island in the United States, located in the state of <span class=\"searchmatch\">Hawaii</span>. It is the southeasternmost of the Hawaiian",
+          "timestamp": "2026-04-25T16:23:00Z"
+        }
+      ]
+    }
+  }
+}

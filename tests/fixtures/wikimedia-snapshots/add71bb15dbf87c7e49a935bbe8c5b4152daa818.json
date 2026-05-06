@@ -1,0 +1,41 @@
+{
+  "url": "https://www.wikidata.org/w/api.php?action=wbsearchentities&format=json&language=en&origin=*&type=property&limit=5&search=Hawaii",
+  "recordedAt": "2026-05-06T19:36:51.792Z",
+  "value": {
+    "searchinfo": {
+      "search": "Hawaii"
+    },
+    "search": [
+      {
+        "id": "P4365",
+        "title": "Property:P4365",
+        "pageid": 43275222,
+        "datatype": "external-id",
+        "concepturi": "http://www.wikidata.org/entity/P4365",
+        "repository": "wikidata",
+        "url": "//www.wikidata.org/wiki/Property:P4365",
+        "display": {
+          "label": {
+            "value": "Hawai‘i Sports Hall of Fame ID (archived)",
+            "language": "en"
+          },
+          "description": {
+            "value": "identifier for an athlete on the Hawai‘i Sports Hall of Fame website",
+            "language": "en"
+          }
+        },
+        "label": "Hawai‘i Sports Hall of Fame ID (archived)",
+        "description": "identifier for an athlete on the Hawai‘i Sports Hall of Fame website",
+        "match": {
+          "type": "alias",
+          "language": "en",
+          "text": "Hawaii Sports Hall of Fame ID"
+        },
+        "aliases": [
+          "Hawaii Sports Hall of Fame ID"
+        ]
+      }
+    ],
+    "success": 1
+  }
+}
