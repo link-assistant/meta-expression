@@ -9,18 +9,42 @@ import {
   describeFormalizationLevel,
   findExampleOpposite,
   formalizeTextWith,
+  formatInterpretationPhrase,
   FORMALIZE_LINK_TARGETS,
   getPreparedExamples,
   getRandomExamples,
+  interpretationKey,
+  INTERPRETATION_DISPLAY_MODES,
   listReasoningStrategies,
   parseSourceSpec,
   resolveFormalizeLinkTarget,
   serializeLinksNotation,
 } from '../src/index.js';
+import {
+  applyTranslations,
+  listLocales,
+  loadLocale,
+  persistLocale,
+  translate,
+} from './i18n.js';
+import {
+  applyTheme,
+  loadTheme,
+  nextTheme,
+  persistTheme,
+  themeIcon,
+  watchSystemTheme,
+} from './theme.js';
 
 const beliefStorageKey = 'meta-expression.user-beliefs.v1';
 const wikimediaCacheStorageKey = 'meta-expression.wikimedia-cache.v1';
 const defaultRandomExampleCount = 4;
+const topInterpretationCount = 10;
+
+let currentLocale = loadLocale();
+let currentThemePreference = loadTheme();
+let activeInterpretationKey = null;
+let interpretationDisplayMode = INTERPRETATION_DISPLAY_MODES.NAME;
 
 const form = document.querySelector('#statement-form');
 const input = document.querySelector('#statement-input');
@@ -63,6 +87,10 @@ const copyLino = document.querySelector('#copy-lino');
 const reportIssue = document.querySelector('#report-issue');
 const strategySelect = document.querySelector('#strategy-select');
 const strategySummary = document.querySelector('#strategy-summary');
+const localeSelect = document.querySelector('#locale-select');
+const themeToggle = document.querySelector('#theme-toggle');
+const themeToggleIcon = document.querySelector('#theme-toggle-icon');
+const themeToggleLabel = document.querySelector('#theme-toggle-label');
 
 let selectedIndex = 0;
 let currentAnalysis = null;
@@ -128,7 +156,9 @@ shuffleExamples.addEventListener('click', () => {
 toggleShowAll.addEventListener('click', () => {
   showAllExamples = !showAllExamples;
   toggleShowAll.setAttribute('aria-pressed', String(showAllExamples));
-  toggleShowAll.textContent = showAllExamples ? 'Show 4 random' : 'Show all';
+  toggleShowAll.textContent = showAllExamples
+    ? t('analyse.showLess')
+    : t('analyse.showAll');
   renderPreparedExamples();
 });
 
@@ -705,6 +735,106 @@ function persistWikimediaCache(map) {
   }
 }
 
+function t(key) {
+  return translate(currentLocale, key);
+}
+
+function applyLocale(locale) {
+  currentLocale = locale;
+  applyTranslations(document, currentLocale);
+  if (localeSelect && localeSelect.value !== currentLocale) {
+    localeSelect.value = currentLocale;
+  }
+  if (toggleShowAll) {
+    toggleShowAll.textContent = showAllExamples
+      ? t('analyse.showLess')
+      : t('analyse.showAll');
+  }
+  refreshThemeLabel();
+  document.title = `${t('formalize.heading')} · meta-expression`;
+}
+
+function refreshThemeLabel() {
+  if (!themeToggleIcon || !themeToggleLabel) {
+    return;
+  }
+  themeToggleIcon.textContent = themeIcon(currentThemePreference);
+  themeToggleLabel.textContent = t(`prefs.theme.${currentThemePreference}`);
+  themeToggle?.setAttribute(
+    'aria-label',
+    t(`prefs.theme.${currentThemePreference}`)
+  );
+}
+
+function setTheme(theme) {
+  currentThemePreference = theme;
+  applyTheme(currentThemePreference);
+  persistTheme(currentThemePreference);
+  refreshThemeLabel();
+}
+
+function setupLocale() {
+  if (!localeSelect) {
+    return;
+  }
+  localeSelect.replaceChildren();
+  for (const { code, label } of listLocales()) {
+    const option = document.createElement('option');
+    option.value = code;
+    option.textContent = label;
+    if (code === currentLocale) {
+      option.selected = true;
+    }
+    localeSelect.append(option);
+  }
+  localeSelect.addEventListener('change', () => {
+    persistLocale(localeSelect.value);
+    applyLocale(localeSelect.value);
+    if (currentFormalizeResult) {
+      renderFormalizeInterpretations(currentFormalizeResult);
+    }
+  });
+}
+
+function setupTheme() {
+  applyTheme(currentThemePreference);
+  refreshThemeLabel();
+  if (themeToggle) {
+    themeToggle.addEventListener('click', () => {
+      setTheme(nextTheme(currentThemePreference));
+    });
+  }
+  watchSystemTheme(() => {
+    if (currentThemePreference === 'auto') {
+      applyTheme(currentThemePreference);
+    }
+  });
+}
+
+function setupFormalizeDisplayMode() {
+  const radios = document.querySelectorAll(
+    'input[name="formalize-display-mode"]'
+  );
+  for (const radio of radios) {
+    if (radio.checked) {
+      interpretationDisplayMode = radio.value;
+    }
+    radio.addEventListener('change', () => {
+      if (!radio.checked) {
+        return;
+      }
+      interpretationDisplayMode = radio.value;
+      if (currentFormalizeResult) {
+        renderFormalizeInterpretations(currentFormalizeResult);
+      }
+    });
+  }
+}
+
+setupLocale();
+setupTheme();
+setupFormalizeDisplayMode();
+applyLocale(currentLocale);
 renderPreparedExamples();
 syncBeliefControl(input.value);
 render(input.value);
@@ -1078,6 +1208,7 @@ function applyFormalizeResult(data) {
     return;
   }
   currentFormalizeResult = result;
+  activeInterpretationKey = null;
   renderFormalizeOutput(result);
   renderFormalizeContexts(result);
   renderFormalizeBigContexts(result);
@@ -1163,33 +1294,106 @@ function renderFormalizeContexts(result) {
 
 function renderFormalizeInterpretations(result) {
   formalizeInterpretations.replaceChildren();
-  const items = result.interpretations ?? [];
-  if (items.length === 0) {
+  const all = result.interpretations ?? [];
+  if (all.length === 0) {
     const empty = document.createElement('li');
     empty.className = 'section-empty';
-    empty.textContent = 'No alternative interpretations.';
+    empty.textContent = t('formalize.empty');
     formalizeInterpretations.append(empty);
     return;
   }
+
+  if (!activeInterpretationKey && all[0]) {
+    activeInterpretationKey = interpretationKey(all[0]);
+  }
+
+  const top = all.slice(0, topInterpretationCount);
+  const activeIndex = all.findIndex(
+    (entry) => interpretationKey(entry) === activeInterpretationKey
+  );
+  const items =
+    activeIndex >= 0 && activeIndex >= top.length
+      ? [...top.slice(0, top.length - 1), all[activeIndex]]
+      : top;
+
   for (const interpretation of items) {
     const item = document.createElement('li');
     item.className = 'formalize-interpretation';
+    const key = interpretationKey(interpretation);
+    const isActive = key === activeInterpretationKey;
+    if (isActive) {
+      item.classList.add('active');
+    }
+    item.setAttribute('role', 'button');
+    item.setAttribute('tabindex', '0');
+    item.dataset.interpretationKey = key;
     const score = (interpretation.score ?? 0).toFixed(1);
     const phrases = interpretation.phrases
-      .map((phrase) => {
-        if (phrase.entityId) {
-          return `${phrase.text} [${phrase.entityId}]`;
-        }
-        return phrase.text;
-      })
+      .map((phrase) =>
+        formatInterpretationPhrase(phrase, interpretationDisplayMode)
+      )
       .join(' ');
+    const badge = isActive
+      ? `<span class="formalize-interpretation-active-badge">${escapeHtml(t('formalize.activeBadge'))}</span>`
+      : '';
     item.innerHTML = `
       <strong>#${interpretation.rank}</strong>
       <span>${escapeHtml(phrases)}</span>
-      <small>score ${score}</small>
+      <small>${escapeHtml(t('formalize.score'))} ${score}${badge ? ' · ' : ''}${badge}</small>
     `;
+    item.addEventListener('click', () => {
+      activeInterpretationKey = key;
+      renderFormalizeInterpretations(result);
+      applyActiveInterpretationToOutput(result);
+    });
+    item.addEventListener('keydown', (event) => {
+      if (event.key === 'Enter' || event.key === ' ') {
+        event.preventDefault();
+        item.click();
+      }
+    });
     formalizeInterpretations.append(item);
   }
+}
+
+function applyActiveInterpretationToOutput(result) {
+  const all = result.interpretations ?? [];
+  const active = all.find(
+    (entry) => interpretationKey(entry) === activeInterpretationKey
+  );
+  if (!active) {
+    return;
+  }
+  const phrasesByText = new Map();
+  for (const phrase of active.phrases) {
+    if (phrase?.text) {
+      phrasesByText.set(phrase.text, phrase);
+    }
+  }
+  for (const phrase of result.phrases) {
+    const override = phrasesByText.get(phrase.text);
+    if (!override || !override.entityId) {
+      continue;
+    }
+    phrase.entity = phrase.entity
+      ? {
+          ...phrase.entity,
+          id: override.entityId,
+          label: override.entityLabel ?? phrase.entity.label,
+          description: override.entityDescription ?? phrase.entity.description,
+        }
+      : {
+          id: override.entityId,
+          label: override.entityLabel ?? phrase.text,
+          description: override.entityDescription ?? '',
+          kind: override.kind ?? 'entity',
+          score: 0,
+          wikipediaUrl: null,
+          wikipediaTitle: null,
+          contextLabels: [],
+        };
+  }
+  renderFormalizeOutput(result);
 }
 
 formalizeRun.addEventListener('click', () => runFormalize());
