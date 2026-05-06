@@ -5,6 +5,7 @@ import {
   createSeededRandom,
   createWikimediaEvidenceClient,
   decodeOverridesText,
+  encodeOverridesAsLino,
   defaultReasoningStrategyId,
   describeFormalizationLevel,
   findExampleOpposite,
@@ -887,6 +888,16 @@ const formalizeOverridesText = document.querySelector('#formalize-overrides');
 const formalizeOverridesError = document.querySelector(
   '#formalize-overrides-error'
 );
+const formalizePinPhrase = document.querySelector('#formalize-pin-phrase');
+const formalizePinId = document.querySelector('#formalize-pin-id');
+const formalizePinLabel = document.querySelector('#formalize-pin-label');
+const formalizePinAdd = document.querySelector('#formalize-pin-add');
+const formalizePinError = document.querySelector('#formalize-pin-error');
+
+const defaultBigContextAutoSelectCount = 5;
+let selectedBigContextIds = null;
+let bigContextPhraseIndex = new Map();
+let bigContextEntityIndex = new Map();
 
 if (formalizeFandomCheckbox && formalizeFandomSlug) {
   formalizeFandomCheckbox.addEventListener('change', () => {
@@ -937,6 +948,7 @@ function runFormalize({ contextLensId = null } = {}) {
     Math.min(5, Number(formalizeNgramSize.value) || 3)
   );
   activeContextLensId = contextLensId;
+  selectedBigContextIds = null;
   formalizeStatus.textContent = 'Formalizing…';
   const id = String((formalizeRequestId += 1));
   formalizeStatus.dataset.requestId = id;
@@ -1029,12 +1041,42 @@ function readFormalizeOverrides() {
   }
 }
 
+function rebuildBigContextIndices(list) {
+  bigContextPhraseIndex = new Map();
+  bigContextEntityIndex = new Map();
+  for (const context of list) {
+    const sourceList = context.sourcePhrases ?? [];
+    for (const source of sourceList) {
+      if (source?.entityId) {
+        const bucket = bigContextEntityIndex.get(source.entityId) ?? new Set();
+        bucket.add(context.id);
+        bigContextEntityIndex.set(source.entityId, bucket);
+      }
+      if (source?.text) {
+        const bucket = bigContextPhraseIndex.get(source.text) ?? new Set();
+        bucket.add(context.id);
+        bigContextPhraseIndex.set(source.text, bucket);
+      }
+    }
+  }
+}
+
+function autoSelectBigContextIds(list) {
+  return new Set(
+    list.slice(0, defaultBigContextAutoSelectCount).map((context) => context.id)
+  );
+}
+
 function renderFormalizeBigContexts(result) {
   if (!formalizeBigContexts) {
     return;
   }
   formalizeBigContexts.replaceChildren();
   const list = result.bigContexts ?? [];
+  rebuildBigContextIndices(list);
+  if (selectedBigContextIds === null) {
+    selectedBigContextIds = autoSelectBigContextIds(list);
+  }
   if (list.length === 0) {
     const empty = document.createElement('p');
     empty.className = 'section-empty';
@@ -1042,25 +1084,148 @@ function renderFormalizeBigContexts(result) {
     formalizeBigContexts.append(empty);
     return;
   }
-  for (const context of list) {
-    const item = document.createElement('div');
-    item.className = 'formalize-big-context';
-    if (result.mainBigContext && context.id === result.mainBigContext.id) {
-      item.classList.add('main');
+  for (const [index, context] of list.entries()) {
+    formalizeBigContexts.append(
+      buildBigContextItem(context, index, result.mainBigContext)
+    );
+  }
+}
+
+function buildBigContextItem(context, index, mainBigContext) {
+  const item = document.createElement('label');
+  item.className = 'formalize-big-context';
+  item.dataset.bigContextId = context.id;
+  if (mainBigContext && context.id === mainBigContext.id) {
+    item.classList.add('main');
+  }
+  const checkbox = document.createElement('input');
+  checkbox.type = 'checkbox';
+  checkbox.checked = selectedBigContextIds.has(context.id);
+  checkbox.addEventListener('change', () => {
+    if (checkbox.checked) {
+      selectedBigContextIds.add(context.id);
+    } else {
+      selectedBigContextIds.delete(context.id);
     }
-    const probabilityPercent = Math.round((context.probability ?? 0) * 100);
-    const link = document.createElement('a');
-    link.href = `https://www.wikidata.org/wiki/${context.id}`;
-    link.title = context.id;
-    link.target = '_blank';
-    link.rel = 'noopener noreferrer';
-    link.textContent = context.label ?? context.id;
-    item.append(link);
-    const meta = document.createElement('span');
-    meta.className = 'formalize-big-context-meta';
-    meta.textContent = ` weight ${context.weight} · ${probabilityPercent}%`;
-    item.append(meta);
-    formalizeBigContexts.append(item);
+    applyBigContextSelectionDimming();
+  });
+  item.append(checkbox);
+  const link = document.createElement('a');
+  link.href = `https://www.wikidata.org/wiki/${context.id}`;
+  link.title = `${context.id}${
+    context.label ? ` — ${context.label}` : ''
+  } (rank ${index + 1})`;
+  link.target = '_blank';
+  link.rel = 'noopener noreferrer';
+  link.textContent = context.label ?? context.id;
+  item.append(link);
+  const probabilityPercent = Math.round((context.probability ?? 0) * 100);
+  const meta = document.createElement('span');
+  meta.className = 'formalize-big-context-meta';
+  meta.textContent = ` weight ${context.weight} · ${probabilityPercent}%`;
+  item.append(meta);
+  attachBigContextHover(item, context);
+  return item;
+}
+
+function attachBigContextHover(item, context) {
+  const phraseTexts = new Set(
+    (context.sourcePhrases ?? [])
+      .map((source) => source?.text)
+      .filter((text) => typeof text === 'string')
+  );
+  const entityIds = new Set(
+    (context.sourcePhrases ?? [])
+      .map((source) => source?.entityId)
+      .filter((id) => typeof id === 'string')
+  );
+  item.addEventListener('mouseenter', () => {
+    highlightPhrasesForBigContext(phraseTexts, entityIds);
+  });
+  item.addEventListener('mouseleave', clearPhraseHighlights);
+}
+
+function highlightPhrasesForBigContext(phraseTexts, entityIds) {
+  if (!formalizeOutput) {
+    return;
+  }
+  for (const node of formalizeOutput.querySelectorAll('[data-phrase-text]')) {
+    const text = node.dataset.phraseText;
+    const id = node.dataset.wikidataId;
+    if ((text && phraseTexts.has(text)) || (id && entityIds.has(id))) {
+      node.classList.add('formalize-output-hover');
+    }
+  }
+}
+
+function clearPhraseHighlights() {
+  if (!formalizeOutput) {
+    return;
+  }
+  for (const node of formalizeOutput.querySelectorAll(
+    '.formalize-output-hover'
+  )) {
+    node.classList.remove('formalize-output-hover');
+  }
+}
+
+function highlightBigContextsForPhrase(phraseText, entityId) {
+  if (!formalizeBigContexts) {
+    return;
+  }
+  const ids = new Set();
+  if (phraseText && bigContextPhraseIndex.has(phraseText)) {
+    for (const id of bigContextPhraseIndex.get(phraseText)) {
+      ids.add(id);
+    }
+  }
+  if (entityId && bigContextEntityIndex.has(entityId)) {
+    for (const id of bigContextEntityIndex.get(entityId)) {
+      ids.add(id);
+    }
+  }
+  for (const node of formalizeBigContexts.querySelectorAll(
+    '[data-big-context-id]'
+  )) {
+    if (ids.has(node.dataset.bigContextId)) {
+      node.classList.add('formalize-big-context-hover');
+    }
+  }
+}
+
+function clearBigContextHighlights() {
+  if (!formalizeBigContexts) {
+    return;
+  }
+  for (const node of formalizeBigContexts.querySelectorAll(
+    '.formalize-big-context-hover'
+  )) {
+    node.classList.remove('formalize-big-context-hover');
+  }
+}
+
+function applyBigContextSelectionDimming() {
+  if (!formalizeOutput || !selectedBigContextIds) {
+    return;
+  }
+  const total = bigContextEntityIndex.size + bigContextPhraseIndex.size;
+  for (const node of formalizeOutput.querySelectorAll('[data-phrase-text]')) {
+    const phraseText = node.dataset.phraseText;
+    const entityId = node.dataset.wikidataId;
+    const ids = new Set();
+    if (phraseText && bigContextPhraseIndex.has(phraseText)) {
+      for (const id of bigContextPhraseIndex.get(phraseText)) {
+        ids.add(id);
+      }
+    }
+    if (entityId && bigContextEntityIndex.has(entityId)) {
+      for (const id of bigContextEntityIndex.get(entityId)) {
+        ids.add(id);
+      }
+    }
+    const hasSelected = [...ids].some((id) => selectedBigContextIds.has(id));
+    const dim = ids.size > 0 && !hasSelected && total > 0;
+    node.classList.toggle('formalize-output-dim', dim);
   }
 }
 
@@ -1081,6 +1246,7 @@ function applyFormalizeResult(data) {
   renderFormalizeOutput(result);
   renderFormalizeContexts(result);
   renderFormalizeBigContexts(result);
+  applyBigContextSelectionDimming();
   renderFormalizeInterpretations(result);
   formalizeMarkdownPre.textContent = result.markdown;
   formalizeLinoPre.textContent = result.linksNotation;
@@ -1099,26 +1265,31 @@ function renderFormalizeOutput(result) {
     if (index > 0) {
       wrapper.append(' ');
     }
-    if (phrase.entity) {
-      const link = document.createElement('a');
-      link.href =
-        resolveFormalizeLinkTarget(phrase, {
-          linkTargetMode: result.linkTargetMode,
-        }) ?? '#';
-      link.title = phrase.entity.id;
-      link.target = '_blank';
-      link.rel = 'noopener noreferrer';
-      link.textContent = phrase.text;
-      link.dataset.wikidataId = phrase.entity.id;
-      wrapper.append(link);
-    } else {
-      const span = document.createElement('span');
-      span.className = 'formalize-output-plain';
-      span.textContent = phrase.text;
-      wrapper.append(span);
-    }
+    wrapper.append(buildFormalizeOutputNode(phrase, result.linkTargetMode));
   }
   formalizeOutput.append(wrapper);
+}
+
+function buildFormalizeOutputNode(phrase, linkTargetMode) {
+  const node = phrase.entity
+    ? document.createElement('a')
+    : document.createElement('span');
+  node.dataset.phraseText = phrase.text;
+  if (phrase.entity) {
+    node.href = resolveFormalizeLinkTarget(phrase, { linkTargetMode }) ?? '#';
+    node.title = phrase.entity.id;
+    node.target = '_blank';
+    node.rel = 'noopener noreferrer';
+    node.dataset.wikidataId = phrase.entity.id;
+  } else {
+    node.className = 'formalize-output-plain';
+  }
+  node.textContent = phrase.text;
+  node.addEventListener('mouseenter', () => {
+    highlightBigContextsForPhrase(phrase.text, phrase.entity?.id);
+  });
+  node.addEventListener('mouseleave', clearBigContextHighlights);
+  return node;
 }
 
 function renderFormalizeContexts(result) {
@@ -1193,6 +1364,77 @@ function renderFormalizeInterpretations(result) {
 }
 
 formalizeRun.addEventListener('click', () => runFormalize());
+
+if (formalizePinAdd) {
+  formalizePinAdd.addEventListener('click', addManualPinFromForm);
+}
+
+function addManualPinFromForm() {
+  if (!formalizePinPhrase || !formalizePinId) {
+    return;
+  }
+  const phrase = formalizePinPhrase.value.trim();
+  const id = formalizePinId.value.trim();
+  const label = formalizePinLabel?.value.trim() ?? '';
+  if (formalizePinError) {
+    formalizePinError.textContent = '';
+  }
+  if (!phrase) {
+    setPinError('Phrase is required.');
+    return;
+  }
+  if (!/^[QP]\d+$/.test(id)) {
+    setPinError('Id must look like Q123 or P31.');
+    return;
+  }
+  const kind = id.startsWith('P') ? 'property' : 'entity';
+  const existing = readExistingOverridesForMerge();
+  if (existing === null) {
+    setPinError('Existing overrides cannot be parsed; fix them first.');
+    return;
+  }
+  const filtered = existing.filter(
+    (entry) =>
+      !(entry?.phrase === phrase && (!entry?.kind || entry.kind === kind))
+  );
+  filtered.push({
+    phrase,
+    entityId: id,
+    label: label || phrase,
+    kind,
+  });
+  if (formalizeOverridesText) {
+    formalizeOverridesText.value = encodeOverridesAsLino(filtered);
+  }
+  formalizePinPhrase.value = '';
+  formalizePinId.value = '';
+  if (formalizePinLabel) {
+    formalizePinLabel.value = '';
+  }
+  runFormalize({ contextLensId: activeContextLensId });
+}
+
+function readExistingOverridesForMerge() {
+  if (!formalizeOverridesText) {
+    return [];
+  }
+  const raw = formalizeOverridesText.value.trim();
+  if (!raw) {
+    return [];
+  }
+  try {
+    const parsed = decodeOverridesText(raw);
+    return Array.isArray(parsed) ? parsed : [];
+  } catch {
+    return null;
+  }
+}
+
+function setPinError(message) {
+  if (formalizePinError) {
+    formalizePinError.textContent = message;
+  }
+}
 
 for (const radio of formalizeTargetRadios) {
   radio.addEventListener('change', () => {
