@@ -1,9 +1,9 @@
 # Roadmap
 
-This roadmap turns the requirements from issues #1 and #5 into incremental
-implementation slices. The current goal is a real, inspectable playground that
-keeps every statement, interpretation, evidence item, result, and refinement
-traceable as links with provenance.
+This roadmap turns the requirements from issues #1, #5, and #18 into
+incremental implementation slices. The current goal is a real, inspectable
+playground that keeps every statement, interpretation, evidence item, result,
+preference, and refinement traceable as links with provenance.
 
 ## Current Slice
 
@@ -21,6 +21,8 @@ Implemented or added in PR #6:
   including direct and parent-chain astronomical-body checks.
 - Browser worker that resolves live evidence after initial render.
 - Local user belief slider persisted in `localStorage`.
+- `/preferences` profile with worldview, religion, context, local persistence,
+  and Links Notation import/export.
 - Prefilled GitHub issue reporting with interpretations, Q/P reasoning traces,
   evidence, and Links Notation.
 - Rust core workspace with Doublets-based relation-link encoding and WASM-ready
@@ -88,8 +90,8 @@ Goal: make Links Notation the human-readable storage and exchange format.
 
 - Add the real `links-notation` parser/formatter dependency.
 - Define canonical shapes for statement links, interpretation links,
-  formalization links, evidence links, result links, belief links, and report
-  snapshots.
+  formalization links, evidence links, result links, belief links, preference
+  profile links, and report snapshots.
 - Add import/export tests.
 - Store small local state as Links Notation text.
 - Keep JSON as an API convenience wrapper only.
@@ -137,6 +139,8 @@ Goal: make confidence and formal semantics reproducible.
 
 - Add built-in profiles: default scientific, math only, user first, and
   Wikidata structured.
+- Promote context presets and preference profiles from web-only controls to the
+  CLI and service APIs.
 - Expose source weights in CLI, service, and web.
 - Add symbol/operator overrides for formal systems.
 - Add custom belief-system files.

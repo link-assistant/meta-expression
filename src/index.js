@@ -9,6 +9,7 @@ import {
   orderReasoningSteps,
 } from './reasoning-strategies.js';
 import { findExampleOpposite } from './examples.js';
+import { createPreferenceEvidence } from './preferences.js';
 
 export {
   createWikimediaEvidenceClient,
@@ -79,6 +80,20 @@ export {
   decodeToken as decodeLinoToken,
   tokenizeLino,
 } from './lino.js';
+export {
+  createDefaultPreferenceProfile,
+  createPreferenceEvidence,
+  getPreferenceBeliefProbability,
+  isPreferenceBeliefVisible,
+  listVisiblePreferenceBeliefs,
+  normalizePreferenceProfile,
+  parsePreferenceProfile,
+  preferenceBeliefDefinitions,
+  preferenceContextDefinitions,
+  serializePreferenceProfile,
+  setPreferenceBelief,
+  setPreferenceContext,
+} from './preferences.js';
 export {
   createDoubletStore,
   encodeAsDoublets,
@@ -236,6 +251,9 @@ export const defaultBeliefSystem = Object.freeze({
     wikidata: 1,
     algorithm: 0.6,
     user: 0.25,
+    preference: 1,
+    'derived-preference': 0.85,
+    context: 0.85,
   }),
 });
 
@@ -382,6 +400,7 @@ export function analyzeStatement(input, options = {}) {
   const evidence = [
     ...(options.evidence ?? knownEvidence),
     ...createUserBeliefEvidence(formalization, options.userBeliefs),
+    ...createPreferenceEvidence(options.preferenceProfile),
   ];
   const result = formalization.computable
     ? evaluateComputableFormalization(formalization)

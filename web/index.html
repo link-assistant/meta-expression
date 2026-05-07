@@ -36,6 +36,14 @@
         >
           Formalize
         </button>
+        <button
+          type="button"
+          id="nav-preferences"
+          class="top-nav-button"
+          data-i18n="nav.preferences"
+        >
+          Preferences
+        </button>
       </div>
       <div class="top-nav-prefs">
         <label class="top-nav-locale">
@@ -582,6 +590,90 @@ Barack Obama was born in Hawaii.</textarea
           <summary data-i18n="formalize.linoPayload">Links Notation</summary>
           <pre id="formalize-lino"></pre>
         </details>
+      </section>
+    </main>
+
+    <main class="preferences-shell" id="page-preferences" hidden>
+      <section class="preferences-panel" aria-label="Preference profile">
+        <header class="preferences-header">
+          <h1 data-i18n="preferences.heading">Preferences</h1>
+        </header>
+
+        <section
+          class="preferences-section"
+          aria-labelledby="preferences-worldview-heading"
+        >
+          <h2
+            id="preferences-worldview-heading"
+            data-i18n="preferences.worldview"
+          >
+            Worldview
+          </h2>
+          <div class="preferences-slider-list" id="preferences-worldview"></div>
+        </section>
+
+        <section
+          class="preferences-section"
+          id="preferences-religion-panel"
+          aria-labelledby="preferences-religions-heading"
+          hidden
+        >
+          <h2
+            id="preferences-religions-heading"
+            data-i18n="preferences.religions"
+          >
+            Religions
+          </h2>
+          <div class="preferences-slider-list" id="preferences-religions"></div>
+        </section>
+
+        <section
+          class="preferences-section"
+          aria-labelledby="preferences-context-heading"
+        >
+          <h2 id="preferences-context-heading" data-i18n="preferences.context">
+            Context
+          </h2>
+          <div class="preferences-context-list" id="preferences-contexts"></div>
+        </section>
+
+        <section
+          class="preferences-section"
+          aria-labelledby="preferences-lino-heading"
+        >
+          <h2 id="preferences-lino-heading" data-i18n="preferences.lino">
+            Links Notation
+          </h2>
+          <textarea id="preferences-lino" rows="10"></textarea>
+          <div class="preferences-actions">
+            <button
+              type="button"
+              id="preferences-export"
+              data-i18n="preferences.export"
+            >
+              Export
+            </button>
+            <button
+              type="button"
+              id="preferences-import"
+              data-i18n="preferences.import"
+            >
+              Import
+            </button>
+            <button
+              type="button"
+              id="preferences-reset"
+              data-i18n="preferences.reset"
+            >
+              Reset
+            </button>
+            <span
+              class="preferences-status"
+              id="preferences-status"
+              aria-live="polite"
+            ></span>
+          </div>
+        </section>
       </section>
     </main>
 

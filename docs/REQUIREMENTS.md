@@ -5,6 +5,7 @@ prototype. It consolidates:
 
 - [Issue #1](https://github.com/link-assistant/meta-expression/issues/1)
 - [Issue #5](https://github.com/link-assistant/meta-expression/issues/5)
+- [Issue #18](https://github.com/link-assistant/meta-expression/issues/18)
 - [PR #6 feedback](https://github.com/link-assistant/meta-expression/pull/6#issuecomment-4322346610)
 
 ## Terminology
@@ -34,7 +35,7 @@ boundary.
 | R13 | Support explicit formalization levels.                       | MVP   | Levels 1-4 have names, summaries, and executable flags.                                                                  | Preserve the gate: only fully computable expressions execute locally.                                           |
 | R14 | Evaluate computable expressions exactly.                     | MVP   | Arithmetic equality and arithmetic question expressions work.                                                            | Move these computations into Rust/RML and broaden only with tests.                                              |
 | R15 | Treat question expressions separately from truth statements. | MVP   | `1 + 1` returns a computed answer.                                                                                       | Add entity lookup, evidence lookup, and dependency-explanation question shapes.                                 |
-| R16 | Support configurable belief and formal systems.              | MVP   | Source weights and local user evidence are represented.                                                                  | Add operator semantics, symbol dictionaries, source reliability profiles, and custom strategy files.            |
+| R16 | Support configurable belief and formal systems.              | MVP   | Source weights, local user evidence, preference profiles, and context presets are represented.                           | Add operator semantics, symbol dictionaries, source reliability profiles, and custom strategy files.            |
 | R17 | Avoid absolute confidence for real-world facts.              | MVP   | Real-world confidence is bounded away from 0% and 100%.                                                                  | Keep exact 0%/100% only for deterministic computations in an explicit formal system.                            |
 | R18 | Calculate confidence with visible evidence.                  | MVP   | Weighted support/refute confidence and raw balance exist.                                                                | Add dependency-aware strategies and show all inputs needed to reproduce the number.                             |
 | R19 | List confirmations and refutations.                          | MVP   | Supporting and refuting evidence are relation links with provenance.                                                     | Add richer candidate inference from selected statement templates.                                               |
@@ -44,9 +45,9 @@ boundary.
 | R23 | Represent implied statements and dependencies.               | MVP   | Arithmetic parts, Q/P phrase mappings, reasoning steps, and evidence mappings are relation links.                        | Add source-weight and belief-system dependency extraction.                                                      |
 | R24 | Show statements that depend on the current statement.        | Next  | Not implemented yet.                                                                                                     | Add reverse relation-link queries once persistence exists.                                                      |
 | R25 | Support self-reference without false certainty.              | MVP   | `this statement is false` is undetermined at 50% confidence.                                                             | Add more paradox and self-reference templates only with explicit tests.                                         |
-| R26 | Add continuous user-belief sliders.                          | MVP   | Web slider maps false/unknown/true to local evidence.                                                                    | Add named belief profiles and source-weight controls.                                                           |
-| R27 | Persist user beliefs locally.                                | MVP   | Current slider state is stored in `localStorage`.                                                                        | Move larger state to Links Notation text, IndexedDB, or Doublets-backed storage.                                |
-| R28 | Store human-readable state in Links Notation.                | MVP   | Links Notation export exists.                                                                                            | Add parser-backed import/export and local persistence.                                                          |
+| R26 | Add continuous user-belief sliders.                          | MVP   | Web sliders map false/unknown/true to local evidence for the current statement and named preferences.                    | Add user-authored arbitrary preference sliders and source-weight controls.                                      |
+| R27 | Persist user beliefs locally.                                | MVP   | Current slider state and `/preferences` profile state are stored in `localStorage`.                                      | Move larger state to Links Notation text, IndexedDB, or Doublets-backed storage.                                |
+| R28 | Store human-readable state in Links Notation.                | MVP   | Links Notation export exists for analysis links, formalize overrides, and preference profiles.                           | Add parser-backed import/export to more local persistence surfaces.                                             |
 | R29 | Work internally with binary links for durable storage.       | Next  | Rust `doublets` foundation exists.                                                                                       | Map strings, scalar values, roles, provenance, and versions into Doublets.                                      |
 | R30 | Support Unicode strings as link sequences.                   | Next  | Tracked from issue #5.                                                                                                   | Implement Rust sequence/tree encoding compatible with LinksPlatform references.                                 |
 | R31 | Traverse Wikimedia data in a worker thread.                  | MVP   | Browser worker fetches live evidence after initial render.                                                               | Add cancellation, backoff, IndexedDB cache, and progress events.                                                |
@@ -57,6 +58,10 @@ boundary.
 | R36 | Collect case-study data for each issue.                      | MVP   | Issue #1 and #5 case-study folders contain captured data, screenshots, and research notes.                               | Keep future issue analyses under `docs/case-studies/issue-{id}`.                                                |
 | R37 | Search current component/library data before implementation. | MVP   | Case studies and this PR record current package/crate facts.                                                             | Re-check versions before adding new dependencies because ecosystem state changes.                               |
 | R38 | Do not overclaim the MVP.                                    | MVP   | Docs separate implemented slices from roadmap work.                                                                      | Keep guardrails explicit: no full NLU, no perfect probability, no unbounded Wikipedia traversal.                |
+| R39 | Provide a `/preferences` section.                            | MVP   | Static web app exposes a Preferences page at `#/preferences`.                                                            | Grow it from predefined controls to user-created statement sliders.                                             |
+| R40 | Support context-specific interpretation profiles.            | MVP   | Preferences include real-world, World of Warcraft, StarCraft, Harry Potter, and Star Wars presets.                       | Let users compose and weight multiple active contexts.                                                          |
+| R41 | Derive dependent beliefs from basic axioms.                  | MVP   | The God slider controls visibility of religion sliders and derives atheist refutations for religion claims.              | Generalize dependency rules beyond the initial worldview example.                                               |
+| R42 | Import and export preference configuration.                  | MVP   | Preferences import/export as Links Notation and persist in `localStorage`.                                               | Add shareable URL payloads once profile size and privacy behavior are settled.                                  |
 
 ## Concrete Acceptance Examples
 
@@ -78,5 +83,7 @@ The prototype must keep these examples working:
 - Real-world confidence must be labeled confidence, not truth.
 - User beliefs and LLM suggestions must be explicit inputs, not hidden truth
   sources.
+- Preference profiles and fictional context presets must be explicit evidence
+  sources, not global facts.
 - Every computed result or evidence estimate should remain traceable through
   links, references, provenance, and versioned state.

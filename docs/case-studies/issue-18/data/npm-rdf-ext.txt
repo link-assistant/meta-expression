@@ -1,0 +1,4 @@
+version = '2.6.0'
+description = 'RDF-Ext is a developer-friendly extension for RDF/JS'
+homepage = 'https://github.com/rdf-ext/rdf-ext'
+repository.url = 'git+https://github.com/rdf-ext/rdf-ext.git'

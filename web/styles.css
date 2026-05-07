@@ -170,7 +170,8 @@ textarea {
 }
 
 .compare-shell,
-.formalize-shell {
+.formalize-shell,
+.preferences-shell {
   display: grid;
   padding: 18px;
   background: var(--surface);
@@ -179,7 +180,8 @@ textarea {
 
 .app-shell[hidden],
 .compare-shell[hidden],
-.formalize-shell[hidden] {
+.formalize-shell[hidden],
+.preferences-shell[hidden] {
   display: none;
 }
 
@@ -796,7 +798,8 @@ pre {
   flex-wrap: wrap;
 }
 
-.formalize-panel {
+.formalize-panel,
+.preferences-panel {
   display: grid;
   gap: 18px;
   align-content: start;
@@ -805,9 +808,93 @@ pre {
   margin: 0 auto;
 }
 
-.formalize-header {
+.formalize-header,
+.preferences-header {
   display: grid;
   gap: 6px;
+}
+
+.preferences-section {
+  display: grid;
+  gap: 12px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 14px;
+  background: var(--surface);
+}
+
+.preferences-section[hidden] {
+  display: none;
+}
+
+.preferences-slider-list {
+  display: grid;
+  gap: 10px;
+}
+
+.preferences-slider {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 8px 12px;
+  align-items: center;
+  color: var(--ink);
+}
+
+.preferences-slider-heading {
+  font-weight: 700;
+  overflow-wrap: anywhere;
+}
+
+.preferences-slider output {
+  color: var(--accent);
+  font-weight: 800;
+}
+
+.preferences-slider input {
+  grid-column: 1 / -1;
+  padding: 0;
+}
+
+.preferences-context-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.preferences-context-option {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  border: 1px solid var(--border-strong);
+  border-radius: 6px;
+  padding: 8px 10px;
+  background: var(--surface);
+  color: var(--ink);
+  cursor: pointer;
+}
+
+.preferences-context-option input {
+  width: auto;
+  margin: 0;
+  padding: 0;
+}
+
+#preferences-lino {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 0.85rem;
+  resize: vertical;
+}
+
+.preferences-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+}
+
+.preferences-status {
+  color: var(--ink-soft);
+  font-size: 0.85rem;
 }
 
 .formalize-input-label {
@@ -1325,7 +1412,8 @@ pre {
   }
 
   .compare-shell,
-  .formalize-shell {
+  .formalize-shell,
+  .preferences-shell {
     padding: 28px;
   }
 

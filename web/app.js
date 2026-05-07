@@ -48,6 +48,10 @@ import {
   summary,
 } from './format-helpers.js';
 import { createPersistentWikimediaCache } from './persistent-cache.js';
+import {
+  getActivePreferenceProfile,
+  setupPreferencesPage,
+} from './preferences-ui.js';
 
 const beliefStorageKey = 'meta-expression.user-beliefs.v1';
 const wikimediaCacheStorageKey = 'meta-expression.wikimedia-cache.v1';
@@ -84,9 +88,11 @@ const resultValue = document.querySelector('#result-value');
 const navAnalyse = document.querySelector('#nav-analyse');
 const navCompare = document.querySelector('#nav-compare');
 const navFormalize = document.querySelector('#nav-formalize');
+const navPreferences = document.querySelector('#nav-preferences');
 const pageAnalyse = document.querySelector('#page-analyse');
 const pageCompare = document.querySelector('#page-compare');
 const pageFormalize = document.querySelector('#page-formalize');
+const pagePreferences = document.querySelector('#page-preferences');
 const compareRows = document.querySelector('#compare-rows');
 const compareAdd = document.querySelector('#compare-add');
 const compareRun = document.querySelector('#compare-run');
@@ -203,6 +209,7 @@ function render(statement, interpretationIndex = 0) {
     interpretationIndex: selectedIndex,
     selectedBy: 'web',
     userBeliefs,
+    preferenceProfile: getActivePreferenceProfile(),
     reasoningStrategyId: strategyId,
   });
 
@@ -502,6 +509,7 @@ function applyLiveEvidenceResult(data) {
     interpretationIndex: selectedIndex,
     selectedBy: 'web-worker',
     userBeliefs,
+    preferenceProfile: getActivePreferenceProfile(),
     evidence: data.evidence,
     reasoningStrategyId: strategyId,
   });
@@ -716,21 +724,30 @@ function setupFormalizeDisplayMode() {
 setupLocale();
 setupTheme();
 setupFormalizeDisplayMode();
+setupPreferencesPage({
+  onChange() {
+    if (currentAnalysis) {
+      render(input.value, selectedIndex);
+    }
+    runAllCompareRows();
+  },
+});
 applyLocale(currentLocale);
 renderPreparedExamples();
 syncBeliefControl(input.value);
 render(input.value);
 
-// Top-nav page switching (Analyse / Compare / Formalize)
 const navButtons = {
   analyse: navAnalyse,
   compare: navCompare,
   formalize: navFormalize,
+  preferences: navPreferences,
 };
 const pageElements = {
   analyse: pageAnalyse,
   compare: pageCompare,
   formalize: pageFormalize,
+  preferences: pagePreferences,
 };
 
 function showPage(pageId) {
@@ -757,9 +774,9 @@ function pageFromHash() {
 navAnalyse.addEventListener('click', () => showPage('analyse'));
 navCompare.addEventListener('click', () => showPage('compare'));
 navFormalize.addEventListener('click', () => showPage('formalize'));
+navPreferences.addEventListener('click', () => showPage('preferences'));
 globalThis.addEventListener('hashchange', () => showPage(pageFromHash()));
 
-// Compare page
 function seedCompareRows() {
   appendCompareRow('Population of Russia is 100m');
   appendCompareRow('Population of Russia is 200m');
@@ -820,6 +837,7 @@ function runCompareRow(row) {
     analysis = analyzeStatement(claim, {
       selectedBy: 'compare',
       userBeliefs,
+      preferenceProfile: getActivePreferenceProfile(),
       reasoningStrategyId: strategyId,
     });
   } catch {
@@ -868,7 +886,6 @@ function runAllCompareRows() {
 compareAdd.addEventListener('click', () => appendCompareRow(''));
 compareRun.addEventListener('click', runAllCompareRows);
 
-// Formalize page
 const formalizeInput = document.querySelector('#formalize-input');
 const formalizeSampleSelect = document.querySelector('#formalize-sample');
 const formalizeNgramSize = document.querySelector('#formalize-ngram-size');
