@@ -69,7 +69,9 @@ function makeFetch(routes) {
 
 function startServer() {
   return new Promise((resolve, reject) => {
-    const server = createMetaExpressionServer();
+    const server = createMetaExpressionServer({
+      cacheRoot: '.cache/issue-16-test',
+    });
     server.once('error', reject);
     server.listen(0, '127.0.0.1', () => {
       const address = server.address();
@@ -82,6 +84,20 @@ function startServer() {
 function stopServer(server) {
   return new Promise((resolve) => server.close(() => resolve()));
 }
+
+async function canUseLocalServer() {
+  const deno = globalThis.Deno;
+  if (!deno?.permissions?.query) {
+    return true;
+  }
+  const status = await deno.permissions.query({
+    name: 'net',
+    host: '127.0.0.1',
+  });
+  return status.state === 'granted';
+}
+
+const localServerTestsEnabled = await canUseLocalServer();
 
 describe('issue 16 — formalize CST for translation', () => {
   it('emits a CST that can regenerate formalize Markdown', async () => {
@@ -247,6 +263,9 @@ describe('issue 16 — CLI and HTTP translate surfaces', () => {
   });
 
   it('serves POST /translate', async () => {
+    if (!localServerTestsEnabled) {
+      return;
+    }
     const previousFetch = globalThis.fetch;
     globalThis.fetch = makeFetch({
       search: {
