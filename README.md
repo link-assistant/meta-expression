@@ -104,7 +104,9 @@ belief slider saved in `localStorage`, two default metrics (Correctness and
 signed Confidence), result/evidence summaries, Q/P source links in the links
 network, Links Notation output, a live Wikimedia evidence worker, a prefilled
 GitHub issue report link, and a top-menu page switch between **Analyse**
-(default) and **Compare** for putting two or more competing claims side-by-side.
+(default), **Compare**, **Formalize**, and **Preferences**. The Preferences page
+stores a local profile with worldview sliders, context presets, and Links
+Notation import/export.
 
 ### Default metrics
 

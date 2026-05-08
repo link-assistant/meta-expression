@@ -1,0 +1,4 @@
+version = '2.1.1'
+description = 'A basic implementation of the RDF/JS Data Model'
+homepage = 'https://github.com/rdfjs-base/data-model'
+repository.url = 'git+https://github.com/rdfjs-base/data-model.git'

@@ -86,14 +86,18 @@ Tokenize input by stripping punctuation and splitting on whitespace.
 
 ### `generateNgrams(tokens, maxSize)`
 
-Build all n-grams up to `maxSize` tokens, skipping stop-only n-grams.
+Build all n-grams up to `maxSize` tokens. Multi-token stop-only
+n-grams are skipped (they're useless on their own), but single-token
+stop words are kept and tagged with `stopOnly: true` so the issue
+#21 Wiktionary fallback can resolve a definition for `the`, `of`,
+etc. Non-stop-word n-grams remain unchanged.
 
 | Parameter   | Type       | Description |
 | ----------- | ---------- | ----------- |
 | `tokens`    | `string[]` | —           |
 | `[maxSize]` | `number`   | —           |
 
-**Returns** `Array<{text:string,tokens:string[],start:number,end:number,size:number` — >}
+**Returns** `Array<{text:string,tokens:string[],start:number,end:number,size:number,stopOnly:boolean` — >}
 
 ### `buildMarkdownLink(phrase, options)`
 
@@ -146,6 +150,53 @@ Build a Wikidata source resolver.
 | `[options.searchLimit]` | `number` | —           |
 
 **Returns** `object` — Source resolver
+
+### `createWikipediaSource(options)`
+
+Build a Wikipedia source resolver.
+
+The issue mandates Wikipedia as the FIRST disambiguation tier — it
+carries the richest article context per phrase and (via
+`pageprops.wikibase_item`) tells us which Wikidata Q-id each title
+actually points at, so downstream context-walking still works.
+
+Implementation:
+
+- `action=query&list=search` for a candidate list (one MediaWiki
+  round-trip per phrase).
+- `action=query&prop=pageprops` to backfill the wikibase_item for
+  every returned title (one batch round-trip).
+
+Each candidate carries the canonical Wikidata id as its `.id` so the
+existing entity-hydration path (wbgetentities -> claims/sitelinks)
+still applies. When a Wikipedia hit has no wikibase_item we fall back
+to a `wp:<title>` id so the candidate is at least linkable in the UI.
+
+| Parameter               | Type     | Description |
+| ----------------------- | -------- | ----------- |
+| `options`               | `object` | —           |
+| `[options.language]`    | `string` | —           |
+| `[options.searchLimit]` | `number` | —           |
+
+**Returns** `object`
+
+### `createWiktionarySource(options)`
+
+Build a Wiktionary fallback resolver.
+
+Wiktionary's REST-v1 definition endpoint returns clean per-PoS
+definitions for a single token. This is the LAST disambiguation
+tier per issue #21 — it ensures even glue words (`the`, `of`,
+`and`) get a tooltip-worthy hit when Wikipedia and Wikidata return
+nothing.
+
+| Parameter                  | Type     | Description |
+| -------------------------- | -------- | ----------- |
+| `options`                  | `object` | —           |
+| `[options.language]`       | `string` | —           |
+| `[options.maxDefinitions]` | `number` | —           |
+
+**Returns** `object`
 
 ### `createWordNetSource(options)`
 
@@ -209,6 +260,20 @@ fandom-host:<host> e.g. `fandom-host:tolkiengateway.net`
 | Parameter | Type               | Description |
 | --------- | ------------------ | ----------- |
 | `spec`    | `string\|string[]` | —           |
+
+**Returns** `object[]`
+
+### `createDefaultSourceTiers(language)`
+
+Default tier order per issue #21:
+
+1. Wikipedia (richest article context, carries wikibase_item)
+2. Wikidata (canonical Q/P graph, holds claims for context BFS)
+3. Wiktionary (last-resort lexical fallback for stop words / verbs)
+
+| Parameter    | Type     | Description |
+| ------------ | -------- | ----------- |
+| `[language]` | `string` | —           |
 
 **Returns** `object[]`
 

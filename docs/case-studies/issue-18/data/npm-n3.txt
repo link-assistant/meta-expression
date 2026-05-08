@@ -1,0 +1,4 @@
+version = '2.0.3'
+description = 'Lightning fast, asynchronous, streaming Turtle / N3 / RDF library.'
+homepage = 'https://github.com/rdfjs/N3.js#readme'
+repository.url = 'git+https://github.com/rdfjs/N3.js.git'

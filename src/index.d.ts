@@ -119,6 +119,40 @@ export interface AnalysisOptions {
   cacheTtlMs?: number;
   now?: () => number;
   reasoningStrategyId?: string;
+  preferenceProfile?: PreferenceProfile;
+}
+
+export interface PreferenceBeliefDefinition {
+  id: string;
+  statement: string;
+  label: string;
+  group: 'worldview' | 'religion';
+  defaultProbability: number;
+  visibleWhen?: {
+    beliefId: string;
+    greaterThan: number;
+  };
+}
+
+export interface PreferenceContextDefinition {
+  id: string;
+  label: string;
+  beliefs: Array<{
+    statement: string;
+    probability: number;
+  }>;
+}
+
+export interface PreferenceProfile {
+  version?: number;
+  activeContextId?: string;
+  beliefs?: Record<string, number> | Array<{ id: string; probability: number }>;
+}
+
+export interface NormalizedPreferenceProfile {
+  version: number;
+  activeContextId: string;
+  beliefs: Record<string, number>;
 }
 
 export interface PreparedExample {
@@ -186,6 +220,53 @@ export interface WikimediaEvidenceClient {
 }
 
 export declare const defaultBeliefSystem: BeliefSystem;
+
+export declare const preferenceBeliefDefinitions: readonly PreferenceBeliefDefinition[];
+
+export declare const preferenceContextDefinitions: readonly PreferenceContextDefinition[];
+
+export declare function createDefaultPreferenceProfile(): NormalizedPreferenceProfile;
+
+export declare function normalizePreferenceProfile(
+  profile?: PreferenceProfile
+): NormalizedPreferenceProfile;
+
+export declare function getPreferenceBeliefProbability(
+  profile: PreferenceProfile,
+  beliefId: string
+): number;
+
+export declare function setPreferenceBelief(
+  profile: PreferenceProfile,
+  beliefId: string,
+  probability: number
+): NormalizedPreferenceProfile;
+
+export declare function setPreferenceContext(
+  profile: PreferenceProfile,
+  contextId: string
+): NormalizedPreferenceProfile;
+
+export declare function isPreferenceBeliefVisible(
+  definitionOrId: PreferenceBeliefDefinition | string,
+  profile: PreferenceProfile
+): boolean;
+
+export declare function listVisiblePreferenceBeliefs(
+  profile: PreferenceProfile
+): PreferenceBeliefDefinition[];
+
+export declare function serializePreferenceProfile(
+  profile: PreferenceProfile
+): string;
+
+export declare function parsePreferenceProfile(
+  text: string
+): NormalizedPreferenceProfile;
+
+export declare function createPreferenceEvidence(
+  profile?: PreferenceProfile
+): EvidenceItem[];
 
 export declare const FORMALIZATION_LEVELS: {
   readonly RAW_TEXT: 1;
