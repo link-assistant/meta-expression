@@ -6,6 +6,7 @@ import {
   serializeLinksNotation,
 } from './index.js';
 import { formalizeTextWith, FORMALIZE_LINK_TARGETS } from './formalize.js';
+import { translateTextWith } from './translate.js';
 import { parseSourceSpec } from './formalize-sources.js';
 import { loadRepoOverrides, loadUserOverrides } from './formalize-overrides.js';
 import {
@@ -64,74 +65,106 @@ async function routeRequest(request, response, ctx) {
 }
 
 async function routeGetRequest(url, response, ctx) {
-  if (url.pathname === '/health') {
-    sendJson(response, 200, { ok: true });
-    return;
+  switch (url.pathname) {
+    case '/health':
+      sendJson(response, 200, { ok: true });
+      return;
+    case '/analyze':
+      await sendAnalysis(response, ...analyzeParamsFromSearch(url));
+      return;
+    case '/formalize':
+      await sendFormalize(response, formalizeParamsFromSearch(url), ctx);
+      return;
+    case '/translate':
+      await sendTranslate(response, translateParamsFromSearch(url), ctx);
+      return;
+    default:
+      sendNotFound(response);
   }
-
-  if (url.pathname === '/analyze') {
-    const input = url.searchParams.get('input') ?? '';
-    const format = url.searchParams.get('format') ?? 'json';
-    const interpretationIndex = Number(url.searchParams.get('select') ?? 0);
-    const live = url.searchParams.get('live') === 'true';
-    await sendAnalysis(response, input, format, interpretationIndex, live);
-    return;
-  }
-
-  if (url.pathname === '/formalize') {
-    await sendFormalize(
-      response,
-      {
-        input: url.searchParams.get('input') ?? '',
-        format: url.searchParams.get('format') ?? 'json',
-        sourcesSpec: url.searchParams.get('sources') ?? '',
-        target: url.searchParams.get('target') ?? 'wikipedia',
-        maxNgramSize: numberParam(url.searchParams.get('maxNgram')),
-        overrideFile: url.searchParams.get('override') ?? '',
-        noRepoOverrides: url.searchParams.get('noRepoOverrides') === 'true',
-      },
-      ctx
-    );
-    return;
-  }
-
-  sendNotFound(response);
 }
 
 async function routePostRequest(url, request, response, ctx) {
   const body = await readRequestBody(request);
   const payload = body ? JSON.parse(body) : {};
 
-  if (url.pathname === '/analyze') {
-    await sendAnalysis(
-      response,
-      payload.input ?? '',
-      payload.format ?? 'json',
-      payload.interpretationIndex ?? 0,
-      payload.live === true
-    );
-    return;
+  switch (url.pathname) {
+    case '/analyze':
+      await sendAnalysis(response, ...analyzeParamsFromPayload(payload));
+      return;
+    case '/formalize':
+      await sendFormalize(response, formalizeParamsFromPayload(payload), ctx);
+      return;
+    case '/translate':
+      await sendTranslate(response, translateParamsFromPayload(payload), ctx);
+      return;
+    default:
+      sendNotFound(response);
   }
+}
 
-  if (url.pathname === '/formalize') {
-    await sendFormalize(
-      response,
-      {
-        input: payload.input ?? '',
-        format: payload.format ?? 'json',
-        sourcesSpec: payload.sources ?? '',
-        target: payload.target ?? 'wikipedia',
-        maxNgramSize: payload.maxNgramSize,
-        overrideFile: payload.overrideFile ?? '',
-        noRepoOverrides: payload.noRepoOverrides === true,
-        overrides: payload.overrides,
-      },
-      ctx
-    );
-    return;
-  }
+function analyzeParamsFromSearch(url) {
+  return [
+    url.searchParams.get('input') ?? '',
+    url.searchParams.get('format') ?? 'json',
+    Number(url.searchParams.get('select') ?? 0),
+    url.searchParams.get('live') === 'true',
+  ];
+}
 
-  sendNotFound(response);
+function analyzeParamsFromPayload(payload) {
+  return [
+    payload.input ?? '',
+    payload.format ?? 'json',
+    payload.interpretationIndex ?? 0,
+    payload.live === true,
+  ];
+}
+
+function formalizeParamsFromSearch(url) {
+  return {
+    input: url.searchParams.get('input') ?? '',
+    format: url.searchParams.get('format') ?? 'json',
+    sourcesSpec: url.searchParams.get('sources') ?? '',
+    target: url.searchParams.get('target') ?? 'wikipedia',
+    maxNgramSize: numberParam(url.searchParams.get('maxNgram')),
+    overrideFile: url.searchParams.get('override') ?? '',
+    noRepoOverrides: url.searchParams.get('noRepoOverrides') === 'true',
+  };
+}
+
+function formalizeParamsFromPayload(payload) {
+  return {
+    input: payload.input ?? '',
+    format: payload.format ?? 'json',
+    sourcesSpec: payload.sources ?? '',
+    target: payload.target ?? 'wikipedia',
+    maxNgramSize: payload.maxNgramSize,
+    overrideFile: payload.overrideFile ?? '',
+    noRepoOverrides: payload.noRepoOverrides === true,
+    overrides: payload.overrides,
+  };
+}
+
+function translateParamsFromSearch(url) {
+  return {
+    ...formalizeParamsFromSearch(url),
+    sourceLanguage:
+      url.searchParams.get('from') ??
+      url.searchParams.get('sourceLanguage') ??
+      '',
+    targetLanguage:
+      url.searchParams.get('to') ??
+      url.searchParams.get('targetLanguage') ??
+      '',
+  };
+}
+
+function translateParamsFromPayload(payload) {
+  return {
+    ...formalizeParamsFromPayload(payload),
+    sourceLanguage: payload.from ?? payload.sourceLanguage,
+    targetLanguage: payload.to ?? payload.targetLanguage,
+  };
 }
 
 function sendNotFound(response) {
@@ -143,6 +176,8 @@ function sendNotFound(response) {
       'POST /analyze',
       'GET /formalize?input=...',
       'POST /formalize',
+      'GET /translate?input=...',
+      'POST /translate',
     ],
   });
 }
@@ -220,6 +255,34 @@ async function sendFormalize(response, params, ctx) {
   });
 }
 
+async function sendTranslate(response, params, ctx) {
+  if (!params.input) {
+    sendJson(response, 400, { error: 'Missing input parameter.' });
+    return;
+  }
+  const sources = params.sourcesSpec
+    ? parseSourceSpec(params.sourcesSpec)
+    : undefined;
+  const repoOverrides = params.noRepoOverrides ? [] : await loadRepoOverrides();
+  const userOverrides = Array.isArray(params.overrides)
+    ? params.overrides
+    : params.overrideFile
+      ? await loadUserOverrides(params.overrideFile)
+      : [];
+  const linkTargetMode = resolveLinkTargetParam(params.target);
+  const result = await translateTextWith(params.input, {
+    fetch: globalThis.fetch?.bind(globalThis),
+    cache: ctx.liveCache,
+    sourceLanguage: params.sourceLanguage,
+    targetLanguage: params.targetLanguage,
+    linkTargetMode,
+    sources,
+    overrides: [...repoOverrides, ...userOverrides],
+    maxNgramSize: params.maxNgramSize,
+  });
+  emitTranslateResponse(response, params.format, result);
+}
+
 function resolveLinkTargetParam(token) {
   const normalized = String(token ?? '').toLowerCase();
   if (normalized === 'wikidata') {
@@ -279,6 +342,32 @@ function emitFormalizeResponse(response, format, payload, meta) {
       2
     )
   );
+  return 0;
+}
+
+function emitTranslateResponse(response, format, payload) {
+  if (format === 'links' || format === 'lino') {
+    response.writeHead(200, {
+      'content-type': 'text/plain; charset=utf-8',
+    });
+    response.end(payload.linksNotation);
+    return 0;
+  }
+  if (format === 'markdown' || format === 'md') {
+    response.writeHead(200, {
+      'content-type': 'text/markdown; charset=utf-8',
+    });
+    response.end(payload.markdown);
+    return 0;
+  }
+  if (format === 'html') {
+    response.writeHead(200, {
+      'content-type': 'text/html; charset=utf-8',
+    });
+    response.end(payload.html);
+    return 0;
+  }
+  sendJson(response, 200, payload);
   return 0;
 }
 

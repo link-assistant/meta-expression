@@ -507,6 +507,50 @@ export interface FormalizeInterpretation {
   }>;
 }
 
+export interface FormalizationCstEntity {
+  id: string;
+  label: string;
+  description: string;
+  kind: 'entity' | 'property' | string;
+  source: string | null;
+  sourceUrl: string | null;
+  wikipediaUrl: string | null;
+  wikipediaTitle: string | null;
+  score: number;
+  url: string;
+}
+
+export interface FormalizationCstCandidate {
+  id: string;
+  label: string;
+  description: string;
+  kind: 'entity' | 'property' | string;
+  score: number;
+  source: string | null;
+}
+
+export interface FormalizationCstPhrase {
+  type: 'phrase';
+  id: string;
+  text: string;
+  tokens: string[];
+  start: number;
+  end: number;
+  size: number;
+  entity: FormalizationCstEntity | null;
+  candidates: FormalizationCstCandidate[];
+}
+
+export interface FormalizationCst {
+  type: 'formalization';
+  version: number;
+  text: string;
+  tokens: string[];
+  linkTargetMode: FormalizeLinkTargetMode;
+  phrases: FormalizationCstPhrase[];
+  contexts: FormalizeContext[];
+}
+
 export interface FormalizeOptions {
   fetch?: typeof fetch | null;
   cache?: Map<string, unknown>;
@@ -532,6 +576,7 @@ export interface FormalizeResult {
   markdown: string;
   html: string;
   linksNotation: string;
+  cst: FormalizationCst;
   linksNetwork: LinksNetwork;
   linkTargetMode: FormalizeLinkTargetMode;
 }
@@ -545,6 +590,81 @@ export declare function formalizeTextWith(
   input: string,
   options?: FormalizeOptions
 ): Promise<FormalizeResult>;
+
+export declare function markdownFromFormalizationCst(
+  cst: FormalizationCst
+): string;
+
+export interface TranslateOptions extends FormalizeOptions {
+  sourceLanguage?: string;
+  targetLanguage?: string;
+  from?: string;
+  to?: string;
+}
+
+export interface TranslationVariable {
+  name: string;
+  sourceText: string;
+  entityId: string | null;
+  reason: string;
+}
+
+export interface TranslationPhrase {
+  id: string;
+  entityId: string | null;
+  source: {
+    text: string;
+    start: number;
+    end: number;
+    language: string;
+    entityId: string | null;
+    label: string | null;
+  };
+  target: {
+    text: string;
+    language: string | null;
+    description: string | null;
+    url: string | null;
+    status: string;
+  };
+  variable: TranslationVariable | null;
+}
+
+export interface TranslationCst {
+  type: 'translation';
+  version: number;
+  text: string;
+  sourceLanguage: string;
+  targetLanguage: string;
+  formalization: FormalizationCst;
+  phrases: TranslationPhrase[];
+  variables: TranslationVariable[];
+}
+
+export interface TranslateResult {
+  text: string;
+  sourceLanguage: string;
+  targetLanguage: string;
+  formalization: FormalizeResult;
+  cst: TranslationCst;
+  phrases: TranslationPhrase[];
+  plainText: string;
+  markdown: string;
+  html: string;
+  linksNotation: string;
+  variables: TranslationVariable[];
+  questions: string[];
+}
+
+export declare function translateText(
+  input: string,
+  options?: TranslateOptions
+): Promise<TranslateResult>;
+
+export declare function translateTextWith(
+  input: string,
+  options?: TranslateOptions
+): Promise<TranslateResult>;
 
 export declare function tokenizeForFormalize(text: string): string[];
 

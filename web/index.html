@@ -38,6 +38,14 @@
         </button>
         <button
           type="button"
+          id="nav-translate"
+          class="top-nav-button"
+          data-i18n="nav.translate"
+        >
+          Translate
+        </button>
+        <button
+          type="button"
           id="nav-preferences"
           class="top-nav-button"
           data-i18n="nav.preferences"
@@ -589,6 +597,106 @@ Barack Obama was born in Hawaii.</textarea
         <details class="formalize-payload">
           <summary data-i18n="formalize.linoPayload">Links Notation</summary>
           <pre id="formalize-lino"></pre>
+        </details>
+      </section>
+    </main>
+
+    <main class="translate-shell" id="page-translate" hidden>
+      <section class="translate-panel" aria-label="Translate text">
+        <header class="translate-header">
+          <h1 data-i18n="translate.heading">Translate</h1>
+          <p class="section-hint" data-i18n="translate.hint">
+            Formalize source phrases with Wikidata, then replace resolved
+            phrases with target-language labels. Unresolved phrases become
+            variables with questions.
+          </p>
+        </header>
+
+        <label class="translate-input-label" for="translate-input">
+          <span data-i18n="translate.text">Text</span>
+        </label>
+        <textarea id="translate-input" rows="5">Hawaii</textarea>
+
+        <div class="translate-options">
+          <label class="translate-option">
+            <span data-i18n="translate.from">From</span>
+            <select id="translate-source-language">
+              <option value="en" selected>English</option>
+              <option value="ru">Русский</option>
+              <option value="es">Español</option>
+              <option value="fr">Français</option>
+              <option value="de">Deutsch</option>
+            </select>
+          </label>
+          <label class="translate-option">
+            <span data-i18n="translate.to">To</span>
+            <select id="translate-target-language">
+              <option value="ru" selected>Русский</option>
+              <option value="en">English</option>
+              <option value="es">Español</option>
+              <option value="fr">Français</option>
+              <option value="de">Deutsch</option>
+            </select>
+          </label>
+        </div>
+
+        <div class="translate-actions">
+          <button
+            type="button"
+            id="translate-run"
+            data-i18n="translate.runButton"
+          >
+            Translate
+          </button>
+          <button
+            type="button"
+            id="translate-copy-markdown"
+            data-i18n="translate.copyMarkdown"
+          >
+            Copy as Markdown
+          </button>
+          <button
+            type="button"
+            id="translate-copy-lino"
+            data-i18n="translate.copyLino"
+          >
+            Copy as Links Notation
+          </button>
+          <span class="translate-status" id="translate-status"></span>
+        </div>
+
+        <section class="translate-result" aria-label="Translated output">
+          <h2 data-i18n="translate.result">Result</h2>
+          <div id="translate-output" class="translate-output">
+            <span data-i18n="translate.resultPlaceholder"
+              >Click Translate to see the output here.</span
+            >
+          </div>
+        </section>
+
+        <section
+          class="translate-unresolved"
+          aria-label="Translation questions"
+        >
+          <h2 data-i18n="translate.questions">Questions</h2>
+          <ul id="translate-questions">
+            <li class="section-empty" data-i18n="translate.questionsEmpty">
+              No unresolved variables.
+            </li>
+          </ul>
+        </section>
+
+        <details class="translate-payload">
+          <summary data-i18n="translate.markdownPayload">Markdown</summary>
+          <pre id="translate-markdown"></pre>
+        </details>
+        <details class="translate-payload">
+          <summary data-i18n="translate.linoPayload">Links Notation</summary>
+          <pre id="translate-lino"></pre>
+        </details>
+        <details class="translate-payload">
+          <summary data-i18n="translate.cstPayload">Translation CST</summary>
+          <pre id="translate-cst"></pre>
         </details>
       </section>
     </main>

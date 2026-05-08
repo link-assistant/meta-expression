@@ -66,6 +66,7 @@ function serializeResult(result) {
     markdown: result.markdown,
     html: result.html,
     linksNotation: result.linksNotation,
+    cst: result.cst,
     linksNetwork: result.linksNetwork,
     linkTargetMode: result.linkTargetMode,
   };
