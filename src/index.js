@@ -10,11 +10,13 @@ import {
 } from './reasoning-strategies.js';
 import { findExampleOpposite } from './examples.js';
 import { createPreferenceEvidence } from './preferences.js';
+import { scoreEvidenceItems } from './evidence-scoring.js';
 
 export {
   createWikimediaEvidenceClient,
   resolveLiveEvidence,
 } from './wikimedia-evidence.js';
+export { computeEvidenceConfidence } from './evidence-scoring.js';
 export {
   disambiguatePhrases,
   describeDisambiguation,
@@ -60,6 +62,7 @@ export {
   parseSourceSpec,
 } from './formalize-sources.js';
 export { translateText, translateTextWith } from './translate.js';
+export { checkText, checkTextWithLiveEvidence } from './check.js';
 export {
   aggregateBigContexts,
   aggregateBigContextsFromGraph,
@@ -85,6 +88,7 @@ export {
 export {
   createDefaultPreferenceProfile,
   createPreferenceEvidence,
+  getPreferenceEvidenceSituationProbability,
   getPreferenceBeliefProbability,
   isPreferenceBeliefVisible,
   listVisiblePreferenceBeliefs,
@@ -92,9 +96,11 @@ export {
   parsePreferenceProfile,
   preferenceBeliefDefinitions,
   preferenceContextDefinitions,
+  preferenceEvidenceSituationDefinitions,
   serializePreferenceProfile,
   setPreferenceBelief,
   setPreferenceContext,
+  setPreferenceEvidenceSituation,
 } from './preferences.js';
 export {
   createDoubletStore,
@@ -120,6 +126,7 @@ const knownEvidence = [
     polarity: 'support',
     weight: 1,
     sourceType: 'wikidata',
+    situation: 'wikidata-structured-claim',
     sourceUrl: 'https://www.wikidata.org/wiki/Q2#P397',
     retrievedAt: '2026-04-26',
     claim:
@@ -135,6 +142,7 @@ const knownEvidence = [
     polarity: 'support',
     weight: 1,
     sourceType: 'wikidata',
+    situation: 'wikidata-structured-claim',
     sourceUrl: 'https://www.wikidata.org/wiki/Q405#P397',
     retrievedAt: '2026-04-26',
     claim:
@@ -191,6 +199,7 @@ const knownEvidence = [
     polarity: 'support',
     weight: 1,
     sourceType: 'wikidata',
+    situation: 'wikidata-structured-claim',
     sourceUrl: 'https://www.wikidata.org/wiki/Q317521#P570',
     retrievedAt: '2026-04-26',
     claim:
@@ -712,6 +721,7 @@ function createIssueReportBody(analysis, options) {
     'Refuting evidence',
     analysis.result.refutingEvidence
   );
+  appendProbabilityCalculationLines(lines, analysis.result.calculation);
   appendReasoningTraceLines(lines, analysis.linksNetwork.links);
   lines.push('');
   lines.push('## Links Notation');
@@ -761,6 +771,30 @@ function appendEvidenceLines(lines, heading, evidenceItems) {
   lines.push('');
 }
 
+function appendProbabilityCalculationLines(lines, calculation) {
+  if (!calculation) {
+    return;
+  }
+
+  lines.push('## Probability Calculation');
+  lines.push('');
+  lines.push(`- **Strategy**: ${calculation.strategy}`);
+  lines.push(`- **Support weight**: ${calculation.supportWeight}`);
+  lines.push(`- **Refute weight**: ${calculation.refuteWeight}`);
+  lines.push(`- **Raw confidence**: ${calculation.rawConfidence}`);
+  lines.push(`- **Bounded confidence**: ${calculation.boundedConfidence}`);
+  lines.push('');
+  for (const evidence of calculation.evidence ?? []) {
+    const situation = evidence.situationId
+      ? `, situation ${evidence.situationId}`
+      : '';
+    lines.push(
+      `- ${evidence.polarity} weight ${evidence.weight}${situation}: ${evidence.claim}`
+    );
+  }
+  lines.push('');
+}
+
 function appendReasoningTraceLines(lines, links) {
   const traceLinks = links.filter((link) =>
     ['meaning', 'reasoning-step'].includes(link.role)
@@ -798,61 +832,6 @@ function summarizeReportValue(value) {
     value.expression?.type ??
     ''
   );
-}
-
-export function computeEvidenceConfidence(evidenceItems) {
-  const totals = evidenceItems.reduce(
-    (accumulator, evidence) => {
-      const weight = Number(evidence.weight ?? 0);
-      if (evidence.polarity === 'support') {
-        accumulator.support += weight;
-      } else if (evidence.polarity === 'refute') {
-        accumulator.refute += weight;
-      }
-      return accumulator;
-    },
-    { support: 0, refute: 0 }
-  );
-  const total = totals.support + totals.refute;
-
-  if (total === 0) {
-    return {
-      confidence: null,
-      rawBalance: null,
-      supportWeight: 0,
-      refuteWeight: 0,
-    };
-  }
-
-  return {
-    confidence: clamp(totals.support / total, 0, 1),
-    rawBalance: clamp((totals.support - totals.refute) / total, -1, 1),
-    supportWeight: totals.support,
-    refuteWeight: totals.refute,
-  };
-}
-
-function applySourceWeights(evidenceItems, beliefSystem) {
-  return evidenceItems.map((evidence) => {
-    const sourceWeight = Number(
-      beliefSystem.sourceWeights?.[evidence.sourceType] ?? 1
-    );
-    return {
-      ...evidence,
-      weight: Number(evidence.weight ?? 0) * sourceWeight,
-    };
-  });
-}
-
-function boundRealWorldConfidence(confidence, uncertainty) {
-  if (confidence === null) {
-    return null;
-  }
-  const parsed = Number(uncertainty);
-  const epsilon = Number.isFinite(parsed)
-    ? clamp(parsed, 0, 0.49)
-    : realWorldConfidenceEpsilon;
-  return clamp(confidence, epsilon, 1 - epsilon);
 }
 
 function createUserBeliefEvidence(formalization, userBeliefs) {
@@ -1204,17 +1183,12 @@ function estimateFromEvidence(formalization, evidenceFixtures, options = {}) {
   const evidence = evidenceFixtures.filter(
     (item) => item.key === formalization.expression.normalized
   );
-  const weightedEvidence = applySourceWeights(
-    evidence,
-    options.beliefSystem ?? defaultBeliefSystem
-  );
-  const confidence = computeEvidenceConfidence(weightedEvidence);
-  const boundedConfidence = boundRealWorldConfidence(
-    confidence.confidence,
-    options.realWorldUncertainty ??
-      options.beliefSystem?.realWorldUncertainty ??
-      realWorldConfidenceEpsilon
-  );
+  const { weightedEvidence, confidence, boundedConfidence, calculation } =
+    scoreEvidenceItems(evidence, {
+      ...options,
+      defaultBeliefSystem,
+      defaultRealWorldUncertainty: realWorldConfidenceEpsilon,
+    });
 
   const boundedSignedConfidence =
     boundedConfidence === null ? null : 2 * boundedConfidence - 1;
@@ -1228,6 +1202,7 @@ function estimateFromEvidence(formalization, evidenceFixtures, options = {}) {
     rawBalance: confidence.rawBalance,
     supportWeight: confidence.supportWeight,
     refuteWeight: confidence.refuteWeight,
+    calculation,
     supportingEvidence: weightedEvidence.filter(
       (item) => item.polarity === 'support'
     ),
@@ -1237,7 +1212,7 @@ function estimateFromEvidence(formalization, evidenceFixtures, options = {}) {
     explanation:
       confidence.confidence === null
         ? 'No configured evidence was found for the selected interpretation.'
-        : 'Confidence is the weighted support ratio over configured evidence, bounded away from absolute certainty for real-world claims.',
+        : 'Confidence is the weighted support ratio over configured evidence situations, bounded away from absolute certainty for real-world claims.',
   };
 }
 

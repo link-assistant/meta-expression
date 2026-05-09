@@ -8,6 +8,7 @@ import {
 } from './index.js';
 import { formalizeTextWith, FORMALIZE_LINK_TARGETS } from './formalize.js';
 import { translateTextWith } from './translate.js';
+import { checkText, checkTextWithLiveEvidence } from './check.js';
 import { parseSourceSpec } from './formalize-sources.js';
 import { loadRepoOverrides, loadUserOverrides } from './formalize-overrides.js';
 
@@ -16,6 +17,7 @@ export function parseCliArguments(args) {
     command: 'analyze',
     format: 'json',
     inputParts: [],
+    evidenceScoring: {},
   };
   let index = 0;
   const optionHandlers = {
@@ -63,6 +65,13 @@ export function parseCliArguments(args) {
     '--max-ngram': () => {
       options.maxNgramSize = Number(args[++index] ?? 3);
     },
+    '--score': () => {
+      const [id, value] = String(args[++index] ?? '').split('=');
+      const parsed = Number(value);
+      if (id && Number.isFinite(parsed)) {
+        options.evidenceScoring[id] = parsed;
+      }
+    },
     '--help': () => {
       options.command = 'help';
     },
@@ -108,6 +117,16 @@ export function runCli(args = process.argv.slice(2), output = console) {
     return checked;
   }
 
+  if (isCheckCommand(options.command)) {
+    return emitCheckResult(
+      options,
+      output,
+      checkText(options.input, {
+        evidenceScoring: options.evidenceScoring,
+      })
+    );
+  }
+
   return emitCliAnalysis(
     options,
     output,
@@ -129,6 +148,9 @@ export async function runCliAsync(
   }
   if (options.command === 'translate') {
     return runTranslateCommand(options, output);
+  }
+  if (isCheckCommand(options.command)) {
+    return runCheckCommand(options, output);
   }
 
   const analysis = options.live
@@ -210,6 +232,18 @@ async function runTranslateCommand(options, output) {
   return 0;
 }
 
+async function runCheckCommand(options, output) {
+  const result = options.live
+    ? await checkTextWithLiveEvidence(options.input, {
+        fetch: globalThis.fetch?.bind(globalThis),
+        evidenceScoring: options.evidenceScoring,
+      })
+    : checkText(options.input, {
+        evidenceScoring: options.evidenceScoring,
+      });
+  return emitCheckResult(options, output, result);
+}
+
 function resolveCliLinkTargetMode(token) {
   if (!token) {
     return FORMALIZE_LINK_TARGETS.WIKIPEDIA;
@@ -230,7 +264,11 @@ function validateCliOptions(options, output) {
     return 0;
   }
 
-  if (!['analyze', 'formalize', 'translate'].includes(options.command)) {
+  if (
+    !['analyze', 'formalize', 'translate', 'check', 'fact-check'].includes(
+      options.command
+    )
+  ) {
     output.error(`Unsupported command: ${options.command}`);
     output.error(helpText());
     return 1;
@@ -249,6 +287,7 @@ function cliAnalysisOptions(options) {
   return {
     interpretationIndex: options.interpretationIndex ?? 0,
     selectedBy: 'cli',
+    evidenceScoring: options.evidenceScoring,
   };
 }
 
@@ -262,6 +301,27 @@ function emitCliAnalysis(options, output, analysis) {
   return 0;
 }
 
+function emitCheckResult(options, output, result) {
+  if (options.format === 'links' || options.format === 'lino') {
+    output.log(result.linksNotation);
+    return 0;
+  }
+  if (options.format === 'markdown' || options.format === 'md') {
+    output.log(result.markdown);
+    return 0;
+  }
+  if (options.format === 'html') {
+    output.log(result.html);
+    return 0;
+  }
+  output.log(JSON.stringify(result, null, 2));
+  return 0;
+}
+
+function isCheckCommand(command) {
+  return command === 'check' || command === 'fact-check';
+}
+
 function helpText() {
   return `Usage:
   meta-expression analyze "1 + 1 = 2"
@@ -272,11 +332,16 @@ function helpText() {
   meta-expression formalize --input "Genshin Impact" --sources wikidata,fandom:genshin-impact
   meta-expression formalize --input "Hawaii" --format markdown --target wikipedia
   meta-expression translate --input "Hawaii is a state." --to ru --format markdown
+  meta-expression check --input "Earth orbits the Sun. 1 + 1 = 1." --format html
+  meta-expression check --input "Earth orbits the Sun." --score wikidata-structured-claim=0.7
+  meta-expression fact-check --input "Paris is the capital of France." --live
 
 Commands:
   analyze     Run the disambiguation/evaluation prototype.
   formalize   Tokenise text and link each phrase to a knowledge graph entity.
   translate   Formalize text, then translate resolved Wikidata phrases.
+  check       Color detected statements by correctness.
+  fact-check  Alias for check.
 
 Options:
   -i, --input <text>             Statement text
@@ -294,6 +359,8 @@ Options:
   --override <file.lino|.json>   formalize: extra user override file (.lino preferred)
   --no-repo-overrides            formalize: ignore docs/formalize/overrides.lino
   --max-ngram <n>                formalize: maximum n-gram size (default 3)
+  --score <situation=probability>
+                                 check/fact-check: override evidence scoring
   -h, --help                     Show this help`;
 }
 

@@ -50,6 +50,9 @@ Core exports:
   sentences through resolved Wikidata Q/P target-language labels and explicit
   transformation rules while preserving unresolved parts as variables with
   questions and trace steps.
+- `checkText(input, options)` detects statements in longer text, analyzes each
+  statement, and returns red-to-green correctness coloring as JSON, HTML,
+  Markdown, and Links Notation.
 
 Current deterministic examples:
 
@@ -78,6 +81,8 @@ node src/cli.js analyze --input "Earth orbits the Sun" --format links
 node src/cli.js analyze --input "Paris is the capital of France" --live
 node src/cli.js formalize --input "Hawaii is a state." --format markdown
 node src/cli.js translate --input "Hawaii is a state." --to ru --format markdown
+node src/cli.js check --input "Earth orbits the Sun. 1 + 1 = 1." --format html
+node src/cli.js fact-check --input "Paris is the capital of France." --live
 ```
 
 ## Microservice
@@ -87,6 +92,7 @@ npm start
 curl "http://127.0.0.1:3000/analyze?input=1%20%2B%201%20%3D%202"
 curl "http://127.0.0.1:3000/analyze?input=Earth%20orbits%20the%20Sun&format=links"
 curl "http://127.0.0.1:3000/translate?input=Hawaii%20is%20a%20state.&to=ru&format=markdown"
+curl "http://127.0.0.1:3000/check?input=Earth%20orbits%20the%20Sun.%201%20%2B%201%20%3D%201.&format=html"
 ```
 
 Routes:
@@ -99,6 +105,10 @@ Routes:
 - `POST /formalize` with `{ "input": "...", "format": "json" }`
 - `GET /translate?input=...&from=en&to=ru&format=json|links|markdown|html`
 - `POST /translate` with `{ "input": "...", "targetLanguage": "ru" }`
+- `GET /check?input=...&format=json|links|markdown|html`
+- `POST /check` with `{ "input": "...", "live": true }`
+- `GET /fact-check?input=...` and `POST /fact-check` as aliases for
+  `/check`
 
 ## Static Web Prototype
 
@@ -119,12 +129,14 @@ signed Confidence), result/evidence summaries, Q/P source links in the links
 network, Links Notation output, a live Wikimedia evidence worker, a global
 prefilled GitHub issue report link with page state and deployed version
 metadata, and a top-menu page switch between **Analyse**
-(default), **Compare**, **Formalize**, **Translate**, and **Preferences**. The
-Translate page uses the formalization CST to show formalized source text,
-translated sentence output, unresolved questions, Markdown, Links Notation, the
-translation CST, and a collapsed step trace. The Preferences page stores a
-local profile with worldview sliders, context presets, and Links Notation
-import/export.
+(default), **Compare**, **Check**, **Formalize**, **Translate**, and
+**Preferences**. The Check page colors each detected statement from red
+(wrong) to green (correct) and exposes the checked result as Markdown and Links
+Notation. The Translate page uses the formalization CST to show formalized
+source text, translated sentence output, unresolved questions, Markdown, Links
+Notation, the translation CST, and a collapsed step trace. The Preferences page
+stores a local profile with worldview sliders, context presets, and Links
+Notation import/export.
 
 ### Default metrics
 

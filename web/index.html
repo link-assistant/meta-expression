@@ -7,6 +7,7 @@
     <title>meta-expression prototype</title>
     <link rel="icon" href="data:," />
     <link rel="stylesheet" href="./styles.css" />
+    <link rel="stylesheet" href="./check.css" />
   </head>
   <body>
     <nav class="top-nav" aria-label="Pages">
@@ -27,6 +28,14 @@
           data-i18n="nav.compare"
         >
           Compare
+        </button>
+        <button
+          type="button"
+          id="nav-check"
+          class="top-nav-button"
+          data-i18n="nav.check"
+        >
+          Check
         </button>
         <button
           type="button"
@@ -296,6 +305,68 @@
             Compare
           </button>
         </div>
+      </section>
+    </main>
+
+    <main class="check-shell" id="page-check" hidden>
+      <section class="check-panel" aria-label="Check text">
+        <header class="check-header">
+          <h1 data-i18n="check.heading">Check</h1>
+          <p class="section-hint" data-i18n="check.hint">
+            Paste text to color detected statements by correctness.
+          </p>
+        </header>
+
+        <label class="check-input-label" for="check-input">
+          <span data-i18n="check.text">Text</span>
+        </label>
+        <textarea id="check-input" rows="7">
+Earth orbits the Sun. 1 + 1 = 1.</textarea
+        >
+
+        <div class="check-options">
+          <label class="check-live-option">
+            <input type="checkbox" id="check-live" />
+            <span data-i18n="check.live">Live Wikimedia evidence</span>
+          </label>
+        </div>
+
+        <div class="check-actions">
+          <button type="button" id="check-run" data-i18n="check.runButton">
+            Check
+          </button>
+          <button
+            type="button"
+            id="check-copy-markdown"
+            data-i18n="check.copyMarkdown"
+          >
+            Copy as Markdown
+          </button>
+          <button type="button" id="check-copy-lino" data-i18n="check.copyLino">
+            Copy as Links Notation
+          </button>
+          <span class="check-status" id="check-status"></span>
+        </div>
+
+        <section class="check-summary" id="check-summary"></section>
+
+        <section class="check-result" aria-label="Checked output">
+          <h2 data-i18n="check.result">Result</h2>
+          <div id="check-output" class="check-output">
+            <span data-i18n="check.resultPlaceholder"
+              >Click Check to color detected statements here.</span
+            >
+          </div>
+        </section>
+
+        <details class="check-payload">
+          <summary data-i18n="check.markdownPayload">Markdown</summary>
+          <pre id="check-markdown"></pre>
+        </details>
+        <details class="check-payload">
+          <summary data-i18n="check.linoPayload">Links Notation</summary>
+          <pre id="check-lino"></pre>
+        </details>
       </section>
     </main>
 
@@ -773,6 +844,19 @@ Barack Obama was born in Hawaii.</textarea
             Context
           </h2>
           <div class="preferences-context-list" id="preferences-contexts"></div>
+        </section>
+
+        <section
+          class="preferences-section"
+          aria-labelledby="preferences-evidence-heading"
+        >
+          <h2
+            id="preferences-evidence-heading"
+            data-i18n="preferences.evidence"
+          >
+            Evidence scoring
+          </h2>
+          <div class="preferences-slider-list" id="preferences-evidence"></div>
         </section>
 
         <section

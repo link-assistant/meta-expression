@@ -7,6 +7,7 @@ import {
 } from './index.js';
 import { formalizeTextWith, FORMALIZE_LINK_TARGETS } from './formalize.js';
 import { translateTextWith } from './translate.js';
+import { checkText, checkTextWithLiveEvidence } from './check.js';
 import { parseSourceSpec } from './formalize-sources.js';
 import { loadRepoOverrides, loadUserOverrides } from './formalize-overrides.js';
 import {
@@ -78,6 +79,10 @@ async function routeGetRequest(url, response, ctx) {
     case '/translate':
       await sendTranslate(response, translateParamsFromSearch(url), ctx);
       return;
+    case '/check':
+    case '/fact-check':
+      await sendCheck(response, checkParamsFromSearch(url), ctx);
+      return;
     default:
       sendNotFound(response);
   }
@@ -96,6 +101,10 @@ async function routePostRequest(url, request, response, ctx) {
       return;
     case '/translate':
       await sendTranslate(response, translateParamsFromPayload(payload), ctx);
+      return;
+    case '/check':
+    case '/fact-check':
+      await sendCheck(response, checkParamsFromPayload(payload), ctx);
       return;
     default:
       sendNotFound(response);
@@ -167,6 +176,39 @@ function translateParamsFromPayload(payload) {
   };
 }
 
+function checkParamsFromSearch(url) {
+  return {
+    input: url.searchParams.get('input') ?? '',
+    format: url.searchParams.get('format') ?? 'json',
+    live: url.searchParams.get('live') === 'true',
+    evidenceScoring: evidenceScoringFromSearch(url),
+  };
+}
+
+function checkParamsFromPayload(payload) {
+  return {
+    input: payload.input ?? '',
+    format: payload.format ?? 'json',
+    live: payload.live === true,
+    evidenceScoring: payload.evidenceScoring,
+    preferenceProfile: payload.preferenceProfile,
+  };
+}
+
+function evidenceScoringFromSearch(url) {
+  const scoring = {};
+  for (const [key, value] of url.searchParams.entries()) {
+    if (!key.startsWith('score.')) {
+      continue;
+    }
+    const parsed = Number(value);
+    if (Number.isFinite(parsed)) {
+      scoring[key.slice('score.'.length)] = parsed;
+    }
+  }
+  return scoring;
+}
+
 function sendNotFound(response) {
   sendJson(response, 404, {
     error: 'Not found',
@@ -178,6 +220,10 @@ function sendNotFound(response) {
       'POST /formalize',
       'GET /translate?input=...',
       'POST /translate',
+      'GET /check?input=...',
+      'POST /check',
+      'GET /fact-check?input=...',
+      'POST /fact-check',
     ],
   });
 }
@@ -283,6 +329,23 @@ async function sendTranslate(response, params, ctx) {
   emitTranslateResponse(response, params.format, result);
 }
 
+async function sendCheck(response, params, ctx) {
+  if (!params.input) {
+    sendJson(response, 400, { error: 'Missing input parameter.' });
+    return;
+  }
+  const options = {
+    fetch: globalThis.fetch?.bind(globalThis),
+    cache: ctx.liveCache,
+    evidenceScoring: params.evidenceScoring,
+    preferenceProfile: params.preferenceProfile,
+  };
+  const result = params.live
+    ? await checkTextWithLiveEvidence(params.input, options)
+    : checkText(params.input, options);
+  emitCheckResponse(response, params.format, result);
+}
+
 function resolveLinkTargetParam(token) {
   const normalized = String(token ?? '').toLowerCase();
   if (normalized === 'wikidata') {
@@ -346,6 +409,32 @@ function emitFormalizeResponse(response, format, payload, meta) {
 }
 
 function emitTranslateResponse(response, format, payload) {
+  if (format === 'links' || format === 'lino') {
+    response.writeHead(200, {
+      'content-type': 'text/plain; charset=utf-8',
+    });
+    response.end(payload.linksNotation);
+    return 0;
+  }
+  if (format === 'markdown' || format === 'md') {
+    response.writeHead(200, {
+      'content-type': 'text/markdown; charset=utf-8',
+    });
+    response.end(payload.markdown);
+    return 0;
+  }
+  if (format === 'html') {
+    response.writeHead(200, {
+      'content-type': 'text/html; charset=utf-8',
+    });
+    response.end(payload.html);
+    return 0;
+  }
+  sendJson(response, 200, payload);
+  return 0;
+}
+
+function emitCheckResponse(response, format, payload) {
   if (format === 'links' || format === 'lino') {
     response.writeHead(200, {
       'content-type': 'text/plain; charset=utf-8',
