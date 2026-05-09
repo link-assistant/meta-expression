@@ -399,6 +399,24 @@ jobs:
         run: |
           mkdir -p _site
           cp -R web src _site/
+          node --input-type=module <<'NODE'
+          import { readFileSync, writeFileSync } from 'node:fs';
+          const packageJson = JSON.parse(readFileSync('package.json', 'utf8'));
+          writeFileSync(
+            '_site/web/app-version.json',
+            JSON.stringify(
+              {
+                packageVersion: packageJson.version,
+                commitSha: process.env.GITHUB_SHA,
+                ref: process.env.GITHUB_REF_NAME,
+                buildTime: new Date().toISOString(),
+                source: 'github-pages',
+              },
+              null,
+              2
+            ) + '\n'
+          );
+          NODE
           cat > _site/index.html <<'HTML'
           <!doctype html>
           <html lang="en">
