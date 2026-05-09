@@ -127,6 +127,13 @@ textarea {
   min-height: 36px;
 }
 
+.app-version {
+  color: var(--ink-soft);
+  font-size: 0.82rem;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
 .top-nav-button {
   background: transparent;
   color: var(--accent);
@@ -152,6 +159,10 @@ textarea {
   padding: 6px 10px;
   font-size: 1.1rem;
   line-height: 1;
+}
+
+.top-nav-report {
+  text-decoration: none;
 }
 
 .top-nav-locale select {

@@ -54,6 +54,7 @@
         </button>
       </div>
       <div class="top-nav-prefs">
+        <span class="app-version" id="app-version">version unknown</span>
         <label class="top-nav-locale">
           <span class="visually-hidden" data-i18n="prefs.locale">Language</span>
           <select id="locale-select" aria-label="Language"></select>
@@ -70,6 +71,16 @@
             >Theme: auto</span
           >
         </button>
+        <a
+          class="top-nav-button top-nav-report"
+          id="report-issue-global"
+          href="https://github.com/link-assistant/meta-expression/issues/new"
+          target="_blank"
+          rel="noopener noreferrer"
+          data-issue-report-link
+          data-i18n="nav.reportIssue"
+          >Report Issue</a
+        >
       </div>
     </nav>
     <main class="app-shell" id="page-analyse">
@@ -253,6 +264,7 @@
               href="https://github.com/link-assistant/meta-expression/issues/new"
               target="_blank"
               rel="noopener noreferrer"
+              data-issue-report-link
               data-i18n="analyse.reportIssue"
               >Report Issue</a
             >

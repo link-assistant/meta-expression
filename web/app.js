@@ -1,6 +1,5 @@
 import {
   analyzeStatement,
-  createIssueReportUrl,
   createStatementDraft,
   createSeededRandom,
   createWikimediaEvidenceClient,
@@ -52,6 +51,7 @@ import {
   getActivePreferenceProfile,
   setupPreferencesPage,
 } from './preferences-ui.js';
+import { setupPageIssueReporting } from './page-report.js';
 import { setupTranslatePage } from './translate-ui.js';
 
 const beliefStorageKey = 'meta-expression.user-beliefs.v1';
@@ -106,7 +106,6 @@ const liveEvidenceStatus = document.querySelector('#live-evidence-status');
 const linkLanes = document.querySelector('#link-lanes');
 const linoOutput = document.querySelector('#lino-output');
 const copyLino = document.querySelector('#copy-lino');
-const reportIssue = document.querySelector('#report-issue');
 const strategySelect = document.querySelector('#strategy-select');
 const strategySummary = document.querySelector('#strategy-summary');
 const localeSelect = document.querySelector('#locale-select');
@@ -148,10 +147,6 @@ copyLino.addEventListener('click', async () => {
   if (globalThis.navigator?.clipboard) {
     await globalThis.navigator.clipboard.writeText(lino);
   }
-});
-
-reportIssue.addEventListener('click', () => {
-  updateReportIssueLink();
 });
 
 beliefSlider.addEventListener('input', () => {
@@ -225,7 +220,6 @@ function render(statement, interpretationIndex = 0) {
   renderOpposite(statement, currentAnalysis.opposite);
   renderResult(currentAnalysis);
   renderReasoningSteps(currentAnalysis);
-  updateReportIssueLink();
   syncSelectedExample(statement);
   requestLiveEvidence(statement);
   linoOutput.hidden = true;
@@ -520,21 +514,7 @@ function applyLiveEvidenceResult(data) {
   renderRefutations(currentAnalysis.refutations);
   renderResult(currentAnalysis);
   renderReasoningSteps(currentAnalysis);
-  updateReportIssueLink();
   liveEvidenceStatus.textContent = 'Live Wikimedia evidence';
-}
-
-function updateReportIssueLink() {
-  if (!currentAnalysis) {
-    reportIssue.href =
-      'https://github.com/link-assistant/meta-expression/issues/new';
-    return;
-  }
-
-  reportIssue.href = createIssueReportUrl(currentAnalysis, {
-    pageUrl: globalThis.location.href,
-    userAgent: globalThis.navigator.userAgent,
-  });
 }
 
 function renderPreparedExamples() {
@@ -783,6 +763,18 @@ navFormalize.addEventListener('click', () => showPage('formalize'));
 navTranslate.addEventListener('click', () => showPage('translate'));
 navPreferences.addEventListener('click', () => showPage('preferences'));
 globalThis.addEventListener('hashchange', () => showPage(pageFromHash()));
+setupPageIssueReporting({
+  getPageId: pageFromHash,
+  getAnalysis: () => currentAnalysis,
+  getFormalizeResult: () => currentFormalizeResult,
+  getPreferenceProfile: getActivePreferenceProfile,
+  getStrategyId: () => strategyId,
+  getLocale: () => currentLocale,
+  getTheme: () => currentThemePreference,
+  getFormalizeSourcesSpec: collectFormalizeSourcesSpec,
+  getFormalizeLinkTargetMode: selectedLinkTargetMode,
+  getInterpretationDisplayMode: () => interpretationDisplayMode,
+});
 
 function seedCompareRows() {
   appendCompareRow('Population of Russia is 100m');

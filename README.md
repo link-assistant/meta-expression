@@ -116,8 +116,9 @@ Pages `/web/` path after tests pass.
 The web prototype includes prepared examples, an interpretation selector, local
 belief slider saved in `localStorage`, two default metrics (Correctness and
 signed Confidence), result/evidence summaries, Q/P source links in the links
-network, Links Notation output, a live Wikimedia evidence worker, a prefilled
-GitHub issue report link, and a top-menu page switch between **Analyse**
+network, Links Notation output, a live Wikimedia evidence worker, a global
+prefilled GitHub issue report link with page state and deployed version
+metadata, and a top-menu page switch between **Analyse**
 (default), **Compare**, **Formalize**, **Translate**, and **Preferences**. The
 Translate page uses the formalization CST to show formalized source text,
 translated sentence output, unresolved questions, Markdown, Links Notation, the
