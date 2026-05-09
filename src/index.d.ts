@@ -536,6 +536,8 @@ export interface FormalizationCstPhrase {
   tokens: string[];
   start: number;
   end: number;
+  sourceStart: number | null;
+  sourceEnd: number | null;
   size: number;
   entity: FormalizationCstEntity | null;
   candidates: FormalizationCstCandidate[];
@@ -607,6 +609,7 @@ export interface TranslationVariable {
   sourceText: string;
   entityId: string | null;
   reason: string;
+  resolvedByRule?: boolean;
 }
 
 export interface TranslationPhrase {
@@ -616,6 +619,8 @@ export interface TranslationPhrase {
     text: string;
     start: number;
     end: number;
+    sourceStart: number | null;
+    sourceEnd: number | null;
     language: string;
     entityId: string | null;
     label: string | null;
@@ -630,6 +635,46 @@ export interface TranslationPhrase {
   variable: TranslationVariable | null;
 }
 
+export interface TranslationSentence {
+  id: string;
+  source: {
+    text: string;
+    start: number;
+    end: number;
+    language: string;
+  };
+  target: {
+    text: string;
+    markdown: string;
+    html: string;
+    language: string;
+  };
+  phrases: TranslationPhrase[];
+  transformations: string[];
+  resolvedVariableNames: string[];
+  plainText: string;
+  markdown: string;
+  html: string;
+}
+
+export interface TranslationStep {
+  id: string;
+  type: string;
+  [key: string]: unknown;
+}
+
+export interface TranslationCstSentence {
+  type: 'sentence';
+  id: string;
+  sourceText: string;
+  sourceStart: number;
+  sourceEnd: number;
+  targetText: string;
+  targetMarkdown: string;
+  transformations: string[];
+  phraseIds: string[];
+}
+
 export interface TranslationCst {
   type: 'translation';
   version: number;
@@ -639,6 +684,8 @@ export interface TranslationCst {
   formalization: FormalizationCst;
   phrases: TranslationPhrase[];
   variables: TranslationVariable[];
+  sentences: TranslationCstSentence[];
+  steps: TranslationStep[];
 }
 
 export interface TranslateResult {
@@ -648,12 +695,14 @@ export interface TranslateResult {
   formalization: FormalizeResult;
   cst: TranslationCst;
   phrases: TranslationPhrase[];
+  sentences: TranslationSentence[];
   plainText: string;
   markdown: string;
   html: string;
   linksNotation: string;
   variables: TranslationVariable[];
   questions: string[];
+  steps: TranslationStep[];
 }
 
 export declare function translateText(

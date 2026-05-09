@@ -254,7 +254,7 @@ export async function formalizeTextWith(input, options = {}) {
     config
   );
   const markdown = markdownFromFormalizationCst(cst);
-  const html = renderHtml(reranked, config);
+  const html = htmlFromFormalizationCst(cst);
   const linksNotation = renderLinksNotation(cst);
 
   return {
@@ -281,10 +281,11 @@ export async function formalizeTextWith(input, options = {}) {
 /**
  * Recreate Markdown from a formalization CST.
  *
- * The CST stores phrase order, source text, selected entity id, and the exact
- * link URL used by the formalizer. That makes the Links Notation / CST form
- * sufficient for downstream tools such as `/translate` to regenerate the
- * same wikified Markdown without re-running disambiguation.
+ * The CST stores phrase order, source text, source character ranges, selected
+ * entity id, and the exact link URL used by the formalizer. That makes the
+ * Links Notation / CST form sufficient for downstream tools such as
+ * `/translate` to regenerate the same wikified Markdown, including sentence
+ * punctuation, without re-running disambiguation.
  *
  * @param {object} cst
  * @returns {string}
@@ -292,6 +293,9 @@ export async function formalizeTextWith(input, options = {}) {
 export function markdownFromFormalizationCst(cst) {
   if (!cst || !Array.isArray(cst.phrases)) {
     throw new TypeError('Formalization CST must contain a phrases array.');
+  }
+  if (canRenderCstWithSourceText(cst)) {
+    return markdownFromCstSourceText(cst);
   }
   return cst.phrases.map((phrase) => markdownFromCstPhrase(phrase)).join(' ');
 }
@@ -1087,6 +1091,7 @@ function generateFormalizeInterpretations(phrases, contexts, config) {
 }
 
 function buildFormalizationCst(text, tokens, phrases, contexts, config) {
+  const tokenSpans = sourceTokenSpans(text, tokens);
   return {
     type: 'formalization',
     version: 1,
@@ -1094,7 +1099,7 @@ function buildFormalizationCst(text, tokens, phrases, contexts, config) {
     tokens: [...tokens],
     linkTargetMode: config.linkTargetMode,
     phrases: phrases.map((phrase, index) =>
-      buildCstPhrase(phrase, index, config)
+      buildCstPhrase(phrase, index, config, tokenSpans)
     ),
     contexts: contexts.all.map((context, index) => ({
       id: `context-${index + 1}`,
@@ -1107,7 +1112,9 @@ function buildFormalizationCst(text, tokens, phrases, contexts, config) {
   };
 }
 
-function buildCstPhrase(phrase, index, config) {
+function buildCstPhrase(phrase, index, config, tokenSpans) {
+  const firstToken = tokenSpans[phrase.start];
+  const lastToken = tokenSpans[phrase.end];
   return {
     type: 'phrase',
     id: `phrase-${index + 1}`,
@@ -1115,12 +1122,30 @@ function buildCstPhrase(phrase, index, config) {
     tokens: [...phrase.tokens],
     start: phrase.start,
     end: phrase.end,
+    sourceStart: firstToken?.start ?? null,
+    sourceEnd: lastToken?.end ?? null,
     size: phrase.size,
     entity: phrase.entity ? buildCstEntity(phrase.entity, config) : null,
     candidates: (phrase.candidates ?? []).map((candidate) =>
       buildCstEntity(candidate, config)
     ),
   };
+}
+
+function sourceTokenSpans(text, tokens) {
+  const spans = [];
+  let cursor = 0;
+  for (const token of tokens) {
+    const start = text.indexOf(token, cursor);
+    if (start === -1) {
+      spans.push({ start: null, end: null });
+      continue;
+    }
+    const end = start + token.length;
+    spans.push({ start, end });
+    cursor = end;
+  }
+  return spans;
 }
 
 function buildCstEntity(entity, config) {
@@ -1228,12 +1253,11 @@ function buildContextLink(context, index, inputId) {
   };
 }
 
-function renderHtml(phrases, config) {
-  return phrases
-    .map((phrase) =>
-      buildHtmlLink(phrase, { linkTargetMode: config.linkTargetMode })
-    )
-    .join(' ');
+function htmlFromFormalizationCst(cst) {
+  if (canRenderCstWithSourceText(cst)) {
+    return htmlFromCstSourceText(cst);
+  }
+  return cst.phrases.map((phrase) => htmlFromCstPhrase(phrase)).join(' ');
 }
 
 function renderLinksNotation(cst) {
@@ -1258,6 +1282,63 @@ function markdownFromCstPhrase(phrase) {
     return phrase.text;
   }
   return `[${escapeMarkdown(phrase.text)}](${phrase.entity.url} "${phrase.entity.id}")`;
+}
+
+function canRenderCstWithSourceText(cst) {
+  return (
+    typeof cst.text === 'string' &&
+    cst.phrases.every(
+      (phrase) =>
+        Number.isInteger(phrase.sourceStart) &&
+        Number.isInteger(phrase.sourceEnd) &&
+        phrase.sourceEnd >= phrase.sourceStart
+    )
+  );
+}
+
+function markdownFromCstSourceText(cst) {
+  const phrases = [...cst.phrases].sort(
+    (left, right) => left.sourceStart - right.sourceStart
+  );
+  let cursor = 0;
+  let markdown = '';
+  for (const phrase of phrases) {
+    if (phrase.sourceStart < cursor) {
+      continue;
+    }
+    markdown += cst.text.slice(cursor, phrase.sourceStart);
+    markdown += markdownFromCstPhrase(phrase);
+    cursor = phrase.sourceEnd;
+  }
+  markdown += cst.text.slice(cursor);
+  return markdown;
+}
+
+function htmlFromCstPhrase(phrase) {
+  if (!phrase.entity) {
+    return escapeHtml(phrase.text);
+  }
+  return `<a href="${escapeAttribute(phrase.entity.url)}" title="${escapeAttribute(
+    phrase.entity.id
+  )}">${escapeHtml(phrase.text)}</a>`;
+}
+
+function htmlFromCstSourceText(cst) {
+  const phrases = [...cst.phrases].sort(
+    (left, right) => left.sourceStart - right.sourceStart
+  );
+  let cursor = 0;
+  let html = '';
+  for (const phrase of phrases) {
+    if (phrase.sourceStart < cursor) {
+      continue;
+    }
+    html += escapeHtml(cst.text.slice(cursor, phrase.sourceStart));
+    html += htmlFromCstPhrase(phrase);
+    cursor = phrase.sourceEnd;
+  }
+  html += escapeHtml(cst.text.slice(cursor));
+  return html;
 }
 
 function toLino(value) {

@@ -271,7 +271,7 @@ function helpText() {
   meta-expression formalize "Albert Einstein was born in Ulm"
   meta-expression formalize --input "Genshin Impact" --sources wikidata,fandom:genshin-impact
   meta-expression formalize --input "Hawaii" --format markdown --target wikipedia
-  meta-expression translate --input "Hawaii" --to ru --format markdown
+  meta-expression translate --input "Hawaii is a state." --to ru --format markdown
 
 Commands:
   analyze     Run the disambiguation/evaluation prototype.

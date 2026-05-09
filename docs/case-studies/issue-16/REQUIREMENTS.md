@@ -23,8 +23,9 @@ The formalization output must include enough concrete syntax-tree information
 to regenerate Markdown and support later Links Notation manipulation.
 
 Status: implemented. The formalization CST stores phrase ids, token spans,
-source text, chosen entity ids, generated link URLs, candidate summaries, and
-contexts. `markdownFromFormalizationCst()` verifies the Markdown round trip.
+source character ranges, source text, chosen entity ids, generated link URLs,
+candidate summaries, and contexts. `markdownFromFormalizationCst()` verifies
+the Markdown round trip while preserving sentence punctuation.
 
 ## R16.4 — Preserve undefined parts as variables
 
@@ -49,7 +50,8 @@ Tests should not fake correctness. They should pin observed data contracts and
 use deterministic fixtures.
 
 Status: implemented with mocked Wikidata search/entity payloads for Hawaii
-`Q782` and Russian `Гавайи`, plus unresolved-term fixtures.
+`Q782`, state `Q7275`, and Russian `Гавайи`/`штат`, plus unresolved-term
+fixtures.
 
 ## R16.7 — Survey related work and components
 
@@ -58,3 +60,24 @@ language-switching and substitution-rule projects.
 
 Status: implemented in [`ONLINE-RESEARCH.md`](./ONLINE-RESEARCH.md) with raw
 captures in [`data/`](./data/).
+
+## R16.8 — Translate sentences and text, not only isolated words
+
+Translation should operate over each sentence in the input text. Word/entity
+label replacement is still useful, but the output must expose sentence-level
+translation and leave room for grammar-aware transformation rules.
+
+Status: implemented. `translateTextWith()` now returns `sentences`, builds the
+text output from translated sentence renderings, keeps the default web example
+as `Hawaii is a state.`, and applies a deterministic English-to-Russian rule
+slice for article omission and copula-to-dash rewriting.
+
+## R16.9 — Show formalization and collapsed translation steps
+
+Users need to see how the original input was formalized before translation and
+inspect the translation trace, including API requests and transformation rules,
+without the trace dominating the default page.
+
+Status: implemented. Translation results include `formalization` and `steps`.
+The web page renders formalized input before the translated result and exposes
+all recorded steps in a collapsed `Translation steps` details section.

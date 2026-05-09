@@ -14,11 +14,13 @@ export function setupTranslatePage({
   const copyMarkdown = document.querySelector('#translate-copy-markdown');
   const copyLino = document.querySelector('#translate-copy-lino');
   const status = document.querySelector('#translate-status');
+  const formalizedOutput = document.querySelector('#translate-formalized');
   const output = document.querySelector('#translate-output');
   const questions = document.querySelector('#translate-questions');
   const markdownPre = document.querySelector('#translate-markdown');
   const linoPre = document.querySelector('#translate-lino');
   const cstPre = document.querySelector('#translate-cst');
+  const stepsList = document.querySelector('#translate-steps');
 
   if (!input || !run || !output || !status) {
     return;
@@ -85,12 +87,15 @@ export function setupTranslatePage({
   }
 
   function renderTranslateResult(result) {
-    output.innerHTML = result.html || escapeHtml(result.plainText);
-    for (const link of output.querySelectorAll('a')) {
-      link.target = '_blank';
-      link.rel = 'noopener noreferrer';
+    if (formalizedOutput) {
+      renderLinkedHtml(
+        formalizedOutput,
+        result.formalization.html || escapeHtml(result.formalization.markdown)
+      );
     }
+    renderLinkedHtml(output, result.html || escapeHtml(result.plainText));
     renderQuestions(result.questions);
+    renderSteps(result.steps);
     if (markdownPre) {
       markdownPre.textContent = result.markdown;
     }
@@ -104,10 +109,18 @@ export function setupTranslatePage({
       (phrase) => phrase.target.status === 'translated'
     ).length;
     const total = result.phrases.length;
-    const unresolved = result.variables.length;
-    status.textContent = `Translated ${translated}/${total} phrase${
-      total === 1 ? '' : 's'
-    }${unresolved ? `; ${unresolved} unresolved` : ''}.`;
+    const unresolved = result.variables.filter(
+      (variable) => !variable.resolvedByRule
+    ).length;
+    const sentenceCount = result.sentences?.length ?? 0;
+    const resolvedByRule = result.variables.filter(
+      (variable) => variable.resolvedByRule
+    ).length;
+    const ruleText = resolvedByRule ? `, ${resolvedByRule} rule-resolved` : '';
+    const unresolvedText = unresolved ? `; ${unresolved} unresolved` : '';
+    status.textContent = `Translated ${sentenceCount} sentence${
+      sentenceCount === 1 ? '' : 's'
+    } (${translated}/${total} linked phrases${ruleText}${unresolvedText}).`;
   }
 
   function renderQuestions(list) {
@@ -128,6 +141,61 @@ export function setupTranslatePage({
       questions.append(item);
     }
   }
+
+  function renderSteps(list) {
+    if (!stepsList) {
+      return;
+    }
+    stepsList.replaceChildren();
+    if (!list.length) {
+      const empty = document.createElement('li');
+      empty.className = 'section-empty';
+      empty.textContent = 'No recorded steps.';
+      stepsList.append(empty);
+      return;
+    }
+    for (const step of list) {
+      const item = document.createElement('li');
+      item.textContent = formatStep(step);
+      stepsList.append(item);
+    }
+  }
+}
+
+function renderLinkedHtml(container, html) {
+  container.innerHTML = html;
+  for (const link of container.querySelectorAll('a')) {
+    link.target = '_blank';
+    link.rel = 'noopener noreferrer';
+  }
+}
+
+function formatStep(step) {
+  if (step.type === 'api-request') {
+    return `API request: ${step.method ?? 'GET'} ${step.url}`;
+  }
+  if (step.type === 'api-response') {
+    return `API response: ${step.status ?? 'unknown'} ${step.url}`;
+  }
+  if (step.type === 'api-cache-hit') {
+    return `API cache hit: ${step.url}`;
+  }
+  if (step.type === 'formalization') {
+    return `Formalization: ${step.phraseCount ?? 0} phrases`;
+  }
+  if (step.type === 'translation-phrase') {
+    return `Phrase: ${step.sourceText} -> ${step.targetText} (${step.status})`;
+  }
+  if (step.type === 'transformation-rule') {
+    return `Rule: ${step.rule} (${step.sentenceId})`;
+  }
+  if (step.type === 'sentence') {
+    return `Sentence: ${step.sourceText} -> ${step.targetText}`;
+  }
+  if (step.type === 'text') {
+    return `Text: ${step.text}`;
+  }
+  return `${step.type}: ${step.id}`;
 }
 
 async function writeClipboard(text) {

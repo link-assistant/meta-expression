@@ -174,6 +174,81 @@ describe('issue 16 — translate through formalized Wikidata labels', () => {
     expect(result.linksNotation).toContain('(translation:');
   });
 
+  it('translates full sentences and records formalization plus rule steps', async () => {
+    const fetchImpl = makeFetch({
+      search: {
+        'Hawaii|item|en': [
+          { id: 'Q782', label: 'Hawaii', description: 'US state' },
+        ],
+        'state|item|en': [
+          { id: 'Q7275', label: 'state', description: 'federated state' },
+        ],
+      },
+      entities: {
+        'Q782|en': entity({
+          id: 'Q782',
+          label: 'Hawaii',
+          language: 'en',
+          sitelink: 'Hawaii',
+        }),
+        'Q782|ru': entity({
+          id: 'Q782',
+          label: 'Гавайи',
+          language: 'ru',
+          sitelink: 'Гавайи',
+        }),
+        'Q7275|en': entity({
+          id: 'Q7275',
+          label: 'state',
+          language: 'en',
+          sitelink: 'Federated state',
+        }),
+        'Q7275|ru': entity({
+          id: 'Q7275',
+          label: 'штат',
+          language: 'ru',
+          sitelink: 'Штат',
+        }),
+      },
+    });
+
+    const result = await translateTextWith('Hawaii is a state.', {
+      fetch: fetchImpl,
+      sources: [createWikidataSource({ language: 'en' })],
+      sourceLanguage: 'en',
+      targetLanguage: 'ru',
+      now: () => 0,
+    });
+
+    expect(result.formalization.markdown.endsWith('.')).toBe(true);
+    expect(result.formalization.html.endsWith('.')).toBe(true);
+    expect(result.sentences.length).toBe(1);
+    expect(result.sentences[0].source.text).toBe('Hawaii is a state.');
+    expect(result.sentences[0].plainText).toBe('Гавайи - штат.');
+    expect(result.sentences[0].transformations).toEqual([
+      'english-article-omission',
+      'english-copula-to-russian-dash',
+    ]);
+    expect(result.plainText).toBe('Гавайи - штат.');
+    expect(result.markdown).toContain('[Гавайи](');
+    expect(result.markdown).toContain('- [штат](');
+    expect(result.questions.length).toBe(0);
+    expect(result.steps.some((step) => step.type === 'api-request')).toBe(true);
+    expect(result.steps.some((step) => step.type === 'formalization')).toBe(
+      true
+    );
+    expect(
+      result.steps.some(
+        (step) =>
+          step.type === 'transformation-rule' &&
+          step.rule === 'english-copula-to-russian-dash'
+      )
+    ).toBe(true);
+    expect(result.cst.sentences[0].targetText).toBe('Гавайи - штат.');
+    expect(result.linksNotation).toContain('sentence-1');
+    expect(result.linksNotation).toContain('step-');
+  });
+
   it('keeps unresolved parts as variables with clarifying questions', async () => {
     const result = await translateTextWith('xyzzy', {
       fetch: makeFetch({}),
@@ -329,7 +404,9 @@ describe('issue 16 — web translate surface', () => {
 
     expect(html).toContain('id="nav-translate"');
     expect(html).toContain('id="page-translate"');
+    expect(html).toContain('id="translate-formalized"');
     expect(html).toContain('id="translate-output"');
+    expect(html).toContain('id="translate-steps"');
     expect(html).toContain('id="translate-cst"');
     expect(app).toContain('setupTranslatePage({ cache: wikimediaCache })');
   });

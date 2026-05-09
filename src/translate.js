@@ -42,12 +42,22 @@ export function translateText(input, options = {}) {
  */
 export async function translateTextWith(input, options = {}) {
   const config = createTranslateConfig(options);
+  recordStep(config, 'input', {
+    sourceLanguage: config.sourceLanguage,
+    targetLanguage: config.targetLanguage,
+    text: input,
+  });
   const formalization = await formalizeTextWith(input, {
     ...options,
     fetch: config.fetchImpl,
     cache: config.cache,
     language: config.sourceLanguage,
     linkTargetMode: config.linkTargetMode,
+  });
+  recordStep(config, 'formalization', {
+    phraseCount: formalization.cst.phrases.length,
+    markdown: formalization.markdown,
+    linksNotation: formalization.linksNotation,
   });
   const phrases = [];
   const variables = [];
@@ -59,10 +69,35 @@ export async function translateTextWith(input, options = {}) {
     }
     phrases.push(translated);
   }
-  const questions = variables.map((variable) =>
+  const sentences = buildTranslatedSentences(formalization, phrases, config);
+  const resolvedVariableNames = new Set(
+    sentences.flatMap((sentence) => sentence.resolvedVariableNames)
+  );
+  for (const variable of variables) {
+    if (resolvedVariableNames.has(variable.name)) {
+      variable.resolvedByRule = true;
+    }
+  }
+  const unresolvedVariables = variables.filter(
+    (variable) => !variable.resolvedByRule
+  );
+  const questions = unresolvedVariables.map((variable) =>
     buildVariableQuestion(variable, config)
   );
-  const cst = buildTranslationCst(formalization, phrases, variables, config);
+  const plainText = renderSentenceOutput(sentences, 'plainText', phrases);
+  const markdown = renderSentenceOutput(sentences, 'markdown', phrases);
+  const html = renderSentenceOutput(sentences, 'html', phrases);
+  recordStep(config, 'text', {
+    sentenceCount: sentences.length,
+    text: plainText,
+  });
+  const cst = buildTranslationCst(
+    formalization,
+    phrases,
+    variables,
+    sentences,
+    config
+  );
   return {
     text: formalization.text,
     sourceLanguage: config.sourceLanguage,
@@ -70,12 +105,14 @@ export async function translateTextWith(input, options = {}) {
     formalization,
     cst,
     phrases,
-    plainText: phrases.map((phrase) => phrase.target.text).join(' '),
-    markdown: renderTranslationMarkdown(phrases),
-    html: renderTranslationHtml(phrases),
+    sentences,
+    plainText,
+    markdown,
+    html,
     linksNotation: renderTranslationLinksNotation(cst, questions),
     variables,
     questions,
+    steps: [...config.steps],
   };
 }
 
@@ -84,17 +121,25 @@ function createTranslateConfig(options) {
     options.sourceLanguage ?? options.from ?? 'en'
   );
   const requestedTargetLanguage = options.targetLanguage ?? options.to;
-  return {
-    fetchImpl: options.fetch ?? globalThis.fetch?.bind(globalThis) ?? null,
+  const rawFetch = options.fetch ?? globalThis.fetch?.bind(globalThis) ?? null;
+  const config = {
+    rawFetch,
+    fetchImpl: null,
     cache: options.cache ?? new Map(),
     cacheTtlMs: options.cacheTtlMs ?? defaultCacheTtlMs,
     now: options.now ?? Date.now,
+    trace: options.trace !== false,
+    steps: [],
     sourceLanguage,
     targetLanguage: String(requestedTargetLanguage ?? '').trim()
       ? normalizeLanguage(requestedTargetLanguage)
       : defaultTargetLanguage(sourceLanguage),
     linkTargetMode: options.linkTargetMode ?? FORMALIZE_LINK_TARGETS.WIKIPEDIA,
   };
+  config.fetchImpl = rawFetch
+    ? (url, init) => traceFetch(url, init, config)
+    : null;
+  return config;
 }
 
 function defaultTargetLanguage(sourceLanguage) {
@@ -109,40 +154,103 @@ function normalizeLanguage(value) {
 }
 
 async function translatePhrase(phrase, config) {
+  const translationEntity = translatableEntityForPhrase(phrase, config);
   const base = {
     id: phrase.id,
     source: {
       text: phrase.text,
       start: phrase.start,
       end: phrase.end,
+      sourceStart: phrase.sourceStart ?? null,
+      sourceEnd: phrase.sourceEnd ?? null,
       language: config.sourceLanguage,
-      entityId: phrase.entity?.id ?? null,
-      label: phrase.entity?.label ?? null,
+      entityId: translationEntity?.id ?? phrase.entity?.id ?? null,
+      label: translationEntity?.label ?? phrase.entity?.label ?? null,
     },
   };
   if (!phrase.entity) {
-    return unresolvedPhrase(base, 'unresolved-source-phrase');
+    const unresolved = unresolvedPhrase(base, 'unresolved-source-phrase');
+    recordPhraseStep(unresolved, config);
+    return unresolved;
   }
-  if (!/^[QP]\d+$/.test(phrase.entity.id)) {
-    return unresolvedPhrase(base, 'non-wikidata-source');
+  if (!translationEntity) {
+    const unresolved = unresolvedPhrase(base, 'non-wikidata-source');
+    recordPhraseStep(unresolved, config);
+    return unresolved;
   }
-  const target = await fetchTargetEntity(phrase.entity.id, config);
-  const targetLabel = targetLabelFor(target, config.targetLanguage);
+  const targetResult = await lookupTargetEntityForPhrase(
+    phrase,
+    translationEntity,
+    base,
+    config
+  );
+  if (targetResult.unresolved) {
+    const unresolved = targetResult.unresolved;
+    recordPhraseStep(unresolved, config);
+    return unresolved;
+  }
+  const targetLabel = targetLabelFor(
+    targetResult.entity,
+    config.targetLanguage
+  );
   if (!targetLabel) {
-    return unresolvedPhrase(base, 'missing-target-label', phrase.entity.id);
+    const unresolved = unresolvedPhrase(
+      base,
+      'missing-target-label',
+      translationEntity.id
+    );
+    recordPhraseStep(unresolved, config);
+    return unresolved;
   }
-  return {
+  const translated = {
     ...base,
-    entityId: phrase.entity.id,
+    entityId: translationEntity.id,
     target: {
       text: targetLabel,
       language: config.targetLanguage,
-      description: targetDescriptionFor(target, config.targetLanguage),
-      url: targetUrlFor(target, phrase.entity, config.targetLanguage),
+      description: targetDescriptionFor(
+        targetResult.entity,
+        config.targetLanguage
+      ),
+      url: targetUrlFor(
+        targetResult.entity,
+        translationEntity,
+        config.targetLanguage
+      ),
       status: 'translated',
     },
     variable: null,
   };
+  recordPhraseStep(translated, config);
+  return translated;
+}
+
+async function lookupTargetEntityForPhrase(
+  phrase,
+  translationEntity,
+  base,
+  config
+) {
+  try {
+    return {
+      entity: await fetchTargetEntity(translationEntity.id, config),
+      unresolved: null,
+    };
+  } catch (error) {
+    recordStep(config, 'target-lookup-error', {
+      phraseId: phrase.id,
+      entityId: translationEntity.id,
+      error: error instanceof Error ? error.message : String(error),
+    });
+    return {
+      entity: null,
+      unresolved: unresolvedPhrase(
+        base,
+        'target-lookup-failed',
+        translationEntity.id
+      ),
+    };
+  }
 }
 
 function unresolvedPhrase(base, reason, entityId = null) {
@@ -163,6 +271,35 @@ function unresolvedPhrase(base, reason, entityId = null) {
       reason,
     },
   };
+}
+
+function translatableEntityForPhrase(phrase, config) {
+  if (isWikidataId(phrase.entity?.id)) {
+    return phrase.entity;
+  }
+  if (isGrammarPhrase(phrase.text, config.sourceLanguage)) {
+    return null;
+  }
+  return (
+    (phrase.candidates ?? []).find((candidate) =>
+      isWikidataId(candidate?.id)
+    ) ?? null
+  );
+}
+
+function isWikidataId(value) {
+  return /^[QP]\d+$/.test(String(value ?? ''));
+}
+
+function isGrammarPhrase(value, language) {
+  if (language !== 'en') {
+    return false;
+  }
+  return (
+    isEnglishArticle(value) ||
+    isEnglishCopula(value) ||
+    isEnglishPreposition(value)
+  );
 }
 
 async function fetchTargetEntity(id, config) {
@@ -190,6 +327,7 @@ async function fetchJson(url, config) {
   const now = Number(config.now());
   const cached = config.cache.get(key);
   if (cached && cached.expiresAt > now) {
+    recordStep(config, 'api-cache-hit', { url: key });
     return cached.value;
   }
   const response = await config.fetchImpl(key, {
@@ -204,6 +342,29 @@ async function fetchJson(url, config) {
     value,
   });
   return value;
+}
+
+async function traceFetch(url, init, config) {
+  const requestUrl = String(url);
+  const method = init?.method ?? 'GET';
+  recordStep(config, 'api-request', { method, url: requestUrl });
+  try {
+    const response = await config.rawFetch(requestUrl, init);
+    recordStep(config, 'api-response', {
+      method,
+      url: requestUrl,
+      status: response?.status ?? null,
+      ok: response?.ok ?? null,
+    });
+    return response;
+  } catch (error) {
+    recordStep(config, 'api-error', {
+      method,
+      url: requestUrl,
+      error: error instanceof Error ? error.message : String(error),
+    });
+    throw error;
+  }
 }
 
 function targetLabelFor(entity, language) {
@@ -234,7 +395,13 @@ function buildVariableQuestion(variable, config) {
   return `What entity or expression should "${variable.sourceText}" map to before translating it from ${config.sourceLanguage} to ${config.targetLanguage}?`;
 }
 
-function buildTranslationCst(formalization, phrases, variables, config) {
+function buildTranslationCst(
+  formalization,
+  phrases,
+  variables,
+  sentences,
+  config
+) {
   return {
     type: 'translation',
     version: 1,
@@ -244,35 +411,257 @@ function buildTranslationCst(formalization, phrases, variables, config) {
     formalization: formalization.cst,
     phrases,
     variables,
+    sentences: sentences.map((sentence) => ({
+      type: 'sentence',
+      id: sentence.id,
+      sourceText: sentence.source.text,
+      sourceStart: sentence.source.start,
+      sourceEnd: sentence.source.end,
+      targetText: sentence.plainText,
+      targetMarkdown: sentence.markdown,
+      transformations: [...sentence.transformations],
+      phraseIds: sentence.phrases.map((phrase) => phrase.id),
+    })),
+    steps: [...config.steps],
   };
 }
 
-function renderTranslationMarkdown(phrases) {
-  return phrases
-    .map((phrase) => {
-      if (!phrase.entityId || !phrase.target.url) {
-        return phrase.target.text;
-      }
-      return `[${escapeMarkdown(phrase.target.text)}](${phrase.target.url} "${phrase.entityId}")`;
-    })
-    .join(' ');
+function buildTranslatedSentences(formalization, phrases, config) {
+  const segments = segmentSourceText(formalization.text);
+  return segments.map((segment, index) =>
+    buildTranslatedSentence(segment, index, phrases, config)
+  );
 }
 
-function renderTranslationHtml(phrases) {
-  return phrases
-    .map((phrase) => {
-      if (!phrase.entityId || !phrase.target.url) {
-        return escapeHtml(phrase.target.text);
-      }
-      return `<a href="${escapeAttribute(phrase.target.url)}" title="${escapeAttribute(
-        phrase.entityId
-      )}">${escapeHtml(phrase.target.text)}</a>`;
-    })
-    .join(' ');
+function segmentSourceText(text) {
+  const source = String(text);
+  const segments = [];
+  const pattern = /\S[\s\S]*?(?:[.!?]+(?=\s|$)|$)/g;
+  for (const match of source.matchAll(pattern)) {
+    const raw = match[0];
+    const leading = raw.search(/\S/);
+    const start = (match.index ?? 0) + Math.max(leading, 0);
+    const trimmed = raw.trim();
+    if (!trimmed) {
+      continue;
+    }
+    segments.push({
+      text: trimmed,
+      start,
+      end: start + trimmed.length,
+    });
+  }
+  return segments.length
+    ? segments
+    : [{ text: source, start: 0, end: source.length }];
+}
+
+function buildTranslatedSentence(segment, index, phrases, config) {
+  const sentencePhrases = phrases.filter((phrase) =>
+    phraseBelongsToSegment(phrase, segment)
+  );
+  const units = sentencePhrases.map(renderUnitFromPhrase);
+  const rendered = applySentenceTransformations(
+    units,
+    segment,
+    `sentence-${index + 1}`,
+    config
+  );
+  const punctuation = terminalPunctuation(segment.text);
+  const plainText = appendTerminalPunctuation(
+    rendered.units.map((unit) => unit.plainText).join(' '),
+    punctuation
+  );
+  const markdown = appendTerminalPunctuation(
+    rendered.units.map((unit) => unit.markdown).join(' '),
+    punctuation
+  );
+  const html = appendTerminalPunctuation(
+    rendered.units.map((unit) => unit.html).join(' '),
+    punctuation
+  );
+  const sentence = {
+    id: `sentence-${index + 1}`,
+    source: {
+      text: segment.text,
+      start: segment.start,
+      end: segment.end,
+      language: config.sourceLanguage,
+    },
+    target: {
+      text: plainText,
+      markdown,
+      html,
+      language: config.targetLanguage,
+    },
+    phrases: sentencePhrases,
+    transformations: rendered.transformations,
+    resolvedVariableNames: [...rendered.resolvedVariableNames],
+    plainText,
+    markdown,
+    html,
+  };
+  recordStep(config, 'sentence', {
+    sentenceId: sentence.id,
+    sourceText: sentence.source.text,
+    targetText: sentence.plainText,
+    transformations: sentence.transformations,
+  });
+  return sentence;
+}
+
+function phraseBelongsToSegment(phrase, segment) {
+  const start = phrase.source.sourceStart;
+  if (!Number.isInteger(start)) {
+    return true;
+  }
+  return start >= segment.start && start < segment.end;
+}
+
+function renderUnitFromPhrase(phrase) {
+  return {
+    kind: 'phrase',
+    phraseId: phrase.id,
+    sourceText: phrase.source.text,
+    variableName: phrase.variable?.name ?? null,
+    plainText: phrase.target.text,
+    markdown: renderPhraseMarkdown(phrase),
+    html: renderPhraseHtml(phrase),
+  };
+}
+
+function applySentenceTransformations(units, segment, sentenceId, config) {
+  if (config.sourceLanguage === 'en' && config.targetLanguage === 'ru') {
+    return applyEnglishToRussianRules(units, segment, sentenceId, config);
+  }
+  return {
+    units,
+    transformations: [],
+    resolvedVariableNames: new Set(),
+  };
+}
+
+function applyEnglishToRussianRules(units, segment, sentenceId, config) {
+  const resolvedVariableNames = new Set();
+  const transformations = [];
+  let nextUnits = [...units];
+  const articleVariables = nextUnits
+    .filter((unit) => isEnglishArticle(unit.sourceText) && unit.variableName)
+    .map((unit) => unit.variableName);
+  if (nextUnits.some((unit) => isEnglishArticle(unit.sourceText))) {
+    nextUnits = nextUnits.filter((unit) => !isEnglishArticle(unit.sourceText));
+    for (const name of articleVariables) {
+      resolvedVariableNames.add(name);
+    }
+    transformations.push('english-article-omission');
+    recordStep(config, 'transformation-rule', {
+      sentenceId,
+      rule: 'english-article-omission',
+      sourceText: segment.text,
+      affectedVariables: articleVariables,
+    });
+  }
+
+  const copulaIndex = nextUnits.findIndex((unit) =>
+    isEnglishCopula(unit.sourceText)
+  );
+  if (
+    copulaIndex > 0 &&
+    copulaIndex < nextUnits.length - 1 &&
+    !isEnglishPreposition(nextUnits[copulaIndex + 1].sourceText)
+  ) {
+    const [copula] = nextUnits.splice(copulaIndex, 1, {
+      kind: 'rule-token',
+      sourceText: nextUnits[copulaIndex].sourceText,
+      variableName: null,
+      plainText: '-',
+      markdown: '-',
+      html: '-',
+    });
+    if (copula.variableName) {
+      resolvedVariableNames.add(copula.variableName);
+    }
+    transformations.push('english-copula-to-russian-dash');
+    recordStep(config, 'transformation-rule', {
+      sentenceId,
+      rule: 'english-copula-to-russian-dash',
+      sourceText: segment.text,
+      affectedVariables: copula.variableName ? [copula.variableName] : [],
+    });
+  }
+
+  return { units: nextUnits, transformations, resolvedVariableNames };
+}
+
+function isEnglishArticle(value) {
+  return ['a', 'an', 'the'].includes(String(value).toLowerCase());
+}
+
+function isEnglishCopula(value) {
+  return ['am', 'is', 'are', 'was', 'were', 'be', 'being', 'been'].includes(
+    String(value).toLowerCase()
+  );
+}
+
+function isEnglishPreposition(value) {
+  return [
+    'about',
+    'at',
+    'by',
+    'for',
+    'from',
+    'in',
+    'into',
+    'of',
+    'on',
+    'onto',
+    'to',
+    'with',
+  ].includes(String(value).toLowerCase());
+}
+
+function terminalPunctuation(value) {
+  const match = String(value).match(/[.!?]+$/);
+  return match?.[0] ?? '';
+}
+
+function appendTerminalPunctuation(value, punctuation) {
+  const text = String(value).trim();
+  if (!punctuation || text.endsWith(punctuation)) {
+    return text;
+  }
+  return `${text}${punctuation}`;
+}
+
+function renderSentenceOutput(sentences, key, fallbackPhrases) {
+  if (!sentences.length) {
+    return fallbackPhrases.map((phrase) => phrase.target.text).join(' ');
+  }
+  return sentences.map((sentence) => sentence[key]).join(' ');
+}
+
+function renderPhraseMarkdown(phrase) {
+  if (!phrase.entityId || !phrase.target.url) {
+    return phrase.target.text;
+  }
+  return `[${escapeMarkdown(phrase.target.text)}](${phrase.target.url} "${phrase.entityId}")`;
+}
+
+function renderPhraseHtml(phrase) {
+  if (!phrase.entityId || !phrase.target.url) {
+    return escapeHtml(phrase.target.text);
+  }
+  return `<a href="${escapeAttribute(phrase.target.url)}" title="${escapeAttribute(
+    phrase.entityId
+  )}">${escapeHtml(phrase.target.text)}</a>`;
 }
 
 function renderTranslationLinksNotation(cst, questions) {
   const head = `(translation: ${toLino(cst.text)} from ${cst.sourceLanguage} to ${cst.targetLanguage})`;
+  const sentences = cst.sentences.map(
+    (sentence) =>
+      `(${sentence.id}: source ${toLino(sentence.sourceText)} target ${toLino(sentence.targetText)} transformations ${toLino(sentence.transformations.join(', ') || 'none')})`
+  );
   const phrases = cst.phrases.map((phrase, index) => {
     const id = phrase.entityId ? ` id ${phrase.entityId}` : '';
     const variable = phrase.variable?.name
@@ -290,7 +679,57 @@ function renderTranslationLinksNotation(cst, questions) {
   const questionLines = questions.map(
     (question, index) => `(question-${index + 1}: ${toLino(question)})`
   );
-  return [head, ...phrases, ...variables, ...questionLines].join('\n');
+  const steps = cst.steps.map(
+    (step) => `(${step.id}: type ${step.type} ${toLino(stepSummary(step))})`
+  );
+  return [
+    head,
+    ...sentences,
+    ...phrases,
+    ...variables,
+    ...questionLines,
+    ...steps,
+  ].join('\n');
+}
+
+function recordPhraseStep(phrase, config) {
+  recordStep(config, 'translation-phrase', {
+    phraseId: phrase.id,
+    sourceText: phrase.source.text,
+    entityId: phrase.entityId,
+    status: phrase.target.status,
+    targetText: phrase.target.text,
+  });
+}
+
+function recordStep(config, type, details) {
+  if (!config.trace) {
+    return;
+  }
+  config.steps.push({
+    id: `step-${config.steps.length + 1}`,
+    type,
+    ...details,
+  });
+}
+
+function stepSummary(step) {
+  if (step.rule) {
+    return step.rule;
+  }
+  if (step.url) {
+    return step.url;
+  }
+  if (step.sentenceId) {
+    return step.sentenceId;
+  }
+  if (step.phraseId) {
+    return step.phraseId;
+  }
+  if (step.text) {
+    return step.text;
+  }
+  return step.type;
 }
 
 function toLino(value) {

@@ -615,7 +615,7 @@ Barack Obama was born in Hawaii.</textarea
         <label class="translate-input-label" for="translate-input">
           <span data-i18n="translate.text">Text</span>
         </label>
-        <textarea id="translate-input" rows="5">Hawaii</textarea>
+        <textarea id="translate-input" rows="5">Hawaii is a state.</textarea>
 
         <div class="translate-options">
           <label class="translate-option">
@@ -665,6 +665,18 @@ Barack Obama was born in Hawaii.</textarea
           <span class="translate-status" id="translate-status"></span>
         </div>
 
+        <section
+          class="translate-formalized"
+          aria-label="Formalized source input"
+        >
+          <h2 data-i18n="translate.formalized">Formalized input</h2>
+          <div id="translate-formalized" class="translate-output">
+            <span data-i18n="translate.formalizedPlaceholder"
+              >Click Translate to see the formalized source here.</span
+            >
+          </div>
+        </section>
+
         <section class="translate-result" aria-label="Translated output">
           <h2 data-i18n="translate.result">Result</h2>
           <div id="translate-output" class="translate-output">
@@ -697,6 +709,12 @@ Barack Obama was born in Hawaii.</textarea
         <details class="translate-payload">
           <summary data-i18n="translate.cstPayload">Translation CST</summary>
           <pre id="translate-cst"></pre>
+        </details>
+        <details class="translate-payload">
+          <summary data-i18n="translate.stepsPayload">
+            Translation steps
+          </summary>
+          <ol id="translate-steps" class="translate-steps"></ol>
         </details>
       </section>
     </main>

@@ -47,8 +47,9 @@ Core exports:
 - `formalizeTextWith(input, options)` links phrases to Wikipedia, Wikidata, or
   fallback sources and returns Markdown, Links Notation, and a CST.
 - `translateTextWith(input, options)` formalizes first, then translates
-  resolved Wikidata Q/P phrases through target-language labels while preserving
-  unresolved parts as variables with questions.
+  sentences through resolved Wikidata Q/P target-language labels and explicit
+  transformation rules while preserving unresolved parts as variables with
+  questions and trace steps.
 
 Current deterministic examples:
 
@@ -75,8 +76,8 @@ Real-world confidence is intentionally bounded away from absolute `0%` and
 node src/cli.js analyze "1 + 1 = 2"
 node src/cli.js analyze --input "Earth orbits the Sun" --format links
 node src/cli.js analyze --input "Paris is the capital of France" --live
-node src/cli.js formalize --input "Hawaii" --format markdown
-node src/cli.js translate --input "Hawaii" --to ru --format markdown
+node src/cli.js formalize --input "Hawaii is a state." --format markdown
+node src/cli.js translate --input "Hawaii is a state." --to ru --format markdown
 ```
 
 ## Microservice
@@ -85,7 +86,7 @@ node src/cli.js translate --input "Hawaii" --to ru --format markdown
 npm start
 curl "http://127.0.0.1:3000/analyze?input=1%20%2B%201%20%3D%202"
 curl "http://127.0.0.1:3000/analyze?input=Earth%20orbits%20the%20Sun&format=links"
-curl "http://127.0.0.1:3000/translate?input=Hawaii&to=ru&format=markdown"
+curl "http://127.0.0.1:3000/translate?input=Hawaii%20is%20a%20state.&to=ru&format=markdown"
 ```
 
 Routes:
@@ -118,10 +119,11 @@ signed Confidence), result/evidence summaries, Q/P source links in the links
 network, Links Notation output, a live Wikimedia evidence worker, a prefilled
 GitHub issue report link, and a top-menu page switch between **Analyse**
 (default), **Compare**, **Formalize**, **Translate**, and **Preferences**. The
-Translate page uses the formalization CST to show translated text, unresolved
-questions, Markdown, Links Notation, and the translation CST. The Preferences
-page stores a local profile with worldview sliders, context presets, and Links
-Notation import/export.
+Translate page uses the formalization CST to show formalized source text,
+translated sentence output, unresolved questions, Markdown, Links Notation, the
+translation CST, and a collapsed step trace. The Preferences page stores a
+local profile with worldview sliders, context presets, and Links Notation
+import/export.
 
 ### Default metrics
 
