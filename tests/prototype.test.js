@@ -40,9 +40,14 @@ describe('meta-expression prototype pipeline', () => {
 
     expect(analysis.result.kind).toBe('evidence-estimate');
     expect(analysis.result.confidence).toBeLessThan(1);
-    expect(analysis.result.confidence).toBeGreaterThan(0.98);
+    expect(analysis.result.confidence).toBeGreaterThan(0.7);
+    expect(analysis.result.confidence).toBeLessThan(0.75);
     expect(analysis.result.supportingEvidence.length).toBe(1);
     expect(analysis.result.supportingEvidence[0].sourceType).toBe('wikidata');
+    expect(analysis.result.refutingEvidence.length).toBe(1);
+    expect(analysis.result.calculation.evidence[0].situationId).toBe(
+      'wikidata-structured-claim'
+    );
     expect(
       analysis.linksNetwork.links.some((link) => link.role === 'support')
     ).toBe(true);
@@ -61,7 +66,7 @@ describe('meta-expression prototype pipeline', () => {
       .join('\n');
 
     expect(analysis.result.kind).toBe('evidence-estimate');
-    expect(analysis.result.value).toBe(0.99);
+    expect(analysis.result.value).toBe(0.74);
     expect(analysis.result.supportingEvidence.length).toBe(1);
     expect(evidence.identifiers.subject).toBe('Q405');
     expect(evidence.identifiers.property).toBe('P397');
@@ -78,8 +83,8 @@ describe('meta-expression prototype pipeline', () => {
     const analysis = analyzeStatement('Elon Musk is alive');
 
     expect(analysis.result.kind).toBe('evidence-estimate');
-    expect(analysis.result.value).toBe(0.99);
-    expect(analysis.result.confidence).toBe(0.99);
+    expect(analysis.result.value).toBe(0.74);
+    expect(analysis.result.confidence).toBe(0.74);
     expect(analysis.result.supportingEvidence[0].identifiers.subject).toBe(
       'Q317521'
     );
@@ -202,7 +207,7 @@ describe('Wikimedia live evidence client', () => {
     expect(
       capitalAnalysis.result.supportingEvidence[0].identifiers.object
     ).toBe('Q90');
-    expect(moonOrbitAnalysis.result.confidence).toBe(0.99);
+    expect(moonOrbitAnalysis.result.confidence).toBe(0.74);
     expect(moonEvidence.identifiers.subject).toBe('Q405');
     expect(moonEvidence.identifiers.property).toBe('P397');
     expect(moonEvidence.identifiers.object).toBe('Q525');
@@ -238,6 +243,15 @@ function mockWikimediaResponse(url) {
   }
 
   if (parsed.hostname === 'en.wikipedia.org') {
+    if (parsed.pathname === '/w/api.php') {
+      const action = parsed.searchParams.get('action');
+      if (action === 'query') {
+        return jsonResponse({ query: { search: [] } });
+      }
+      if (action === 'parse') {
+        return jsonResponse({ parse: { wikitext: '', externallinks: [] } });
+      }
+    }
     const title = decodeURIComponent(parsed.pathname.split('/').pop() ?? '');
     return jsonResponse({
       title,

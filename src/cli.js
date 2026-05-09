@@ -17,6 +17,7 @@ export function parseCliArguments(args) {
     command: 'analyze',
     format: 'json',
     inputParts: [],
+    evidenceScoring: {},
   };
   let index = 0;
   const optionHandlers = {
@@ -64,6 +65,13 @@ export function parseCliArguments(args) {
     '--max-ngram': () => {
       options.maxNgramSize = Number(args[++index] ?? 3);
     },
+    '--score': () => {
+      const [id, value] = String(args[++index] ?? '').split('=');
+      const parsed = Number(value);
+      if (id && Number.isFinite(parsed)) {
+        options.evidenceScoring[id] = parsed;
+      }
+    },
     '--help': () => {
       options.command = 'help';
     },
@@ -110,7 +118,13 @@ export function runCli(args = process.argv.slice(2), output = console) {
   }
 
   if (isCheckCommand(options.command)) {
-    return emitCheckResult(options, output, checkText(options.input));
+    return emitCheckResult(
+      options,
+      output,
+      checkText(options.input, {
+        evidenceScoring: options.evidenceScoring,
+      })
+    );
   }
 
   return emitCliAnalysis(
@@ -222,8 +236,11 @@ async function runCheckCommand(options, output) {
   const result = options.live
     ? await checkTextWithLiveEvidence(options.input, {
         fetch: globalThis.fetch?.bind(globalThis),
+        evidenceScoring: options.evidenceScoring,
       })
-    : checkText(options.input);
+    : checkText(options.input, {
+        evidenceScoring: options.evidenceScoring,
+      });
   return emitCheckResult(options, output, result);
 }
 
@@ -270,6 +287,7 @@ function cliAnalysisOptions(options) {
   return {
     interpretationIndex: options.interpretationIndex ?? 0,
     selectedBy: 'cli',
+    evidenceScoring: options.evidenceScoring,
   };
 }
 
@@ -315,6 +333,7 @@ function helpText() {
   meta-expression formalize --input "Hawaii" --format markdown --target wikipedia
   meta-expression translate --input "Hawaii is a state." --to ru --format markdown
   meta-expression check --input "Earth orbits the Sun. 1 + 1 = 1." --format html
+  meta-expression check --input "Earth orbits the Sun." --score wikidata-structured-claim=0.7
   meta-expression fact-check --input "Paris is the capital of France." --live
 
 Commands:
@@ -340,6 +359,8 @@ Options:
   --override <file.lino|.json>   formalize: extra user override file (.lino preferred)
   --no-repo-overrides            formalize: ignore docs/formalize/overrides.lino
   --max-ngram <n>                formalize: maximum n-gram size (default 3)
+  --score <situation=probability>
+                                 check/fact-check: override evidence scoring
   -h, --help                     Show this help`;
 }
 

@@ -1,9 +1,11 @@
 const wikidataApiUrl = 'https://www.wikidata.org/w/api.php';
 const wikidataPropertyBaseUrl = 'https://www.wikidata.org/wiki/Property:';
+const wikipediaApiUrl = 'https://en.wikipedia.org/w/api.php';
 const wikipediaSummaryBaseUrl =
   'https://en.wikipedia.org/api/rest_v1/page/summary/';
 const defaultEvidenceCacheTtlMs = 60 * 60 * 1000;
 const maxOrbitParentDepth = 6;
+const defaultWikipediaSearchLimit = 3;
 const astronomyEntitySearchOptions = Object.freeze({
   preferredDescriptionTerms: Object.freeze([
     'astronomical',
@@ -139,7 +141,11 @@ function createEvidenceQuery(text) {
     };
   }
 
-  return null;
+  return {
+    kind: 'wikipedia-text',
+    normalized,
+    originalText: text,
+  };
 }
 
 async function resolveEvidenceQuery(query, request) {
@@ -151,6 +157,9 @@ async function resolveEvidenceQuery(query, request) {
   }
   if (query.kind === 'orbit') {
     return await resolveOrbitEvidence(query, request);
+  }
+  if (query.kind === 'wikipedia-text') {
+    return await resolveWikipediaTextEvidence(query, request);
   }
   return [];
 }
@@ -434,11 +443,240 @@ function createClaimPathIdentifier(path, property) {
     .join('>');
 }
 
+async function resolveWikipediaTextEvidence(query, request) {
+  const pages = await searchWikipediaPages(query.originalText, request);
+  const evidence = [];
+  for (const page of pages.slice(0, defaultWikipediaSearchLimit)) {
+    const pageDetails = await fetchWikipediaPage(page.title, request);
+    const match = classifyWikipediaStatementMatch(
+      query.originalText,
+      page,
+      pageDetails
+    );
+    if (!match) {
+      continue;
+    }
+
+    const sourceUrl = wikipediaPageUrl(page.title);
+    evidence.push(
+      createLiveEvidence(query, {
+        id: `live-wikipedia-${safeReference(query.normalized)}-${safeReference(
+          page.title
+        )}`,
+        sourceType: 'wikipedia',
+        situation: match.situation,
+        polarity: 'support',
+        weight: 1,
+        sourceUrl,
+        claim: match.cited
+          ? `Wikipedia page "${page.title}" contains a cited ${match.kind} match for this statement.`
+          : `Wikipedia page "${page.title}" contains an uncited ${match.kind} match for this statement.`,
+        identifiers: {
+          pageid: String(page.pageid ?? pageDetails.pageid ?? ''),
+          title: page.title,
+          match: match.kind,
+        },
+        context: {
+          wikipediaSummaryUrl: sourceUrl,
+          wikipediaTitle: page.title,
+          wikipediaExtract: match.excerpt,
+          reasoningSteps: [
+            {
+              text: `Wikipedia page "${page.title}" was returned for the statement search.`,
+              sourceUrl,
+            },
+            {
+              text: `${match.kind} match scored ${Math.round(
+                match.similarity * 100
+              )}% token overlap; citation ${match.cited ? 'found' : 'not found'}.`,
+              sourceUrl,
+            },
+          ],
+        },
+        retrievedAt: retrievalTimestamp(request),
+      })
+    );
+  }
+  return evidence;
+}
+
+async function searchWikipediaPages(text, request) {
+  const pagesByKey = new Map();
+  for (const searchText of [`"${text}"`, text]) {
+    const pages = await searchWikipediaPageBatch(searchText, request);
+    for (const page of pages) {
+      const key = String(page.pageid ?? page.title);
+      if (!pagesByKey.has(key)) {
+        pagesByKey.set(key, page);
+      }
+      if (pagesByKey.size >= defaultWikipediaSearchLimit) {
+        return [...pagesByKey.values()];
+      }
+    }
+  }
+  return [...pagesByKey.values()];
+}
+
+async function searchWikipediaPageBatch(searchText, request) {
+  const url = new URL(wikipediaApiUrl);
+  url.search = new URLSearchParams({
+    action: 'query',
+    format: 'json',
+    origin: '*',
+    list: 'search',
+    srlimit: String(defaultWikipediaSearchLimit),
+    srsearch: searchText,
+  }).toString();
+  const payload = await fetchJson(url, request);
+  return payload.query?.search ?? [];
+}
+
+async function fetchWikipediaPage(title, request) {
+  const url = new URL(wikipediaApiUrl);
+  url.search = new URLSearchParams({
+    action: 'parse',
+    format: 'json',
+    formatversion: '2',
+    origin: '*',
+    page: title,
+    prop: 'wikitext|externallinks',
+  }).toString();
+  const payload = await fetchJson(url, request);
+  return payload.parse ?? {};
+}
+
+function classifyWikipediaStatementMatch(statement, page, pageDetails) {
+  const rawText = [
+    page.snippet,
+    extractWikitext(pageDetails.wikitext),
+    ...(pageDetails.externallinks ?? []),
+  ]
+    .filter(Boolean)
+    .join('\n\n');
+  const plainText = stripWikipediaMarkup(rawText);
+  const normalizedStatement = normalizePlainText(statement);
+  const normalizedText = normalizePlainText(plainText);
+  const statementTokens = contentTokens(statement);
+  const exact = normalizedText.includes(normalizedStatement);
+  const similarity = exact ? 1 : tokenOverlap(statementTokens, plainText);
+
+  if (!exact && similarity < 0.65) {
+    return null;
+  }
+
+  const cited = hasCitationForStatement(rawText, statementTokens);
+  const kind = exact ? 'literal' : 'similar';
+  return {
+    kind,
+    cited,
+    similarity,
+    situation: cited
+      ? 'wikipedia-cited-statement'
+      : exact
+        ? 'wikipedia-literal-statement'
+        : 'wikipedia-similar-statement',
+    excerpt: createExcerpt(plainText, statementTokens),
+  };
+}
+
+function extractWikitext(value) {
+  if (typeof value === 'string') {
+    return value;
+  }
+  if (value && typeof value === 'object') {
+    return value['*'] ?? value.content ?? '';
+  }
+  return '';
+}
+
+function stripWikipediaMarkup(text) {
+  return String(text ?? '')
+    .replace(/<ref\b[\s\S]*?<\/ref>/giu, ' ')
+    .replace(/<[^>]+>/gu, ' ')
+    .replace(/\{\{cite[\s\S]*?\}\}/giu, ' ')
+    .replace(/\[\[(?:[^\]|]*\|)?([^\]]+)\]\]/gu, '$1')
+    .replace(/'{2,}/gu, '')
+    .replace(/&quot;/gu, '"')
+    .replace(/&amp;/gu, '&');
+}
+
+function normalizePlainText(text) {
+  return String(text ?? '')
+    .toLowerCase()
+    .replace(/[^\p{Letter}\p{Number}]+/gu, ' ')
+    .trim()
+    .replace(/\s+/gu, ' ');
+}
+
+function contentTokens(text) {
+  const stopWords = new Set([
+    'a',
+    'an',
+    'and',
+    'in',
+    'is',
+    'of',
+    'on',
+    'the',
+    'to',
+  ]);
+  return normalizePlainText(text)
+    .split(' ')
+    .filter((token) => token.length > 2 && !stopWords.has(token));
+}
+
+function tokenOverlap(tokens, text) {
+  if (tokens.length === 0) {
+    return 0;
+  }
+  const textTokens = new Set(contentTokens(text));
+  const matches = tokens.filter((token) => textTokens.has(token)).length;
+  return matches / tokens.length;
+}
+
+function hasCitationForStatement(rawText, statementTokens) {
+  const citationPattern = /<ref\b|\{\{\s*cite\b|\[\s*https?:\/\//iu;
+  if (!citationPattern.test(rawText)) {
+    return false;
+  }
+
+  const paragraphs = String(rawText ?? '').split(/\n{2,}/u);
+  for (const paragraph of paragraphs) {
+    const overlap = tokenOverlap(statementTokens, paragraph);
+    if (overlap >= 0.65 && citationPattern.test(paragraph)) {
+      return true;
+    }
+  }
+  return false;
+}
+
+function createExcerpt(text, statementTokens) {
+  const normalizedTokens = new Set(statementTokens);
+  const sentences = String(text ?? '').split(/(?<=[.!?])\s+/u);
+  return (
+    sentences.find((sentence) =>
+      contentTokens(sentence).some((token) => normalizedTokens.has(token))
+    ) ??
+    sentences[0] ??
+    ''
+  ).slice(0, 500);
+}
+
+function wikipediaPageUrl(title) {
+  return `https://en.wikipedia.org/wiki/${encodeURIComponent(
+    String(title ?? '').replace(/\s+/g, '_')
+  )}`;
+}
+
 function createLiveEvidence(query, evidence) {
   return {
     id: `live-${safeReference(query.kind)}-${safeReference(query.normalized)}`,
     key: query.normalized,
     sourceType: 'wikidata',
+    situation:
+      evidence.sourceType === 'wikipedia'
+        ? evidence.situation
+        : (evidence.situation ?? 'wikidata-structured-claim'),
     ...evidence,
   };
 }

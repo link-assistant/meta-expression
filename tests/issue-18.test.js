@@ -1,6 +1,7 @@
 import { describe, it, expect } from 'test-anywhere';
 import {
   analyzeStatement,
+  getPreferenceEvidenceSituationProbability,
   getPreferenceBeliefProbability,
   isPreferenceBeliefVisible,
   parsePreferenceProfile,
@@ -15,6 +16,9 @@ describe('issue 18 - preference profiles', () => {
         'god-exists': 0.9,
         'christianity-is-true': 0.3,
       },
+      evidenceScoring: {
+        'wikipedia-cited-statement': 0.82,
+      },
     };
 
     const encoded = serializePreferenceProfile(profile);
@@ -25,6 +29,12 @@ describe('issue 18 - preference profiles', () => {
     expect(
       getPreferenceBeliefProbability(decoded, 'christianity-is-true')
     ).toBe(0.3);
+    expect(
+      getPreferenceEvidenceSituationProbability(
+        decoded,
+        'wikipedia-cited-statement'
+      )
+    ).toBe(0.82);
   });
 
   it('keeps specific religion sliders hidden unless the God belief is positive', () => {

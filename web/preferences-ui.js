@@ -1,14 +1,17 @@
 import {
   createDefaultPreferenceProfile,
+  getPreferenceEvidenceSituationProbability,
   getPreferenceBeliefProbability,
   isPreferenceBeliefVisible,
   normalizePreferenceProfile,
   parsePreferenceProfile,
   preferenceBeliefDefinitions,
   preferenceContextDefinitions,
+  preferenceEvidenceSituationDefinitions,
   serializePreferenceProfile,
   setPreferenceBelief,
   setPreferenceContext,
+  setPreferenceEvidenceSituation,
 } from '../src/index.js';
 
 const preferenceStorageKey = 'meta-expression.preferences.v1';
@@ -55,12 +58,14 @@ function renderPreferenceControls() {
   const religions = document.querySelector('#preferences-religions');
   const religionPanel = document.querySelector('#preferences-religion-panel');
   const contexts = document.querySelector('#preferences-contexts');
-  if (!worldview || !religions || !contexts) {
+  const evidenceScoring = document.querySelector('#preferences-evidence');
+  if (!worldview || !religions || !contexts || !evidenceScoring) {
     return;
   }
 
   worldview.replaceChildren();
   religions.replaceChildren();
+  evidenceScoring.replaceChildren();
   for (const definition of preferenceBeliefDefinitions) {
     if (!isPreferenceBeliefVisible(definition, activePreferenceProfile)) {
       continue;
@@ -75,6 +80,9 @@ function renderPreferenceControls() {
   contexts.replaceChildren();
   for (const context of preferenceContextDefinitions) {
     contexts.append(buildContextOption(context));
+  }
+  for (const definition of preferenceEvidenceSituationDefinitions) {
+    evidenceScoring.append(buildEvidenceSituationSlider(definition));
   }
   syncPreferenceExport();
 }
@@ -113,6 +121,43 @@ function buildBeliefSlider(definition) {
     if (definition.id === 'god-exists') {
       renderPreferenceControls();
     }
+  });
+
+  row.append(heading, output, input);
+  return row;
+}
+
+function buildEvidenceSituationSlider(definition) {
+  const probability = getPreferenceEvidenceSituationProbability(
+    activePreferenceProfile,
+    definition.id
+  );
+  const row = document.createElement('label');
+  row.className = 'preferences-slider';
+
+  const heading = document.createElement('span');
+  heading.className = 'preferences-slider-heading';
+  heading.textContent = definition.label;
+
+  const output = document.createElement('output');
+  output.textContent = `${Math.round(probability * 100)}%`;
+
+  const input = document.createElement('input');
+  input.type = 'range';
+  input.min = '0';
+  input.max = '100';
+  input.value = String(Math.round(probability * 100));
+  input.addEventListener('input', () => {
+    const nextProbability = Number(input.value) / 100;
+    activePreferenceProfile = setPreferenceEvidenceSituation(
+      activePreferenceProfile,
+      definition.id,
+      nextProbability
+    );
+    output.textContent = `${input.value}%`;
+    savePreferenceProfile();
+    syncPreferenceExport();
+    onProfileChange(activePreferenceProfile);
   });
 
   row.append(heading, output, input);

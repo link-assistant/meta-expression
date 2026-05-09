@@ -3,6 +3,7 @@ export interface BeliefSystem {
   name: string;
   probabilityStrategy: string;
   sourceWeights: Record<string, number>;
+  evidenceScoring?: Record<string, number>;
   realWorldUncertainty?: number;
 }
 
@@ -61,11 +62,40 @@ export interface EvidenceItem {
   polarity: 'support' | 'refute';
   weight: number;
   sourceType: string;
+  situation?: string | { id: string };
   sourceUrl: string | null;
   retrievedAt: string;
   claim: string;
   identifiers?: Record<string, string>;
   context?: Record<string, unknown>;
+  score?: {
+    situationId: string;
+    label: string;
+    probability: number;
+    baseWeight: number;
+    residual?: boolean;
+  };
+}
+
+export interface EvidenceCalculation {
+  strategy: string;
+  supportWeight: number;
+  refuteWeight: number;
+  rawConfidence: number | null;
+  boundedConfidence: number | null;
+  realWorldUncertainty?: number;
+  evidence: Array<{
+    id?: string;
+    polarity: EvidenceItem['polarity'];
+    sourceType: string;
+    sourceUrl: string | null;
+    weight: number;
+    situationId: string | null;
+    situationLabel: string | null;
+    situationProbability: number | null;
+    residual: boolean;
+    claim: string;
+  }>;
 }
 
 export interface EvaluationResult {
@@ -79,6 +109,7 @@ export interface EvaluationResult {
   rawBalance: number | null;
   supportWeight?: number;
   refuteWeight?: number;
+  calculation?: EvidenceCalculation;
   supportingEvidence: EvidenceItem[];
   refutingEvidence: EvidenceItem[];
   explanation: string;
@@ -110,6 +141,7 @@ export interface AnalysisOptions {
   selectedBy?: string;
   beliefSystem?: BeliefSystem;
   evidence?: EvidenceItem[];
+  evidenceScoring?: Record<string, number>;
   userBeliefs?: Record<string, number> | Map<string, number>;
   realWorldUncertainty?: number;
   includeFixtureEvidence?: boolean;
@@ -143,16 +175,27 @@ export interface PreferenceContextDefinition {
   }>;
 }
 
+export interface PreferenceEvidenceSituationDefinition {
+  id: string;
+  label: string;
+  group: 'knowledge-source';
+  defaultProbability: number;
+}
+
 export interface PreferenceProfile {
   version?: number;
   activeContextId?: string;
   beliefs?: Record<string, number> | Array<{ id: string; probability: number }>;
+  evidenceScoring?:
+    | Record<string, number>
+    | Array<{ id: string; probability: number }>;
 }
 
 export interface NormalizedPreferenceProfile {
   version: number;
   activeContextId: string;
   beliefs: Record<string, number>;
+  evidenceScoring: Record<string, number>;
 }
 
 export interface PreparedExample {
@@ -225,6 +268,8 @@ export declare const preferenceBeliefDefinitions: readonly PreferenceBeliefDefin
 
 export declare const preferenceContextDefinitions: readonly PreferenceContextDefinition[];
 
+export declare const preferenceEvidenceSituationDefinitions: readonly PreferenceEvidenceSituationDefinition[];
+
 export declare function createDefaultPreferenceProfile(): NormalizedPreferenceProfile;
 
 export declare function normalizePreferenceProfile(
@@ -236,9 +281,20 @@ export declare function getPreferenceBeliefProbability(
   beliefId: string
 ): number;
 
+export declare function getPreferenceEvidenceSituationProbability(
+  profile: PreferenceProfile,
+  situationId: string
+): number;
+
 export declare function setPreferenceBelief(
   profile: PreferenceProfile,
   beliefId: string,
+  probability: number
+): NormalizedPreferenceProfile;
+
+export declare function setPreferenceEvidenceSituation(
+  profile: PreferenceProfile,
+  situationId: string,
   probability: number
 ): NormalizedPreferenceProfile;
 
@@ -724,6 +780,8 @@ export interface CheckStatement {
   result: {
     kind: EvaluationResult['kind'];
     value: EvaluationResult['value'];
+    confidence: EvaluationResult['confidence'];
+    calculation?: EvidenceCalculation;
     explanation: string;
   };
   analysis: StatementAnalysis;

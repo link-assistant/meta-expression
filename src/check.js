@@ -91,6 +91,8 @@ function statementFromAnalysis(statement, analysis, index) {
     result: {
       kind: analysis.result.kind,
       value: analysis.result.value,
+      confidence: analysis.result.confidence,
+      calculation: analysis.result.calculation,
       explanation: analysis.result.explanation,
     },
     analysis,
@@ -172,8 +174,29 @@ function renderCheckMarkdown(statements, summary) {
         statement.wrongness
       )} wrong: ${statement.text}`
     );
+    appendStatementEvidenceLines(lines, statement);
   }
   return `${lines.join('\n')}\n`;
+}
+
+function appendStatementEvidenceLines(lines, statement) {
+  const calculation = statement.result.calculation;
+  if (!calculation) {
+    return;
+  }
+  lines.push(
+    `  - support ${formatWeight(
+      calculation.supportWeight
+    )} / refute ${formatWeight(calculation.refuteWeight)}`
+  );
+  for (const evidence of calculation.evidence.slice(0, 3)) {
+    const situation = evidence.situationId ? ` (${evidence.situationId})` : '';
+    lines.push(
+      `  - ${evidence.polarity}${situation}: ${formatWeight(
+        evidence.weight
+      )} - ${evidence.claim}`
+    );
+  }
 }
 
 function renderCheckLino(text, statements, summary) {
@@ -189,6 +212,8 @@ function renderCheckLino(text, statements, summary) {
         correctness: statement.correctness,
         wrongness: statement.wrongness,
         hue: statement.color.hue,
+        supportWeight: statement.result.calculation?.supportWeight ?? null,
+        refuteWeight: statement.result.calculation?.refuteWeight ?? null,
         result: statement.result.value,
         explanation: statement.result.explanation,
       })),
@@ -256,6 +281,10 @@ function formatPercent(value) {
 
 function dataValue(value) {
   return value === null ? 'unknown' : String(Number(value.toFixed(6)));
+}
+
+function formatWeight(value) {
+  return Number.isFinite(value) ? String(Number(value.toFixed(6))) : 'unknown';
 }
 
 function escapeHtml(value) {

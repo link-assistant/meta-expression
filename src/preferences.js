@@ -121,10 +121,38 @@ export const preferenceContextDefinitions = Object.freeze([
   }),
 ]);
 
+export const preferenceEvidenceSituationDefinitions = Object.freeze([
+  Object.freeze({
+    id: 'wikidata-structured-claim',
+    label: 'Wikidata structured statement',
+    group: 'knowledge-source',
+    defaultProbability: 0.74,
+  }),
+  Object.freeze({
+    id: 'wikipedia-literal-statement',
+    label: 'Wikipedia literal statement',
+    group: 'knowledge-source',
+    defaultProbability: 0.68,
+  }),
+  Object.freeze({
+    id: 'wikipedia-similar-statement',
+    label: 'Wikipedia similar statement',
+    group: 'knowledge-source',
+    defaultProbability: 0.62,
+  }),
+  Object.freeze({
+    id: 'wikipedia-cited-statement',
+    label: 'Wikipedia cited statement',
+    group: 'knowledge-source',
+    defaultProbability: 0.87,
+  }),
+]);
+
 const defaultPreferenceProfile = Object.freeze({
   version: 1,
   activeContextId: 'real-world',
   beliefs: Object.freeze({}),
+  evidenceScoring: Object.freeze({}),
 });
 
 const beliefDefinitionsById = new Map(
@@ -132,6 +160,12 @@ const beliefDefinitionsById = new Map(
 );
 const contextDefinitionsById = new Map(
   preferenceContextDefinitions.map((definition) => [definition.id, definition])
+);
+const evidenceSituationDefinitionsById = new Map(
+  preferenceEvidenceSituationDefinitions.map((definition) => [
+    definition.id,
+    definition,
+  ])
 );
 
 export function createDefaultPreferenceProfile() {
@@ -143,33 +177,50 @@ export function normalizePreferenceProfile(profile = {}) {
   const activeContextId = contextDefinitionsById.has(candidate.activeContextId)
     ? candidate.activeContextId
     : defaultPreferenceProfile.activeContextId;
-  const rawBeliefs =
-    candidate.beliefs && typeof candidate.beliefs === 'object'
-      ? candidate.beliefs
-      : {};
-  const beliefs = {};
-
-  if (Array.isArray(rawBeliefs)) {
-    for (const entry of rawBeliefs) {
-      if (entry?.id) {
-        setKnownBelief(beliefs, entry.id, entry.probability);
-      }
-    }
-  } else {
-    for (const [id, probability] of Object.entries(rawBeliefs)) {
-      setKnownBelief(beliefs, id, probability);
-    }
-  }
 
   return {
     version: 1,
     activeContextId,
-    beliefs,
+    beliefs: normalizePreferenceValues(candidate.beliefs, setKnownBelief),
+    evidenceScoring: normalizePreferenceValues(
+      candidate.evidenceScoring,
+      setKnownEvidenceSituation
+    ),
   };
+}
+
+function normalizePreferenceValues(rawValues, assignValue) {
+  const values = {};
+  if (!rawValues || typeof rawValues !== 'object') {
+    return values;
+  }
+  if (Array.isArray(rawValues)) {
+    for (const entry of rawValues) {
+      if (entry?.id) {
+        assignValue(values, entry.id, entry.probability);
+      }
+    }
+    return values;
+  }
+  for (const [id, probability] of Object.entries(rawValues)) {
+    assignValue(values, id, probability);
+  }
+  return values;
 }
 
 function setKnownBelief(target, id, probability) {
   if (!beliefDefinitionsById.has(id)) {
+    return;
+  }
+  const parsed = Number(probability);
+  if (!Number.isFinite(parsed)) {
+    return;
+  }
+  target[id] = clamp(parsed, 0, 1);
+}
+
+function setKnownEvidenceSituation(target, id, probability) {
+  if (!evidenceSituationDefinitionsById.has(id)) {
     return;
   }
   const parsed = Number(probability);
@@ -188,6 +239,22 @@ export function getPreferenceBeliefProbability(profile, beliefId) {
   return normalized.beliefs[beliefId] ?? definition.defaultProbability ?? 0.5;
 }
 
+export function getPreferenceEvidenceSituationProbability(
+  profile,
+  situationId
+) {
+  const normalized = normalizePreferenceProfile(profile);
+  const definition = evidenceSituationDefinitionsById.get(situationId);
+  if (!definition) {
+    return 0.5;
+  }
+  return (
+    normalized.evidenceScoring[situationId] ??
+    definition.defaultProbability ??
+    0.5
+  );
+}
+
 export function setPreferenceBelief(profile, beliefId, probability) {
   const normalized = normalizePreferenceProfile(profile);
   const definition = beliefDefinitionsById.get(beliefId);
@@ -203,6 +270,29 @@ export function setPreferenceBelief(profile, beliefId, probability) {
     delete next.beliefs[beliefId];
   } else {
     next.beliefs[beliefId] = value;
+  }
+  return next;
+}
+
+export function setPreferenceEvidenceSituation(
+  profile,
+  situationId,
+  probability
+) {
+  const normalized = normalizePreferenceProfile(profile);
+  const definition = evidenceSituationDefinitionsById.get(situationId);
+  if (!definition) {
+    return normalized;
+  }
+  const next = {
+    ...normalized,
+    evidenceScoring: { ...normalized.evidenceScoring },
+  };
+  const value = clamp(Number(probability), 0, 1);
+  if (!Number.isFinite(value) || value === definition.defaultProbability) {
+    delete next.evidenceScoring[situationId];
+  } else {
+    next.evidenceScoring[situationId] = value;
   }
   return next;
 }
@@ -249,11 +339,18 @@ export function serializePreferenceProfile(profile) {
       probability,
     })
   );
+  const evidenceScoring = Object.entries(normalized.evidenceScoring).map(
+    ([id, probability]) => ({
+      id,
+      probability,
+    })
+  );
   return serializeLino(
     {
       version: normalized.version,
       activeContextId: normalized.activeContextId,
       beliefs: entries,
+      evidenceScoring,
     },
     { rootIdentifier: 'preferences' }
   );

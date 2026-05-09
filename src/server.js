@@ -181,6 +181,7 @@ function checkParamsFromSearch(url) {
     input: url.searchParams.get('input') ?? '',
     format: url.searchParams.get('format') ?? 'json',
     live: url.searchParams.get('live') === 'true',
+    evidenceScoring: evidenceScoringFromSearch(url),
   };
 }
 
@@ -189,7 +190,23 @@ function checkParamsFromPayload(payload) {
     input: payload.input ?? '',
     format: payload.format ?? 'json',
     live: payload.live === true,
+    evidenceScoring: payload.evidenceScoring,
+    preferenceProfile: payload.preferenceProfile,
   };
+}
+
+function evidenceScoringFromSearch(url) {
+  const scoring = {};
+  for (const [key, value] of url.searchParams.entries()) {
+    if (!key.startsWith('score.')) {
+      continue;
+    }
+    const parsed = Number(value);
+    if (Number.isFinite(parsed)) {
+      scoring[key.slice('score.'.length)] = parsed;
+    }
+  }
+  return scoring;
 }
 
 function sendNotFound(response) {
@@ -320,6 +337,8 @@ async function sendCheck(response, params, ctx) {
   const options = {
     fetch: globalThis.fetch?.bind(globalThis),
     cache: ctx.liveCache,
+    evidenceScoring: params.evidenceScoring,
+    preferenceProfile: params.preferenceProfile,
   };
   const result = params.live
     ? await checkTextWithLiveEvidence(params.input, options)
