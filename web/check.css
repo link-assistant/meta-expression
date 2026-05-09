@@ -1,0 +1,73 @@
+.check-shell {
+  width: min(1180px, calc(100% - 32px));
+  margin: 0 auto;
+  padding: 28px 0 48px;
+}
+
+.check-panel {
+  display: grid;
+  gap: 20px;
+}
+
+.check-input-label {
+  display: grid;
+  gap: 8px;
+  font-weight: 700;
+}
+
+.check-live-option {
+  display: inline-flex;
+  gap: 8px;
+  align-items: center;
+  font-weight: 700;
+}
+
+.check-panel textarea {
+  width: 100%;
+  resize: vertical;
+}
+
+.check-options,
+.check-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 14px;
+  align-items: center;
+}
+
+.check-summary {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(120px, 1fr));
+  gap: 10px;
+}
+
+.check-summary > div {
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 12px;
+  background: var(--surface);
+}
+
+.check-output {
+  min-height: 140px;
+  white-space: pre-wrap;
+  line-height: 1.8;
+}
+
+.check-statement {
+  color: var(--check-foreground);
+  background: var(--check-background);
+  border-bottom: 3px solid var(--check-border);
+  border-radius: 5px;
+  padding: 2px 4px;
+}
+
+.check-payload pre {
+  white-space: pre-wrap;
+}
+
+@media (max-width: 760px) {
+  .check-summary {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}

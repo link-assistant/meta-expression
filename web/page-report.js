@@ -6,10 +6,12 @@ const defaultIssueUrl = `${repositoryUrl}/issues/new`;
 const pageLabels = {
   analyse: 'Analyse',
   compare: 'Compare',
+  check: 'Check',
   formalize: 'Formalize',
   translate: 'Translate',
   preferences: 'Preferences',
 };
+const pageAliases = { 'fact-check': 'check' };
 
 export function setupPageIssueReporting(options = {}) {
   const links = [
@@ -87,13 +89,14 @@ export function createPageIssueReport(report) {
 }
 
 function createCurrentPageReport(pageId, options) {
-  const pageLabel = pageLabels[pageId] ?? pageLabels.analyse;
+  const normalizedPageId = normalizePageId(pageId);
+  const pageLabel = pageLabels[normalizedPageId] ?? pageLabels.analyse;
   return {
-    pageId,
+    pageId: normalizedPageId,
     pageLabel,
-    summary: getPageSummary(pageId),
+    summary: getPageSummary(normalizedPageId),
     environment: collectEnvironment(pageLabel, options),
-    sections: collectPageSections(pageId, options),
+    sections: collectPageSections(normalizedPageId, options),
     reproductionSteps: createReproductionSteps(pageLabel),
   };
 }
@@ -121,6 +124,9 @@ function collectPageSections(pageId, options) {
   }
   if (pageId === 'formalize') {
     return collectFormalizeSections(options);
+  }
+  if (pageId === 'check') {
+    return collectCheckSections(options);
   }
   if (pageId === 'translate') {
     return collectTranslateSections();
@@ -252,6 +258,32 @@ function collectFormalizeSections(options) {
   ];
 }
 
+function collectCheckSections(options) {
+  const result = options.getCheckResult?.();
+  return [
+    { heading: 'Text', code: valueOf('#check-input') },
+    {
+      heading: 'Options',
+      lines: [
+        `- **Live Wikimedia evidence**: ${
+          document.querySelector('#check-live')?.checked ? 'on' : 'off'
+        }`,
+      ],
+    },
+    { heading: 'Status', lines: [`- ${textOf('#check-status')}`] },
+    { heading: 'Summary', lines: linesFrom('#check-summary > *') },
+    { heading: 'Checked Result', lines: linesFrom('#check-output') },
+    {
+      heading: 'Markdown',
+      code: result?.markdown ?? textOf('#check-markdown'),
+    },
+    {
+      heading: 'Links Notation',
+      code: result?.linksNotation ?? textOf('#check-lino'),
+    },
+  ];
+}
+
 function collectTranslateSections() {
   return [
     { heading: 'Text', code: valueOf('#translate-input') },
@@ -308,6 +340,9 @@ function getPageSummary(pageId) {
   }
   if (pageId === 'translate') {
     return shorten(valueOf('#translate-input'));
+  }
+  if (pageId === 'check') {
+    return shorten(valueOf('#check-input'));
   }
   if (pageId === 'compare') {
     return shorten(valueOf('#compare-rows .compare-claim'));
@@ -406,5 +441,11 @@ function createVersionTitle(info) {
 
 function pageFromLocation() {
   const fragment = globalThis.location?.hash?.replace('#/', '') ?? '';
-  return pageLabels[fragment] ? fragment : 'analyse';
+  return pageLabels[normalizePageId(fragment)]
+    ? normalizePageId(fragment)
+    : 'analyse';
+}
+
+function normalizePageId(pageId) {
+  return pageAliases[pageId] ?? pageId;
 }

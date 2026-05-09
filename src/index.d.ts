@@ -705,6 +705,49 @@ export interface TranslateResult {
   steps: TranslationStep[];
 }
 
+export interface CheckStatementColor {
+  hue: number;
+  foreground: string;
+  background: string;
+  border: string;
+}
+
+export interface CheckStatement {
+  id: string;
+  text: string;
+  start: number;
+  end: number;
+  analysisInput: string;
+  correctness: number | null;
+  wrongness: number | null;
+  color: CheckStatementColor;
+  result: {
+    kind: EvaluationResult['kind'];
+    value: EvaluationResult['value'];
+    explanation: string;
+  };
+  analysis: StatementAnalysis;
+}
+
+export interface CheckSummary {
+  total: number;
+  correct: number;
+  wrong: number;
+  uncertain: number;
+  averageCorrectness: number | null;
+  averageWrongness: number | null;
+}
+
+export interface CheckResult {
+  status: 'checked';
+  text: string;
+  summary: CheckSummary;
+  statements: CheckStatement[];
+  html: string;
+  markdown: string;
+  linksNotation: string;
+}
+
 export declare function translateText(
   input: string,
   options?: TranslateOptions
@@ -714,6 +757,16 @@ export declare function translateTextWith(
   input: string,
   options?: TranslateOptions
 ): Promise<TranslateResult>;
+
+export declare function checkText(
+  input: string,
+  options?: AnalysisOptions & { locale?: string }
+): CheckResult;
+
+export declare function checkTextWithLiveEvidence(
+  input: string,
+  options?: AnalysisOptions & { locale?: string }
+): Promise<CheckResult>;
 
 export declare function tokenizeForFormalize(text: string): string[];
 

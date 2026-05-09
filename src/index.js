@@ -60,6 +60,7 @@ export {
   parseSourceSpec,
 } from './formalize-sources.js';
 export { translateText, translateTextWith } from './translate.js';
+export { checkText, checkTextWithLiveEvidence } from './check.js';
 export {
   aggregateBigContexts,
   aggregateBigContextsFromGraph,

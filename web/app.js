@@ -52,6 +52,8 @@ import {
   setupPreferencesPage,
 } from './preferences-ui.js';
 import { setupPageIssueReporting } from './page-report.js';
+import { setupComparePage } from './compare-ui.js';
+import { setupCheckPage } from './check-ui.js';
 import { setupTranslatePage } from './translate-ui.js';
 
 const beliefStorageKey = 'meta-expression.user-beliefs.v1';
@@ -88,17 +90,16 @@ const formalizationLevelName = document.querySelector(
 const resultValue = document.querySelector('#result-value');
 const navAnalyse = document.querySelector('#nav-analyse');
 const navCompare = document.querySelector('#nav-compare');
+const navCheck = document.querySelector('#nav-check');
 const navFormalize = document.querySelector('#nav-formalize');
 const navTranslate = document.querySelector('#nav-translate');
 const navPreferences = document.querySelector('#nav-preferences');
 const pageAnalyse = document.querySelector('#page-analyse');
 const pageCompare = document.querySelector('#page-compare');
+const pageCheck = document.querySelector('#page-check');
 const pageFormalize = document.querySelector('#page-formalize');
 const pageTranslate = document.querySelector('#page-translate');
 const pagePreferences = document.querySelector('#page-preferences');
-const compareRows = document.querySelector('#compare-rows');
-const compareAdd = document.querySelector('#compare-add');
-const compareRun = document.querySelector('#compare-run');
 const supportCount = document.querySelector('#support-count');
 const refuteCount = document.querySelector('#refute-count');
 const unknownCount = document.querySelector('#unknown-count');
@@ -708,12 +709,23 @@ setupLocale();
 setupTheme();
 setupFormalizeDisplayMode();
 setupTranslatePage({ cache: wikimediaCache });
+const checkPage = setupCheckPage({
+  cache: wikimediaCache,
+  userBeliefs,
+  getPreferenceProfile: getActivePreferenceProfile,
+  getStrategyId: () => strategyId,
+});
+const comparePage = setupComparePage({
+  userBeliefs,
+  getPreferenceProfile: getActivePreferenceProfile,
+  getStrategyId: () => strategyId,
+});
 setupPreferencesPage({
   onChange() {
     if (currentAnalysis) {
       render(input.value, selectedIndex);
     }
-    runAllCompareRows();
+    comparePage.runAllCompareRows();
   },
 });
 applyLocale(currentLocale);
@@ -724,6 +736,7 @@ render(input.value);
 const navButtons = {
   analyse: navAnalyse,
   compare: navCompare,
+  check: navCheck,
   formalize: navFormalize,
   translate: navTranslate,
   preferences: navPreferences,
@@ -731,13 +744,16 @@ const navButtons = {
 const pageElements = {
   analyse: pageAnalyse,
   compare: pageCompare,
+  check: pageCheck,
   formalize: pageFormalize,
   translate: pageTranslate,
   preferences: pagePreferences,
 };
+const pageAliases = { 'fact-check': 'check' };
 
 function showPage(pageId) {
-  const known = pageElements[pageId] ? pageId : 'analyse';
+  const normalized = pageAliases[pageId] ?? pageId;
+  const known = pageElements[normalized] ? normalized : 'analyse';
   for (const [id, element] of Object.entries(pageElements)) {
     element.hidden = id !== known;
   }
@@ -746,19 +762,20 @@ function showPage(pageId) {
     button.setAttribute('aria-current', active ? 'page' : 'false');
     button.classList.toggle('active', active);
   }
-  if (known === 'compare' && compareRows.children.length === 0) {
-    seedCompareRows();
+  if (known === 'compare') {
+    comparePage.seedCompareRows();
   }
   globalThis.location.hash = `#/${known}`;
 }
 
 function pageFromHash() {
   const fragment = globalThis.location.hash.replace('#/', '');
-  return pageElements[fragment] ? fragment : 'analyse';
+  return pageElements[fragment] || pageAliases[fragment] ? fragment : 'analyse';
 }
 
 navAnalyse.addEventListener('click', () => showPage('analyse'));
 navCompare.addEventListener('click', () => showPage('compare'));
+navCheck.addEventListener('click', () => showPage('check'));
 navFormalize.addEventListener('click', () => showPage('formalize'));
 navTranslate.addEventListener('click', () => showPage('translate'));
 navPreferences.addEventListener('click', () => showPage('preferences'));
@@ -774,117 +791,8 @@ setupPageIssueReporting({
   getFormalizeSourcesSpec: collectFormalizeSourcesSpec,
   getFormalizeLinkTargetMode: selectedLinkTargetMode,
   getInterpretationDisplayMode: () => interpretationDisplayMode,
+  getCheckResult: checkPage.getResult,
 });
-
-function seedCompareRows() {
-  appendCompareRow('Population of Russia is 100m');
-  appendCompareRow('Population of Russia is 200m');
-}
-
-function appendCompareRow(initialValue = '') {
-  const row = document.createElement('div');
-  row.className = 'compare-row';
-  row.innerHTML = `
-    <div class="compare-row-input">
-      <label>Claim</label>
-      <input type="text" class="compare-claim" value="${escapeHtml(initialValue)}" />
-    </div>
-    <div class="compare-metric" data-metric="correctness">
-      <span class="eyebrow">Correctness</span>
-      <strong class="compare-correctness">—</strong>
-      <div class="compare-bar"><div class="compare-bar-fill correctness"></div></div>
-    </div>
-    <div class="compare-metric" data-metric="confidence">
-      <span class="eyebrow">Confidence</span>
-      <strong class="compare-confidence">—</strong>
-      <div class="compare-bar signed"><div class="compare-bar-axis"></div><div class="compare-bar-fill signed-confidence"></div></div>
-    </div>
-    <button type="button" class="compare-remove" aria-label="Remove claim">×</button>
-  `;
-  row.querySelector('.compare-remove').addEventListener('click', () => {
-    if (compareRows.children.length > 2) {
-      row.remove();
-    }
-  });
-  row.querySelector('.compare-claim').addEventListener('change', () => {
-    runCompareRow(row);
-  });
-  compareRows.append(row);
-  if (initialValue) {
-    runCompareRow(row);
-  }
-}
-
-function runCompareRow(row) {
-  const claim = row.querySelector('.compare-claim').value.trim();
-  const correctnessEl = row.querySelector('.compare-correctness');
-  const confidenceEl = row.querySelector('.compare-confidence');
-  const correctnessFill = row.querySelector('.compare-bar-fill.correctness');
-  const signedFill = row.querySelector('.compare-bar-fill.signed-confidence');
-
-  if (!claim) {
-    correctnessEl.textContent = '—';
-    confidenceEl.textContent = '—';
-    correctnessFill.style.width = '0%';
-    signedFill.style.width = '0%';
-    signedFill.style.left = '50%';
-    return;
-  }
-
-  let analysis;
-  try {
-    analysis = analyzeStatement(claim, {
-      selectedBy: 'compare',
-      userBeliefs,
-      preferenceProfile: getActivePreferenceProfile(),
-      reasoningStrategyId: strategyId,
-    });
-  } catch {
-    correctnessEl.textContent = 'error';
-    confidenceEl.textContent = 'error';
-    correctnessFill.style.width = '0%';
-    signedFill.style.width = '0%';
-    signedFill.style.left = '50%';
-    return;
-  }
-
-  const correctness = analysis.result.correctness;
-  const signed = analysis.result.signedConfidence;
-
-  correctnessEl.textContent = formatCorrectness(correctness);
-  confidenceEl.textContent = formatSignedConfidence(signed);
-  confidenceEl.dataset.sign = signOf(signed);
-
-  correctnessFill.style.width =
-    correctness === null
-      ? '0%'
-      : `${Math.max(0, Math.min(100, correctness * 100))}%`;
-
-  signedFill.classList.remove('positive', 'negative');
-  if (signed === null || signed === undefined) {
-    signedFill.style.width = '0%';
-    signedFill.style.left = '50%';
-  } else if (signed >= 0) {
-    signedFill.style.left = '50%';
-    signedFill.style.width = `${Math.min(50, signed * 50)}%`;
-    signedFill.classList.add('positive');
-  } else {
-    const magnitude = Math.min(50, Math.abs(signed) * 50);
-    signedFill.style.left = `${50 - magnitude}%`;
-    signedFill.style.width = `${magnitude}%`;
-    signedFill.classList.add('negative');
-  }
-}
-
-function runAllCompareRows() {
-  for (const row of compareRows.querySelectorAll('.compare-row')) {
-    runCompareRow(row);
-  }
-}
-
-compareAdd.addEventListener('click', () => appendCompareRow(''));
-compareRun.addEventListener('click', runAllCompareRows);
-
 const formalizeInput = document.querySelector('#formalize-input');
 const formalizeSampleSelect = document.querySelector('#formalize-sample');
 const formalizeNgramSize = document.querySelector('#formalize-ngram-size');
