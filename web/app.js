@@ -52,6 +52,7 @@ import {
   getActivePreferenceProfile,
   setupPreferencesPage,
 } from './preferences-ui.js';
+import { setupTranslatePage } from './translate-ui.js';
 
 const beliefStorageKey = 'meta-expression.user-beliefs.v1';
 const wikimediaCacheStorageKey = 'meta-expression.wikimedia-cache.v1';
@@ -88,10 +89,12 @@ const resultValue = document.querySelector('#result-value');
 const navAnalyse = document.querySelector('#nav-analyse');
 const navCompare = document.querySelector('#nav-compare');
 const navFormalize = document.querySelector('#nav-formalize');
+const navTranslate = document.querySelector('#nav-translate');
 const navPreferences = document.querySelector('#nav-preferences');
 const pageAnalyse = document.querySelector('#page-analyse');
 const pageCompare = document.querySelector('#page-compare');
 const pageFormalize = document.querySelector('#page-formalize');
+const pageTranslate = document.querySelector('#page-translate');
 const pagePreferences = document.querySelector('#page-preferences');
 const compareRows = document.querySelector('#compare-rows');
 const compareAdd = document.querySelector('#compare-add');
@@ -724,6 +727,7 @@ function setupFormalizeDisplayMode() {
 setupLocale();
 setupTheme();
 setupFormalizeDisplayMode();
+setupTranslatePage({ cache: wikimediaCache });
 setupPreferencesPage({
   onChange() {
     if (currentAnalysis) {
@@ -741,12 +745,14 @@ const navButtons = {
   analyse: navAnalyse,
   compare: navCompare,
   formalize: navFormalize,
+  translate: navTranslate,
   preferences: navPreferences,
 };
 const pageElements = {
   analyse: pageAnalyse,
   compare: pageCompare,
   formalize: pageFormalize,
+  translate: pageTranslate,
   preferences: pagePreferences,
 };
 
@@ -774,6 +780,7 @@ function pageFromHash() {
 navAnalyse.addEventListener('click', () => showPage('analyse'));
 navCompare.addEventListener('click', () => showPage('compare'));
 navFormalize.addEventListener('click', () => showPage('formalize'));
+navTranslate.addEventListener('click', () => showPage('translate'));
 navPreferences.addEventListener('click', () => showPage('preferences'));
 globalThis.addEventListener('hashchange', () => showPage(pageFromHash()));
 
@@ -1584,13 +1591,10 @@ formalizeCopyLino.addEventListener('click', async () => {
 });
 
 async function copyToClipboard(text) {
-  if (globalThis.navigator?.clipboard) {
-    try {
-      await globalThis.navigator.clipboard.writeText(text);
-    } catch {
-      // Clipboard may be blocked; the textarea still shows the value.
-    }
+  try {
+    await globalThis.navigator?.clipboard?.writeText(text);
+  } catch {
+    // Clipboard may be blocked; the textarea still shows the value.
   }
 }
-
 showPage(pageFromHash());

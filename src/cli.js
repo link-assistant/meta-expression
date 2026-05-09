@@ -7,6 +7,7 @@ import {
   serializeLinksNotation,
 } from './index.js';
 import { formalizeTextWith, FORMALIZE_LINK_TARGETS } from './formalize.js';
+import { translateTextWith } from './translate.js';
 import { parseSourceSpec } from './formalize-sources.js';
 import { loadRepoOverrides, loadUserOverrides } from './formalize-overrides.js';
 
@@ -37,6 +38,18 @@ export function parseCliArguments(args) {
     },
     '--target': () => {
       options.target = args[++index] ?? 'wikipedia';
+    },
+    '--to': () => {
+      options.targetLanguage = args[++index] ?? 'ru';
+    },
+    '--target-language': () => {
+      options.targetLanguage = args[++index] ?? 'ru';
+    },
+    '--from': () => {
+      options.sourceLanguage = args[++index] ?? 'en';
+    },
+    '--source-language': () => {
+      options.sourceLanguage = args[++index] ?? 'en';
     },
     '--sources': () => {
       options.sourcesSpec = args[++index] ?? '';
@@ -86,6 +99,9 @@ export function runCli(args = process.argv.slice(2), output = console) {
   if (options.command === 'formalize') {
     throw new Error('Use runCliAsync for the formalize command.');
   }
+  if (options.command === 'translate') {
+    throw new Error('Use runCliAsync for the translate command.');
+  }
 
   const checked = validateCliOptions(options, output);
   if (checked !== null) {
@@ -110,6 +126,9 @@ export async function runCliAsync(
   }
   if (options.command === 'formalize') {
     return runFormalizeCommand(options, output);
+  }
+  if (options.command === 'translate') {
+    return runTranslateCommand(options, output);
   }
 
   const analysis = options.live
@@ -155,6 +174,42 @@ async function runFormalizeCommand(options, output) {
   return 0;
 }
 
+async function runTranslateCommand(options, output) {
+  const sources = options.sourcesSpec
+    ? parseSourceSpec(options.sourcesSpec)
+    : undefined;
+  const repoOverrides = options.noRepoOverrides
+    ? []
+    : await loadRepoOverrides();
+  const userOverrides = options.overrideFile
+    ? await loadUserOverrides(options.overrideFile)
+    : [];
+  const linkTargetMode = resolveCliLinkTargetMode(options.target);
+  const result = await translateTextWith(options.input, {
+    fetch: globalThis.fetch?.bind(globalThis),
+    sourceLanguage: options.sourceLanguage,
+    targetLanguage: options.targetLanguage,
+    linkTargetMode,
+    sources,
+    overrides: [...repoOverrides, ...userOverrides],
+    maxNgramSize: options.maxNgramSize,
+  });
+  if (options.format === 'links' || options.format === 'lino') {
+    output.log(result.linksNotation);
+    return 0;
+  }
+  if (options.format === 'markdown' || options.format === 'md') {
+    output.log(result.markdown);
+    return 0;
+  }
+  if (options.format === 'html') {
+    output.log(result.html);
+    return 0;
+  }
+  output.log(JSON.stringify(result, null, 2));
+  return 0;
+}
+
 function resolveCliLinkTargetMode(token) {
   if (!token) {
     return FORMALIZE_LINK_TARGETS.WIKIPEDIA;
@@ -175,7 +230,7 @@ function validateCliOptions(options, output) {
     return 0;
   }
 
-  if (!['analyze', 'formalize'].includes(options.command)) {
+  if (!['analyze', 'formalize', 'translate'].includes(options.command)) {
     output.error(`Unsupported command: ${options.command}`);
     output.error(helpText());
     return 1;
@@ -216,10 +271,12 @@ function helpText() {
   meta-expression formalize "Albert Einstein was born in Ulm"
   meta-expression formalize --input "Genshin Impact" --sources wikidata,fandom:genshin-impact
   meta-expression formalize --input "Hawaii" --format markdown --target wikipedia
+  meta-expression translate --input "Hawaii is a state." --to ru --format markdown
 
 Commands:
   analyze     Run the disambiguation/evaluation prototype.
   formalize   Tokenise text and link each phrase to a knowledge graph entity.
+  translate   Formalize text, then translate resolved Wikidata phrases.
 
 Options:
   -i, --input <text>             Statement text
@@ -227,7 +284,11 @@ Options:
   -s, --select <index>           Interpretation index (analyze), default 0
   --live                         analyze: resolve through Wikimedia APIs
   --target <wikipedia|wikidata|local>
-                                 formalize: link target style
+                                 formalize/translate: link target style
+  --from, --source-language <bcp47>
+                                 translate: source language (default en)
+  --to, --target-language <bcp47>
+                                 translate: target language (default ru for en)
   --sources <spec>               formalize: comma-separated sources
                                    (wikidata,wordnet,fandom:<slug>,fandom-host:<host>)
   --override <file.lino|.json>   formalize: extra user override file (.lino preferred)

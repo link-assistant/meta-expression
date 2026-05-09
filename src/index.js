@@ -39,6 +39,7 @@ export {
   FORMALIZE_LINK_TARGETS,
   FORMALIZE_SOURCE_KIND,
   INTERPRETATION_DISPLAY_MODES,
+  markdownFromFormalizationCst,
   formatInterpretationPhrase,
   interpretationKey,
   tokenize as tokenizeForFormalize,
@@ -58,6 +59,7 @@ export {
   createDefaultSourceTiers,
   parseSourceSpec,
 } from './formalize-sources.js';
+export { translateText, translateTextWith } from './translate.js';
 export {
   aggregateBigContexts,
   aggregateBigContextsFromGraph,

@@ -74,6 +74,22 @@ aggregated big contexts and ranked interpretations.
 
 **Returns** `Promise<object>`
 
+### `markdownFromFormalizationCst(cst)`
+
+Recreate Markdown from a formalization CST.
+
+The CST stores phrase order, source text, source character ranges, selected
+entity id, and the exact link URL used by the formalizer. That makes the
+Links Notation / CST form sufficient for downstream tools such as
+`/translate` to regenerate the same wikified Markdown, including sentence
+punctuation, without re-running disambiguation.
+
+| Parameter | Type     | Description |
+| --------- | -------- | ----------- |
+| `cst`     | `object` | —           |
+
+**Returns** `string`
+
 ### `tokenize(text)`
 
 Tokenize input by stripping punctuation and splitting on whitespace.

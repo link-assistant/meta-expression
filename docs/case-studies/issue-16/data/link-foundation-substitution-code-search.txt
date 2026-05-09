@@ -1,0 +1,32 @@
+link-foundation/link-cli:csharp/.changeset/fix-issue-20-substitution.md: Fixed self-link substitution with outgoing links by preserving unbound substitution parts from the matched link and rejecting unsupported link addresses during explicit creation.
+link-foundation/start:js/src/lib/substitution.js: * Substitution Engine for start-command
+link-foundation/start:js/src/lib/substitution.js: * Process a command through the substitution engine
+link-foundation/link-cli:rust/changelog.d/20260508_105800_issue_20_substitution.md: Fixed issue 20 query parity by preserving unbound substitution parts from existing matched links and rejecting unsupported explicit creation addresses.
+link-foundation/start:rust/src/lib/substitution.rs: /// A substitution rule parsed from a .lino file
+link-foundation/start:rust/src/lib/substitution.rs: /// Process a command through the substitution engine
+link-foundation/start:rust/src/lib/substitution.rs: pub fn process_command(input: &str, options: &ProcessOptions) -> SubstitutionResult {
+link-foundation/command-stream:js/src/shell-parser.mjs: '`', // Command substitution
+link-foundation/command-stream:js/src/shell-parser.mjs: '$(', // Command substitution
+link-foundation/js-ai-driven-development-pipeline-template:docs/case-studies/issue-42/data/link-foundation-my-package-search.txt: link-foundation/start:js/test/substitution.test.js: const varTest = matchAndSubstitute('install my-package npm package', rules);
+link-foundation/js-ai-driven-development-pipeline-template:docs/case-studies/issue-42/data/link-foundation-my-package-search.txt: link-foundation/start:js/test/substitution.test.js: varTest.matched && varTest.command === 'npm install my-package',
+link-foundation/meta-theory:archive/0.0.2/article.md: In this demo we build up on links notation to create a dialect that is able to describe single universal operation - substitution. As with unification of data types, it is also possible to unify creation, read, update and deletion into single substitution operation. That is similar to the only operation from [Markov algorithm](https://en.wikipedia.org/wiki/Markov_algorithm), which is proven to be [Turing-complete](https://en.wikipedia.org/wiki/Turing_completeness#:~:text=13%20External%20links-,Non%2Dmathematical%20usage,purpose%20computer%20or%20computer%20language.).
+link-foundation/link-cli:rust/src/query_processor_substitution.rs: pub(crate) fn preserve_existing_substitution_parts(
+link-foundation/command-stream:js/docs/SHELL_OPERATORS_IMPLEMENTATION.md: - Process substitution (`<()`, `>()`)
+link-foundation/meta-theory:drafts/0.0.3/images/metadata.json: "caption": "Figure 11. In this image you can see creation of two links (1: 1 1) and (2: 2 2); update of first link to (1: 1 2); update/substitution using variables to swap sources and targets of each link; and a deletion of all links using (* *) pattern."
+link-foundation/start:README.md: Variables like `$packageName`, `$version`, `$repository` are captured and used in the substitution.
+link-foundation/start:README.md: You can create your own substitution patterns by placing a `substitutions.lino` file in `~/.start-command/substitutions.lino`. User patterns take precedence over the default ones.
+link-foundation/command-stream:rust/src/shell_parser.rs: "`",   // Command substitution
+link-foundation/command-stream:rust/src/shell_parser.rs: "$(",  // Command substitution
+link-foundation/link-cli:rust/src/lib.rs: mod query_processor_substitution;
+link-foundation/start:experiments/debug-regex.js: const { createRule, parseLinoContent } = require('../src/lib/substitution');
+link-foundation/meta-theory:archive/0.0.2/images/metadata.json: "caption": "Figure 11. In this image you can see creation of two links (1: 1 1) and (2: 2 2); update of first link to (1: 1 2); update/substitution using variables to swap sources and targets of each link; and a deletion of all links using (* *) pattern."
+link-foundation/link-cli:docs/case-studies/issue-20/evidence/repro-after-fix.log: [ProcessQuery] Substitution link => Id="" Values.Count=2
+link-foundation/link-cli:docs/case-studies/issue-20/evidence/repro-after-fix.log: [ProcessQuery] Substitution patterns to parse: 2
+link-foundation/start:REQUIREMENTS.md: ### 5. Command Aliases / Substitutions
+link-foundation/start:REQUIREMENTS.md: - The substitution engine must produce identical results for the same input in both implementations
+link-foundation/command-stream:README.md: const cmdSubstitution = '$(whoami)';
+link-foundation/command-stream:README.md: await $`echo ${cmdSubstitution}`; // → echo '$(whoami)' (literal text, not executed)
+link-foundation/link-cli:rust/src/link_reference_validator.rs: substitution_patterns: &[LinoLink],
+link-foundation/link-cli:rust/src/link_reference_validator.rs: let mut plan = self.build_link_reference_plan(storage, substitution_patterns);
+link-foundation/start:js/src/bin/cli.js: // Process through substitution engine (unless disabled)
+link-foundation/start:js/src/bin/cli.js: * @param {object} subResult - Result from substitution engine
