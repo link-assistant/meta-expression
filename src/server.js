@@ -8,6 +8,7 @@ import {
 import { formalizeTextWith, FORMALIZE_LINK_TARGETS } from './formalize.js';
 import { translateTextWith } from './translate.js';
 import { checkText, checkTextWithLiveEvidence } from './check.js';
+import { searchTextUniqueness } from './uniqueness.js';
 import { parseSourceSpec } from './formalize-sources.js';
 import { loadRepoOverrides, loadUserOverrides } from './formalize-overrides.js';
 import {
@@ -83,6 +84,10 @@ async function routeGetRequest(url, response, ctx) {
     case '/fact-check':
       await sendCheck(response, checkParamsFromSearch(url), ctx);
       return;
+    case '/uniqueness':
+    case '/uniquness':
+      await sendUniqueness(response, uniquenessParamsFromSearch(url));
+      return;
     default:
       sendNotFound(response);
   }
@@ -105,6 +110,10 @@ async function routePostRequest(url, request, response, ctx) {
     case '/check':
     case '/fact-check':
       await sendCheck(response, checkParamsFromPayload(payload), ctx);
+      return;
+    case '/uniqueness':
+    case '/uniquness':
+      await sendUniqueness(response, uniquenessParamsFromPayload(payload));
       return;
     default:
       sendNotFound(response);
@@ -195,6 +204,22 @@ function checkParamsFromPayload(payload) {
   };
 }
 
+function uniquenessParamsFromSearch(url) {
+  return {
+    input: url.searchParams.get('input') ?? '',
+    format: url.searchParams.get('format') ?? 'json',
+    limit: numberParam(url.searchParams.get('limit')),
+  };
+}
+
+function uniquenessParamsFromPayload(payload) {
+  return {
+    input: payload.input ?? '',
+    format: payload.format ?? 'json',
+    limit: payload.limit,
+  };
+}
+
 function evidenceScoringFromSearch(url) {
   const scoring = {};
   for (const [key, value] of url.searchParams.entries()) {
@@ -224,6 +249,9 @@ function sendNotFound(response) {
       'POST /check',
       'GET /fact-check?input=...',
       'POST /fact-check',
+      'GET /uniqueness?input=...',
+      'POST /uniqueness',
+      'GET /uniquness?input=...',
     ],
   });
 }
@@ -346,6 +374,18 @@ async function sendCheck(response, params, ctx) {
   emitCheckResponse(response, params.format, result);
 }
 
+async function sendUniqueness(response, params) {
+  if (!params.input) {
+    sendJson(response, 400, { error: 'Missing input parameter.' });
+    return;
+  }
+  const result = await searchTextUniqueness(params.input, {
+    fetch: globalThis.fetch?.bind(globalThis),
+    limit: params.limit,
+  });
+  emitUniquenessResponse(response, params.format, result);
+}
+
 function resolveLinkTargetParam(token) {
   const normalized = String(token ?? '').toLowerCase();
   if (normalized === 'wikidata') {
@@ -435,6 +475,32 @@ function emitTranslateResponse(response, format, payload) {
 }
 
 function emitCheckResponse(response, format, payload) {
+  if (format === 'links' || format === 'lino') {
+    response.writeHead(200, {
+      'content-type': 'text/plain; charset=utf-8',
+    });
+    response.end(payload.linksNotation);
+    return 0;
+  }
+  if (format === 'markdown' || format === 'md') {
+    response.writeHead(200, {
+      'content-type': 'text/markdown; charset=utf-8',
+    });
+    response.end(payload.markdown);
+    return 0;
+  }
+  if (format === 'html') {
+    response.writeHead(200, {
+      'content-type': 'text/html; charset=utf-8',
+    });
+    response.end(payload.html);
+    return 0;
+  }
+  sendJson(response, 200, payload);
+  return 0;
+}
+
+function emitUniquenessResponse(response, format, payload) {
   if (format === 'links' || format === 'lino') {
     response.writeHead(200, {
       'content-type': 'text/plain; charset=utf-8',

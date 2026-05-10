@@ -1,0 +1,93 @@
+.uniqueness-shell {
+  width: min(1180px, calc(100% - 32px));
+  margin: 0 auto;
+  padding: 28px 0 48px;
+}
+
+.uniqueness-panel {
+  display: grid;
+  gap: 20px;
+}
+
+.uniqueness-input-label {
+  display: grid;
+  gap: 8px;
+  font-weight: 700;
+}
+
+.uniqueness-panel textarea {
+  width: 100%;
+  resize: vertical;
+}
+
+.uniqueness-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 14px;
+  align-items: center;
+}
+
+.uniqueness-summary {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(120px, 1fr));
+  gap: 10px;
+}
+
+.uniqueness-summary > div {
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 12px;
+  background: var(--surface);
+}
+
+.uniqueness-output {
+  min-height: 140px;
+  white-space: pre-wrap;
+  line-height: 1.8;
+}
+
+.uniqueness-statement {
+  color: var(--uniqueness-foreground);
+  background: var(--uniqueness-background);
+  border-bottom: 3px solid var(--uniqueness-border);
+  border-radius: 5px;
+  padding: 2px 4px;
+}
+
+.uniqueness-match-list {
+  display: grid;
+  gap: 12px;
+}
+
+.uniqueness-match-group {
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 14px;
+  background: var(--surface);
+}
+
+.uniqueness-match-group h3 {
+  margin: 0 0 10px;
+  font-size: 1rem;
+}
+
+.uniqueness-match {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 12px;
+  margin: 8px 0 0;
+}
+
+.uniqueness-match span {
+  font-weight: 700;
+}
+
+.uniqueness-payload pre {
+  white-space: pre-wrap;
+}
+
+@media (max-width: 760px) {
+  .uniqueness-summary {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}

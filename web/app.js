@@ -54,6 +54,7 @@ import {
 import { setupPageIssueReporting } from './page-report.js';
 import { setupComparePage } from './compare-ui.js';
 import { setupCheckPage } from './check-ui.js';
+import { setupUniquenessPage } from './uniqueness-ui.js';
 import { setupTranslatePage } from './translate-ui.js';
 
 const beliefStorageKey = 'meta-expression.user-beliefs.v1';
@@ -91,12 +92,14 @@ const resultValue = document.querySelector('#result-value');
 const navAnalyse = document.querySelector('#nav-analyse');
 const navCompare = document.querySelector('#nav-compare');
 const navCheck = document.querySelector('#nav-check');
+const navUniqueness = document.querySelector('#nav-uniqueness');
 const navFormalize = document.querySelector('#nav-formalize');
 const navTranslate = document.querySelector('#nav-translate');
 const navPreferences = document.querySelector('#nav-preferences');
 const pageAnalyse = document.querySelector('#page-analyse');
 const pageCompare = document.querySelector('#page-compare');
 const pageCheck = document.querySelector('#page-check');
+const pageUniqueness = document.querySelector('#page-uniqueness');
 const pageFormalize = document.querySelector('#page-formalize');
 const pageTranslate = document.querySelector('#page-translate');
 const pagePreferences = document.querySelector('#page-preferences');
@@ -715,6 +718,7 @@ const checkPage = setupCheckPage({
   getPreferenceProfile: getActivePreferenceProfile,
   getStrategyId: () => strategyId,
 });
+const uniquenessPage = setupUniquenessPage();
 const comparePage = setupComparePage({
   userBeliefs,
   getPreferenceProfile: getActivePreferenceProfile,
@@ -737,6 +741,7 @@ const navButtons = {
   analyse: navAnalyse,
   compare: navCompare,
   check: navCheck,
+  uniqueness: navUniqueness,
   formalize: navFormalize,
   translate: navTranslate,
   preferences: navPreferences,
@@ -745,11 +750,12 @@ const pageElements = {
   analyse: pageAnalyse,
   compare: pageCompare,
   check: pageCheck,
+  uniqueness: pageUniqueness,
   formalize: pageFormalize,
   translate: pageTranslate,
   preferences: pagePreferences,
 };
-const pageAliases = { 'fact-check': 'check' };
+const pageAliases = { 'fact-check': 'check', uniquness: 'uniqueness' };
 
 function showPage(pageId) {
   const normalized = pageAliases[pageId] ?? pageId;
@@ -776,6 +782,7 @@ function pageFromHash() {
 navAnalyse.addEventListener('click', () => showPage('analyse'));
 navCompare.addEventListener('click', () => showPage('compare'));
 navCheck.addEventListener('click', () => showPage('check'));
+navUniqueness.addEventListener('click', () => showPage('uniqueness'));
 navFormalize.addEventListener('click', () => showPage('formalize'));
 navTranslate.addEventListener('click', () => showPage('translate'));
 navPreferences.addEventListener('click', () => showPage('preferences'));
@@ -792,6 +799,7 @@ setupPageIssueReporting({
   getFormalizeLinkTargetMode: selectedLinkTargetMode,
   getInterpretationDisplayMode: () => interpretationDisplayMode,
   getCheckResult: checkPage.getResult,
+  getUniquenessResult: uniquenessPage.getResult,
 });
 const formalizeInput = document.querySelector('#formalize-input');
 const formalizeSampleSelect = document.querySelector('#formalize-sample');
