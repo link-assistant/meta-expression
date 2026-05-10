@@ -806,6 +806,94 @@ export interface CheckResult {
   linksNotation: string;
 }
 
+export type UniquenessSuggestedAction =
+  | 'cite-or-quote'
+  | 'review-matches'
+  | 'likely-original';
+
+export interface UniquenessSearchStatement {
+  id?: string;
+  text: string;
+  start: number;
+  end: number;
+  query: string;
+}
+
+export interface UniquenessSearchContext {
+  fetch?: typeof fetch | null;
+  limit: number;
+  now: string;
+  sources: UniquenessSource[];
+}
+
+export interface UniquenessSource {
+  id: string;
+  label: string;
+  search(
+    statement: UniquenessSearchStatement,
+    ctx: UniquenessSearchContext
+  ): Promise<UniquenessMatch[]>;
+}
+
+export interface UniquenessMatch {
+  sourceId: string;
+  sourceLabel: string;
+  title: string;
+  url: string | null;
+  snippet: string;
+  score: number;
+  matchKind: string;
+}
+
+export interface UniquenessStatement {
+  id: string;
+  text: string;
+  start: number;
+  end: number;
+  query: string;
+  existingLikelihood: number;
+  uniqueness: number;
+  suggestedAction: UniquenessSuggestedAction;
+  matches: UniquenessMatch[];
+  sourceErrors: Array<{
+    sourceId: string;
+    sourceLabel: string;
+    error: string;
+  }>;
+  checkedAt: string;
+  color: CheckStatementColor;
+}
+
+export interface UniquenessSummary {
+  total: number;
+  citeOrQuote: number;
+  reviewMatches: number;
+  likelyOriginal: number;
+  averageExistingLikelihood: number | null;
+  averageUniqueness: number | null;
+}
+
+export interface UniquenessResult {
+  status: 'checked';
+  text: string;
+  summary: UniquenessSummary;
+  statements: UniquenessStatement[];
+  html: string;
+  markdown: string;
+  linksNotation: string;
+}
+
+export interface UniquenessOptions {
+  fetch?: typeof fetch | null;
+  language?: string;
+  limit?: number;
+  sources?: UniquenessSource[];
+  crossref?: {
+    mailto?: string;
+  };
+  now?: (() => string | number | Date) | string | number | Date;
+}
+
 export declare function translateText(
   input: string,
   options?: TranslateOptions
@@ -825,6 +913,27 @@ export declare function checkTextWithLiveEvidence(
   input: string,
   options?: AnalysisOptions & { locale?: string }
 ): Promise<CheckResult>;
+
+export declare function searchTextUniqueness(
+  input: string,
+  options?: UniquenessOptions
+): Promise<UniquenessResult>;
+
+export declare function createDefaultUniquenessSources(
+  options?: UniquenessOptions
+): UniquenessSource[];
+
+export declare function createWikipediaUniquenessSource(options?: {
+  language?: string;
+}): UniquenessSource;
+
+export declare function createOpenAlexUniquenessSource(): UniquenessSource;
+
+export declare function createCrossrefUniquenessSource(options?: {
+  mailto?: string;
+}): UniquenessSource;
+
+export declare function createDuckDuckGoUniquenessSource(): UniquenessSource;
 
 export declare function tokenizeForFormalize(text: string): string[];
 

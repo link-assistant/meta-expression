@@ -7,11 +7,12 @@ const pageLabels = {
   analyse: 'Analyse',
   compare: 'Compare',
   check: 'Check',
+  uniqueness: 'Uniqueness',
   formalize: 'Formalize',
   translate: 'Translate',
   preferences: 'Preferences',
 };
-const pageAliases = { 'fact-check': 'check' };
+const pageAliases = { 'fact-check': 'check', uniquness: 'uniqueness' };
 
 export function setupPageIssueReporting(options = {}) {
   const links = [
@@ -127,6 +128,9 @@ function collectPageSections(pageId, options) {
   }
   if (pageId === 'check') {
     return collectCheckSections(options);
+  }
+  if (pageId === 'uniqueness') {
+    return collectUniquenessSections(options);
   }
   if (pageId === 'translate') {
     return collectTranslateSections();
@@ -284,6 +288,25 @@ function collectCheckSections(options) {
   ];
 }
 
+function collectUniquenessSections(options) {
+  const result = options.getUniquenessResult?.();
+  return [
+    { heading: 'Text', code: valueOf('#uniqueness-input') },
+    { heading: 'Status', lines: [`- ${textOf('#uniqueness-status')}`] },
+    { heading: 'Summary', lines: linesFrom('#uniqueness-summary > *') },
+    { heading: 'Rendered Result', lines: linesFrom('#uniqueness-output') },
+    { heading: 'Matches', lines: linesFrom('#uniqueness-matches > *') },
+    {
+      heading: 'Markdown',
+      code: result?.markdown ?? textOf('#uniqueness-markdown'),
+    },
+    {
+      heading: 'Links Notation',
+      code: result?.linksNotation ?? textOf('#uniqueness-lino'),
+    },
+  ];
+}
+
 function collectTranslateSections() {
   return [
     { heading: 'Text', code: valueOf('#translate-input') },
@@ -343,6 +366,9 @@ function getPageSummary(pageId) {
   }
   if (pageId === 'check') {
     return shorten(valueOf('#check-input'));
+  }
+  if (pageId === 'uniqueness') {
+    return shorten(valueOf('#uniqueness-input'));
   }
   if (pageId === 'compare') {
     return shorten(valueOf('#compare-rows .compare-claim'));

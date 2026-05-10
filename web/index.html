@@ -8,6 +8,7 @@
     <link rel="icon" href="data:," />
     <link rel="stylesheet" href="./styles.css" />
     <link rel="stylesheet" href="./check.css" />
+    <link rel="stylesheet" href="./uniqueness.css" />
   </head>
   <body>
     <nav class="top-nav" aria-label="Pages">
@@ -36,6 +37,14 @@
           data-i18n="nav.check"
         >
           Check
+        </button>
+        <button
+          type="button"
+          id="nav-uniqueness"
+          class="top-nav-button"
+          data-i18n="nav.uniqueness"
+        >
+          Uniqueness
         </button>
         <button
           type="button"
@@ -366,6 +375,75 @@ Earth orbits the Sun. 1 + 1 = 1.</textarea
         <details class="check-payload">
           <summary data-i18n="check.linoPayload">Links Notation</summary>
           <pre id="check-lino"></pre>
+        </details>
+      </section>
+    </main>
+
+    <main class="uniqueness-shell" id="page-uniqueness" hidden>
+      <section class="uniqueness-panel" aria-label="Uniqueness search">
+        <header class="uniqueness-header">
+          <h1 data-i18n="uniqueness.heading">Uniqueness</h1>
+          <p class="section-hint" data-i18n="uniqueness.hint">
+            Search each detected statement across public sources and estimate
+            whether it should be cited, quoted, or reworded.
+          </p>
+        </header>
+
+        <label class="uniqueness-input-label" for="uniqueness-input">
+          <span data-i18n="uniqueness.text">Text</span>
+        </label>
+        <textarea id="uniqueness-input" rows="7">
+Earth orbits the Sun. A locally coined statement has no prior source.</textarea
+        >
+
+        <div class="uniqueness-actions">
+          <button
+            type="button"
+            id="uniqueness-run"
+            data-i18n="uniqueness.runButton"
+          >
+            Search
+          </button>
+          <button
+            type="button"
+            id="uniqueness-copy-markdown"
+            data-i18n="uniqueness.copyMarkdown"
+          >
+            Copy as Markdown
+          </button>
+          <button
+            type="button"
+            id="uniqueness-copy-lino"
+            data-i18n="uniqueness.copyLino"
+          >
+            Copy as Links Notation
+          </button>
+          <span class="uniqueness-status" id="uniqueness-status"></span>
+        </div>
+
+        <section class="uniqueness-summary" id="uniqueness-summary"></section>
+
+        <section class="uniqueness-result" aria-label="Uniqueness output">
+          <h2 data-i18n="uniqueness.result">Result</h2>
+          <div id="uniqueness-output" class="uniqueness-output">
+            <span data-i18n="uniqueness.resultPlaceholder"
+              >Click Search to inspect detected statements here.</span
+            >
+          </div>
+        </section>
+
+        <section class="uniqueness-match-list" aria-label="Source matches">
+          <h2 data-i18n="uniqueness.matches">Matches</h2>
+          <div id="uniqueness-matches"></div>
+        </section>
+
+        <details class="uniqueness-payload">
+          <summary data-i18n="uniqueness.markdownPayload">Markdown</summary>
+          <pre id="uniqueness-markdown"></pre>
+        </details>
+        <details class="uniqueness-payload">
+          <summary data-i18n="uniqueness.linoPayload">Links Notation</summary>
+          <pre id="uniqueness-lino"></pre>
         </details>
       </section>
     </main>

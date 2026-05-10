@@ -9,6 +9,7 @@ import {
 import { formalizeTextWith, FORMALIZE_LINK_TARGETS } from './formalize.js';
 import { translateTextWith } from './translate.js';
 import { checkText, checkTextWithLiveEvidence } from './check.js';
+import { searchTextUniqueness } from './uniqueness.js';
 import { parseSourceSpec } from './formalize-sources.js';
 import { loadRepoOverrides, loadUserOverrides } from './formalize-overrides.js';
 
@@ -111,6 +112,9 @@ export function runCli(args = process.argv.slice(2), output = console) {
   if (options.command === 'translate') {
     throw new Error('Use runCliAsync for the translate command.');
   }
+  if (isUniquenessCommand(options.command)) {
+    throw new Error('Use runCliAsync for the uniqueness command.');
+  }
 
   const checked = validateCliOptions(options, output);
   if (checked !== null) {
@@ -151,6 +155,9 @@ export async function runCliAsync(
   }
   if (isCheckCommand(options.command)) {
     return runCheckCommand(options, output);
+  }
+  if (isUniquenessCommand(options.command)) {
+    return runUniquenessCommand(options, output);
   }
 
   const analysis = options.live
@@ -244,6 +251,13 @@ async function runCheckCommand(options, output) {
   return emitCheckResult(options, output, result);
 }
 
+async function runUniquenessCommand(options, output) {
+  const result = await searchTextUniqueness(options.input, {
+    fetch: globalThis.fetch?.bind(globalThis),
+  });
+  return emitUniquenessResult(options, output, result);
+}
+
 function resolveCliLinkTargetMode(token) {
   if (!token) {
     return FORMALIZE_LINK_TARGETS.WIKIPEDIA;
@@ -264,11 +278,16 @@ function validateCliOptions(options, output) {
     return 0;
   }
 
-  if (
-    !['analyze', 'formalize', 'translate', 'check', 'fact-check'].includes(
-      options.command
-    )
-  ) {
+  const supportedCommands = [
+    'analyze',
+    'formalize',
+    'translate',
+    'check',
+    'fact-check',
+    'uniqueness',
+    'uniquness',
+  ];
+  if (!supportedCommands.includes(options.command)) {
     output.error(`Unsupported command: ${options.command}`);
     output.error(helpText());
     return 1;
@@ -318,8 +337,29 @@ function emitCheckResult(options, output, result) {
   return 0;
 }
 
+function emitUniquenessResult(options, output, result) {
+  if (options.format === 'links' || options.format === 'lino') {
+    output.log(result.linksNotation);
+    return 0;
+  }
+  if (options.format === 'markdown' || options.format === 'md') {
+    output.log(result.markdown);
+    return 0;
+  }
+  if (options.format === 'html') {
+    output.log(result.html);
+    return 0;
+  }
+  output.log(JSON.stringify(result, null, 2));
+  return 0;
+}
+
 function isCheckCommand(command) {
   return command === 'check' || command === 'fact-check';
+}
+
+function isUniquenessCommand(command) {
+  return command === 'uniqueness' || command === 'uniquness';
 }
 
 function helpText() {
@@ -335,6 +375,7 @@ function helpText() {
   meta-expression check --input "Earth orbits the Sun. 1 + 1 = 1." --format html
   meta-expression check --input "Earth orbits the Sun." --score wikidata-structured-claim=0.7
   meta-expression fact-check --input "Paris is the capital of France." --live
+  meta-expression uniqueness --input "Earth orbits the Sun." --format markdown
 
 Commands:
   analyze     Run the disambiguation/evaluation prototype.
@@ -342,6 +383,7 @@ Commands:
   translate   Formalize text, then translate resolved Wikidata phrases.
   check       Color detected statements by correctness.
   fact-check  Alias for check.
+  uniqueness  Search public sources for prior exact or similar statements.
 
 Options:
   -i, --input <text>             Statement text

@@ -64,6 +64,14 @@ export {
 export { translateText, translateTextWith } from './translate.js';
 export { checkText, checkTextWithLiveEvidence } from './check.js';
 export {
+  createCrossrefUniquenessSource,
+  createDefaultUniquenessSources,
+  createDuckDuckGoUniquenessSource,
+  createOpenAlexUniquenessSource,
+  createWikipediaUniquenessSource,
+  searchTextUniqueness,
+} from './uniqueness.js';
+export {
   aggregateBigContexts,
   aggregateBigContextsFromGraph,
 } from './formalize-contexts.js';
