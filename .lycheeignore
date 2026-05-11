@@ -24,3 +24,29 @@ https://medium\.com
 
 # Web Archive returns 502 to link checkers (bot protection)
 https://web\.archive\.org
+
+# Commercial / AI-assistant landing pages that bot-detect HEAD requests.
+# These are documented references in docs/COMPARISON-CONCEPTS.md and stay
+# accessible interactively (added for issue #26).
+https://chatgpt\.com
+https://claude\.ai
+https://www\.perplexity\.ai
+https://you\.com
+https://www\.turnitin\.com
+https://www\.plagscan\.com
+https://terminusdb\.com
+https://reporterslab\.org
+
+# Research-lab landing pages that occasionally drop HEAD requests or
+# present self-signed certificates. Referenced from
+# docs/COMPARISON-CONCEPTS.md (added for issue #26).
+https://amr\.isi\.edu
+https://isabelle\.in\.tum\.de
+https://idir\.uta\.edu
+https://allenai\.org
+https://www\.let\.rug\.nl
+https://query\.wikidata\.org
+
+# GitHub "new issue" page requires a logged-in session — link is intentional
+# but the unauthenticated bot probe is rejected.
+https://github\.com/link-assistant/meta-expression/issues/new
