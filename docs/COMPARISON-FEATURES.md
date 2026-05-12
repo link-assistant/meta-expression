@@ -1,8 +1,10 @@
 # Feature comparison: meta-expression vs. similar projects
 
-> Last checked: 2026-05-11.
+> Last checked: 2026-05-12.
 > Companion document: [`COMPARISON-CONCEPTS.md`](./COMPARISON-CONCEPTS.md).
 > Source case study: [`docs/case-studies/issue-26/`](./case-studies/issue-26/).
+> Issue #20 extension:
+> [`docs/case-studies/issue-20/`](./case-studies/issue-20/).
 
 This matrix turns the seven concept clusters from
 [`COMPARISON-CONCEPTS.md`](./COMPARISON-CONCEPTS.md) into a per-feature
@@ -76,7 +78,42 @@ log [`docs/case-studies/issue-26/ONLINE-RESEARCH.md`](./case-studies/issue-26/ON
 | F16 Issue-report URL prefilled         | —                         | —                       | —                     | —                         | —                     | —                         | —                                         | —                       | —                                      | —                       | —                | —                      | —                        |
 | F17 Rust + doublets core               | —                         | —                       | —                     | —                         | —                     | —                         | —                                         | —                       | —                                      | —                       | ✓ (Rust drivers) | ≈                      | ✓ (doublets-rs)          |
 
-## 3. How to read F8 vs F9
+## 3. Expanded academic-writing assistant matrix
+
+Issue #20 asks for the comparison to include projects from the
+AI-writing / academic-assistant cluster directly, rather than only via
+the representative columns above. This focused lens keeps the
+full-feature rows but narrows the columns to the assistant products most
+likely to be compared with Jenni AI.
+
+| Feature                                | Jenni AI                                    | Elicit                                | Grammarly                         | Consensus.app                   |
+| -------------------------------------- | ------------------------------------------- | ------------------------------------- | --------------------------------- | ------------------------------- |
+| F1 Reusable JS library                 | —                                           | ≈ (REST API with JS examples)         | —                                 | ≈ (API by application)          |
+| F2 CLI                                 | —                                           | ≈ (API examples include CLI/MCP glue) | —                                 | —                               |
+| F3 Microservice                        | —                                           | ✓ (hosted API)                        | —                                 | ✓ (hosted API)                  |
+| F4 Static web prototype                | ✓ (web editor)                              | ✓ (web app)                           | ✓ (web/editor/extensions)         | ✓ (web app)                     |
+| F5 Interpretation pipeline             | ≈ (autocomplete + chat)                     | ≈ (paper chat / reports)              | ≈ (rewrites + Citation Finder)    | ≈ (query-to-papers search)      |
+| F6 Formal levels                       | —                                           | —                                     | —                                 | —                               |
+| F7 Exact arithmetic                    | —                                           | —                                     | —                                 | —                               |
+| F8 Real-world evidence                 | ≈ (citations + source-controlled chat)      | ✓ (paper metadata + excerpts)         | ≈ (citation and source refs)      | ✓ (peer-reviewed citations)     |
+| F9 Correctness + signed confidence     | ≈ (Claim Confidence categories)             | ≈ (relevance / screening signals)     | ≈ (originality / match score)     | ✓ (Consensus Meter)             |
+| F10 Formalize → markdown/Lino/HTML/CST | ≈ (document / BibTeX export, not CST)       | ≈ (PDF/Word/CSV/BIB/RIS exports)      | ≈ (citation formatting/rewrites)  | —                               |
+| F11 Translate via formalized entities  | ≈ (multilingual writing; no entity mapping) | —                                     | —                                 | —                               |
+| F12 /check (fact-check)                | ≈ (Claim Confidence, not public endpoint)   | ≈ (paper-grounded review workflows)   | ≈ (integrity/citation checks)     | ✓ (yes/no literature agreement) |
+| F13 /uniqueness (originality)          | ≈ (source-confidence review only)           | —                                     | ✓ (plagiarism/originality report) | —                               |
+| F14 Preference profiles                | ≈ (source/language toggles)                 | ≈ (protocols, filters, columns)       | ≈ (tone/style goals)              | ≈ (filters + saved libraries)   |
+| F15 Links Notation export              | —                                           | —                                     | —                                 | —                               |
+| F16 Issue-report URL prefilled         | —                                           | —                                     | —                                 | —                               |
+| F17 Rust + doublets core               | —                                           | —                                     | —                                 | —                               |
+
+The focused view shows Jenni AI's closest overlap with meta-expression
+is not deterministic reasoning or Links Notation export; it is the
+writing-assistant side of F4, F8, F9, F12, F13, and F14. Grammarly is
+the stronger direct comparison for originality scoring (F13), while
+Elicit and Consensus.app are stronger comparisons for paper discovery,
+evidence attachment, and literature-level confidence.
+
+## 4. How to read F8 vs F9
 
 The F8 ("evidence") and F9 ("correctness + signed confidence") rows do
 **not** mean the same thing:
@@ -89,7 +126,7 @@ The F8 ("evidence") and F9 ("correctness + signed confidence") rows do
   analog to meta-expression's `signedConfidence`. Wolfram Alpha and Z3
   return a binary verdict only, so they sit at `≈`.
 
-## 4. Notable gaps the matrix reveals
+## 5. Notable gaps the matrix reveals
 
 - **F16 (issue-report URL prefilled)** is unique to meta-expression in
   this survey. No comparable project ships a one-click "report this
@@ -107,8 +144,13 @@ The F8 ("evidence") and F9 ("correctness + signed confidence") rows do
   defining intersection: Wolfram Alpha covers both but charges for the
   API and is closed-source; Wikidata covers F8 but not F7; Z3 and
   Coq/Lean cover F7 but not F8.
+- **Academic-writing assistants** (Jenni AI, Elicit, Grammarly, and
+  Consensus.app) cluster around citations, source review, originality,
+  and literature synthesis. None of them expose meta-expression's
+  prefilled issue-report state, Links Notation export, or Rust/doublets
+  persistence surface.
 
-## 5. How this matrix is maintained
+## 6. How this matrix is maintained
 
 1. When a new feature lands in meta-expression, add a row to §1 and a
    column-by-column assessment in §2.
