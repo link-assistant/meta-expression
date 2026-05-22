@@ -232,7 +232,8 @@ describe('issue 16 — translate through formalized Wikidata labels', () => {
     ]);
     expect(result.plainText).toBe('Гавайи это штат.');
     expect(result.markdown).toContain('[Гавайи](');
-    expect(result.markdown).toContain('это [штат](');
+    expect(result.markdown).toContain('[это](');
+    expect(result.markdown).toContain('[штат](');
     expect(result.questions.length).toBe(0);
     expect(result.steps.some((step) => step.type === 'api-request')).toBe(true);
     expect(result.steps.some((step) => step.type === 'formalization')).toBe(

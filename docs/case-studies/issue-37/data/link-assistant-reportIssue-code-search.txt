@@ -1,0 +1,59 @@
+link-assistant/calculator:web/src/utils/index.ts: export * from './reportIssue';
+link-assistant/meta-expression:docs/case-studies/issue-29/README.md: | [`data/calculator-reportIssue.ts`](./data/calculator-reportIssue.ts)                   | Reference implementation from calculator           |
+link-assistant/meta-expression:docs/case-studies/issue-29/README.md: | [`data/calculator-reportIssue.test.ts.txt`](./data/calculator-reportIssue.test.ts.txt) | Reference calculator tests                         |
+link-assistant/formal-ai:src/web/i18n-catalog.lino: reportIssue "Report issue"
+link-assistant/formal-ai:src/web/i18n-catalog.lino: reportIssue """
+link-assistant/hive-mind:src/solve.error-handlers.lib.mjs: export const isErrorIssueAutoCreationDisabled = argv => !!(argv?.disableReportIssue || argv?.disableIssueAutoCreationOnError);
+link-assistant/hive-mind:src/solve.error-handlers.lib.mjs: autoReport: argv.autoReportIssue,
+link-assistant/calculator:web/src/i18n/locales/en.lino: reportIssue 'Report this as an issue'
+link-assistant/calculator:web/src/i18n/locales/en.lino: reportIssue 'Report Issue'
+link-assistant/meta-expression:docs/case-studies/issue-29/ONLINE-RESEARCH.md: `web/src/utils/reportIssue.ts`. The helper accepts page state, normalizes
+link-assistant/meta-expression:docs/case-studies/issue-29/ONLINE-RESEARCH.md: - [`data/calculator-reportIssue.ts`](./data/calculator-reportIssue.ts)
+link-assistant/meta-expression:docs/case-studies/issue-29/ONLINE-RESEARCH.md: - [`data/calculator-reportIssue.test.ts.txt`](./data/calculator-reportIssue.test.ts.txt)
+link-assistant/formal-ai:src/web/app.js: : t("buttons.reportIssue");
+link-assistant/formal-ai:src/web/app.js: title: t("titles.reportIssue"),
+link-assistant/formal-ai:src/web/app.js: "aria-label": t("buttons.reportIssue"),
+link-assistant/hive-mind:src/solve.config.lib.mjs: // disableReportIssue path as the single behavior flag.
+link-assistant/hive-mind:src/solve.config.lib.mjs: argv.disableReportIssue = true;
+link-assistant/calculator:web/src/i18n/locales/fr.lino: reportIssue 'Signaler ce problème'
+link-assistant/calculator:web/src/i18n/locales/fr.lino: reportIssue 'Signaler un problème'
+link-assistant/meta-expression:docs/case-studies/issue-29/SOLUTION-PLAN.md: Copying calculator's `reportIssue.ts` would provide mature report formatting,
+link-assistant/formal-ai:docs/case-studies/issue-121/github-data/local-cargo-package-list-before.txt: docs/case-studies/issue-10/raw-data/calculator-reportIssue.ts
+link-assistant/calculator:web/src/i18n/locales/zh.lino: reportIssue 报告此问题
+link-assistant/calculator:web/src/i18n/locales/zh.lino: reportIssue 报告问题
+link-assistant/meta-expression:docs/case-studies/issue-7/data/report-issue-code-search.txt: link-assistant/calculator:docs/case-studies/issue-121/README.md: - `web/src/utils/reportIssue.ts` — Include alternative interpretations in bug report
+link-assistant/meta-expression:docs/case-studies/issue-7/data/report-issue-code-search.txt: link-assistant/meta-expression:web/app.js: const reportIssue = document.querySelector('#report-issue');
+link-assistant/meta-expression:docs/case-studies/issue-7/data/report-issue-code-search.txt: link-assistant/meta-expression:web/app.js: reportIssue.addEventListener('click', () => {
+link-assistant/meta-expression:docs/case-studies/issue-7/data/report-issue-code-search.txt: link-assistant/calculator:web/src/i18n/locales/en.lino: reportIssue 'Report Issue'
+link-assistant/meta-expression:docs/case-studies/issue-7/data/report-issue-code-search.txt: link-assistant/meta-expression:docs/case-studies/issue-5/README.md: | [`calculator-reportIssue.ts`](./data/calculator-reportIssue.ts)                              | Reference issue-report implementation from `link-assistant/calculator` |
+link-assistant/meta-expression:docs/case-studies/issue-7/data/report-issue-code-search.txt: link-assistant/meta-expression:docs/case-studies/issue-5/README.md: | [`calculator-reportIssue-test.ts.txt`](./data/calculator-reportIssue-test.ts.txt)            | Reference issue-report test fixture captured as inert data             |
+link-assistant/hive-mind:docs/case-studies/issue-1752/README.md: - Normalized the new option to `disableReportIssue`, preserving the existing single behavior path.
+link-assistant/calculator:web/src/i18n/locales/de.lino: reportIssue 'Dies als Problem melden'
+link-assistant/calculator:web/src/i18n/locales/de.lino: reportIssue 'Problem melden'
+link-assistant/meta-expression:web/i18n.js: 'nav.reportIssue': 'Report Issue',
+link-assistant/meta-expression:web/i18n.js: 'analyse.reportIssue': 'Report Issue',
+link-assistant/formal-ai:docs/case-studies/issue-117/README.md: The browser UI now keeps translations in `src/web/i18n-catalog.lino`. Each locale is a top-level block (`en`, `ru`, `zh`, `hi`), related messages are nested (`buttons.reportIssue`, `composer.placeholder.chat`, `settings.theme.dark`), and long tooltip strings use multiline quoted values.
+link-assistant/calculator:web/src/App.tsx: import { generateIssueUrl, type PageState } from './utils/reportIssue';
+link-assistant/calculator:web/src/App.tsx: {t('errors.reportIssue')} →
+link-assistant/meta-expression:web/index.html: data-i18n="nav.reportIssue"
+link-assistant/meta-expression:web/index.html: data-i18n="analyse.reportIssue"
+link-assistant/calculator:web/src/i18n/locales/ar.lino: reportIssue 'الإبلاغ عن هذه المشكلة'
+link-assistant/calculator:web/src/i18n/locales/ar.lino: reportIssue 'الإبلاغ عن مشكلة'
+link-assistant/formal-ai:docs/case-studies/issue-10/README.md: - `raw-data/calculator-reportIssue.ts`: related issue-report URL helper from `link-assistant/calculator`.
+link-assistant/meta-expression:docs/case-studies/issue-5/data/calculator-issue-report-code-search.txt: link-assistant/calculator:web/src/utils/reportIssue.ts: const baseUrl = 'https://github.com/link-assistant/calculator/issues/new';
+link-assistant/meta-expression:docs/case-studies/issue-5/data/calculator-issue-report-code-search.txt: link-assistant/calculator:web/src/utils/reportIssue.test.ts: expect(url).toContain('https://github.com/link-assistant/calculator/issues/new');
+link-assistant/meta-expression:docs/case-studies/issue-29/data/meta-expression-file-tree.txt: docs/case-studies/issue-5/data/calculator-reportIssue-test.ts.txt
+link-assistant/meta-expression:docs/case-studies/issue-29/data/meta-expression-file-tree.txt: docs/case-studies/issue-5/data/calculator-reportIssue.ts
+link-assistant/meta-expression:docs/case-studies/issue-5/data/meta-expression-file-tree.txt: ./docs/case-studies/issue-5/data/calculator-reportIssue-test.ts.txt
+link-assistant/meta-expression:docs/case-studies/issue-5/data/meta-expression-file-tree.txt: ./docs/case-studies/issue-5/data/calculator-reportIssue.ts
+link-assistant/meta-expression:docs/case-studies/issue-5/ci-logs/checks-and-release-24959524749.txt: Detect Changes	Detect changes	2026-04-26T14:54:31.1515556Z   docs/case-studies/issue-5/data/calculator-reportIssue.test.ts
+link-assistant/meta-expression:docs/case-studies/issue-5/ci-logs/checks-and-release-24959524749.txt: Detect Changes	Detect changes	2026-04-26T14:54:31.1517830Z   docs/case-studies/issue-5/data/calculator-reportIssue.ts
+link-assistant/meta-expression:docs/case-studies/issue-5/ONLINE-RESEARCH.md: | [`link-assistant/calculator` report helper](./data/calculator-reportIssue.ts)                                                                        | The calculator project already builds a prefilled issue URL containing environment, input, result, Links Notation, and reproduction context.                      |
+link-assistant/calculator:web/src/i18n/locales/ru.lino: reportIssue 'Сообщить о проблеме'
+link-assistant/calculator:web/src/i18n/locales/ru.lino: reportIssue 'Сообщить о проблеме'
+link-assistant/calculator:web/src/i18n/locales/hi.lino: reportIssue 'इस समस्या की रिपोर्ट करें'
+link-assistant/calculator:web/src/i18n/locales/hi.lino: reportIssue 'समस्या की रिपोर्ट करें'
+link-assistant/meta-expression:docs/case-studies/issue-29/data/calculator-App.tsx.txt: import { generateIssueUrl, type PageState } from './utils/reportIssue';
+link-assistant/meta-expression:docs/case-studies/issue-29/data/calculator-App.tsx.txt: {t('errors.reportIssue')} →
+link-assistant/meta-expression:docs/case-studies/issue-5/README.md: | [`calculator-reportIssue.ts`](./data/calculator-reportIssue.ts)                              | Reference issue-report implementation from `link-assistant/calculator` |
+link-assistant/meta-expression:docs/case-studies/issue-5/README.md: | [`calculator-reportIssue-test.ts.txt`](./data/calculator-reportIssue-test.ts.txt)            | Reference issue-report test fixture captured as inert data             |

@@ -102,11 +102,10 @@ Tokenize input by stripping punctuation and splitting on whitespace.
 
 ### `generateNgrams(tokens, maxSize)`
 
-Build all n-grams up to `maxSize` tokens. Multi-token stop-only
-n-grams are skipped (they're useless on their own), but single-token
-stop words are kept and tagged with `stopOnly: true` so the issue
-#21 Wiktionary fallback can resolve a definition for `the`, `of`,
-etc. Non-stop-word n-grams remain unchanged.
+Build all n-grams up to `maxSize` tokens. Generic multi-token stop-only
+n-grams are skipped, but single-token stop words and exact Wiktionary
+grammar compounds are kept with `stopOnly: true` so lexical definitions
+remain linkable without flooding every source tier with glue words.
 
 | Parameter   | Type       | Description |
 | ----------- | ---------- | ----------- |

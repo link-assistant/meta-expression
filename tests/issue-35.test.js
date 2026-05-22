@@ -196,7 +196,8 @@ describe('issue 35 — Hawaii translation through semantic phrases', () => {
     ]);
     expect(result.plainText).toBe('Гавайи это штат.');
     expect(result.markdown).toContain('[Гавайи](');
-    expect(result.markdown).toContain('это [штат](');
+    expect(result.markdown).toContain('[это](');
+    expect(result.markdown).toContain('[штат](');
     const stateTranslation = result.phrases.find(
       (phrase) => phrase.source.text === 'state'
     );

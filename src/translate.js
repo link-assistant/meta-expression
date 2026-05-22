@@ -12,6 +12,12 @@ const russianUsStatePredicate = Object.freeze({
   url: 'https://ru.wikipedia.org/wiki/%D0%A8%D1%82%D0%B0%D1%82_%D0%A1%D0%A8%D0%90',
   description: 'state of the United States',
 });
+const russianEtoCopula = Object.freeze({
+  text: 'это',
+  entityId: 'wikt:ru:это#Determiner:0',
+  url: 'https://en.wiktionary.org/wiki/%D1%8D%D1%82%D0%BE',
+  description: 'Russian demonstrative/copula-like predicate marker',
+});
 
 /**
  * Deterministic convenience wrapper for `translateTextWith()`.
@@ -312,6 +318,7 @@ function isGrammarPhrase(value, language) {
     return false;
   }
   return (
+    isEnglishIsAPhrase(value) ||
     isEnglishArticle(value) ||
     isEnglishCopula(value) ||
     isEnglishPreposition(value)
@@ -581,6 +588,27 @@ function applyEnglishToRussianRules(units, segment, sentenceId, config) {
   const resolvedVariableNames = new Set();
   const transformations = [];
   let nextUnits = [...units];
+  const isAPhraseIndex = nextUnits.findIndex((unit) =>
+    isEnglishIsAPhrase(unit.sourceText)
+  );
+  if (isAPhraseIndex > 0 && isAPhraseIndex < nextUnits.length - 1) {
+    const [phrase] = nextUnits.splice(
+      isAPhraseIndex,
+      1,
+      buildRuleToken(nextUnits[isAPhraseIndex].sourceText, russianEtoCopula)
+    );
+    if (phrase.variableName) {
+      resolvedVariableNames.add(phrase.variableName);
+    }
+    transformations.push('english-is-a-to-russian-eto');
+    recordStep(config, 'transformation-rule', {
+      sentenceId,
+      rule: 'english-is-a-to-russian-eto',
+      sourceText: segment.text,
+      affectedVariables: phrase.variableName ? [phrase.variableName] : [],
+    });
+  }
+
   const articleVariables = nextUnits
     .filter((unit) => isEnglishArticle(unit.sourceText) && unit.variableName)
     .map((unit) => unit.variableName);
@@ -606,14 +634,11 @@ function applyEnglishToRussianRules(units, segment, sentenceId, config) {
     copulaIndex < nextUnits.length - 1 &&
     !isEnglishPreposition(nextUnits[copulaIndex + 1].sourceText)
   ) {
-    const [copula] = nextUnits.splice(copulaIndex, 1, {
-      kind: 'rule-token',
-      sourceText: nextUnits[copulaIndex].sourceText,
-      variableName: null,
-      plainText: 'это',
-      markdown: 'это',
-      html: 'это',
-    });
+    const [copula] = nextUnits.splice(
+      copulaIndex,
+      1,
+      buildRuleToken(nextUnits[copulaIndex].sourceText, russianEtoCopula)
+    );
     if (copula.variableName) {
       resolvedVariableNames.add(copula.variableName);
     }
@@ -698,6 +723,26 @@ function setUnitTargetText(unit, target) {
   unit.html = escapeHtml(unit.plainText);
 }
 
+function buildRuleToken(sourceText, target) {
+  const unit = {
+    kind: 'rule-token',
+    sourceText,
+    variableName: null,
+    plainText: target.text,
+    targetEntityId: target.entityId ?? null,
+    targetUrl: target.url ?? null,
+    markdown: target.text,
+    html: escapeHtml(target.text),
+  };
+  if (unit.targetEntityId && unit.targetUrl) {
+    unit.markdown = `[${escapeMarkdown(unit.plainText)}](${unit.targetUrl} "${unit.targetEntityId}")`;
+    unit.html = `<a href="${escapeAttribute(unit.targetUrl)}" title="${escapeAttribute(
+      unit.targetEntityId
+    )}">${escapeHtml(unit.plainText)}</a>`;
+  }
+  return unit;
+}
+
 function applyUnitTargetToPhrase(unit, target) {
   if (!unit.phraseRef) {
     return;
@@ -766,6 +811,10 @@ function applyRussianToEnglishRules(units, segment, sentenceId, config) {
 
 function isEnglishArticle(value) {
   return ['a', 'an', 'the'].includes(String(value).toLowerCase());
+}
+
+function isEnglishIsAPhrase(value) {
+  return normalizePhrase(value) === 'is a';
 }
 
 function isEnglishCopula(value) {

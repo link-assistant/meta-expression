@@ -3,6 +3,43 @@ import { formatAppVersion, loadAppVersionInfo } from './app-version.js';
 
 const repositoryUrl = 'https://github.com/link-assistant/meta-expression';
 const defaultIssueUrl = `${repositoryUrl}/issues/new`;
+const defaultMaxIssueUrlLength = 8000;
+const compactSectionCharacterLimits = [2000, 1200, 800, 500, 320];
+const compactEnvironmentLabels = new Set([
+  'Page',
+  'Version',
+  'Commit',
+  'Ref',
+  'Build time',
+  'Build source',
+  'URL',
+  'Locale',
+  'Theme',
+  'Timestamp',
+]);
+const defaultEssentialSectionHeadings = new Set([
+  'text',
+  'statement',
+  'input',
+  'options',
+  'status',
+  'result',
+  'rendered result',
+  'checked result',
+  'summary',
+  'markdown',
+  'links notation',
+]);
+const translateEssentialSectionHeadings = new Set([
+  'text',
+  'options',
+  'status',
+  'formalized input',
+  'formalized input markdown',
+  'translated result',
+  'questions',
+  'markdown',
+]);
 const pageLabels = {
   analyse: 'Analyse',
   compare: 'Compare',
@@ -58,18 +95,46 @@ export function createCurrentPageIssueUrl(options = {}) {
 }
 
 export function createPageIssueReportUrl(report, options = {}) {
-  const params = new URLSearchParams({
-    title: options.title ?? createIssueTitle(report),
-    body: createPageIssueReport(report),
-    labels: options.labels ?? 'bug',
-  });
-  return `${(options.repositoryUrl ?? repositoryUrl).replace(
+  const baseUrl = `${(options.repositoryUrl ?? repositoryUrl).replace(
     /\/$/,
     ''
-  )}/issues/new?${params.toString()}`;
+  )}/issues/new`;
+  const title = options.title ?? createIssueTitle(report);
+  const labels = options.labels ?? 'bug';
+  const maxUrlLength = options.maxUrlLength ?? defaultMaxIssueUrlLength;
+  const createUrl = (body) =>
+    `${baseUrl}?${new URLSearchParams({ title, body, labels }).toString()}`;
+  const fullUrl = createUrl(createPageIssueReport(report));
+  if (!Number.isFinite(maxUrlLength) || fullUrl.length <= maxUrlLength) {
+    return fullUrl;
+  }
+
+  const omittedHeadings = omittedDiagnosticHeadings(report);
+  for (const maxSectionCharacters of compactSectionCharacterLimits) {
+    const compactReport = createCompactPageReport(report, {
+      maxSectionCharacters,
+    });
+    const compactUrl = createUrl(
+      createPageIssueReport(compactReport, {
+        notices: [compactReportNotice(omittedHeadings)],
+      })
+    );
+    if (compactUrl.length <= maxUrlLength) {
+      return compactUrl;
+    }
+  }
+
+  const fallbackReport = createCompactPageReport(report, {
+    maxSectionCharacters: 160,
+  });
+  return createUrl(
+    createPageIssueReport(fallbackReport, {
+      notices: [compactReportNotice(omittedHeadings)],
+    })
+  );
 }
 
-export function createPageIssueReport(report) {
+export function createPageIssueReport(report, options = {}) {
   const lines = [];
   lines.push('## Environment', '');
   for (const [label, value] of Object.entries(report.environment ?? {})) {
@@ -77,6 +142,10 @@ export function createPageIssueReport(report) {
   }
   for (const section of report.sections ?? []) {
     appendSection(lines, section);
+  }
+  if (options.notices?.length) {
+    lines.push('', '## Report Notes', '');
+    lines.push(...options.notices.map((notice) => `- ${notice}`));
   }
   if (report.reproductionSteps?.length) {
     lines.push('', '## Reproduction Steps', '');
@@ -133,7 +202,7 @@ function collectPageSections(pageId, options) {
     return collectUniquenessSections(options);
   }
   if (pageId === 'translate') {
-    return collectTranslateSections();
+    return collectTranslateSections(options);
   }
   if (pageId === 'preferences') {
     return collectPreferencesSections(options);
@@ -307,8 +376,9 @@ function collectUniquenessSections(options) {
   ];
 }
 
-function collectTranslateSections() {
-  return [
+function collectTranslateSections(options) {
+  const result = options.getTranslateResult?.();
+  const sections = [
     { heading: 'Text', code: valueOf('#translate-input') },
     {
       heading: 'Options',
@@ -319,13 +389,33 @@ function collectTranslateSections() {
     },
     { heading: 'Status', lines: [`- ${textOf('#translate-status')}`] },
     { heading: 'Formalized Input', lines: linesFrom('#translate-formalized') },
+  ];
+  if (result?.formalization?.markdown) {
+    sections.push({
+      heading: 'Formalized Input Markdown',
+      code: result.formalization.markdown,
+    });
+  }
+  sections.push(
     { heading: 'Translated Result', lines: linesFrom('#translate-output') },
     { heading: 'Questions', lines: linesFrom('#translate-questions > *') },
-    { heading: 'Markdown', code: textOf('#translate-markdown') },
-    { heading: 'Links Notation', code: textOf('#translate-lino') },
-    { heading: 'Translation CST', code: textOf('#translate-cst') },
-    { heading: 'Translation Steps', lines: linesFrom('#translate-steps > *') },
-  ];
+    {
+      heading: 'Markdown',
+      code: result?.markdown ?? textOf('#translate-markdown'),
+    },
+    {
+      heading: 'Links Notation',
+      code: result?.linksNotation ?? textOf('#translate-lino'),
+    },
+    {
+      heading: 'Translation CST',
+      code: result?.cst
+        ? JSON.stringify(result.cst, null, 2)
+        : textOf('#translate-cst'),
+    },
+    { heading: 'Translation Steps', lines: linesFrom('#translate-steps > *') }
+  );
+  return sections;
 }
 
 function collectPreferencesSections(options) {
@@ -350,6 +440,87 @@ function appendSection(lines, section) {
   if (section.code !== undefined) {
     lines.push('```', section.code || '', '```');
   }
+}
+
+function createCompactPageReport(report, { maxSectionCharacters }) {
+  return {
+    ...report,
+    environment: compactEnvironment(report.environment),
+    sections: (report.sections ?? [])
+      .filter((section) => isEssentialReportSection(report, section))
+      .map((section) => compactSection(section, maxSectionCharacters)),
+  };
+}
+
+function compactEnvironment(environment = {}) {
+  return Object.fromEntries(
+    Object.entries(environment).filter(([label]) =>
+      compactEnvironmentLabels.has(label)
+    )
+  );
+}
+
+function compactSection(section, maxSectionCharacters) {
+  return {
+    ...section,
+    code:
+      section.code === undefined
+        ? undefined
+        : truncateReportText(section.code, maxSectionCharacters),
+    lines: section.lines
+      ? truncateReportLines(section.lines, maxSectionCharacters)
+      : undefined,
+  };
+}
+
+function truncateReportLines(lines, maxSectionCharacters) {
+  const kept = [];
+  let used = 0;
+  for (const line of lines) {
+    const value = String(line ?? '');
+    if (used + value.length > maxSectionCharacters) {
+      kept.push('[truncated to keep the GitHub issue URL short]');
+      break;
+    }
+    kept.push(value);
+    used += value.length;
+  }
+  return kept;
+}
+
+function truncateReportText(value, maxSectionCharacters) {
+  const text = String(value ?? '');
+  if (text.length <= maxSectionCharacters) {
+    return text;
+  }
+  return `${text.slice(
+    0,
+    maxSectionCharacters
+  )}\n\n[truncated to keep the GitHub issue URL short]`;
+}
+
+function omittedDiagnosticHeadings(report) {
+  return (report.sections ?? [])
+    .filter((section) => !isEssentialReportSection(report, section))
+    .map((section) => section.heading);
+}
+
+function compactReportNotice(omittedHeadings) {
+  if (!omittedHeadings.length) {
+    return 'Shortened generated values to keep the GitHub issue URL within browser/server limits.';
+  }
+  return `Omitted generated diagnostic sections to keep the GitHub issue URL within browser/server limits: ${omittedHeadings.join(
+    ', '
+  )}.`;
+}
+
+function isEssentialReportSection(report, section) {
+  const heading = normalizeHeading(section.heading);
+  const headings =
+    report.pageId === 'translate'
+      ? translateEssentialSectionHeadings
+      : defaultEssentialSectionHeadings;
+  return headings.has(heading);
 }
 
 function createIssueTitle(report) {
@@ -436,6 +607,10 @@ function normalizeText(value) {
   return String(value ?? '')
     .replace(/\s+/g, ' ')
     .trim();
+}
+
+function normalizeHeading(value) {
+  return normalizeText(value).toLowerCase();
 }
 
 function shorten(value) {
