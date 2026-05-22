@@ -62,6 +62,10 @@ export {
   parseSourceSpec,
 } from './formalize-sources.js';
 export { translateText, translateTextWith } from './translate.js';
+export {
+  listTranslationStrategies,
+  TRANSLATION_STRATEGIES,
+} from './translation-strategies.js';
 export { checkText, checkTextWithLiveEvidence } from './check.js';
 export {
   createCrossrefUniquenessSource,

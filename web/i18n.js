@@ -129,8 +129,11 @@ const dictionaries = {
     'translate.hint':
       'Formalize source text with Wikidata, then translate each sentence through labels and transformation rules. Unresolved parts remain variables with questions.',
     'translate.text': 'Text',
+    'translate.loadSample': 'Load sample',
+    'translate.pickExample': '— pick an example —',
     'translate.from': 'From',
     'translate.to': 'To',
+    'translate.strategy': 'Strategy',
     'translate.runButton': 'Translate',
     'translate.copyMarkdown': 'Copy as Markdown',
     'translate.copyLino': 'Copy as Links Notation',
@@ -287,8 +290,11 @@ const dictionaries = {
     'translate.hint':
       'Сначала формализует исходный текст через Wikidata, затем переводит каждое предложение через метки и правила преобразования. Нераспознанные части остаются переменными с вопросами.',
     'translate.text': 'Текст',
+    'translate.loadSample': 'Загрузить пример',
+    'translate.pickExample': '— выберите пример —',
     'translate.from': 'С языка',
     'translate.to': 'На язык',
+    'translate.strategy': 'Стратегия',
     'translate.runButton': 'Перевести',
     'translate.copyMarkdown': 'Скопировать как Markdown',
     'translate.copyLino': 'Скопировать как Links Notation',

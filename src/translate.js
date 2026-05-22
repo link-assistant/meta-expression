@@ -1,4 +1,9 @@
 import { FORMALIZE_LINK_TARGETS, formalizeTextWith } from './formalize.js';
+import {
+  lookupGlossaryTranslation,
+  normalizeTranslationStrategy,
+  TRANSLATION_STRATEGIES,
+} from './translation-strategies.js';
 
 const wikidataApiUrl = 'https://www.wikidata.org/w/api.php';
 const wikidataEntityBaseUrl = 'https://www.wikidata.org/wiki/';
@@ -96,8 +101,10 @@ export async function translateTextWith(input, options = {}) {
     (variable) => !variable.resolvedByRule
   );
   const questions = unresolvedVariables.map((variable) =>
-    buildVariableQuestion(variable, config)
+    buildVariableQuestionDetails(variable, config)
   );
+  const questionDetails = questions;
+  const questionTexts = questionDetails.map((question) => question.question);
   const plainText = renderSentenceOutput(sentences, 'plainText', phrases);
   const markdown = renderSentenceOutput(sentences, 'markdown', phrases);
   const html = renderSentenceOutput(sentences, 'html', phrases);
@@ -123,9 +130,10 @@ export async function translateTextWith(input, options = {}) {
     plainText,
     markdown,
     html,
-    linksNotation: renderTranslationLinksNotation(cst, questions),
+    linksNotation: renderTranslationLinksNotation(cst, questionTexts),
     variables,
-    questions,
+    questions: questionTexts,
+    questionDetails,
     steps: [...config.steps],
   };
 }
@@ -149,6 +157,9 @@ function createTranslateConfig(options) {
       ? normalizeLanguage(requestedTargetLanguage)
       : defaultTargetLanguage(sourceLanguage),
     linkTargetMode: options.linkTargetMode ?? FORMALIZE_LINK_TARGETS.WIKIPEDIA,
+    translationStrategy: normalizeTranslationStrategy(
+      options.translationStrategy ?? options.strategy
+    ),
   };
   config.fetchImpl = rawFetch
     ? (url, init) => traceFetch(url, init, config)
@@ -170,6 +181,17 @@ function normalizeLanguage(value) {
 async function translatePhrase(phrase, config) {
   const translationEntity = translatableEntityForPhrase(phrase, config);
   const base = buildPhraseTranslationBase(phrase, translationEntity, config);
+  const glossaryTranslation = lookupGlossaryTranslation(phrase.text, config);
+  if (glossaryTranslation) {
+    const translated = translatedGlossaryPhrase(
+      base,
+      translationEntity,
+      glossaryTranslation,
+      config
+    );
+    recordPhraseStep(translated, config);
+    return translated;
+  }
   if (!phrase.entity) {
     const unresolved = unresolvedPhrase(base, 'unresolved-source-phrase');
     recordPhraseStep(unresolved, config);
@@ -226,6 +248,29 @@ async function translatePhrase(phrase, config) {
   };
   recordPhraseStep(translated, config);
   return translated;
+}
+
+function translatedGlossaryPhrase(
+  base,
+  translationEntity,
+  translation,
+  config
+) {
+  const entityId = translationEntity?.id ?? base.source.entityId ?? null;
+  return {
+    ...base,
+    entityId,
+    target: {
+      text: translation.text,
+      language: config.targetLanguage,
+      entityId,
+      description: base.source.description,
+      url: null,
+      status: 'translated',
+      strategy: translation.strategy,
+    },
+    variable: null,
+  };
 }
 
 function buildPhraseTranslationBase(phrase, translationEntity, config) {
@@ -422,11 +467,59 @@ function targetUrlFor(entity, sourceEntity, language) {
   return `${wikidataEntityBaseUrl}${sourceEntity.id}`;
 }
 
-function buildVariableQuestion(variable, config) {
+function buildVariableQuestionDetails(variable, config) {
+  const question = variable.entityId
+    ? `What ${config.targetLanguage} label should represent ${variable.entityId} for "${variable.sourceText}"?`
+    : `What entity or expression should "${variable.sourceText}" map to before translating it from ${config.sourceLanguage} to ${config.targetLanguage}?`;
+  return {
+    variableName: variable.name,
+    sourceText: variable.sourceText,
+    entityId: variable.entityId,
+    reason: variable.reason,
+    question,
+    selectedOptionId: 'preserve-source',
+    options: buildVariableAnswerOptions(variable, config),
+  };
+}
+
+function buildVariableAnswerOptions(variable, config) {
+  const options = [
+    {
+      id: 'preserve-source',
+      label: `Keep "${variable.sourceText}"`,
+      targetText: variable.sourceText,
+      description: 'Preserve the source phrase in the translated sentence.',
+      confidence: 0.45,
+    },
+  ];
   if (variable.entityId) {
-    return `What ${config.targetLanguage} label should represent ${variable.entityId} for "${variable.sourceText}"?`;
+    options.push({
+      id: 'target-label',
+      label: `Use ${config.targetLanguage} label`,
+      targetText: null,
+      entityId: variable.entityId,
+      description: `Resolve the ${config.targetLanguage} label for ${variable.entityId}.`,
+      confidence: 0.35,
+    });
+  } else {
+    options.push({
+      id: 'map-entity',
+      label: 'Map to entity',
+      targetText: null,
+      entityId: null,
+      description: 'Choose a linked entity or expression before translating.',
+      confidence: 0.35,
+    });
   }
-  return `What entity or expression should "${variable.sourceText}" map to before translating it from ${config.sourceLanguage} to ${config.targetLanguage}?`;
+  options.push({
+    id: 'manual-entry',
+    label: 'Manual answer',
+    targetText: null,
+    entityId: variable.entityId,
+    description: 'Provide a custom target phrase.',
+    confidence: 0.2,
+  });
+  return options;
 }
 
 function buildTranslationCst(
@@ -656,8 +749,98 @@ function applyEnglishToRussianRules(units, segment, sentenceId, config) {
   ) {
     transformations.push('english-us-state-predicate-to-russian-shtat');
   }
+  transformations.push(
+    ...applyEnglishToRussianLexicalRules(nextUnits, segment, sentenceId, config)
+  );
 
   return { units: nextUnits, transformations, resolvedVariableNames };
+}
+
+function applyEnglishToRussianLexicalRules(units, segment, sentenceId, config) {
+  if (config.translationStrategy === TRANSLATION_STRATEGIES.SEMANTIC_LABEL) {
+    return [];
+  }
+  const transformations = [];
+  if (applyEnglishWithWikidataRule(units, segment, sentenceId, config)) {
+    transformations.push('english-with-wikidata-to-russian-instrumental');
+  }
+  if (applyEnglishTransformationRulesRule(units, segment, sentenceId, config)) {
+    transformations.push('english-transformation-rules-to-russian-noun-phrase');
+  }
+  if (applyCommaBeforeThenRule(units, segment, sentenceId, config)) {
+    transformations.push('english-comma-before-then-preserved');
+  }
+  return transformations;
+}
+
+function applyEnglishWithWikidataRule(units, segment, sentenceId, config) {
+  for (let index = 0; index < units.length - 1; index += 1) {
+    if (
+      normalizePhrase(units[index].sourceText) !== 'with' ||
+      normalizePhrase(units[index + 1].sourceText) !== 'wikidata'
+    ) {
+      continue;
+    }
+    setUnitTargetText(units[index], { text: 'с помощью' });
+    setUnitTargetText(units[index + 1], { text: 'Викиданных' });
+    recordStep(config, 'transformation-rule', {
+      sentenceId,
+      rule: 'english-with-wikidata-to-russian-instrumental',
+      sourceText: segment.text,
+      affectedVariables: [],
+    });
+    return true;
+  }
+  return false;
+}
+
+function applyEnglishTransformationRulesRule(
+  units,
+  segment,
+  sentenceId,
+  config
+) {
+  for (let index = 0; index < units.length - 1; index += 1) {
+    if (
+      normalizePhrase(units[index].sourceText) !== 'transformation' ||
+      normalizePhrase(units[index + 1].sourceText) !== 'rules'
+    ) {
+      continue;
+    }
+    const modifier = units[index];
+    const noun = units[index + 1];
+    setUnitTargetText(noun, { text: 'правила' });
+    setUnitTargetText(modifier, { text: 'преобразования' });
+    units.splice(index, 2, noun, modifier);
+    recordStep(config, 'transformation-rule', {
+      sentenceId,
+      rule: 'english-transformation-rules-to-russian-noun-phrase',
+      sourceText: segment.text,
+      affectedVariables: [],
+    });
+    return true;
+  }
+  return false;
+}
+
+function applyCommaBeforeThenRule(units, segment, sentenceId, config) {
+  if (!/,\s*then\b/i.test(segment.text)) {
+    return false;
+  }
+  const thenIndex = units.findIndex(
+    (unit) => normalizePhrase(unit.sourceText) === 'then'
+  );
+  if (thenIndex <= 0) {
+    return false;
+  }
+  appendUnitSuffix(units[thenIndex - 1], ',');
+  recordStep(config, 'transformation-rule', {
+    sentenceId,
+    rule: 'english-comma-before-then-preserved',
+    sourceText: segment.text,
+    affectedVariables: [],
+  });
+  return true;
 }
 
 function applyRussianUsStatePredicateRule(units, segment, sentenceId, config) {
@@ -721,6 +904,15 @@ function setUnitTargetText(unit, target) {
   }
   unit.markdown = unit.plainText;
   unit.html = escapeHtml(unit.plainText);
+}
+
+function appendUnitSuffix(unit, suffix) {
+  if (!unit || unit.plainText.endsWith(suffix)) {
+    return;
+  }
+  unit.plainText = `${unit.plainText}${suffix}`;
+  unit.markdown = `${unit.markdown}${suffix}`;
+  unit.html = `${unit.html}${suffix}`;
 }
 
 function buildRuleToken(sourceText, target) {
@@ -943,6 +1135,7 @@ function recordPhraseStep(phrase, config) {
     entityId: phrase.entityId,
     status: phrase.target.status,
     targetText: phrase.target.text,
+    strategy: phrase.target.strategy ?? config.translationStrategy,
   });
 }
 

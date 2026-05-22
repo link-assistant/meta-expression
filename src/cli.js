@@ -45,6 +45,9 @@ export function parseCliArguments(args) {
     '--to': () => {
       options.targetLanguage = args[++index] ?? 'ru';
     },
+    '--translation-strategy': () => {
+      options.translationStrategy = args[++index] ?? '';
+    },
     '--target-language': () => {
       options.targetLanguage = args[++index] ?? 'ru';
     },
@@ -222,6 +225,7 @@ async function runTranslateCommand(options, output) {
     sources,
     overrides: [...repoOverrides, ...userOverrides],
     maxNgramSize: options.maxNgramSize,
+    translationStrategy: options.translationStrategy,
   });
   if (options.format === 'links' || options.format === 'lino') {
     output.log(result.linksNotation);

@@ -1,0 +1,3323 @@
+{
+  "text": "Formalize source text with Wikidata, then translate each sentence through labels and transformation rules. Unresolved parts remain variables with questions.",
+  "tokens": [
+    "Formalize",
+    "source",
+    "text",
+    "with",
+    "Wikidata",
+    "then",
+    "translate",
+    "each",
+    "sentence",
+    "through",
+    "labels",
+    "and",
+    "transformation",
+    "rules",
+    "Unresolved",
+    "parts",
+    "remain",
+    "variables",
+    "with",
+    "questions"
+  ],
+  "phrases": [
+    {
+      "text": "Formalize source text",
+      "tokens": [
+        "Formalize",
+        "source",
+        "text"
+      ],
+      "start": 0,
+      "end": 2,
+      "size": 3,
+      "candidates": [
+        {
+          "id": "wp:en:version_control",
+          "label": "Version control",
+          "description": "tracking different versions in history of computer files – primarily source code text files, but generally any type of file. Version control is a component",
+          "kind": "entity",
+          "source": "wikipedia",
+          "sourceUrl": "https://en.wikipedia.org/wiki/Version_control",
+          "matchText": "Version control",
+          "matchType": null,
+          "wikipediaTitle": "Version control",
+          "wikipediaUrl": "https://en.wikipedia.org/wiki/Version_control",
+          "wikibaseId": null,
+          "score": 23,
+          "ngramSize": 3,
+          "contextLabels": []
+        },
+        {
+          "id": "wp:en:nile",
+          "label": "Nile",
+          "description": "powers divided up Africa during a process called the Scramble for Africa, formalized in the Berlin Conference of 1885. Under that agreement, Britain received",
+          "kind": "entity",
+          "source": "wikipedia",
+          "sourceUrl": "https://en.wikipedia.org/wiki/Nile",
+          "matchText": "Nile",
+          "matchType": null,
+          "wikipediaTitle": "Nile",
+          "wikipediaUrl": "https://en.wikipedia.org/wiki/Nile",
+          "wikibaseId": null,
+          "score": 23,
+          "ngramSize": 3,
+          "contextLabels": []
+        },
+        {
+          "id": "wp:en:hebrew_bible",
+          "label": "Hebrew Bible",
+          "description": "Masoretic Text. In addition to the Masoretic Text, modern biblical scholars seeking to understand the history of the Hebrew Bible use a range of sources. These",
+          "kind": "entity",
+          "source": "wikipedia",
+          "sourceUrl": "https://en.wikipedia.org/wiki/Hebrew_Bible",
+          "matchText": "Hebrew Bible",
+          "matchType": null,
+          "wikipediaTitle": "Hebrew Bible",
+          "wikipediaUrl": "https://en.wikipedia.org/wiki/Hebrew_Bible",
+          "wikibaseId": null,
+          "score": 23,
+          "ngramSize": 3,
+          "contextLabels": []
+        }
+      ],
+      "entity": {
+        "id": "wp:en:version_control",
+        "label": "Version control",
+        "description": "tracking different versions in history of computer files – primarily source code text files, but generally any type of file. Version control is a component",
+        "kind": "entity",
+        "source": "wikipedia",
+        "sourceUrl": "https://en.wikipedia.org/wiki/Version_control",
+        "score": 23,
+        "wikipediaUrl": "https://en.wikipedia.org/wiki/Version_control",
+        "wikipediaTitle": "Version control",
+        "contextLabels": [],
+        "overrideEntry": null
+      }
+    },
+    {
+      "text": "with",
+      "tokens": [
+        "with"
+      ],
+      "start": 3,
+      "end": 3,
+      "size": 1,
+      "candidates": [
+        {
+          "id": "wikt:en:with#Preposition:0",
+          "label": "with",
+          "description": "Against.",
+          "kind": "entity",
+          "source": "wiktionary",
+          "sourceUrl": "https://en.wiktionary.org/wiki/with",
+          "matchText": "with",
+          "matchType": "definition",
+          "partOfSpeech": "Preposition",
+          "definition": "Against.",
+          "score": 43,
+          "ngramSize": 1,
+          "contextLabels": []
+        },
+        {
+          "id": "wikt:en:with#Preposition:1",
+          "label": "with",
+          "description": "In the company of; alongside, close to; near to.",
+          "kind": "entity",
+          "source": "wiktionary",
+          "sourceUrl": "https://en.wiktionary.org/wiki/with",
+          "matchText": "with",
+          "matchType": "definition",
+          "partOfSpeech": "Preposition",
+          "definition": "In the company of; alongside, close to; near to.",
+          "score": 43,
+          "ngramSize": 1,
+          "contextLabels": []
+        },
+        {
+          "id": "wikt:en:with#Preposition:2",
+          "label": "with",
+          "description": "In addition to; as an accessory to.",
+          "kind": "entity",
+          "source": "wiktionary",
+          "sourceUrl": "https://en.wiktionary.org/wiki/with",
+          "matchText": "with",
+          "matchType": "definition",
+          "partOfSpeech": "Preposition",
+          "definition": "In addition to; as an accessory to.",
+          "score": 43,
+          "ngramSize": 1,
+          "contextLabels": []
+        }
+      ],
+      "entity": {
+        "id": "wikt:en:with#Preposition:0",
+        "label": "with",
+        "description": "Against.",
+        "kind": "entity",
+        "source": "wiktionary",
+        "sourceUrl": "https://en.wiktionary.org/wiki/with",
+        "score": 43,
+        "wikipediaUrl": null,
+        "wikipediaTitle": null,
+        "contextLabels": [],
+        "overrideEntry": null
+      }
+    },
+    {
+      "text": "Wikidata",
+      "tokens": [
+        "Wikidata"
+      ],
+      "start": 4,
+      "end": 4,
+      "size": 1,
+      "candidates": [],
+      "entity": null
+    },
+    {
+      "text": "then",
+      "tokens": [
+        "then"
+      ],
+      "start": 5,
+      "end": 5,
+      "size": 1,
+      "candidates": [
+        {
+          "id": "wikt:en:then#Adverb:0",
+          "label": "then",
+          "description": " At that time.",
+          "kind": "entity",
+          "source": "wiktionary",
+          "sourceUrl": "https://en.wiktionary.org/wiki/then",
+          "matchText": "then",
+          "matchType": "definition",
+          "partOfSpeech": "Adverb",
+          "definition": " At that time.",
+          "score": 43,
+          "ngramSize": 1,
+          "contextLabels": []
+        },
+        {
+          "id": "wikt:en:then#Adverb:1",
+          "label": "then",
+          "description": " Soon afterward.",
+          "kind": "entity",
+          "source": "wiktionary",
+          "sourceUrl": "https://en.wiktionary.org/wiki/then",
+          "matchText": "then",
+          "matchType": "definition",
+          "partOfSpeech": "Adverb",
+          "definition": " Soon afterward.",
+          "score": 43,
+          "ngramSize": 1,
+          "contextLabels": []
+        },
+        {
+          "id": "wikt:en:then#Adverb:2",
+          "label": "then",
+          "description": " Next in order of place.",
+          "kind": "entity",
+          "source": "wiktionary",
+          "sourceUrl": "https://en.wiktionary.org/wiki/then",
+          "matchText": "then",
+          "matchType": "definition",
+          "partOfSpeech": "Adverb",
+          "definition": " Next in order of place.",
+          "score": 43,
+          "ngramSize": 1,
+          "contextLabels": []
+        }
+      ],
+      "entity": {
+        "id": "wikt:en:then#Adverb:0",
+        "label": "then",
+        "description": " At that time.",
+        "kind": "entity",
+        "source": "wiktionary",
+        "sourceUrl": "https://en.wiktionary.org/wiki/then",
+        "score": 43,
+        "wikipediaUrl": null,
+        "wikipediaTitle": null,
+        "contextLabels": [],
+        "overrideEntry": null
+      }
+    },
+    {
+      "text": "translate",
+      "tokens": [
+        "translate"
+      ],
+      "start": 6,
+      "end": 6,
+      "size": 1,
+      "candidates": [
+        {
+          "id": "wikt:en:translate#Verb:0",
+          "label": "translate",
+          "description": "Senses relating to the change of information, etc., from one form to another.\n To change spoken words or written text (of a book, document, movie, etc.) from one language to another.",
+          "kind": "entity",
+          "source": "wiktionary",
+          "sourceUrl": "https://en.wiktionary.org/wiki/translate",
+          "matchText": "translate",
+          "matchType": "definition",
+          "partOfSpeech": "Verb",
+          "definition": "Senses relating to the change of information, etc., from one form to another.\n To change spoken words or written text (of a book, document, movie, etc.) from one language to another.",
+          "score": 43,
+          "ngramSize": 1,
+          "contextLabels": []
+        },
+        {
+          "id": "wikt:en:translate#Verb:1",
+          "label": "translate",
+          "description": " To change spoken words or written text (of a book, document, movie, etc.) from one language to another.",
+          "kind": "entity",
+          "source": "wiktionary",
+          "sourceUrl": "https://en.wiktionary.org/wiki/translate",
+          "matchText": "translate",
+          "matchType": "definition",
+          "partOfSpeech": "Verb",
+          "definition": " To change spoken words or written text (of a book, document, movie, etc.) from one language to another.",
+          "score": 43,
+          "ngramSize": 1,
+          "contextLabels": []
+        },
+        {
+          "id": "wikt:en:translate#Verb:2",
+          "label": "translate",
+          "description": " To provide a translation of spoken words or written text in another language; to be, or be capable of being, rendered in another language.",
+          "kind": "entity",
+          "source": "wiktionary",
+          "sourceUrl": "https://en.wiktionary.org/wiki/translate",
+          "matchText": "translate",
+          "matchType": "definition",
+          "partOfSpeech": "Verb",
+          "definition": " To provide a translation of spoken words or written text in another language; to be, or be capable of being, rendered in another language.",
+          "score": 43,
+          "ngramSize": 1,
+          "contextLabels": []
+        }
+      ],
+      "entity": {
+        "id": "wikt:en:translate#Verb:0",
+        "label": "translate",
+        "description": "Senses relating to the change of information, etc., from one form to another.\n To change spoken words or written text (of a book, document, movie, etc.) from one language to another.",
+        "kind": "entity",
+        "source": "wiktionary",
+        "sourceUrl": "https://en.wiktionary.org/wiki/translate",
+        "score": 43,
+        "wikipediaUrl": null,
+        "wikipediaTitle": null,
+        "contextLabels": [],
+        "overrideEntry": null
+      }
+    },
+    {
+      "text": "each",
+      "tokens": [
+        "each"
+      ],
+      "start": 7,
+      "end": 7,
+      "size": 1,
+      "candidates": [
+        {
+          "id": "wikt:en:each#Determiner:0",
+          "label": "each",
+          "description": "All; every; qualifying a singular noun, indicating all examples of the thing so named seen as individual or separate items (compare every).",
+          "kind": "entity",
+          "source": "wiktionary",
+          "sourceUrl": "https://en.wiktionary.org/wiki/each",
+          "matchText": "each",
+          "matchType": "definition",
+          "partOfSpeech": "Determiner",
+          "definition": "All; every; qualifying a singular noun, indicating all examples of the thing so named seen as individual or separate items (compare every).",
+          "score": 43,
+          "ngramSize": 1,
+          "contextLabels": []
+        },
+        {
+          "id": "wikt:en:each#Adverb:1",
+          "label": "each",
+          "description": "For one; apiece; per.",
+          "kind": "entity",
+          "source": "wiktionary",
+          "sourceUrl": "https://en.wiktionary.org/wiki/each",
+          "matchText": "each",
+          "matchType": "definition",
+          "partOfSpeech": "Adverb",
+          "definition": "For one; apiece; per.",
+          "score": 43,
+          "ngramSize": 1,
+          "contextLabels": []
+        },
+        {
+          "id": "wikt:en:each#Adverb:2",
+          "label": "each",
+          "description": "Individually; separately; used in a sentence with a plural subject to indicate that the action or state described by the verb applies to all members of the described group individually, rather than collectively to the entire group.",
+          "kind": "entity",
+          "source": "wiktionary",
+          "sourceUrl": "https://en.wiktionary.org/wiki/each",
+          "matchText": "each",
+          "matchType": "definition",
+          "partOfSpeech": "Adverb",
+          "definition": "Individually; separately; used in a sentence with a plural subject to indicate that the action or state described by the verb applies to all members of the described group individually, rather than collectively to the entire group.",
+          "score": 43,
+          "ngramSize": 1,
+          "contextLabels": []
+        }
+      ],
+      "entity": {
+        "id": "wikt:en:each#Determiner:0",
+        "label": "each",
+        "description": "All; every; qualifying a singular noun, indicating all examples of the thing so named seen as individual or separate items (compare every).",
+        "kind": "entity",
+        "source": "wiktionary",
+        "sourceUrl": "https://en.wiktionary.org/wiki/each",
+        "score": 43,
+        "wikipediaUrl": null,
+        "wikipediaTitle": null,
+        "contextLabels": [],
+        "overrideEntry": null
+      }
+    },
+    {
+      "text": "sentence",
+      "tokens": [
+        "sentence"
+      ],
+      "start": 8,
+      "end": 8,
+      "size": 1,
+      "candidates": [
+        {
+          "id": "wikt:en:sentence#Noun:0",
+          "label": "sentence",
+          "description": " The decision or judgement of a jury or court; a verdict. .mw-parser-output .defdate{font-size:smaller}",
+          "kind": "entity",
+          "source": "wiktionary",
+          "sourceUrl": "https://en.wiktionary.org/wiki/sentence",
+          "matchText": "sentence",
+          "matchType": "definition",
+          "partOfSpeech": "Noun",
+          "definition": " The decision or judgement of a jury or court; a verdict. .mw-parser-output .defdate{font-size:smaller}",
+          "score": 43,
+          "ngramSize": 1,
+          "contextLabels": []
+        },
+        {
+          "id": "wikt:en:sentence#Noun:1",
+          "label": "sentence",
+          "description": "The judicial order for a punishment to be imposed on a person convicted of a crime. ",
+          "kind": "entity",
+          "source": "wiktionary",
+          "sourceUrl": "https://en.wiktionary.org/wiki/sentence",
+          "matchText": "sentence",
+          "matchType": "definition",
+          "partOfSpeech": "Noun",
+          "definition": "The judicial order for a punishment to be imposed on a person convicted of a crime. ",
+          "score": 43,
+          "ngramSize": 1,
+          "contextLabels": []
+        },
+        {
+          "id": "wikt:en:sentence#Noun:2",
+          "label": "sentence",
+          "description": "A punishment imposed on a person convicted of a crime.",
+          "kind": "entity",
+          "source": "wiktionary",
+          "sourceUrl": "https://en.wiktionary.org/wiki/sentence",
+          "matchText": "sentence",
+          "matchType": "definition",
+          "partOfSpeech": "Noun",
+          "definition": "A punishment imposed on a person convicted of a crime.",
+          "score": 43,
+          "ngramSize": 1,
+          "contextLabels": []
+        }
+      ],
+      "entity": {
+        "id": "wikt:en:sentence#Noun:0",
+        "label": "sentence",
+        "description": " The decision or judgement of a jury or court; a verdict. .mw-parser-output .defdate{font-size:smaller}",
+        "kind": "entity",
+        "source": "wiktionary",
+        "sourceUrl": "https://en.wiktionary.org/wiki/sentence",
+        "score": 43,
+        "wikipediaUrl": null,
+        "wikipediaTitle": null,
+        "contextLabels": [],
+        "overrideEntry": null
+      }
+    },
+    {
+      "text": "through",
+      "tokens": [
+        "through"
+      ],
+      "start": 9,
+      "end": 9,
+      "size": 1,
+      "candidates": [
+        {
+          "id": "wikt:en:through#Preposition:0",
+          "label": "through",
+          "description": "From one side or end of (something) to the other. \nSo as to enter (something), pass within or across, and then leave.",
+          "kind": "entity",
+          "source": "wiktionary",
+          "sourceUrl": "https://en.wiktionary.org/wiki/through",
+          "matchText": "through",
+          "matchType": "definition",
+          "partOfSpeech": "Preposition",
+          "definition": "From one side or end of (something) to the other. \nSo as to enter (something), pass within or across, and then leave.",
+          "score": 43,
+          "ngramSize": 1,
+          "contextLabels": []
+        },
+        {
+          "id": "wikt:en:through#Preposition:1",
+          "label": "through",
+          "description": "So as to enter (something), pass within or across, and then leave.",
+          "kind": "entity",
+          "source": "wiktionary",
+          "sourceUrl": "https://en.wiktionary.org/wiki/through",
+          "matchText": "through",
+          "matchType": "definition",
+          "partOfSpeech": "Preposition",
+          "definition": "So as to enter (something), pass within or across, and then leave.",
+          "score": 43,
+          "ngramSize": 1,
+          "contextLabels": []
+        },
+        {
+          "id": "wikt:en:through#Preposition:2",
+          "label": "through",
+          "description": "So as to progress within (something) or towards the end or limit of (something).",
+          "kind": "entity",
+          "source": "wiktionary",
+          "sourceUrl": "https://en.wiktionary.org/wiki/through",
+          "matchText": "through",
+          "matchType": "definition",
+          "partOfSpeech": "Preposition",
+          "definition": "So as to progress within (something) or towards the end or limit of (something).",
+          "score": 43,
+          "ngramSize": 1,
+          "contextLabels": []
+        }
+      ],
+      "entity": {
+        "id": "wikt:en:through#Preposition:0",
+        "label": "through",
+        "description": "From one side or end of (something) to the other. \nSo as to enter (something), pass within or across, and then leave.",
+        "kind": "entity",
+        "source": "wiktionary",
+        "sourceUrl": "https://en.wiktionary.org/wiki/through",
+        "score": 43,
+        "wikipediaUrl": null,
+        "wikipediaTitle": null,
+        "contextLabels": [],
+        "overrideEntry": null
+      }
+    },
+    {
+      "text": "labels",
+      "tokens": [
+        "labels"
+      ],
+      "start": 10,
+      "end": 10,
+      "size": 1,
+      "candidates": [
+        {
+          "id": "wikt:en:labels#Noun:0",
+          "label": "labels",
+          "description": "plural of label",
+          "kind": "entity",
+          "source": "wiktionary",
+          "sourceUrl": "https://en.wiktionary.org/wiki/labels",
+          "matchText": "labels",
+          "matchType": "definition",
+          "partOfSpeech": "Noun",
+          "definition": "plural of label",
+          "score": 43,
+          "ngramSize": 1,
+          "contextLabels": []
+        },
+        {
+          "id": "wikt:en:labels#Verb:1",
+          "label": "labels",
+          "description": "third-person singular simple present indicative of label",
+          "kind": "entity",
+          "source": "wiktionary",
+          "sourceUrl": "https://en.wiktionary.org/wiki/labels",
+          "matchText": "labels",
+          "matchType": "definition",
+          "partOfSpeech": "Verb",
+          "definition": "third-person singular simple present indicative of label",
+          "score": 43,
+          "ngramSize": 1,
+          "contextLabels": []
+        }
+      ],
+      "entity": {
+        "id": "wikt:en:labels#Noun:0",
+        "label": "labels",
+        "description": "plural of label",
+        "kind": "entity",
+        "source": "wiktionary",
+        "sourceUrl": "https://en.wiktionary.org/wiki/labels",
+        "score": 43,
+        "wikipediaUrl": null,
+        "wikipediaTitle": null,
+        "contextLabels": [],
+        "overrideEntry": null
+      }
+    },
+    {
+      "text": "and",
+      "tokens": [
+        "and"
+      ],
+      "start": 11,
+      "end": 11,
+      "size": 1,
+      "candidates": [
+        {
+          "id": "wikt:en:and#Symbol:0",
+          "label": "and",
+          "description": " ISO 639-3 language code for Ansus.",
+          "kind": "entity",
+          "source": "wiktionary",
+          "sourceUrl": "https://en.wiktionary.org/wiki/and",
+          "matchText": "and",
+          "matchType": "definition",
+          "partOfSpeech": "Symbol",
+          "definition": " ISO 639-3 language code for Ansus.",
+          "score": 43,
+          "ngramSize": 1,
+          "contextLabels": []
+        },
+        {
+          "id": "wikt:en:and#Conjunction:1",
+          "label": "and",
+          "description": "As a coordinating conjunction; expressing two elements to be taken together or in addition to each other.\nUsed simply to connect two noun phrases, adjectives or adverbs. .mw-parser-output .defdate{font-size:smaller}\n\nSimply connecting two clauses or sentences. \n\nIntroducing a clause or sentence which follows on in time or consequence from the first. ",
+          "kind": "entity",
+          "source": "wiktionary",
+          "sourceUrl": "https://en.wiktionary.org/wiki/and",
+          "matchText": "and",
+          "matchType": "definition",
+          "partOfSpeech": "Conjunction",
+          "definition": "As a coordinating conjunction; expressing two elements to be taken together or in addition to each other.\nUsed simply to connect two noun phrases, adjectives or adverbs. .mw-parser-output .defdate{font-size:smaller}\n\nSimply connecting two clauses or sentences. \n\nIntroducing a clause or sentence which follows on in time or consequence from the first. ",
+          "score": 43,
+          "ngramSize": 1,
+          "contextLabels": []
+        },
+        {
+          "id": "wikt:en:and#Conjunction:2",
+          "label": "and",
+          "description": "Used simply to connect two noun phrases, adjectives or adverbs. .mw-parser-output .defdate{font-size:smaller}",
+          "kind": "entity",
+          "source": "wiktionary",
+          "sourceUrl": "https://en.wiktionary.org/wiki/and",
+          "matchText": "and",
+          "matchType": "definition",
+          "partOfSpeech": "Conjunction",
+          "definition": "Used simply to connect two noun phrases, adjectives or adverbs. .mw-parser-output .defdate{font-size:smaller}",
+          "score": 43,
+          "ngramSize": 1,
+          "contextLabels": []
+        }
+      ],
+      "entity": {
+        "id": "wikt:en:and#Symbol:0",
+        "label": "and",
+        "description": " ISO 639-3 language code for Ansus.",
+        "kind": "entity",
+        "source": "wiktionary",
+        "sourceUrl": "https://en.wiktionary.org/wiki/and",
+        "score": 43,
+        "wikipediaUrl": null,
+        "wikipediaTitle": null,
+        "contextLabels": [],
+        "overrideEntry": null
+      }
+    },
+    {
+      "text": "transformation rules",
+      "tokens": [
+        "transformation",
+        "rules"
+      ],
+      "start": 12,
+      "end": 13,
+      "size": 2,
+      "candidates": [
+        {
+          "id": "Q46841744",
+          "label": "Transformation rules in concept learning",
+          "description": "scientific article published on September 1, 1978",
+          "kind": "entity",
+          "source": "wikidata",
+          "sourceUrl": "https://www.wikidata.org/wiki/Q46841744",
+          "matchText": "Transformation rules in concept learning",
+          "matchType": "label",
+          "aliases": [],
+          "score": 21,
+          "ngramSize": 2,
+          "contextLabels": []
+        },
+        {
+          "id": "Q130927092",
+          "label": "Transformation rules for designing CNOT-based quantum circuits",
+          "description": "scientific article published on 19 April 2004",
+          "kind": "entity",
+          "source": "wikidata",
+          "sourceUrl": "https://www.wikidata.org/wiki/Q130927092",
+          "matchText": "Transformation rules for designing CNOT-based quantum circuits",
+          "matchType": "label",
+          "aliases": [],
+          "score": 21,
+          "ngramSize": 2,
+          "contextLabels": []
+        },
+        {
+          "id": "Q126009166",
+          "label": "Transformation rules of N = 2 supergravity multiplets",
+          "description": "scientific article published in 1980",
+          "kind": "entity",
+          "source": "wikidata",
+          "sourceUrl": "https://www.wikidata.org/wiki/Q126009166",
+          "matchText": "Transformation rules of N = 2 supergravity multiplets",
+          "matchType": "label",
+          "aliases": [],
+          "score": 21,
+          "ngramSize": 2,
+          "contextLabels": []
+        }
+      ],
+      "entity": {
+        "id": "Q46841744",
+        "label": "Transformation rules in concept learning",
+        "description": "scientific article published on September 1, 1978",
+        "kind": "entity",
+        "source": "wikidata",
+        "sourceUrl": "https://www.wikidata.org/wiki/Q46841744",
+        "score": 21,
+        "wikipediaUrl": null,
+        "wikipediaTitle": null,
+        "contextLabels": [],
+        "overrideEntry": null
+      }
+    },
+    {
+      "text": "Unresolved parts",
+      "tokens": [
+        "Unresolved",
+        "parts"
+      ],
+      "start": 14,
+      "end": 15,
+      "size": 2,
+      "candidates": [
+        {
+          "id": "wp:en:love_mocktail_3",
+          "label": "Love Mocktail 3",
+          "description": "sparks an emotionally intense custody battle, pushing Adi to confront unresolved parts of his past while trying to keep the daughter he deeply loves. Legal",
+          "kind": "entity",
+          "source": "wikipedia",
+          "sourceUrl": "https://en.wikipedia.org/wiki/Love_Mocktail_3",
+          "matchText": "Love Mocktail 3",
+          "matchType": null,
+          "wikipediaTitle": "Love Mocktail 3",
+          "wikipediaUrl": "https://en.wikipedia.org/wiki/Love_Mocktail_3",
+          "wikibaseId": null,
+          "score": 20,
+          "ngramSize": 2,
+          "contextLabels": []
+        },
+        {
+          "id": "wp:en:morchella",
+          "label": "Morchella",
+          "description": "The seminal taxon Morchella elata, whose true identity still remains unresolved, was described by Elias Fries in 1822, from a fir forest in Sweden. Other",
+          "kind": "entity",
+          "source": "wikipedia",
+          "sourceUrl": "https://en.wikipedia.org/wiki/Morchella",
+          "matchText": "Morchella",
+          "matchType": null,
+          "wikipediaTitle": "Morchella",
+          "wikipediaUrl": "https://en.wikipedia.org/wiki/Morchella",
+          "wikibaseId": null,
+          "score": 20,
+          "ngramSize": 2,
+          "contextLabels": []
+        },
+        {
+          "id": "wp:en:world_war_ii",
+          "label": "World War II",
+          "description": "leaders were tried for war crimes. The causes of World War II included unresolved tensions in the aftermath of World War I and the rise of fascism in Europe",
+          "kind": "entity",
+          "source": "wikipedia",
+          "sourceUrl": "https://en.wikipedia.org/wiki/World_War_II",
+          "matchText": "World War II",
+          "matchType": null,
+          "wikipediaTitle": "World War II",
+          "wikipediaUrl": "https://en.wikipedia.org/wiki/World_War_II",
+          "wikibaseId": null,
+          "score": 20,
+          "ngramSize": 2,
+          "contextLabels": []
+        }
+      ],
+      "entity": {
+        "id": "wp:en:love_mocktail_3",
+        "label": "Love Mocktail 3",
+        "description": "sparks an emotionally intense custody battle, pushing Adi to confront unresolved parts of his past while trying to keep the daughter he deeply loves. Legal",
+        "kind": "entity",
+        "source": "wikipedia",
+        "sourceUrl": "https://en.wikipedia.org/wiki/Love_Mocktail_3",
+        "score": 20,
+        "wikipediaUrl": "https://en.wikipedia.org/wiki/Love_Mocktail_3",
+        "wikipediaTitle": "Love Mocktail 3",
+        "contextLabels": [],
+        "overrideEntry": null
+      }
+    },
+    {
+      "text": "remain variables",
+      "tokens": [
+        "remain",
+        "variables"
+      ],
+      "start": 16,
+      "end": 17,
+      "size": 2,
+      "candidates": [
+        {
+          "id": "wp:en:variable_(high-level_programming_language)",
+          "label": "Variable (high-level programming language)",
+          "description": "the variable may thus change during the course of program execution. Variables in programming may not directly correspond to the concept of variables in",
+          "kind": "entity",
+          "source": "wikipedia",
+          "sourceUrl": "https://en.wikipedia.org/wiki/Variable_(high-level_programming_language)",
+          "matchText": "Variable (high-level programming language)",
+          "matchType": null,
+          "wikipediaTitle": "Variable (high-level programming language)",
+          "wikipediaUrl": "https://en.wikipedia.org/wiki/Variable_(high-level_programming_language)",
+          "wikibaseId": null,
+          "score": 20,
+          "ngramSize": 2,
+          "contextLabels": []
+        },
+        {
+          "id": "wp:en:joint_probability_distribution",
+          "label": "Joint probability distribution",
+          "description": "function (in the case of continuous variables) or joint probability mass function (in the case of discrete variables). These in turn can be used to find",
+          "kind": "entity",
+          "source": "wikipedia",
+          "sourceUrl": "https://en.wikipedia.org/wiki/Joint_probability_distribution",
+          "matchText": "Joint probability distribution",
+          "matchType": null,
+          "wikipediaTitle": "Joint probability distribution",
+          "wikipediaUrl": "https://en.wikipedia.org/wiki/Joint_probability_distribution",
+          "wikibaseId": null,
+          "score": 20,
+          "ngramSize": 2,
+          "contextLabels": []
+        },
+        {
+          "id": "wp:en:environment_variable",
+          "label": "Environment variable",
+          "description": "the variable name. By convention, names of environment variables are normally expressed in all capital letters. This helps keep environment variables distinctly",
+          "kind": "entity",
+          "source": "wikipedia",
+          "sourceUrl": "https://en.wikipedia.org/wiki/Environment_variable",
+          "matchText": "Environment variable",
+          "matchType": null,
+          "wikipediaTitle": "Environment variable",
+          "wikipediaUrl": "https://en.wikipedia.org/wiki/Environment_variable",
+          "wikibaseId": null,
+          "score": 20,
+          "ngramSize": 2,
+          "contextLabels": []
+        }
+      ],
+      "entity": {
+        "id": "wp:en:variable_(high-level_programming_language)",
+        "label": "Variable (high-level programming language)",
+        "description": "the variable may thus change during the course of program execution. Variables in programming may not directly correspond to the concept of variables in",
+        "kind": "entity",
+        "source": "wikipedia",
+        "sourceUrl": "https://en.wikipedia.org/wiki/Variable_(high-level_programming_language)",
+        "score": 20,
+        "wikipediaUrl": "https://en.wikipedia.org/wiki/Variable_(high-level_programming_language)",
+        "wikipediaTitle": "Variable (high-level programming language)",
+        "contextLabels": [],
+        "overrideEntry": null
+      }
+    },
+    {
+      "text": "with",
+      "tokens": [
+        "with"
+      ],
+      "start": 18,
+      "end": 18,
+      "size": 1,
+      "candidates": [
+        {
+          "id": "wikt:en:with#Preposition:0",
+          "label": "with",
+          "description": "Against.",
+          "kind": "entity",
+          "source": "wiktionary",
+          "sourceUrl": "https://en.wiktionary.org/wiki/with",
+          "matchText": "with",
+          "matchType": "definition",
+          "partOfSpeech": "Preposition",
+          "definition": "Against.",
+          "score": 43,
+          "ngramSize": 1,
+          "contextLabels": []
+        },
+        {
+          "id": "wikt:en:with#Preposition:1",
+          "label": "with",
+          "description": "In the company of; alongside, close to; near to.",
+          "kind": "entity",
+          "source": "wiktionary",
+          "sourceUrl": "https://en.wiktionary.org/wiki/with",
+          "matchText": "with",
+          "matchType": "definition",
+          "partOfSpeech": "Preposition",
+          "definition": "In the company of; alongside, close to; near to.",
+          "score": 43,
+          "ngramSize": 1,
+          "contextLabels": []
+        },
+        {
+          "id": "wikt:en:with#Preposition:2",
+          "label": "with",
+          "description": "In addition to; as an accessory to.",
+          "kind": "entity",
+          "source": "wiktionary",
+          "sourceUrl": "https://en.wiktionary.org/wiki/with",
+          "matchText": "with",
+          "matchType": "definition",
+          "partOfSpeech": "Preposition",
+          "definition": "In addition to; as an accessory to.",
+          "score": 43,
+          "ngramSize": 1,
+          "contextLabels": []
+        }
+      ],
+      "entity": {
+        "id": "wikt:en:with#Preposition:0",
+        "label": "with",
+        "description": "Against.",
+        "kind": "entity",
+        "source": "wiktionary",
+        "sourceUrl": "https://en.wiktionary.org/wiki/with",
+        "score": 43,
+        "wikipediaUrl": null,
+        "wikipediaTitle": null,
+        "contextLabels": [],
+        "overrideEntry": null
+      }
+    },
+    {
+      "text": "questions",
+      "tokens": [
+        "questions"
+      ],
+      "start": 19,
+      "end": 19,
+      "size": 1,
+      "candidates": [
+        {
+          "id": "wikt:en:questions#Noun:0",
+          "label": "questions",
+          "description": "plural of question",
+          "kind": "entity",
+          "source": "wiktionary",
+          "sourceUrl": "https://en.wiktionary.org/wiki/questions",
+          "matchText": "questions",
+          "matchType": "definition",
+          "partOfSpeech": "Noun",
+          "definition": "plural of question",
+          "score": 43,
+          "ngramSize": 1,
+          "contextLabels": []
+        },
+        {
+          "id": "wikt:en:questions#Noun:1",
+          "label": "questions",
+          "description": "A game in which players must only say questions, and if they don't they lose.",
+          "kind": "entity",
+          "source": "wiktionary",
+          "sourceUrl": "https://en.wiktionary.org/wiki/questions",
+          "matchText": "questions",
+          "matchType": "definition",
+          "partOfSpeech": "Noun",
+          "definition": "A game in which players must only say questions, and if they don't they lose.",
+          "score": 43,
+          "ngramSize": 1,
+          "contextLabels": []
+        },
+        {
+          "id": "wikt:en:questions#Verb:2",
+          "label": "questions",
+          "description": "third-person singular simple present indicative of question",
+          "kind": "entity",
+          "source": "wiktionary",
+          "sourceUrl": "https://en.wiktionary.org/wiki/questions",
+          "matchText": "questions",
+          "matchType": "definition",
+          "partOfSpeech": "Verb",
+          "definition": "third-person singular simple present indicative of question",
+          "score": 43,
+          "ngramSize": 1,
+          "contextLabels": []
+        }
+      ],
+      "entity": {
+        "id": "wikt:en:questions#Noun:0",
+        "label": "questions",
+        "description": "plural of question",
+        "kind": "entity",
+        "source": "wiktionary",
+        "sourceUrl": "https://en.wiktionary.org/wiki/questions",
+        "score": 43,
+        "wikipediaUrl": null,
+        "wikipediaTitle": null,
+        "contextLabels": [],
+        "overrideEntry": null
+      }
+    }
+  ],
+  "contexts": [],
+  "mainContext": null,
+  "additionalContexts": [],
+  "bigContexts": [],
+  "mainBigContext": null,
+  "additionalBigContexts": [],
+  "interpretations": [
+    {
+      "rank": 1,
+      "score": 514,
+      "phrases": [
+        {
+          "text": "Formalize source text",
+          "entityId": "wp:en:version_control",
+          "kind": "entity",
+          "entityLabel": "Version control",
+          "entityDescription": "tracking different versions in history of computer files – primarily source code text files, but generally any type of file. Version control is a component"
+        },
+        {
+          "text": "with",
+          "entityId": "wikt:en:with#Preposition:0",
+          "kind": "entity",
+          "entityLabel": "with",
+          "entityDescription": "Against."
+        },
+        {
+          "text": "then",
+          "entityId": "wikt:en:then#Adverb:0",
+          "kind": "entity",
+          "entityLabel": "then",
+          "entityDescription": " At that time."
+        },
+        {
+          "text": "translate",
+          "entityId": "wikt:en:translate#Verb:0",
+          "kind": "entity",
+          "entityLabel": "translate",
+          "entityDescription": "Senses relating to the change of information, etc., from one form to another.\n To change spoken words or written text (of a book, document, movie, etc.) from one language to another."
+        },
+        {
+          "text": "each",
+          "entityId": "wikt:en:each#Determiner:0",
+          "kind": "entity",
+          "entityLabel": "each",
+          "entityDescription": "All; every; qualifying a singular noun, indicating all examples of the thing so named seen as individual or separate items (compare every)."
+        },
+        {
+          "text": "sentence",
+          "entityId": "wikt:en:sentence#Noun:0",
+          "kind": "entity",
+          "entityLabel": "sentence",
+          "entityDescription": " The decision or judgement of a jury or court; a verdict. .mw-parser-output .defdate{font-size:smaller}"
+        },
+        {
+          "text": "through",
+          "entityId": "wikt:en:through#Preposition:0",
+          "kind": "entity",
+          "entityLabel": "through",
+          "entityDescription": "From one side or end of (something) to the other. \nSo as to enter (something), pass within or across, and then leave."
+        },
+        {
+          "text": "labels",
+          "entityId": "wikt:en:labels#Noun:0",
+          "kind": "entity",
+          "entityLabel": "labels",
+          "entityDescription": "plural of label"
+        },
+        {
+          "text": "and",
+          "entityId": "wikt:en:and#Symbol:0",
+          "kind": "entity",
+          "entityLabel": "and",
+          "entityDescription": " ISO 639-3 language code for Ansus."
+        },
+        {
+          "text": "transformation rules",
+          "entityId": "Q46841744",
+          "kind": "entity",
+          "entityLabel": "Transformation rules in concept learning",
+          "entityDescription": "scientific article published on September 1, 1978"
+        },
+        {
+          "text": "Unresolved parts",
+          "entityId": "wp:en:love_mocktail_3",
+          "kind": "entity",
+          "entityLabel": "Love Mocktail 3",
+          "entityDescription": "sparks an emotionally intense custody battle, pushing Adi to confront unresolved parts of his past while trying to keep the daughter he deeply loves. Legal"
+        },
+        {
+          "text": "remain variables",
+          "entityId": "wp:en:variable_(high-level_programming_language)",
+          "kind": "entity",
+          "entityLabel": "Variable (high-level programming language)",
+          "entityDescription": "the variable may thus change during the course of program execution. Variables in programming may not directly correspond to the concept of variables in"
+        },
+        {
+          "text": "with",
+          "entityId": "wikt:en:with#Preposition:0",
+          "kind": "entity",
+          "entityLabel": "with",
+          "entityDescription": "Against."
+        },
+        {
+          "text": "questions",
+          "entityId": "wikt:en:questions#Noun:0",
+          "kind": "entity",
+          "entityLabel": "questions",
+          "entityDescription": "plural of question"
+        }
+      ]
+    },
+    {
+      "rank": 2,
+      "score": 514,
+      "phrases": [
+        {
+          "text": "Formalize source text",
+          "entityId": "wp:en:version_control",
+          "kind": "entity",
+          "entityLabel": "Version control",
+          "entityDescription": "tracking different versions in history of computer files – primarily source code text files, but generally any type of file. Version control is a component"
+        },
+        {
+          "text": "with",
+          "entityId": "wikt:en:with#Preposition:0",
+          "kind": "entity",
+          "entityLabel": "with",
+          "entityDescription": "Against."
+        },
+        {
+          "text": "then",
+          "entityId": "wikt:en:then#Adverb:0",
+          "kind": "entity",
+          "entityLabel": "then",
+          "entityDescription": " At that time."
+        },
+        {
+          "text": "translate",
+          "entityId": "wikt:en:translate#Verb:0",
+          "kind": "entity",
+          "entityLabel": "translate",
+          "entityDescription": "Senses relating to the change of information, etc., from one form to another.\n To change spoken words or written text (of a book, document, movie, etc.) from one language to another."
+        },
+        {
+          "text": "each",
+          "entityId": "wikt:en:each#Determiner:0",
+          "kind": "entity",
+          "entityLabel": "each",
+          "entityDescription": "All; every; qualifying a singular noun, indicating all examples of the thing so named seen as individual or separate items (compare every)."
+        },
+        {
+          "text": "sentence",
+          "entityId": "wikt:en:sentence#Noun:0",
+          "kind": "entity",
+          "entityLabel": "sentence",
+          "entityDescription": " The decision or judgement of a jury or court; a verdict. .mw-parser-output .defdate{font-size:smaller}"
+        },
+        {
+          "text": "through",
+          "entityId": "wikt:en:through#Preposition:0",
+          "kind": "entity",
+          "entityLabel": "through",
+          "entityDescription": "From one side or end of (something) to the other. \nSo as to enter (something), pass within or across, and then leave."
+        },
+        {
+          "text": "labels",
+          "entityId": "wikt:en:labels#Noun:0",
+          "kind": "entity",
+          "entityLabel": "labels",
+          "entityDescription": "plural of label"
+        },
+        {
+          "text": "and",
+          "entityId": "wikt:en:and#Symbol:0",
+          "kind": "entity",
+          "entityLabel": "and",
+          "entityDescription": " ISO 639-3 language code for Ansus."
+        },
+        {
+          "text": "transformation rules",
+          "entityId": "Q46841744",
+          "kind": "entity",
+          "entityLabel": "Transformation rules in concept learning",
+          "entityDescription": "scientific article published on September 1, 1978"
+        },
+        {
+          "text": "Unresolved parts",
+          "entityId": "wp:en:love_mocktail_3",
+          "kind": "entity",
+          "entityLabel": "Love Mocktail 3",
+          "entityDescription": "sparks an emotionally intense custody battle, pushing Adi to confront unresolved parts of his past while trying to keep the daughter he deeply loves. Legal"
+        },
+        {
+          "text": "remain variables",
+          "entityId": "wp:en:variable_(high-level_programming_language)",
+          "kind": "entity",
+          "entityLabel": "Variable (high-level programming language)",
+          "entityDescription": "the variable may thus change during the course of program execution. Variables in programming may not directly correspond to the concept of variables in"
+        },
+        {
+          "text": "with",
+          "entityId": "wikt:en:with#Preposition:0",
+          "kind": "entity",
+          "entityLabel": "with",
+          "entityDescription": "Against."
+        },
+        {
+          "text": "questions",
+          "entityId": "wikt:en:questions#Noun:1",
+          "kind": "entity",
+          "entityLabel": "questions",
+          "entityDescription": "A game in which players must only say questions, and if they don't they lose."
+        }
+      ]
+    },
+    {
+      "rank": 3,
+      "score": 514,
+      "phrases": [
+        {
+          "text": "Formalize source text",
+          "entityId": "wp:en:version_control",
+          "kind": "entity",
+          "entityLabel": "Version control",
+          "entityDescription": "tracking different versions in history of computer files – primarily source code text files, but generally any type of file. Version control is a component"
+        },
+        {
+          "text": "with",
+          "entityId": "wikt:en:with#Preposition:0",
+          "kind": "entity",
+          "entityLabel": "with",
+          "entityDescription": "Against."
+        },
+        {
+          "text": "then",
+          "entityId": "wikt:en:then#Adverb:0",
+          "kind": "entity",
+          "entityLabel": "then",
+          "entityDescription": " At that time."
+        },
+        {
+          "text": "translate",
+          "entityId": "wikt:en:translate#Verb:0",
+          "kind": "entity",
+          "entityLabel": "translate",
+          "entityDescription": "Senses relating to the change of information, etc., from one form to another.\n To change spoken words or written text (of a book, document, movie, etc.) from one language to another."
+        },
+        {
+          "text": "each",
+          "entityId": "wikt:en:each#Determiner:0",
+          "kind": "entity",
+          "entityLabel": "each",
+          "entityDescription": "All; every; qualifying a singular noun, indicating all examples of the thing so named seen as individual or separate items (compare every)."
+        },
+        {
+          "text": "sentence",
+          "entityId": "wikt:en:sentence#Noun:0",
+          "kind": "entity",
+          "entityLabel": "sentence",
+          "entityDescription": " The decision or judgement of a jury or court; a verdict. .mw-parser-output .defdate{font-size:smaller}"
+        },
+        {
+          "text": "through",
+          "entityId": "wikt:en:through#Preposition:0",
+          "kind": "entity",
+          "entityLabel": "through",
+          "entityDescription": "From one side or end of (something) to the other. \nSo as to enter (something), pass within or across, and then leave."
+        },
+        {
+          "text": "labels",
+          "entityId": "wikt:en:labels#Noun:0",
+          "kind": "entity",
+          "entityLabel": "labels",
+          "entityDescription": "plural of label"
+        },
+        {
+          "text": "and",
+          "entityId": "wikt:en:and#Symbol:0",
+          "kind": "entity",
+          "entityLabel": "and",
+          "entityDescription": " ISO 639-3 language code for Ansus."
+        },
+        {
+          "text": "transformation rules",
+          "entityId": "Q46841744",
+          "kind": "entity",
+          "entityLabel": "Transformation rules in concept learning",
+          "entityDescription": "scientific article published on September 1, 1978"
+        },
+        {
+          "text": "Unresolved parts",
+          "entityId": "wp:en:love_mocktail_3",
+          "kind": "entity",
+          "entityLabel": "Love Mocktail 3",
+          "entityDescription": "sparks an emotionally intense custody battle, pushing Adi to confront unresolved parts of his past while trying to keep the daughter he deeply loves. Legal"
+        },
+        {
+          "text": "remain variables",
+          "entityId": "wp:en:variable_(high-level_programming_language)",
+          "kind": "entity",
+          "entityLabel": "Variable (high-level programming language)",
+          "entityDescription": "the variable may thus change during the course of program execution. Variables in programming may not directly correspond to the concept of variables in"
+        },
+        {
+          "text": "with",
+          "entityId": "wikt:en:with#Preposition:0",
+          "kind": "entity",
+          "entityLabel": "with",
+          "entityDescription": "Against."
+        },
+        {
+          "text": "questions",
+          "entityId": "wikt:en:questions#Verb:2",
+          "kind": "entity",
+          "entityLabel": "questions",
+          "entityDescription": "third-person singular simple present indicative of question"
+        }
+      ]
+    },
+    {
+      "rank": 4,
+      "score": 514,
+      "phrases": [
+        {
+          "text": "Formalize source text",
+          "entityId": "wp:en:version_control",
+          "kind": "entity",
+          "entityLabel": "Version control",
+          "entityDescription": "tracking different versions in history of computer files – primarily source code text files, but generally any type of file. Version control is a component"
+        },
+        {
+          "text": "with",
+          "entityId": "wikt:en:with#Preposition:0",
+          "kind": "entity",
+          "entityLabel": "with",
+          "entityDescription": "Against."
+        },
+        {
+          "text": "then",
+          "entityId": "wikt:en:then#Adverb:0",
+          "kind": "entity",
+          "entityLabel": "then",
+          "entityDescription": " At that time."
+        },
+        {
+          "text": "translate",
+          "entityId": "wikt:en:translate#Verb:0",
+          "kind": "entity",
+          "entityLabel": "translate",
+          "entityDescription": "Senses relating to the change of information, etc., from one form to another.\n To change spoken words or written text (of a book, document, movie, etc.) from one language to another."
+        },
+        {
+          "text": "each",
+          "entityId": "wikt:en:each#Determiner:0",
+          "kind": "entity",
+          "entityLabel": "each",
+          "entityDescription": "All; every; qualifying a singular noun, indicating all examples of the thing so named seen as individual or separate items (compare every)."
+        },
+        {
+          "text": "sentence",
+          "entityId": "wikt:en:sentence#Noun:0",
+          "kind": "entity",
+          "entityLabel": "sentence",
+          "entityDescription": " The decision or judgement of a jury or court; a verdict. .mw-parser-output .defdate{font-size:smaller}"
+        },
+        {
+          "text": "through",
+          "entityId": "wikt:en:through#Preposition:0",
+          "kind": "entity",
+          "entityLabel": "through",
+          "entityDescription": "From one side or end of (something) to the other. \nSo as to enter (something), pass within or across, and then leave."
+        },
+        {
+          "text": "labels",
+          "entityId": "wikt:en:labels#Noun:0",
+          "kind": "entity",
+          "entityLabel": "labels",
+          "entityDescription": "plural of label"
+        },
+        {
+          "text": "and",
+          "entityId": "wikt:en:and#Symbol:0",
+          "kind": "entity",
+          "entityLabel": "and",
+          "entityDescription": " ISO 639-3 language code for Ansus."
+        },
+        {
+          "text": "transformation rules",
+          "entityId": "Q46841744",
+          "kind": "entity",
+          "entityLabel": "Transformation rules in concept learning",
+          "entityDescription": "scientific article published on September 1, 1978"
+        },
+        {
+          "text": "Unresolved parts",
+          "entityId": "wp:en:love_mocktail_3",
+          "kind": "entity",
+          "entityLabel": "Love Mocktail 3",
+          "entityDescription": "sparks an emotionally intense custody battle, pushing Adi to confront unresolved parts of his past while trying to keep the daughter he deeply loves. Legal"
+        },
+        {
+          "text": "remain variables",
+          "entityId": "wp:en:variable_(high-level_programming_language)",
+          "kind": "entity",
+          "entityLabel": "Variable (high-level programming language)",
+          "entityDescription": "the variable may thus change during the course of program execution. Variables in programming may not directly correspond to the concept of variables in"
+        },
+        {
+          "text": "with",
+          "entityId": "wikt:en:with#Preposition:1",
+          "kind": "entity",
+          "entityLabel": "with",
+          "entityDescription": "In the company of; alongside, close to; near to."
+        },
+        {
+          "text": "questions",
+          "entityId": "wikt:en:questions#Noun:0",
+          "kind": "entity",
+          "entityLabel": "questions",
+          "entityDescription": "plural of question"
+        }
+      ]
+    },
+    {
+      "rank": 5,
+      "score": 514,
+      "phrases": [
+        {
+          "text": "Formalize source text",
+          "entityId": "wp:en:version_control",
+          "kind": "entity",
+          "entityLabel": "Version control",
+          "entityDescription": "tracking different versions in history of computer files – primarily source code text files, but generally any type of file. Version control is a component"
+        },
+        {
+          "text": "with",
+          "entityId": "wikt:en:with#Preposition:0",
+          "kind": "entity",
+          "entityLabel": "with",
+          "entityDescription": "Against."
+        },
+        {
+          "text": "then",
+          "entityId": "wikt:en:then#Adverb:0",
+          "kind": "entity",
+          "entityLabel": "then",
+          "entityDescription": " At that time."
+        },
+        {
+          "text": "translate",
+          "entityId": "wikt:en:translate#Verb:0",
+          "kind": "entity",
+          "entityLabel": "translate",
+          "entityDescription": "Senses relating to the change of information, etc., from one form to another.\n To change spoken words or written text (of a book, document, movie, etc.) from one language to another."
+        },
+        {
+          "text": "each",
+          "entityId": "wikt:en:each#Determiner:0",
+          "kind": "entity",
+          "entityLabel": "each",
+          "entityDescription": "All; every; qualifying a singular noun, indicating all examples of the thing so named seen as individual or separate items (compare every)."
+        },
+        {
+          "text": "sentence",
+          "entityId": "wikt:en:sentence#Noun:0",
+          "kind": "entity",
+          "entityLabel": "sentence",
+          "entityDescription": " The decision or judgement of a jury or court; a verdict. .mw-parser-output .defdate{font-size:smaller}"
+        },
+        {
+          "text": "through",
+          "entityId": "wikt:en:through#Preposition:0",
+          "kind": "entity",
+          "entityLabel": "through",
+          "entityDescription": "From one side or end of (something) to the other. \nSo as to enter (something), pass within or across, and then leave."
+        },
+        {
+          "text": "labels",
+          "entityId": "wikt:en:labels#Noun:0",
+          "kind": "entity",
+          "entityLabel": "labels",
+          "entityDescription": "plural of label"
+        },
+        {
+          "text": "and",
+          "entityId": "wikt:en:and#Symbol:0",
+          "kind": "entity",
+          "entityLabel": "and",
+          "entityDescription": " ISO 639-3 language code for Ansus."
+        },
+        {
+          "text": "transformation rules",
+          "entityId": "Q46841744",
+          "kind": "entity",
+          "entityLabel": "Transformation rules in concept learning",
+          "entityDescription": "scientific article published on September 1, 1978"
+        },
+        {
+          "text": "Unresolved parts",
+          "entityId": "wp:en:love_mocktail_3",
+          "kind": "entity",
+          "entityLabel": "Love Mocktail 3",
+          "entityDescription": "sparks an emotionally intense custody battle, pushing Adi to confront unresolved parts of his past while trying to keep the daughter he deeply loves. Legal"
+        },
+        {
+          "text": "remain variables",
+          "entityId": "wp:en:variable_(high-level_programming_language)",
+          "kind": "entity",
+          "entityLabel": "Variable (high-level programming language)",
+          "entityDescription": "the variable may thus change during the course of program execution. Variables in programming may not directly correspond to the concept of variables in"
+        },
+        {
+          "text": "with",
+          "entityId": "wikt:en:with#Preposition:1",
+          "kind": "entity",
+          "entityLabel": "with",
+          "entityDescription": "In the company of; alongside, close to; near to."
+        },
+        {
+          "text": "questions",
+          "entityId": "wikt:en:questions#Noun:1",
+          "kind": "entity",
+          "entityLabel": "questions",
+          "entityDescription": "A game in which players must only say questions, and if they don't they lose."
+        }
+      ]
+    },
+    {
+      "rank": 6,
+      "score": 514,
+      "phrases": [
+        {
+          "text": "Formalize source text",
+          "entityId": "wp:en:version_control",
+          "kind": "entity",
+          "entityLabel": "Version control",
+          "entityDescription": "tracking different versions in history of computer files – primarily source code text files, but generally any type of file. Version control is a component"
+        },
+        {
+          "text": "with",
+          "entityId": "wikt:en:with#Preposition:0",
+          "kind": "entity",
+          "entityLabel": "with",
+          "entityDescription": "Against."
+        },
+        {
+          "text": "then",
+          "entityId": "wikt:en:then#Adverb:0",
+          "kind": "entity",
+          "entityLabel": "then",
+          "entityDescription": " At that time."
+        },
+        {
+          "text": "translate",
+          "entityId": "wikt:en:translate#Verb:0",
+          "kind": "entity",
+          "entityLabel": "translate",
+          "entityDescription": "Senses relating to the change of information, etc., from one form to another.\n To change spoken words or written text (of a book, document, movie, etc.) from one language to another."
+        },
+        {
+          "text": "each",
+          "entityId": "wikt:en:each#Determiner:0",
+          "kind": "entity",
+          "entityLabel": "each",
+          "entityDescription": "All; every; qualifying a singular noun, indicating all examples of the thing so named seen as individual or separate items (compare every)."
+        },
+        {
+          "text": "sentence",
+          "entityId": "wikt:en:sentence#Noun:0",
+          "kind": "entity",
+          "entityLabel": "sentence",
+          "entityDescription": " The decision or judgement of a jury or court; a verdict. .mw-parser-output .defdate{font-size:smaller}"
+        },
+        {
+          "text": "through",
+          "entityId": "wikt:en:through#Preposition:0",
+          "kind": "entity",
+          "entityLabel": "through",
+          "entityDescription": "From one side or end of (something) to the other. \nSo as to enter (something), pass within or across, and then leave."
+        },
+        {
+          "text": "labels",
+          "entityId": "wikt:en:labels#Noun:0",
+          "kind": "entity",
+          "entityLabel": "labels",
+          "entityDescription": "plural of label"
+        },
+        {
+          "text": "and",
+          "entityId": "wikt:en:and#Symbol:0",
+          "kind": "entity",
+          "entityLabel": "and",
+          "entityDescription": " ISO 639-3 language code for Ansus."
+        },
+        {
+          "text": "transformation rules",
+          "entityId": "Q46841744",
+          "kind": "entity",
+          "entityLabel": "Transformation rules in concept learning",
+          "entityDescription": "scientific article published on September 1, 1978"
+        },
+        {
+          "text": "Unresolved parts",
+          "entityId": "wp:en:love_mocktail_3",
+          "kind": "entity",
+          "entityLabel": "Love Mocktail 3",
+          "entityDescription": "sparks an emotionally intense custody battle, pushing Adi to confront unresolved parts of his past while trying to keep the daughter he deeply loves. Legal"
+        },
+        {
+          "text": "remain variables",
+          "entityId": "wp:en:variable_(high-level_programming_language)",
+          "kind": "entity",
+          "entityLabel": "Variable (high-level programming language)",
+          "entityDescription": "the variable may thus change during the course of program execution. Variables in programming may not directly correspond to the concept of variables in"
+        },
+        {
+          "text": "with",
+          "entityId": "wikt:en:with#Preposition:1",
+          "kind": "entity",
+          "entityLabel": "with",
+          "entityDescription": "In the company of; alongside, close to; near to."
+        },
+        {
+          "text": "questions",
+          "entityId": "wikt:en:questions#Verb:2",
+          "kind": "entity",
+          "entityLabel": "questions",
+          "entityDescription": "third-person singular simple present indicative of question"
+        }
+      ]
+    },
+    {
+      "rank": 7,
+      "score": 514,
+      "phrases": [
+        {
+          "text": "Formalize source text",
+          "entityId": "wp:en:version_control",
+          "kind": "entity",
+          "entityLabel": "Version control",
+          "entityDescription": "tracking different versions in history of computer files – primarily source code text files, but generally any type of file. Version control is a component"
+        },
+        {
+          "text": "with",
+          "entityId": "wikt:en:with#Preposition:0",
+          "kind": "entity",
+          "entityLabel": "with",
+          "entityDescription": "Against."
+        },
+        {
+          "text": "then",
+          "entityId": "wikt:en:then#Adverb:0",
+          "kind": "entity",
+          "entityLabel": "then",
+          "entityDescription": " At that time."
+        },
+        {
+          "text": "translate",
+          "entityId": "wikt:en:translate#Verb:0",
+          "kind": "entity",
+          "entityLabel": "translate",
+          "entityDescription": "Senses relating to the change of information, etc., from one form to another.\n To change spoken words or written text (of a book, document, movie, etc.) from one language to another."
+        },
+        {
+          "text": "each",
+          "entityId": "wikt:en:each#Determiner:0",
+          "kind": "entity",
+          "entityLabel": "each",
+          "entityDescription": "All; every; qualifying a singular noun, indicating all examples of the thing so named seen as individual or separate items (compare every)."
+        },
+        {
+          "text": "sentence",
+          "entityId": "wikt:en:sentence#Noun:0",
+          "kind": "entity",
+          "entityLabel": "sentence",
+          "entityDescription": " The decision or judgement of a jury or court; a verdict. .mw-parser-output .defdate{font-size:smaller}"
+        },
+        {
+          "text": "through",
+          "entityId": "wikt:en:through#Preposition:0",
+          "kind": "entity",
+          "entityLabel": "through",
+          "entityDescription": "From one side or end of (something) to the other. \nSo as to enter (something), pass within or across, and then leave."
+        },
+        {
+          "text": "labels",
+          "entityId": "wikt:en:labels#Noun:0",
+          "kind": "entity",
+          "entityLabel": "labels",
+          "entityDescription": "plural of label"
+        },
+        {
+          "text": "and",
+          "entityId": "wikt:en:and#Symbol:0",
+          "kind": "entity",
+          "entityLabel": "and",
+          "entityDescription": " ISO 639-3 language code for Ansus."
+        },
+        {
+          "text": "transformation rules",
+          "entityId": "Q46841744",
+          "kind": "entity",
+          "entityLabel": "Transformation rules in concept learning",
+          "entityDescription": "scientific article published on September 1, 1978"
+        },
+        {
+          "text": "Unresolved parts",
+          "entityId": "wp:en:love_mocktail_3",
+          "kind": "entity",
+          "entityLabel": "Love Mocktail 3",
+          "entityDescription": "sparks an emotionally intense custody battle, pushing Adi to confront unresolved parts of his past while trying to keep the daughter he deeply loves. Legal"
+        },
+        {
+          "text": "remain variables",
+          "entityId": "wp:en:variable_(high-level_programming_language)",
+          "kind": "entity",
+          "entityLabel": "Variable (high-level programming language)",
+          "entityDescription": "the variable may thus change during the course of program execution. Variables in programming may not directly correspond to the concept of variables in"
+        },
+        {
+          "text": "with",
+          "entityId": "wikt:en:with#Preposition:2",
+          "kind": "entity",
+          "entityLabel": "with",
+          "entityDescription": "In addition to; as an accessory to."
+        },
+        {
+          "text": "questions",
+          "entityId": "wikt:en:questions#Noun:0",
+          "kind": "entity",
+          "entityLabel": "questions",
+          "entityDescription": "plural of question"
+        }
+      ]
+    },
+    {
+      "rank": 8,
+      "score": 514,
+      "phrases": [
+        {
+          "text": "Formalize source text",
+          "entityId": "wp:en:version_control",
+          "kind": "entity",
+          "entityLabel": "Version control",
+          "entityDescription": "tracking different versions in history of computer files – primarily source code text files, but generally any type of file. Version control is a component"
+        },
+        {
+          "text": "with",
+          "entityId": "wikt:en:with#Preposition:0",
+          "kind": "entity",
+          "entityLabel": "with",
+          "entityDescription": "Against."
+        },
+        {
+          "text": "then",
+          "entityId": "wikt:en:then#Adverb:0",
+          "kind": "entity",
+          "entityLabel": "then",
+          "entityDescription": " At that time."
+        },
+        {
+          "text": "translate",
+          "entityId": "wikt:en:translate#Verb:0",
+          "kind": "entity",
+          "entityLabel": "translate",
+          "entityDescription": "Senses relating to the change of information, etc., from one form to another.\n To change spoken words or written text (of a book, document, movie, etc.) from one language to another."
+        },
+        {
+          "text": "each",
+          "entityId": "wikt:en:each#Determiner:0",
+          "kind": "entity",
+          "entityLabel": "each",
+          "entityDescription": "All; every; qualifying a singular noun, indicating all examples of the thing so named seen as individual or separate items (compare every)."
+        },
+        {
+          "text": "sentence",
+          "entityId": "wikt:en:sentence#Noun:0",
+          "kind": "entity",
+          "entityLabel": "sentence",
+          "entityDescription": " The decision or judgement of a jury or court; a verdict. .mw-parser-output .defdate{font-size:smaller}"
+        },
+        {
+          "text": "through",
+          "entityId": "wikt:en:through#Preposition:0",
+          "kind": "entity",
+          "entityLabel": "through",
+          "entityDescription": "From one side or end of (something) to the other. \nSo as to enter (something), pass within or across, and then leave."
+        },
+        {
+          "text": "labels",
+          "entityId": "wikt:en:labels#Noun:0",
+          "kind": "entity",
+          "entityLabel": "labels",
+          "entityDescription": "plural of label"
+        },
+        {
+          "text": "and",
+          "entityId": "wikt:en:and#Symbol:0",
+          "kind": "entity",
+          "entityLabel": "and",
+          "entityDescription": " ISO 639-3 language code for Ansus."
+        },
+        {
+          "text": "transformation rules",
+          "entityId": "Q46841744",
+          "kind": "entity",
+          "entityLabel": "Transformation rules in concept learning",
+          "entityDescription": "scientific article published on September 1, 1978"
+        },
+        {
+          "text": "Unresolved parts",
+          "entityId": "wp:en:love_mocktail_3",
+          "kind": "entity",
+          "entityLabel": "Love Mocktail 3",
+          "entityDescription": "sparks an emotionally intense custody battle, pushing Adi to confront unresolved parts of his past while trying to keep the daughter he deeply loves. Legal"
+        },
+        {
+          "text": "remain variables",
+          "entityId": "wp:en:variable_(high-level_programming_language)",
+          "kind": "entity",
+          "entityLabel": "Variable (high-level programming language)",
+          "entityDescription": "the variable may thus change during the course of program execution. Variables in programming may not directly correspond to the concept of variables in"
+        },
+        {
+          "text": "with",
+          "entityId": "wikt:en:with#Preposition:2",
+          "kind": "entity",
+          "entityLabel": "with",
+          "entityDescription": "In addition to; as an accessory to."
+        },
+        {
+          "text": "questions",
+          "entityId": "wikt:en:questions#Noun:1",
+          "kind": "entity",
+          "entityLabel": "questions",
+          "entityDescription": "A game in which players must only say questions, and if they don't they lose."
+        }
+      ]
+    },
+    {
+      "rank": 9,
+      "score": 514,
+      "phrases": [
+        {
+          "text": "Formalize source text",
+          "entityId": "wp:en:version_control",
+          "kind": "entity",
+          "entityLabel": "Version control",
+          "entityDescription": "tracking different versions in history of computer files – primarily source code text files, but generally any type of file. Version control is a component"
+        },
+        {
+          "text": "with",
+          "entityId": "wikt:en:with#Preposition:0",
+          "kind": "entity",
+          "entityLabel": "with",
+          "entityDescription": "Against."
+        },
+        {
+          "text": "then",
+          "entityId": "wikt:en:then#Adverb:0",
+          "kind": "entity",
+          "entityLabel": "then",
+          "entityDescription": " At that time."
+        },
+        {
+          "text": "translate",
+          "entityId": "wikt:en:translate#Verb:0",
+          "kind": "entity",
+          "entityLabel": "translate",
+          "entityDescription": "Senses relating to the change of information, etc., from one form to another.\n To change spoken words or written text (of a book, document, movie, etc.) from one language to another."
+        },
+        {
+          "text": "each",
+          "entityId": "wikt:en:each#Determiner:0",
+          "kind": "entity",
+          "entityLabel": "each",
+          "entityDescription": "All; every; qualifying a singular noun, indicating all examples of the thing so named seen as individual or separate items (compare every)."
+        },
+        {
+          "text": "sentence",
+          "entityId": "wikt:en:sentence#Noun:0",
+          "kind": "entity",
+          "entityLabel": "sentence",
+          "entityDescription": " The decision or judgement of a jury or court; a verdict. .mw-parser-output .defdate{font-size:smaller}"
+        },
+        {
+          "text": "through",
+          "entityId": "wikt:en:through#Preposition:0",
+          "kind": "entity",
+          "entityLabel": "through",
+          "entityDescription": "From one side or end of (something) to the other. \nSo as to enter (something), pass within or across, and then leave."
+        },
+        {
+          "text": "labels",
+          "entityId": "wikt:en:labels#Noun:0",
+          "kind": "entity",
+          "entityLabel": "labels",
+          "entityDescription": "plural of label"
+        },
+        {
+          "text": "and",
+          "entityId": "wikt:en:and#Symbol:0",
+          "kind": "entity",
+          "entityLabel": "and",
+          "entityDescription": " ISO 639-3 language code for Ansus."
+        },
+        {
+          "text": "transformation rules",
+          "entityId": "Q46841744",
+          "kind": "entity",
+          "entityLabel": "Transformation rules in concept learning",
+          "entityDescription": "scientific article published on September 1, 1978"
+        },
+        {
+          "text": "Unresolved parts",
+          "entityId": "wp:en:love_mocktail_3",
+          "kind": "entity",
+          "entityLabel": "Love Mocktail 3",
+          "entityDescription": "sparks an emotionally intense custody battle, pushing Adi to confront unresolved parts of his past while trying to keep the daughter he deeply loves. Legal"
+        },
+        {
+          "text": "remain variables",
+          "entityId": "wp:en:variable_(high-level_programming_language)",
+          "kind": "entity",
+          "entityLabel": "Variable (high-level programming language)",
+          "entityDescription": "the variable may thus change during the course of program execution. Variables in programming may not directly correspond to the concept of variables in"
+        },
+        {
+          "text": "with",
+          "entityId": "wikt:en:with#Preposition:2",
+          "kind": "entity",
+          "entityLabel": "with",
+          "entityDescription": "In addition to; as an accessory to."
+        },
+        {
+          "text": "questions",
+          "entityId": "wikt:en:questions#Verb:2",
+          "kind": "entity",
+          "entityLabel": "questions",
+          "entityDescription": "third-person singular simple present indicative of question"
+        }
+      ]
+    },
+    {
+      "rank": 10,
+      "score": 514,
+      "phrases": [
+        {
+          "text": "Formalize source text",
+          "entityId": "wp:en:version_control",
+          "kind": "entity",
+          "entityLabel": "Version control",
+          "entityDescription": "tracking different versions in history of computer files – primarily source code text files, but generally any type of file. Version control is a component"
+        },
+        {
+          "text": "with",
+          "entityId": "wikt:en:with#Preposition:0",
+          "kind": "entity",
+          "entityLabel": "with",
+          "entityDescription": "Against."
+        },
+        {
+          "text": "then",
+          "entityId": "wikt:en:then#Adverb:0",
+          "kind": "entity",
+          "entityLabel": "then",
+          "entityDescription": " At that time."
+        },
+        {
+          "text": "translate",
+          "entityId": "wikt:en:translate#Verb:0",
+          "kind": "entity",
+          "entityLabel": "translate",
+          "entityDescription": "Senses relating to the change of information, etc., from one form to another.\n To change spoken words or written text (of a book, document, movie, etc.) from one language to another."
+        },
+        {
+          "text": "each",
+          "entityId": "wikt:en:each#Determiner:0",
+          "kind": "entity",
+          "entityLabel": "each",
+          "entityDescription": "All; every; qualifying a singular noun, indicating all examples of the thing so named seen as individual or separate items (compare every)."
+        },
+        {
+          "text": "sentence",
+          "entityId": "wikt:en:sentence#Noun:0",
+          "kind": "entity",
+          "entityLabel": "sentence",
+          "entityDescription": " The decision or judgement of a jury or court; a verdict. .mw-parser-output .defdate{font-size:smaller}"
+        },
+        {
+          "text": "through",
+          "entityId": "wikt:en:through#Preposition:0",
+          "kind": "entity",
+          "entityLabel": "through",
+          "entityDescription": "From one side or end of (something) to the other. \nSo as to enter (something), pass within or across, and then leave."
+        },
+        {
+          "text": "labels",
+          "entityId": "wikt:en:labels#Noun:0",
+          "kind": "entity",
+          "entityLabel": "labels",
+          "entityDescription": "plural of label"
+        },
+        {
+          "text": "and",
+          "entityId": "wikt:en:and#Symbol:0",
+          "kind": "entity",
+          "entityLabel": "and",
+          "entityDescription": " ISO 639-3 language code for Ansus."
+        },
+        {
+          "text": "transformation rules",
+          "entityId": "Q46841744",
+          "kind": "entity",
+          "entityLabel": "Transformation rules in concept learning",
+          "entityDescription": "scientific article published on September 1, 1978"
+        },
+        {
+          "text": "Unresolved parts",
+          "entityId": "wp:en:love_mocktail_3",
+          "kind": "entity",
+          "entityLabel": "Love Mocktail 3",
+          "entityDescription": "sparks an emotionally intense custody battle, pushing Adi to confront unresolved parts of his past while trying to keep the daughter he deeply loves. Legal"
+        },
+        {
+          "text": "remain variables",
+          "entityId": "wp:en:joint_probability_distribution",
+          "kind": "entity",
+          "entityLabel": "Joint probability distribution",
+          "entityDescription": "function (in the case of continuous variables) or joint probability mass function (in the case of discrete variables). These in turn can be used to find"
+        },
+        {
+          "text": "with",
+          "entityId": "wikt:en:with#Preposition:0",
+          "kind": "entity",
+          "entityLabel": "with",
+          "entityDescription": "Against."
+        },
+        {
+          "text": "questions",
+          "entityId": "wikt:en:questions#Noun:0",
+          "kind": "entity",
+          "entityLabel": "questions",
+          "entityDescription": "plural of question"
+        }
+      ]
+    }
+  ],
+  "markdown": "[Formalize source text](https://en.wikipedia.org/wiki/Version_control \"wp:en:version_control\") [with](https://en.wiktionary.org/wiki/with \"wikt:en:with#Preposition:0\") Wikidata, [then](https://en.wiktionary.org/wiki/then \"wikt:en:then#Adverb:0\") [translate](https://en.wiktionary.org/wiki/translate \"wikt:en:translate#Verb:0\") [each](https://en.wiktionary.org/wiki/each \"wikt:en:each#Determiner:0\") [sentence](https://en.wiktionary.org/wiki/sentence \"wikt:en:sentence#Noun:0\") [through](https://en.wiktionary.org/wiki/through \"wikt:en:through#Preposition:0\") [labels](https://en.wiktionary.org/wiki/labels \"wikt:en:labels#Noun:0\") [and](https://en.wiktionary.org/wiki/and \"wikt:en:and#Symbol:0\") [transformation rules](https://www.wikidata.org/wiki/Q46841744 \"Q46841744\"). [Unresolved parts](https://en.wikipedia.org/wiki/Love_Mocktail_3 \"wp:en:love_mocktail_3\") [remain variables](https://en.wikipedia.org/wiki/Variable_(high-level_programming_language) \"wp:en:variable_(high-level_programming_language)\") [with](https://en.wiktionary.org/wiki/with \"wikt:en:with#Preposition:0\") [questions](https://en.wiktionary.org/wiki/questions \"wikt:en:questions#Noun:0\").",
+  "html": "<a href=\"https://en.wikipedia.org/wiki/Version_control\" title=\"wp:en:version_control\">Formalize source text</a> <a href=\"https://en.wiktionary.org/wiki/with\" title=\"wikt:en:with#Preposition:0\">with</a> Wikidata, <a href=\"https://en.wiktionary.org/wiki/then\" title=\"wikt:en:then#Adverb:0\">then</a> <a href=\"https://en.wiktionary.org/wiki/translate\" title=\"wikt:en:translate#Verb:0\">translate</a> <a href=\"https://en.wiktionary.org/wiki/each\" title=\"wikt:en:each#Determiner:0\">each</a> <a href=\"https://en.wiktionary.org/wiki/sentence\" title=\"wikt:en:sentence#Noun:0\">sentence</a> <a href=\"https://en.wiktionary.org/wiki/through\" title=\"wikt:en:through#Preposition:0\">through</a> <a href=\"https://en.wiktionary.org/wiki/labels\" title=\"wikt:en:labels#Noun:0\">labels</a> <a href=\"https://en.wiktionary.org/wiki/and\" title=\"wikt:en:and#Symbol:0\">and</a> <a href=\"https://www.wikidata.org/wiki/Q46841744\" title=\"Q46841744\">transformation rules</a>. <a href=\"https://en.wikipedia.org/wiki/Love_Mocktail_3\" title=\"wp:en:love_mocktail_3\">Unresolved parts</a> <a href=\"https://en.wikipedia.org/wiki/Variable_(high-level_programming_language)\" title=\"wp:en:variable_(high-level_programming_language)\">remain variables</a> <a href=\"https://en.wiktionary.org/wiki/with\" title=\"wikt:en:with#Preposition:0\">with</a> <a href=\"https://en.wiktionary.org/wiki/questions\" title=\"wikt:en:questions#Noun:0\">questions</a>.",
+  "linksNotation": "(formalization: (Formalize source text with Wikidata, then translate each sentence through labels and transformation rules. Unresolved parts remain variables with questions.))\n(phrase-1: source (Formalize source text) start 0 end 2 id wp:en:version_control label (Version control) kind entity markdownUrl (https://en.wikipedia.org/wiki/Version_control))\n(phrase-2: source (with) start 3 end 3 id wikt:en:with#Preposition:0 label (with) kind entity markdownUrl (https://en.wiktionary.org/wiki/with))\n(phrase-3: source (Wikidata) start 4 end 4 unresolved)\n(phrase-4: source (then) start 5 end 5 id wikt:en:then#Adverb:0 label (then) kind entity markdownUrl (https://en.wiktionary.org/wiki/then))\n(phrase-5: source (translate) start 6 end 6 id wikt:en:translate#Verb:0 label (translate) kind entity markdownUrl (https://en.wiktionary.org/wiki/translate))\n(phrase-6: source (each) start 7 end 7 id wikt:en:each#Determiner:0 label (each) kind entity markdownUrl (https://en.wiktionary.org/wiki/each))\n(phrase-7: source (sentence) start 8 end 8 id wikt:en:sentence#Noun:0 label (sentence) kind entity markdownUrl (https://en.wiktionary.org/wiki/sentence))\n(phrase-8: source (through) start 9 end 9 id wikt:en:through#Preposition:0 label (through) kind entity markdownUrl (https://en.wiktionary.org/wiki/through))\n(phrase-9: source (labels) start 10 end 10 id wikt:en:labels#Noun:0 label (labels) kind entity markdownUrl (https://en.wiktionary.org/wiki/labels))\n(phrase-10: source (and) start 11 end 11 id wikt:en:and#Symbol:0 label (and) kind entity markdownUrl (https://en.wiktionary.org/wiki/and))\n(phrase-11: source (transformation rules) start 12 end 13 id Q46841744 label (Transformation rules in concept learning) kind entity markdownUrl (https://www.wikidata.org/wiki/Q46841744))\n(phrase-12: source (Unresolved parts) start 14 end 15 id wp:en:love_mocktail_3 label (Love Mocktail 3) kind entity markdownUrl (https://en.wikipedia.org/wiki/Love_Mocktail_3))\n(phrase-13: source (remain variables) start 16 end 17 id wp:en:variable_(high-level_programming_language) label (Variable high-level programming language) kind entity markdownUrl (https://en.wikipedia.org/wiki/Variable_ high-level_programming_language))\n(phrase-14: source (with) start 18 end 18 id wikt:en:with#Preposition:0 label (with) kind entity markdownUrl (https://en.wiktionary.org/wiki/with))\n(phrase-15: source (questions) start 19 end 19 id wikt:en:questions#Noun:0 label (questions) kind entity markdownUrl (https://en.wiktionary.org/wiki/questions))",
+  "linksNetwork": {
+    "id": "formalize-links-network",
+    "kind": "links-network",
+    "version": 1,
+    "beliefSystem": {
+      "id": "formalize-default",
+      "name": "Formalize prototype",
+      "probabilityStrategy": "frequency-weighted-context",
+      "sourceWeights": {
+        "wikidata": 1,
+        "wordnet": 0.7,
+        "fandom": 0.6,
+        "algorithm": 0.5
+      }
+    },
+    "links": [
+      {
+        "id": "formalize-input-1",
+        "role": "input",
+        "references": [],
+        "value": {
+          "text": "Formalize source text with Wikidata, then translate each sentence through labels and transformation rules. Unresolved parts remain variables with questions."
+        },
+        "provenance": {
+          "sourceType": "algorithm",
+          "method": "formalize"
+        }
+      },
+      {
+        "id": "formalize-phrase-1",
+        "role": "phrase",
+        "references": [
+          "formalize-input-1"
+        ],
+        "value": {
+          "text": "Formalize source text",
+          "position": 0,
+          "size": 3,
+          "wikidataId": "wp:en:version_control",
+          "wikidataLabel": "Version control",
+          "wikidataKind": "entity",
+          "wikipediaUrl": "https://en.wikipedia.org/wiki/Version_control",
+          "source": "wikipedia"
+        },
+        "provenance": {
+          "sourceType": "wikipedia",
+          "sourceUrl": "https://en.wikipedia.org/wiki/Version_control"
+        }
+      },
+      {
+        "id": "formalize-phrase-2",
+        "role": "phrase",
+        "references": [
+          "formalize-input-1"
+        ],
+        "value": {
+          "text": "with",
+          "position": 3,
+          "size": 1,
+          "wikidataId": "wikt:en:with#Preposition:0",
+          "wikidataLabel": "with",
+          "wikidataKind": "entity",
+          "wikipediaUrl": null,
+          "source": "wiktionary"
+        },
+        "provenance": {
+          "sourceType": "wiktionary",
+          "sourceUrl": "https://en.wiktionary.org/wiki/with"
+        }
+      },
+      {
+        "id": "formalize-phrase-3",
+        "role": "phrase",
+        "references": [
+          "formalize-input-1"
+        ],
+        "value": {
+          "text": "Wikidata",
+          "position": 4,
+          "size": 1,
+          "wikidataId": null,
+          "wikidataLabel": null,
+          "wikidataKind": null,
+          "wikipediaUrl": null,
+          "source": null
+        },
+        "provenance": {
+          "sourceType": "algorithm",
+          "sourceUrl": null
+        }
+      },
+      {
+        "id": "formalize-phrase-4",
+        "role": "phrase",
+        "references": [
+          "formalize-input-1"
+        ],
+        "value": {
+          "text": "then",
+          "position": 5,
+          "size": 1,
+          "wikidataId": "wikt:en:then#Adverb:0",
+          "wikidataLabel": "then",
+          "wikidataKind": "entity",
+          "wikipediaUrl": null,
+          "source": "wiktionary"
+        },
+        "provenance": {
+          "sourceType": "wiktionary",
+          "sourceUrl": "https://en.wiktionary.org/wiki/then"
+        }
+      },
+      {
+        "id": "formalize-phrase-5",
+        "role": "phrase",
+        "references": [
+          "formalize-input-1"
+        ],
+        "value": {
+          "text": "translate",
+          "position": 6,
+          "size": 1,
+          "wikidataId": "wikt:en:translate#Verb:0",
+          "wikidataLabel": "translate",
+          "wikidataKind": "entity",
+          "wikipediaUrl": null,
+          "source": "wiktionary"
+        },
+        "provenance": {
+          "sourceType": "wiktionary",
+          "sourceUrl": "https://en.wiktionary.org/wiki/translate"
+        }
+      },
+      {
+        "id": "formalize-phrase-6",
+        "role": "phrase",
+        "references": [
+          "formalize-input-1"
+        ],
+        "value": {
+          "text": "each",
+          "position": 7,
+          "size": 1,
+          "wikidataId": "wikt:en:each#Determiner:0",
+          "wikidataLabel": "each",
+          "wikidataKind": "entity",
+          "wikipediaUrl": null,
+          "source": "wiktionary"
+        },
+        "provenance": {
+          "sourceType": "wiktionary",
+          "sourceUrl": "https://en.wiktionary.org/wiki/each"
+        }
+      },
+      {
+        "id": "formalize-phrase-7",
+        "role": "phrase",
+        "references": [
+          "formalize-input-1"
+        ],
+        "value": {
+          "text": "sentence",
+          "position": 8,
+          "size": 1,
+          "wikidataId": "wikt:en:sentence#Noun:0",
+          "wikidataLabel": "sentence",
+          "wikidataKind": "entity",
+          "wikipediaUrl": null,
+          "source": "wiktionary"
+        },
+        "provenance": {
+          "sourceType": "wiktionary",
+          "sourceUrl": "https://en.wiktionary.org/wiki/sentence"
+        }
+      },
+      {
+        "id": "formalize-phrase-8",
+        "role": "phrase",
+        "references": [
+          "formalize-input-1"
+        ],
+        "value": {
+          "text": "through",
+          "position": 9,
+          "size": 1,
+          "wikidataId": "wikt:en:through#Preposition:0",
+          "wikidataLabel": "through",
+          "wikidataKind": "entity",
+          "wikipediaUrl": null,
+          "source": "wiktionary"
+        },
+        "provenance": {
+          "sourceType": "wiktionary",
+          "sourceUrl": "https://en.wiktionary.org/wiki/through"
+        }
+      },
+      {
+        "id": "formalize-phrase-9",
+        "role": "phrase",
+        "references": [
+          "formalize-input-1"
+        ],
+        "value": {
+          "text": "labels",
+          "position": 10,
+          "size": 1,
+          "wikidataId": "wikt:en:labels#Noun:0",
+          "wikidataLabel": "labels",
+          "wikidataKind": "entity",
+          "wikipediaUrl": null,
+          "source": "wiktionary"
+        },
+        "provenance": {
+          "sourceType": "wiktionary",
+          "sourceUrl": "https://en.wiktionary.org/wiki/labels"
+        }
+      },
+      {
+        "id": "formalize-phrase-10",
+        "role": "phrase",
+        "references": [
+          "formalize-input-1"
+        ],
+        "value": {
+          "text": "and",
+          "position": 11,
+          "size": 1,
+          "wikidataId": "wikt:en:and#Symbol:0",
+          "wikidataLabel": "and",
+          "wikidataKind": "entity",
+          "wikipediaUrl": null,
+          "source": "wiktionary"
+        },
+        "provenance": {
+          "sourceType": "wiktionary",
+          "sourceUrl": "https://en.wiktionary.org/wiki/and"
+        }
+      },
+      {
+        "id": "formalize-phrase-11",
+        "role": "phrase",
+        "references": [
+          "formalize-input-1"
+        ],
+        "value": {
+          "text": "transformation rules",
+          "position": 12,
+          "size": 2,
+          "wikidataId": "Q46841744",
+          "wikidataLabel": "Transformation rules in concept learning",
+          "wikidataKind": "entity",
+          "wikipediaUrl": null,
+          "source": "wikidata"
+        },
+        "provenance": {
+          "sourceType": "wikidata",
+          "sourceUrl": "https://www.wikidata.org/wiki/Q46841744"
+        }
+      },
+      {
+        "id": "formalize-phrase-12",
+        "role": "phrase",
+        "references": [
+          "formalize-input-1"
+        ],
+        "value": {
+          "text": "Unresolved parts",
+          "position": 14,
+          "size": 2,
+          "wikidataId": "wp:en:love_mocktail_3",
+          "wikidataLabel": "Love Mocktail 3",
+          "wikidataKind": "entity",
+          "wikipediaUrl": "https://en.wikipedia.org/wiki/Love_Mocktail_3",
+          "source": "wikipedia"
+        },
+        "provenance": {
+          "sourceType": "wikipedia",
+          "sourceUrl": "https://en.wikipedia.org/wiki/Love_Mocktail_3"
+        }
+      },
+      {
+        "id": "formalize-phrase-13",
+        "role": "phrase",
+        "references": [
+          "formalize-input-1"
+        ],
+        "value": {
+          "text": "remain variables",
+          "position": 16,
+          "size": 2,
+          "wikidataId": "wp:en:variable_(high-level_programming_language)",
+          "wikidataLabel": "Variable (high-level programming language)",
+          "wikidataKind": "entity",
+          "wikipediaUrl": "https://en.wikipedia.org/wiki/Variable_(high-level_programming_language)",
+          "source": "wikipedia"
+        },
+        "provenance": {
+          "sourceType": "wikipedia",
+          "sourceUrl": "https://en.wikipedia.org/wiki/Variable_(high-level_programming_language)"
+        }
+      },
+      {
+        "id": "formalize-phrase-14",
+        "role": "phrase",
+        "references": [
+          "formalize-input-1"
+        ],
+        "value": {
+          "text": "with",
+          "position": 18,
+          "size": 1,
+          "wikidataId": "wikt:en:with#Preposition:0",
+          "wikidataLabel": "with",
+          "wikidataKind": "entity",
+          "wikipediaUrl": null,
+          "source": "wiktionary"
+        },
+        "provenance": {
+          "sourceType": "wiktionary",
+          "sourceUrl": "https://en.wiktionary.org/wiki/with"
+        }
+      },
+      {
+        "id": "formalize-phrase-15",
+        "role": "phrase",
+        "references": [
+          "formalize-input-1"
+        ],
+        "value": {
+          "text": "questions",
+          "position": 19,
+          "size": 1,
+          "wikidataId": "wikt:en:questions#Noun:0",
+          "wikidataLabel": "questions",
+          "wikidataKind": "entity",
+          "wikipediaUrl": null,
+          "source": "wiktionary"
+        },
+        "provenance": {
+          "sourceType": "wiktionary",
+          "sourceUrl": "https://en.wiktionary.org/wiki/questions"
+        }
+      }
+    ]
+  },
+  "cst": {
+    "type": "formalization",
+    "version": 1,
+    "text": "Formalize source text with Wikidata, then translate each sentence through labels and transformation rules. Unresolved parts remain variables with questions.",
+    "tokens": [
+      "Formalize",
+      "source",
+      "text",
+      "with",
+      "Wikidata",
+      "then",
+      "translate",
+      "each",
+      "sentence",
+      "through",
+      "labels",
+      "and",
+      "transformation",
+      "rules",
+      "Unresolved",
+      "parts",
+      "remain",
+      "variables",
+      "with",
+      "questions"
+    ],
+    "linkTargetMode": "wikipedia",
+    "phrases": [
+      {
+        "type": "phrase",
+        "id": "phrase-1",
+        "text": "Formalize source text",
+        "tokens": [
+          "Formalize",
+          "source",
+          "text"
+        ],
+        "start": 0,
+        "end": 2,
+        "sourceStart": 0,
+        "sourceEnd": 21,
+        "size": 3,
+        "entity": {
+          "id": "wp:en:version_control",
+          "label": "Version control",
+          "description": "tracking different versions in history of computer files – primarily source code text files, but generally any type of file. Version control is a component",
+          "kind": "entity",
+          "source": "wikipedia",
+          "sourceUrl": "https://en.wikipedia.org/wiki/Version_control",
+          "wikipediaUrl": "https://en.wikipedia.org/wiki/Version_control",
+          "wikipediaTitle": "Version control",
+          "score": 23,
+          "url": "https://en.wikipedia.org/wiki/Version_control"
+        },
+        "candidates": [
+          {
+            "id": "wp:en:version_control",
+            "label": "Version control",
+            "description": "tracking different versions in history of computer files – primarily source code text files, but generally any type of file. Version control is a component",
+            "kind": "entity",
+            "source": "wikipedia",
+            "sourceUrl": "https://en.wikipedia.org/wiki/Version_control",
+            "wikipediaUrl": "https://en.wikipedia.org/wiki/Version_control",
+            "wikipediaTitle": "Version control",
+            "score": 23,
+            "url": "https://en.wikipedia.org/wiki/Version_control"
+          },
+          {
+            "id": "wp:en:nile",
+            "label": "Nile",
+            "description": "powers divided up Africa during a process called the Scramble for Africa, formalized in the Berlin Conference of 1885. Under that agreement, Britain received",
+            "kind": "entity",
+            "source": "wikipedia",
+            "sourceUrl": "https://en.wikipedia.org/wiki/Nile",
+            "wikipediaUrl": "https://en.wikipedia.org/wiki/Nile",
+            "wikipediaTitle": "Nile",
+            "score": 23,
+            "url": "https://en.wikipedia.org/wiki/Nile"
+          },
+          {
+            "id": "wp:en:hebrew_bible",
+            "label": "Hebrew Bible",
+            "description": "Masoretic Text. In addition to the Masoretic Text, modern biblical scholars seeking to understand the history of the Hebrew Bible use a range of sources. These",
+            "kind": "entity",
+            "source": "wikipedia",
+            "sourceUrl": "https://en.wikipedia.org/wiki/Hebrew_Bible",
+            "wikipediaUrl": "https://en.wikipedia.org/wiki/Hebrew_Bible",
+            "wikipediaTitle": "Hebrew Bible",
+            "score": 23,
+            "url": "https://en.wikipedia.org/wiki/Hebrew_Bible"
+          }
+        ]
+      },
+      {
+        "type": "phrase",
+        "id": "phrase-2",
+        "text": "with",
+        "tokens": [
+          "with"
+        ],
+        "start": 3,
+        "end": 3,
+        "sourceStart": 22,
+        "sourceEnd": 26,
+        "size": 1,
+        "entity": {
+          "id": "wikt:en:with#Preposition:0",
+          "label": "with",
+          "description": "Against.",
+          "kind": "entity",
+          "source": "wiktionary",
+          "sourceUrl": "https://en.wiktionary.org/wiki/with",
+          "wikipediaUrl": null,
+          "wikipediaTitle": null,
+          "score": 43,
+          "url": "https://en.wiktionary.org/wiki/with"
+        },
+        "candidates": [
+          {
+            "id": "wikt:en:with#Preposition:0",
+            "label": "with",
+            "description": "Against.",
+            "kind": "entity",
+            "source": "wiktionary",
+            "sourceUrl": "https://en.wiktionary.org/wiki/with",
+            "wikipediaUrl": null,
+            "wikipediaTitle": null,
+            "score": 43,
+            "url": "https://en.wiktionary.org/wiki/with"
+          },
+          {
+            "id": "wikt:en:with#Preposition:1",
+            "label": "with",
+            "description": "In the company of; alongside, close to; near to.",
+            "kind": "entity",
+            "source": "wiktionary",
+            "sourceUrl": "https://en.wiktionary.org/wiki/with",
+            "wikipediaUrl": null,
+            "wikipediaTitle": null,
+            "score": 43,
+            "url": "https://en.wiktionary.org/wiki/with"
+          },
+          {
+            "id": "wikt:en:with#Preposition:2",
+            "label": "with",
+            "description": "In addition to; as an accessory to.",
+            "kind": "entity",
+            "source": "wiktionary",
+            "sourceUrl": "https://en.wiktionary.org/wiki/with",
+            "wikipediaUrl": null,
+            "wikipediaTitle": null,
+            "score": 43,
+            "url": "https://en.wiktionary.org/wiki/with"
+          }
+        ]
+      },
+      {
+        "type": "phrase",
+        "id": "phrase-3",
+        "text": "Wikidata",
+        "tokens": [
+          "Wikidata"
+        ],
+        "start": 4,
+        "end": 4,
+        "sourceStart": 27,
+        "sourceEnd": 35,
+        "size": 1,
+        "entity": null,
+        "candidates": []
+      },
+      {
+        "type": "phrase",
+        "id": "phrase-4",
+        "text": "then",
+        "tokens": [
+          "then"
+        ],
+        "start": 5,
+        "end": 5,
+        "sourceStart": 37,
+        "sourceEnd": 41,
+        "size": 1,
+        "entity": {
+          "id": "wikt:en:then#Adverb:0",
+          "label": "then",
+          "description": " At that time.",
+          "kind": "entity",
+          "source": "wiktionary",
+          "sourceUrl": "https://en.wiktionary.org/wiki/then",
+          "wikipediaUrl": null,
+          "wikipediaTitle": null,
+          "score": 43,
+          "url": "https://en.wiktionary.org/wiki/then"
+        },
+        "candidates": [
+          {
+            "id": "wikt:en:then#Adverb:0",
+            "label": "then",
+            "description": " At that time.",
+            "kind": "entity",
+            "source": "wiktionary",
+            "sourceUrl": "https://en.wiktionary.org/wiki/then",
+            "wikipediaUrl": null,
+            "wikipediaTitle": null,
+            "score": 43,
+            "url": "https://en.wiktionary.org/wiki/then"
+          },
+          {
+            "id": "wikt:en:then#Adverb:1",
+            "label": "then",
+            "description": " Soon afterward.",
+            "kind": "entity",
+            "source": "wiktionary",
+            "sourceUrl": "https://en.wiktionary.org/wiki/then",
+            "wikipediaUrl": null,
+            "wikipediaTitle": null,
+            "score": 43,
+            "url": "https://en.wiktionary.org/wiki/then"
+          },
+          {
+            "id": "wikt:en:then#Adverb:2",
+            "label": "then",
+            "description": " Next in order of place.",
+            "kind": "entity",
+            "source": "wiktionary",
+            "sourceUrl": "https://en.wiktionary.org/wiki/then",
+            "wikipediaUrl": null,
+            "wikipediaTitle": null,
+            "score": 43,
+            "url": "https://en.wiktionary.org/wiki/then"
+          }
+        ]
+      },
+      {
+        "type": "phrase",
+        "id": "phrase-5",
+        "text": "translate",
+        "tokens": [
+          "translate"
+        ],
+        "start": 6,
+        "end": 6,
+        "sourceStart": 42,
+        "sourceEnd": 51,
+        "size": 1,
+        "entity": {
+          "id": "wikt:en:translate#Verb:0",
+          "label": "translate",
+          "description": "Senses relating to the change of information, etc., from one form to another.\n To change spoken words or written text (of a book, document, movie, etc.) from one language to another.",
+          "kind": "entity",
+          "source": "wiktionary",
+          "sourceUrl": "https://en.wiktionary.org/wiki/translate",
+          "wikipediaUrl": null,
+          "wikipediaTitle": null,
+          "score": 43,
+          "url": "https://en.wiktionary.org/wiki/translate"
+        },
+        "candidates": [
+          {
+            "id": "wikt:en:translate#Verb:0",
+            "label": "translate",
+            "description": "Senses relating to the change of information, etc., from one form to another.\n To change spoken words or written text (of a book, document, movie, etc.) from one language to another.",
+            "kind": "entity",
+            "source": "wiktionary",
+            "sourceUrl": "https://en.wiktionary.org/wiki/translate",
+            "wikipediaUrl": null,
+            "wikipediaTitle": null,
+            "score": 43,
+            "url": "https://en.wiktionary.org/wiki/translate"
+          },
+          {
+            "id": "wikt:en:translate#Verb:1",
+            "label": "translate",
+            "description": " To change spoken words or written text (of a book, document, movie, etc.) from one language to another.",
+            "kind": "entity",
+            "source": "wiktionary",
+            "sourceUrl": "https://en.wiktionary.org/wiki/translate",
+            "wikipediaUrl": null,
+            "wikipediaTitle": null,
+            "score": 43,
+            "url": "https://en.wiktionary.org/wiki/translate"
+          },
+          {
+            "id": "wikt:en:translate#Verb:2",
+            "label": "translate",
+            "description": " To provide a translation of spoken words or written text in another language; to be, or be capable of being, rendered in another language.",
+            "kind": "entity",
+            "source": "wiktionary",
+            "sourceUrl": "https://en.wiktionary.org/wiki/translate",
+            "wikipediaUrl": null,
+            "wikipediaTitle": null,
+            "score": 43,
+            "url": "https://en.wiktionary.org/wiki/translate"
+          }
+        ]
+      },
+      {
+        "type": "phrase",
+        "id": "phrase-6",
+        "text": "each",
+        "tokens": [
+          "each"
+        ],
+        "start": 7,
+        "end": 7,
+        "sourceStart": 52,
+        "sourceEnd": 56,
+        "size": 1,
+        "entity": {
+          "id": "wikt:en:each#Determiner:0",
+          "label": "each",
+          "description": "All; every; qualifying a singular noun, indicating all examples of the thing so named seen as individual or separate items (compare every).",
+          "kind": "entity",
+          "source": "wiktionary",
+          "sourceUrl": "https://en.wiktionary.org/wiki/each",
+          "wikipediaUrl": null,
+          "wikipediaTitle": null,
+          "score": 43,
+          "url": "https://en.wiktionary.org/wiki/each"
+        },
+        "candidates": [
+          {
+            "id": "wikt:en:each#Determiner:0",
+            "label": "each",
+            "description": "All; every; qualifying a singular noun, indicating all examples of the thing so named seen as individual or separate items (compare every).",
+            "kind": "entity",
+            "source": "wiktionary",
+            "sourceUrl": "https://en.wiktionary.org/wiki/each",
+            "wikipediaUrl": null,
+            "wikipediaTitle": null,
+            "score": 43,
+            "url": "https://en.wiktionary.org/wiki/each"
+          },
+          {
+            "id": "wikt:en:each#Adverb:1",
+            "label": "each",
+            "description": "For one; apiece; per.",
+            "kind": "entity",
+            "source": "wiktionary",
+            "sourceUrl": "https://en.wiktionary.org/wiki/each",
+            "wikipediaUrl": null,
+            "wikipediaTitle": null,
+            "score": 43,
+            "url": "https://en.wiktionary.org/wiki/each"
+          },
+          {
+            "id": "wikt:en:each#Adverb:2",
+            "label": "each",
+            "description": "Individually; separately; used in a sentence with a plural subject to indicate that the action or state described by the verb applies to all members of the described group individually, rather than collectively to the entire group.",
+            "kind": "entity",
+            "source": "wiktionary",
+            "sourceUrl": "https://en.wiktionary.org/wiki/each",
+            "wikipediaUrl": null,
+            "wikipediaTitle": null,
+            "score": 43,
+            "url": "https://en.wiktionary.org/wiki/each"
+          }
+        ]
+      },
+      {
+        "type": "phrase",
+        "id": "phrase-7",
+        "text": "sentence",
+        "tokens": [
+          "sentence"
+        ],
+        "start": 8,
+        "end": 8,
+        "sourceStart": 57,
+        "sourceEnd": 65,
+        "size": 1,
+        "entity": {
+          "id": "wikt:en:sentence#Noun:0",
+          "label": "sentence",
+          "description": " The decision or judgement of a jury or court; a verdict. .mw-parser-output .defdate{font-size:smaller}",
+          "kind": "entity",
+          "source": "wiktionary",
+          "sourceUrl": "https://en.wiktionary.org/wiki/sentence",
+          "wikipediaUrl": null,
+          "wikipediaTitle": null,
+          "score": 43,
+          "url": "https://en.wiktionary.org/wiki/sentence"
+        },
+        "candidates": [
+          {
+            "id": "wikt:en:sentence#Noun:0",
+            "label": "sentence",
+            "description": " The decision or judgement of a jury or court; a verdict. .mw-parser-output .defdate{font-size:smaller}",
+            "kind": "entity",
+            "source": "wiktionary",
+            "sourceUrl": "https://en.wiktionary.org/wiki/sentence",
+            "wikipediaUrl": null,
+            "wikipediaTitle": null,
+            "score": 43,
+            "url": "https://en.wiktionary.org/wiki/sentence"
+          },
+          {
+            "id": "wikt:en:sentence#Noun:1",
+            "label": "sentence",
+            "description": "The judicial order for a punishment to be imposed on a person convicted of a crime. ",
+            "kind": "entity",
+            "source": "wiktionary",
+            "sourceUrl": "https://en.wiktionary.org/wiki/sentence",
+            "wikipediaUrl": null,
+            "wikipediaTitle": null,
+            "score": 43,
+            "url": "https://en.wiktionary.org/wiki/sentence"
+          },
+          {
+            "id": "wikt:en:sentence#Noun:2",
+            "label": "sentence",
+            "description": "A punishment imposed on a person convicted of a crime.",
+            "kind": "entity",
+            "source": "wiktionary",
+            "sourceUrl": "https://en.wiktionary.org/wiki/sentence",
+            "wikipediaUrl": null,
+            "wikipediaTitle": null,
+            "score": 43,
+            "url": "https://en.wiktionary.org/wiki/sentence"
+          }
+        ]
+      },
+      {
+        "type": "phrase",
+        "id": "phrase-8",
+        "text": "through",
+        "tokens": [
+          "through"
+        ],
+        "start": 9,
+        "end": 9,
+        "sourceStart": 66,
+        "sourceEnd": 73,
+        "size": 1,
+        "entity": {
+          "id": "wikt:en:through#Preposition:0",
+          "label": "through",
+          "description": "From one side or end of (something) to the other. \nSo as to enter (something), pass within or across, and then leave.",
+          "kind": "entity",
+          "source": "wiktionary",
+          "sourceUrl": "https://en.wiktionary.org/wiki/through",
+          "wikipediaUrl": null,
+          "wikipediaTitle": null,
+          "score": 43,
+          "url": "https://en.wiktionary.org/wiki/through"
+        },
+        "candidates": [
+          {
+            "id": "wikt:en:through#Preposition:0",
+            "label": "through",
+            "description": "From one side or end of (something) to the other. \nSo as to enter (something), pass within or across, and then leave.",
+            "kind": "entity",
+            "source": "wiktionary",
+            "sourceUrl": "https://en.wiktionary.org/wiki/through",
+            "wikipediaUrl": null,
+            "wikipediaTitle": null,
+            "score": 43,
+            "url": "https://en.wiktionary.org/wiki/through"
+          },
+          {
+            "id": "wikt:en:through#Preposition:1",
+            "label": "through",
+            "description": "So as to enter (something), pass within or across, and then leave.",
+            "kind": "entity",
+            "source": "wiktionary",
+            "sourceUrl": "https://en.wiktionary.org/wiki/through",
+            "wikipediaUrl": null,
+            "wikipediaTitle": null,
+            "score": 43,
+            "url": "https://en.wiktionary.org/wiki/through"
+          },
+          {
+            "id": "wikt:en:through#Preposition:2",
+            "label": "through",
+            "description": "So as to progress within (something) or towards the end or limit of (something).",
+            "kind": "entity",
+            "source": "wiktionary",
+            "sourceUrl": "https://en.wiktionary.org/wiki/through",
+            "wikipediaUrl": null,
+            "wikipediaTitle": null,
+            "score": 43,
+            "url": "https://en.wiktionary.org/wiki/through"
+          }
+        ]
+      },
+      {
+        "type": "phrase",
+        "id": "phrase-9",
+        "text": "labels",
+        "tokens": [
+          "labels"
+        ],
+        "start": 10,
+        "end": 10,
+        "sourceStart": 74,
+        "sourceEnd": 80,
+        "size": 1,
+        "entity": {
+          "id": "wikt:en:labels#Noun:0",
+          "label": "labels",
+          "description": "plural of label",
+          "kind": "entity",
+          "source": "wiktionary",
+          "sourceUrl": "https://en.wiktionary.org/wiki/labels",
+          "wikipediaUrl": null,
+          "wikipediaTitle": null,
+          "score": 43,
+          "url": "https://en.wiktionary.org/wiki/labels"
+        },
+        "candidates": [
+          {
+            "id": "wikt:en:labels#Noun:0",
+            "label": "labels",
+            "description": "plural of label",
+            "kind": "entity",
+            "source": "wiktionary",
+            "sourceUrl": "https://en.wiktionary.org/wiki/labels",
+            "wikipediaUrl": null,
+            "wikipediaTitle": null,
+            "score": 43,
+            "url": "https://en.wiktionary.org/wiki/labels"
+          },
+          {
+            "id": "wikt:en:labels#Verb:1",
+            "label": "labels",
+            "description": "third-person singular simple present indicative of label",
+            "kind": "entity",
+            "source": "wiktionary",
+            "sourceUrl": "https://en.wiktionary.org/wiki/labels",
+            "wikipediaUrl": null,
+            "wikipediaTitle": null,
+            "score": 43,
+            "url": "https://en.wiktionary.org/wiki/labels"
+          }
+        ]
+      },
+      {
+        "type": "phrase",
+        "id": "phrase-10",
+        "text": "and",
+        "tokens": [
+          "and"
+        ],
+        "start": 11,
+        "end": 11,
+        "sourceStart": 81,
+        "sourceEnd": 84,
+        "size": 1,
+        "entity": {
+          "id": "wikt:en:and#Symbol:0",
+          "label": "and",
+          "description": " ISO 639-3 language code for Ansus.",
+          "kind": "entity",
+          "source": "wiktionary",
+          "sourceUrl": "https://en.wiktionary.org/wiki/and",
+          "wikipediaUrl": null,
+          "wikipediaTitle": null,
+          "score": 43,
+          "url": "https://en.wiktionary.org/wiki/and"
+        },
+        "candidates": [
+          {
+            "id": "wikt:en:and#Symbol:0",
+            "label": "and",
+            "description": " ISO 639-3 language code for Ansus.",
+            "kind": "entity",
+            "source": "wiktionary",
+            "sourceUrl": "https://en.wiktionary.org/wiki/and",
+            "wikipediaUrl": null,
+            "wikipediaTitle": null,
+            "score": 43,
+            "url": "https://en.wiktionary.org/wiki/and"
+          },
+          {
+            "id": "wikt:en:and#Conjunction:1",
+            "label": "and",
+            "description": "As a coordinating conjunction; expressing two elements to be taken together or in addition to each other.\nUsed simply to connect two noun phrases, adjectives or adverbs. .mw-parser-output .defdate{font-size:smaller}\n\nSimply connecting two clauses or sentences. \n\nIntroducing a clause or sentence which follows on in time or consequence from the first. ",
+            "kind": "entity",
+            "source": "wiktionary",
+            "sourceUrl": "https://en.wiktionary.org/wiki/and",
+            "wikipediaUrl": null,
+            "wikipediaTitle": null,
+            "score": 43,
+            "url": "https://en.wiktionary.org/wiki/and"
+          },
+          {
+            "id": "wikt:en:and#Conjunction:2",
+            "label": "and",
+            "description": "Used simply to connect two noun phrases, adjectives or adverbs. .mw-parser-output .defdate{font-size:smaller}",
+            "kind": "entity",
+            "source": "wiktionary",
+            "sourceUrl": "https://en.wiktionary.org/wiki/and",
+            "wikipediaUrl": null,
+            "wikipediaTitle": null,
+            "score": 43,
+            "url": "https://en.wiktionary.org/wiki/and"
+          }
+        ]
+      },
+      {
+        "type": "phrase",
+        "id": "phrase-11",
+        "text": "transformation rules",
+        "tokens": [
+          "transformation",
+          "rules"
+        ],
+        "start": 12,
+        "end": 13,
+        "sourceStart": 85,
+        "sourceEnd": 105,
+        "size": 2,
+        "entity": {
+          "id": "Q46841744",
+          "label": "Transformation rules in concept learning",
+          "description": "scientific article published on September 1, 1978",
+          "kind": "entity",
+          "source": "wikidata",
+          "sourceUrl": "https://www.wikidata.org/wiki/Q46841744",
+          "wikipediaUrl": null,
+          "wikipediaTitle": null,
+          "score": 21,
+          "url": "https://www.wikidata.org/wiki/Q46841744"
+        },
+        "candidates": [
+          {
+            "id": "Q46841744",
+            "label": "Transformation rules in concept learning",
+            "description": "scientific article published on September 1, 1978",
+            "kind": "entity",
+            "source": "wikidata",
+            "sourceUrl": "https://www.wikidata.org/wiki/Q46841744",
+            "wikipediaUrl": null,
+            "wikipediaTitle": null,
+            "score": 21,
+            "url": "https://www.wikidata.org/wiki/Q46841744"
+          },
+          {
+            "id": "Q130927092",
+            "label": "Transformation rules for designing CNOT-based quantum circuits",
+            "description": "scientific article published on 19 April 2004",
+            "kind": "entity",
+            "source": "wikidata",
+            "sourceUrl": "https://www.wikidata.org/wiki/Q130927092",
+            "wikipediaUrl": null,
+            "wikipediaTitle": null,
+            "score": 21,
+            "url": "https://www.wikidata.org/wiki/Q130927092"
+          },
+          {
+            "id": "Q126009166",
+            "label": "Transformation rules of N = 2 supergravity multiplets",
+            "description": "scientific article published in 1980",
+            "kind": "entity",
+            "source": "wikidata",
+            "sourceUrl": "https://www.wikidata.org/wiki/Q126009166",
+            "wikipediaUrl": null,
+            "wikipediaTitle": null,
+            "score": 21,
+            "url": "https://www.wikidata.org/wiki/Q126009166"
+          }
+        ]
+      },
+      {
+        "type": "phrase",
+        "id": "phrase-12",
+        "text": "Unresolved parts",
+        "tokens": [
+          "Unresolved",
+          "parts"
+        ],
+        "start": 14,
+        "end": 15,
+        "sourceStart": 107,
+        "sourceEnd": 123,
+        "size": 2,
+        "entity": {
+          "id": "wp:en:love_mocktail_3",
+          "label": "Love Mocktail 3",
+          "description": "sparks an emotionally intense custody battle, pushing Adi to confront unresolved parts of his past while trying to keep the daughter he deeply loves. Legal",
+          "kind": "entity",
+          "source": "wikipedia",
+          "sourceUrl": "https://en.wikipedia.org/wiki/Love_Mocktail_3",
+          "wikipediaUrl": "https://en.wikipedia.org/wiki/Love_Mocktail_3",
+          "wikipediaTitle": "Love Mocktail 3",
+          "score": 20,
+          "url": "https://en.wikipedia.org/wiki/Love_Mocktail_3"
+        },
+        "candidates": [
+          {
+            "id": "wp:en:love_mocktail_3",
+            "label": "Love Mocktail 3",
+            "description": "sparks an emotionally intense custody battle, pushing Adi to confront unresolved parts of his past while trying to keep the daughter he deeply loves. Legal",
+            "kind": "entity",
+            "source": "wikipedia",
+            "sourceUrl": "https://en.wikipedia.org/wiki/Love_Mocktail_3",
+            "wikipediaUrl": "https://en.wikipedia.org/wiki/Love_Mocktail_3",
+            "wikipediaTitle": "Love Mocktail 3",
+            "score": 20,
+            "url": "https://en.wikipedia.org/wiki/Love_Mocktail_3"
+          },
+          {
+            "id": "wp:en:morchella",
+            "label": "Morchella",
+            "description": "The seminal taxon Morchella elata, whose true identity still remains unresolved, was described by Elias Fries in 1822, from a fir forest in Sweden. Other",
+            "kind": "entity",
+            "source": "wikipedia",
+            "sourceUrl": "https://en.wikipedia.org/wiki/Morchella",
+            "wikipediaUrl": "https://en.wikipedia.org/wiki/Morchella",
+            "wikipediaTitle": "Morchella",
+            "score": 20,
+            "url": "https://en.wikipedia.org/wiki/Morchella"
+          },
+          {
+            "id": "wp:en:world_war_ii",
+            "label": "World War II",
+            "description": "leaders were tried for war crimes. The causes of World War II included unresolved tensions in the aftermath of World War I and the rise of fascism in Europe",
+            "kind": "entity",
+            "source": "wikipedia",
+            "sourceUrl": "https://en.wikipedia.org/wiki/World_War_II",
+            "wikipediaUrl": "https://en.wikipedia.org/wiki/World_War_II",
+            "wikipediaTitle": "World War II",
+            "score": 20,
+            "url": "https://en.wikipedia.org/wiki/World_War_II"
+          }
+        ]
+      },
+      {
+        "type": "phrase",
+        "id": "phrase-13",
+        "text": "remain variables",
+        "tokens": [
+          "remain",
+          "variables"
+        ],
+        "start": 16,
+        "end": 17,
+        "sourceStart": 124,
+        "sourceEnd": 140,
+        "size": 2,
+        "entity": {
+          "id": "wp:en:variable_(high-level_programming_language)",
+          "label": "Variable (high-level programming language)",
+          "description": "the variable may thus change during the course of program execution. Variables in programming may not directly correspond to the concept of variables in",
+          "kind": "entity",
+          "source": "wikipedia",
+          "sourceUrl": "https://en.wikipedia.org/wiki/Variable_(high-level_programming_language)",
+          "wikipediaUrl": "https://en.wikipedia.org/wiki/Variable_(high-level_programming_language)",
+          "wikipediaTitle": "Variable (high-level programming language)",
+          "score": 20,
+          "url": "https://en.wikipedia.org/wiki/Variable_(high-level_programming_language)"
+        },
+        "candidates": [
+          {
+            "id": "wp:en:variable_(high-level_programming_language)",
+            "label": "Variable (high-level programming language)",
+            "description": "the variable may thus change during the course of program execution. Variables in programming may not directly correspond to the concept of variables in",
+            "kind": "entity",
+            "source": "wikipedia",
+            "sourceUrl": "https://en.wikipedia.org/wiki/Variable_(high-level_programming_language)",
+            "wikipediaUrl": "https://en.wikipedia.org/wiki/Variable_(high-level_programming_language)",
+            "wikipediaTitle": "Variable (high-level programming language)",
+            "score": 20,
+            "url": "https://en.wikipedia.org/wiki/Variable_(high-level_programming_language)"
+          },
+          {
+            "id": "wp:en:joint_probability_distribution",
+            "label": "Joint probability distribution",
+            "description": "function (in the case of continuous variables) or joint probability mass function (in the case of discrete variables). These in turn can be used to find",
+            "kind": "entity",
+            "source": "wikipedia",
+            "sourceUrl": "https://en.wikipedia.org/wiki/Joint_probability_distribution",
+            "wikipediaUrl": "https://en.wikipedia.org/wiki/Joint_probability_distribution",
+            "wikipediaTitle": "Joint probability distribution",
+            "score": 20,
+            "url": "https://en.wikipedia.org/wiki/Joint_probability_distribution"
+          },
+          {
+            "id": "wp:en:environment_variable",
+            "label": "Environment variable",
+            "description": "the variable name. By convention, names of environment variables are normally expressed in all capital letters. This helps keep environment variables distinctly",
+            "kind": "entity",
+            "source": "wikipedia",
+            "sourceUrl": "https://en.wikipedia.org/wiki/Environment_variable",
+            "wikipediaUrl": "https://en.wikipedia.org/wiki/Environment_variable",
+            "wikipediaTitle": "Environment variable",
+            "score": 20,
+            "url": "https://en.wikipedia.org/wiki/Environment_variable"
+          }
+        ]
+      },
+      {
+        "type": "phrase",
+        "id": "phrase-14",
+        "text": "with",
+        "tokens": [
+          "with"
+        ],
+        "start": 18,
+        "end": 18,
+        "sourceStart": 141,
+        "sourceEnd": 145,
+        "size": 1,
+        "entity": {
+          "id": "wikt:en:with#Preposition:0",
+          "label": "with",
+          "description": "Against.",
+          "kind": "entity",
+          "source": "wiktionary",
+          "sourceUrl": "https://en.wiktionary.org/wiki/with",
+          "wikipediaUrl": null,
+          "wikipediaTitle": null,
+          "score": 43,
+          "url": "https://en.wiktionary.org/wiki/with"
+        },
+        "candidates": [
+          {
+            "id": "wikt:en:with#Preposition:0",
+            "label": "with",
+            "description": "Against.",
+            "kind": "entity",
+            "source": "wiktionary",
+            "sourceUrl": "https://en.wiktionary.org/wiki/with",
+            "wikipediaUrl": null,
+            "wikipediaTitle": null,
+            "score": 43,
+            "url": "https://en.wiktionary.org/wiki/with"
+          },
+          {
+            "id": "wikt:en:with#Preposition:1",
+            "label": "with",
+            "description": "In the company of; alongside, close to; near to.",
+            "kind": "entity",
+            "source": "wiktionary",
+            "sourceUrl": "https://en.wiktionary.org/wiki/with",
+            "wikipediaUrl": null,
+            "wikipediaTitle": null,
+            "score": 43,
+            "url": "https://en.wiktionary.org/wiki/with"
+          },
+          {
+            "id": "wikt:en:with#Preposition:2",
+            "label": "with",
+            "description": "In addition to; as an accessory to.",
+            "kind": "entity",
+            "source": "wiktionary",
+            "sourceUrl": "https://en.wiktionary.org/wiki/with",
+            "wikipediaUrl": null,
+            "wikipediaTitle": null,
+            "score": 43,
+            "url": "https://en.wiktionary.org/wiki/with"
+          }
+        ]
+      },
+      {
+        "type": "phrase",
+        "id": "phrase-15",
+        "text": "questions",
+        "tokens": [
+          "questions"
+        ],
+        "start": 19,
+        "end": 19,
+        "sourceStart": 146,
+        "sourceEnd": 155,
+        "size": 1,
+        "entity": {
+          "id": "wikt:en:questions#Noun:0",
+          "label": "questions",
+          "description": "plural of question",
+          "kind": "entity",
+          "source": "wiktionary",
+          "sourceUrl": "https://en.wiktionary.org/wiki/questions",
+          "wikipediaUrl": null,
+          "wikipediaTitle": null,
+          "score": 43,
+          "url": "https://en.wiktionary.org/wiki/questions"
+        },
+        "candidates": [
+          {
+            "id": "wikt:en:questions#Noun:0",
+            "label": "questions",
+            "description": "plural of question",
+            "kind": "entity",
+            "source": "wiktionary",
+            "sourceUrl": "https://en.wiktionary.org/wiki/questions",
+            "wikipediaUrl": null,
+            "wikipediaTitle": null,
+            "score": 43,
+            "url": "https://en.wiktionary.org/wiki/questions"
+          },
+          {
+            "id": "wikt:en:questions#Noun:1",
+            "label": "questions",
+            "description": "A game in which players must only say questions, and if they don't they lose.",
+            "kind": "entity",
+            "source": "wiktionary",
+            "sourceUrl": "https://en.wiktionary.org/wiki/questions",
+            "wikipediaUrl": null,
+            "wikipediaTitle": null,
+            "score": 43,
+            "url": "https://en.wiktionary.org/wiki/questions"
+          },
+          {
+            "id": "wikt:en:questions#Verb:2",
+            "label": "questions",
+            "description": "third-person singular simple present indicative of question",
+            "kind": "entity",
+            "source": "wiktionary",
+            "sourceUrl": "https://en.wiktionary.org/wiki/questions",
+            "wikipediaUrl": null,
+            "wikipediaTitle": null,
+            "score": 43,
+            "url": "https://en.wiktionary.org/wiki/questions"
+          }
+        ]
+      }
+    ],
+    "contexts": []
+  },
+  "linkTargetMode": "wikipedia",
+  "sources": [
+    "wikipedia",
+    "wikidata",
+    "wiktionary"
+  ]
+}

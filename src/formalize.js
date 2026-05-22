@@ -52,9 +52,9 @@ const wikimediaApiUserAgent =
 // appear in the rendered output, just without a hyperlink.
 const stopWords = new Set([
   'the', 'a', 'an', 'and', 'or', 'but', 'in', 'on', 'at', 'to', 'for', 'of',
-  'with', 'by', 'from', 'as', 'into', 'onto', 'than', 'that', 'this',
-  'these', 'those', 'it', 'its', 'am', 'is', 'are', 'was', 'were', 'be',
-  'being', 'been', 'so',
+  'with', 'by', 'from', 'as', 'into', 'onto', 'than', 'that', 'this', 'then',
+  'these', 'those', 'it', 'its', 'each', 'through', 'am', 'is', 'are', 'was',
+  'were', 'be', 'being', 'been', 'so',
 ]); // prettier-ignore
 
 // English verbs / relation phrases that bias an n-gram toward properties.
@@ -219,8 +219,9 @@ export function formalizeText(input, options = {}) {
 export async function formalizeTextWith(input, options = {}) {
   const text = normalizeInput(input);
   const config = createConfig(options);
-  const tokens = tokenize(text);
-  const ngrams = generateNgrams(tokens, config.maxNgramSize);
+  const tokenSpans = tokenizeWithSpans(text);
+  const tokens = tokenSpans.map((span) => span.token);
+  const ngrams = generateNgrams(tokens, config.maxNgramSize, tokenSpans);
   const ngramCandidates = await Promise.all(
     ngrams.map((ngram) => searchNgramCandidates(ngram, config))
   );
@@ -311,10 +312,7 @@ export function markdownFromFormalizationCst(cst) {
  * @returns {string[]}
  */
 export function tokenize(text) {
-  return String(text)
-    .replace(/[.,!?;:"“”]/g, ' ')
-    .split(/\s+/)
-    .filter((token) => token.length > 0);
+  return tokenizeWithSpans(text).map((span) => span.token);
 }
 
 /**
@@ -325,13 +323,22 @@ export function tokenize(text) {
  *
  * @param {string[]} tokens
  * @param {number} [maxSize]
+ * @param {Array<{sentenceBoundaryAfter?: boolean}>} [tokenSpans]
  * @returns {Array<{text:string,tokens:string[],start:number,end:number,size:number,stopOnly:boolean}>}
  */
-export function generateNgrams(tokens, maxSize = defaultMaxNgramSize) {
+export function generateNgrams(
+  tokens,
+  maxSize = defaultMaxNgramSize,
+  tokenSpans = []
+) {
   const ngrams = [];
   const max = Math.max(1, Math.min(maxSize, tokens.length));
   for (let size = 1; size <= max; size += 1) {
     for (let start = 0; start + size <= tokens.length; start += 1) {
+      const end = start + size - 1;
+      if (crossesSentenceBoundary(tokenSpans, start, end)) {
+        continue;
+      }
       const slice = tokens.slice(start, start + size);
       const stopOnly = isStopOnly(slice);
       if (
@@ -345,7 +352,7 @@ export function generateNgrams(tokens, maxSize = defaultMaxNgramSize) {
         text: slice.join(' '),
         tokens: slice,
         start,
-        end: start + size - 1,
+        end,
         size,
         stopOnly,
       });
@@ -477,6 +484,38 @@ function isStopOnly(tokens) {
   return tokens.every((token) => stopWords.has(token.toLowerCase()));
 }
 
+function tokenizeWithSpans(text) {
+  const source = String(text);
+  const tokenPattern = /[^\s.,!?;:"“”]+/g;
+  const spans = [];
+  let match;
+  while ((match = tokenPattern.exec(source)) !== null) {
+    spans.push({
+      token: match[0],
+      start: match.index,
+      end: match.index + match[0].length,
+      sentenceBoundaryAfter: false,
+    });
+  }
+  for (let index = 0; index < spans.length - 1; index += 1) {
+    const delimiter = source.slice(spans[index].end, spans[index + 1].start);
+    spans[index].sentenceBoundaryAfter = /[.!?]/.test(delimiter);
+  }
+  return spans;
+}
+
+function crossesSentenceBoundary(tokenSpans, start, end) {
+  if (!Array.isArray(tokenSpans) || tokenSpans.length === 0) {
+    return false;
+  }
+  for (let index = start; index < end; index += 1) {
+    if (tokenSpans[index]?.sentenceBoundaryAfter) {
+      return true;
+    }
+  }
+  return false;
+}
+
 async function searchNgramCandidates(ngram, config) {
   // Overrides short-circuit live search entirely.
   const override = lookupOverride(config.overrides, ngram.text);
@@ -546,7 +585,7 @@ function shouldSearchNgram(ngram) {
   }
   const first = ngram.tokens[0];
   const last = ngram.tokens[ngram.tokens.length - 1];
-  return !isIndefiniteEnglishArticle(first) && !isEnglishArticle(last);
+  return !isEnglishGrammarGlue(first) && !isEnglishGrammarGlue(last);
 }
 
 function candidateMatchesNgramShape(ngram, candidate) {
@@ -573,10 +612,6 @@ function isEnglishGrammarGlue(value) {
 
 function isEnglishArticle(value) {
   return ['a', 'an', 'the'].includes(String(value).toLowerCase());
-}
-
-function isIndefiniteEnglishArticle(value) {
-  return ['a', 'an'].includes(String(value).toLowerCase());
 }
 
 function isEnglishCopula(value) {
@@ -699,6 +734,9 @@ function scoreCandidate(ngram, candidate, propertyBias) {
   }
   if (sourceTags.has(SOURCE_KIND.WIKIDATA)) {
     score += 8;
+  }
+  if (sourceTags.has(SOURCE_KIND.WIKTIONARY) && /^[a-z]+$/.test(ngram.text)) {
+    score += 12;
   }
   if (isDisambiguationCandidate(candidate)) {
     score -= 20;

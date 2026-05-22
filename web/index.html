@@ -773,9 +773,19 @@ Barack Obama was born in Hawaii.</textarea
           </p>
         </header>
 
-        <label class="translate-input-label" for="translate-input">
-          <span data-i18n="translate.text">Text</span>
-        </label>
+        <div class="translate-input-row">
+          <label class="translate-input-label" for="translate-input">
+            <span data-i18n="translate.text">Text</span>
+          </label>
+          <label class="translate-sample-label" for="translate-sample">
+            <span data-i18n="translate.loadSample">Load sample</span>
+            <select id="translate-sample">
+              <option value="" data-i18n="translate.pickExample">
+                — pick an example —
+              </option>
+            </select>
+          </label>
+        </div>
         <textarea id="translate-input" rows="5">Hawaii is a state.</textarea>
 
         <div class="translate-options">
@@ -799,6 +809,10 @@ Barack Obama was born in Hawaii.</textarea
               <option value="de">Deutsch</option>
             </select>
           </label>
+          <fieldset class="translate-strategy">
+            <legend data-i18n="translate.strategy">Strategy</legend>
+            <div id="translate-strategy" class="translate-strategy-group"></div>
+          </fieldset>
         </div>
 
         <div class="translate-actions">

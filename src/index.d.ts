@@ -658,7 +658,28 @@ export interface TranslateOptions extends FormalizeOptions {
   targetLanguage?: string;
   from?: string;
   to?: string;
+  translationStrategy?: TranslationStrategyId;
+  strategy?: TranslationStrategyId;
 }
+
+export type TranslationStrategyId =
+  | 'contextual-glossary'
+  | 'semantic-label'
+  | 'lexical-glossary';
+
+export declare const TRANSLATION_STRATEGIES: Readonly<{
+  CONTEXTUAL_GLOSSARY: 'contextual-glossary';
+  SEMANTIC_LABEL: 'semantic-label';
+  LEXICAL_GLOSSARY: 'lexical-glossary';
+}>;
+
+export interface TranslationStrategy {
+  id: TranslationStrategyId;
+  label: string;
+  description: string;
+}
+
+export declare function listTranslationStrategies(): TranslationStrategy[];
 
 export interface TranslationVariable {
   name: string;
@@ -688,8 +709,28 @@ export interface TranslationPhrase {
     description: string | null;
     url: string | null;
     status: string;
+    strategy?: string | null;
   };
   variable: TranslationVariable | null;
+}
+
+export interface TranslationQuestionOption {
+  id: string;
+  label: string;
+  targetText: string | null;
+  entityId?: string | null;
+  description: string;
+  confidence: number;
+}
+
+export interface TranslationQuestion {
+  variableName: string;
+  sourceText: string;
+  entityId: string | null;
+  reason: string;
+  question: string;
+  selectedOptionId: string;
+  options: TranslationQuestionOption[];
 }
 
 export interface TranslationSentence {
@@ -759,6 +800,7 @@ export interface TranslateResult {
   linksNotation: string;
   variables: TranslationVariable[];
   questions: string[];
+  questionDetails: TranslationQuestion[];
   steps: TranslationStep[];
 }
 
