@@ -28,6 +28,7 @@
 - `data/bun-test.log`: Bun test suite passing.
 - `data/deno-test.log`: Deno test suite passing.
 - `data/check-file-line-limits.log`: file line-limit check passing.
+- `data/changeset-status.log`: changeset patch-bump status passing.
 - `data/live-translate-before.json`: live source-language result and 429 target lookup failures.
 - `data/live-translate-after.json`: live Russian output with no unresolved questions.
 - `translate-ui.png` and `translate-ui-mobile.png`: Translate UI smoke

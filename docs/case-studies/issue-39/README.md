@@ -45,6 +45,7 @@ logs used for this fix:
 - [`data/bun-test.log`](./data/bun-test.log)
 - [`data/deno-test.log`](./data/deno-test.log)
 - [`data/check-file-line-limits.log`](./data/check-file-line-limits.log)
+- [`data/changeset-status.log`](./data/changeset-status.log)
 - [`data/npm-install.log`](./data/npm-install.log)
 - [`translate-ui.png`](./translate-ui.png)
 - [`translate-ui-mobile.png`](./translate-ui-mobile.png)
