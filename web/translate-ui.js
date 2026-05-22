@@ -1,6 +1,11 @@
-import { FORMALIZE_LINK_TARGETS, translateTextWith } from '../src/index.js';
+import {
+  FORMALIZE_LINK_TARGETS,
+  listTranslationStrategies,
+  translateTextWith,
+} from '../src/index.js';
 import { escapeHtml } from './format-helpers.js';
 import { createPersistentWikimediaCache } from './persistent-cache.js';
+import { translateSamples } from './translate-samples.js';
 
 const translateCacheStorageKey = 'meta-expression.translate-cache.v1';
 
@@ -8,8 +13,10 @@ export function setupTranslatePage({
   cache = createPersistentWikimediaCache(translateCacheStorageKey),
 } = {}) {
   const input = document.querySelector('#translate-input');
+  const sampleSelect = document.querySelector('#translate-sample');
   const sourceLanguage = document.querySelector('#translate-source-language');
   const targetLanguage = document.querySelector('#translate-target-language');
+  const strategyGroup = document.querySelector('#translate-strategy');
   const run = document.querySelector('#translate-run');
   const copyMarkdown = document.querySelector('#translate-copy-markdown');
   const copyLino = document.querySelector('#translate-copy-lino');
@@ -22,12 +29,23 @@ export function setupTranslatePage({
   const cstPre = document.querySelector('#translate-cst');
   const stepsList = document.querySelector('#translate-steps');
   let currentResult = null;
+  const strategyState = {
+    selected: listTranslationStrategies()[0]?.id ?? 'contextual-glossary',
+  };
 
   if (!input || !run || !output || !status) {
     return { getResult: () => currentResult };
   }
 
   let requestId = 0;
+
+  setupTranslateSamples({
+    sampleSelect,
+    input,
+    sourceLanguage,
+    targetLanguage,
+  });
+  setupTranslationStrategies(strategyGroup, strategyState);
 
   run.addEventListener('click', () => {
     runTranslate();
@@ -71,6 +89,7 @@ export function setupTranslatePage({
         sourceLanguage: sourceLanguage?.value ?? 'en',
         targetLanguage: targetLanguage?.value ?? 'ru',
         linkTargetMode: FORMALIZE_LINK_TARGETS.WIKIPEDIA,
+        translationStrategy: strategyState.selected,
       });
       if (status.dataset.requestId !== id) {
         return;
@@ -94,7 +113,7 @@ export function setupTranslatePage({
       );
     }
     renderLinkedHtml(output, result.html || escapeHtml(result.plainText));
-    renderQuestionList(questions, result.questions);
+    renderQuestionList(questions, result.questionDetails ?? result.questions);
     renderStepList(stepsList, result.steps);
     if (markdownPre) {
       markdownPre.textContent = result.markdown;
@@ -126,6 +145,64 @@ export function setupTranslatePage({
   return { getResult: () => currentResult };
 }
 
+function setupTranslateSamples({
+  sampleSelect,
+  input,
+  sourceLanguage,
+  targetLanguage,
+}) {
+  if (!sampleSelect) {
+    return;
+  }
+  for (const [index, sample] of translateSamples.entries()) {
+    const option = document.createElement('option');
+    option.value = String(index);
+    option.textContent = sample.label;
+    sampleSelect.append(option);
+  }
+  sampleSelect.addEventListener('change', () => {
+    const sample = translateSamples[Number(sampleSelect.value)];
+    if (!sample) {
+      return;
+    }
+    input.value = sample.text;
+    if (sourceLanguage) {
+      sourceLanguage.value = sample.sourceLanguage;
+    }
+    if (targetLanguage) {
+      targetLanguage.value = sample.targetLanguage;
+    }
+  });
+}
+
+function setupTranslationStrategies(strategyGroup, state) {
+  if (!strategyGroup) {
+    return;
+  }
+  strategyGroup.replaceChildren();
+  for (const strategy of listTranslationStrategies()) {
+    const button = document.createElement('button');
+    button.type = 'button';
+    button.className = 'translate-strategy-option';
+    button.dataset.strategy = strategy.id;
+    button.textContent = strategy.label;
+    button.title = strategy.description;
+    button.addEventListener('click', () => {
+      state.selected = strategy.id;
+      syncStrategyButtons(strategyGroup, state);
+    });
+    strategyGroup.append(button);
+  }
+  syncStrategyButtons(strategyGroup, state);
+}
+
+function syncStrategyButtons(strategyGroup, state) {
+  for (const button of strategyGroup.querySelectorAll('button')) {
+    const active = button.dataset.strategy === state.selected;
+    button.setAttribute('aria-pressed', String(active));
+  }
+}
+
 function renderQuestionList(container, list) {
   if (!container) {
     return;
@@ -137,9 +214,39 @@ function renderQuestionList(container, list) {
   }
   for (const question of list) {
     const item = document.createElement('li');
-    item.textContent = question;
+    const text = document.createElement('span');
+    text.textContent =
+      typeof question === 'string' ? question : question.question;
+    item.append(text);
+    if (typeof question !== 'string' && question.options?.length) {
+      item.append(renderQuestionOptions(question));
+    }
     container.append(item);
   }
+}
+
+function renderQuestionOptions(question) {
+  const group = document.createElement('div');
+  group.className = 'translate-question-options';
+  for (const option of question.options) {
+    const button = document.createElement('button');
+    button.type = 'button';
+    button.className = 'translate-question-option';
+    button.textContent = option.label;
+    button.title = option.description;
+    button.setAttribute(
+      'aria-pressed',
+      String(option.id === question.selectedOptionId)
+    );
+    button.addEventListener('click', () => {
+      question.selectedOptionId = option.id;
+      for (const peer of group.querySelectorAll('button')) {
+        peer.setAttribute('aria-pressed', String(peer === button));
+      }
+    });
+    group.append(button);
+  }
+  return group;
 }
 
 function renderStepList(container, list) {

@@ -1,0 +1,3937 @@
+{
+  "text": "Formalize source text with Wikidata, then translate each sentence through labels and transformation rules. Unresolved parts remain variables with questions.",
+  "tokens": [
+    "Formalize",
+    "source",
+    "text",
+    "with",
+    "Wikidata",
+    "then",
+    "translate",
+    "each",
+    "sentence",
+    "through",
+    "labels",
+    "and",
+    "transformation",
+    "rules",
+    "Unresolved",
+    "parts",
+    "remain",
+    "variables",
+    "with",
+    "questions"
+  ],
+  "phrases": [
+    {
+      "text": "Formalize",
+      "tokens": [
+        "Formalize"
+      ],
+      "start": 0,
+      "end": 0,
+      "size": 1,
+      "candidates": [
+        {
+          "id": "Q5469987",
+          "label": "Formalized Music",
+          "description": "Formalized Music: Thought and Mathematics in Composition is a book by Greek composer, architect, and engineer Iannis Xenakis in which he explains his motivation",
+          "kind": "entity",
+          "source": "wikidata",
+          "sourceUrl": "https://www.wikidata.org/wiki/Q5469987",
+          "matchText": "Formalized Music",
+          "matchType": "label",
+          "wikipediaTitle": "Formalized Music",
+          "wikipediaUrl": "https://en.wikipedia.org/wiki/Formalized_Music",
+          "wikibaseId": "Q5469987",
+          "aliases": [],
+          "sources": [
+            "wikipedia",
+            "wikidata"
+          ],
+          "score": 30,
+          "ngramSize": 1,
+          "contextLabels": []
+        },
+        {
+          "id": "Q50814811",
+          "label": "Formalized Mathematics",
+          "description": "Academic journal published by De Gruyter Open, covering the subjects: Science: Mathematics",
+          "kind": "entity",
+          "source": "wikidata",
+          "sourceUrl": "https://www.wikidata.org/wiki/Q50814811",
+          "matchText": "Formalized Mathematics",
+          "matchType": "label",
+          "aliases": [],
+          "score": 18,
+          "ngramSize": 1,
+          "contextLabels": []
+        },
+        {
+          "id": "Q11688701",
+          "label": "formalized language",
+          "description": "",
+          "kind": "entity",
+          "source": "wikidata",
+          "sourceUrl": "https://www.wikidata.org/wiki/Q11688701",
+          "matchText": "formalized language",
+          "matchType": "label",
+          "aliases": [],
+          "score": 18,
+          "ngramSize": 1,
+          "contextLabels": []
+        }
+      ],
+      "entity": {
+        "id": "Q5469987",
+        "label": "Formalized Music",
+        "description": "Formalized Music: Thought and Mathematics in Composition is a book by Greek composer, architect, and engineer Iannis Xenakis in which he explains his motivation",
+        "kind": "entity",
+        "source": "wikidata",
+        "sourceUrl": "https://www.wikidata.org/wiki/Q5469987",
+        "score": 30,
+        "wikipediaUrl": "https://en.wikipedia.org/wiki/Formalized_Music",
+        "wikipediaTitle": "Formalized Music",
+        "contextLabels": [],
+        "overrideEntry": null
+      }
+    },
+    {
+      "text": "source",
+      "tokens": [
+        "source"
+      ],
+      "start": 1,
+      "end": 1,
+      "size": 1,
+      "candidates": [
+        {
+          "id": "Q643572",
+          "label": "Source",
+          "description": "game engine developed by Valve Corporation",
+          "kind": "entity",
+          "source": "wikidata",
+          "sourceUrl": "https://www.wikidata.org/wiki/Q643572",
+          "matchText": "Source",
+          "matchType": "label",
+          "aliases": [],
+          "score": 39,
+          "ngramSize": 1,
+          "contextLabels": []
+        },
+        {
+          "id": "Q106512627",
+          "label": "Source",
+          "description": "sculpture in downtown Montreal",
+          "kind": "entity",
+          "source": "wikidata",
+          "sourceUrl": "https://www.wikidata.org/wiki/Q106512627",
+          "matchText": "Source",
+          "matchType": "label",
+          "aliases": [],
+          "score": 39,
+          "ngramSize": 1,
+          "contextLabels": []
+        },
+        {
+          "id": "wikt:en:source#Noun:0",
+          "label": "source",
+          "description": "The person, place, or thing from which something (information, goods, etc.) comes or is acquired.",
+          "kind": "entity",
+          "source": "wiktionary",
+          "sourceUrl": "https://en.wiktionary.org/wiki/source",
+          "matchText": "source",
+          "matchType": "definition",
+          "partOfSpeech": "Noun",
+          "definition": "The person, place, or thing from which something (information, goods, etc.) comes or is acquired.",
+          "score": 31,
+          "ngramSize": 1,
+          "contextLabels": []
+        }
+      ],
+      "entity": {
+        "id": "Q643572",
+        "label": "Source",
+        "description": "game engine developed by Valve Corporation",
+        "kind": "entity",
+        "source": "wikidata",
+        "sourceUrl": "https://www.wikidata.org/wiki/Q643572",
+        "score": 39,
+        "wikipediaUrl": null,
+        "wikipediaTitle": null,
+        "contextLabels": [],
+        "overrideEntry": null
+      }
+    },
+    {
+      "text": "text",
+      "tokens": [
+        "text"
+      ],
+      "start": 2,
+      "end": 2,
+      "size": 1,
+      "candidates": [
+        {
+          "id": "Q7670066",
+          "label": "TEXT",
+          "description": "TEXT is a Swedish band founded by Kristofer Steen, David Sandström, Fredrik Bäckström and Jon F Brännström. All, except Bäckström, were ex-members of hardcore",
+          "kind": "entity",
+          "source": "wikipedia",
+          "sourceUrl": "https://en.wikipedia.org/wiki/TEXT",
+          "matchText": "TEXT",
+          "matchType": "label",
+          "wikipediaTitle": "TEXT",
+          "wikipediaUrl": "https://en.wikipedia.org/wiki/TEXT",
+          "wikibaseId": "Q7670066",
+          "score": 43,
+          "ngramSize": 1,
+          "contextLabels": []
+        },
+        {
+          "id": "Q234460",
+          "label": "text",
+          "description": "object that can be \"read\" by reader; result of writing",
+          "kind": "entity",
+          "source": "wikidata",
+          "sourceUrl": "https://www.wikidata.org/wiki/Q234460",
+          "matchText": "text",
+          "matchType": "label",
+          "aliases": [],
+          "score": 39,
+          "ngramSize": 1,
+          "contextLabels": []
+        },
+        {
+          "id": "Q6658155",
+          "label": "Text",
+          "description": "AI customer service software company",
+          "kind": "entity",
+          "source": "wikidata",
+          "sourceUrl": "https://www.wikidata.org/wiki/Q6658155",
+          "matchText": "Text",
+          "matchType": "label",
+          "aliases": [],
+          "score": 39,
+          "ngramSize": 1,
+          "contextLabels": []
+        }
+      ],
+      "entity": {
+        "id": "Q7670066",
+        "label": "TEXT",
+        "description": "TEXT is a Swedish band founded by Kristofer Steen, David Sandström, Fredrik Bäckström and Jon F Brännström. All, except Bäckström, were ex-members of hardcore",
+        "kind": "entity",
+        "source": "wikipedia",
+        "sourceUrl": "https://en.wikipedia.org/wiki/TEXT",
+        "score": 43,
+        "wikipediaUrl": "https://en.wikipedia.org/wiki/TEXT",
+        "wikipediaTitle": "TEXT",
+        "contextLabels": [],
+        "overrideEntry": null
+      }
+    },
+    {
+      "text": "with",
+      "tokens": [
+        "with"
+      ],
+      "start": 3,
+      "end": 3,
+      "size": 1,
+      "candidates": [
+        {
+          "id": "wikt:en:with#Preposition:0",
+          "label": "with",
+          "description": "Against.",
+          "kind": "entity",
+          "source": "wiktionary",
+          "sourceUrl": "https://en.wiktionary.org/wiki/with",
+          "matchText": "with",
+          "matchType": "definition",
+          "partOfSpeech": "Preposition",
+          "definition": "Against.",
+          "score": 31,
+          "ngramSize": 1,
+          "contextLabels": []
+        },
+        {
+          "id": "wikt:en:with#Preposition:1",
+          "label": "with",
+          "description": "In the company of; alongside, close to; near to.",
+          "kind": "entity",
+          "source": "wiktionary",
+          "sourceUrl": "https://en.wiktionary.org/wiki/with",
+          "matchText": "with",
+          "matchType": "definition",
+          "partOfSpeech": "Preposition",
+          "definition": "In the company of; alongside, close to; near to.",
+          "score": 31,
+          "ngramSize": 1,
+          "contextLabels": []
+        },
+        {
+          "id": "wikt:en:with#Preposition:2",
+          "label": "with",
+          "description": "In addition to; as an accessory to.",
+          "kind": "entity",
+          "source": "wiktionary",
+          "sourceUrl": "https://en.wiktionary.org/wiki/with",
+          "matchText": "with",
+          "matchType": "definition",
+          "partOfSpeech": "Preposition",
+          "definition": "In addition to; as an accessory to.",
+          "score": 31,
+          "ngramSize": 1,
+          "contextLabels": []
+        }
+      ],
+      "entity": {
+        "id": "wikt:en:with#Preposition:0",
+        "label": "with",
+        "description": "Against.",
+        "kind": "entity",
+        "source": "wiktionary",
+        "sourceUrl": "https://en.wiktionary.org/wiki/with",
+        "score": 31,
+        "wikipediaUrl": null,
+        "wikipediaTitle": null,
+        "contextLabels": [],
+        "overrideEntry": null
+      }
+    },
+    {
+      "text": "Wikidata",
+      "tokens": [
+        "Wikidata"
+      ],
+      "start": 4,
+      "end": 4,
+      "size": 1,
+      "candidates": [
+        {
+          "id": "Q2013",
+          "label": "Wikidata",
+          "description": "free multilingual online knowledge graph",
+          "kind": "entity",
+          "source": "wikidata",
+          "sourceUrl": "https://www.wikidata.org/wiki/Q2013",
+          "matchText": "Wikidata",
+          "matchType": "label",
+          "wikipediaTitle": "Wikidata",
+          "wikipediaUrl": "https://en.wikipedia.org/wiki/Wikidata",
+          "wikibaseId": "Q2013",
+          "aliases": [],
+          "sources": [
+            "wikipedia",
+            "wikidata"
+          ],
+          "score": 51,
+          "ngramSize": 1,
+          "contextLabels": []
+        },
+        {
+          "id": "Q4115189",
+          "label": "Wikidata Sandbox",
+          "description": "This serves as a sandbox for live testing features. Please be gentle with it. Feel free to edit anything on this page, though! For testing links, try adding ones to userpages.",
+          "kind": "entity",
+          "source": "wikidata",
+          "sourceUrl": "https://www.wikidata.org/wiki/Q4115189",
+          "matchText": "Wikidata Sandbox",
+          "matchType": "label",
+          "aliases": [],
+          "score": 18,
+          "ngramSize": 1,
+          "contextLabels": []
+        },
+        {
+          "id": "Q98970039",
+          "label": "WikiProject PCC Wikidata Pilot/University of Washington",
+          "description": "Wikidata pilot project at the University of Washington Libraries",
+          "kind": "entity",
+          "source": "wikidata",
+          "sourceUrl": "https://www.wikidata.org/wiki/Q98970039",
+          "matchText": "Wikidata:WikiProject PCC Wikidata Pilot/University of Washington",
+          "matchType": "alias",
+          "aliases": [
+            "Wikidata:WikiProject PCC Wikidata Pilot/University of Washington"
+          ],
+          "score": 18,
+          "ngramSize": 1,
+          "contextLabels": []
+        }
+      ],
+      "entity": {
+        "id": "Q2013",
+        "label": "Wikidata",
+        "description": "free multilingual online knowledge graph",
+        "kind": "entity",
+        "source": "wikidata",
+        "sourceUrl": "https://www.wikidata.org/wiki/Q2013",
+        "score": 51,
+        "wikipediaUrl": "https://en.wikipedia.org/wiki/Wikidata",
+        "wikipediaTitle": "Wikidata",
+        "contextLabels": [],
+        "overrideEntry": null
+      }
+    },
+    {
+      "text": "then",
+      "tokens": [
+        "then"
+      ],
+      "start": 5,
+      "end": 5,
+      "size": 1,
+      "candidates": [
+        {
+          "id": "Q37485249",
+          "label": "Then",
+          "description": "family name",
+          "kind": "entity",
+          "source": "wikidata",
+          "sourceUrl": "https://www.wikidata.org/wiki/Q37485249",
+          "matchText": "Then",
+          "matchType": "label",
+          "aliases": [],
+          "score": 39,
+          "ngramSize": 1,
+          "contextLabels": []
+        },
+        {
+          "id": "Q50130676",
+          "label": "Then",
+          "description": "2017 single by Anne-Marie",
+          "kind": "entity",
+          "source": "wikidata",
+          "sourceUrl": "https://www.wikidata.org/wiki/Q50130676",
+          "matchText": "Then",
+          "matchType": "label",
+          "aliases": [],
+          "score": 39,
+          "ngramSize": 1,
+          "contextLabels": []
+        },
+        {
+          "id": "wikt:en:then#Adverb:0",
+          "label": "then",
+          "description": " At that time.",
+          "kind": "entity",
+          "source": "wiktionary",
+          "sourceUrl": "https://en.wiktionary.org/wiki/then",
+          "matchText": "then",
+          "matchType": "definition",
+          "partOfSpeech": "Adverb",
+          "definition": " At that time.",
+          "score": 31,
+          "ngramSize": 1,
+          "contextLabels": []
+        }
+      ],
+      "entity": {
+        "id": "Q37485249",
+        "label": "Then",
+        "description": "family name",
+        "kind": "entity",
+        "source": "wikidata",
+        "sourceUrl": "https://www.wikidata.org/wiki/Q37485249",
+        "score": 39,
+        "wikipediaUrl": null,
+        "wikipediaTitle": null,
+        "contextLabels": [],
+        "overrideEntry": null
+      }
+    },
+    {
+      "text": "translate",
+      "tokens": [
+        "translate"
+      ],
+      "start": 6,
+      "end": 6,
+      "size": 1,
+      "candidates": [
+        {
+          "id": "Q7553",
+          "label": "translation",
+          "description": "statement that explains the meaning of a word, phrase, concept, or idea",
+          "kind": "entity",
+          "source": "wikidata",
+          "sourceUrl": "https://www.wikidata.org/wiki/Q7553",
+          "matchText": "translate",
+          "matchType": "alias",
+          "wikipediaTitle": "Translation",
+          "wikipediaUrl": "https://en.wikipedia.org/wiki/Translation",
+          "wikibaseId": "Q7553",
+          "aliases": [
+            "translate"
+          ],
+          "sources": [
+            "wikipedia",
+            "wikidata"
+          ],
+          "score": 31,
+          "ngramSize": 1,
+          "contextLabels": []
+        },
+        {
+          "id": "wikt:en:translate#Verb:0",
+          "label": "translate",
+          "description": "Senses relating to the change of information, etc., from one form to another.\n To change spoken words or written text (of a book, document, movie, etc.) from one language to another.",
+          "kind": "entity",
+          "source": "wiktionary",
+          "sourceUrl": "https://en.wiktionary.org/wiki/translate",
+          "matchText": "translate",
+          "matchType": "definition",
+          "partOfSpeech": "Verb",
+          "definition": "Senses relating to the change of information, etc., from one form to another.\n To change spoken words or written text (of a book, document, movie, etc.) from one language to another.",
+          "score": 31,
+          "ngramSize": 1,
+          "contextLabels": []
+        },
+        {
+          "id": "wikt:en:translate#Verb:1",
+          "label": "translate",
+          "description": " To change spoken words or written text (of a book, document, movie, etc.) from one language to another.",
+          "kind": "entity",
+          "source": "wiktionary",
+          "sourceUrl": "https://en.wiktionary.org/wiki/translate",
+          "matchText": "translate",
+          "matchType": "definition",
+          "partOfSpeech": "Verb",
+          "definition": " To change spoken words or written text (of a book, document, movie, etc.) from one language to another.",
+          "score": 31,
+          "ngramSize": 1,
+          "contextLabels": []
+        }
+      ],
+      "entity": {
+        "id": "Q7553",
+        "label": "translation",
+        "description": "statement that explains the meaning of a word, phrase, concept, or idea",
+        "kind": "entity",
+        "source": "wikidata",
+        "sourceUrl": "https://www.wikidata.org/wiki/Q7553",
+        "score": 31,
+        "wikipediaUrl": "https://en.wikipedia.org/wiki/Translation",
+        "wikipediaTitle": "Translation",
+        "contextLabels": [],
+        "overrideEntry": null
+      }
+    },
+    {
+      "text": "each",
+      "tokens": [
+        "each"
+      ],
+      "start": 7,
+      "end": 7,
+      "size": 1,
+      "candidates": [
+        {
+          "id": "wikt:en:each#Determiner:0",
+          "label": "each",
+          "description": "All; every; qualifying a singular noun, indicating all examples of the thing so named seen as individual or separate items (compare every).",
+          "kind": "entity",
+          "source": "wiktionary",
+          "sourceUrl": "https://en.wiktionary.org/wiki/each",
+          "matchText": "each",
+          "matchType": "definition",
+          "partOfSpeech": "Determiner",
+          "definition": "All; every; qualifying a singular noun, indicating all examples of the thing so named seen as individual or separate items (compare every).",
+          "score": 31,
+          "ngramSize": 1,
+          "contextLabels": []
+        },
+        {
+          "id": "wikt:en:each#Adverb:1",
+          "label": "each",
+          "description": "For one; apiece; per.",
+          "kind": "entity",
+          "source": "wiktionary",
+          "sourceUrl": "https://en.wiktionary.org/wiki/each",
+          "matchText": "each",
+          "matchType": "definition",
+          "partOfSpeech": "Adverb",
+          "definition": "For one; apiece; per.",
+          "score": 31,
+          "ngramSize": 1,
+          "contextLabels": []
+        },
+        {
+          "id": "wikt:en:each#Adverb:2",
+          "label": "each",
+          "description": "Individually; separately; used in a sentence with a plural subject to indicate that the action or state described by the verb applies to all members of the described group individually, rather than collectively to the entire group.",
+          "kind": "entity",
+          "source": "wiktionary",
+          "sourceUrl": "https://en.wiktionary.org/wiki/each",
+          "matchText": "each",
+          "matchType": "definition",
+          "partOfSpeech": "Adverb",
+          "definition": "Individually; separately; used in a sentence with a plural subject to indicate that the action or state described by the verb applies to all members of the described group individually, rather than collectively to the entire group.",
+          "score": 31,
+          "ngramSize": 1,
+          "contextLabels": []
+        }
+      ],
+      "entity": {
+        "id": "wikt:en:each#Determiner:0",
+        "label": "each",
+        "description": "All; every; qualifying a singular noun, indicating all examples of the thing so named seen as individual or separate items (compare every).",
+        "kind": "entity",
+        "source": "wiktionary",
+        "sourceUrl": "https://en.wiktionary.org/wiki/each",
+        "score": 31,
+        "wikipediaUrl": null,
+        "wikipediaTitle": null,
+        "contextLabels": [],
+        "overrideEntry": null
+      }
+    },
+    {
+      "text": "sentence",
+      "tokens": [
+        "sentence"
+      ],
+      "start": 8,
+      "end": 8,
+      "size": 1,
+      "candidates": [
+        {
+          "id": "Q41796",
+          "label": "sentence",
+          "description": "textual unit consisting of one or more words that are grammatically linked, expressing a complete thought in non-functional linguistics",
+          "kind": "entity",
+          "source": "wikidata",
+          "sourceUrl": "https://www.wikidata.org/wiki/Q41796",
+          "matchText": "sentence",
+          "matchType": "label",
+          "wikipediaTitle": "Sentence (linguistics)",
+          "wikipediaUrl": "https://en.wikipedia.org/wiki/Sentence_(linguistics)",
+          "wikibaseId": "Q41796",
+          "aliases": [],
+          "sources": [
+            "wikipedia",
+            "wikidata"
+          ],
+          "score": 51,
+          "ngramSize": 1,
+          "contextLabels": []
+        },
+        {
+          "id": "Q1763090",
+          "label": "sentence",
+          "description": "decree of punishment in law",
+          "kind": "entity",
+          "source": "wikidata",
+          "sourceUrl": "https://www.wikidata.org/wiki/Q1763090",
+          "matchText": "sentence",
+          "matchType": "label",
+          "aliases": [],
+          "score": 39,
+          "ngramSize": 1,
+          "contextLabels": []
+        },
+        {
+          "id": "wikt:en:sentence#Noun:0",
+          "label": "sentence",
+          "description": " The decision or judgement of a jury or court; a verdict. .mw-parser-output .defdate{font-size:smaller}",
+          "kind": "entity",
+          "source": "wiktionary",
+          "sourceUrl": "https://en.wiktionary.org/wiki/sentence",
+          "matchText": "sentence",
+          "matchType": "definition",
+          "partOfSpeech": "Noun",
+          "definition": " The decision or judgement of a jury or court; a verdict. .mw-parser-output .defdate{font-size:smaller}",
+          "score": 31,
+          "ngramSize": 1,
+          "contextLabels": []
+        }
+      ],
+      "entity": {
+        "id": "Q41796",
+        "label": "sentence",
+        "description": "textual unit consisting of one or more words that are grammatically linked, expressing a complete thought in non-functional linguistics",
+        "kind": "entity",
+        "source": "wikidata",
+        "sourceUrl": "https://www.wikidata.org/wiki/Q41796",
+        "score": 51,
+        "wikipediaUrl": "https://en.wikipedia.org/wiki/Sentence_(linguistics)",
+        "wikipediaTitle": "Sentence (linguistics)",
+        "contextLabels": [],
+        "overrideEntry": null
+      }
+    },
+    {
+      "text": "through",
+      "tokens": [
+        "through"
+      ],
+      "start": 9,
+      "end": 9,
+      "size": 1,
+      "candidates": [
+        {
+          "id": "Q135058010",
+          "label": "THROUGH",
+          "description": "2024 video game developed by Degüello Studio",
+          "kind": "entity",
+          "source": "wikidata",
+          "sourceUrl": "https://www.wikidata.org/wiki/Q135058010",
+          "matchText": "THROUGH",
+          "matchType": "label",
+          "aliases": [],
+          "score": 39,
+          "ngramSize": 1,
+          "contextLabels": []
+        },
+        {
+          "id": "wikt:en:through#Preposition:0",
+          "label": "through",
+          "description": "From one side or end of (something) to the other. \nSo as to enter (something), pass within or across, and then leave.",
+          "kind": "entity",
+          "source": "wiktionary",
+          "sourceUrl": "https://en.wiktionary.org/wiki/through",
+          "matchText": "through",
+          "matchType": "definition",
+          "partOfSpeech": "Preposition",
+          "definition": "From one side or end of (something) to the other. \nSo as to enter (something), pass within or across, and then leave.",
+          "score": 31,
+          "ngramSize": 1,
+          "contextLabels": []
+        },
+        {
+          "id": "wikt:en:through#Preposition:1",
+          "label": "through",
+          "description": "So as to enter (something), pass within or across, and then leave.",
+          "kind": "entity",
+          "source": "wiktionary",
+          "sourceUrl": "https://en.wiktionary.org/wiki/through",
+          "matchText": "through",
+          "matchType": "definition",
+          "partOfSpeech": "Preposition",
+          "definition": "So as to enter (something), pass within or across, and then leave.",
+          "score": 31,
+          "ngramSize": 1,
+          "contextLabels": []
+        }
+      ],
+      "entity": {
+        "id": "Q135058010",
+        "label": "THROUGH",
+        "description": "2024 video game developed by Degüello Studio",
+        "kind": "entity",
+        "source": "wikidata",
+        "sourceUrl": "https://www.wikidata.org/wiki/Q135058010",
+        "score": 39,
+        "wikipediaUrl": null,
+        "wikipediaTitle": null,
+        "contextLabels": [],
+        "overrideEntry": null
+      }
+    },
+    {
+      "text": "labels",
+      "tokens": [
+        "labels"
+      ],
+      "start": 10,
+      "end": 10,
+      "size": 1,
+      "candidates": [
+        {
+          "id": "Q3214321",
+          "label": "Labels",
+          "description": "French record label",
+          "kind": "entity",
+          "source": "wikidata",
+          "sourceUrl": "https://www.wikidata.org/wiki/Q3214321",
+          "matchText": "Labels",
+          "matchType": "label",
+          "aliases": [],
+          "score": 39,
+          "ngramSize": 1,
+          "contextLabels": []
+        },
+        {
+          "id": "Q51153747",
+          "label": "Labels",
+          "description": "episode of Moesha (S2 E6)",
+          "kind": "entity",
+          "source": "wikidata",
+          "sourceUrl": "https://www.wikidata.org/wiki/Q51153747",
+          "matchText": "Labels",
+          "matchType": "label",
+          "aliases": [],
+          "score": 39,
+          "ngramSize": 1,
+          "contextLabels": []
+        },
+        {
+          "id": "wikt:en:labels#Noun:0",
+          "label": "labels",
+          "description": "plural of label",
+          "kind": "entity",
+          "source": "wiktionary",
+          "sourceUrl": "https://en.wiktionary.org/wiki/labels",
+          "matchText": "labels",
+          "matchType": "definition",
+          "partOfSpeech": "Noun",
+          "definition": "plural of label",
+          "score": 31,
+          "ngramSize": 1,
+          "contextLabels": []
+        }
+      ],
+      "entity": {
+        "id": "Q3214321",
+        "label": "Labels",
+        "description": "French record label",
+        "kind": "entity",
+        "source": "wikidata",
+        "sourceUrl": "https://www.wikidata.org/wiki/Q3214321",
+        "score": 39,
+        "wikipediaUrl": null,
+        "wikipediaTitle": null,
+        "contextLabels": [],
+        "overrideEntry": null
+      }
+    },
+    {
+      "text": "and",
+      "tokens": [
+        "and"
+      ],
+      "start": 11,
+      "end": 11,
+      "size": 1,
+      "candidates": [
+        {
+          "id": "wikt:en:and#Symbol:0",
+          "label": "and",
+          "description": " ISO 639-3 language code for Ansus.",
+          "kind": "entity",
+          "source": "wiktionary",
+          "sourceUrl": "https://en.wiktionary.org/wiki/and",
+          "matchText": "and",
+          "matchType": "definition",
+          "partOfSpeech": "Symbol",
+          "definition": " ISO 639-3 language code for Ansus.",
+          "score": 31,
+          "ngramSize": 1,
+          "contextLabels": []
+        },
+        {
+          "id": "wikt:en:and#Conjunction:1",
+          "label": "and",
+          "description": "As a coordinating conjunction; expressing two elements to be taken together or in addition to each other.\nUsed simply to connect two noun phrases, adjectives or adverbs. .mw-parser-output .defdate{font-size:smaller}\n\nSimply connecting two clauses or sentences. \n\nIntroducing a clause or sentence which follows on in time or consequence from the first. ",
+          "kind": "entity",
+          "source": "wiktionary",
+          "sourceUrl": "https://en.wiktionary.org/wiki/and",
+          "matchText": "and",
+          "matchType": "definition",
+          "partOfSpeech": "Conjunction",
+          "definition": "As a coordinating conjunction; expressing two elements to be taken together or in addition to each other.\nUsed simply to connect two noun phrases, adjectives or adverbs. .mw-parser-output .defdate{font-size:smaller}\n\nSimply connecting two clauses or sentences. \n\nIntroducing a clause or sentence which follows on in time or consequence from the first. ",
+          "score": 31,
+          "ngramSize": 1,
+          "contextLabels": []
+        },
+        {
+          "id": "wikt:en:and#Conjunction:2",
+          "label": "and",
+          "description": "Used simply to connect two noun phrases, adjectives or adverbs. .mw-parser-output .defdate{font-size:smaller}",
+          "kind": "entity",
+          "source": "wiktionary",
+          "sourceUrl": "https://en.wiktionary.org/wiki/and",
+          "matchText": "and",
+          "matchType": "definition",
+          "partOfSpeech": "Conjunction",
+          "definition": "Used simply to connect two noun phrases, adjectives or adverbs. .mw-parser-output .defdate{font-size:smaller}",
+          "score": 31,
+          "ngramSize": 1,
+          "contextLabels": []
+        }
+      ],
+      "entity": {
+        "id": "wikt:en:and#Symbol:0",
+        "label": "and",
+        "description": " ISO 639-3 language code for Ansus.",
+        "kind": "entity",
+        "source": "wiktionary",
+        "sourceUrl": "https://en.wiktionary.org/wiki/and",
+        "score": 31,
+        "wikipediaUrl": null,
+        "wikipediaTitle": null,
+        "contextLabels": [],
+        "overrideEntry": null
+      }
+    },
+    {
+      "text": "transformation",
+      "tokens": [
+        "transformation"
+      ],
+      "start": 12,
+      "end": 12,
+      "size": 1,
+      "candidates": [
+        {
+          "id": "Q461499",
+          "label": "transformation",
+          "description": "planned genetic alteration of a cell by uptake of genetic material from the environment",
+          "kind": "entity",
+          "source": "wikidata",
+          "sourceUrl": "https://www.wikidata.org/wiki/Q461499",
+          "matchText": "transformation",
+          "matchType": "label",
+          "aliases": [],
+          "score": 39,
+          "ngramSize": 1,
+          "contextLabels": []
+        },
+        {
+          "id": "Q65757353",
+          "label": "transformation",
+          "description": "process involving change into a qualitatively different form",
+          "kind": "entity",
+          "source": "wikidata",
+          "sourceUrl": "https://www.wikidata.org/wiki/Q65757353",
+          "matchText": "transformation",
+          "matchType": "label",
+          "aliases": [],
+          "score": 39,
+          "ngramSize": 1,
+          "contextLabels": []
+        },
+        {
+          "id": "Q12202238",
+          "label": "transformation",
+          "description": "function mapping a set to itself",
+          "kind": "entity",
+          "source": "wikidata",
+          "sourceUrl": "https://www.wikidata.org/wiki/Q12202238",
+          "matchText": "transformation",
+          "matchType": "label",
+          "aliases": [],
+          "score": 39,
+          "ngramSize": 1,
+          "contextLabels": []
+        }
+      ],
+      "entity": {
+        "id": "Q461499",
+        "label": "transformation",
+        "description": "planned genetic alteration of a cell by uptake of genetic material from the environment",
+        "kind": "entity",
+        "source": "wikidata",
+        "sourceUrl": "https://www.wikidata.org/wiki/Q461499",
+        "score": 39,
+        "wikipediaUrl": null,
+        "wikipediaTitle": null,
+        "contextLabels": [],
+        "overrideEntry": null
+      }
+    },
+    {
+      "text": "rules",
+      "tokens": [
+        "rules"
+      ],
+      "start": 13,
+      "end": 13,
+      "size": 1,
+      "candidates": [
+        {
+          "id": "wikt:en:rules#Noun:0",
+          "label": "rules",
+          "description": "plural of rule",
+          "kind": "entity",
+          "source": "wiktionary",
+          "sourceUrl": "https://en.wiktionary.org/wiki/rules",
+          "matchText": "rules",
+          "matchType": "definition",
+          "partOfSpeech": "Noun",
+          "definition": "plural of rule",
+          "score": 31,
+          "ngramSize": 1,
+          "contextLabels": []
+        },
+        {
+          "id": "wikt:en:rules#Verb:1",
+          "label": "rules",
+          "description": "third-person singular simple present indicative of rule",
+          "kind": "entity",
+          "source": "wiktionary",
+          "sourceUrl": "https://en.wiktionary.org/wiki/rules",
+          "matchText": "rules",
+          "matchType": "definition",
+          "partOfSpeech": "Verb",
+          "definition": "third-person singular simple present indicative of rule",
+          "score": 31,
+          "ngramSize": 1,
+          "contextLabels": []
+        },
+        {
+          "id": "wp:en:vanderpump_rules",
+          "label": "Vanderpump Rules",
+          "description": "three spin-offs: Vanderpump Rules After Show, Vanderpump Rules: Jax &amp; Brittany Take Kentucky, and The Valley. Vanderpump Rules follows Lisa Vanderpump and",
+          "kind": "entity",
+          "source": "wikipedia",
+          "sourceUrl": "https://en.wikipedia.org/wiki/Vanderpump_Rules",
+          "matchText": "Vanderpump Rules",
+          "matchType": null,
+          "wikipediaTitle": "Vanderpump Rules",
+          "wikipediaUrl": "https://en.wikipedia.org/wiki/Vanderpump_Rules",
+          "wikibaseId": null,
+          "score": 22,
+          "ngramSize": 1,
+          "contextLabels": []
+        }
+      ],
+      "entity": {
+        "id": "wikt:en:rules#Noun:0",
+        "label": "rules",
+        "description": "plural of rule",
+        "kind": "entity",
+        "source": "wiktionary",
+        "sourceUrl": "https://en.wiktionary.org/wiki/rules",
+        "score": 31,
+        "wikipediaUrl": null,
+        "wikipediaTitle": null,
+        "contextLabels": [],
+        "overrideEntry": null
+      }
+    },
+    {
+      "text": "Unresolved",
+      "tokens": [
+        "Unresolved"
+      ],
+      "start": 14,
+      "end": 14,
+      "size": 1,
+      "candidates": [
+        {
+          "id": "wp:en:sexual_tension",
+          "label": "Sexual tension",
+          "description": "Sexual tension is a social phenomenon that occurs when two individuals interact and one or both feel sexual attraction, but the consummation is postponed",
+          "kind": "entity",
+          "source": "wikipedia",
+          "sourceUrl": "https://en.wikipedia.org/wiki/Sexual_tension",
+          "matchText": "Sexual tension",
+          "matchType": null,
+          "wikipediaTitle": "Sexual tension",
+          "wikipediaUrl": "https://en.wikipedia.org/wiki/Sexual_tension",
+          "wikibaseId": null,
+          "score": 17,
+          "ngramSize": 1,
+          "contextLabels": []
+        },
+        {
+          "id": "wp:en:open_problem",
+          "label": "Open problem",
+          "description": "In science and mathematics, an open problem or an open question is a known problem which can be accurately stated, and which is assumed to have an objective",
+          "kind": "entity",
+          "source": "wikipedia",
+          "sourceUrl": "https://en.wikipedia.org/wiki/Open_problem",
+          "matchText": "Open problem",
+          "matchType": null,
+          "wikipediaTitle": "Open problem",
+          "wikipediaUrl": "https://en.wikipedia.org/wiki/Open_problem",
+          "wikibaseId": null,
+          "score": 17,
+          "ngramSize": 1,
+          "contextLabels": []
+        },
+        {
+          "id": "wp:en:list_of_unsolved_murders_in_belize",
+          "label": "List of unsolved murders in Belize",
+          "description": "This is a list of noted unsolved murders in Belize since the 1970s. This list includes both known and presumed murders, and further includes murders which",
+          "kind": "entity",
+          "source": "wikipedia",
+          "sourceUrl": "https://en.wikipedia.org/wiki/List_of_unsolved_murders_in_Belize",
+          "matchText": "List of unsolved murders in Belize",
+          "matchType": null,
+          "wikipediaTitle": "List of unsolved murders in Belize",
+          "wikipediaUrl": "https://en.wikipedia.org/wiki/List_of_unsolved_murders_in_Belize",
+          "wikibaseId": null,
+          "score": 17,
+          "ngramSize": 1,
+          "contextLabels": []
+        }
+      ],
+      "entity": {
+        "id": "wp:en:sexual_tension",
+        "label": "Sexual tension",
+        "description": "Sexual tension is a social phenomenon that occurs when two individuals interact and one or both feel sexual attraction, but the consummation is postponed",
+        "kind": "entity",
+        "source": "wikipedia",
+        "sourceUrl": "https://en.wikipedia.org/wiki/Sexual_tension",
+        "score": 17,
+        "wikipediaUrl": "https://en.wikipedia.org/wiki/Sexual_tension",
+        "wikipediaTitle": "Sexual tension",
+        "contextLabels": [],
+        "overrideEntry": null
+      }
+    },
+    {
+      "text": "parts",
+      "tokens": [
+        "parts"
+      ],
+      "start": 15,
+      "end": 15,
+      "size": 1,
+      "candidates": [],
+      "entity": null
+    },
+    {
+      "text": "remain",
+      "tokens": [
+        "remain"
+      ],
+      "start": 16,
+      "end": 16,
+      "size": 1,
+      "candidates": [],
+      "entity": null
+    },
+    {
+      "text": "variables",
+      "tokens": [
+        "variables"
+      ],
+      "start": 17,
+      "end": 17,
+      "size": 1,
+      "candidates": [],
+      "entity": null
+    },
+    {
+      "text": "with",
+      "tokens": [
+        "with"
+      ],
+      "start": 18,
+      "end": 18,
+      "size": 1,
+      "candidates": [
+        {
+          "id": "wikt:en:with#Preposition:0",
+          "label": "with",
+          "description": "Against.",
+          "kind": "entity",
+          "source": "wiktionary",
+          "sourceUrl": "https://en.wiktionary.org/wiki/with",
+          "matchText": "with",
+          "matchType": "definition",
+          "partOfSpeech": "Preposition",
+          "definition": "Against.",
+          "score": 31,
+          "ngramSize": 1,
+          "contextLabels": []
+        },
+        {
+          "id": "wikt:en:with#Preposition:1",
+          "label": "with",
+          "description": "In the company of; alongside, close to; near to.",
+          "kind": "entity",
+          "source": "wiktionary",
+          "sourceUrl": "https://en.wiktionary.org/wiki/with",
+          "matchText": "with",
+          "matchType": "definition",
+          "partOfSpeech": "Preposition",
+          "definition": "In the company of; alongside, close to; near to.",
+          "score": 31,
+          "ngramSize": 1,
+          "contextLabels": []
+        },
+        {
+          "id": "wikt:en:with#Preposition:2",
+          "label": "with",
+          "description": "In addition to; as an accessory to.",
+          "kind": "entity",
+          "source": "wiktionary",
+          "sourceUrl": "https://en.wiktionary.org/wiki/with",
+          "matchText": "with",
+          "matchType": "definition",
+          "partOfSpeech": "Preposition",
+          "definition": "In addition to; as an accessory to.",
+          "score": 31,
+          "ngramSize": 1,
+          "contextLabels": []
+        }
+      ],
+      "entity": {
+        "id": "wikt:en:with#Preposition:0",
+        "label": "with",
+        "description": "Against.",
+        "kind": "entity",
+        "source": "wiktionary",
+        "sourceUrl": "https://en.wiktionary.org/wiki/with",
+        "score": 31,
+        "wikipediaUrl": null,
+        "wikipediaTitle": null,
+        "contextLabels": [],
+        "overrideEntry": null
+      }
+    },
+    {
+      "text": "questions",
+      "tokens": [
+        "questions"
+      ],
+      "start": 19,
+      "end": 19,
+      "size": 1,
+      "candidates": [],
+      "entity": null
+    }
+  ],
+  "contexts": [],
+  "mainContext": null,
+  "additionalContexts": [],
+  "bigContexts": [],
+  "mainBigContext": null,
+  "additionalBigContexts": [],
+  "interpretations": [
+    {
+      "rank": 1,
+      "score": 573,
+      "phrases": [
+        {
+          "text": "Formalize",
+          "entityId": "Q5469987",
+          "kind": "entity",
+          "entityLabel": "Formalized Music",
+          "entityDescription": "Formalized Music: Thought and Mathematics in Composition is a book by Greek composer, architect, and engineer Iannis Xenakis in which he explains his motivation"
+        },
+        {
+          "text": "source",
+          "entityId": "Q643572",
+          "kind": "entity",
+          "entityLabel": "Source",
+          "entityDescription": "game engine developed by Valve Corporation"
+        },
+        {
+          "text": "text",
+          "entityId": "Q7670066",
+          "kind": "entity",
+          "entityLabel": "TEXT",
+          "entityDescription": "TEXT is a Swedish band founded by Kristofer Steen, David Sandström, Fredrik Bäckström and Jon F Brännström. All, except Bäckström, were ex-members of hardcore"
+        },
+        {
+          "text": "with",
+          "entityId": "wikt:en:with#Preposition:0",
+          "kind": "entity",
+          "entityLabel": "with",
+          "entityDescription": "Against."
+        },
+        {
+          "text": "Wikidata",
+          "entityId": "Q2013",
+          "kind": "entity",
+          "entityLabel": "Wikidata",
+          "entityDescription": "free multilingual online knowledge graph"
+        },
+        {
+          "text": "then",
+          "entityId": "Q37485249",
+          "kind": "entity",
+          "entityLabel": "Then",
+          "entityDescription": "family name"
+        },
+        {
+          "text": "translate",
+          "entityId": "Q7553",
+          "kind": "entity",
+          "entityLabel": "translation",
+          "entityDescription": "statement that explains the meaning of a word, phrase, concept, or idea"
+        },
+        {
+          "text": "each",
+          "entityId": "wikt:en:each#Determiner:0",
+          "kind": "entity",
+          "entityLabel": "each",
+          "entityDescription": "All; every; qualifying a singular noun, indicating all examples of the thing so named seen as individual or separate items (compare every)."
+        },
+        {
+          "text": "sentence",
+          "entityId": "Q41796",
+          "kind": "entity",
+          "entityLabel": "sentence",
+          "entityDescription": "textual unit consisting of one or more words that are grammatically linked, expressing a complete thought in non-functional linguistics"
+        },
+        {
+          "text": "through",
+          "entityId": "Q135058010",
+          "kind": "entity",
+          "entityLabel": "THROUGH",
+          "entityDescription": "2024 video game developed by Degüello Studio"
+        },
+        {
+          "text": "labels",
+          "entityId": "Q3214321",
+          "kind": "entity",
+          "entityLabel": "Labels",
+          "entityDescription": "French record label"
+        },
+        {
+          "text": "and",
+          "entityId": "wikt:en:and#Symbol:0",
+          "kind": "entity",
+          "entityLabel": "and",
+          "entityDescription": " ISO 639-3 language code for Ansus."
+        },
+        {
+          "text": "transformation",
+          "entityId": "Q461499",
+          "kind": "entity",
+          "entityLabel": "transformation",
+          "entityDescription": "planned genetic alteration of a cell by uptake of genetic material from the environment"
+        },
+        {
+          "text": "rules",
+          "entityId": "wikt:en:rules#Noun:0",
+          "kind": "entity",
+          "entityLabel": "rules",
+          "entityDescription": "plural of rule"
+        },
+        {
+          "text": "Unresolved",
+          "entityId": "wp:en:sexual_tension",
+          "kind": "entity",
+          "entityLabel": "Sexual tension",
+          "entityDescription": "Sexual tension is a social phenomenon that occurs when two individuals interact and one or both feel sexual attraction, but the consummation is postponed"
+        },
+        {
+          "text": "with",
+          "entityId": "wikt:en:with#Preposition:0",
+          "kind": "entity",
+          "entityLabel": "with",
+          "entityDescription": "Against."
+        }
+      ]
+    },
+    {
+      "rank": 2,
+      "score": 573,
+      "phrases": [
+        {
+          "text": "Formalize",
+          "entityId": "Q5469987",
+          "kind": "entity",
+          "entityLabel": "Formalized Music",
+          "entityDescription": "Formalized Music: Thought and Mathematics in Composition is a book by Greek composer, architect, and engineer Iannis Xenakis in which he explains his motivation"
+        },
+        {
+          "text": "source",
+          "entityId": "Q643572",
+          "kind": "entity",
+          "entityLabel": "Source",
+          "entityDescription": "game engine developed by Valve Corporation"
+        },
+        {
+          "text": "text",
+          "entityId": "Q7670066",
+          "kind": "entity",
+          "entityLabel": "TEXT",
+          "entityDescription": "TEXT is a Swedish band founded by Kristofer Steen, David Sandström, Fredrik Bäckström and Jon F Brännström. All, except Bäckström, were ex-members of hardcore"
+        },
+        {
+          "text": "with",
+          "entityId": "wikt:en:with#Preposition:0",
+          "kind": "entity",
+          "entityLabel": "with",
+          "entityDescription": "Against."
+        },
+        {
+          "text": "Wikidata",
+          "entityId": "Q2013",
+          "kind": "entity",
+          "entityLabel": "Wikidata",
+          "entityDescription": "free multilingual online knowledge graph"
+        },
+        {
+          "text": "then",
+          "entityId": "Q37485249",
+          "kind": "entity",
+          "entityLabel": "Then",
+          "entityDescription": "family name"
+        },
+        {
+          "text": "translate",
+          "entityId": "Q7553",
+          "kind": "entity",
+          "entityLabel": "translation",
+          "entityDescription": "statement that explains the meaning of a word, phrase, concept, or idea"
+        },
+        {
+          "text": "each",
+          "entityId": "wikt:en:each#Determiner:0",
+          "kind": "entity",
+          "entityLabel": "each",
+          "entityDescription": "All; every; qualifying a singular noun, indicating all examples of the thing so named seen as individual or separate items (compare every)."
+        },
+        {
+          "text": "sentence",
+          "entityId": "Q41796",
+          "kind": "entity",
+          "entityLabel": "sentence",
+          "entityDescription": "textual unit consisting of one or more words that are grammatically linked, expressing a complete thought in non-functional linguistics"
+        },
+        {
+          "text": "through",
+          "entityId": "Q135058010",
+          "kind": "entity",
+          "entityLabel": "THROUGH",
+          "entityDescription": "2024 video game developed by Degüello Studio"
+        },
+        {
+          "text": "labels",
+          "entityId": "Q3214321",
+          "kind": "entity",
+          "entityLabel": "Labels",
+          "entityDescription": "French record label"
+        },
+        {
+          "text": "and",
+          "entityId": "wikt:en:and#Symbol:0",
+          "kind": "entity",
+          "entityLabel": "and",
+          "entityDescription": " ISO 639-3 language code for Ansus."
+        },
+        {
+          "text": "transformation",
+          "entityId": "Q461499",
+          "kind": "entity",
+          "entityLabel": "transformation",
+          "entityDescription": "planned genetic alteration of a cell by uptake of genetic material from the environment"
+        },
+        {
+          "text": "rules",
+          "entityId": "wikt:en:rules#Noun:0",
+          "kind": "entity",
+          "entityLabel": "rules",
+          "entityDescription": "plural of rule"
+        },
+        {
+          "text": "Unresolved",
+          "entityId": "wp:en:sexual_tension",
+          "kind": "entity",
+          "entityLabel": "Sexual tension",
+          "entityDescription": "Sexual tension is a social phenomenon that occurs when two individuals interact and one or both feel sexual attraction, but the consummation is postponed"
+        },
+        {
+          "text": "with",
+          "entityId": "wikt:en:with#Preposition:1",
+          "kind": "entity",
+          "entityLabel": "with",
+          "entityDescription": "In the company of; alongside, close to; near to."
+        }
+      ]
+    },
+    {
+      "rank": 3,
+      "score": 573,
+      "phrases": [
+        {
+          "text": "Formalize",
+          "entityId": "Q5469987",
+          "kind": "entity",
+          "entityLabel": "Formalized Music",
+          "entityDescription": "Formalized Music: Thought and Mathematics in Composition is a book by Greek composer, architect, and engineer Iannis Xenakis in which he explains his motivation"
+        },
+        {
+          "text": "source",
+          "entityId": "Q643572",
+          "kind": "entity",
+          "entityLabel": "Source",
+          "entityDescription": "game engine developed by Valve Corporation"
+        },
+        {
+          "text": "text",
+          "entityId": "Q7670066",
+          "kind": "entity",
+          "entityLabel": "TEXT",
+          "entityDescription": "TEXT is a Swedish band founded by Kristofer Steen, David Sandström, Fredrik Bäckström and Jon F Brännström. All, except Bäckström, were ex-members of hardcore"
+        },
+        {
+          "text": "with",
+          "entityId": "wikt:en:with#Preposition:0",
+          "kind": "entity",
+          "entityLabel": "with",
+          "entityDescription": "Against."
+        },
+        {
+          "text": "Wikidata",
+          "entityId": "Q2013",
+          "kind": "entity",
+          "entityLabel": "Wikidata",
+          "entityDescription": "free multilingual online knowledge graph"
+        },
+        {
+          "text": "then",
+          "entityId": "Q37485249",
+          "kind": "entity",
+          "entityLabel": "Then",
+          "entityDescription": "family name"
+        },
+        {
+          "text": "translate",
+          "entityId": "Q7553",
+          "kind": "entity",
+          "entityLabel": "translation",
+          "entityDescription": "statement that explains the meaning of a word, phrase, concept, or idea"
+        },
+        {
+          "text": "each",
+          "entityId": "wikt:en:each#Determiner:0",
+          "kind": "entity",
+          "entityLabel": "each",
+          "entityDescription": "All; every; qualifying a singular noun, indicating all examples of the thing so named seen as individual or separate items (compare every)."
+        },
+        {
+          "text": "sentence",
+          "entityId": "Q41796",
+          "kind": "entity",
+          "entityLabel": "sentence",
+          "entityDescription": "textual unit consisting of one or more words that are grammatically linked, expressing a complete thought in non-functional linguistics"
+        },
+        {
+          "text": "through",
+          "entityId": "Q135058010",
+          "kind": "entity",
+          "entityLabel": "THROUGH",
+          "entityDescription": "2024 video game developed by Degüello Studio"
+        },
+        {
+          "text": "labels",
+          "entityId": "Q3214321",
+          "kind": "entity",
+          "entityLabel": "Labels",
+          "entityDescription": "French record label"
+        },
+        {
+          "text": "and",
+          "entityId": "wikt:en:and#Symbol:0",
+          "kind": "entity",
+          "entityLabel": "and",
+          "entityDescription": " ISO 639-3 language code for Ansus."
+        },
+        {
+          "text": "transformation",
+          "entityId": "Q461499",
+          "kind": "entity",
+          "entityLabel": "transformation",
+          "entityDescription": "planned genetic alteration of a cell by uptake of genetic material from the environment"
+        },
+        {
+          "text": "rules",
+          "entityId": "wikt:en:rules#Noun:0",
+          "kind": "entity",
+          "entityLabel": "rules",
+          "entityDescription": "plural of rule"
+        },
+        {
+          "text": "Unresolved",
+          "entityId": "wp:en:sexual_tension",
+          "kind": "entity",
+          "entityLabel": "Sexual tension",
+          "entityDescription": "Sexual tension is a social phenomenon that occurs when two individuals interact and one or both feel sexual attraction, but the consummation is postponed"
+        },
+        {
+          "text": "with",
+          "entityId": "wikt:en:with#Preposition:2",
+          "kind": "entity",
+          "entityLabel": "with",
+          "entityDescription": "In addition to; as an accessory to."
+        }
+      ]
+    },
+    {
+      "rank": 4,
+      "score": 573,
+      "phrases": [
+        {
+          "text": "Formalize",
+          "entityId": "Q5469987",
+          "kind": "entity",
+          "entityLabel": "Formalized Music",
+          "entityDescription": "Formalized Music: Thought and Mathematics in Composition is a book by Greek composer, architect, and engineer Iannis Xenakis in which he explains his motivation"
+        },
+        {
+          "text": "source",
+          "entityId": "Q643572",
+          "kind": "entity",
+          "entityLabel": "Source",
+          "entityDescription": "game engine developed by Valve Corporation"
+        },
+        {
+          "text": "text",
+          "entityId": "Q7670066",
+          "kind": "entity",
+          "entityLabel": "TEXT",
+          "entityDescription": "TEXT is a Swedish band founded by Kristofer Steen, David Sandström, Fredrik Bäckström and Jon F Brännström. All, except Bäckström, were ex-members of hardcore"
+        },
+        {
+          "text": "with",
+          "entityId": "wikt:en:with#Preposition:0",
+          "kind": "entity",
+          "entityLabel": "with",
+          "entityDescription": "Against."
+        },
+        {
+          "text": "Wikidata",
+          "entityId": "Q2013",
+          "kind": "entity",
+          "entityLabel": "Wikidata",
+          "entityDescription": "free multilingual online knowledge graph"
+        },
+        {
+          "text": "then",
+          "entityId": "Q37485249",
+          "kind": "entity",
+          "entityLabel": "Then",
+          "entityDescription": "family name"
+        },
+        {
+          "text": "translate",
+          "entityId": "Q7553",
+          "kind": "entity",
+          "entityLabel": "translation",
+          "entityDescription": "statement that explains the meaning of a word, phrase, concept, or idea"
+        },
+        {
+          "text": "each",
+          "entityId": "wikt:en:each#Determiner:0",
+          "kind": "entity",
+          "entityLabel": "each",
+          "entityDescription": "All; every; qualifying a singular noun, indicating all examples of the thing so named seen as individual or separate items (compare every)."
+        },
+        {
+          "text": "sentence",
+          "entityId": "Q41796",
+          "kind": "entity",
+          "entityLabel": "sentence",
+          "entityDescription": "textual unit consisting of one or more words that are grammatically linked, expressing a complete thought in non-functional linguistics"
+        },
+        {
+          "text": "through",
+          "entityId": "Q135058010",
+          "kind": "entity",
+          "entityLabel": "THROUGH",
+          "entityDescription": "2024 video game developed by Degüello Studio"
+        },
+        {
+          "text": "labels",
+          "entityId": "Q3214321",
+          "kind": "entity",
+          "entityLabel": "Labels",
+          "entityDescription": "French record label"
+        },
+        {
+          "text": "and",
+          "entityId": "wikt:en:and#Symbol:0",
+          "kind": "entity",
+          "entityLabel": "and",
+          "entityDescription": " ISO 639-3 language code for Ansus."
+        },
+        {
+          "text": "transformation",
+          "entityId": "Q461499",
+          "kind": "entity",
+          "entityLabel": "transformation",
+          "entityDescription": "planned genetic alteration of a cell by uptake of genetic material from the environment"
+        },
+        {
+          "text": "rules",
+          "entityId": "wikt:en:rules#Noun:0",
+          "kind": "entity",
+          "entityLabel": "rules",
+          "entityDescription": "plural of rule"
+        },
+        {
+          "text": "Unresolved",
+          "entityId": "wp:en:open_problem",
+          "kind": "entity",
+          "entityLabel": "Open problem",
+          "entityDescription": "In science and mathematics, an open problem or an open question is a known problem which can be accurately stated, and which is assumed to have an objective"
+        },
+        {
+          "text": "with",
+          "entityId": "wikt:en:with#Preposition:0",
+          "kind": "entity",
+          "entityLabel": "with",
+          "entityDescription": "Against."
+        }
+      ]
+    },
+    {
+      "rank": 5,
+      "score": 573,
+      "phrases": [
+        {
+          "text": "Formalize",
+          "entityId": "Q5469987",
+          "kind": "entity",
+          "entityLabel": "Formalized Music",
+          "entityDescription": "Formalized Music: Thought and Mathematics in Composition is a book by Greek composer, architect, and engineer Iannis Xenakis in which he explains his motivation"
+        },
+        {
+          "text": "source",
+          "entityId": "Q643572",
+          "kind": "entity",
+          "entityLabel": "Source",
+          "entityDescription": "game engine developed by Valve Corporation"
+        },
+        {
+          "text": "text",
+          "entityId": "Q7670066",
+          "kind": "entity",
+          "entityLabel": "TEXT",
+          "entityDescription": "TEXT is a Swedish band founded by Kristofer Steen, David Sandström, Fredrik Bäckström and Jon F Brännström. All, except Bäckström, were ex-members of hardcore"
+        },
+        {
+          "text": "with",
+          "entityId": "wikt:en:with#Preposition:0",
+          "kind": "entity",
+          "entityLabel": "with",
+          "entityDescription": "Against."
+        },
+        {
+          "text": "Wikidata",
+          "entityId": "Q2013",
+          "kind": "entity",
+          "entityLabel": "Wikidata",
+          "entityDescription": "free multilingual online knowledge graph"
+        },
+        {
+          "text": "then",
+          "entityId": "Q37485249",
+          "kind": "entity",
+          "entityLabel": "Then",
+          "entityDescription": "family name"
+        },
+        {
+          "text": "translate",
+          "entityId": "Q7553",
+          "kind": "entity",
+          "entityLabel": "translation",
+          "entityDescription": "statement that explains the meaning of a word, phrase, concept, or idea"
+        },
+        {
+          "text": "each",
+          "entityId": "wikt:en:each#Determiner:0",
+          "kind": "entity",
+          "entityLabel": "each",
+          "entityDescription": "All; every; qualifying a singular noun, indicating all examples of the thing so named seen as individual or separate items (compare every)."
+        },
+        {
+          "text": "sentence",
+          "entityId": "Q41796",
+          "kind": "entity",
+          "entityLabel": "sentence",
+          "entityDescription": "textual unit consisting of one or more words that are grammatically linked, expressing a complete thought in non-functional linguistics"
+        },
+        {
+          "text": "through",
+          "entityId": "Q135058010",
+          "kind": "entity",
+          "entityLabel": "THROUGH",
+          "entityDescription": "2024 video game developed by Degüello Studio"
+        },
+        {
+          "text": "labels",
+          "entityId": "Q3214321",
+          "kind": "entity",
+          "entityLabel": "Labels",
+          "entityDescription": "French record label"
+        },
+        {
+          "text": "and",
+          "entityId": "wikt:en:and#Symbol:0",
+          "kind": "entity",
+          "entityLabel": "and",
+          "entityDescription": " ISO 639-3 language code for Ansus."
+        },
+        {
+          "text": "transformation",
+          "entityId": "Q461499",
+          "kind": "entity",
+          "entityLabel": "transformation",
+          "entityDescription": "planned genetic alteration of a cell by uptake of genetic material from the environment"
+        },
+        {
+          "text": "rules",
+          "entityId": "wikt:en:rules#Noun:0",
+          "kind": "entity",
+          "entityLabel": "rules",
+          "entityDescription": "plural of rule"
+        },
+        {
+          "text": "Unresolved",
+          "entityId": "wp:en:open_problem",
+          "kind": "entity",
+          "entityLabel": "Open problem",
+          "entityDescription": "In science and mathematics, an open problem or an open question is a known problem which can be accurately stated, and which is assumed to have an objective"
+        },
+        {
+          "text": "with",
+          "entityId": "wikt:en:with#Preposition:1",
+          "kind": "entity",
+          "entityLabel": "with",
+          "entityDescription": "In the company of; alongside, close to; near to."
+        }
+      ]
+    },
+    {
+      "rank": 6,
+      "score": 573,
+      "phrases": [
+        {
+          "text": "Formalize",
+          "entityId": "Q5469987",
+          "kind": "entity",
+          "entityLabel": "Formalized Music",
+          "entityDescription": "Formalized Music: Thought and Mathematics in Composition is a book by Greek composer, architect, and engineer Iannis Xenakis in which he explains his motivation"
+        },
+        {
+          "text": "source",
+          "entityId": "Q643572",
+          "kind": "entity",
+          "entityLabel": "Source",
+          "entityDescription": "game engine developed by Valve Corporation"
+        },
+        {
+          "text": "text",
+          "entityId": "Q7670066",
+          "kind": "entity",
+          "entityLabel": "TEXT",
+          "entityDescription": "TEXT is a Swedish band founded by Kristofer Steen, David Sandström, Fredrik Bäckström and Jon F Brännström. All, except Bäckström, were ex-members of hardcore"
+        },
+        {
+          "text": "with",
+          "entityId": "wikt:en:with#Preposition:0",
+          "kind": "entity",
+          "entityLabel": "with",
+          "entityDescription": "Against."
+        },
+        {
+          "text": "Wikidata",
+          "entityId": "Q2013",
+          "kind": "entity",
+          "entityLabel": "Wikidata",
+          "entityDescription": "free multilingual online knowledge graph"
+        },
+        {
+          "text": "then",
+          "entityId": "Q37485249",
+          "kind": "entity",
+          "entityLabel": "Then",
+          "entityDescription": "family name"
+        },
+        {
+          "text": "translate",
+          "entityId": "Q7553",
+          "kind": "entity",
+          "entityLabel": "translation",
+          "entityDescription": "statement that explains the meaning of a word, phrase, concept, or idea"
+        },
+        {
+          "text": "each",
+          "entityId": "wikt:en:each#Determiner:0",
+          "kind": "entity",
+          "entityLabel": "each",
+          "entityDescription": "All; every; qualifying a singular noun, indicating all examples of the thing so named seen as individual or separate items (compare every)."
+        },
+        {
+          "text": "sentence",
+          "entityId": "Q41796",
+          "kind": "entity",
+          "entityLabel": "sentence",
+          "entityDescription": "textual unit consisting of one or more words that are grammatically linked, expressing a complete thought in non-functional linguistics"
+        },
+        {
+          "text": "through",
+          "entityId": "Q135058010",
+          "kind": "entity",
+          "entityLabel": "THROUGH",
+          "entityDescription": "2024 video game developed by Degüello Studio"
+        },
+        {
+          "text": "labels",
+          "entityId": "Q3214321",
+          "kind": "entity",
+          "entityLabel": "Labels",
+          "entityDescription": "French record label"
+        },
+        {
+          "text": "and",
+          "entityId": "wikt:en:and#Symbol:0",
+          "kind": "entity",
+          "entityLabel": "and",
+          "entityDescription": " ISO 639-3 language code for Ansus."
+        },
+        {
+          "text": "transformation",
+          "entityId": "Q461499",
+          "kind": "entity",
+          "entityLabel": "transformation",
+          "entityDescription": "planned genetic alteration of a cell by uptake of genetic material from the environment"
+        },
+        {
+          "text": "rules",
+          "entityId": "wikt:en:rules#Noun:0",
+          "kind": "entity",
+          "entityLabel": "rules",
+          "entityDescription": "plural of rule"
+        },
+        {
+          "text": "Unresolved",
+          "entityId": "wp:en:open_problem",
+          "kind": "entity",
+          "entityLabel": "Open problem",
+          "entityDescription": "In science and mathematics, an open problem or an open question is a known problem which can be accurately stated, and which is assumed to have an objective"
+        },
+        {
+          "text": "with",
+          "entityId": "wikt:en:with#Preposition:2",
+          "kind": "entity",
+          "entityLabel": "with",
+          "entityDescription": "In addition to; as an accessory to."
+        }
+      ]
+    },
+    {
+      "rank": 7,
+      "score": 573,
+      "phrases": [
+        {
+          "text": "Formalize",
+          "entityId": "Q5469987",
+          "kind": "entity",
+          "entityLabel": "Formalized Music",
+          "entityDescription": "Formalized Music: Thought and Mathematics in Composition is a book by Greek composer, architect, and engineer Iannis Xenakis in which he explains his motivation"
+        },
+        {
+          "text": "source",
+          "entityId": "Q643572",
+          "kind": "entity",
+          "entityLabel": "Source",
+          "entityDescription": "game engine developed by Valve Corporation"
+        },
+        {
+          "text": "text",
+          "entityId": "Q7670066",
+          "kind": "entity",
+          "entityLabel": "TEXT",
+          "entityDescription": "TEXT is a Swedish band founded by Kristofer Steen, David Sandström, Fredrik Bäckström and Jon F Brännström. All, except Bäckström, were ex-members of hardcore"
+        },
+        {
+          "text": "with",
+          "entityId": "wikt:en:with#Preposition:0",
+          "kind": "entity",
+          "entityLabel": "with",
+          "entityDescription": "Against."
+        },
+        {
+          "text": "Wikidata",
+          "entityId": "Q2013",
+          "kind": "entity",
+          "entityLabel": "Wikidata",
+          "entityDescription": "free multilingual online knowledge graph"
+        },
+        {
+          "text": "then",
+          "entityId": "Q37485249",
+          "kind": "entity",
+          "entityLabel": "Then",
+          "entityDescription": "family name"
+        },
+        {
+          "text": "translate",
+          "entityId": "Q7553",
+          "kind": "entity",
+          "entityLabel": "translation",
+          "entityDescription": "statement that explains the meaning of a word, phrase, concept, or idea"
+        },
+        {
+          "text": "each",
+          "entityId": "wikt:en:each#Determiner:0",
+          "kind": "entity",
+          "entityLabel": "each",
+          "entityDescription": "All; every; qualifying a singular noun, indicating all examples of the thing so named seen as individual or separate items (compare every)."
+        },
+        {
+          "text": "sentence",
+          "entityId": "Q41796",
+          "kind": "entity",
+          "entityLabel": "sentence",
+          "entityDescription": "textual unit consisting of one or more words that are grammatically linked, expressing a complete thought in non-functional linguistics"
+        },
+        {
+          "text": "through",
+          "entityId": "Q135058010",
+          "kind": "entity",
+          "entityLabel": "THROUGH",
+          "entityDescription": "2024 video game developed by Degüello Studio"
+        },
+        {
+          "text": "labels",
+          "entityId": "Q3214321",
+          "kind": "entity",
+          "entityLabel": "Labels",
+          "entityDescription": "French record label"
+        },
+        {
+          "text": "and",
+          "entityId": "wikt:en:and#Symbol:0",
+          "kind": "entity",
+          "entityLabel": "and",
+          "entityDescription": " ISO 639-3 language code for Ansus."
+        },
+        {
+          "text": "transformation",
+          "entityId": "Q461499",
+          "kind": "entity",
+          "entityLabel": "transformation",
+          "entityDescription": "planned genetic alteration of a cell by uptake of genetic material from the environment"
+        },
+        {
+          "text": "rules",
+          "entityId": "wikt:en:rules#Noun:0",
+          "kind": "entity",
+          "entityLabel": "rules",
+          "entityDescription": "plural of rule"
+        },
+        {
+          "text": "Unresolved",
+          "entityId": "wp:en:list_of_unsolved_murders_in_belize",
+          "kind": "entity",
+          "entityLabel": "List of unsolved murders in Belize",
+          "entityDescription": "This is a list of noted unsolved murders in Belize since the 1970s. This list includes both known and presumed murders, and further includes murders which"
+        },
+        {
+          "text": "with",
+          "entityId": "wikt:en:with#Preposition:0",
+          "kind": "entity",
+          "entityLabel": "with",
+          "entityDescription": "Against."
+        }
+      ]
+    },
+    {
+      "rank": 8,
+      "score": 573,
+      "phrases": [
+        {
+          "text": "Formalize",
+          "entityId": "Q5469987",
+          "kind": "entity",
+          "entityLabel": "Formalized Music",
+          "entityDescription": "Formalized Music: Thought and Mathematics in Composition is a book by Greek composer, architect, and engineer Iannis Xenakis in which he explains his motivation"
+        },
+        {
+          "text": "source",
+          "entityId": "Q643572",
+          "kind": "entity",
+          "entityLabel": "Source",
+          "entityDescription": "game engine developed by Valve Corporation"
+        },
+        {
+          "text": "text",
+          "entityId": "Q7670066",
+          "kind": "entity",
+          "entityLabel": "TEXT",
+          "entityDescription": "TEXT is a Swedish band founded by Kristofer Steen, David Sandström, Fredrik Bäckström and Jon F Brännström. All, except Bäckström, were ex-members of hardcore"
+        },
+        {
+          "text": "with",
+          "entityId": "wikt:en:with#Preposition:0",
+          "kind": "entity",
+          "entityLabel": "with",
+          "entityDescription": "Against."
+        },
+        {
+          "text": "Wikidata",
+          "entityId": "Q2013",
+          "kind": "entity",
+          "entityLabel": "Wikidata",
+          "entityDescription": "free multilingual online knowledge graph"
+        },
+        {
+          "text": "then",
+          "entityId": "Q37485249",
+          "kind": "entity",
+          "entityLabel": "Then",
+          "entityDescription": "family name"
+        },
+        {
+          "text": "translate",
+          "entityId": "Q7553",
+          "kind": "entity",
+          "entityLabel": "translation",
+          "entityDescription": "statement that explains the meaning of a word, phrase, concept, or idea"
+        },
+        {
+          "text": "each",
+          "entityId": "wikt:en:each#Determiner:0",
+          "kind": "entity",
+          "entityLabel": "each",
+          "entityDescription": "All; every; qualifying a singular noun, indicating all examples of the thing so named seen as individual or separate items (compare every)."
+        },
+        {
+          "text": "sentence",
+          "entityId": "Q41796",
+          "kind": "entity",
+          "entityLabel": "sentence",
+          "entityDescription": "textual unit consisting of one or more words that are grammatically linked, expressing a complete thought in non-functional linguistics"
+        },
+        {
+          "text": "through",
+          "entityId": "Q135058010",
+          "kind": "entity",
+          "entityLabel": "THROUGH",
+          "entityDescription": "2024 video game developed by Degüello Studio"
+        },
+        {
+          "text": "labels",
+          "entityId": "Q3214321",
+          "kind": "entity",
+          "entityLabel": "Labels",
+          "entityDescription": "French record label"
+        },
+        {
+          "text": "and",
+          "entityId": "wikt:en:and#Symbol:0",
+          "kind": "entity",
+          "entityLabel": "and",
+          "entityDescription": " ISO 639-3 language code for Ansus."
+        },
+        {
+          "text": "transformation",
+          "entityId": "Q461499",
+          "kind": "entity",
+          "entityLabel": "transformation",
+          "entityDescription": "planned genetic alteration of a cell by uptake of genetic material from the environment"
+        },
+        {
+          "text": "rules",
+          "entityId": "wikt:en:rules#Noun:0",
+          "kind": "entity",
+          "entityLabel": "rules",
+          "entityDescription": "plural of rule"
+        },
+        {
+          "text": "Unresolved",
+          "entityId": "wp:en:list_of_unsolved_murders_in_belize",
+          "kind": "entity",
+          "entityLabel": "List of unsolved murders in Belize",
+          "entityDescription": "This is a list of noted unsolved murders in Belize since the 1970s. This list includes both known and presumed murders, and further includes murders which"
+        },
+        {
+          "text": "with",
+          "entityId": "wikt:en:with#Preposition:1",
+          "kind": "entity",
+          "entityLabel": "with",
+          "entityDescription": "In the company of; alongside, close to; near to."
+        }
+      ]
+    },
+    {
+      "rank": 9,
+      "score": 573,
+      "phrases": [
+        {
+          "text": "Formalize",
+          "entityId": "Q5469987",
+          "kind": "entity",
+          "entityLabel": "Formalized Music",
+          "entityDescription": "Formalized Music: Thought and Mathematics in Composition is a book by Greek composer, architect, and engineer Iannis Xenakis in which he explains his motivation"
+        },
+        {
+          "text": "source",
+          "entityId": "Q643572",
+          "kind": "entity",
+          "entityLabel": "Source",
+          "entityDescription": "game engine developed by Valve Corporation"
+        },
+        {
+          "text": "text",
+          "entityId": "Q7670066",
+          "kind": "entity",
+          "entityLabel": "TEXT",
+          "entityDescription": "TEXT is a Swedish band founded by Kristofer Steen, David Sandström, Fredrik Bäckström and Jon F Brännström. All, except Bäckström, were ex-members of hardcore"
+        },
+        {
+          "text": "with",
+          "entityId": "wikt:en:with#Preposition:0",
+          "kind": "entity",
+          "entityLabel": "with",
+          "entityDescription": "Against."
+        },
+        {
+          "text": "Wikidata",
+          "entityId": "Q2013",
+          "kind": "entity",
+          "entityLabel": "Wikidata",
+          "entityDescription": "free multilingual online knowledge graph"
+        },
+        {
+          "text": "then",
+          "entityId": "Q37485249",
+          "kind": "entity",
+          "entityLabel": "Then",
+          "entityDescription": "family name"
+        },
+        {
+          "text": "translate",
+          "entityId": "Q7553",
+          "kind": "entity",
+          "entityLabel": "translation",
+          "entityDescription": "statement that explains the meaning of a word, phrase, concept, or idea"
+        },
+        {
+          "text": "each",
+          "entityId": "wikt:en:each#Determiner:0",
+          "kind": "entity",
+          "entityLabel": "each",
+          "entityDescription": "All; every; qualifying a singular noun, indicating all examples of the thing so named seen as individual or separate items (compare every)."
+        },
+        {
+          "text": "sentence",
+          "entityId": "Q41796",
+          "kind": "entity",
+          "entityLabel": "sentence",
+          "entityDescription": "textual unit consisting of one or more words that are grammatically linked, expressing a complete thought in non-functional linguistics"
+        },
+        {
+          "text": "through",
+          "entityId": "Q135058010",
+          "kind": "entity",
+          "entityLabel": "THROUGH",
+          "entityDescription": "2024 video game developed by Degüello Studio"
+        },
+        {
+          "text": "labels",
+          "entityId": "Q3214321",
+          "kind": "entity",
+          "entityLabel": "Labels",
+          "entityDescription": "French record label"
+        },
+        {
+          "text": "and",
+          "entityId": "wikt:en:and#Symbol:0",
+          "kind": "entity",
+          "entityLabel": "and",
+          "entityDescription": " ISO 639-3 language code for Ansus."
+        },
+        {
+          "text": "transformation",
+          "entityId": "Q461499",
+          "kind": "entity",
+          "entityLabel": "transformation",
+          "entityDescription": "planned genetic alteration of a cell by uptake of genetic material from the environment"
+        },
+        {
+          "text": "rules",
+          "entityId": "wikt:en:rules#Noun:0",
+          "kind": "entity",
+          "entityLabel": "rules",
+          "entityDescription": "plural of rule"
+        },
+        {
+          "text": "Unresolved",
+          "entityId": "wp:en:list_of_unsolved_murders_in_belize",
+          "kind": "entity",
+          "entityLabel": "List of unsolved murders in Belize",
+          "entityDescription": "This is a list of noted unsolved murders in Belize since the 1970s. This list includes both known and presumed murders, and further includes murders which"
+        },
+        {
+          "text": "with",
+          "entityId": "wikt:en:with#Preposition:2",
+          "kind": "entity",
+          "entityLabel": "with",
+          "entityDescription": "In addition to; as an accessory to."
+        }
+      ]
+    },
+    {
+      "rank": 10,
+      "score": 573,
+      "phrases": [
+        {
+          "text": "Formalize",
+          "entityId": "Q5469987",
+          "kind": "entity",
+          "entityLabel": "Formalized Music",
+          "entityDescription": "Formalized Music: Thought and Mathematics in Composition is a book by Greek composer, architect, and engineer Iannis Xenakis in which he explains his motivation"
+        },
+        {
+          "text": "source",
+          "entityId": "Q643572",
+          "kind": "entity",
+          "entityLabel": "Source",
+          "entityDescription": "game engine developed by Valve Corporation"
+        },
+        {
+          "text": "text",
+          "entityId": "Q7670066",
+          "kind": "entity",
+          "entityLabel": "TEXT",
+          "entityDescription": "TEXT is a Swedish band founded by Kristofer Steen, David Sandström, Fredrik Bäckström and Jon F Brännström. All, except Bäckström, were ex-members of hardcore"
+        },
+        {
+          "text": "with",
+          "entityId": "wikt:en:with#Preposition:0",
+          "kind": "entity",
+          "entityLabel": "with",
+          "entityDescription": "Against."
+        },
+        {
+          "text": "Wikidata",
+          "entityId": "Q2013",
+          "kind": "entity",
+          "entityLabel": "Wikidata",
+          "entityDescription": "free multilingual online knowledge graph"
+        },
+        {
+          "text": "then",
+          "entityId": "Q37485249",
+          "kind": "entity",
+          "entityLabel": "Then",
+          "entityDescription": "family name"
+        },
+        {
+          "text": "translate",
+          "entityId": "Q7553",
+          "kind": "entity",
+          "entityLabel": "translation",
+          "entityDescription": "statement that explains the meaning of a word, phrase, concept, or idea"
+        },
+        {
+          "text": "each",
+          "entityId": "wikt:en:each#Determiner:0",
+          "kind": "entity",
+          "entityLabel": "each",
+          "entityDescription": "All; every; qualifying a singular noun, indicating all examples of the thing so named seen as individual or separate items (compare every)."
+        },
+        {
+          "text": "sentence",
+          "entityId": "Q41796",
+          "kind": "entity",
+          "entityLabel": "sentence",
+          "entityDescription": "textual unit consisting of one or more words that are grammatically linked, expressing a complete thought in non-functional linguistics"
+        },
+        {
+          "text": "through",
+          "entityId": "Q135058010",
+          "kind": "entity",
+          "entityLabel": "THROUGH",
+          "entityDescription": "2024 video game developed by Degüello Studio"
+        },
+        {
+          "text": "labels",
+          "entityId": "Q3214321",
+          "kind": "entity",
+          "entityLabel": "Labels",
+          "entityDescription": "French record label"
+        },
+        {
+          "text": "and",
+          "entityId": "wikt:en:and#Symbol:0",
+          "kind": "entity",
+          "entityLabel": "and",
+          "entityDescription": " ISO 639-3 language code for Ansus."
+        },
+        {
+          "text": "transformation",
+          "entityId": "Q461499",
+          "kind": "entity",
+          "entityLabel": "transformation",
+          "entityDescription": "planned genetic alteration of a cell by uptake of genetic material from the environment"
+        },
+        {
+          "text": "rules",
+          "entityId": "wikt:en:rules#Verb:1",
+          "kind": "entity",
+          "entityLabel": "rules",
+          "entityDescription": "third-person singular simple present indicative of rule"
+        },
+        {
+          "text": "Unresolved",
+          "entityId": "wp:en:sexual_tension",
+          "kind": "entity",
+          "entityLabel": "Sexual tension",
+          "entityDescription": "Sexual tension is a social phenomenon that occurs when two individuals interact and one or both feel sexual attraction, but the consummation is postponed"
+        },
+        {
+          "text": "with",
+          "entityId": "wikt:en:with#Preposition:0",
+          "kind": "entity",
+          "entityLabel": "with",
+          "entityDescription": "Against."
+        }
+      ]
+    }
+  ],
+  "markdown": "[Formalize](https://en.wikipedia.org/wiki/Formalized_Music \"Q5469987\") [source](https://www.wikidata.org/wiki/Q643572 \"Q643572\") [text](https://en.wikipedia.org/wiki/TEXT \"Q7670066\") [with](https://en.wiktionary.org/wiki/with \"wikt:en:with#Preposition:0\") [Wikidata](https://en.wikipedia.org/wiki/Wikidata \"Q2013\"), [then](https://www.wikidata.org/wiki/Q37485249 \"Q37485249\") [translate](https://en.wikipedia.org/wiki/Translation \"Q7553\") [each](https://en.wiktionary.org/wiki/each \"wikt:en:each#Determiner:0\") [sentence](https://en.wikipedia.org/wiki/Sentence_(linguistics) \"Q41796\") [through](https://www.wikidata.org/wiki/Q135058010 \"Q135058010\") [labels](https://www.wikidata.org/wiki/Q3214321 \"Q3214321\") [and](https://en.wiktionary.org/wiki/and \"wikt:en:and#Symbol:0\") [transformation](https://www.wikidata.org/wiki/Q461499 \"Q461499\") [rules](https://en.wiktionary.org/wiki/rules \"wikt:en:rules#Noun:0\"). [Unresolved](https://en.wikipedia.org/wiki/Sexual_tension \"wp:en:sexual_tension\") parts remain variables [with](https://en.wiktionary.org/wiki/with \"wikt:en:with#Preposition:0\") questions.",
+  "html": "<a href=\"https://en.wikipedia.org/wiki/Formalized_Music\" title=\"Q5469987\">Formalize</a> <a href=\"https://www.wikidata.org/wiki/Q643572\" title=\"Q643572\">source</a> <a href=\"https://en.wikipedia.org/wiki/TEXT\" title=\"Q7670066\">text</a> <a href=\"https://en.wiktionary.org/wiki/with\" title=\"wikt:en:with#Preposition:0\">with</a> <a href=\"https://en.wikipedia.org/wiki/Wikidata\" title=\"Q2013\">Wikidata</a>, <a href=\"https://www.wikidata.org/wiki/Q37485249\" title=\"Q37485249\">then</a> <a href=\"https://en.wikipedia.org/wiki/Translation\" title=\"Q7553\">translate</a> <a href=\"https://en.wiktionary.org/wiki/each\" title=\"wikt:en:each#Determiner:0\">each</a> <a href=\"https://en.wikipedia.org/wiki/Sentence_(linguistics)\" title=\"Q41796\">sentence</a> <a href=\"https://www.wikidata.org/wiki/Q135058010\" title=\"Q135058010\">through</a> <a href=\"https://www.wikidata.org/wiki/Q3214321\" title=\"Q3214321\">labels</a> <a href=\"https://en.wiktionary.org/wiki/and\" title=\"wikt:en:and#Symbol:0\">and</a> <a href=\"https://www.wikidata.org/wiki/Q461499\" title=\"Q461499\">transformation</a> <a href=\"https://en.wiktionary.org/wiki/rules\" title=\"wikt:en:rules#Noun:0\">rules</a>. <a href=\"https://en.wikipedia.org/wiki/Sexual_tension\" title=\"wp:en:sexual_tension\">Unresolved</a> parts remain variables <a href=\"https://en.wiktionary.org/wiki/with\" title=\"wikt:en:with#Preposition:0\">with</a> questions.",
+  "linksNotation": "(formalization: (Formalize source text with Wikidata, then translate each sentence through labels and transformation rules. Unresolved parts remain variables with questions.))\n(phrase-1: source (Formalize) start 0 end 0 id Q5469987 label (Formalized Music) kind entity markdownUrl (https://en.wikipedia.org/wiki/Formalized_Music))\n(phrase-2: source (source) start 1 end 1 id Q643572 label (Source) kind entity markdownUrl (https://www.wikidata.org/wiki/Q643572))\n(phrase-3: source (text) start 2 end 2 id Q7670066 label (TEXT) kind entity markdownUrl (https://en.wikipedia.org/wiki/TEXT))\n(phrase-4: source (with) start 3 end 3 id wikt:en:with#Preposition:0 label (with) kind entity markdownUrl (https://en.wiktionary.org/wiki/with))\n(phrase-5: source (Wikidata) start 4 end 4 id Q2013 label (Wikidata) kind entity markdownUrl (https://en.wikipedia.org/wiki/Wikidata))\n(phrase-6: source (then) start 5 end 5 id Q37485249 label (Then) kind entity markdownUrl (https://www.wikidata.org/wiki/Q37485249))\n(phrase-7: source (translate) start 6 end 6 id Q7553 label (translation) kind entity markdownUrl (https://en.wikipedia.org/wiki/Translation))\n(phrase-8: source (each) start 7 end 7 id wikt:en:each#Determiner:0 label (each) kind entity markdownUrl (https://en.wiktionary.org/wiki/each))\n(phrase-9: source (sentence) start 8 end 8 id Q41796 label (sentence) kind entity markdownUrl (https://en.wikipedia.org/wiki/Sentence_ linguistics))\n(phrase-10: source (through) start 9 end 9 id Q135058010 label (THROUGH) kind entity markdownUrl (https://www.wikidata.org/wiki/Q135058010))\n(phrase-11: source (labels) start 10 end 10 id Q3214321 label (Labels) kind entity markdownUrl (https://www.wikidata.org/wiki/Q3214321))\n(phrase-12: source (and) start 11 end 11 id wikt:en:and#Symbol:0 label (and) kind entity markdownUrl (https://en.wiktionary.org/wiki/and))\n(phrase-13: source (transformation) start 12 end 12 id Q461499 label (transformation) kind entity markdownUrl (https://www.wikidata.org/wiki/Q461499))\n(phrase-14: source (rules) start 13 end 13 id wikt:en:rules#Noun:0 label (rules) kind entity markdownUrl (https://en.wiktionary.org/wiki/rules))\n(phrase-15: source (Unresolved) start 14 end 14 id wp:en:sexual_tension label (Sexual tension) kind entity markdownUrl (https://en.wikipedia.org/wiki/Sexual_tension))\n(phrase-16: source (parts) start 15 end 15 unresolved)\n(phrase-17: source (remain) start 16 end 16 unresolved)\n(phrase-18: source (variables) start 17 end 17 unresolved)\n(phrase-19: source (with) start 18 end 18 id wikt:en:with#Preposition:0 label (with) kind entity markdownUrl (https://en.wiktionary.org/wiki/with))\n(phrase-20: source (questions) start 19 end 19 unresolved)",
+  "linksNetwork": {
+    "id": "formalize-links-network",
+    "kind": "links-network",
+    "version": 1,
+    "beliefSystem": {
+      "id": "formalize-default",
+      "name": "Formalize prototype",
+      "probabilityStrategy": "frequency-weighted-context",
+      "sourceWeights": {
+        "wikidata": 1,
+        "wordnet": 0.7,
+        "fandom": 0.6,
+        "algorithm": 0.5
+      }
+    },
+    "links": [
+      {
+        "id": "formalize-input-1",
+        "role": "input",
+        "references": [],
+        "value": {
+          "text": "Formalize source text with Wikidata, then translate each sentence through labels and transformation rules. Unresolved parts remain variables with questions."
+        },
+        "provenance": {
+          "sourceType": "algorithm",
+          "method": "formalize"
+        }
+      },
+      {
+        "id": "formalize-phrase-1",
+        "role": "phrase",
+        "references": [
+          "formalize-input-1"
+        ],
+        "value": {
+          "text": "Formalize",
+          "position": 0,
+          "size": 1,
+          "wikidataId": "Q5469987",
+          "wikidataLabel": "Formalized Music",
+          "wikidataKind": "entity",
+          "wikipediaUrl": "https://en.wikipedia.org/wiki/Formalized_Music",
+          "source": "wikidata"
+        },
+        "provenance": {
+          "sourceType": "wikidata",
+          "sourceUrl": "https://www.wikidata.org/wiki/Q5469987"
+        }
+      },
+      {
+        "id": "formalize-phrase-2",
+        "role": "phrase",
+        "references": [
+          "formalize-input-1"
+        ],
+        "value": {
+          "text": "source",
+          "position": 1,
+          "size": 1,
+          "wikidataId": "Q643572",
+          "wikidataLabel": "Source",
+          "wikidataKind": "entity",
+          "wikipediaUrl": null,
+          "source": "wikidata"
+        },
+        "provenance": {
+          "sourceType": "wikidata",
+          "sourceUrl": "https://www.wikidata.org/wiki/Q643572"
+        }
+      },
+      {
+        "id": "formalize-phrase-3",
+        "role": "phrase",
+        "references": [
+          "formalize-input-1"
+        ],
+        "value": {
+          "text": "text",
+          "position": 2,
+          "size": 1,
+          "wikidataId": "Q7670066",
+          "wikidataLabel": "TEXT",
+          "wikidataKind": "entity",
+          "wikipediaUrl": "https://en.wikipedia.org/wiki/TEXT",
+          "source": "wikipedia"
+        },
+        "provenance": {
+          "sourceType": "wikipedia",
+          "sourceUrl": "https://en.wikipedia.org/wiki/TEXT"
+        }
+      },
+      {
+        "id": "formalize-phrase-4",
+        "role": "phrase",
+        "references": [
+          "formalize-input-1"
+        ],
+        "value": {
+          "text": "with",
+          "position": 3,
+          "size": 1,
+          "wikidataId": "wikt:en:with#Preposition:0",
+          "wikidataLabel": "with",
+          "wikidataKind": "entity",
+          "wikipediaUrl": null,
+          "source": "wiktionary"
+        },
+        "provenance": {
+          "sourceType": "wiktionary",
+          "sourceUrl": "https://en.wiktionary.org/wiki/with"
+        }
+      },
+      {
+        "id": "formalize-phrase-5",
+        "role": "phrase",
+        "references": [
+          "formalize-input-1"
+        ],
+        "value": {
+          "text": "Wikidata",
+          "position": 4,
+          "size": 1,
+          "wikidataId": "Q2013",
+          "wikidataLabel": "Wikidata",
+          "wikidataKind": "entity",
+          "wikipediaUrl": "https://en.wikipedia.org/wiki/Wikidata",
+          "source": "wikidata"
+        },
+        "provenance": {
+          "sourceType": "wikidata",
+          "sourceUrl": "https://www.wikidata.org/wiki/Q2013"
+        }
+      },
+      {
+        "id": "formalize-phrase-6",
+        "role": "phrase",
+        "references": [
+          "formalize-input-1"
+        ],
+        "value": {
+          "text": "then",
+          "position": 5,
+          "size": 1,
+          "wikidataId": "Q37485249",
+          "wikidataLabel": "Then",
+          "wikidataKind": "entity",
+          "wikipediaUrl": null,
+          "source": "wikidata"
+        },
+        "provenance": {
+          "sourceType": "wikidata",
+          "sourceUrl": "https://www.wikidata.org/wiki/Q37485249"
+        }
+      },
+      {
+        "id": "formalize-phrase-7",
+        "role": "phrase",
+        "references": [
+          "formalize-input-1"
+        ],
+        "value": {
+          "text": "translate",
+          "position": 6,
+          "size": 1,
+          "wikidataId": "Q7553",
+          "wikidataLabel": "translation",
+          "wikidataKind": "entity",
+          "wikipediaUrl": "https://en.wikipedia.org/wiki/Translation",
+          "source": "wikidata"
+        },
+        "provenance": {
+          "sourceType": "wikidata",
+          "sourceUrl": "https://www.wikidata.org/wiki/Q7553"
+        }
+      },
+      {
+        "id": "formalize-phrase-8",
+        "role": "phrase",
+        "references": [
+          "formalize-input-1"
+        ],
+        "value": {
+          "text": "each",
+          "position": 7,
+          "size": 1,
+          "wikidataId": "wikt:en:each#Determiner:0",
+          "wikidataLabel": "each",
+          "wikidataKind": "entity",
+          "wikipediaUrl": null,
+          "source": "wiktionary"
+        },
+        "provenance": {
+          "sourceType": "wiktionary",
+          "sourceUrl": "https://en.wiktionary.org/wiki/each"
+        }
+      },
+      {
+        "id": "formalize-phrase-9",
+        "role": "phrase",
+        "references": [
+          "formalize-input-1"
+        ],
+        "value": {
+          "text": "sentence",
+          "position": 8,
+          "size": 1,
+          "wikidataId": "Q41796",
+          "wikidataLabel": "sentence",
+          "wikidataKind": "entity",
+          "wikipediaUrl": "https://en.wikipedia.org/wiki/Sentence_(linguistics)",
+          "source": "wikidata"
+        },
+        "provenance": {
+          "sourceType": "wikidata",
+          "sourceUrl": "https://www.wikidata.org/wiki/Q41796"
+        }
+      },
+      {
+        "id": "formalize-phrase-10",
+        "role": "phrase",
+        "references": [
+          "formalize-input-1"
+        ],
+        "value": {
+          "text": "through",
+          "position": 9,
+          "size": 1,
+          "wikidataId": "Q135058010",
+          "wikidataLabel": "THROUGH",
+          "wikidataKind": "entity",
+          "wikipediaUrl": null,
+          "source": "wikidata"
+        },
+        "provenance": {
+          "sourceType": "wikidata",
+          "sourceUrl": "https://www.wikidata.org/wiki/Q135058010"
+        }
+      },
+      {
+        "id": "formalize-phrase-11",
+        "role": "phrase",
+        "references": [
+          "formalize-input-1"
+        ],
+        "value": {
+          "text": "labels",
+          "position": 10,
+          "size": 1,
+          "wikidataId": "Q3214321",
+          "wikidataLabel": "Labels",
+          "wikidataKind": "entity",
+          "wikipediaUrl": null,
+          "source": "wikidata"
+        },
+        "provenance": {
+          "sourceType": "wikidata",
+          "sourceUrl": "https://www.wikidata.org/wiki/Q3214321"
+        }
+      },
+      {
+        "id": "formalize-phrase-12",
+        "role": "phrase",
+        "references": [
+          "formalize-input-1"
+        ],
+        "value": {
+          "text": "and",
+          "position": 11,
+          "size": 1,
+          "wikidataId": "wikt:en:and#Symbol:0",
+          "wikidataLabel": "and",
+          "wikidataKind": "entity",
+          "wikipediaUrl": null,
+          "source": "wiktionary"
+        },
+        "provenance": {
+          "sourceType": "wiktionary",
+          "sourceUrl": "https://en.wiktionary.org/wiki/and"
+        }
+      },
+      {
+        "id": "formalize-phrase-13",
+        "role": "phrase",
+        "references": [
+          "formalize-input-1"
+        ],
+        "value": {
+          "text": "transformation",
+          "position": 12,
+          "size": 1,
+          "wikidataId": "Q461499",
+          "wikidataLabel": "transformation",
+          "wikidataKind": "entity",
+          "wikipediaUrl": null,
+          "source": "wikidata"
+        },
+        "provenance": {
+          "sourceType": "wikidata",
+          "sourceUrl": "https://www.wikidata.org/wiki/Q461499"
+        }
+      },
+      {
+        "id": "formalize-phrase-14",
+        "role": "phrase",
+        "references": [
+          "formalize-input-1"
+        ],
+        "value": {
+          "text": "rules",
+          "position": 13,
+          "size": 1,
+          "wikidataId": "wikt:en:rules#Noun:0",
+          "wikidataLabel": "rules",
+          "wikidataKind": "entity",
+          "wikipediaUrl": null,
+          "source": "wiktionary"
+        },
+        "provenance": {
+          "sourceType": "wiktionary",
+          "sourceUrl": "https://en.wiktionary.org/wiki/rules"
+        }
+      },
+      {
+        "id": "formalize-phrase-15",
+        "role": "phrase",
+        "references": [
+          "formalize-input-1"
+        ],
+        "value": {
+          "text": "Unresolved",
+          "position": 14,
+          "size": 1,
+          "wikidataId": "wp:en:sexual_tension",
+          "wikidataLabel": "Sexual tension",
+          "wikidataKind": "entity",
+          "wikipediaUrl": "https://en.wikipedia.org/wiki/Sexual_tension",
+          "source": "wikipedia"
+        },
+        "provenance": {
+          "sourceType": "wikipedia",
+          "sourceUrl": "https://en.wikipedia.org/wiki/Sexual_tension"
+        }
+      },
+      {
+        "id": "formalize-phrase-16",
+        "role": "phrase",
+        "references": [
+          "formalize-input-1"
+        ],
+        "value": {
+          "text": "parts",
+          "position": 15,
+          "size": 1,
+          "wikidataId": null,
+          "wikidataLabel": null,
+          "wikidataKind": null,
+          "wikipediaUrl": null,
+          "source": null
+        },
+        "provenance": {
+          "sourceType": "algorithm",
+          "sourceUrl": null
+        }
+      },
+      {
+        "id": "formalize-phrase-17",
+        "role": "phrase",
+        "references": [
+          "formalize-input-1"
+        ],
+        "value": {
+          "text": "remain",
+          "position": 16,
+          "size": 1,
+          "wikidataId": null,
+          "wikidataLabel": null,
+          "wikidataKind": null,
+          "wikipediaUrl": null,
+          "source": null
+        },
+        "provenance": {
+          "sourceType": "algorithm",
+          "sourceUrl": null
+        }
+      },
+      {
+        "id": "formalize-phrase-18",
+        "role": "phrase",
+        "references": [
+          "formalize-input-1"
+        ],
+        "value": {
+          "text": "variables",
+          "position": 17,
+          "size": 1,
+          "wikidataId": null,
+          "wikidataLabel": null,
+          "wikidataKind": null,
+          "wikipediaUrl": null,
+          "source": null
+        },
+        "provenance": {
+          "sourceType": "algorithm",
+          "sourceUrl": null
+        }
+      },
+      {
+        "id": "formalize-phrase-19",
+        "role": "phrase",
+        "references": [
+          "formalize-input-1"
+        ],
+        "value": {
+          "text": "with",
+          "position": 18,
+          "size": 1,
+          "wikidataId": "wikt:en:with#Preposition:0",
+          "wikidataLabel": "with",
+          "wikidataKind": "entity",
+          "wikipediaUrl": null,
+          "source": "wiktionary"
+        },
+        "provenance": {
+          "sourceType": "wiktionary",
+          "sourceUrl": "https://en.wiktionary.org/wiki/with"
+        }
+      },
+      {
+        "id": "formalize-phrase-20",
+        "role": "phrase",
+        "references": [
+          "formalize-input-1"
+        ],
+        "value": {
+          "text": "questions",
+          "position": 19,
+          "size": 1,
+          "wikidataId": null,
+          "wikidataLabel": null,
+          "wikidataKind": null,
+          "wikipediaUrl": null,
+          "source": null
+        },
+        "provenance": {
+          "sourceType": "algorithm",
+          "sourceUrl": null
+        }
+      }
+    ]
+  },
+  "cst": {
+    "type": "formalization",
+    "version": 1,
+    "text": "Formalize source text with Wikidata, then translate each sentence through labels and transformation rules. Unresolved parts remain variables with questions.",
+    "tokens": [
+      "Formalize",
+      "source",
+      "text",
+      "with",
+      "Wikidata",
+      "then",
+      "translate",
+      "each",
+      "sentence",
+      "through",
+      "labels",
+      "and",
+      "transformation",
+      "rules",
+      "Unresolved",
+      "parts",
+      "remain",
+      "variables",
+      "with",
+      "questions"
+    ],
+    "linkTargetMode": "wikipedia",
+    "phrases": [
+      {
+        "type": "phrase",
+        "id": "phrase-1",
+        "text": "Formalize",
+        "tokens": [
+          "Formalize"
+        ],
+        "start": 0,
+        "end": 0,
+        "sourceStart": 0,
+        "sourceEnd": 9,
+        "size": 1,
+        "entity": {
+          "id": "Q5469987",
+          "label": "Formalized Music",
+          "description": "Formalized Music: Thought and Mathematics in Composition is a book by Greek composer, architect, and engineer Iannis Xenakis in which he explains his motivation",
+          "kind": "entity",
+          "source": "wikidata",
+          "sourceUrl": "https://www.wikidata.org/wiki/Q5469987",
+          "wikipediaUrl": "https://en.wikipedia.org/wiki/Formalized_Music",
+          "wikipediaTitle": "Formalized Music",
+          "score": 30,
+          "url": "https://en.wikipedia.org/wiki/Formalized_Music"
+        },
+        "candidates": [
+          {
+            "id": "Q5469987",
+            "label": "Formalized Music",
+            "description": "Formalized Music: Thought and Mathematics in Composition is a book by Greek composer, architect, and engineer Iannis Xenakis in which he explains his motivation",
+            "kind": "entity",
+            "source": "wikidata",
+            "sourceUrl": "https://www.wikidata.org/wiki/Q5469987",
+            "wikipediaUrl": "https://en.wikipedia.org/wiki/Formalized_Music",
+            "wikipediaTitle": "Formalized Music",
+            "score": 30,
+            "url": "https://en.wikipedia.org/wiki/Formalized_Music"
+          },
+          {
+            "id": "Q50814811",
+            "label": "Formalized Mathematics",
+            "description": "Academic journal published by De Gruyter Open, covering the subjects: Science: Mathematics",
+            "kind": "entity",
+            "source": "wikidata",
+            "sourceUrl": "https://www.wikidata.org/wiki/Q50814811",
+            "wikipediaUrl": null,
+            "wikipediaTitle": null,
+            "score": 18,
+            "url": "https://www.wikidata.org/wiki/Q50814811"
+          },
+          {
+            "id": "Q11688701",
+            "label": "formalized language",
+            "description": "",
+            "kind": "entity",
+            "source": "wikidata",
+            "sourceUrl": "https://www.wikidata.org/wiki/Q11688701",
+            "wikipediaUrl": null,
+            "wikipediaTitle": null,
+            "score": 18,
+            "url": "https://www.wikidata.org/wiki/Q11688701"
+          }
+        ]
+      },
+      {
+        "type": "phrase",
+        "id": "phrase-2",
+        "text": "source",
+        "tokens": [
+          "source"
+        ],
+        "start": 1,
+        "end": 1,
+        "sourceStart": 10,
+        "sourceEnd": 16,
+        "size": 1,
+        "entity": {
+          "id": "Q643572",
+          "label": "Source",
+          "description": "game engine developed by Valve Corporation",
+          "kind": "entity",
+          "source": "wikidata",
+          "sourceUrl": "https://www.wikidata.org/wiki/Q643572",
+          "wikipediaUrl": null,
+          "wikipediaTitle": null,
+          "score": 39,
+          "url": "https://www.wikidata.org/wiki/Q643572"
+        },
+        "candidates": [
+          {
+            "id": "Q643572",
+            "label": "Source",
+            "description": "game engine developed by Valve Corporation",
+            "kind": "entity",
+            "source": "wikidata",
+            "sourceUrl": "https://www.wikidata.org/wiki/Q643572",
+            "wikipediaUrl": null,
+            "wikipediaTitle": null,
+            "score": 39,
+            "url": "https://www.wikidata.org/wiki/Q643572"
+          },
+          {
+            "id": "Q106512627",
+            "label": "Source",
+            "description": "sculpture in downtown Montreal",
+            "kind": "entity",
+            "source": "wikidata",
+            "sourceUrl": "https://www.wikidata.org/wiki/Q106512627",
+            "wikipediaUrl": null,
+            "wikipediaTitle": null,
+            "score": 39,
+            "url": "https://www.wikidata.org/wiki/Q106512627"
+          },
+          {
+            "id": "wikt:en:source#Noun:0",
+            "label": "source",
+            "description": "The person, place, or thing from which something (information, goods, etc.) comes or is acquired.",
+            "kind": "entity",
+            "source": "wiktionary",
+            "sourceUrl": "https://en.wiktionary.org/wiki/source",
+            "wikipediaUrl": null,
+            "wikipediaTitle": null,
+            "score": 31,
+            "url": "https://en.wiktionary.org/wiki/source"
+          }
+        ]
+      },
+      {
+        "type": "phrase",
+        "id": "phrase-3",
+        "text": "text",
+        "tokens": [
+          "text"
+        ],
+        "start": 2,
+        "end": 2,
+        "sourceStart": 17,
+        "sourceEnd": 21,
+        "size": 1,
+        "entity": {
+          "id": "Q7670066",
+          "label": "TEXT",
+          "description": "TEXT is a Swedish band founded by Kristofer Steen, David Sandström, Fredrik Bäckström and Jon F Brännström. All, except Bäckström, were ex-members of hardcore",
+          "kind": "entity",
+          "source": "wikipedia",
+          "sourceUrl": "https://en.wikipedia.org/wiki/TEXT",
+          "wikipediaUrl": "https://en.wikipedia.org/wiki/TEXT",
+          "wikipediaTitle": "TEXT",
+          "score": 43,
+          "url": "https://en.wikipedia.org/wiki/TEXT"
+        },
+        "candidates": [
+          {
+            "id": "Q7670066",
+            "label": "TEXT",
+            "description": "TEXT is a Swedish band founded by Kristofer Steen, David Sandström, Fredrik Bäckström and Jon F Brännström. All, except Bäckström, were ex-members of hardcore",
+            "kind": "entity",
+            "source": "wikipedia",
+            "sourceUrl": "https://en.wikipedia.org/wiki/TEXT",
+            "wikipediaUrl": "https://en.wikipedia.org/wiki/TEXT",
+            "wikipediaTitle": "TEXT",
+            "score": 43,
+            "url": "https://en.wikipedia.org/wiki/TEXT"
+          },
+          {
+            "id": "Q234460",
+            "label": "text",
+            "description": "object that can be \"read\" by reader; result of writing",
+            "kind": "entity",
+            "source": "wikidata",
+            "sourceUrl": "https://www.wikidata.org/wiki/Q234460",
+            "wikipediaUrl": null,
+            "wikipediaTitle": null,
+            "score": 39,
+            "url": "https://www.wikidata.org/wiki/Q234460"
+          },
+          {
+            "id": "Q6658155",
+            "label": "Text",
+            "description": "AI customer service software company",
+            "kind": "entity",
+            "source": "wikidata",
+            "sourceUrl": "https://www.wikidata.org/wiki/Q6658155",
+            "wikipediaUrl": null,
+            "wikipediaTitle": null,
+            "score": 39,
+            "url": "https://www.wikidata.org/wiki/Q6658155"
+          }
+        ]
+      },
+      {
+        "type": "phrase",
+        "id": "phrase-4",
+        "text": "with",
+        "tokens": [
+          "with"
+        ],
+        "start": 3,
+        "end": 3,
+        "sourceStart": 22,
+        "sourceEnd": 26,
+        "size": 1,
+        "entity": {
+          "id": "wikt:en:with#Preposition:0",
+          "label": "with",
+          "description": "Against.",
+          "kind": "entity",
+          "source": "wiktionary",
+          "sourceUrl": "https://en.wiktionary.org/wiki/with",
+          "wikipediaUrl": null,
+          "wikipediaTitle": null,
+          "score": 31,
+          "url": "https://en.wiktionary.org/wiki/with"
+        },
+        "candidates": [
+          {
+            "id": "wikt:en:with#Preposition:0",
+            "label": "with",
+            "description": "Against.",
+            "kind": "entity",
+            "source": "wiktionary",
+            "sourceUrl": "https://en.wiktionary.org/wiki/with",
+            "wikipediaUrl": null,
+            "wikipediaTitle": null,
+            "score": 31,
+            "url": "https://en.wiktionary.org/wiki/with"
+          },
+          {
+            "id": "wikt:en:with#Preposition:1",
+            "label": "with",
+            "description": "In the company of; alongside, close to; near to.",
+            "kind": "entity",
+            "source": "wiktionary",
+            "sourceUrl": "https://en.wiktionary.org/wiki/with",
+            "wikipediaUrl": null,
+            "wikipediaTitle": null,
+            "score": 31,
+            "url": "https://en.wiktionary.org/wiki/with"
+          },
+          {
+            "id": "wikt:en:with#Preposition:2",
+            "label": "with",
+            "description": "In addition to; as an accessory to.",
+            "kind": "entity",
+            "source": "wiktionary",
+            "sourceUrl": "https://en.wiktionary.org/wiki/with",
+            "wikipediaUrl": null,
+            "wikipediaTitle": null,
+            "score": 31,
+            "url": "https://en.wiktionary.org/wiki/with"
+          }
+        ]
+      },
+      {
+        "type": "phrase",
+        "id": "phrase-5",
+        "text": "Wikidata",
+        "tokens": [
+          "Wikidata"
+        ],
+        "start": 4,
+        "end": 4,
+        "sourceStart": 27,
+        "sourceEnd": 35,
+        "size": 1,
+        "entity": {
+          "id": "Q2013",
+          "label": "Wikidata",
+          "description": "free multilingual online knowledge graph",
+          "kind": "entity",
+          "source": "wikidata",
+          "sourceUrl": "https://www.wikidata.org/wiki/Q2013",
+          "wikipediaUrl": "https://en.wikipedia.org/wiki/Wikidata",
+          "wikipediaTitle": "Wikidata",
+          "score": 51,
+          "url": "https://en.wikipedia.org/wiki/Wikidata"
+        },
+        "candidates": [
+          {
+            "id": "Q2013",
+            "label": "Wikidata",
+            "description": "free multilingual online knowledge graph",
+            "kind": "entity",
+            "source": "wikidata",
+            "sourceUrl": "https://www.wikidata.org/wiki/Q2013",
+            "wikipediaUrl": "https://en.wikipedia.org/wiki/Wikidata",
+            "wikipediaTitle": "Wikidata",
+            "score": 51,
+            "url": "https://en.wikipedia.org/wiki/Wikidata"
+          },
+          {
+            "id": "Q4115189",
+            "label": "Wikidata Sandbox",
+            "description": "This serves as a sandbox for live testing features. Please be gentle with it. Feel free to edit anything on this page, though! For testing links, try adding ones to userpages.",
+            "kind": "entity",
+            "source": "wikidata",
+            "sourceUrl": "https://www.wikidata.org/wiki/Q4115189",
+            "wikipediaUrl": null,
+            "wikipediaTitle": null,
+            "score": 18,
+            "url": "https://www.wikidata.org/wiki/Q4115189"
+          },
+          {
+            "id": "Q98970039",
+            "label": "WikiProject PCC Wikidata Pilot/University of Washington",
+            "description": "Wikidata pilot project at the University of Washington Libraries",
+            "kind": "entity",
+            "source": "wikidata",
+            "sourceUrl": "https://www.wikidata.org/wiki/Q98970039",
+            "wikipediaUrl": null,
+            "wikipediaTitle": null,
+            "score": 18,
+            "url": "https://www.wikidata.org/wiki/Q98970039"
+          }
+        ]
+      },
+      {
+        "type": "phrase",
+        "id": "phrase-6",
+        "text": "then",
+        "tokens": [
+          "then"
+        ],
+        "start": 5,
+        "end": 5,
+        "sourceStart": 37,
+        "sourceEnd": 41,
+        "size": 1,
+        "entity": {
+          "id": "Q37485249",
+          "label": "Then",
+          "description": "family name",
+          "kind": "entity",
+          "source": "wikidata",
+          "sourceUrl": "https://www.wikidata.org/wiki/Q37485249",
+          "wikipediaUrl": null,
+          "wikipediaTitle": null,
+          "score": 39,
+          "url": "https://www.wikidata.org/wiki/Q37485249"
+        },
+        "candidates": [
+          {
+            "id": "Q37485249",
+            "label": "Then",
+            "description": "family name",
+            "kind": "entity",
+            "source": "wikidata",
+            "sourceUrl": "https://www.wikidata.org/wiki/Q37485249",
+            "wikipediaUrl": null,
+            "wikipediaTitle": null,
+            "score": 39,
+            "url": "https://www.wikidata.org/wiki/Q37485249"
+          },
+          {
+            "id": "Q50130676",
+            "label": "Then",
+            "description": "2017 single by Anne-Marie",
+            "kind": "entity",
+            "source": "wikidata",
+            "sourceUrl": "https://www.wikidata.org/wiki/Q50130676",
+            "wikipediaUrl": null,
+            "wikipediaTitle": null,
+            "score": 39,
+            "url": "https://www.wikidata.org/wiki/Q50130676"
+          },
+          {
+            "id": "wikt:en:then#Adverb:0",
+            "label": "then",
+            "description": " At that time.",
+            "kind": "entity",
+            "source": "wiktionary",
+            "sourceUrl": "https://en.wiktionary.org/wiki/then",
+            "wikipediaUrl": null,
+            "wikipediaTitle": null,
+            "score": 31,
+            "url": "https://en.wiktionary.org/wiki/then"
+          }
+        ]
+      },
+      {
+        "type": "phrase",
+        "id": "phrase-7",
+        "text": "translate",
+        "tokens": [
+          "translate"
+        ],
+        "start": 6,
+        "end": 6,
+        "sourceStart": 42,
+        "sourceEnd": 51,
+        "size": 1,
+        "entity": {
+          "id": "Q7553",
+          "label": "translation",
+          "description": "statement that explains the meaning of a word, phrase, concept, or idea",
+          "kind": "entity",
+          "source": "wikidata",
+          "sourceUrl": "https://www.wikidata.org/wiki/Q7553",
+          "wikipediaUrl": "https://en.wikipedia.org/wiki/Translation",
+          "wikipediaTitle": "Translation",
+          "score": 31,
+          "url": "https://en.wikipedia.org/wiki/Translation"
+        },
+        "candidates": [
+          {
+            "id": "Q7553",
+            "label": "translation",
+            "description": "statement that explains the meaning of a word, phrase, concept, or idea",
+            "kind": "entity",
+            "source": "wikidata",
+            "sourceUrl": "https://www.wikidata.org/wiki/Q7553",
+            "wikipediaUrl": "https://en.wikipedia.org/wiki/Translation",
+            "wikipediaTitle": "Translation",
+            "score": 31,
+            "url": "https://en.wikipedia.org/wiki/Translation"
+          },
+          {
+            "id": "wikt:en:translate#Verb:0",
+            "label": "translate",
+            "description": "Senses relating to the change of information, etc., from one form to another.\n To change spoken words or written text (of a book, document, movie, etc.) from one language to another.",
+            "kind": "entity",
+            "source": "wiktionary",
+            "sourceUrl": "https://en.wiktionary.org/wiki/translate",
+            "wikipediaUrl": null,
+            "wikipediaTitle": null,
+            "score": 31,
+            "url": "https://en.wiktionary.org/wiki/translate"
+          },
+          {
+            "id": "wikt:en:translate#Verb:1",
+            "label": "translate",
+            "description": " To change spoken words or written text (of a book, document, movie, etc.) from one language to another.",
+            "kind": "entity",
+            "source": "wiktionary",
+            "sourceUrl": "https://en.wiktionary.org/wiki/translate",
+            "wikipediaUrl": null,
+            "wikipediaTitle": null,
+            "score": 31,
+            "url": "https://en.wiktionary.org/wiki/translate"
+          }
+        ]
+      },
+      {
+        "type": "phrase",
+        "id": "phrase-8",
+        "text": "each",
+        "tokens": [
+          "each"
+        ],
+        "start": 7,
+        "end": 7,
+        "sourceStart": 52,
+        "sourceEnd": 56,
+        "size": 1,
+        "entity": {
+          "id": "wikt:en:each#Determiner:0",
+          "label": "each",
+          "description": "All; every; qualifying a singular noun, indicating all examples of the thing so named seen as individual or separate items (compare every).",
+          "kind": "entity",
+          "source": "wiktionary",
+          "sourceUrl": "https://en.wiktionary.org/wiki/each",
+          "wikipediaUrl": null,
+          "wikipediaTitle": null,
+          "score": 31,
+          "url": "https://en.wiktionary.org/wiki/each"
+        },
+        "candidates": [
+          {
+            "id": "wikt:en:each#Determiner:0",
+            "label": "each",
+            "description": "All; every; qualifying a singular noun, indicating all examples of the thing so named seen as individual or separate items (compare every).",
+            "kind": "entity",
+            "source": "wiktionary",
+            "sourceUrl": "https://en.wiktionary.org/wiki/each",
+            "wikipediaUrl": null,
+            "wikipediaTitle": null,
+            "score": 31,
+            "url": "https://en.wiktionary.org/wiki/each"
+          },
+          {
+            "id": "wikt:en:each#Adverb:1",
+            "label": "each",
+            "description": "For one; apiece; per.",
+            "kind": "entity",
+            "source": "wiktionary",
+            "sourceUrl": "https://en.wiktionary.org/wiki/each",
+            "wikipediaUrl": null,
+            "wikipediaTitle": null,
+            "score": 31,
+            "url": "https://en.wiktionary.org/wiki/each"
+          },
+          {
+            "id": "wikt:en:each#Adverb:2",
+            "label": "each",
+            "description": "Individually; separately; used in a sentence with a plural subject to indicate that the action or state described by the verb applies to all members of the described group individually, rather than collectively to the entire group.",
+            "kind": "entity",
+            "source": "wiktionary",
+            "sourceUrl": "https://en.wiktionary.org/wiki/each",
+            "wikipediaUrl": null,
+            "wikipediaTitle": null,
+            "score": 31,
+            "url": "https://en.wiktionary.org/wiki/each"
+          }
+        ]
+      },
+      {
+        "type": "phrase",
+        "id": "phrase-9",
+        "text": "sentence",
+        "tokens": [
+          "sentence"
+        ],
+        "start": 8,
+        "end": 8,
+        "sourceStart": 57,
+        "sourceEnd": 65,
+        "size": 1,
+        "entity": {
+          "id": "Q41796",
+          "label": "sentence",
+          "description": "textual unit consisting of one or more words that are grammatically linked, expressing a complete thought in non-functional linguistics",
+          "kind": "entity",
+          "source": "wikidata",
+          "sourceUrl": "https://www.wikidata.org/wiki/Q41796",
+          "wikipediaUrl": "https://en.wikipedia.org/wiki/Sentence_(linguistics)",
+          "wikipediaTitle": "Sentence (linguistics)",
+          "score": 51,
+          "url": "https://en.wikipedia.org/wiki/Sentence_(linguistics)"
+        },
+        "candidates": [
+          {
+            "id": "Q41796",
+            "label": "sentence",
+            "description": "textual unit consisting of one or more words that are grammatically linked, expressing a complete thought in non-functional linguistics",
+            "kind": "entity",
+            "source": "wikidata",
+            "sourceUrl": "https://www.wikidata.org/wiki/Q41796",
+            "wikipediaUrl": "https://en.wikipedia.org/wiki/Sentence_(linguistics)",
+            "wikipediaTitle": "Sentence (linguistics)",
+            "score": 51,
+            "url": "https://en.wikipedia.org/wiki/Sentence_(linguistics)"
+          },
+          {
+            "id": "Q1763090",
+            "label": "sentence",
+            "description": "decree of punishment in law",
+            "kind": "entity",
+            "source": "wikidata",
+            "sourceUrl": "https://www.wikidata.org/wiki/Q1763090",
+            "wikipediaUrl": null,
+            "wikipediaTitle": null,
+            "score": 39,
+            "url": "https://www.wikidata.org/wiki/Q1763090"
+          },
+          {
+            "id": "wikt:en:sentence#Noun:0",
+            "label": "sentence",
+            "description": " The decision or judgement of a jury or court; a verdict. .mw-parser-output .defdate{font-size:smaller}",
+            "kind": "entity",
+            "source": "wiktionary",
+            "sourceUrl": "https://en.wiktionary.org/wiki/sentence",
+            "wikipediaUrl": null,
+            "wikipediaTitle": null,
+            "score": 31,
+            "url": "https://en.wiktionary.org/wiki/sentence"
+          }
+        ]
+      },
+      {
+        "type": "phrase",
+        "id": "phrase-10",
+        "text": "through",
+        "tokens": [
+          "through"
+        ],
+        "start": 9,
+        "end": 9,
+        "sourceStart": 66,
+        "sourceEnd": 73,
+        "size": 1,
+        "entity": {
+          "id": "Q135058010",
+          "label": "THROUGH",
+          "description": "2024 video game developed by Degüello Studio",
+          "kind": "entity",
+          "source": "wikidata",
+          "sourceUrl": "https://www.wikidata.org/wiki/Q135058010",
+          "wikipediaUrl": null,
+          "wikipediaTitle": null,
+          "score": 39,
+          "url": "https://www.wikidata.org/wiki/Q135058010"
+        },
+        "candidates": [
+          {
+            "id": "Q135058010",
+            "label": "THROUGH",
+            "description": "2024 video game developed by Degüello Studio",
+            "kind": "entity",
+            "source": "wikidata",
+            "sourceUrl": "https://www.wikidata.org/wiki/Q135058010",
+            "wikipediaUrl": null,
+            "wikipediaTitle": null,
+            "score": 39,
+            "url": "https://www.wikidata.org/wiki/Q135058010"
+          },
+          {
+            "id": "wikt:en:through#Preposition:0",
+            "label": "through",
+            "description": "From one side or end of (something) to the other. \nSo as to enter (something), pass within or across, and then leave.",
+            "kind": "entity",
+            "source": "wiktionary",
+            "sourceUrl": "https://en.wiktionary.org/wiki/through",
+            "wikipediaUrl": null,
+            "wikipediaTitle": null,
+            "score": 31,
+            "url": "https://en.wiktionary.org/wiki/through"
+          },
+          {
+            "id": "wikt:en:through#Preposition:1",
+            "label": "through",
+            "description": "So as to enter (something), pass within or across, and then leave.",
+            "kind": "entity",
+            "source": "wiktionary",
+            "sourceUrl": "https://en.wiktionary.org/wiki/through",
+            "wikipediaUrl": null,
+            "wikipediaTitle": null,
+            "score": 31,
+            "url": "https://en.wiktionary.org/wiki/through"
+          }
+        ]
+      },
+      {
+        "type": "phrase",
+        "id": "phrase-11",
+        "text": "labels",
+        "tokens": [
+          "labels"
+        ],
+        "start": 10,
+        "end": 10,
+        "sourceStart": 74,
+        "sourceEnd": 80,
+        "size": 1,
+        "entity": {
+          "id": "Q3214321",
+          "label": "Labels",
+          "description": "French record label",
+          "kind": "entity",
+          "source": "wikidata",
+          "sourceUrl": "https://www.wikidata.org/wiki/Q3214321",
+          "wikipediaUrl": null,
+          "wikipediaTitle": null,
+          "score": 39,
+          "url": "https://www.wikidata.org/wiki/Q3214321"
+        },
+        "candidates": [
+          {
+            "id": "Q3214321",
+            "label": "Labels",
+            "description": "French record label",
+            "kind": "entity",
+            "source": "wikidata",
+            "sourceUrl": "https://www.wikidata.org/wiki/Q3214321",
+            "wikipediaUrl": null,
+            "wikipediaTitle": null,
+            "score": 39,
+            "url": "https://www.wikidata.org/wiki/Q3214321"
+          },
+          {
+            "id": "Q51153747",
+            "label": "Labels",
+            "description": "episode of Moesha (S2 E6)",
+            "kind": "entity",
+            "source": "wikidata",
+            "sourceUrl": "https://www.wikidata.org/wiki/Q51153747",
+            "wikipediaUrl": null,
+            "wikipediaTitle": null,
+            "score": 39,
+            "url": "https://www.wikidata.org/wiki/Q51153747"
+          },
+          {
+            "id": "wikt:en:labels#Noun:0",
+            "label": "labels",
+            "description": "plural of label",
+            "kind": "entity",
+            "source": "wiktionary",
+            "sourceUrl": "https://en.wiktionary.org/wiki/labels",
+            "wikipediaUrl": null,
+            "wikipediaTitle": null,
+            "score": 31,
+            "url": "https://en.wiktionary.org/wiki/labels"
+          }
+        ]
+      },
+      {
+        "type": "phrase",
+        "id": "phrase-12",
+        "text": "and",
+        "tokens": [
+          "and"
+        ],
+        "start": 11,
+        "end": 11,
+        "sourceStart": 81,
+        "sourceEnd": 84,
+        "size": 1,
+        "entity": {
+          "id": "wikt:en:and#Symbol:0",
+          "label": "and",
+          "description": " ISO 639-3 language code for Ansus.",
+          "kind": "entity",
+          "source": "wiktionary",
+          "sourceUrl": "https://en.wiktionary.org/wiki/and",
+          "wikipediaUrl": null,
+          "wikipediaTitle": null,
+          "score": 31,
+          "url": "https://en.wiktionary.org/wiki/and"
+        },
+        "candidates": [
+          {
+            "id": "wikt:en:and#Symbol:0",
+            "label": "and",
+            "description": " ISO 639-3 language code for Ansus.",
+            "kind": "entity",
+            "source": "wiktionary",
+            "sourceUrl": "https://en.wiktionary.org/wiki/and",
+            "wikipediaUrl": null,
+            "wikipediaTitle": null,
+            "score": 31,
+            "url": "https://en.wiktionary.org/wiki/and"
+          },
+          {
+            "id": "wikt:en:and#Conjunction:1",
+            "label": "and",
+            "description": "As a coordinating conjunction; expressing two elements to be taken together or in addition to each other.\nUsed simply to connect two noun phrases, adjectives or adverbs. .mw-parser-output .defdate{font-size:smaller}\n\nSimply connecting two clauses or sentences. \n\nIntroducing a clause or sentence which follows on in time or consequence from the first. ",
+            "kind": "entity",
+            "source": "wiktionary",
+            "sourceUrl": "https://en.wiktionary.org/wiki/and",
+            "wikipediaUrl": null,
+            "wikipediaTitle": null,
+            "score": 31,
+            "url": "https://en.wiktionary.org/wiki/and"
+          },
+          {
+            "id": "wikt:en:and#Conjunction:2",
+            "label": "and",
+            "description": "Used simply to connect two noun phrases, adjectives or adverbs. .mw-parser-output .defdate{font-size:smaller}",
+            "kind": "entity",
+            "source": "wiktionary",
+            "sourceUrl": "https://en.wiktionary.org/wiki/and",
+            "wikipediaUrl": null,
+            "wikipediaTitle": null,
+            "score": 31,
+            "url": "https://en.wiktionary.org/wiki/and"
+          }
+        ]
+      },
+      {
+        "type": "phrase",
+        "id": "phrase-13",
+        "text": "transformation",
+        "tokens": [
+          "transformation"
+        ],
+        "start": 12,
+        "end": 12,
+        "sourceStart": 85,
+        "sourceEnd": 99,
+        "size": 1,
+        "entity": {
+          "id": "Q461499",
+          "label": "transformation",
+          "description": "planned genetic alteration of a cell by uptake of genetic material from the environment",
+          "kind": "entity",
+          "source": "wikidata",
+          "sourceUrl": "https://www.wikidata.org/wiki/Q461499",
+          "wikipediaUrl": null,
+          "wikipediaTitle": null,
+          "score": 39,
+          "url": "https://www.wikidata.org/wiki/Q461499"
+        },
+        "candidates": [
+          {
+            "id": "Q461499",
+            "label": "transformation",
+            "description": "planned genetic alteration of a cell by uptake of genetic material from the environment",
+            "kind": "entity",
+            "source": "wikidata",
+            "sourceUrl": "https://www.wikidata.org/wiki/Q461499",
+            "wikipediaUrl": null,
+            "wikipediaTitle": null,
+            "score": 39,
+            "url": "https://www.wikidata.org/wiki/Q461499"
+          },
+          {
+            "id": "Q65757353",
+            "label": "transformation",
+            "description": "process involving change into a qualitatively different form",
+            "kind": "entity",
+            "source": "wikidata",
+            "sourceUrl": "https://www.wikidata.org/wiki/Q65757353",
+            "wikipediaUrl": null,
+            "wikipediaTitle": null,
+            "score": 39,
+            "url": "https://www.wikidata.org/wiki/Q65757353"
+          },
+          {
+            "id": "Q12202238",
+            "label": "transformation",
+            "description": "function mapping a set to itself",
+            "kind": "entity",
+            "source": "wikidata",
+            "sourceUrl": "https://www.wikidata.org/wiki/Q12202238",
+            "wikipediaUrl": null,
+            "wikipediaTitle": null,
+            "score": 39,
+            "url": "https://www.wikidata.org/wiki/Q12202238"
+          }
+        ]
+      },
+      {
+        "type": "phrase",
+        "id": "phrase-14",
+        "text": "rules",
+        "tokens": [
+          "rules"
+        ],
+        "start": 13,
+        "end": 13,
+        "sourceStart": 100,
+        "sourceEnd": 105,
+        "size": 1,
+        "entity": {
+          "id": "wikt:en:rules#Noun:0",
+          "label": "rules",
+          "description": "plural of rule",
+          "kind": "entity",
+          "source": "wiktionary",
+          "sourceUrl": "https://en.wiktionary.org/wiki/rules",
+          "wikipediaUrl": null,
+          "wikipediaTitle": null,
+          "score": 31,
+          "url": "https://en.wiktionary.org/wiki/rules"
+        },
+        "candidates": [
+          {
+            "id": "wikt:en:rules#Noun:0",
+            "label": "rules",
+            "description": "plural of rule",
+            "kind": "entity",
+            "source": "wiktionary",
+            "sourceUrl": "https://en.wiktionary.org/wiki/rules",
+            "wikipediaUrl": null,
+            "wikipediaTitle": null,
+            "score": 31,
+            "url": "https://en.wiktionary.org/wiki/rules"
+          },
+          {
+            "id": "wikt:en:rules#Verb:1",
+            "label": "rules",
+            "description": "third-person singular simple present indicative of rule",
+            "kind": "entity",
+            "source": "wiktionary",
+            "sourceUrl": "https://en.wiktionary.org/wiki/rules",
+            "wikipediaUrl": null,
+            "wikipediaTitle": null,
+            "score": 31,
+            "url": "https://en.wiktionary.org/wiki/rules"
+          },
+          {
+            "id": "wp:en:vanderpump_rules",
+            "label": "Vanderpump Rules",
+            "description": "three spin-offs: Vanderpump Rules After Show, Vanderpump Rules: Jax &amp; Brittany Take Kentucky, and The Valley. Vanderpump Rules follows Lisa Vanderpump and",
+            "kind": "entity",
+            "source": "wikipedia",
+            "sourceUrl": "https://en.wikipedia.org/wiki/Vanderpump_Rules",
+            "wikipediaUrl": "https://en.wikipedia.org/wiki/Vanderpump_Rules",
+            "wikipediaTitle": "Vanderpump Rules",
+            "score": 22,
+            "url": "https://en.wikipedia.org/wiki/Vanderpump_Rules"
+          }
+        ]
+      },
+      {
+        "type": "phrase",
+        "id": "phrase-15",
+        "text": "Unresolved",
+        "tokens": [
+          "Unresolved"
+        ],
+        "start": 14,
+        "end": 14,
+        "sourceStart": 107,
+        "sourceEnd": 117,
+        "size": 1,
+        "entity": {
+          "id": "wp:en:sexual_tension",
+          "label": "Sexual tension",
+          "description": "Sexual tension is a social phenomenon that occurs when two individuals interact and one or both feel sexual attraction, but the consummation is postponed",
+          "kind": "entity",
+          "source": "wikipedia",
+          "sourceUrl": "https://en.wikipedia.org/wiki/Sexual_tension",
+          "wikipediaUrl": "https://en.wikipedia.org/wiki/Sexual_tension",
+          "wikipediaTitle": "Sexual tension",
+          "score": 17,
+          "url": "https://en.wikipedia.org/wiki/Sexual_tension"
+        },
+        "candidates": [
+          {
+            "id": "wp:en:sexual_tension",
+            "label": "Sexual tension",
+            "description": "Sexual tension is a social phenomenon that occurs when two individuals interact and one or both feel sexual attraction, but the consummation is postponed",
+            "kind": "entity",
+            "source": "wikipedia",
+            "sourceUrl": "https://en.wikipedia.org/wiki/Sexual_tension",
+            "wikipediaUrl": "https://en.wikipedia.org/wiki/Sexual_tension",
+            "wikipediaTitle": "Sexual tension",
+            "score": 17,
+            "url": "https://en.wikipedia.org/wiki/Sexual_tension"
+          },
+          {
+            "id": "wp:en:open_problem",
+            "label": "Open problem",
+            "description": "In science and mathematics, an open problem or an open question is a known problem which can be accurately stated, and which is assumed to have an objective",
+            "kind": "entity",
+            "source": "wikipedia",
+            "sourceUrl": "https://en.wikipedia.org/wiki/Open_problem",
+            "wikipediaUrl": "https://en.wikipedia.org/wiki/Open_problem",
+            "wikipediaTitle": "Open problem",
+            "score": 17,
+            "url": "https://en.wikipedia.org/wiki/Open_problem"
+          },
+          {
+            "id": "wp:en:list_of_unsolved_murders_in_belize",
+            "label": "List of unsolved murders in Belize",
+            "description": "This is a list of noted unsolved murders in Belize since the 1970s. This list includes both known and presumed murders, and further includes murders which",
+            "kind": "entity",
+            "source": "wikipedia",
+            "sourceUrl": "https://en.wikipedia.org/wiki/List_of_unsolved_murders_in_Belize",
+            "wikipediaUrl": "https://en.wikipedia.org/wiki/List_of_unsolved_murders_in_Belize",
+            "wikipediaTitle": "List of unsolved murders in Belize",
+            "score": 17,
+            "url": "https://en.wikipedia.org/wiki/List_of_unsolved_murders_in_Belize"
+          }
+        ]
+      },
+      {
+        "type": "phrase",
+        "id": "phrase-16",
+        "text": "parts",
+        "tokens": [
+          "parts"
+        ],
+        "start": 15,
+        "end": 15,
+        "sourceStart": 118,
+        "sourceEnd": 123,
+        "size": 1,
+        "entity": null,
+        "candidates": []
+      },
+      {
+        "type": "phrase",
+        "id": "phrase-17",
+        "text": "remain",
+        "tokens": [
+          "remain"
+        ],
+        "start": 16,
+        "end": 16,
+        "sourceStart": 124,
+        "sourceEnd": 130,
+        "size": 1,
+        "entity": null,
+        "candidates": []
+      },
+      {
+        "type": "phrase",
+        "id": "phrase-18",
+        "text": "variables",
+        "tokens": [
+          "variables"
+        ],
+        "start": 17,
+        "end": 17,
+        "sourceStart": 131,
+        "sourceEnd": 140,
+        "size": 1,
+        "entity": null,
+        "candidates": []
+      },
+      {
+        "type": "phrase",
+        "id": "phrase-19",
+        "text": "with",
+        "tokens": [
+          "with"
+        ],
+        "start": 18,
+        "end": 18,
+        "sourceStart": 141,
+        "sourceEnd": 145,
+        "size": 1,
+        "entity": {
+          "id": "wikt:en:with#Preposition:0",
+          "label": "with",
+          "description": "Against.",
+          "kind": "entity",
+          "source": "wiktionary",
+          "sourceUrl": "https://en.wiktionary.org/wiki/with",
+          "wikipediaUrl": null,
+          "wikipediaTitle": null,
+          "score": 31,
+          "url": "https://en.wiktionary.org/wiki/with"
+        },
+        "candidates": [
+          {
+            "id": "wikt:en:with#Preposition:0",
+            "label": "with",
+            "description": "Against.",
+            "kind": "entity",
+            "source": "wiktionary",
+            "sourceUrl": "https://en.wiktionary.org/wiki/with",
+            "wikipediaUrl": null,
+            "wikipediaTitle": null,
+            "score": 31,
+            "url": "https://en.wiktionary.org/wiki/with"
+          },
+          {
+            "id": "wikt:en:with#Preposition:1",
+            "label": "with",
+            "description": "In the company of; alongside, close to; near to.",
+            "kind": "entity",
+            "source": "wiktionary",
+            "sourceUrl": "https://en.wiktionary.org/wiki/with",
+            "wikipediaUrl": null,
+            "wikipediaTitle": null,
+            "score": 31,
+            "url": "https://en.wiktionary.org/wiki/with"
+          },
+          {
+            "id": "wikt:en:with#Preposition:2",
+            "label": "with",
+            "description": "In addition to; as an accessory to.",
+            "kind": "entity",
+            "source": "wiktionary",
+            "sourceUrl": "https://en.wiktionary.org/wiki/with",
+            "wikipediaUrl": null,
+            "wikipediaTitle": null,
+            "score": 31,
+            "url": "https://en.wiktionary.org/wiki/with"
+          }
+        ]
+      },
+      {
+        "type": "phrase",
+        "id": "phrase-20",
+        "text": "questions",
+        "tokens": [
+          "questions"
+        ],
+        "start": 19,
+        "end": 19,
+        "sourceStart": 146,
+        "sourceEnd": 155,
+        "size": 1,
+        "entity": null,
+        "candidates": []
+      }
+    ],
+    "contexts": []
+  },
+  "linkTargetMode": "wikipedia",
+  "sources": [
+    "wikipedia",
+    "wikidata",
+    "wiktionary"
+  ]
+}
