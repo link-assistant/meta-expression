@@ -1,0 +1,482 @@
+
+> my-package@0.9.0 test
+> node --test tests/*.test.js
+
+TAP version 13
+# node:internal/modules/esm/resolve:873
+#   throw new ERR_MODULE_NOT_FOUND(packageName, fileURLToPath(base), null);
+#         ^
+# Error [ERR_MODULE_NOT_FOUND]: Cannot find package 'test-anywhere' imported from /tmp/gh-issue-solver-1779449835118/tests/documentation.test.js
+#     at packageResolve (node:internal/modules/esm/resolve:873:9)
+#     at moduleResolve (node:internal/modules/esm/resolve:946:18)
+#     at defaultResolve (node:internal/modules/esm/resolve:1188:11)
+#     at ModuleLoader.defaultResolve (node:internal/modules/esm/loader:708:12)
+#     at \#cachedDefaultResolve (node:internal/modules/esm/loader:657:25)
+#     at ModuleLoader.resolve (node:internal/modules/esm/loader:640:38)
+#     at ModuleLoader.getModuleJobForImport (node:internal/modules/esm/loader:264:38)
+#     at ModuleJob._link (node:internal/modules/esm/module_job:168:49) {
+#   code: 'ERR_MODULE_NOT_FOUND'
+# }
+# Node.js v20.20.2
+# Subtest: /tmp/gh-issue-solver-1779449835118/tests/documentation.test.js
+not ok 1 - /tmp/gh-issue-solver-1779449835118/tests/documentation.test.js
+  ---
+  duration_ms: 57.500384
+  location: '/tmp/gh-issue-solver-1779449835118/tests/documentation.test.js:1:1'
+  failureType: 'testCodeFailure'
+  exitCode: 1
+  signal: ~
+  error: 'test failed'
+  code: 'ERR_TEST_FAILURE'
+  ...
+# node:internal/modules/esm/resolve:873
+#   throw new ERR_MODULE_NOT_FOUND(packageName, fileURLToPath(base), null);
+#         ^
+# Error [ERR_MODULE_NOT_FOUND]: Cannot find package 'test-anywhere' imported from /tmp/gh-issue-solver-1779449835118/tests/index.test.js
+#     at packageResolve (node:internal/modules/esm/resolve:873:9)
+#     at moduleResolve (node:internal/modules/esm/resolve:946:18)
+#     at defaultResolve (node:internal/modules/esm/resolve:1188:11)
+#     at ModuleLoader.defaultResolve (node:internal/modules/esm/loader:708:12)
+#     at \#cachedDefaultResolve (node:internal/modules/esm/loader:657:25)
+#     at ModuleLoader.resolve (node:internal/modules/esm/loader:640:38)
+#     at ModuleLoader.getModuleJobForImport (node:internal/modules/esm/loader:264:38)
+#     at ModuleJob._link (node:internal/modules/esm/module_job:168:49) {
+#   code: 'ERR_MODULE_NOT_FOUND'
+# }
+# Node.js v20.20.2
+# Subtest: /tmp/gh-issue-solver-1779449835118/tests/index.test.js
+not ok 2 - /tmp/gh-issue-solver-1779449835118/tests/index.test.js
+  ---
+  duration_ms: 67.078425
+  location: '/tmp/gh-issue-solver-1779449835118/tests/index.test.js:1:1'
+  failureType: 'testCodeFailure'
+  exitCode: 1
+  signal: ~
+  error: 'test failed'
+  code: 'ERR_TEST_FAILURE'
+  ...
+# node:internal/modules/esm/resolve:873
+#   throw new ERR_MODULE_NOT_FOUND(packageName, fileURLToPath(base), null);
+#         ^
+# Error [ERR_MODULE_NOT_FOUND]: Cannot find package 'test-anywhere' imported from /tmp/gh-issue-solver-1779449835118/tests/issue-13.test.js
+#     at packageResolve (node:internal/modules/esm/resolve:873:9)
+#     at moduleResolve (node:internal/modules/esm/resolve:946:18)
+#     at defaultResolve (node:internal/modules/esm/resolve:1188:11)
+#     at ModuleLoader.defaultResolve (node:internal/modules/esm/loader:708:12)
+#     at \#cachedDefaultResolve (node:internal/modules/esm/loader:657:25)
+#     at ModuleLoader.resolve (node:internal/modules/esm/loader:640:38)
+#     at ModuleLoader.getModuleJobForImport (node:internal/modules/esm/loader:264:38)
+#     at ModuleJob._link (node:internal/modules/esm/module_job:168:49) {
+#   code: 'ERR_MODULE_NOT_FOUND'
+# }
+# Node.js v20.20.2
+# Subtest: /tmp/gh-issue-solver-1779449835118/tests/issue-13.test.js
+not ok 3 - /tmp/gh-issue-solver-1779449835118/tests/issue-13.test.js
+  ---
+  duration_ms: 81.997242
+  location: '/tmp/gh-issue-solver-1779449835118/tests/issue-13.test.js:1:1'
+  failureType: 'testCodeFailure'
+  exitCode: 1
+  signal: ~
+  error: 'test failed'
+  code: 'ERR_TEST_FAILURE'
+  ...
+# node:internal/modules/esm/resolve:873
+#   throw new ERR_MODULE_NOT_FOUND(packageName, fileURLToPath(base), null);
+#         ^
+# Error [ERR_MODULE_NOT_FOUND]: Cannot find package 'test-anywhere' imported from /tmp/gh-issue-solver-1779449835118/tests/issue-15.test.js
+#     at packageResolve (node:internal/modules/esm/resolve:873:9)
+#     at moduleResolve (node:internal/modules/esm/resolve:946:18)
+#     at defaultResolve (node:internal/modules/esm/resolve:1188:11)
+#     at ModuleLoader.defaultResolve (node:internal/modules/esm/loader:708:12)
+#     at \#cachedDefaultResolve (node:internal/modules/esm/loader:657:25)
+#     at ModuleLoader.resolve (node:internal/modules/esm/loader:640:38)
+#     at ModuleLoader.getModuleJobForImport (node:internal/modules/esm/loader:264:38)
+#     at ModuleJob._link (node:internal/modules/esm/module_job:168:49) {
+#   code: 'ERR_MODULE_NOT_FOUND'
+# }
+# Node.js v20.20.2
+# Subtest: /tmp/gh-issue-solver-1779449835118/tests/issue-15.test.js
+not ok 4 - /tmp/gh-issue-solver-1779449835118/tests/issue-15.test.js
+  ---
+  duration_ms: 111.777503
+  location: '/tmp/gh-issue-solver-1779449835118/tests/issue-15.test.js:1:1'
+  failureType: 'testCodeFailure'
+  exitCode: 1
+  signal: ~
+  error: 'test failed'
+  code: 'ERR_TEST_FAILURE'
+  ...
+# node:internal/modules/esm/resolve:873
+#   throw new ERR_MODULE_NOT_FOUND(packageName, fileURLToPath(base), null);
+#         ^
+# Error [ERR_MODULE_NOT_FOUND]: Cannot find package 'test-anywhere' imported from /tmp/gh-issue-solver-1779449835118/tests/issue-16.test.js
+#     at packageResolve (node:internal/modules/esm/resolve:873:9)
+#     at moduleResolve (node:internal/modules/esm/resolve:946:18)
+#     at defaultResolve (node:internal/modules/esm/resolve:1188:11)
+#     at ModuleLoader.defaultResolve (node:internal/modules/esm/loader:708:12)
+#     at \#cachedDefaultResolve (node:internal/modules/esm/loader:657:25)
+#     at ModuleLoader.resolve (node:internal/modules/esm/loader:640:38)
+#     at ModuleLoader.getModuleJobForImport (node:internal/modules/esm/loader:264:38)
+#     at ModuleJob._link (node:internal/modules/esm/module_job:168:49) {
+#   code: 'ERR_MODULE_NOT_FOUND'
+# }
+# Node.js v20.20.2
+# Subtest: /tmp/gh-issue-solver-1779449835118/tests/issue-16.test.js
+not ok 5 - /tmp/gh-issue-solver-1779449835118/tests/issue-16.test.js
+  ---
+  duration_ms: 85.243241
+  location: '/tmp/gh-issue-solver-1779449835118/tests/issue-16.test.js:1:1'
+  failureType: 'testCodeFailure'
+  exitCode: 1
+  signal: ~
+  error: 'test failed'
+  code: 'ERR_TEST_FAILURE'
+  ...
+# node:internal/modules/esm/resolve:873
+#   throw new ERR_MODULE_NOT_FOUND(packageName, fileURLToPath(base), null);
+#         ^
+# Error [ERR_MODULE_NOT_FOUND]: Cannot find package 'test-anywhere' imported from /tmp/gh-issue-solver-1779449835118/tests/issue-17.test.js
+#     at packageResolve (node:internal/modules/esm/resolve:873:9)
+#     at moduleResolve (node:internal/modules/esm/resolve:946:18)
+#     at defaultResolve (node:internal/modules/esm/resolve:1188:11)
+#     at ModuleLoader.defaultResolve (node:internal/modules/esm/loader:708:12)
+#     at \#cachedDefaultResolve (node:internal/modules/esm/loader:657:25)
+#     at ModuleLoader.resolve (node:internal/modules/esm/loader:640:38)
+#     at ModuleLoader.getModuleJobForImport (node:internal/modules/esm/loader:264:38)
+#     at ModuleJob._link (node:internal/modules/esm/module_job:168:49) {
+#   code: 'ERR_MODULE_NOT_FOUND'
+# }
+# Node.js v20.20.2
+# Subtest: /tmp/gh-issue-solver-1779449835118/tests/issue-17.test.js
+not ok 6 - /tmp/gh-issue-solver-1779449835118/tests/issue-17.test.js
+  ---
+  duration_ms: 86.834298
+  location: '/tmp/gh-issue-solver-1779449835118/tests/issue-17.test.js:1:1'
+  failureType: 'testCodeFailure'
+  exitCode: 1
+  signal: ~
+  error: 'test failed'
+  code: 'ERR_TEST_FAILURE'
+  ...
+# node:internal/modules/esm/resolve:873
+#   throw new ERR_MODULE_NOT_FOUND(packageName, fileURLToPath(base), null);
+#         ^
+# Error [ERR_MODULE_NOT_FOUND]: Cannot find package 'test-anywhere' imported from /tmp/gh-issue-solver-1779449835118/tests/issue-18.test.js
+#     at packageResolve (node:internal/modules/esm/resolve:873:9)
+#     at moduleResolve (node:internal/modules/esm/resolve:946:18)
+#     at defaultResolve (node:internal/modules/esm/resolve:1188:11)
+#     at ModuleLoader.defaultResolve (node:internal/modules/esm/loader:708:12)
+#     at \#cachedDefaultResolve (node:internal/modules/esm/loader:657:25)
+#     at ModuleLoader.resolve (node:internal/modules/esm/loader:640:38)
+#     at ModuleLoader.getModuleJobForImport (node:internal/modules/esm/loader:264:38)
+#     at ModuleJob._link (node:internal/modules/esm/module_job:168:49) {
+#   code: 'ERR_MODULE_NOT_FOUND'
+# }
+# Node.js v20.20.2
+# Subtest: /tmp/gh-issue-solver-1779449835118/tests/issue-18.test.js
+not ok 7 - /tmp/gh-issue-solver-1779449835118/tests/issue-18.test.js
+  ---
+  duration_ms: 74.528895
+  location: '/tmp/gh-issue-solver-1779449835118/tests/issue-18.test.js:1:1'
+  failureType: 'testCodeFailure'
+  exitCode: 1
+  signal: ~
+  error: 'test failed'
+  code: 'ERR_TEST_FAILURE'
+  ...
+# node:internal/modules/esm/resolve:873
+#   throw new ERR_MODULE_NOT_FOUND(packageName, fileURLToPath(base), null);
+#         ^
+# Error [ERR_MODULE_NOT_FOUND]: Cannot find package 'test-anywhere' imported from /tmp/gh-issue-solver-1779449835118/tests/issue-20.test.js
+#     at packageResolve (node:internal/modules/esm/resolve:873:9)
+#     at moduleResolve (node:internal/modules/esm/resolve:946:18)
+#     at defaultResolve (node:internal/modules/esm/resolve:1188:11)
+#     at ModuleLoader.defaultResolve (node:internal/modules/esm/loader:708:12)
+#     at \#cachedDefaultResolve (node:internal/modules/esm/loader:657:25)
+#     at ModuleLoader.resolve (node:internal/modules/esm/loader:640:38)
+#     at ModuleLoader.getModuleJobForImport (node:internal/modules/esm/loader:264:38)
+#     at ModuleJob._link (node:internal/modules/esm/module_job:168:49) {
+#   code: 'ERR_MODULE_NOT_FOUND'
+# }
+# Node.js v20.20.2
+# Subtest: /tmp/gh-issue-solver-1779449835118/tests/issue-20.test.js
+not ok 8 - /tmp/gh-issue-solver-1779449835118/tests/issue-20.test.js
+  ---
+  duration_ms: 68.81619
+  location: '/tmp/gh-issue-solver-1779449835118/tests/issue-20.test.js:1:1'
+  failureType: 'testCodeFailure'
+  exitCode: 1
+  signal: ~
+  error: 'test failed'
+  code: 'ERR_TEST_FAILURE'
+  ...
+# node:internal/modules/esm/resolve:873
+#   throw new ERR_MODULE_NOT_FOUND(packageName, fileURLToPath(base), null);
+#         ^
+# Error [ERR_MODULE_NOT_FOUND]: Cannot find package 'test-anywhere' imported from /tmp/gh-issue-solver-1779449835118/tests/issue-21-context-detection.test.js
+#     at packageResolve (node:internal/modules/esm/resolve:873:9)
+#     at moduleResolve (node:internal/modules/esm/resolve:946:18)
+#     at defaultResolve (node:internal/modules/esm/resolve:1188:11)
+#     at ModuleLoader.defaultResolve (node:internal/modules/esm/loader:708:12)
+#     at \#cachedDefaultResolve (node:internal/modules/esm/loader:657:25)
+#     at ModuleLoader.resolve (node:internal/modules/esm/loader:640:38)
+#     at ModuleLoader.getModuleJobForImport (node:internal/modules/esm/loader:264:38)
+#     at ModuleJob._link (node:internal/modules/esm/module_job:168:49) {
+#   code: 'ERR_MODULE_NOT_FOUND'
+# }
+# Node.js v20.20.2
+# Subtest: /tmp/gh-issue-solver-1779449835118/tests/issue-21-context-detection.test.js
+not ok 9 - /tmp/gh-issue-solver-1779449835118/tests/issue-21-context-detection.test.js
+  ---
+  duration_ms: 68.639635
+  location: '/tmp/gh-issue-solver-1779449835118/tests/issue-21-context-detection.test.js:1:1'
+  failureType: 'testCodeFailure'
+  exitCode: 1
+  signal: ~
+  error: 'test failed'
+  code: 'ERR_TEST_FAILURE'
+  ...
+# node:internal/modules/esm/resolve:873
+#   throw new ERR_MODULE_NOT_FOUND(packageName, fileURLToPath(base), null);
+#         ^
+# Error [ERR_MODULE_NOT_FOUND]: Cannot find package 'test-anywhere' imported from /tmp/gh-issue-solver-1779449835118/tests/issue-21-snapshot-cache.test.js
+#     at packageResolve (node:internal/modules/esm/resolve:873:9)
+#     at moduleResolve (node:internal/modules/esm/resolve:946:18)
+#     at defaultResolve (node:internal/modules/esm/resolve:1188:11)
+#     at ModuleLoader.defaultResolve (node:internal/modules/esm/loader:708:12)
+#     at \#cachedDefaultResolve (node:internal/modules/esm/loader:657:25)
+#     at ModuleLoader.resolve (node:internal/modules/esm/loader:640:38)
+#     at ModuleLoader.getModuleJobForImport (node:internal/modules/esm/loader:264:38)
+#     at ModuleJob._link (node:internal/modules/esm/module_job:168:49) {
+#   code: 'ERR_MODULE_NOT_FOUND'
+# }
+# Node.js v20.20.2
+# Subtest: /tmp/gh-issue-solver-1779449835118/tests/issue-21-snapshot-cache.test.js
+not ok 10 - /tmp/gh-issue-solver-1779449835118/tests/issue-21-snapshot-cache.test.js
+  ---
+  duration_ms: 71.179281
+  location: '/tmp/gh-issue-solver-1779449835118/tests/issue-21-snapshot-cache.test.js:1:1'
+  failureType: 'testCodeFailure'
+  exitCode: 1
+  signal: ~
+  error: 'test failed'
+  code: 'ERR_TEST_FAILURE'
+  ...
+# node:internal/modules/esm/resolve:873
+#   throw new ERR_MODULE_NOT_FOUND(packageName, fileURLToPath(base), null);
+#         ^
+# Error [ERR_MODULE_NOT_FOUND]: Cannot find package 'test-anywhere' imported from /tmp/gh-issue-solver-1779449835118/tests/issue-23.test.js
+#     at packageResolve (node:internal/modules/esm/resolve:873:9)
+#     at moduleResolve (node:internal/modules/esm/resolve:946:18)
+#     at defaultResolve (node:internal/modules/esm/resolve:1188:11)
+#     at ModuleLoader.defaultResolve (node:internal/modules/esm/loader:708:12)
+#     at \#cachedDefaultResolve (node:internal/modules/esm/loader:657:25)
+#     at ModuleLoader.resolve (node:internal/modules/esm/loader:640:38)
+#     at ModuleLoader.getModuleJobForImport (node:internal/modules/esm/loader:264:38)
+#     at ModuleJob._link (node:internal/modules/esm/module_job:168:49) {
+#   code: 'ERR_MODULE_NOT_FOUND'
+# }
+# Node.js v20.20.2
+# Subtest: /tmp/gh-issue-solver-1779449835118/tests/issue-23.test.js
+not ok 11 - /tmp/gh-issue-solver-1779449835118/tests/issue-23.test.js
+  ---
+  duration_ms: 52.49049
+  location: '/tmp/gh-issue-solver-1779449835118/tests/issue-23.test.js:1:1'
+  failureType: 'testCodeFailure'
+  exitCode: 1
+  signal: ~
+  error: 'test failed'
+  code: 'ERR_TEST_FAILURE'
+  ...
+# node:internal/modules/esm/resolve:873
+#   throw new ERR_MODULE_NOT_FOUND(packageName, fileURLToPath(base), null);
+#         ^
+# Error [ERR_MODULE_NOT_FOUND]: Cannot find package 'test-anywhere' imported from /tmp/gh-issue-solver-1779449835118/tests/issue-26-comparable-fixtures.test.js
+#     at packageResolve (node:internal/modules/esm/resolve:873:9)
+#     at moduleResolve (node:internal/modules/esm/resolve:946:18)
+#     at defaultResolve (node:internal/modules/esm/resolve:1188:11)
+#     at ModuleLoader.defaultResolve (node:internal/modules/esm/loader:708:12)
+#     at \#cachedDefaultResolve (node:internal/modules/esm/loader:657:25)
+#     at ModuleLoader.resolve (node:internal/modules/esm/loader:640:38)
+#     at ModuleLoader.getModuleJobForImport (node:internal/modules/esm/loader:264:38)
+#     at ModuleJob._link (node:internal/modules/esm/module_job:168:49) {
+#   code: 'ERR_MODULE_NOT_FOUND'
+# }
+# Node.js v20.20.2
+# Subtest: /tmp/gh-issue-solver-1779449835118/tests/issue-26-comparable-fixtures.test.js
+not ok 12 - /tmp/gh-issue-solver-1779449835118/tests/issue-26-comparable-fixtures.test.js
+  ---
+  duration_ms: 56.965575
+  location: '/tmp/gh-issue-solver-1779449835118/tests/issue-26-comparable-fixtures.test.js:1:1'
+  failureType: 'testCodeFailure'
+  exitCode: 1
+  signal: ~
+  error: 'test failed'
+  code: 'ERR_TEST_FAILURE'
+  ...
+# node:internal/modules/esm/resolve:873
+#   throw new ERR_MODULE_NOT_FOUND(packageName, fileURLToPath(base), null);
+#         ^
+# Error [ERR_MODULE_NOT_FOUND]: Cannot find package 'test-anywhere' imported from /tmp/gh-issue-solver-1779449835118/tests/issue-27.test.js
+#     at packageResolve (node:internal/modules/esm/resolve:873:9)
+#     at moduleResolve (node:internal/modules/esm/resolve:946:18)
+#     at defaultResolve (node:internal/modules/esm/resolve:1188:11)
+#     at ModuleLoader.defaultResolve (node:internal/modules/esm/loader:708:12)
+#     at \#cachedDefaultResolve (node:internal/modules/esm/loader:657:25)
+#     at ModuleLoader.resolve (node:internal/modules/esm/loader:640:38)
+#     at ModuleLoader.getModuleJobForImport (node:internal/modules/esm/loader:264:38)
+#     at ModuleJob._link (node:internal/modules/esm/module_job:168:49) {
+#   code: 'ERR_MODULE_NOT_FOUND'
+# }
+# Node.js v20.20.2
+# Subtest: /tmp/gh-issue-solver-1779449835118/tests/issue-27.test.js
+not ok 13 - /tmp/gh-issue-solver-1779449835118/tests/issue-27.test.js
+  ---
+  duration_ms: 71.865095
+  location: '/tmp/gh-issue-solver-1779449835118/tests/issue-27.test.js:1:1'
+  failureType: 'testCodeFailure'
+  exitCode: 1
+  signal: ~
+  error: 'test failed'
+  code: 'ERR_TEST_FAILURE'
+  ...
+# node:internal/modules/esm/resolve:873
+#   throw new ERR_MODULE_NOT_FOUND(packageName, fileURLToPath(base), null);
+#         ^
+# Error [ERR_MODULE_NOT_FOUND]: Cannot find package 'test-anywhere' imported from /tmp/gh-issue-solver-1779449835118/tests/issue-29.test.js
+#     at packageResolve (node:internal/modules/esm/resolve:873:9)
+#     at moduleResolve (node:internal/modules/esm/resolve:946:18)
+#     at defaultResolve (node:internal/modules/esm/resolve:1188:11)
+#     at ModuleLoader.defaultResolve (node:internal/modules/esm/loader:708:12)
+#     at \#cachedDefaultResolve (node:internal/modules/esm/loader:657:25)
+#     at ModuleLoader.resolve (node:internal/modules/esm/loader:640:38)
+#     at ModuleLoader.getModuleJobForImport (node:internal/modules/esm/loader:264:38)
+#     at ModuleJob._link (node:internal/modules/esm/module_job:168:49) {
+#   code: 'ERR_MODULE_NOT_FOUND'
+# }
+# Node.js v20.20.2
+# Subtest: /tmp/gh-issue-solver-1779449835118/tests/issue-29.test.js
+not ok 14 - /tmp/gh-issue-solver-1779449835118/tests/issue-29.test.js
+  ---
+  duration_ms: 76.455252
+  location: '/tmp/gh-issue-solver-1779449835118/tests/issue-29.test.js:1:1'
+  failureType: 'testCodeFailure'
+  exitCode: 1
+  signal: ~
+  error: 'test failed'
+  code: 'ERR_TEST_FAILURE'
+  ...
+# node:internal/modules/esm/resolve:873
+#   throw new ERR_MODULE_NOT_FOUND(packageName, fileURLToPath(base), null);
+#         ^
+# Error [ERR_MODULE_NOT_FOUND]: Cannot find package 'test-anywhere' imported from /tmp/gh-issue-solver-1779449835118/tests/issue-9.test.js
+#     at packageResolve (node:internal/modules/esm/resolve:873:9)
+#     at moduleResolve (node:internal/modules/esm/resolve:946:18)
+#     at defaultResolve (node:internal/modules/esm/resolve:1188:11)
+#     at ModuleLoader.defaultResolve (node:internal/modules/esm/loader:708:12)
+#     at \#cachedDefaultResolve (node:internal/modules/esm/loader:657:25)
+#     at ModuleLoader.resolve (node:internal/modules/esm/loader:640:38)
+#     at ModuleLoader.getModuleJobForImport (node:internal/modules/esm/loader:264:38)
+#     at ModuleJob._link (node:internal/modules/esm/module_job:168:49) {
+#   code: 'ERR_MODULE_NOT_FOUND'
+# }
+# Node.js v20.20.2
+# Subtest: /tmp/gh-issue-solver-1779449835118/tests/issue-9.test.js
+not ok 15 - /tmp/gh-issue-solver-1779449835118/tests/issue-9.test.js
+  ---
+  duration_ms: 62.564911
+  location: '/tmp/gh-issue-solver-1779449835118/tests/issue-9.test.js:1:1'
+  failureType: 'testCodeFailure'
+  exitCode: 1
+  signal: ~
+  error: 'test failed'
+  code: 'ERR_TEST_FAILURE'
+  ...
+# node:internal/modules/esm/resolve:873
+#   throw new ERR_MODULE_NOT_FOUND(packageName, fileURLToPath(base), null);
+#         ^
+# Error [ERR_MODULE_NOT_FOUND]: Cannot find package 'test-anywhere' imported from /tmp/gh-issue-solver-1779449835118/tests/prototype.test.js
+#     at packageResolve (node:internal/modules/esm/resolve:873:9)
+#     at moduleResolve (node:internal/modules/esm/resolve:946:18)
+#     at defaultResolve (node:internal/modules/esm/resolve:1188:11)
+#     at ModuleLoader.defaultResolve (node:internal/modules/esm/loader:708:12)
+#     at \#cachedDefaultResolve (node:internal/modules/esm/loader:657:25)
+#     at ModuleLoader.resolve (node:internal/modules/esm/loader:640:38)
+#     at ModuleLoader.getModuleJobForImport (node:internal/modules/esm/loader:264:38)
+#     at ModuleJob._link (node:internal/modules/esm/module_job:168:49) {
+#   code: 'ERR_MODULE_NOT_FOUND'
+# }
+# Node.js v20.20.2
+# Subtest: /tmp/gh-issue-solver-1779449835118/tests/prototype.test.js
+not ok 16 - /tmp/gh-issue-solver-1779449835118/tests/prototype.test.js
+  ---
+  duration_ms: 60.132317
+  location: '/tmp/gh-issue-solver-1779449835118/tests/prototype.test.js:1:1'
+  failureType: 'testCodeFailure'
+  exitCode: 1
+  signal: ~
+  error: 'test failed'
+  code: 'ERR_TEST_FAILURE'
+  ...
+# node:internal/modules/esm/resolve:873
+#   throw new ERR_MODULE_NOT_FOUND(packageName, fileURLToPath(base), null);
+#         ^
+# Error [ERR_MODULE_NOT_FOUND]: Cannot find package 'test-anywhere' imported from /tmp/gh-issue-solver-1779449835118/tests/tag-prefix.test.js
+#     at packageResolve (node:internal/modules/esm/resolve:873:9)
+#     at moduleResolve (node:internal/modules/esm/resolve:946:18)
+#     at defaultResolve (node:internal/modules/esm/resolve:1188:11)
+#     at ModuleLoader.defaultResolve (node:internal/modules/esm/loader:708:12)
+#     at \#cachedDefaultResolve (node:internal/modules/esm/loader:657:25)
+#     at ModuleLoader.resolve (node:internal/modules/esm/loader:640:38)
+#     at ModuleLoader.getModuleJobForImport (node:internal/modules/esm/loader:264:38)
+#     at ModuleJob._link (node:internal/modules/esm/module_job:168:49) {
+#   code: 'ERR_MODULE_NOT_FOUND'
+# }
+# Node.js v20.20.2
+# Subtest: /tmp/gh-issue-solver-1779449835118/tests/tag-prefix.test.js
+not ok 17 - /tmp/gh-issue-solver-1779449835118/tests/tag-prefix.test.js
+  ---
+  duration_ms: 58.306128
+  location: '/tmp/gh-issue-solver-1779449835118/tests/tag-prefix.test.js:1:1'
+  failureType: 'testCodeFailure'
+  exitCode: 1
+  signal: ~
+  error: 'test failed'
+  code: 'ERR_TEST_FAILURE'
+  ...
+# node:internal/modules/esm/resolve:873
+#   throw new ERR_MODULE_NOT_FOUND(packageName, fileURLToPath(base), null);
+#         ^
+# Error [ERR_MODULE_NOT_FOUND]: Cannot find package 'test-anywhere' imported from /tmp/gh-issue-solver-1779449835118/tests/workflow.test.js
+#     at packageResolve (node:internal/modules/esm/resolve:873:9)
+#     at moduleResolve (node:internal/modules/esm/resolve:946:18)
+#     at defaultResolve (node:internal/modules/esm/resolve:1188:11)
+#     at ModuleLoader.defaultResolve (node:internal/modules/esm/loader:708:12)
+#     at \#cachedDefaultResolve (node:internal/modules/esm/loader:657:25)
+#     at ModuleLoader.resolve (node:internal/modules/esm/loader:640:38)
+#     at ModuleLoader.getModuleJobForImport (node:internal/modules/esm/loader:264:38)
+#     at ModuleJob._link (node:internal/modules/esm/module_job:168:49) {
+#   code: 'ERR_MODULE_NOT_FOUND'
+# }
+# Node.js v20.20.2
+# Subtest: /tmp/gh-issue-solver-1779449835118/tests/workflow.test.js
+not ok 18 - /tmp/gh-issue-solver-1779449835118/tests/workflow.test.js
+  ---
+  duration_ms: 53.38752
+  location: '/tmp/gh-issue-solver-1779449835118/tests/workflow.test.js:1:1'
+  failureType: 'testCodeFailure'
+  exitCode: 1
+  signal: ~
+  error: 'test failed'
+  code: 'ERR_TEST_FAILURE'
+  ...
+1..18
+# tests 18
+# suites 0
+# pass 0
+# fail 18
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 293.69286

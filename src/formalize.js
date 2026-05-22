@@ -44,13 +44,16 @@ const defaultMaxNgramSize = 3;
 const defaultSearchLimit = 5;
 const defaultTopKCandidates = 3;
 const defaultInterpretationsCount = 10;
+const wikimediaApiUserAgent =
+  'meta-expression/0.9.0 (https://github.com/link-assistant/meta-expression)';
 
 // English glue words that must not anchor an n-gram on their own. They still
 // appear in the rendered output, just without a hyperlink.
 const stopWords = new Set([
   'the', 'a', 'an', 'and', 'or', 'but', 'in', 'on', 'at', 'to', 'for', 'of',
   'with', 'by', 'from', 'as', 'into', 'onto', 'than', 'that', 'this',
-  'these', 'those', 'it', 'its', 'be', 'so',
+  'these', 'those', 'it', 'its', 'am', 'is', 'are', 'was', 'were', 'be',
+  'being', 'been', 'so',
 ]); // prettier-ignore
 
 // English verbs / relation phrases that bias an n-gram toward properties.
@@ -476,6 +479,9 @@ async function searchNgramCandidates(ngram, config) {
   if (override) {
     return [overrideToCandidate(override)];
   }
+  if (!shouldSearchNgram(ngram)) {
+    return [];
+  }
   const sourceCtx = buildSourceContext(config);
   const propertyBias = isPropertyIndicator(ngram.text);
   // Stop-only single-token n-grams go ONLY to Wiktionary so we never
@@ -493,6 +499,7 @@ async function searchNgramCandidates(ngram, config) {
   );
   const merged = mergeSearchResults(perSource.flat(), propertyBias);
   return merged
+    .filter((candidate) => candidateMatchesNgramShape(ngram, candidate))
     .map((candidate) => scoreCandidate(ngram, candidate, propertyBias))
     .sort((left, right) => right.score - left.score)
     .slice(0, config.topKCandidates);
@@ -517,6 +524,66 @@ function isPropertyIndicator(text) {
     }
   }
   return false;
+}
+
+function shouldSearchNgram(ngram) {
+  if (ngram.size <= 1) {
+    return true;
+  }
+  const lowered = String(ngram.text).toLowerCase();
+  if (propertyIndicators.has(lowered)) {
+    return true;
+  }
+  if (ngram.tokens.some((token) => isCopula(token))) {
+    return false;
+  }
+  const first = ngram.tokens[0];
+  const last = ngram.tokens[ngram.tokens.length - 1];
+  return !isIndefiniteEnglishArticle(first) && !isEnglishArticle(last);
+}
+
+function candidateMatchesNgramShape(ngram, candidate) {
+  if (ngram.size <= 1 || candidate?.kind === 'property') {
+    return true;
+  }
+  if (!ngram.tokens.some((token) => isEnglishGrammarGlue(token))) {
+    return true;
+  }
+  const phrase = normalizeLabel(ngram.text);
+  return (
+    normalizeLabel(candidate.label) === phrase ||
+    normalizeLabel(candidate.matchText) === phrase
+  );
+}
+
+function isEnglishGrammarGlue(value) {
+  return (
+    stopWords.has(String(value).toLowerCase()) ||
+    isEnglishArticle(value) ||
+    isCopula(value)
+  );
+}
+
+function isEnglishArticle(value) {
+  return ['a', 'an', 'the'].includes(String(value).toLowerCase());
+}
+
+function isIndefiniteEnglishArticle(value) {
+  return ['a', 'an'].includes(String(value).toLowerCase());
+}
+
+function isEnglishCopula(value) {
+  return ['am', 'is', 'are', 'was', 'were', 'be', 'being', 'been'].includes(
+    String(value).toLowerCase()
+  );
+}
+
+function isRussianCopula(value) {
+  return ['это'].includes(String(value).toLowerCase());
+}
+
+function isCopula(value) {
+  return isEnglishCopula(value) || isRussianCopula(value);
 }
 
 function mergeSearchResults(results, propertyBias) {
@@ -626,9 +693,24 @@ function scoreCandidate(ngram, candidate, propertyBias) {
   if (sourceTags.has(SOURCE_KIND.WIKIDATA)) {
     score += 8;
   }
+  if (isDisambiguationCandidate(candidate)) {
+    score -= 20;
+  }
   // Prefer longer phrases.
   score += ngram.size * 3;
   return { ...candidate, score, ngramSize: ngram.size };
+}
+
+function isDisambiguationCandidate(candidate) {
+  const title = String(candidate.wikipediaTitle ?? candidate.label ?? '');
+  const description = String(candidate.description ?? '').toLowerCase();
+  return (
+    /\bdisambiguation\b/i.test(title) ||
+    /\bdisambiguation\b/.test(description) ||
+    /\bmay refer to\b/.test(description) ||
+    /\bcan refer to\b/.test(description) ||
+    description.startsWith('look up ')
+  );
 }
 
 function collectSourceTags(candidate) {
@@ -864,7 +946,7 @@ async function fetchJson(url, config) {
     return cached.value;
   }
   const response = await config.fetchImpl(key, {
-    headers: { accept: 'application/json' },
+    headers: wikimediaRequestHeaders(),
   });
   if (!response.ok) {
     throw new Error(`Wikimedia request failed with status ${response.status}.`);
@@ -875,6 +957,17 @@ async function fetchJson(url, config) {
     value,
   });
   return value;
+}
+
+function wikimediaRequestHeaders() {
+  const headers = {
+    accept: 'application/json',
+    'Api-User-Agent': wikimediaApiUserAgent,
+  };
+  if (typeof process !== 'undefined' && process.versions?.node) {
+    headers['User-Agent'] = wikimediaApiUserAgent;
+  }
+  return headers;
 }
 
 function aggregateContexts(phrases) {

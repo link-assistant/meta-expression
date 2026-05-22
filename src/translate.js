@@ -4,6 +4,14 @@ const wikidataApiUrl = 'https://www.wikidata.org/w/api.php';
 const wikidataEntityBaseUrl = 'https://www.wikidata.org/wiki/';
 const wikidataPropertyBaseUrl = 'https://www.wikidata.org/wiki/Property:';
 const defaultCacheTtlMs = 60 * 60 * 1000;
+const wikimediaApiUserAgent =
+  'meta-expression/0.9.0 (https://github.com/link-assistant/meta-expression)';
+const russianUsStatePredicate = Object.freeze({
+  text: 'штат',
+  entityId: 'Q35657',
+  url: 'https://ru.wikipedia.org/wiki/%D0%A8%D1%82%D0%B0%D1%82_%D0%A1%D0%A8%D0%90',
+  description: 'state of the United States',
+});
 
 /**
  * Deterministic convenience wrapper for `translateTextWith()`.
@@ -155,19 +163,7 @@ function normalizeLanguage(value) {
 
 async function translatePhrase(phrase, config) {
   const translationEntity = translatableEntityForPhrase(phrase, config);
-  const base = {
-    id: phrase.id,
-    source: {
-      text: phrase.text,
-      start: phrase.start,
-      end: phrase.end,
-      sourceStart: phrase.sourceStart ?? null,
-      sourceEnd: phrase.sourceEnd ?? null,
-      language: config.sourceLanguage,
-      entityId: translationEntity?.id ?? phrase.entity?.id ?? null,
-      label: translationEntity?.label ?? phrase.entity?.label ?? null,
-    },
-  };
+  const base = buildPhraseTranslationBase(phrase, translationEntity, config);
   if (!phrase.entity) {
     const unresolved = unresolvedPhrase(base, 'unresolved-source-phrase');
     recordPhraseStep(unresolved, config);
@@ -208,6 +204,7 @@ async function translatePhrase(phrase, config) {
     target: {
       text: targetLabel,
       language: config.targetLanguage,
+      entityId: translationEntity.id,
       description: targetDescriptionFor(
         targetResult.entity,
         config.targetLanguage
@@ -223,6 +220,24 @@ async function translatePhrase(phrase, config) {
   };
   recordPhraseStep(translated, config);
   return translated;
+}
+
+function buildPhraseTranslationBase(phrase, translationEntity, config) {
+  const sourceEntity = translationEntity ?? phrase.entity ?? null;
+  return {
+    id: phrase.id,
+    source: {
+      text: phrase.text,
+      start: phrase.start,
+      end: phrase.end,
+      sourceStart: phrase.sourceStart ?? null,
+      sourceEnd: phrase.sourceEnd ?? null,
+      language: config.sourceLanguage,
+      entityId: sourceEntity?.id ?? null,
+      label: sourceEntity?.label ?? null,
+      description: sourceEntity?.description ?? null,
+    },
+  };
 }
 
 async function lookupTargetEntityForPhrase(
@@ -260,6 +275,7 @@ function unresolvedPhrase(base, reason, entityId = null) {
     target: {
       text: base.source.text,
       language: null,
+      entityId,
       description: null,
       url: null,
       status: reason,
@@ -331,7 +347,7 @@ async function fetchJson(url, config) {
     return cached.value;
   }
   const response = await config.fetchImpl(key, {
-    headers: { accept: 'application/json' },
+    headers: wikimediaRequestHeaders(),
   });
   if (!response.ok) {
     throw new Error(`Wikimedia request failed with status ${response.status}.`);
@@ -342,6 +358,17 @@ async function fetchJson(url, config) {
     value,
   });
   return value;
+}
+
+function wikimediaRequestHeaders() {
+  const headers = {
+    accept: 'application/json',
+    'Api-User-Agent': wikimediaApiUserAgent,
+  };
+  if (typeof process !== 'undefined' && process.versions?.node) {
+    headers['User-Agent'] = wikimediaApiUserAgent;
+  }
+  return headers;
 }
 
 async function traceFetch(url, init, config) {
@@ -523,6 +550,12 @@ function renderUnitFromPhrase(phrase) {
     kind: 'phrase',
     phraseId: phrase.id,
     sourceText: phrase.source.text,
+    sourceLabel: phrase.source.label ?? null,
+    sourceDescription: phrase.source.description ?? null,
+    entityId: phrase.entityId ?? null,
+    targetEntityId: phrase.target.entityId ?? phrase.entityId ?? null,
+    targetUrl: phrase.target.url ?? null,
+    phraseRef: phrase,
     variableName: phrase.variable?.name ?? null,
     plainText: phrase.target.text,
     markdown: renderPhraseMarkdown(phrase),
@@ -533,6 +566,9 @@ function renderUnitFromPhrase(phrase) {
 function applySentenceTransformations(units, segment, sentenceId, config) {
   if (config.sourceLanguage === 'en' && config.targetLanguage === 'ru') {
     return applyEnglishToRussianRules(units, segment, sentenceId, config);
+  }
+  if (config.sourceLanguage === 'ru' && config.targetLanguage === 'en') {
+    return applyRussianToEnglishRules(units, segment, sentenceId, config);
   }
   return {
     units,
@@ -574,20 +610,155 @@ function applyEnglishToRussianRules(units, segment, sentenceId, config) {
       kind: 'rule-token',
       sourceText: nextUnits[copulaIndex].sourceText,
       variableName: null,
-      plainText: '-',
-      markdown: '-',
-      html: '-',
+      plainText: 'это',
+      markdown: 'это',
+      html: 'это',
     });
     if (copula.variableName) {
       resolvedVariableNames.add(copula.variableName);
     }
-    transformations.push('english-copula-to-russian-dash');
+    transformations.push('english-copula-to-russian-eto');
     recordStep(config, 'transformation-rule', {
       sentenceId,
-      rule: 'english-copula-to-russian-dash',
+      rule: 'english-copula-to-russian-eto',
       sourceText: segment.text,
       affectedVariables: copula.variableName ? [copula.variableName] : [],
     });
+  }
+
+  if (
+    applyRussianUsStatePredicateRule(nextUnits, segment, sentenceId, config)
+  ) {
+    transformations.push('english-us-state-predicate-to-russian-shtat');
+  }
+
+  return { units: nextUnits, transformations, resolvedVariableNames };
+}
+
+function applyRussianUsStatePredicateRule(units, segment, sentenceId, config) {
+  for (let index = 1; index < units.length - 1; index += 1) {
+    if (!isRussianCopula(units[index].plainText)) {
+      continue;
+    }
+    const subject = units[index - 1];
+    const predicate = units[index + 1];
+    if (!isStatePredicate(predicate) || !isUsStateSubject(subject)) {
+      continue;
+    }
+    setUnitTargetText(predicate, russianUsStatePredicate);
+    recordStep(config, 'transformation-rule', {
+      sentenceId,
+      rule: 'english-us-state-predicate-to-russian-shtat',
+      sourceText: segment.text,
+      affectedVariables: predicate.variableName ? [predicate.variableName] : [],
+    });
+    return true;
+  }
+  return false;
+}
+
+function isStatePredicate(unit) {
+  if (normalizePhrase(unit?.sourceText) !== 'state') {
+    return false;
+  }
+  return !unit.entityId || ['Q7275', 'Q35657'].includes(unit.entityId);
+}
+
+function isUsStateSubject(unit) {
+  const description = normalizePhrase(unit?.sourceDescription);
+  return (
+    description.includes('state of the united states') ||
+    description.includes('state of the united states of america') ||
+    description.includes('us state') ||
+    description.includes('u s state')
+  );
+}
+
+function normalizePhrase(value) {
+  return String(value ?? '')
+    .toLowerCase()
+    .replace(/[^\p{Letter}\p{Number}]+/gu, ' ')
+    .trim()
+    .replace(/\s+/g, ' ');
+}
+
+function setUnitTargetText(unit, target) {
+  unit.plainText = target.text;
+  unit.targetEntityId = target.entityId ?? unit.targetEntityId ?? unit.entityId;
+  unit.targetUrl = target.url ?? unit.targetUrl;
+  applyUnitTargetToPhrase(unit, target);
+  if (unit.targetEntityId && unit.targetUrl) {
+    unit.markdown = `[${escapeMarkdown(unit.plainText)}](${unit.targetUrl} "${unit.targetEntityId}")`;
+    unit.html = `<a href="${escapeAttribute(unit.targetUrl)}" title="${escapeAttribute(
+      unit.targetEntityId
+    )}">${escapeHtml(unit.plainText)}</a>`;
+    return;
+  }
+  unit.markdown = unit.plainText;
+  unit.html = escapeHtml(unit.plainText);
+}
+
+function applyUnitTargetToPhrase(unit, target) {
+  if (!unit.phraseRef) {
+    return;
+  }
+  unit.phraseRef.target.text = target.text;
+  unit.phraseRef.target.entityId = unit.targetEntityId;
+  unit.phraseRef.target.url = unit.targetUrl;
+  unit.phraseRef.target.description =
+    target.description ?? unit.phraseRef.target.description;
+}
+
+function applyRussianToEnglishRules(units, segment, sentenceId, config) {
+  const resolvedVariableNames = new Set();
+  const transformations = [];
+  const nextUnits = [...units];
+  const copulaIndex = nextUnits.findIndex((unit) =>
+    isRussianCopula(unit.sourceText)
+  );
+  if (
+    copulaIndex > 0 &&
+    copulaIndex < nextUnits.length - 1 &&
+    !isEnglishPreposition(nextUnits[copulaIndex + 1].plainText)
+  ) {
+    const [copula] = nextUnits.splice(copulaIndex, 1, {
+      kind: 'rule-token',
+      sourceText: nextUnits[copulaIndex].sourceText,
+      variableName: null,
+      plainText: 'is',
+      markdown: 'is',
+      html: 'is',
+    });
+    if (copula.variableName) {
+      resolvedVariableNames.add(copula.variableName);
+    }
+    transformations.push('russian-copula-to-english-be');
+    recordStep(config, 'transformation-rule', {
+      sentenceId,
+      rule: 'russian-copula-to-english-be',
+      sourceText: segment.text,
+      affectedVariables: copula.variableName ? [copula.variableName] : [],
+    });
+
+    const predicate = nextUnits[copulaIndex + 1];
+    if (shouldInsertEnglishPredicateArticle(predicate)) {
+      const article = englishIndefiniteArticleFor(predicate.plainText);
+      nextUnits.splice(copulaIndex + 1, 0, {
+        kind: 'rule-token',
+        sourceText: '',
+        variableName: null,
+        plainText: article,
+        markdown: article,
+        html: article,
+      });
+      transformations.push('english-indefinite-article-insertion');
+      recordStep(config, 'transformation-rule', {
+        sentenceId,
+        rule: 'english-indefinite-article-insertion',
+        sourceText: segment.text,
+        affectedVariables: [],
+      });
+    }
   }
 
   return { units: nextUnits, transformations, resolvedVariableNames };
@@ -601,6 +772,10 @@ function isEnglishCopula(value) {
   return ['am', 'is', 'are', 'was', 'were', 'be', 'being', 'been'].includes(
     String(value).toLowerCase()
   );
+}
+
+function isRussianCopula(value) {
+  return ['это'].includes(String(value).toLowerCase());
 }
 
 function isEnglishPreposition(value) {
@@ -618,6 +793,20 @@ function isEnglishPreposition(value) {
     'to',
     'with',
   ].includes(String(value).toLowerCase());
+}
+
+function shouldInsertEnglishPredicateArticle(unit) {
+  const text = String(unit?.plainText ?? '').trim();
+  if (!/^[a-z]/.test(text)) {
+    return false;
+  }
+  const first = text.split(/\s+/)[0];
+  return !isEnglishArticle(first);
+}
+
+function englishIndefiniteArticleFor(value) {
+  const first = String(value).trim().charAt(0).toLowerCase();
+  return ['a', 'e', 'i', 'o', 'u'].includes(first) ? 'an' : 'a';
 }
 
 function terminalPunctuation(value) {
@@ -641,18 +830,20 @@ function renderSentenceOutput(sentences, key, fallbackPhrases) {
 }
 
 function renderPhraseMarkdown(phrase) {
-  if (!phrase.entityId || !phrase.target.url) {
+  const targetEntityId = phrase.target.entityId ?? phrase.entityId;
+  if (!targetEntityId || !phrase.target.url) {
     return phrase.target.text;
   }
-  return `[${escapeMarkdown(phrase.target.text)}](${phrase.target.url} "${phrase.entityId}")`;
+  return `[${escapeMarkdown(phrase.target.text)}](${phrase.target.url} "${targetEntityId}")`;
 }
 
 function renderPhraseHtml(phrase) {
-  if (!phrase.entityId || !phrase.target.url) {
+  const targetEntityId = phrase.target.entityId ?? phrase.entityId;
+  if (!targetEntityId || !phrase.target.url) {
     return escapeHtml(phrase.target.text);
   }
   return `<a href="${escapeAttribute(phrase.target.url)}" title="${escapeAttribute(
-    phrase.entityId
+    targetEntityId
   )}">${escapeHtml(phrase.target.text)}</a>`;
 }
 
@@ -664,13 +855,17 @@ function renderTranslationLinksNotation(cst, questions) {
   );
   const phrases = cst.phrases.map((phrase, index) => {
     const id = phrase.entityId ? ` id ${phrase.entityId}` : '';
+    const targetId =
+      phrase.target.entityId && phrase.target.entityId !== phrase.entityId
+        ? ` targetId ${phrase.target.entityId}`
+        : '';
     const variable = phrase.variable?.name
       ? ` variable ${phrase.variable.name}`
       : '';
     const url = phrase.target.url
       ? ` markdownUrl ${toLino(phrase.target.url)}`
       : '';
-    return `(phrase-${index + 1}: source ${toLino(phrase.source.text)} target ${toLino(phrase.target.text)} status ${phrase.target.status}${id}${variable}${url})`;
+    return `(phrase-${index + 1}: source ${toLino(phrase.source.text)} target ${toLino(phrase.target.text)} status ${phrase.target.status}${id}${targetId}${variable}${url})`;
   });
   const variables = cst.variables.map(
     (variable) =>

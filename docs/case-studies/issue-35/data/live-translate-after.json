@@ -1,0 +1,4917 @@
+{
+  "text": "Hawaii is a state.",
+  "sourceLanguage": "en",
+  "targetLanguage": "ru",
+  "formalization": {
+    "text": "Hawaii is a state.",
+    "tokens": [
+      "Hawaii",
+      "is",
+      "a",
+      "state"
+    ],
+    "phrases": [
+      {
+        "text": "Hawaii",
+        "tokens": [
+          "Hawaii"
+        ],
+        "start": 0,
+        "end": 0,
+        "size": 1,
+        "candidates": [
+          {
+            "id": "Q782",
+            "label": "Hawaii",
+            "description": "state of the United States of America",
+            "kind": "entity",
+            "source": "wikidata",
+            "sourceUrl": "https://www.wikidata.org/wiki/Q782",
+            "matchText": "Hawaii",
+            "matchType": "label",
+            "wikipediaTitle": "Hawaii",
+            "wikipediaUrl": "https://en.wikipedia.org/wiki/Hawaii",
+            "wikibaseId": "Q782",
+            "aliases": [
+              "State of Hawaii",
+              "Hawaii State",
+              "The Aloha State",
+              "Hawaii, United States",
+              "Kaimana Hila",
+              "Owyhee",
+              "Owhyhee"
+            ],
+            "sources": [
+              "wikipedia",
+              "wikidata"
+            ],
+            "score": 51,
+            "ngramSize": 1,
+            "contextLabels": [
+              {
+                "property": "P31",
+                "propertyLabel": "instance of",
+                "targetId": "Q35657"
+              }
+            ]
+          },
+          {
+            "id": "Q68740",
+            "label": "Hawaii",
+            "description": "largest of the Hawaiian islands",
+            "kind": "entity",
+            "source": "wikidata",
+            "sourceUrl": "https://www.wikidata.org/wiki/Q68740",
+            "matchText": "Hawaii",
+            "matchType": "label",
+            "wikipediaTitle": "Hawaiʻi (island)",
+            "wikipediaUrl": "https://en.wikipedia.org/wiki/Hawai%CA%BBi_(island)",
+            "wikibaseId": "Q68740",
+            "aliases": [
+              "Hawaiʻi",
+              "The Big Island",
+              "Hawaii Island",
+              "Big Island, Hawaii",
+              "Island of Hawai‘i",
+              "Big Island",
+              "Hawai‘i Island"
+            ],
+            "sources": [
+              "wikipedia",
+              "wikidata"
+            ],
+            "score": 51,
+            "ngramSize": 1,
+            "contextLabels": [
+              {
+                "property": "P31",
+                "propertyLabel": "instance of",
+                "targetId": "Q1161185"
+              },
+              {
+                "property": "P361",
+                "propertyLabel": "part of",
+                "targetId": "Q192626"
+              }
+            ]
+          },
+          {
+            "id": "Q18703903",
+            "label": "Hawaii",
+            "description": "2013 film by Marco Berger",
+            "kind": "entity",
+            "source": "wikidata",
+            "sourceUrl": "https://www.wikidata.org/wiki/Q18703903",
+            "matchText": "Hawaii",
+            "matchType": "label",
+            "aliases": [],
+            "score": 39,
+            "ngramSize": 1,
+            "wikipediaTitle": "Hawaii (2013 film)",
+            "wikipediaUrl": "https://en.wikipedia.org/wiki/Hawaii_(2013_film)",
+            "contextLabels": [
+              {
+                "property": "P31",
+                "propertyLabel": "instance of",
+                "targetId": "Q11424"
+              },
+              {
+                "property": "P136",
+                "propertyLabel": "genre",
+                "targetId": "Q130232"
+              },
+              {
+                "property": "P136",
+                "propertyLabel": "genre",
+                "targetId": "Q20442589"
+              },
+              {
+                "property": "P136",
+                "propertyLabel": "genre",
+                "targetId": "Q1054574"
+              }
+            ]
+          }
+        ],
+        "entity": {
+          "id": "Q782",
+          "label": "Hawaii",
+          "description": "state of the United States of America",
+          "kind": "entity",
+          "source": "wikidata",
+          "sourceUrl": "https://www.wikidata.org/wiki/Q782",
+          "score": 51,
+          "wikipediaUrl": "https://en.wikipedia.org/wiki/Hawaii",
+          "wikipediaTitle": "Hawaii",
+          "contextLabels": [
+            {
+              "property": "P31",
+              "propertyLabel": "instance of",
+              "targetId": "Q35657"
+            }
+          ],
+          "overrideEntry": null
+        }
+      },
+      {
+        "text": "is",
+        "tokens": [
+          "is"
+        ],
+        "start": 1,
+        "end": 1,
+        "size": 1,
+        "candidates": [
+          {
+            "id": "wikt:en:is#Symbol:0",
+            "label": "is",
+            "description": " ISO 639-1 language code for Icelandic.",
+            "kind": "entity",
+            "source": "wiktionary",
+            "sourceUrl": "https://en.wiktionary.org/wiki/is",
+            "matchText": "is",
+            "matchType": "definition",
+            "partOfSpeech": "Symbol",
+            "definition": " ISO 639-1 language code for Icelandic.",
+            "score": 29,
+            "ngramSize": 1,
+            "contextLabels": []
+          },
+          {
+            "id": "wikt:en:is#Verb:1",
+            "label": "is",
+            "description": "third-person singular simple present indicative of be",
+            "kind": "entity",
+            "source": "wiktionary",
+            "sourceUrl": "https://en.wiktionary.org/wiki/is",
+            "matchText": "is",
+            "matchType": "definition",
+            "partOfSpeech": "Verb",
+            "definition": "third-person singular simple present indicative of be",
+            "score": 29,
+            "ngramSize": 1,
+            "contextLabels": []
+          },
+          {
+            "id": "wikt:en:is#Verb:2",
+            "label": "is",
+            "description": " Used in phrases with existential there (also here and where) when the semantic subject is plural.",
+            "kind": "entity",
+            "source": "wiktionary",
+            "sourceUrl": "https://en.wiktionary.org/wiki/is",
+            "matchText": "is",
+            "matchType": "definition",
+            "partOfSpeech": "Verb",
+            "definition": " Used in phrases with existential there (also here and where) when the semantic subject is plural.",
+            "score": 29,
+            "ngramSize": 1,
+            "contextLabels": []
+          }
+        ],
+        "entity": {
+          "id": "wikt:en:is#Symbol:0",
+          "label": "is",
+          "description": " ISO 639-1 language code for Icelandic.",
+          "kind": "entity",
+          "source": "wiktionary",
+          "sourceUrl": "https://en.wiktionary.org/wiki/is",
+          "score": 29,
+          "wikipediaUrl": null,
+          "wikipediaTitle": null,
+          "contextLabels": [],
+          "overrideEntry": null
+        }
+      },
+      {
+        "text": "a",
+        "tokens": [
+          "a"
+        ],
+        "start": 2,
+        "end": 2,
+        "size": 1,
+        "candidates": [
+          {
+            "id": "wikt:en:a#Letter:0",
+            "label": "a",
+            "description": "The first letter of the basic modern Latin alphabet.",
+            "kind": "entity",
+            "source": "wiktionary",
+            "sourceUrl": "https://en.wiktionary.org/wiki/a",
+            "matchText": "a",
+            "matchType": "definition",
+            "partOfSpeech": "Letter",
+            "definition": "The first letter of the basic modern Latin alphabet.",
+            "score": 31,
+            "ngramSize": 1,
+            "contextLabels": []
+          },
+          {
+            "id": "wikt:en:a#Letter:1",
+            "label": "a",
+            "description": "Transliterates the Cyrillic letter а.",
+            "kind": "entity",
+            "source": "wiktionary",
+            "sourceUrl": "https://en.wiktionary.org/wiki/a",
+            "matchText": "a",
+            "matchType": "definition",
+            "partOfSpeech": "Letter",
+            "definition": "Transliterates the Cyrillic letter а.",
+            "score": 31,
+            "ngramSize": 1,
+            "contextLabels": []
+          },
+          {
+            "id": "wikt:en:a#Letter:2",
+            "label": "a",
+            "description": " See ª.",
+            "kind": "entity",
+            "source": "wiktionary",
+            "sourceUrl": "https://en.wiktionary.org/wiki/a",
+            "matchText": "a",
+            "matchType": "definition",
+            "partOfSpeech": "Letter",
+            "definition": " See ª.",
+            "score": 31,
+            "ngramSize": 1,
+            "contextLabels": []
+          }
+        ],
+        "entity": {
+          "id": "wikt:en:a#Letter:0",
+          "label": "a",
+          "description": "The first letter of the basic modern Latin alphabet.",
+          "kind": "entity",
+          "source": "wiktionary",
+          "sourceUrl": "https://en.wiktionary.org/wiki/a",
+          "score": 31,
+          "wikipediaUrl": null,
+          "wikipediaTitle": null,
+          "contextLabels": [],
+          "overrideEntry": null
+        }
+      },
+      {
+        "text": "state",
+        "tokens": [
+          "state"
+        ],
+        "start": 3,
+        "end": 3,
+        "size": 1,
+        "candidates": [
+          {
+            "id": "Q7275",
+            "label": "state",
+            "description": "organised community living under a system of government; either a sovereign state, constituent state, or federated state",
+            "kind": "entity",
+            "source": "wikidata",
+            "sourceUrl": "https://www.wikidata.org/wiki/Q7275",
+            "matchText": "state",
+            "matchType": "label",
+            "aliases": [],
+            "score": 39,
+            "ngramSize": 1,
+            "wikipediaTitle": "State (polity)",
+            "wikipediaUrl": "https://en.wikipedia.org/wiki/State_(polity)",
+            "contextLabels": [
+              {
+                "property": "P31",
+                "propertyLabel": "instance of",
+                "targetId": "Q211606"
+              },
+              {
+                "property": "P31",
+                "propertyLabel": "instance of",
+                "targetId": "Q15617994"
+              },
+              {
+                "property": "P279",
+                "propertyLabel": "subclass of",
+                "targetId": "Q155076"
+              },
+              {
+                "property": "P279",
+                "propertyLabel": "subclass of",
+                "targetId": "Q1048835"
+              },
+              {
+                "property": "P279",
+                "propertyLabel": "subclass of",
+                "targetId": "Q1896989"
+              },
+              {
+                "property": "P279",
+                "propertyLabel": "subclass of",
+                "targetId": "Q96196009"
+              },
+              {
+                "property": "P361",
+                "propertyLabel": "part of",
+                "targetId": "Q179671"
+              }
+            ]
+          },
+          {
+            "id": "Q37234491",
+            "label": "State",
+            "description": "family name",
+            "kind": "entity",
+            "source": "wikidata",
+            "sourceUrl": "https://www.wikidata.org/wiki/Q37234491",
+            "matchText": "State",
+            "matchType": "label",
+            "aliases": [],
+            "score": 39,
+            "ngramSize": 1,
+            "contextLabels": [
+              {
+                "property": "P31",
+                "propertyLabel": "instance of",
+                "targetId": "Q101352"
+              }
+            ]
+          },
+          {
+            "id": "wikt:en:state#Noun:0",
+            "label": "state",
+            "description": "A condition; a set of circumstances applying at any given time.",
+            "kind": "entity",
+            "source": "wiktionary",
+            "sourceUrl": "https://en.wiktionary.org/wiki/state",
+            "matchText": "state",
+            "matchType": "definition",
+            "partOfSpeech": "Noun",
+            "definition": "A condition; a set of circumstances applying at any given time.",
+            "score": 31,
+            "ngramSize": 1,
+            "contextLabels": []
+          }
+        ],
+        "entity": {
+          "id": "Q7275",
+          "label": "state",
+          "description": "organised community living under a system of government; either a sovereign state, constituent state, or federated state",
+          "kind": "entity",
+          "source": "wikidata",
+          "sourceUrl": "https://www.wikidata.org/wiki/Q7275",
+          "score": 39,
+          "wikipediaUrl": "https://en.wikipedia.org/wiki/State_(polity)",
+          "wikipediaTitle": "State (polity)",
+          "contextLabels": [
+            {
+              "property": "P31",
+              "propertyLabel": "instance of",
+              "targetId": "Q211606"
+            },
+            {
+              "property": "P31",
+              "propertyLabel": "instance of",
+              "targetId": "Q15617994"
+            },
+            {
+              "property": "P279",
+              "propertyLabel": "subclass of",
+              "targetId": "Q155076"
+            },
+            {
+              "property": "P279",
+              "propertyLabel": "subclass of",
+              "targetId": "Q1048835"
+            },
+            {
+              "property": "P279",
+              "propertyLabel": "subclass of",
+              "targetId": "Q1896989"
+            },
+            {
+              "property": "P279",
+              "propertyLabel": "subclass of",
+              "targetId": "Q96196009"
+            },
+            {
+              "property": "P361",
+              "propertyLabel": "part of",
+              "targetId": "Q179671"
+            }
+          ],
+          "overrideEntry": null
+        }
+      }
+    ],
+    "contexts": [
+      {
+        "id": "Q1161185",
+        "property": "P31",
+        "propertyLabel": "instance of",
+        "weight": 0.3617021276595745,
+        "phrases": [
+          {
+            "text": "Hawaii",
+            "entityId": "Q782"
+          }
+        ],
+        "candidates": [
+          {
+            "phrase": "Hawaii",
+            "candidateId": "Q68740",
+            "candidateLabel": "Hawaii",
+            "weight": 0.3617021276595745
+          }
+        ],
+        "probability": 0.0715692711753119
+      },
+      {
+        "id": "Q192626",
+        "property": "P361",
+        "propertyLabel": "part of",
+        "weight": 0.3617021276595745,
+        "phrases": [
+          {
+            "text": "Hawaii",
+            "entityId": "Q782"
+          }
+        ],
+        "candidates": [
+          {
+            "phrase": "Hawaii",
+            "candidateId": "Q68740",
+            "candidateLabel": "Hawaii",
+            "weight": 0.3617021276595745
+          }
+        ],
+        "probability": 0.0715692711753119
+      },
+      {
+        "id": "Q35657",
+        "property": "P31",
+        "propertyLabel": "instance of",
+        "weight": 0.3617021276595745,
+        "phrases": [
+          {
+            "text": "Hawaii",
+            "entityId": "Q782"
+          }
+        ],
+        "candidates": [
+          {
+            "phrase": "Hawaii",
+            "candidateId": "Q782",
+            "candidateLabel": "Hawaii",
+            "weight": 0.3617021276595745
+          }
+        ],
+        "probability": 0.0715692711753119
+      },
+      {
+        "id": "Q101352",
+        "property": "P31",
+        "propertyLabel": "instance of",
+        "weight": 0.3577981651376147,
+        "phrases": [
+          {
+            "text": "state",
+            "entityId": "Q7275"
+          }
+        ],
+        "candidates": [
+          {
+            "phrase": "state",
+            "candidateId": "Q37234491",
+            "candidateLabel": "State",
+            "weight": 0.3577981651376147
+          }
+        ],
+        "probability": 0.07079680197752115
+      },
+      {
+        "id": "Q1048835",
+        "property": "P279",
+        "propertyLabel": "subclass of",
+        "weight": 0.3577981651376147,
+        "phrases": [
+          {
+            "text": "state",
+            "entityId": "Q7275"
+          }
+        ],
+        "candidates": [
+          {
+            "phrase": "state",
+            "candidateId": "Q7275",
+            "candidateLabel": "state",
+            "weight": 0.3577981651376147
+          }
+        ],
+        "probability": 0.07079680197752115
+      },
+      {
+        "id": "Q155076",
+        "property": "P279",
+        "propertyLabel": "subclass of",
+        "weight": 0.3577981651376147,
+        "phrases": [
+          {
+            "text": "state",
+            "entityId": "Q7275"
+          }
+        ],
+        "candidates": [
+          {
+            "phrase": "state",
+            "candidateId": "Q7275",
+            "candidateLabel": "state",
+            "weight": 0.3577981651376147
+          }
+        ],
+        "probability": 0.07079680197752115
+      },
+      {
+        "id": "Q15617994",
+        "property": "P31",
+        "propertyLabel": "instance of",
+        "weight": 0.3577981651376147,
+        "phrases": [
+          {
+            "text": "state",
+            "entityId": "Q7275"
+          }
+        ],
+        "candidates": [
+          {
+            "phrase": "state",
+            "candidateId": "Q7275",
+            "candidateLabel": "state",
+            "weight": 0.3577981651376147
+          }
+        ],
+        "probability": 0.07079680197752115
+      },
+      {
+        "id": "Q179671",
+        "property": "P361",
+        "propertyLabel": "part of",
+        "weight": 0.3577981651376147,
+        "phrases": [
+          {
+            "text": "state",
+            "entityId": "Q7275"
+          }
+        ],
+        "candidates": [
+          {
+            "phrase": "state",
+            "candidateId": "Q7275",
+            "candidateLabel": "state",
+            "weight": 0.3577981651376147
+          }
+        ],
+        "probability": 0.07079680197752115
+      },
+      {
+        "id": "Q1896989",
+        "property": "P279",
+        "propertyLabel": "subclass of",
+        "weight": 0.3577981651376147,
+        "phrases": [
+          {
+            "text": "state",
+            "entityId": "Q7275"
+          }
+        ],
+        "candidates": [
+          {
+            "phrase": "state",
+            "candidateId": "Q7275",
+            "candidateLabel": "state",
+            "weight": 0.3577981651376147
+          }
+        ],
+        "probability": 0.07079680197752115
+      },
+      {
+        "id": "Q211606",
+        "property": "P31",
+        "propertyLabel": "instance of",
+        "weight": 0.3577981651376147,
+        "phrases": [
+          {
+            "text": "state",
+            "entityId": "Q7275"
+          }
+        ],
+        "candidates": [
+          {
+            "phrase": "state",
+            "candidateId": "Q7275",
+            "candidateLabel": "state",
+            "weight": 0.3577981651376147
+          }
+        ],
+        "probability": 0.07079680197752115
+      },
+      {
+        "id": "Q96196009",
+        "property": "P279",
+        "propertyLabel": "subclass of",
+        "weight": 0.3577981651376147,
+        "phrases": [
+          {
+            "text": "state",
+            "entityId": "Q7275"
+          }
+        ],
+        "candidates": [
+          {
+            "phrase": "state",
+            "candidateId": "Q7275",
+            "candidateLabel": "state",
+            "weight": 0.3577981651376147
+          }
+        ],
+        "probability": 0.07079680197752115
+      },
+      {
+        "id": "Q1054574",
+        "property": "P136",
+        "propertyLabel": "genre",
+        "weight": 0.2765957446808511,
+        "phrases": [
+          {
+            "text": "Hawaii",
+            "entityId": "Q782"
+          }
+        ],
+        "candidates": [
+          {
+            "phrase": "Hawaii",
+            "candidateId": "Q18703903",
+            "candidateLabel": "Hawaii",
+            "weight": 0.2765957446808511
+          }
+        ],
+        "probability": 0.0547294426634738
+      },
+      {
+        "id": "Q11424",
+        "property": "P31",
+        "propertyLabel": "instance of",
+        "weight": 0.2765957446808511,
+        "phrases": [
+          {
+            "text": "Hawaii",
+            "entityId": "Q782"
+          }
+        ],
+        "candidates": [
+          {
+            "phrase": "Hawaii",
+            "candidateId": "Q18703903",
+            "candidateLabel": "Hawaii",
+            "weight": 0.2765957446808511
+          }
+        ],
+        "probability": 0.0547294426634738
+      },
+      {
+        "id": "Q130232",
+        "property": "P136",
+        "propertyLabel": "genre",
+        "weight": 0.2765957446808511,
+        "phrases": [
+          {
+            "text": "Hawaii",
+            "entityId": "Q782"
+          }
+        ],
+        "candidates": [
+          {
+            "phrase": "Hawaii",
+            "candidateId": "Q18703903",
+            "candidateLabel": "Hawaii",
+            "weight": 0.2765957446808511
+          }
+        ],
+        "probability": 0.0547294426634738
+      },
+      {
+        "id": "Q20442589",
+        "property": "P136",
+        "propertyLabel": "genre",
+        "weight": 0.2765957446808511,
+        "phrases": [
+          {
+            "text": "Hawaii",
+            "entityId": "Q782"
+          }
+        ],
+        "candidates": [
+          {
+            "phrase": "Hawaii",
+            "candidateId": "Q18703903",
+            "candidateLabel": "Hawaii",
+            "weight": 0.2765957446808511
+          }
+        ],
+        "probability": 0.0547294426634738
+      }
+    ],
+    "mainContext": {
+      "id": "Q1161185",
+      "property": "P31",
+      "propertyLabel": "instance of",
+      "weight": 0.3617021276595745,
+      "phrases": [
+        {
+          "text": "Hawaii",
+          "entityId": "Q782"
+        }
+      ],
+      "candidates": [
+        {
+          "phrase": "Hawaii",
+          "candidateId": "Q68740",
+          "candidateLabel": "Hawaii",
+          "weight": 0.3617021276595745
+        }
+      ],
+      "probability": 0.0715692711753119
+    },
+    "additionalContexts": [
+      {
+        "id": "Q192626",
+        "property": "P361",
+        "propertyLabel": "part of",
+        "weight": 0.3617021276595745,
+        "phrases": [
+          {
+            "text": "Hawaii",
+            "entityId": "Q782"
+          }
+        ],
+        "candidates": [
+          {
+            "phrase": "Hawaii",
+            "candidateId": "Q68740",
+            "candidateLabel": "Hawaii",
+            "weight": 0.3617021276595745
+          }
+        ],
+        "probability": 0.0715692711753119
+      },
+      {
+        "id": "Q35657",
+        "property": "P31",
+        "propertyLabel": "instance of",
+        "weight": 0.3617021276595745,
+        "phrases": [
+          {
+            "text": "Hawaii",
+            "entityId": "Q782"
+          }
+        ],
+        "candidates": [
+          {
+            "phrase": "Hawaii",
+            "candidateId": "Q782",
+            "candidateLabel": "Hawaii",
+            "weight": 0.3617021276595745
+          }
+        ],
+        "probability": 0.0715692711753119
+      },
+      {
+        "id": "Q101352",
+        "property": "P31",
+        "propertyLabel": "instance of",
+        "weight": 0.3577981651376147,
+        "phrases": [
+          {
+            "text": "state",
+            "entityId": "Q7275"
+          }
+        ],
+        "candidates": [
+          {
+            "phrase": "state",
+            "candidateId": "Q37234491",
+            "candidateLabel": "State",
+            "weight": 0.3577981651376147
+          }
+        ],
+        "probability": 0.07079680197752115
+      },
+      {
+        "id": "Q1048835",
+        "property": "P279",
+        "propertyLabel": "subclass of",
+        "weight": 0.3577981651376147,
+        "phrases": [
+          {
+            "text": "state",
+            "entityId": "Q7275"
+          }
+        ],
+        "candidates": [
+          {
+            "phrase": "state",
+            "candidateId": "Q7275",
+            "candidateLabel": "state",
+            "weight": 0.3577981651376147
+          }
+        ],
+        "probability": 0.07079680197752115
+      },
+      {
+        "id": "Q155076",
+        "property": "P279",
+        "propertyLabel": "subclass of",
+        "weight": 0.3577981651376147,
+        "phrases": [
+          {
+            "text": "state",
+            "entityId": "Q7275"
+          }
+        ],
+        "candidates": [
+          {
+            "phrase": "state",
+            "candidateId": "Q7275",
+            "candidateLabel": "state",
+            "weight": 0.3577981651376147
+          }
+        ],
+        "probability": 0.07079680197752115
+      },
+      {
+        "id": "Q15617994",
+        "property": "P31",
+        "propertyLabel": "instance of",
+        "weight": 0.3577981651376147,
+        "phrases": [
+          {
+            "text": "state",
+            "entityId": "Q7275"
+          }
+        ],
+        "candidates": [
+          {
+            "phrase": "state",
+            "candidateId": "Q7275",
+            "candidateLabel": "state",
+            "weight": 0.3577981651376147
+          }
+        ],
+        "probability": 0.07079680197752115
+      },
+      {
+        "id": "Q179671",
+        "property": "P361",
+        "propertyLabel": "part of",
+        "weight": 0.3577981651376147,
+        "phrases": [
+          {
+            "text": "state",
+            "entityId": "Q7275"
+          }
+        ],
+        "candidates": [
+          {
+            "phrase": "state",
+            "candidateId": "Q7275",
+            "candidateLabel": "state",
+            "weight": 0.3577981651376147
+          }
+        ],
+        "probability": 0.07079680197752115
+      },
+      {
+        "id": "Q1896989",
+        "property": "P279",
+        "propertyLabel": "subclass of",
+        "weight": 0.3577981651376147,
+        "phrases": [
+          {
+            "text": "state",
+            "entityId": "Q7275"
+          }
+        ],
+        "candidates": [
+          {
+            "phrase": "state",
+            "candidateId": "Q7275",
+            "candidateLabel": "state",
+            "weight": 0.3577981651376147
+          }
+        ],
+        "probability": 0.07079680197752115
+      },
+      {
+        "id": "Q211606",
+        "property": "P31",
+        "propertyLabel": "instance of",
+        "weight": 0.3577981651376147,
+        "phrases": [
+          {
+            "text": "state",
+            "entityId": "Q7275"
+          }
+        ],
+        "candidates": [
+          {
+            "phrase": "state",
+            "candidateId": "Q7275",
+            "candidateLabel": "state",
+            "weight": 0.3577981651376147
+          }
+        ],
+        "probability": 0.07079680197752115
+      },
+      {
+        "id": "Q96196009",
+        "property": "P279",
+        "propertyLabel": "subclass of",
+        "weight": 0.3577981651376147,
+        "phrases": [
+          {
+            "text": "state",
+            "entityId": "Q7275"
+          }
+        ],
+        "candidates": [
+          {
+            "phrase": "state",
+            "candidateId": "Q7275",
+            "candidateLabel": "state",
+            "weight": 0.3577981651376147
+          }
+        ],
+        "probability": 0.07079680197752115
+      },
+      {
+        "id": "Q1054574",
+        "property": "P136",
+        "propertyLabel": "genre",
+        "weight": 0.2765957446808511,
+        "phrases": [
+          {
+            "text": "Hawaii",
+            "entityId": "Q782"
+          }
+        ],
+        "candidates": [
+          {
+            "phrase": "Hawaii",
+            "candidateId": "Q18703903",
+            "candidateLabel": "Hawaii",
+            "weight": 0.2765957446808511
+          }
+        ],
+        "probability": 0.0547294426634738
+      },
+      {
+        "id": "Q11424",
+        "property": "P31",
+        "propertyLabel": "instance of",
+        "weight": 0.2765957446808511,
+        "phrases": [
+          {
+            "text": "Hawaii",
+            "entityId": "Q782"
+          }
+        ],
+        "candidates": [
+          {
+            "phrase": "Hawaii",
+            "candidateId": "Q18703903",
+            "candidateLabel": "Hawaii",
+            "weight": 0.2765957446808511
+          }
+        ],
+        "probability": 0.0547294426634738
+      },
+      {
+        "id": "Q130232",
+        "property": "P136",
+        "propertyLabel": "genre",
+        "weight": 0.2765957446808511,
+        "phrases": [
+          {
+            "text": "Hawaii",
+            "entityId": "Q782"
+          }
+        ],
+        "candidates": [
+          {
+            "phrase": "Hawaii",
+            "candidateId": "Q18703903",
+            "candidateLabel": "Hawaii",
+            "weight": 0.2765957446808511
+          }
+        ],
+        "probability": 0.0547294426634738
+      },
+      {
+        "id": "Q20442589",
+        "property": "P136",
+        "propertyLabel": "genre",
+        "weight": 0.2765957446808511,
+        "phrases": [
+          {
+            "text": "Hawaii",
+            "entityId": "Q782"
+          }
+        ],
+        "candidates": [
+          {
+            "phrase": "Hawaii",
+            "candidateId": "Q18703903",
+            "candidateLabel": "Hawaii",
+            "weight": 0.2765957446808511
+          }
+        ],
+        "probability": 0.0547294426634738
+      }
+    ],
+    "bigContexts": [
+      {
+        "id": "Q1161185",
+        "label": null,
+        "weight": 0.3617021276595745,
+        "depth": 1,
+        "paths": [
+          [
+            "Q1161185"
+          ]
+        ],
+        "propertyTrail": [
+          "P31"
+        ],
+        "sourcePhrases": [
+          {
+            "text": "Hawaii",
+            "entityId": "Q782"
+          }
+        ],
+        "sourceCandidates": [
+          {
+            "phrase": "Hawaii",
+            "candidateId": "Q68740",
+            "candidateLabel": "Hawaii",
+            "weight": 0.3617021276595745
+          }
+        ],
+        "probability": 0.032742854618544835
+      },
+      {
+        "id": "Q192626",
+        "label": null,
+        "weight": 0.3617021276595745,
+        "depth": 1,
+        "paths": [
+          [
+            "Q192626"
+          ]
+        ],
+        "propertyTrail": [
+          "P361"
+        ],
+        "sourcePhrases": [
+          {
+            "text": "Hawaii",
+            "entityId": "Q782"
+          }
+        ],
+        "sourceCandidates": [
+          {
+            "phrase": "Hawaii",
+            "candidateId": "Q68740",
+            "candidateLabel": "Hawaii",
+            "weight": 0.3617021276595745
+          }
+        ],
+        "probability": 0.032742854618544835
+      },
+      {
+        "id": "Q35657",
+        "label": null,
+        "weight": 0.3617021276595745,
+        "depth": 1,
+        "paths": [
+          [
+            "Q35657"
+          ]
+        ],
+        "propertyTrail": [
+          "P31"
+        ],
+        "sourcePhrases": [
+          {
+            "text": "Hawaii",
+            "entityId": "Q782"
+          }
+        ],
+        "sourceCandidates": [
+          {
+            "phrase": "Hawaii",
+            "candidateId": "Q782",
+            "candidateLabel": "Hawaii",
+            "weight": 0.3617021276595745
+          }
+        ],
+        "probability": 0.032742854618544835
+      },
+      {
+        "id": "Q101352",
+        "label": null,
+        "weight": 0.3577981651376147,
+        "depth": 1,
+        "paths": [
+          [
+            "Q101352"
+          ]
+        ],
+        "propertyTrail": [
+          "P31"
+        ],
+        "sourcePhrases": [
+          {
+            "text": "state",
+            "entityId": "Q7275"
+          }
+        ],
+        "sourceCandidates": [
+          {
+            "phrase": "state",
+            "candidateId": "Q37234491",
+            "candidateLabel": "State",
+            "weight": 0.3577981651376147
+          }
+        ],
+        "probability": 0.03238945089897068
+      },
+      {
+        "id": "Q1048835",
+        "label": null,
+        "weight": 0.3577981651376147,
+        "depth": 1,
+        "paths": [
+          [
+            "Q1048835"
+          ]
+        ],
+        "propertyTrail": [
+          "P279"
+        ],
+        "sourcePhrases": [
+          {
+            "text": "state",
+            "entityId": "Q7275"
+          }
+        ],
+        "sourceCandidates": [
+          {
+            "phrase": "state",
+            "candidateId": "Q7275",
+            "candidateLabel": "state",
+            "weight": 0.3577981651376147
+          }
+        ],
+        "probability": 0.03238945089897068
+      },
+      {
+        "id": "Q155076",
+        "label": null,
+        "weight": 0.3577981651376147,
+        "depth": 1,
+        "paths": [
+          [
+            "Q155076"
+          ]
+        ],
+        "propertyTrail": [
+          "P279"
+        ],
+        "sourcePhrases": [
+          {
+            "text": "state",
+            "entityId": "Q7275"
+          }
+        ],
+        "sourceCandidates": [
+          {
+            "phrase": "state",
+            "candidateId": "Q7275",
+            "candidateLabel": "state",
+            "weight": 0.3577981651376147
+          }
+        ],
+        "probability": 0.03238945089897068
+      },
+      {
+        "id": "Q15617994",
+        "label": null,
+        "weight": 0.3577981651376147,
+        "depth": 1,
+        "paths": [
+          [
+            "Q15617994"
+          ]
+        ],
+        "propertyTrail": [
+          "P31"
+        ],
+        "sourcePhrases": [
+          {
+            "text": "state",
+            "entityId": "Q7275"
+          }
+        ],
+        "sourceCandidates": [
+          {
+            "phrase": "state",
+            "candidateId": "Q7275",
+            "candidateLabel": "state",
+            "weight": 0.3577981651376147
+          }
+        ],
+        "probability": 0.03238945089897068
+      },
+      {
+        "id": "Q179671",
+        "label": null,
+        "weight": 0.3577981651376147,
+        "depth": 1,
+        "paths": [
+          [
+            "Q179671"
+          ]
+        ],
+        "propertyTrail": [
+          "P361"
+        ],
+        "sourcePhrases": [
+          {
+            "text": "state",
+            "entityId": "Q7275"
+          }
+        ],
+        "sourceCandidates": [
+          {
+            "phrase": "state",
+            "candidateId": "Q7275",
+            "candidateLabel": "state",
+            "weight": 0.3577981651376147
+          }
+        ],
+        "probability": 0.03238945089897068
+      },
+      {
+        "id": "Q1896989",
+        "label": null,
+        "weight": 0.3577981651376147,
+        "depth": 1,
+        "paths": [
+          [
+            "Q1896989"
+          ]
+        ],
+        "propertyTrail": [
+          "P279"
+        ],
+        "sourcePhrases": [
+          {
+            "text": "state",
+            "entityId": "Q7275"
+          }
+        ],
+        "sourceCandidates": [
+          {
+            "phrase": "state",
+            "candidateId": "Q7275",
+            "candidateLabel": "state",
+            "weight": 0.3577981651376147
+          }
+        ],
+        "probability": 0.03238945089897068
+      },
+      {
+        "id": "Q211606",
+        "label": null,
+        "weight": 0.3577981651376147,
+        "depth": 1,
+        "paths": [
+          [
+            "Q211606"
+          ]
+        ],
+        "propertyTrail": [
+          "P31"
+        ],
+        "sourcePhrases": [
+          {
+            "text": "state",
+            "entityId": "Q7275"
+          }
+        ],
+        "sourceCandidates": [
+          {
+            "phrase": "state",
+            "candidateId": "Q7275",
+            "candidateLabel": "state",
+            "weight": 0.3577981651376147
+          }
+        ],
+        "probability": 0.03238945089897068
+      },
+      {
+        "id": "Q96196009",
+        "label": null,
+        "weight": 0.3577981651376147,
+        "depth": 1,
+        "paths": [
+          [
+            "Q96196009"
+          ]
+        ],
+        "propertyTrail": [
+          "P279"
+        ],
+        "sourcePhrases": [
+          {
+            "text": "state",
+            "entityId": "Q7275"
+          }
+        ],
+        "sourceCandidates": [
+          {
+            "phrase": "state",
+            "candidateId": "Q7275",
+            "candidateLabel": "state",
+            "weight": 0.3577981651376147
+          }
+        ],
+        "probability": 0.03238945089897068
+      },
+      {
+        "id": "Q1054574",
+        "label": null,
+        "weight": 0.2765957446808511,
+        "depth": 1,
+        "paths": [
+          [
+            "Q1054574"
+          ]
+        ],
+        "propertyTrail": [
+          "P136"
+        ],
+        "sourcePhrases": [
+          {
+            "text": "Hawaii",
+            "entityId": "Q782"
+          }
+        ],
+        "sourceCandidates": [
+          {
+            "phrase": "Hawaii",
+            "candidateId": "Q18703903",
+            "candidateLabel": "Hawaii",
+            "weight": 0.2765957446808511
+          }
+        ],
+        "probability": 0.025038653531828402
+      }
+    ],
+    "mainBigContext": {
+      "id": "Q1161185",
+      "label": null,
+      "weight": 0.3617021276595745,
+      "depth": 1,
+      "paths": [
+        [
+          "Q1161185"
+        ]
+      ],
+      "propertyTrail": [
+        "P31"
+      ],
+      "sourcePhrases": [
+        {
+          "text": "Hawaii",
+          "entityId": "Q782"
+        }
+      ],
+      "sourceCandidates": [
+        {
+          "phrase": "Hawaii",
+          "candidateId": "Q68740",
+          "candidateLabel": "Hawaii",
+          "weight": 0.3617021276595745
+        }
+      ],
+      "probability": 0.032742854618544835
+    },
+    "additionalBigContexts": [
+      {
+        "id": "Q192626",
+        "label": null,
+        "weight": 0.3617021276595745,
+        "depth": 1,
+        "paths": [
+          [
+            "Q192626"
+          ]
+        ],
+        "propertyTrail": [
+          "P361"
+        ],
+        "sourcePhrases": [
+          {
+            "text": "Hawaii",
+            "entityId": "Q782"
+          }
+        ],
+        "sourceCandidates": [
+          {
+            "phrase": "Hawaii",
+            "candidateId": "Q68740",
+            "candidateLabel": "Hawaii",
+            "weight": 0.3617021276595745
+          }
+        ],
+        "probability": 0.032742854618544835
+      },
+      {
+        "id": "Q35657",
+        "label": null,
+        "weight": 0.3617021276595745,
+        "depth": 1,
+        "paths": [
+          [
+            "Q35657"
+          ]
+        ],
+        "propertyTrail": [
+          "P31"
+        ],
+        "sourcePhrases": [
+          {
+            "text": "Hawaii",
+            "entityId": "Q782"
+          }
+        ],
+        "sourceCandidates": [
+          {
+            "phrase": "Hawaii",
+            "candidateId": "Q782",
+            "candidateLabel": "Hawaii",
+            "weight": 0.3617021276595745
+          }
+        ],
+        "probability": 0.032742854618544835
+      },
+      {
+        "id": "Q101352",
+        "label": null,
+        "weight": 0.3577981651376147,
+        "depth": 1,
+        "paths": [
+          [
+            "Q101352"
+          ]
+        ],
+        "propertyTrail": [
+          "P31"
+        ],
+        "sourcePhrases": [
+          {
+            "text": "state",
+            "entityId": "Q7275"
+          }
+        ],
+        "sourceCandidates": [
+          {
+            "phrase": "state",
+            "candidateId": "Q37234491",
+            "candidateLabel": "State",
+            "weight": 0.3577981651376147
+          }
+        ],
+        "probability": 0.03238945089897068
+      },
+      {
+        "id": "Q1048835",
+        "label": null,
+        "weight": 0.3577981651376147,
+        "depth": 1,
+        "paths": [
+          [
+            "Q1048835"
+          ]
+        ],
+        "propertyTrail": [
+          "P279"
+        ],
+        "sourcePhrases": [
+          {
+            "text": "state",
+            "entityId": "Q7275"
+          }
+        ],
+        "sourceCandidates": [
+          {
+            "phrase": "state",
+            "candidateId": "Q7275",
+            "candidateLabel": "state",
+            "weight": 0.3577981651376147
+          }
+        ],
+        "probability": 0.03238945089897068
+      },
+      {
+        "id": "Q155076",
+        "label": null,
+        "weight": 0.3577981651376147,
+        "depth": 1,
+        "paths": [
+          [
+            "Q155076"
+          ]
+        ],
+        "propertyTrail": [
+          "P279"
+        ],
+        "sourcePhrases": [
+          {
+            "text": "state",
+            "entityId": "Q7275"
+          }
+        ],
+        "sourceCandidates": [
+          {
+            "phrase": "state",
+            "candidateId": "Q7275",
+            "candidateLabel": "state",
+            "weight": 0.3577981651376147
+          }
+        ],
+        "probability": 0.03238945089897068
+      },
+      {
+        "id": "Q15617994",
+        "label": null,
+        "weight": 0.3577981651376147,
+        "depth": 1,
+        "paths": [
+          [
+            "Q15617994"
+          ]
+        ],
+        "propertyTrail": [
+          "P31"
+        ],
+        "sourcePhrases": [
+          {
+            "text": "state",
+            "entityId": "Q7275"
+          }
+        ],
+        "sourceCandidates": [
+          {
+            "phrase": "state",
+            "candidateId": "Q7275",
+            "candidateLabel": "state",
+            "weight": 0.3577981651376147
+          }
+        ],
+        "probability": 0.03238945089897068
+      },
+      {
+        "id": "Q179671",
+        "label": null,
+        "weight": 0.3577981651376147,
+        "depth": 1,
+        "paths": [
+          [
+            "Q179671"
+          ]
+        ],
+        "propertyTrail": [
+          "P361"
+        ],
+        "sourcePhrases": [
+          {
+            "text": "state",
+            "entityId": "Q7275"
+          }
+        ],
+        "sourceCandidates": [
+          {
+            "phrase": "state",
+            "candidateId": "Q7275",
+            "candidateLabel": "state",
+            "weight": 0.3577981651376147
+          }
+        ],
+        "probability": 0.03238945089897068
+      },
+      {
+        "id": "Q1896989",
+        "label": null,
+        "weight": 0.3577981651376147,
+        "depth": 1,
+        "paths": [
+          [
+            "Q1896989"
+          ]
+        ],
+        "propertyTrail": [
+          "P279"
+        ],
+        "sourcePhrases": [
+          {
+            "text": "state",
+            "entityId": "Q7275"
+          }
+        ],
+        "sourceCandidates": [
+          {
+            "phrase": "state",
+            "candidateId": "Q7275",
+            "candidateLabel": "state",
+            "weight": 0.3577981651376147
+          }
+        ],
+        "probability": 0.03238945089897068
+      },
+      {
+        "id": "Q211606",
+        "label": null,
+        "weight": 0.3577981651376147,
+        "depth": 1,
+        "paths": [
+          [
+            "Q211606"
+          ]
+        ],
+        "propertyTrail": [
+          "P31"
+        ],
+        "sourcePhrases": [
+          {
+            "text": "state",
+            "entityId": "Q7275"
+          }
+        ],
+        "sourceCandidates": [
+          {
+            "phrase": "state",
+            "candidateId": "Q7275",
+            "candidateLabel": "state",
+            "weight": 0.3577981651376147
+          }
+        ],
+        "probability": 0.03238945089897068
+      },
+      {
+        "id": "Q96196009",
+        "label": null,
+        "weight": 0.3577981651376147,
+        "depth": 1,
+        "paths": [
+          [
+            "Q96196009"
+          ]
+        ],
+        "propertyTrail": [
+          "P279"
+        ],
+        "sourcePhrases": [
+          {
+            "text": "state",
+            "entityId": "Q7275"
+          }
+        ],
+        "sourceCandidates": [
+          {
+            "phrase": "state",
+            "candidateId": "Q7275",
+            "candidateLabel": "state",
+            "weight": 0.3577981651376147
+          }
+        ],
+        "probability": 0.03238945089897068
+      },
+      {
+        "id": "Q1054574",
+        "label": null,
+        "weight": 0.2765957446808511,
+        "depth": 1,
+        "paths": [
+          [
+            "Q1054574"
+          ]
+        ],
+        "propertyTrail": [
+          "P136"
+        ],
+        "sourcePhrases": [
+          {
+            "text": "Hawaii",
+            "entityId": "Q782"
+          }
+        ],
+        "sourceCandidates": [
+          {
+            "phrase": "Hawaii",
+            "candidateId": "Q18703903",
+            "candidateLabel": "Hawaii",
+            "weight": 0.2765957446808511
+          }
+        ],
+        "probability": 0.025038653531828402
+      }
+    ],
+    "interpretations": [
+      {
+        "rank": 1,
+        "score": 151,
+        "phrases": [
+          {
+            "text": "Hawaii",
+            "entityId": "Q782",
+            "kind": "entity",
+            "entityLabel": "Hawaii",
+            "entityDescription": "state of the United States of America"
+          },
+          {
+            "text": "is",
+            "entityId": "wikt:en:is#Symbol:0",
+            "kind": "entity",
+            "entityLabel": "is",
+            "entityDescription": " ISO 639-1 language code for Icelandic."
+          },
+          {
+            "text": "a",
+            "entityId": "wikt:en:a#Letter:0",
+            "kind": "entity",
+            "entityLabel": "a",
+            "entityDescription": "The first letter of the basic modern Latin alphabet."
+          },
+          {
+            "text": "state",
+            "entityId": "Q7275",
+            "kind": "entity",
+            "entityLabel": "state",
+            "entityDescription": "organised community living under a system of government; either a sovereign state, constituent state, or federated state"
+          }
+        ]
+      },
+      {
+        "rank": 2,
+        "score": 151,
+        "phrases": [
+          {
+            "text": "Hawaii",
+            "entityId": "Q782",
+            "kind": "entity",
+            "entityLabel": "Hawaii",
+            "entityDescription": "state of the United States of America"
+          },
+          {
+            "text": "is",
+            "entityId": "wikt:en:is#Symbol:0",
+            "kind": "entity",
+            "entityLabel": "is",
+            "entityDescription": " ISO 639-1 language code for Icelandic."
+          },
+          {
+            "text": "a",
+            "entityId": "wikt:en:a#Letter:0",
+            "kind": "entity",
+            "entityLabel": "a",
+            "entityDescription": "The first letter of the basic modern Latin alphabet."
+          },
+          {
+            "text": "state",
+            "entityId": "Q37234491",
+            "kind": "entity",
+            "entityLabel": "State",
+            "entityDescription": "family name"
+          }
+        ]
+      },
+      {
+        "rank": 3,
+        "score": 151,
+        "phrases": [
+          {
+            "text": "Hawaii",
+            "entityId": "Q782",
+            "kind": "entity",
+            "entityLabel": "Hawaii",
+            "entityDescription": "state of the United States of America"
+          },
+          {
+            "text": "is",
+            "entityId": "wikt:en:is#Symbol:0",
+            "kind": "entity",
+            "entityLabel": "is",
+            "entityDescription": " ISO 639-1 language code for Icelandic."
+          },
+          {
+            "text": "a",
+            "entityId": "wikt:en:a#Letter:1",
+            "kind": "entity",
+            "entityLabel": "a",
+            "entityDescription": "Transliterates the Cyrillic letter а."
+          },
+          {
+            "text": "state",
+            "entityId": "Q7275",
+            "kind": "entity",
+            "entityLabel": "state",
+            "entityDescription": "organised community living under a system of government; either a sovereign state, constituent state, or federated state"
+          }
+        ]
+      },
+      {
+        "rank": 4,
+        "score": 151,
+        "phrases": [
+          {
+            "text": "Hawaii",
+            "entityId": "Q782",
+            "kind": "entity",
+            "entityLabel": "Hawaii",
+            "entityDescription": "state of the United States of America"
+          },
+          {
+            "text": "is",
+            "entityId": "wikt:en:is#Symbol:0",
+            "kind": "entity",
+            "entityLabel": "is",
+            "entityDescription": " ISO 639-1 language code for Icelandic."
+          },
+          {
+            "text": "a",
+            "entityId": "wikt:en:a#Letter:1",
+            "kind": "entity",
+            "entityLabel": "a",
+            "entityDescription": "Transliterates the Cyrillic letter а."
+          },
+          {
+            "text": "state",
+            "entityId": "Q37234491",
+            "kind": "entity",
+            "entityLabel": "State",
+            "entityDescription": "family name"
+          }
+        ]
+      },
+      {
+        "rank": 5,
+        "score": 151,
+        "phrases": [
+          {
+            "text": "Hawaii",
+            "entityId": "Q782",
+            "kind": "entity",
+            "entityLabel": "Hawaii",
+            "entityDescription": "state of the United States of America"
+          },
+          {
+            "text": "is",
+            "entityId": "wikt:en:is#Symbol:0",
+            "kind": "entity",
+            "entityLabel": "is",
+            "entityDescription": " ISO 639-1 language code for Icelandic."
+          },
+          {
+            "text": "a",
+            "entityId": "wikt:en:a#Letter:2",
+            "kind": "entity",
+            "entityLabel": "a",
+            "entityDescription": " See ª."
+          },
+          {
+            "text": "state",
+            "entityId": "Q7275",
+            "kind": "entity",
+            "entityLabel": "state",
+            "entityDescription": "organised community living under a system of government; either a sovereign state, constituent state, or federated state"
+          }
+        ]
+      },
+      {
+        "rank": 6,
+        "score": 151,
+        "phrases": [
+          {
+            "text": "Hawaii",
+            "entityId": "Q782",
+            "kind": "entity",
+            "entityLabel": "Hawaii",
+            "entityDescription": "state of the United States of America"
+          },
+          {
+            "text": "is",
+            "entityId": "wikt:en:is#Symbol:0",
+            "kind": "entity",
+            "entityLabel": "is",
+            "entityDescription": " ISO 639-1 language code for Icelandic."
+          },
+          {
+            "text": "a",
+            "entityId": "wikt:en:a#Letter:2",
+            "kind": "entity",
+            "entityLabel": "a",
+            "entityDescription": " See ª."
+          },
+          {
+            "text": "state",
+            "entityId": "Q37234491",
+            "kind": "entity",
+            "entityLabel": "State",
+            "entityDescription": "family name"
+          }
+        ]
+      },
+      {
+        "rank": 7,
+        "score": 151,
+        "phrases": [
+          {
+            "text": "Hawaii",
+            "entityId": "Q782",
+            "kind": "entity",
+            "entityLabel": "Hawaii",
+            "entityDescription": "state of the United States of America"
+          },
+          {
+            "text": "is",
+            "entityId": "wikt:en:is#Verb:1",
+            "kind": "entity",
+            "entityLabel": "is",
+            "entityDescription": "third-person singular simple present indicative of be"
+          },
+          {
+            "text": "a",
+            "entityId": "wikt:en:a#Letter:0",
+            "kind": "entity",
+            "entityLabel": "a",
+            "entityDescription": "The first letter of the basic modern Latin alphabet."
+          },
+          {
+            "text": "state",
+            "entityId": "Q7275",
+            "kind": "entity",
+            "entityLabel": "state",
+            "entityDescription": "organised community living under a system of government; either a sovereign state, constituent state, or federated state"
+          }
+        ]
+      },
+      {
+        "rank": 8,
+        "score": 151,
+        "phrases": [
+          {
+            "text": "Hawaii",
+            "entityId": "Q782",
+            "kind": "entity",
+            "entityLabel": "Hawaii",
+            "entityDescription": "state of the United States of America"
+          },
+          {
+            "text": "is",
+            "entityId": "wikt:en:is#Verb:1",
+            "kind": "entity",
+            "entityLabel": "is",
+            "entityDescription": "third-person singular simple present indicative of be"
+          },
+          {
+            "text": "a",
+            "entityId": "wikt:en:a#Letter:0",
+            "kind": "entity",
+            "entityLabel": "a",
+            "entityDescription": "The first letter of the basic modern Latin alphabet."
+          },
+          {
+            "text": "state",
+            "entityId": "Q37234491",
+            "kind": "entity",
+            "entityLabel": "State",
+            "entityDescription": "family name"
+          }
+        ]
+      },
+      {
+        "rank": 9,
+        "score": 151,
+        "phrases": [
+          {
+            "text": "Hawaii",
+            "entityId": "Q782",
+            "kind": "entity",
+            "entityLabel": "Hawaii",
+            "entityDescription": "state of the United States of America"
+          },
+          {
+            "text": "is",
+            "entityId": "wikt:en:is#Verb:1",
+            "kind": "entity",
+            "entityLabel": "is",
+            "entityDescription": "third-person singular simple present indicative of be"
+          },
+          {
+            "text": "a",
+            "entityId": "wikt:en:a#Letter:1",
+            "kind": "entity",
+            "entityLabel": "a",
+            "entityDescription": "Transliterates the Cyrillic letter а."
+          },
+          {
+            "text": "state",
+            "entityId": "Q7275",
+            "kind": "entity",
+            "entityLabel": "state",
+            "entityDescription": "organised community living under a system of government; either a sovereign state, constituent state, or federated state"
+          }
+        ]
+      },
+      {
+        "rank": 10,
+        "score": 151,
+        "phrases": [
+          {
+            "text": "Hawaii",
+            "entityId": "Q782",
+            "kind": "entity",
+            "entityLabel": "Hawaii",
+            "entityDescription": "state of the United States of America"
+          },
+          {
+            "text": "is",
+            "entityId": "wikt:en:is#Verb:1",
+            "kind": "entity",
+            "entityLabel": "is",
+            "entityDescription": "third-person singular simple present indicative of be"
+          },
+          {
+            "text": "a",
+            "entityId": "wikt:en:a#Letter:1",
+            "kind": "entity",
+            "entityLabel": "a",
+            "entityDescription": "Transliterates the Cyrillic letter а."
+          },
+          {
+            "text": "state",
+            "entityId": "Q37234491",
+            "kind": "entity",
+            "entityLabel": "State",
+            "entityDescription": "family name"
+          }
+        ]
+      }
+    ],
+    "markdown": "[Hawaii](https://en.wikipedia.org/wiki/Hawaii \"Q782\") [is](https://en.wiktionary.org/wiki/is \"wikt:en:is#Symbol:0\") [a](https://en.wiktionary.org/wiki/a \"wikt:en:a#Letter:0\") [state](https://en.wikipedia.org/wiki/State_(polity) \"Q7275\").",
+    "html": "<a href=\"https://en.wikipedia.org/wiki/Hawaii\" title=\"Q782\">Hawaii</a> <a href=\"https://en.wiktionary.org/wiki/is\" title=\"wikt:en:is#Symbol:0\">is</a> <a href=\"https://en.wiktionary.org/wiki/a\" title=\"wikt:en:a#Letter:0\">a</a> <a href=\"https://en.wikipedia.org/wiki/State_(polity)\" title=\"Q7275\">state</a>.",
+    "linksNotation": "(formalization: (Hawaii is a state.))\n(phrase-1: source (Hawaii) start 0 end 0 id Q782 label (Hawaii) kind entity markdownUrl (https://en.wikipedia.org/wiki/Hawaii))\n(phrase-2: source (is) start 1 end 1 id wikt:en:is#Symbol:0 label (is) kind entity markdownUrl (https://en.wiktionary.org/wiki/is))\n(phrase-3: source (a) start 2 end 2 id wikt:en:a#Letter:0 label (a) kind entity markdownUrl (https://en.wiktionary.org/wiki/a))\n(phrase-4: source (state) start 3 end 3 id Q7275 label (state) kind entity markdownUrl (https://en.wikipedia.org/wiki/State_ polity))\n(context-1: Q1161185 weight 0.3617021276595745 probability 7.2)\n(context-2: Q192626 weight 0.3617021276595745 probability 7.2)\n(context-3: Q35657 weight 0.3617021276595745 probability 7.2)\n(context-4: Q101352 weight 0.3577981651376147 probability 7.1)\n(context-5: Q1048835 weight 0.3577981651376147 probability 7.1)\n(context-6: Q155076 weight 0.3577981651376147 probability 7.1)\n(context-7: Q15617994 weight 0.3577981651376147 probability 7.1)\n(context-8: Q179671 weight 0.3577981651376147 probability 7.1)\n(context-9: Q1896989 weight 0.3577981651376147 probability 7.1)\n(context-10: Q211606 weight 0.3577981651376147 probability 7.1)\n(context-11: Q96196009 weight 0.3577981651376147 probability 7.1)\n(context-12: Q1054574 weight 0.2765957446808511 probability 5.5)\n(context-13: Q11424 weight 0.2765957446808511 probability 5.5)\n(context-14: Q130232 weight 0.2765957446808511 probability 5.5)\n(context-15: Q20442589 weight 0.2765957446808511 probability 5.5)",
+    "linksNetwork": {
+      "id": "formalize-links-network",
+      "kind": "links-network",
+      "version": 1,
+      "beliefSystem": {
+        "id": "formalize-default",
+        "name": "Formalize prototype",
+        "probabilityStrategy": "frequency-weighted-context",
+        "sourceWeights": {
+          "wikidata": 1,
+          "wordnet": 0.7,
+          "fandom": 0.6,
+          "algorithm": 0.5
+        }
+      },
+      "links": [
+        {
+          "id": "formalize-input-1",
+          "role": "input",
+          "references": [],
+          "value": {
+            "text": "Hawaii is a state."
+          },
+          "provenance": {
+            "sourceType": "algorithm",
+            "method": "formalize"
+          }
+        },
+        {
+          "id": "formalize-phrase-1",
+          "role": "phrase",
+          "references": [
+            "formalize-input-1"
+          ],
+          "value": {
+            "text": "Hawaii",
+            "position": 0,
+            "size": 1,
+            "wikidataId": "Q782",
+            "wikidataLabel": "Hawaii",
+            "wikidataKind": "entity",
+            "wikipediaUrl": "https://en.wikipedia.org/wiki/Hawaii",
+            "source": "wikidata"
+          },
+          "provenance": {
+            "sourceType": "wikidata",
+            "sourceUrl": "https://www.wikidata.org/wiki/Q782"
+          }
+        },
+        {
+          "id": "formalize-phrase-2",
+          "role": "phrase",
+          "references": [
+            "formalize-input-1"
+          ],
+          "value": {
+            "text": "is",
+            "position": 1,
+            "size": 1,
+            "wikidataId": "wikt:en:is#Symbol:0",
+            "wikidataLabel": "is",
+            "wikidataKind": "entity",
+            "wikipediaUrl": null,
+            "source": "wiktionary"
+          },
+          "provenance": {
+            "sourceType": "wiktionary",
+            "sourceUrl": "https://en.wiktionary.org/wiki/is"
+          }
+        },
+        {
+          "id": "formalize-phrase-3",
+          "role": "phrase",
+          "references": [
+            "formalize-input-1"
+          ],
+          "value": {
+            "text": "a",
+            "position": 2,
+            "size": 1,
+            "wikidataId": "wikt:en:a#Letter:0",
+            "wikidataLabel": "a",
+            "wikidataKind": "entity",
+            "wikipediaUrl": null,
+            "source": "wiktionary"
+          },
+          "provenance": {
+            "sourceType": "wiktionary",
+            "sourceUrl": "https://en.wiktionary.org/wiki/a"
+          }
+        },
+        {
+          "id": "formalize-phrase-4",
+          "role": "phrase",
+          "references": [
+            "formalize-input-1"
+          ],
+          "value": {
+            "text": "state",
+            "position": 3,
+            "size": 1,
+            "wikidataId": "Q7275",
+            "wikidataLabel": "state",
+            "wikidataKind": "entity",
+            "wikipediaUrl": "https://en.wikipedia.org/wiki/State_(polity)",
+            "source": "wikidata"
+          },
+          "provenance": {
+            "sourceType": "wikidata",
+            "sourceUrl": "https://www.wikidata.org/wiki/Q7275"
+          }
+        },
+        {
+          "id": "formalize-context-1",
+          "role": "context",
+          "references": [
+            "formalize-input-1"
+          ],
+          "value": {
+            "wikidataId": "Q1161185",
+            "property": "P31",
+            "propertyLabel": "instance of",
+            "weight": 0.3617021276595745,
+            "probability": 0.0715692711753119
+          },
+          "provenance": {
+            "sourceType": "wikidata",
+            "sourceUrl": "https://www.wikidata.org/wiki/Q1161185"
+          }
+        },
+        {
+          "id": "formalize-context-2",
+          "role": "context",
+          "references": [
+            "formalize-input-1"
+          ],
+          "value": {
+            "wikidataId": "Q192626",
+            "property": "P361",
+            "propertyLabel": "part of",
+            "weight": 0.3617021276595745,
+            "probability": 0.0715692711753119
+          },
+          "provenance": {
+            "sourceType": "wikidata",
+            "sourceUrl": "https://www.wikidata.org/wiki/Q192626"
+          }
+        },
+        {
+          "id": "formalize-context-3",
+          "role": "context",
+          "references": [
+            "formalize-input-1"
+          ],
+          "value": {
+            "wikidataId": "Q35657",
+            "property": "P31",
+            "propertyLabel": "instance of",
+            "weight": 0.3617021276595745,
+            "probability": 0.0715692711753119
+          },
+          "provenance": {
+            "sourceType": "wikidata",
+            "sourceUrl": "https://www.wikidata.org/wiki/Q35657"
+          }
+        },
+        {
+          "id": "formalize-context-4",
+          "role": "context",
+          "references": [
+            "formalize-input-1"
+          ],
+          "value": {
+            "wikidataId": "Q101352",
+            "property": "P31",
+            "propertyLabel": "instance of",
+            "weight": 0.3577981651376147,
+            "probability": 0.07079680197752115
+          },
+          "provenance": {
+            "sourceType": "wikidata",
+            "sourceUrl": "https://www.wikidata.org/wiki/Q101352"
+          }
+        },
+        {
+          "id": "formalize-context-5",
+          "role": "context",
+          "references": [
+            "formalize-input-1"
+          ],
+          "value": {
+            "wikidataId": "Q1048835",
+            "property": "P279",
+            "propertyLabel": "subclass of",
+            "weight": 0.3577981651376147,
+            "probability": 0.07079680197752115
+          },
+          "provenance": {
+            "sourceType": "wikidata",
+            "sourceUrl": "https://www.wikidata.org/wiki/Q1048835"
+          }
+        },
+        {
+          "id": "formalize-context-6",
+          "role": "context",
+          "references": [
+            "formalize-input-1"
+          ],
+          "value": {
+            "wikidataId": "Q155076",
+            "property": "P279",
+            "propertyLabel": "subclass of",
+            "weight": 0.3577981651376147,
+            "probability": 0.07079680197752115
+          },
+          "provenance": {
+            "sourceType": "wikidata",
+            "sourceUrl": "https://www.wikidata.org/wiki/Q155076"
+          }
+        },
+        {
+          "id": "formalize-context-7",
+          "role": "context",
+          "references": [
+            "formalize-input-1"
+          ],
+          "value": {
+            "wikidataId": "Q15617994",
+            "property": "P31",
+            "propertyLabel": "instance of",
+            "weight": 0.3577981651376147,
+            "probability": 0.07079680197752115
+          },
+          "provenance": {
+            "sourceType": "wikidata",
+            "sourceUrl": "https://www.wikidata.org/wiki/Q15617994"
+          }
+        },
+        {
+          "id": "formalize-context-8",
+          "role": "context",
+          "references": [
+            "formalize-input-1"
+          ],
+          "value": {
+            "wikidataId": "Q179671",
+            "property": "P361",
+            "propertyLabel": "part of",
+            "weight": 0.3577981651376147,
+            "probability": 0.07079680197752115
+          },
+          "provenance": {
+            "sourceType": "wikidata",
+            "sourceUrl": "https://www.wikidata.org/wiki/Q179671"
+          }
+        },
+        {
+          "id": "formalize-context-9",
+          "role": "context",
+          "references": [
+            "formalize-input-1"
+          ],
+          "value": {
+            "wikidataId": "Q1896989",
+            "property": "P279",
+            "propertyLabel": "subclass of",
+            "weight": 0.3577981651376147,
+            "probability": 0.07079680197752115
+          },
+          "provenance": {
+            "sourceType": "wikidata",
+            "sourceUrl": "https://www.wikidata.org/wiki/Q1896989"
+          }
+        },
+        {
+          "id": "formalize-context-10",
+          "role": "context",
+          "references": [
+            "formalize-input-1"
+          ],
+          "value": {
+            "wikidataId": "Q211606",
+            "property": "P31",
+            "propertyLabel": "instance of",
+            "weight": 0.3577981651376147,
+            "probability": 0.07079680197752115
+          },
+          "provenance": {
+            "sourceType": "wikidata",
+            "sourceUrl": "https://www.wikidata.org/wiki/Q211606"
+          }
+        },
+        {
+          "id": "formalize-context-11",
+          "role": "context",
+          "references": [
+            "formalize-input-1"
+          ],
+          "value": {
+            "wikidataId": "Q96196009",
+            "property": "P279",
+            "propertyLabel": "subclass of",
+            "weight": 0.3577981651376147,
+            "probability": 0.07079680197752115
+          },
+          "provenance": {
+            "sourceType": "wikidata",
+            "sourceUrl": "https://www.wikidata.org/wiki/Q96196009"
+          }
+        },
+        {
+          "id": "formalize-context-12",
+          "role": "context",
+          "references": [
+            "formalize-input-1"
+          ],
+          "value": {
+            "wikidataId": "Q1054574",
+            "property": "P136",
+            "propertyLabel": "genre",
+            "weight": 0.2765957446808511,
+            "probability": 0.0547294426634738
+          },
+          "provenance": {
+            "sourceType": "wikidata",
+            "sourceUrl": "https://www.wikidata.org/wiki/Q1054574"
+          }
+        },
+        {
+          "id": "formalize-context-13",
+          "role": "context",
+          "references": [
+            "formalize-input-1"
+          ],
+          "value": {
+            "wikidataId": "Q11424",
+            "property": "P31",
+            "propertyLabel": "instance of",
+            "weight": 0.2765957446808511,
+            "probability": 0.0547294426634738
+          },
+          "provenance": {
+            "sourceType": "wikidata",
+            "sourceUrl": "https://www.wikidata.org/wiki/Q11424"
+          }
+        },
+        {
+          "id": "formalize-context-14",
+          "role": "context",
+          "references": [
+            "formalize-input-1"
+          ],
+          "value": {
+            "wikidataId": "Q130232",
+            "property": "P136",
+            "propertyLabel": "genre",
+            "weight": 0.2765957446808511,
+            "probability": 0.0547294426634738
+          },
+          "provenance": {
+            "sourceType": "wikidata",
+            "sourceUrl": "https://www.wikidata.org/wiki/Q130232"
+          }
+        },
+        {
+          "id": "formalize-context-15",
+          "role": "context",
+          "references": [
+            "formalize-input-1"
+          ],
+          "value": {
+            "wikidataId": "Q20442589",
+            "property": "P136",
+            "propertyLabel": "genre",
+            "weight": 0.2765957446808511,
+            "probability": 0.0547294426634738
+          },
+          "provenance": {
+            "sourceType": "wikidata",
+            "sourceUrl": "https://www.wikidata.org/wiki/Q20442589"
+          }
+        }
+      ]
+    },
+    "cst": {
+      "type": "formalization",
+      "version": 1,
+      "text": "Hawaii is a state.",
+      "tokens": [
+        "Hawaii",
+        "is",
+        "a",
+        "state"
+      ],
+      "linkTargetMode": "wikipedia",
+      "phrases": [
+        {
+          "type": "phrase",
+          "id": "phrase-1",
+          "text": "Hawaii",
+          "tokens": [
+            "Hawaii"
+          ],
+          "start": 0,
+          "end": 0,
+          "sourceStart": 0,
+          "sourceEnd": 6,
+          "size": 1,
+          "entity": {
+            "id": "Q782",
+            "label": "Hawaii",
+            "description": "state of the United States of America",
+            "kind": "entity",
+            "source": "wikidata",
+            "sourceUrl": "https://www.wikidata.org/wiki/Q782",
+            "wikipediaUrl": "https://en.wikipedia.org/wiki/Hawaii",
+            "wikipediaTitle": "Hawaii",
+            "score": 51,
+            "url": "https://en.wikipedia.org/wiki/Hawaii"
+          },
+          "candidates": [
+            {
+              "id": "Q782",
+              "label": "Hawaii",
+              "description": "state of the United States of America",
+              "kind": "entity",
+              "source": "wikidata",
+              "sourceUrl": "https://www.wikidata.org/wiki/Q782",
+              "wikipediaUrl": "https://en.wikipedia.org/wiki/Hawaii",
+              "wikipediaTitle": "Hawaii",
+              "score": 51,
+              "url": "https://en.wikipedia.org/wiki/Hawaii"
+            },
+            {
+              "id": "Q68740",
+              "label": "Hawaii",
+              "description": "largest of the Hawaiian islands",
+              "kind": "entity",
+              "source": "wikidata",
+              "sourceUrl": "https://www.wikidata.org/wiki/Q68740",
+              "wikipediaUrl": "https://en.wikipedia.org/wiki/Hawai%CA%BBi_(island)",
+              "wikipediaTitle": "Hawaiʻi (island)",
+              "score": 51,
+              "url": "https://en.wikipedia.org/wiki/Hawai%CA%BBi_(island)"
+            },
+            {
+              "id": "Q18703903",
+              "label": "Hawaii",
+              "description": "2013 film by Marco Berger",
+              "kind": "entity",
+              "source": "wikidata",
+              "sourceUrl": "https://www.wikidata.org/wiki/Q18703903",
+              "wikipediaUrl": "https://en.wikipedia.org/wiki/Hawaii_(2013_film)",
+              "wikipediaTitle": "Hawaii (2013 film)",
+              "score": 39,
+              "url": "https://en.wikipedia.org/wiki/Hawaii_(2013_film)"
+            }
+          ]
+        },
+        {
+          "type": "phrase",
+          "id": "phrase-2",
+          "text": "is",
+          "tokens": [
+            "is"
+          ],
+          "start": 1,
+          "end": 1,
+          "sourceStart": 7,
+          "sourceEnd": 9,
+          "size": 1,
+          "entity": {
+            "id": "wikt:en:is#Symbol:0",
+            "label": "is",
+            "description": " ISO 639-1 language code for Icelandic.",
+            "kind": "entity",
+            "source": "wiktionary",
+            "sourceUrl": "https://en.wiktionary.org/wiki/is",
+            "wikipediaUrl": null,
+            "wikipediaTitle": null,
+            "score": 29,
+            "url": "https://en.wiktionary.org/wiki/is"
+          },
+          "candidates": [
+            {
+              "id": "wikt:en:is#Symbol:0",
+              "label": "is",
+              "description": " ISO 639-1 language code for Icelandic.",
+              "kind": "entity",
+              "source": "wiktionary",
+              "sourceUrl": "https://en.wiktionary.org/wiki/is",
+              "wikipediaUrl": null,
+              "wikipediaTitle": null,
+              "score": 29,
+              "url": "https://en.wiktionary.org/wiki/is"
+            },
+            {
+              "id": "wikt:en:is#Verb:1",
+              "label": "is",
+              "description": "third-person singular simple present indicative of be",
+              "kind": "entity",
+              "source": "wiktionary",
+              "sourceUrl": "https://en.wiktionary.org/wiki/is",
+              "wikipediaUrl": null,
+              "wikipediaTitle": null,
+              "score": 29,
+              "url": "https://en.wiktionary.org/wiki/is"
+            },
+            {
+              "id": "wikt:en:is#Verb:2",
+              "label": "is",
+              "description": " Used in phrases with existential there (also here and where) when the semantic subject is plural.",
+              "kind": "entity",
+              "source": "wiktionary",
+              "sourceUrl": "https://en.wiktionary.org/wiki/is",
+              "wikipediaUrl": null,
+              "wikipediaTitle": null,
+              "score": 29,
+              "url": "https://en.wiktionary.org/wiki/is"
+            }
+          ]
+        },
+        {
+          "type": "phrase",
+          "id": "phrase-3",
+          "text": "a",
+          "tokens": [
+            "a"
+          ],
+          "start": 2,
+          "end": 2,
+          "sourceStart": 10,
+          "sourceEnd": 11,
+          "size": 1,
+          "entity": {
+            "id": "wikt:en:a#Letter:0",
+            "label": "a",
+            "description": "The first letter of the basic modern Latin alphabet.",
+            "kind": "entity",
+            "source": "wiktionary",
+            "sourceUrl": "https://en.wiktionary.org/wiki/a",
+            "wikipediaUrl": null,
+            "wikipediaTitle": null,
+            "score": 31,
+            "url": "https://en.wiktionary.org/wiki/a"
+          },
+          "candidates": [
+            {
+              "id": "wikt:en:a#Letter:0",
+              "label": "a",
+              "description": "The first letter of the basic modern Latin alphabet.",
+              "kind": "entity",
+              "source": "wiktionary",
+              "sourceUrl": "https://en.wiktionary.org/wiki/a",
+              "wikipediaUrl": null,
+              "wikipediaTitle": null,
+              "score": 31,
+              "url": "https://en.wiktionary.org/wiki/a"
+            },
+            {
+              "id": "wikt:en:a#Letter:1",
+              "label": "a",
+              "description": "Transliterates the Cyrillic letter а.",
+              "kind": "entity",
+              "source": "wiktionary",
+              "sourceUrl": "https://en.wiktionary.org/wiki/a",
+              "wikipediaUrl": null,
+              "wikipediaTitle": null,
+              "score": 31,
+              "url": "https://en.wiktionary.org/wiki/a"
+            },
+            {
+              "id": "wikt:en:a#Letter:2",
+              "label": "a",
+              "description": " See ª.",
+              "kind": "entity",
+              "source": "wiktionary",
+              "sourceUrl": "https://en.wiktionary.org/wiki/a",
+              "wikipediaUrl": null,
+              "wikipediaTitle": null,
+              "score": 31,
+              "url": "https://en.wiktionary.org/wiki/a"
+            }
+          ]
+        },
+        {
+          "type": "phrase",
+          "id": "phrase-4",
+          "text": "state",
+          "tokens": [
+            "state"
+          ],
+          "start": 3,
+          "end": 3,
+          "sourceStart": 12,
+          "sourceEnd": 17,
+          "size": 1,
+          "entity": {
+            "id": "Q7275",
+            "label": "state",
+            "description": "organised community living under a system of government; either a sovereign state, constituent state, or federated state",
+            "kind": "entity",
+            "source": "wikidata",
+            "sourceUrl": "https://www.wikidata.org/wiki/Q7275",
+            "wikipediaUrl": "https://en.wikipedia.org/wiki/State_(polity)",
+            "wikipediaTitle": "State (polity)",
+            "score": 39,
+            "url": "https://en.wikipedia.org/wiki/State_(polity)"
+          },
+          "candidates": [
+            {
+              "id": "Q7275",
+              "label": "state",
+              "description": "organised community living under a system of government; either a sovereign state, constituent state, or federated state",
+              "kind": "entity",
+              "source": "wikidata",
+              "sourceUrl": "https://www.wikidata.org/wiki/Q7275",
+              "wikipediaUrl": "https://en.wikipedia.org/wiki/State_(polity)",
+              "wikipediaTitle": "State (polity)",
+              "score": 39,
+              "url": "https://en.wikipedia.org/wiki/State_(polity)"
+            },
+            {
+              "id": "Q37234491",
+              "label": "State",
+              "description": "family name",
+              "kind": "entity",
+              "source": "wikidata",
+              "sourceUrl": "https://www.wikidata.org/wiki/Q37234491",
+              "wikipediaUrl": null,
+              "wikipediaTitle": null,
+              "score": 39,
+              "url": "https://www.wikidata.org/wiki/Q37234491"
+            },
+            {
+              "id": "wikt:en:state#Noun:0",
+              "label": "state",
+              "description": "A condition; a set of circumstances applying at any given time.",
+              "kind": "entity",
+              "source": "wiktionary",
+              "sourceUrl": "https://en.wiktionary.org/wiki/state",
+              "wikipediaUrl": null,
+              "wikipediaTitle": null,
+              "score": 31,
+              "url": "https://en.wiktionary.org/wiki/state"
+            }
+          ]
+        }
+      ],
+      "contexts": [
+        {
+          "id": "context-1",
+          "wikidataId": "Q1161185",
+          "property": "P31",
+          "propertyLabel": "instance of",
+          "weight": 0.3617021276595745,
+          "probability": 0.0715692711753119
+        },
+        {
+          "id": "context-2",
+          "wikidataId": "Q192626",
+          "property": "P361",
+          "propertyLabel": "part of",
+          "weight": 0.3617021276595745,
+          "probability": 0.0715692711753119
+        },
+        {
+          "id": "context-3",
+          "wikidataId": "Q35657",
+          "property": "P31",
+          "propertyLabel": "instance of",
+          "weight": 0.3617021276595745,
+          "probability": 0.0715692711753119
+        },
+        {
+          "id": "context-4",
+          "wikidataId": "Q101352",
+          "property": "P31",
+          "propertyLabel": "instance of",
+          "weight": 0.3577981651376147,
+          "probability": 0.07079680197752115
+        },
+        {
+          "id": "context-5",
+          "wikidataId": "Q1048835",
+          "property": "P279",
+          "propertyLabel": "subclass of",
+          "weight": 0.3577981651376147,
+          "probability": 0.07079680197752115
+        },
+        {
+          "id": "context-6",
+          "wikidataId": "Q155076",
+          "property": "P279",
+          "propertyLabel": "subclass of",
+          "weight": 0.3577981651376147,
+          "probability": 0.07079680197752115
+        },
+        {
+          "id": "context-7",
+          "wikidataId": "Q15617994",
+          "property": "P31",
+          "propertyLabel": "instance of",
+          "weight": 0.3577981651376147,
+          "probability": 0.07079680197752115
+        },
+        {
+          "id": "context-8",
+          "wikidataId": "Q179671",
+          "property": "P361",
+          "propertyLabel": "part of",
+          "weight": 0.3577981651376147,
+          "probability": 0.07079680197752115
+        },
+        {
+          "id": "context-9",
+          "wikidataId": "Q1896989",
+          "property": "P279",
+          "propertyLabel": "subclass of",
+          "weight": 0.3577981651376147,
+          "probability": 0.07079680197752115
+        },
+        {
+          "id": "context-10",
+          "wikidataId": "Q211606",
+          "property": "P31",
+          "propertyLabel": "instance of",
+          "weight": 0.3577981651376147,
+          "probability": 0.07079680197752115
+        },
+        {
+          "id": "context-11",
+          "wikidataId": "Q96196009",
+          "property": "P279",
+          "propertyLabel": "subclass of",
+          "weight": 0.3577981651376147,
+          "probability": 0.07079680197752115
+        },
+        {
+          "id": "context-12",
+          "wikidataId": "Q1054574",
+          "property": "P136",
+          "propertyLabel": "genre",
+          "weight": 0.2765957446808511,
+          "probability": 0.0547294426634738
+        },
+        {
+          "id": "context-13",
+          "wikidataId": "Q11424",
+          "property": "P31",
+          "propertyLabel": "instance of",
+          "weight": 0.2765957446808511,
+          "probability": 0.0547294426634738
+        },
+        {
+          "id": "context-14",
+          "wikidataId": "Q130232",
+          "property": "P136",
+          "propertyLabel": "genre",
+          "weight": 0.2765957446808511,
+          "probability": 0.0547294426634738
+        },
+        {
+          "id": "context-15",
+          "wikidataId": "Q20442589",
+          "property": "P136",
+          "propertyLabel": "genre",
+          "weight": 0.2765957446808511,
+          "probability": 0.0547294426634738
+        }
+      ]
+    },
+    "linkTargetMode": "wikipedia",
+    "sources": [
+      "wikipedia",
+      "wikidata",
+      "wiktionary"
+    ]
+  },
+  "cst": {
+    "type": "translation",
+    "version": 1,
+    "text": "Hawaii is a state.",
+    "sourceLanguage": "en",
+    "targetLanguage": "ru",
+    "formalization": {
+      "type": "formalization",
+      "version": 1,
+      "text": "Hawaii is a state.",
+      "tokens": [
+        "Hawaii",
+        "is",
+        "a",
+        "state"
+      ],
+      "linkTargetMode": "wikipedia",
+      "phrases": [
+        {
+          "type": "phrase",
+          "id": "phrase-1",
+          "text": "Hawaii",
+          "tokens": [
+            "Hawaii"
+          ],
+          "start": 0,
+          "end": 0,
+          "sourceStart": 0,
+          "sourceEnd": 6,
+          "size": 1,
+          "entity": {
+            "id": "Q782",
+            "label": "Hawaii",
+            "description": "state of the United States of America",
+            "kind": "entity",
+            "source": "wikidata",
+            "sourceUrl": "https://www.wikidata.org/wiki/Q782",
+            "wikipediaUrl": "https://en.wikipedia.org/wiki/Hawaii",
+            "wikipediaTitle": "Hawaii",
+            "score": 51,
+            "url": "https://en.wikipedia.org/wiki/Hawaii"
+          },
+          "candidates": [
+            {
+              "id": "Q782",
+              "label": "Hawaii",
+              "description": "state of the United States of America",
+              "kind": "entity",
+              "source": "wikidata",
+              "sourceUrl": "https://www.wikidata.org/wiki/Q782",
+              "wikipediaUrl": "https://en.wikipedia.org/wiki/Hawaii",
+              "wikipediaTitle": "Hawaii",
+              "score": 51,
+              "url": "https://en.wikipedia.org/wiki/Hawaii"
+            },
+            {
+              "id": "Q68740",
+              "label": "Hawaii",
+              "description": "largest of the Hawaiian islands",
+              "kind": "entity",
+              "source": "wikidata",
+              "sourceUrl": "https://www.wikidata.org/wiki/Q68740",
+              "wikipediaUrl": "https://en.wikipedia.org/wiki/Hawai%CA%BBi_(island)",
+              "wikipediaTitle": "Hawaiʻi (island)",
+              "score": 51,
+              "url": "https://en.wikipedia.org/wiki/Hawai%CA%BBi_(island)"
+            },
+            {
+              "id": "Q18703903",
+              "label": "Hawaii",
+              "description": "2013 film by Marco Berger",
+              "kind": "entity",
+              "source": "wikidata",
+              "sourceUrl": "https://www.wikidata.org/wiki/Q18703903",
+              "wikipediaUrl": "https://en.wikipedia.org/wiki/Hawaii_(2013_film)",
+              "wikipediaTitle": "Hawaii (2013 film)",
+              "score": 39,
+              "url": "https://en.wikipedia.org/wiki/Hawaii_(2013_film)"
+            }
+          ]
+        },
+        {
+          "type": "phrase",
+          "id": "phrase-2",
+          "text": "is",
+          "tokens": [
+            "is"
+          ],
+          "start": 1,
+          "end": 1,
+          "sourceStart": 7,
+          "sourceEnd": 9,
+          "size": 1,
+          "entity": {
+            "id": "wikt:en:is#Symbol:0",
+            "label": "is",
+            "description": " ISO 639-1 language code for Icelandic.",
+            "kind": "entity",
+            "source": "wiktionary",
+            "sourceUrl": "https://en.wiktionary.org/wiki/is",
+            "wikipediaUrl": null,
+            "wikipediaTitle": null,
+            "score": 29,
+            "url": "https://en.wiktionary.org/wiki/is"
+          },
+          "candidates": [
+            {
+              "id": "wikt:en:is#Symbol:0",
+              "label": "is",
+              "description": " ISO 639-1 language code for Icelandic.",
+              "kind": "entity",
+              "source": "wiktionary",
+              "sourceUrl": "https://en.wiktionary.org/wiki/is",
+              "wikipediaUrl": null,
+              "wikipediaTitle": null,
+              "score": 29,
+              "url": "https://en.wiktionary.org/wiki/is"
+            },
+            {
+              "id": "wikt:en:is#Verb:1",
+              "label": "is",
+              "description": "third-person singular simple present indicative of be",
+              "kind": "entity",
+              "source": "wiktionary",
+              "sourceUrl": "https://en.wiktionary.org/wiki/is",
+              "wikipediaUrl": null,
+              "wikipediaTitle": null,
+              "score": 29,
+              "url": "https://en.wiktionary.org/wiki/is"
+            },
+            {
+              "id": "wikt:en:is#Verb:2",
+              "label": "is",
+              "description": " Used in phrases with existential there (also here and where) when the semantic subject is plural.",
+              "kind": "entity",
+              "source": "wiktionary",
+              "sourceUrl": "https://en.wiktionary.org/wiki/is",
+              "wikipediaUrl": null,
+              "wikipediaTitle": null,
+              "score": 29,
+              "url": "https://en.wiktionary.org/wiki/is"
+            }
+          ]
+        },
+        {
+          "type": "phrase",
+          "id": "phrase-3",
+          "text": "a",
+          "tokens": [
+            "a"
+          ],
+          "start": 2,
+          "end": 2,
+          "sourceStart": 10,
+          "sourceEnd": 11,
+          "size": 1,
+          "entity": {
+            "id": "wikt:en:a#Letter:0",
+            "label": "a",
+            "description": "The first letter of the basic modern Latin alphabet.",
+            "kind": "entity",
+            "source": "wiktionary",
+            "sourceUrl": "https://en.wiktionary.org/wiki/a",
+            "wikipediaUrl": null,
+            "wikipediaTitle": null,
+            "score": 31,
+            "url": "https://en.wiktionary.org/wiki/a"
+          },
+          "candidates": [
+            {
+              "id": "wikt:en:a#Letter:0",
+              "label": "a",
+              "description": "The first letter of the basic modern Latin alphabet.",
+              "kind": "entity",
+              "source": "wiktionary",
+              "sourceUrl": "https://en.wiktionary.org/wiki/a",
+              "wikipediaUrl": null,
+              "wikipediaTitle": null,
+              "score": 31,
+              "url": "https://en.wiktionary.org/wiki/a"
+            },
+            {
+              "id": "wikt:en:a#Letter:1",
+              "label": "a",
+              "description": "Transliterates the Cyrillic letter а.",
+              "kind": "entity",
+              "source": "wiktionary",
+              "sourceUrl": "https://en.wiktionary.org/wiki/a",
+              "wikipediaUrl": null,
+              "wikipediaTitle": null,
+              "score": 31,
+              "url": "https://en.wiktionary.org/wiki/a"
+            },
+            {
+              "id": "wikt:en:a#Letter:2",
+              "label": "a",
+              "description": " See ª.",
+              "kind": "entity",
+              "source": "wiktionary",
+              "sourceUrl": "https://en.wiktionary.org/wiki/a",
+              "wikipediaUrl": null,
+              "wikipediaTitle": null,
+              "score": 31,
+              "url": "https://en.wiktionary.org/wiki/a"
+            }
+          ]
+        },
+        {
+          "type": "phrase",
+          "id": "phrase-4",
+          "text": "state",
+          "tokens": [
+            "state"
+          ],
+          "start": 3,
+          "end": 3,
+          "sourceStart": 12,
+          "sourceEnd": 17,
+          "size": 1,
+          "entity": {
+            "id": "Q7275",
+            "label": "state",
+            "description": "organised community living under a system of government; either a sovereign state, constituent state, or federated state",
+            "kind": "entity",
+            "source": "wikidata",
+            "sourceUrl": "https://www.wikidata.org/wiki/Q7275",
+            "wikipediaUrl": "https://en.wikipedia.org/wiki/State_(polity)",
+            "wikipediaTitle": "State (polity)",
+            "score": 39,
+            "url": "https://en.wikipedia.org/wiki/State_(polity)"
+          },
+          "candidates": [
+            {
+              "id": "Q7275",
+              "label": "state",
+              "description": "organised community living under a system of government; either a sovereign state, constituent state, or federated state",
+              "kind": "entity",
+              "source": "wikidata",
+              "sourceUrl": "https://www.wikidata.org/wiki/Q7275",
+              "wikipediaUrl": "https://en.wikipedia.org/wiki/State_(polity)",
+              "wikipediaTitle": "State (polity)",
+              "score": 39,
+              "url": "https://en.wikipedia.org/wiki/State_(polity)"
+            },
+            {
+              "id": "Q37234491",
+              "label": "State",
+              "description": "family name",
+              "kind": "entity",
+              "source": "wikidata",
+              "sourceUrl": "https://www.wikidata.org/wiki/Q37234491",
+              "wikipediaUrl": null,
+              "wikipediaTitle": null,
+              "score": 39,
+              "url": "https://www.wikidata.org/wiki/Q37234491"
+            },
+            {
+              "id": "wikt:en:state#Noun:0",
+              "label": "state",
+              "description": "A condition; a set of circumstances applying at any given time.",
+              "kind": "entity",
+              "source": "wiktionary",
+              "sourceUrl": "https://en.wiktionary.org/wiki/state",
+              "wikipediaUrl": null,
+              "wikipediaTitle": null,
+              "score": 31,
+              "url": "https://en.wiktionary.org/wiki/state"
+            }
+          ]
+        }
+      ],
+      "contexts": [
+        {
+          "id": "context-1",
+          "wikidataId": "Q1161185",
+          "property": "P31",
+          "propertyLabel": "instance of",
+          "weight": 0.3617021276595745,
+          "probability": 0.0715692711753119
+        },
+        {
+          "id": "context-2",
+          "wikidataId": "Q192626",
+          "property": "P361",
+          "propertyLabel": "part of",
+          "weight": 0.3617021276595745,
+          "probability": 0.0715692711753119
+        },
+        {
+          "id": "context-3",
+          "wikidataId": "Q35657",
+          "property": "P31",
+          "propertyLabel": "instance of",
+          "weight": 0.3617021276595745,
+          "probability": 0.0715692711753119
+        },
+        {
+          "id": "context-4",
+          "wikidataId": "Q101352",
+          "property": "P31",
+          "propertyLabel": "instance of",
+          "weight": 0.3577981651376147,
+          "probability": 0.07079680197752115
+        },
+        {
+          "id": "context-5",
+          "wikidataId": "Q1048835",
+          "property": "P279",
+          "propertyLabel": "subclass of",
+          "weight": 0.3577981651376147,
+          "probability": 0.07079680197752115
+        },
+        {
+          "id": "context-6",
+          "wikidataId": "Q155076",
+          "property": "P279",
+          "propertyLabel": "subclass of",
+          "weight": 0.3577981651376147,
+          "probability": 0.07079680197752115
+        },
+        {
+          "id": "context-7",
+          "wikidataId": "Q15617994",
+          "property": "P31",
+          "propertyLabel": "instance of",
+          "weight": 0.3577981651376147,
+          "probability": 0.07079680197752115
+        },
+        {
+          "id": "context-8",
+          "wikidataId": "Q179671",
+          "property": "P361",
+          "propertyLabel": "part of",
+          "weight": 0.3577981651376147,
+          "probability": 0.07079680197752115
+        },
+        {
+          "id": "context-9",
+          "wikidataId": "Q1896989",
+          "property": "P279",
+          "propertyLabel": "subclass of",
+          "weight": 0.3577981651376147,
+          "probability": 0.07079680197752115
+        },
+        {
+          "id": "context-10",
+          "wikidataId": "Q211606",
+          "property": "P31",
+          "propertyLabel": "instance of",
+          "weight": 0.3577981651376147,
+          "probability": 0.07079680197752115
+        },
+        {
+          "id": "context-11",
+          "wikidataId": "Q96196009",
+          "property": "P279",
+          "propertyLabel": "subclass of",
+          "weight": 0.3577981651376147,
+          "probability": 0.07079680197752115
+        },
+        {
+          "id": "context-12",
+          "wikidataId": "Q1054574",
+          "property": "P136",
+          "propertyLabel": "genre",
+          "weight": 0.2765957446808511,
+          "probability": 0.0547294426634738
+        },
+        {
+          "id": "context-13",
+          "wikidataId": "Q11424",
+          "property": "P31",
+          "propertyLabel": "instance of",
+          "weight": 0.2765957446808511,
+          "probability": 0.0547294426634738
+        },
+        {
+          "id": "context-14",
+          "wikidataId": "Q130232",
+          "property": "P136",
+          "propertyLabel": "genre",
+          "weight": 0.2765957446808511,
+          "probability": 0.0547294426634738
+        },
+        {
+          "id": "context-15",
+          "wikidataId": "Q20442589",
+          "property": "P136",
+          "propertyLabel": "genre",
+          "weight": 0.2765957446808511,
+          "probability": 0.0547294426634738
+        }
+      ]
+    },
+    "phrases": [
+      {
+        "id": "phrase-1",
+        "source": {
+          "text": "Hawaii",
+          "start": 0,
+          "end": 0,
+          "sourceStart": 0,
+          "sourceEnd": 6,
+          "language": "en",
+          "entityId": "Q782",
+          "label": "Hawaii",
+          "description": "state of the United States of America"
+        },
+        "entityId": "Q782",
+        "target": {
+          "text": "Гавайи",
+          "language": "ru",
+          "entityId": "Q782",
+          "description": "штат в США, в центральной части Тихого океана",
+          "url": "https://ru.wikipedia.org/wiki/%D0%93%D0%B0%D0%B2%D0%B0%D0%B9%D0%B8",
+          "status": "translated"
+        },
+        "variable": null
+      },
+      {
+        "id": "phrase-2",
+        "source": {
+          "text": "is",
+          "start": 1,
+          "end": 1,
+          "sourceStart": 7,
+          "sourceEnd": 9,
+          "language": "en",
+          "entityId": "wikt:en:is#Symbol:0",
+          "label": "is",
+          "description": " ISO 639-1 language code for Icelandic."
+        },
+        "entityId": null,
+        "target": {
+          "text": "is",
+          "language": null,
+          "entityId": null,
+          "description": null,
+          "url": null,
+          "status": "non-wikidata-source"
+        },
+        "variable": {
+          "name": "variable-1",
+          "sourceText": "is",
+          "entityId": null,
+          "reason": "non-wikidata-source",
+          "resolvedByRule": true
+        }
+      },
+      {
+        "id": "phrase-3",
+        "source": {
+          "text": "a",
+          "start": 2,
+          "end": 2,
+          "sourceStart": 10,
+          "sourceEnd": 11,
+          "language": "en",
+          "entityId": "wikt:en:a#Letter:0",
+          "label": "a",
+          "description": "The first letter of the basic modern Latin alphabet."
+        },
+        "entityId": null,
+        "target": {
+          "text": "a",
+          "language": null,
+          "entityId": null,
+          "description": null,
+          "url": null,
+          "status": "non-wikidata-source"
+        },
+        "variable": {
+          "name": "variable-2",
+          "sourceText": "a",
+          "entityId": null,
+          "reason": "non-wikidata-source",
+          "resolvedByRule": true
+        }
+      },
+      {
+        "id": "phrase-4",
+        "source": {
+          "text": "state",
+          "start": 3,
+          "end": 3,
+          "sourceStart": 12,
+          "sourceEnd": 17,
+          "language": "en",
+          "entityId": "Q7275",
+          "label": "state",
+          "description": "organised community living under a system of government; either a sovereign state, constituent state, or federated state"
+        },
+        "entityId": "Q7275",
+        "target": {
+          "text": "штат",
+          "language": "ru",
+          "entityId": "Q35657",
+          "description": "state of the United States",
+          "url": "https://ru.wikipedia.org/wiki/%D0%A8%D1%82%D0%B0%D1%82_%D0%A1%D0%A8%D0%90",
+          "status": "translated"
+        },
+        "variable": null
+      }
+    ],
+    "variables": [
+      {
+        "name": "variable-1",
+        "sourceText": "is",
+        "entityId": null,
+        "reason": "non-wikidata-source",
+        "resolvedByRule": true
+      },
+      {
+        "name": "variable-2",
+        "sourceText": "a",
+        "entityId": null,
+        "reason": "non-wikidata-source",
+        "resolvedByRule": true
+      }
+    ],
+    "sentences": [
+      {
+        "type": "sentence",
+        "id": "sentence-1",
+        "sourceText": "Hawaii is a state.",
+        "sourceStart": 0,
+        "sourceEnd": 18,
+        "targetText": "Гавайи это штат.",
+        "targetMarkdown": "[Гавайи](https://ru.wikipedia.org/wiki/%D0%93%D0%B0%D0%B2%D0%B0%D0%B9%D0%B8 \"Q782\") это [штат](https://ru.wikipedia.org/wiki/%D0%A8%D1%82%D0%B0%D1%82_%D0%A1%D0%A8%D0%90 \"Q35657\").",
+        "transformations": [
+          "english-article-omission",
+          "english-copula-to-russian-eto",
+          "english-us-state-predicate-to-russian-shtat"
+        ],
+        "phraseIds": [
+          "phrase-1",
+          "phrase-2",
+          "phrase-3",
+          "phrase-4"
+        ]
+      }
+    ],
+    "steps": [
+      {
+        "id": "step-1",
+        "type": "input",
+        "sourceLanguage": "en",
+        "targetLanguage": "ru",
+        "text": "Hawaii is a state."
+      },
+      {
+        "id": "step-2",
+        "type": "api-request",
+        "method": "GET",
+        "url": "https://en.wikipedia.org/w/api.php?action=query&format=json&list=search&srsearch=Hawaii&srlimit=5&origin=*"
+      },
+      {
+        "id": "step-3",
+        "type": "api-request",
+        "method": "GET",
+        "url": "https://www.wikidata.org/w/api.php?action=wbsearchentities&format=json&language=en&origin=*&type=item&limit=5&search=Hawaii"
+      },
+      {
+        "id": "step-4",
+        "type": "api-request",
+        "method": "GET",
+        "url": "https://www.wikidata.org/w/api.php?action=wbsearchentities&format=json&language=en&origin=*&type=property&limit=5&search=Hawaii"
+      },
+      {
+        "id": "step-5",
+        "type": "api-request",
+        "method": "GET",
+        "url": "https://en.wiktionary.org/api/rest_v1/page/definition/Hawaii"
+      },
+      {
+        "id": "step-6",
+        "type": "api-request",
+        "method": "GET",
+        "url": "https://en.wiktionary.org/api/rest_v1/page/definition/is"
+      },
+      {
+        "id": "step-7",
+        "type": "api-request",
+        "method": "GET",
+        "url": "https://en.wiktionary.org/api/rest_v1/page/definition/a"
+      },
+      {
+        "id": "step-8",
+        "type": "api-request",
+        "method": "GET",
+        "url": "https://en.wikipedia.org/w/api.php?action=query&format=json&list=search&srsearch=state&srlimit=5&origin=*"
+      },
+      {
+        "id": "step-9",
+        "type": "api-request",
+        "method": "GET",
+        "url": "https://www.wikidata.org/w/api.php?action=wbsearchentities&format=json&language=en&origin=*&type=item&limit=5&search=state"
+      },
+      {
+        "id": "step-10",
+        "type": "api-request",
+        "method": "GET",
+        "url": "https://www.wikidata.org/w/api.php?action=wbsearchentities&format=json&language=en&origin=*&type=item&limit=5&search=to+state"
+      },
+      {
+        "id": "step-11",
+        "type": "api-request",
+        "method": "GET",
+        "url": "https://www.wikidata.org/w/api.php?action=wbsearchentities&format=json&language=en&origin=*&type=property&limit=5&search=state"
+      },
+      {
+        "id": "step-12",
+        "type": "api-request",
+        "method": "GET",
+        "url": "https://www.wikidata.org/w/api.php?action=wbsearchentities&format=json&language=en&origin=*&type=property&limit=5&search=to+state"
+      },
+      {
+        "id": "step-13",
+        "type": "api-request",
+        "method": "GET",
+        "url": "https://en.wiktionary.org/api/rest_v1/page/definition/state"
+      },
+      {
+        "id": "step-14",
+        "type": "api-response",
+        "method": "GET",
+        "url": "https://en.wiktionary.org/api/rest_v1/page/definition/Hawaii",
+        "status": 200,
+        "ok": true
+      },
+      {
+        "id": "step-15",
+        "type": "api-response",
+        "method": "GET",
+        "url": "https://en.wiktionary.org/api/rest_v1/page/definition/is",
+        "status": 200,
+        "ok": true
+      },
+      {
+        "id": "step-16",
+        "type": "api-response",
+        "method": "GET",
+        "url": "https://en.wiktionary.org/api/rest_v1/page/definition/a",
+        "status": 200,
+        "ok": true
+      },
+      {
+        "id": "step-17",
+        "type": "api-response",
+        "method": "GET",
+        "url": "https://en.wiktionary.org/api/rest_v1/page/definition/state",
+        "status": 200,
+        "ok": true
+      },
+      {
+        "id": "step-18",
+        "type": "api-response",
+        "method": "GET",
+        "url": "https://www.wikidata.org/w/api.php?action=wbsearchentities&format=json&language=en&origin=*&type=property&limit=5&search=to+state",
+        "status": 200,
+        "ok": true
+      },
+      {
+        "id": "step-19",
+        "type": "api-response",
+        "method": "GET",
+        "url": "https://www.wikidata.org/w/api.php?action=wbsearchentities&format=json&language=en&origin=*&type=property&limit=5&search=Hawaii",
+        "status": 200,
+        "ok": true
+      },
+      {
+        "id": "step-20",
+        "type": "api-response",
+        "method": "GET",
+        "url": "https://www.wikidata.org/w/api.php?action=wbsearchentities&format=json&language=en&origin=*&type=item&limit=5&search=to+state",
+        "status": 200,
+        "ok": true
+      },
+      {
+        "id": "step-21",
+        "type": "api-response",
+        "method": "GET",
+        "url": "https://www.wikidata.org/w/api.php?action=wbsearchentities&format=json&language=en&origin=*&type=item&limit=5&search=Hawaii",
+        "status": 200,
+        "ok": true
+      },
+      {
+        "id": "step-22",
+        "type": "api-response",
+        "method": "GET",
+        "url": "https://www.wikidata.org/w/api.php?action=wbsearchentities&format=json&language=en&origin=*&type=property&limit=5&search=state",
+        "status": 200,
+        "ok": true
+      },
+      {
+        "id": "step-23",
+        "type": "api-response",
+        "method": "GET",
+        "url": "https://www.wikidata.org/w/api.php?action=wbsearchentities&format=json&language=en&origin=*&type=item&limit=5&search=state",
+        "status": 200,
+        "ok": true
+      },
+      {
+        "id": "step-24",
+        "type": "api-response",
+        "method": "GET",
+        "url": "https://en.wikipedia.org/w/api.php?action=query&format=json&list=search&srsearch=state&srlimit=5&origin=*",
+        "status": 200,
+        "ok": true
+      },
+      {
+        "id": "step-25",
+        "type": "api-request",
+        "method": "GET",
+        "url": "https://en.wikipedia.org/w/api.php?action=query&format=json&prop=pageprops&titles=State%7CU.S.+state%7CCalifornia%7CLouisiana%7CNew+York+%28state%29&ppprop=wikibase_item&origin=*"
+      },
+      {
+        "id": "step-26",
+        "type": "api-response",
+        "method": "GET",
+        "url": "https://en.wikipedia.org/w/api.php?action=query&format=json&prop=pageprops&titles=State%7CU.S.+state%7CCalifornia%7CLouisiana%7CNew+York+%28state%29&ppprop=wikibase_item&origin=*",
+        "status": 200,
+        "ok": true
+      },
+      {
+        "id": "step-27",
+        "type": "api-response",
+        "method": "GET",
+        "url": "https://en.wikipedia.org/w/api.php?action=query&format=json&list=search&srsearch=Hawaii&srlimit=5&origin=*",
+        "status": 200,
+        "ok": true
+      },
+      {
+        "id": "step-28",
+        "type": "api-request",
+        "method": "GET",
+        "url": "https://en.wikipedia.org/w/api.php?action=query&format=json&prop=pageprops&titles=Hawaii%7CHawaiian%7CHawai%CA%BBi+%28island%29%7CHonolulu%7CHawaiian+Kingdom&ppprop=wikibase_item&origin=*"
+      },
+      {
+        "id": "step-29",
+        "type": "api-response",
+        "method": "GET",
+        "url": "https://en.wikipedia.org/w/api.php?action=query&format=json&prop=pageprops&titles=Hawaii%7CHawaiian%7CHawai%CA%BBi+%28island%29%7CHonolulu%7CHawaiian+Kingdom&ppprop=wikibase_item&origin=*",
+        "status": 200,
+        "ok": true
+      },
+      {
+        "id": "step-30",
+        "type": "api-request",
+        "method": "GET",
+        "url": "https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&ids=Q782&languages=en&origin=*&props=labels%7Caliases%7Cdescriptions%7Cclaims%7Csitelinks&sitefilter=enwiki"
+      },
+      {
+        "id": "step-31",
+        "type": "api-request",
+        "method": "GET",
+        "url": "https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&ids=Q68740&languages=en&origin=*&props=labels%7Caliases%7Cdescriptions%7Cclaims%7Csitelinks&sitefilter=enwiki"
+      },
+      {
+        "id": "step-32",
+        "type": "api-request",
+        "method": "GET",
+        "url": "https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&ids=Q18703903&languages=en&origin=*&props=labels%7Caliases%7Cdescriptions%7Cclaims%7Csitelinks&sitefilter=enwiki"
+      },
+      {
+        "id": "step-33",
+        "type": "api-request",
+        "method": "GET",
+        "url": "https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&ids=Q7275&languages=en&origin=*&props=labels%7Caliases%7Cdescriptions%7Cclaims%7Csitelinks&sitefilter=enwiki"
+      },
+      {
+        "id": "step-34",
+        "type": "api-request",
+        "method": "GET",
+        "url": "https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&ids=Q37234491&languages=en&origin=*&props=labels%7Caliases%7Cdescriptions%7Cclaims%7Csitelinks&sitefilter=enwiki"
+      },
+      {
+        "id": "step-35",
+        "type": "api-response",
+        "method": "GET",
+        "url": "https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&ids=Q37234491&languages=en&origin=*&props=labels%7Caliases%7Cdescriptions%7Cclaims%7Csitelinks&sitefilter=enwiki",
+        "status": 200,
+        "ok": true
+      },
+      {
+        "id": "step-36",
+        "type": "api-response",
+        "method": "GET",
+        "url": "https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&ids=Q18703903&languages=en&origin=*&props=labels%7Caliases%7Cdescriptions%7Cclaims%7Csitelinks&sitefilter=enwiki",
+        "status": 200,
+        "ok": true
+      },
+      {
+        "id": "step-37",
+        "type": "api-response",
+        "method": "GET",
+        "url": "https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&ids=Q782&languages=en&origin=*&props=labels%7Caliases%7Cdescriptions%7Cclaims%7Csitelinks&sitefilter=enwiki",
+        "status": 200,
+        "ok": true
+      },
+      {
+        "id": "step-38",
+        "type": "api-response",
+        "method": "GET",
+        "url": "https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&ids=Q7275&languages=en&origin=*&props=labels%7Caliases%7Cdescriptions%7Cclaims%7Csitelinks&sitefilter=enwiki",
+        "status": 200,
+        "ok": true
+      },
+      {
+        "id": "step-39",
+        "type": "api-response",
+        "method": "GET",
+        "url": "https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&ids=Q68740&languages=en&origin=*&props=labels%7Caliases%7Cdescriptions%7Cclaims%7Csitelinks&sitefilter=enwiki",
+        "status": 200,
+        "ok": true
+      },
+      {
+        "id": "step-40",
+        "type": "api-request",
+        "method": "GET",
+        "url": "https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&ids=Q35657&languages=en&origin=*&props=labels%7Cclaims"
+      },
+      {
+        "id": "step-41",
+        "type": "api-response",
+        "method": "GET",
+        "url": "https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&ids=Q35657&languages=en&origin=*&props=labels%7Cclaims",
+        "status": 200,
+        "ok": true
+      },
+      {
+        "id": "step-42",
+        "type": "api-request",
+        "method": "GET",
+        "url": "https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&ids=Q1161185&languages=en&origin=*&props=labels%7Cclaims"
+      },
+      {
+        "id": "step-43",
+        "type": "api-response",
+        "method": "GET",
+        "url": "https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&ids=Q1161185&languages=en&origin=*&props=labels%7Cclaims",
+        "status": 200,
+        "ok": true
+      },
+      {
+        "id": "step-44",
+        "type": "api-request",
+        "method": "GET",
+        "url": "https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&ids=Q192626&languages=en&origin=*&props=labels%7Cclaims"
+      },
+      {
+        "id": "step-45",
+        "type": "api-response",
+        "method": "GET",
+        "url": "https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&ids=Q192626&languages=en&origin=*&props=labels%7Cclaims",
+        "status": 200,
+        "ok": true
+      },
+      {
+        "id": "step-46",
+        "type": "api-request",
+        "method": "GET",
+        "url": "https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&ids=Q11424&languages=en&origin=*&props=labels%7Cclaims"
+      },
+      {
+        "id": "step-47",
+        "type": "api-response",
+        "method": "GET",
+        "url": "https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&ids=Q11424&languages=en&origin=*&props=labels%7Cclaims",
+        "status": 200,
+        "ok": true
+      },
+      {
+        "id": "step-48",
+        "type": "api-request",
+        "method": "GET",
+        "url": "https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&ids=Q130232&languages=en&origin=*&props=labels%7Cclaims"
+      },
+      {
+        "id": "step-49",
+        "type": "api-response",
+        "method": "GET",
+        "url": "https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&ids=Q130232&languages=en&origin=*&props=labels%7Cclaims",
+        "status": 200,
+        "ok": true
+      },
+      {
+        "id": "step-50",
+        "type": "api-request",
+        "method": "GET",
+        "url": "https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&ids=Q20442589&languages=en&origin=*&props=labels%7Cclaims"
+      },
+      {
+        "id": "step-51",
+        "type": "api-response",
+        "method": "GET",
+        "url": "https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&ids=Q20442589&languages=en&origin=*&props=labels%7Cclaims",
+        "status": 200,
+        "ok": true
+      },
+      {
+        "id": "step-52",
+        "type": "api-request",
+        "method": "GET",
+        "url": "https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&ids=Q1054574&languages=en&origin=*&props=labels%7Cclaims"
+      },
+      {
+        "id": "step-53",
+        "type": "api-response",
+        "method": "GET",
+        "url": "https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&ids=Q1054574&languages=en&origin=*&props=labels%7Cclaims",
+        "status": 200,
+        "ok": true
+      },
+      {
+        "id": "step-54",
+        "type": "api-request",
+        "method": "GET",
+        "url": "https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&ids=Q211606&languages=en&origin=*&props=labels%7Cclaims"
+      },
+      {
+        "id": "step-55",
+        "type": "api-response",
+        "method": "GET",
+        "url": "https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&ids=Q211606&languages=en&origin=*&props=labels%7Cclaims",
+        "status": 200,
+        "ok": true
+      },
+      {
+        "id": "step-56",
+        "type": "api-request",
+        "method": "GET",
+        "url": "https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&ids=Q15617994&languages=en&origin=*&props=labels%7Cclaims"
+      },
+      {
+        "id": "step-57",
+        "type": "api-response",
+        "method": "GET",
+        "url": "https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&ids=Q15617994&languages=en&origin=*&props=labels%7Cclaims",
+        "status": 200,
+        "ok": true
+      },
+      {
+        "id": "step-58",
+        "type": "api-request",
+        "method": "GET",
+        "url": "https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&ids=Q155076&languages=en&origin=*&props=labels%7Cclaims"
+      },
+      {
+        "id": "step-59",
+        "type": "api-response",
+        "method": "GET",
+        "url": "https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&ids=Q155076&languages=en&origin=*&props=labels%7Cclaims",
+        "status": 200,
+        "ok": true
+      },
+      {
+        "id": "step-60",
+        "type": "api-request",
+        "method": "GET",
+        "url": "https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&ids=Q1048835&languages=en&origin=*&props=labels%7Cclaims"
+      },
+      {
+        "id": "step-61",
+        "type": "api-response",
+        "method": "GET",
+        "url": "https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&ids=Q1048835&languages=en&origin=*&props=labels%7Cclaims",
+        "status": 200,
+        "ok": true
+      },
+      {
+        "id": "step-62",
+        "type": "api-request",
+        "method": "GET",
+        "url": "https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&ids=Q1896989&languages=en&origin=*&props=labels%7Cclaims"
+      },
+      {
+        "id": "step-63",
+        "type": "api-response",
+        "method": "GET",
+        "url": "https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&ids=Q1896989&languages=en&origin=*&props=labels%7Cclaims",
+        "status": 200,
+        "ok": true
+      },
+      {
+        "id": "step-64",
+        "type": "api-request",
+        "method": "GET",
+        "url": "https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&ids=Q96196009&languages=en&origin=*&props=labels%7Cclaims"
+      },
+      {
+        "id": "step-65",
+        "type": "api-response",
+        "method": "GET",
+        "url": "https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&ids=Q96196009&languages=en&origin=*&props=labels%7Cclaims",
+        "status": 200,
+        "ok": true
+      },
+      {
+        "id": "step-66",
+        "type": "api-request",
+        "method": "GET",
+        "url": "https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&ids=Q179671&languages=en&origin=*&props=labels%7Cclaims"
+      },
+      {
+        "id": "step-67",
+        "type": "api-response",
+        "method": "GET",
+        "url": "https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&ids=Q179671&languages=en&origin=*&props=labels%7Cclaims",
+        "status": 200,
+        "ok": true
+      },
+      {
+        "id": "step-68",
+        "type": "api-request",
+        "method": "GET",
+        "url": "https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&ids=Q101352&languages=en&origin=*&props=labels%7Cclaims"
+      },
+      {
+        "id": "step-69",
+        "type": "api-response",
+        "method": "GET",
+        "url": "https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&ids=Q101352&languages=en&origin=*&props=labels%7Cclaims",
+        "status": 200,
+        "ok": true
+      },
+      {
+        "id": "step-70",
+        "type": "formalization",
+        "phraseCount": 4,
+        "markdown": "[Hawaii](https://en.wikipedia.org/wiki/Hawaii \"Q782\") [is](https://en.wiktionary.org/wiki/is \"wikt:en:is#Symbol:0\") [a](https://en.wiktionary.org/wiki/a \"wikt:en:a#Letter:0\") [state](https://en.wikipedia.org/wiki/State_(polity) \"Q7275\").",
+        "linksNotation": "(formalization: (Hawaii is a state.))\n(phrase-1: source (Hawaii) start 0 end 0 id Q782 label (Hawaii) kind entity markdownUrl (https://en.wikipedia.org/wiki/Hawaii))\n(phrase-2: source (is) start 1 end 1 id wikt:en:is#Symbol:0 label (is) kind entity markdownUrl (https://en.wiktionary.org/wiki/is))\n(phrase-3: source (a) start 2 end 2 id wikt:en:a#Letter:0 label (a) kind entity markdownUrl (https://en.wiktionary.org/wiki/a))\n(phrase-4: source (state) start 3 end 3 id Q7275 label (state) kind entity markdownUrl (https://en.wikipedia.org/wiki/State_ polity))\n(context-1: Q1161185 weight 0.3617021276595745 probability 7.2)\n(context-2: Q192626 weight 0.3617021276595745 probability 7.2)\n(context-3: Q35657 weight 0.3617021276595745 probability 7.2)\n(context-4: Q101352 weight 0.3577981651376147 probability 7.1)\n(context-5: Q1048835 weight 0.3577981651376147 probability 7.1)\n(context-6: Q155076 weight 0.3577981651376147 probability 7.1)\n(context-7: Q15617994 weight 0.3577981651376147 probability 7.1)\n(context-8: Q179671 weight 0.3577981651376147 probability 7.1)\n(context-9: Q1896989 weight 0.3577981651376147 probability 7.1)\n(context-10: Q211606 weight 0.3577981651376147 probability 7.1)\n(context-11: Q96196009 weight 0.3577981651376147 probability 7.1)\n(context-12: Q1054574 weight 0.2765957446808511 probability 5.5)\n(context-13: Q11424 weight 0.2765957446808511 probability 5.5)\n(context-14: Q130232 weight 0.2765957446808511 probability 5.5)\n(context-15: Q20442589 weight 0.2765957446808511 probability 5.5)"
+      },
+      {
+        "id": "step-71",
+        "type": "api-request",
+        "method": "GET",
+        "url": "https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&ids=Q782&languages=ru&origin=*&props=labels%7Cdescriptions%7Csitelinks&sitefilter=ruwiki"
+      },
+      {
+        "id": "step-72",
+        "type": "api-response",
+        "method": "GET",
+        "url": "https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&ids=Q782&languages=ru&origin=*&props=labels%7Cdescriptions%7Csitelinks&sitefilter=ruwiki",
+        "status": 200,
+        "ok": true
+      },
+      {
+        "id": "step-73",
+        "type": "translation-phrase",
+        "phraseId": "phrase-1",
+        "sourceText": "Hawaii",
+        "entityId": "Q782",
+        "status": "translated",
+        "targetText": "Гавайи"
+      },
+      {
+        "id": "step-74",
+        "type": "translation-phrase",
+        "phraseId": "phrase-2",
+        "sourceText": "is",
+        "entityId": null,
+        "status": "non-wikidata-source",
+        "targetText": "is"
+      },
+      {
+        "id": "step-75",
+        "type": "translation-phrase",
+        "phraseId": "phrase-3",
+        "sourceText": "a",
+        "entityId": null,
+        "status": "non-wikidata-source",
+        "targetText": "a"
+      },
+      {
+        "id": "step-76",
+        "type": "api-request",
+        "method": "GET",
+        "url": "https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&ids=Q7275&languages=ru&origin=*&props=labels%7Cdescriptions%7Csitelinks&sitefilter=ruwiki"
+      },
+      {
+        "id": "step-77",
+        "type": "api-response",
+        "method": "GET",
+        "url": "https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&ids=Q7275&languages=ru&origin=*&props=labels%7Cdescriptions%7Csitelinks&sitefilter=ruwiki",
+        "status": 200,
+        "ok": true
+      },
+      {
+        "id": "step-78",
+        "type": "translation-phrase",
+        "phraseId": "phrase-4",
+        "sourceText": "state",
+        "entityId": "Q7275",
+        "status": "translated",
+        "targetText": "государство"
+      },
+      {
+        "id": "step-79",
+        "type": "transformation-rule",
+        "sentenceId": "sentence-1",
+        "rule": "english-article-omission",
+        "sourceText": "Hawaii is a state.",
+        "affectedVariables": [
+          "variable-2"
+        ]
+      },
+      {
+        "id": "step-80",
+        "type": "transformation-rule",
+        "sentenceId": "sentence-1",
+        "rule": "english-copula-to-russian-eto",
+        "sourceText": "Hawaii is a state.",
+        "affectedVariables": [
+          "variable-1"
+        ]
+      },
+      {
+        "id": "step-81",
+        "type": "transformation-rule",
+        "sentenceId": "sentence-1",
+        "rule": "english-us-state-predicate-to-russian-shtat",
+        "sourceText": "Hawaii is a state.",
+        "affectedVariables": []
+      },
+      {
+        "id": "step-82",
+        "type": "sentence",
+        "sentenceId": "sentence-1",
+        "sourceText": "Hawaii is a state.",
+        "targetText": "Гавайи это штат.",
+        "transformations": [
+          "english-article-omission",
+          "english-copula-to-russian-eto",
+          "english-us-state-predicate-to-russian-shtat"
+        ]
+      },
+      {
+        "id": "step-83",
+        "type": "text",
+        "sentenceCount": 1,
+        "text": "Гавайи это штат."
+      }
+    ]
+  },
+  "phrases": [
+    {
+      "id": "phrase-1",
+      "source": {
+        "text": "Hawaii",
+        "start": 0,
+        "end": 0,
+        "sourceStart": 0,
+        "sourceEnd": 6,
+        "language": "en",
+        "entityId": "Q782",
+        "label": "Hawaii",
+        "description": "state of the United States of America"
+      },
+      "entityId": "Q782",
+      "target": {
+        "text": "Гавайи",
+        "language": "ru",
+        "entityId": "Q782",
+        "description": "штат в США, в центральной части Тихого океана",
+        "url": "https://ru.wikipedia.org/wiki/%D0%93%D0%B0%D0%B2%D0%B0%D0%B9%D0%B8",
+        "status": "translated"
+      },
+      "variable": null
+    },
+    {
+      "id": "phrase-2",
+      "source": {
+        "text": "is",
+        "start": 1,
+        "end": 1,
+        "sourceStart": 7,
+        "sourceEnd": 9,
+        "language": "en",
+        "entityId": "wikt:en:is#Symbol:0",
+        "label": "is",
+        "description": " ISO 639-1 language code for Icelandic."
+      },
+      "entityId": null,
+      "target": {
+        "text": "is",
+        "language": null,
+        "entityId": null,
+        "description": null,
+        "url": null,
+        "status": "non-wikidata-source"
+      },
+      "variable": {
+        "name": "variable-1",
+        "sourceText": "is",
+        "entityId": null,
+        "reason": "non-wikidata-source",
+        "resolvedByRule": true
+      }
+    },
+    {
+      "id": "phrase-3",
+      "source": {
+        "text": "a",
+        "start": 2,
+        "end": 2,
+        "sourceStart": 10,
+        "sourceEnd": 11,
+        "language": "en",
+        "entityId": "wikt:en:a#Letter:0",
+        "label": "a",
+        "description": "The first letter of the basic modern Latin alphabet."
+      },
+      "entityId": null,
+      "target": {
+        "text": "a",
+        "language": null,
+        "entityId": null,
+        "description": null,
+        "url": null,
+        "status": "non-wikidata-source"
+      },
+      "variable": {
+        "name": "variable-2",
+        "sourceText": "a",
+        "entityId": null,
+        "reason": "non-wikidata-source",
+        "resolvedByRule": true
+      }
+    },
+    {
+      "id": "phrase-4",
+      "source": {
+        "text": "state",
+        "start": 3,
+        "end": 3,
+        "sourceStart": 12,
+        "sourceEnd": 17,
+        "language": "en",
+        "entityId": "Q7275",
+        "label": "state",
+        "description": "organised community living under a system of government; either a sovereign state, constituent state, or federated state"
+      },
+      "entityId": "Q7275",
+      "target": {
+        "text": "штат",
+        "language": "ru",
+        "entityId": "Q35657",
+        "description": "state of the United States",
+        "url": "https://ru.wikipedia.org/wiki/%D0%A8%D1%82%D0%B0%D1%82_%D0%A1%D0%A8%D0%90",
+        "status": "translated"
+      },
+      "variable": null
+    }
+  ],
+  "sentences": [
+    {
+      "id": "sentence-1",
+      "source": {
+        "text": "Hawaii is a state.",
+        "start": 0,
+        "end": 18,
+        "language": "en"
+      },
+      "target": {
+        "text": "Гавайи это штат.",
+        "markdown": "[Гавайи](https://ru.wikipedia.org/wiki/%D0%93%D0%B0%D0%B2%D0%B0%D0%B9%D0%B8 \"Q782\") это [штат](https://ru.wikipedia.org/wiki/%D0%A8%D1%82%D0%B0%D1%82_%D0%A1%D0%A8%D0%90 \"Q35657\").",
+        "html": "<a href=\"https://ru.wikipedia.org/wiki/%D0%93%D0%B0%D0%B2%D0%B0%D0%B9%D0%B8\" title=\"Q782\">Гавайи</a> это <a href=\"https://ru.wikipedia.org/wiki/%D0%A8%D1%82%D0%B0%D1%82_%D0%A1%D0%A8%D0%90\" title=\"Q35657\">штат</a>.",
+        "language": "ru"
+      },
+      "phrases": [
+        {
+          "id": "phrase-1",
+          "source": {
+            "text": "Hawaii",
+            "start": 0,
+            "end": 0,
+            "sourceStart": 0,
+            "sourceEnd": 6,
+            "language": "en",
+            "entityId": "Q782",
+            "label": "Hawaii",
+            "description": "state of the United States of America"
+          },
+          "entityId": "Q782",
+          "target": {
+            "text": "Гавайи",
+            "language": "ru",
+            "entityId": "Q782",
+            "description": "штат в США, в центральной части Тихого океана",
+            "url": "https://ru.wikipedia.org/wiki/%D0%93%D0%B0%D0%B2%D0%B0%D0%B9%D0%B8",
+            "status": "translated"
+          },
+          "variable": null
+        },
+        {
+          "id": "phrase-2",
+          "source": {
+            "text": "is",
+            "start": 1,
+            "end": 1,
+            "sourceStart": 7,
+            "sourceEnd": 9,
+            "language": "en",
+            "entityId": "wikt:en:is#Symbol:0",
+            "label": "is",
+            "description": " ISO 639-1 language code for Icelandic."
+          },
+          "entityId": null,
+          "target": {
+            "text": "is",
+            "language": null,
+            "entityId": null,
+            "description": null,
+            "url": null,
+            "status": "non-wikidata-source"
+          },
+          "variable": {
+            "name": "variable-1",
+            "sourceText": "is",
+            "entityId": null,
+            "reason": "non-wikidata-source",
+            "resolvedByRule": true
+          }
+        },
+        {
+          "id": "phrase-3",
+          "source": {
+            "text": "a",
+            "start": 2,
+            "end": 2,
+            "sourceStart": 10,
+            "sourceEnd": 11,
+            "language": "en",
+            "entityId": "wikt:en:a#Letter:0",
+            "label": "a",
+            "description": "The first letter of the basic modern Latin alphabet."
+          },
+          "entityId": null,
+          "target": {
+            "text": "a",
+            "language": null,
+            "entityId": null,
+            "description": null,
+            "url": null,
+            "status": "non-wikidata-source"
+          },
+          "variable": {
+            "name": "variable-2",
+            "sourceText": "a",
+            "entityId": null,
+            "reason": "non-wikidata-source",
+            "resolvedByRule": true
+          }
+        },
+        {
+          "id": "phrase-4",
+          "source": {
+            "text": "state",
+            "start": 3,
+            "end": 3,
+            "sourceStart": 12,
+            "sourceEnd": 17,
+            "language": "en",
+            "entityId": "Q7275",
+            "label": "state",
+            "description": "organised community living under a system of government; either a sovereign state, constituent state, or federated state"
+          },
+          "entityId": "Q7275",
+          "target": {
+            "text": "штат",
+            "language": "ru",
+            "entityId": "Q35657",
+            "description": "state of the United States",
+            "url": "https://ru.wikipedia.org/wiki/%D0%A8%D1%82%D0%B0%D1%82_%D0%A1%D0%A8%D0%90",
+            "status": "translated"
+          },
+          "variable": null
+        }
+      ],
+      "transformations": [
+        "english-article-omission",
+        "english-copula-to-russian-eto",
+        "english-us-state-predicate-to-russian-shtat"
+      ],
+      "resolvedVariableNames": [
+        "variable-2",
+        "variable-1"
+      ],
+      "plainText": "Гавайи это штат.",
+      "markdown": "[Гавайи](https://ru.wikipedia.org/wiki/%D0%93%D0%B0%D0%B2%D0%B0%D0%B9%D0%B8 \"Q782\") это [штат](https://ru.wikipedia.org/wiki/%D0%A8%D1%82%D0%B0%D1%82_%D0%A1%D0%A8%D0%90 \"Q35657\").",
+      "html": "<a href=\"https://ru.wikipedia.org/wiki/%D0%93%D0%B0%D0%B2%D0%B0%D0%B9%D0%B8\" title=\"Q782\">Гавайи</a> это <a href=\"https://ru.wikipedia.org/wiki/%D0%A8%D1%82%D0%B0%D1%82_%D0%A1%D0%A8%D0%90\" title=\"Q35657\">штат</a>."
+    }
+  ],
+  "plainText": "Гавайи это штат.",
+  "markdown": "[Гавайи](https://ru.wikipedia.org/wiki/%D0%93%D0%B0%D0%B2%D0%B0%D0%B9%D0%B8 \"Q782\") это [штат](https://ru.wikipedia.org/wiki/%D0%A8%D1%82%D0%B0%D1%82_%D0%A1%D0%A8%D0%90 \"Q35657\").",
+  "html": "<a href=\"https://ru.wikipedia.org/wiki/%D0%93%D0%B0%D0%B2%D0%B0%D0%B9%D0%B8\" title=\"Q782\">Гавайи</a> это <a href=\"https://ru.wikipedia.org/wiki/%D0%A8%D1%82%D0%B0%D1%82_%D0%A1%D0%A8%D0%90\" title=\"Q35657\">штат</a>.",
+  "linksNotation": "(translation: (Hawaii is a state.) from en to ru)\n(sentence-1: source (Hawaii is a state.) target (Гавайи это штат.) transformations (english-article-omission, english-copula-to-russian-eto, english-us-state-predicate-to-russian-shtat))\n(phrase-1: source (Hawaii) target (Гавайи) status translated id Q782 markdownUrl (https://ru.wikipedia.org/wiki/%D0%93%D0%B0%D0%B2%D0%B0%D0%B9%D0%B8))\n(phrase-2: source (is) target (is) status non-wikidata-source variable variable-1)\n(phrase-3: source (a) target (a) status non-wikidata-source variable variable-2)\n(phrase-4: source (state) target (штат) status translated id Q7275 targetId Q35657 markdownUrl (https://ru.wikipedia.org/wiki/%D0%A8%D1%82%D0%B0%D1%82_%D0%A1%D0%A8%D0%90))\n(variable-1: source (is) reason non-wikidata-source)\n(variable-2: source (a) reason non-wikidata-source)\n(step-1: type input (Hawaii is a state.))\n(step-2: type api-request (https://en.wikipedia.org/w/api.php?action=query&format=json&list=search&srsearch=Hawaii&srlimit=5&origin=*))\n(step-3: type api-request (https://www.wikidata.org/w/api.php?action=wbsearchentities&format=json&language=en&origin=*&type=item&limit=5&search=Hawaii))\n(step-4: type api-request (https://www.wikidata.org/w/api.php?action=wbsearchentities&format=json&language=en&origin=*&type=property&limit=5&search=Hawaii))\n(step-5: type api-request (https://en.wiktionary.org/api/rest_v1/page/definition/Hawaii))\n(step-6: type api-request (https://en.wiktionary.org/api/rest_v1/page/definition/is))\n(step-7: type api-request (https://en.wiktionary.org/api/rest_v1/page/definition/a))\n(step-8: type api-request (https://en.wikipedia.org/w/api.php?action=query&format=json&list=search&srsearch=state&srlimit=5&origin=*))\n(step-9: type api-request (https://www.wikidata.org/w/api.php?action=wbsearchentities&format=json&language=en&origin=*&type=item&limit=5&search=state))\n(step-10: type api-request (https://www.wikidata.org/w/api.php?action=wbsearchentities&format=json&language=en&origin=*&type=item&limit=5&search=to+state))\n(step-11: type api-request (https://www.wikidata.org/w/api.php?action=wbsearchentities&format=json&language=en&origin=*&type=property&limit=5&search=state))\n(step-12: type api-request (https://www.wikidata.org/w/api.php?action=wbsearchentities&format=json&language=en&origin=*&type=property&limit=5&search=to+state))\n(step-13: type api-request (https://en.wiktionary.org/api/rest_v1/page/definition/state))\n(step-14: type api-response (https://en.wiktionary.org/api/rest_v1/page/definition/Hawaii))\n(step-15: type api-response (https://en.wiktionary.org/api/rest_v1/page/definition/is))\n(step-16: type api-response (https://en.wiktionary.org/api/rest_v1/page/definition/a))\n(step-17: type api-response (https://en.wiktionary.org/api/rest_v1/page/definition/state))\n(step-18: type api-response (https://www.wikidata.org/w/api.php?action=wbsearchentities&format=json&language=en&origin=*&type=property&limit=5&search=to+state))\n(step-19: type api-response (https://www.wikidata.org/w/api.php?action=wbsearchentities&format=json&language=en&origin=*&type=property&limit=5&search=Hawaii))\n(step-20: type api-response (https://www.wikidata.org/w/api.php?action=wbsearchentities&format=json&language=en&origin=*&type=item&limit=5&search=to+state))\n(step-21: type api-response (https://www.wikidata.org/w/api.php?action=wbsearchentities&format=json&language=en&origin=*&type=item&limit=5&search=Hawaii))\n(step-22: type api-response (https://www.wikidata.org/w/api.php?action=wbsearchentities&format=json&language=en&origin=*&type=property&limit=5&search=state))\n(step-23: type api-response (https://www.wikidata.org/w/api.php?action=wbsearchentities&format=json&language=en&origin=*&type=item&limit=5&search=state))\n(step-24: type api-response (https://en.wikipedia.org/w/api.php?action=query&format=json&list=search&srsearch=state&srlimit=5&origin=*))\n(step-25: type api-request (https://en.wikipedia.org/w/api.php?action=query&format=json&prop=pageprops&titles=State%7CU.S.+state%7CCalifornia%7CLouisiana%7CNew+York+%28state%29&ppprop=wikibase_item&origin=*))\n(step-26: type api-response (https://en.wikipedia.org/w/api.php?action=query&format=json&prop=pageprops&titles=State%7CU.S.+state%7CCalifornia%7CLouisiana%7CNew+York+%28state%29&ppprop=wikibase_item&origin=*))\n(step-27: type api-response (https://en.wikipedia.org/w/api.php?action=query&format=json&list=search&srsearch=Hawaii&srlimit=5&origin=*))\n(step-28: type api-request (https://en.wikipedia.org/w/api.php?action=query&format=json&prop=pageprops&titles=Hawaii%7CHawaiian%7CHawai%CA%BBi+%28island%29%7CHonolulu%7CHawaiian+Kingdom&ppprop=wikibase_item&origin=*))\n(step-29: type api-response (https://en.wikipedia.org/w/api.php?action=query&format=json&prop=pageprops&titles=Hawaii%7CHawaiian%7CHawai%CA%BBi+%28island%29%7CHonolulu%7CHawaiian+Kingdom&ppprop=wikibase_item&origin=*))\n(step-30: type api-request (https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&ids=Q782&languages=en&origin=*&props=labels%7Caliases%7Cdescriptions%7Cclaims%7Csitelinks&sitefilter=enwiki))\n(step-31: type api-request (https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&ids=Q68740&languages=en&origin=*&props=labels%7Caliases%7Cdescriptions%7Cclaims%7Csitelinks&sitefilter=enwiki))\n(step-32: type api-request (https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&ids=Q18703903&languages=en&origin=*&props=labels%7Caliases%7Cdescriptions%7Cclaims%7Csitelinks&sitefilter=enwiki))\n(step-33: type api-request (https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&ids=Q7275&languages=en&origin=*&props=labels%7Caliases%7Cdescriptions%7Cclaims%7Csitelinks&sitefilter=enwiki))\n(step-34: type api-request (https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&ids=Q37234491&languages=en&origin=*&props=labels%7Caliases%7Cdescriptions%7Cclaims%7Csitelinks&sitefilter=enwiki))\n(step-35: type api-response (https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&ids=Q37234491&languages=en&origin=*&props=labels%7Caliases%7Cdescriptions%7Cclaims%7Csitelinks&sitefilter=enwiki))\n(step-36: type api-response (https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&ids=Q18703903&languages=en&origin=*&props=labels%7Caliases%7Cdescriptions%7Cclaims%7Csitelinks&sitefilter=enwiki))\n(step-37: type api-response (https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&ids=Q782&languages=en&origin=*&props=labels%7Caliases%7Cdescriptions%7Cclaims%7Csitelinks&sitefilter=enwiki))\n(step-38: type api-response (https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&ids=Q7275&languages=en&origin=*&props=labels%7Caliases%7Cdescriptions%7Cclaims%7Csitelinks&sitefilter=enwiki))\n(step-39: type api-response (https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&ids=Q68740&languages=en&origin=*&props=labels%7Caliases%7Cdescriptions%7Cclaims%7Csitelinks&sitefilter=enwiki))\n(step-40: type api-request (https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&ids=Q35657&languages=en&origin=*&props=labels%7Cclaims))\n(step-41: type api-response (https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&ids=Q35657&languages=en&origin=*&props=labels%7Cclaims))\n(step-42: type api-request (https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&ids=Q1161185&languages=en&origin=*&props=labels%7Cclaims))\n(step-43: type api-response (https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&ids=Q1161185&languages=en&origin=*&props=labels%7Cclaims))\n(step-44: type api-request (https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&ids=Q192626&languages=en&origin=*&props=labels%7Cclaims))\n(step-45: type api-response (https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&ids=Q192626&languages=en&origin=*&props=labels%7Cclaims))\n(step-46: type api-request (https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&ids=Q11424&languages=en&origin=*&props=labels%7Cclaims))\n(step-47: type api-response (https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&ids=Q11424&languages=en&origin=*&props=labels%7Cclaims))\n(step-48: type api-request (https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&ids=Q130232&languages=en&origin=*&props=labels%7Cclaims))\n(step-49: type api-response (https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&ids=Q130232&languages=en&origin=*&props=labels%7Cclaims))\n(step-50: type api-request (https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&ids=Q20442589&languages=en&origin=*&props=labels%7Cclaims))\n(step-51: type api-response (https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&ids=Q20442589&languages=en&origin=*&props=labels%7Cclaims))\n(step-52: type api-request (https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&ids=Q1054574&languages=en&origin=*&props=labels%7Cclaims))\n(step-53: type api-response (https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&ids=Q1054574&languages=en&origin=*&props=labels%7Cclaims))\n(step-54: type api-request (https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&ids=Q211606&languages=en&origin=*&props=labels%7Cclaims))\n(step-55: type api-response (https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&ids=Q211606&languages=en&origin=*&props=labels%7Cclaims))\n(step-56: type api-request (https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&ids=Q15617994&languages=en&origin=*&props=labels%7Cclaims))\n(step-57: type api-response (https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&ids=Q15617994&languages=en&origin=*&props=labels%7Cclaims))\n(step-58: type api-request (https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&ids=Q155076&languages=en&origin=*&props=labels%7Cclaims))\n(step-59: type api-response (https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&ids=Q155076&languages=en&origin=*&props=labels%7Cclaims))\n(step-60: type api-request (https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&ids=Q1048835&languages=en&origin=*&props=labels%7Cclaims))\n(step-61: type api-response (https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&ids=Q1048835&languages=en&origin=*&props=labels%7Cclaims))\n(step-62: type api-request (https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&ids=Q1896989&languages=en&origin=*&props=labels%7Cclaims))\n(step-63: type api-response (https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&ids=Q1896989&languages=en&origin=*&props=labels%7Cclaims))\n(step-64: type api-request (https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&ids=Q96196009&languages=en&origin=*&props=labels%7Cclaims))\n(step-65: type api-response (https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&ids=Q96196009&languages=en&origin=*&props=labels%7Cclaims))\n(step-66: type api-request (https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&ids=Q179671&languages=en&origin=*&props=labels%7Cclaims))\n(step-67: type api-response (https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&ids=Q179671&languages=en&origin=*&props=labels%7Cclaims))\n(step-68: type api-request (https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&ids=Q101352&languages=en&origin=*&props=labels%7Cclaims))\n(step-69: type api-response (https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&ids=Q101352&languages=en&origin=*&props=labels%7Cclaims))\n(step-70: type formalization (formalization))\n(step-71: type api-request (https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&ids=Q782&languages=ru&origin=*&props=labels%7Cdescriptions%7Csitelinks&sitefilter=ruwiki))\n(step-72: type api-response (https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&ids=Q782&languages=ru&origin=*&props=labels%7Cdescriptions%7Csitelinks&sitefilter=ruwiki))\n(step-73: type translation-phrase (phrase-1))\n(step-74: type translation-phrase (phrase-2))\n(step-75: type translation-phrase (phrase-3))\n(step-76: type api-request (https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&ids=Q7275&languages=ru&origin=*&props=labels%7Cdescriptions%7Csitelinks&sitefilter=ruwiki))\n(step-77: type api-response (https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&ids=Q7275&languages=ru&origin=*&props=labels%7Cdescriptions%7Csitelinks&sitefilter=ruwiki))\n(step-78: type translation-phrase (phrase-4))\n(step-79: type transformation-rule (english-article-omission))\n(step-80: type transformation-rule (english-copula-to-russian-eto))\n(step-81: type transformation-rule (english-us-state-predicate-to-russian-shtat))\n(step-82: type sentence (sentence-1))\n(step-83: type text (Гавайи это штат.))",
+  "variables": [
+    {
+      "name": "variable-1",
+      "sourceText": "is",
+      "entityId": null,
+      "reason": "non-wikidata-source",
+      "resolvedByRule": true
+    },
+    {
+      "name": "variable-2",
+      "sourceText": "a",
+      "entityId": null,
+      "reason": "non-wikidata-source",
+      "resolvedByRule": true
+    }
+  ],
+  "questions": [],
+  "steps": [
+    {
+      "id": "step-1",
+      "type": "input",
+      "sourceLanguage": "en",
+      "targetLanguage": "ru",
+      "text": "Hawaii is a state."
+    },
+    {
+      "id": "step-2",
+      "type": "api-request",
+      "method": "GET",
+      "url": "https://en.wikipedia.org/w/api.php?action=query&format=json&list=search&srsearch=Hawaii&srlimit=5&origin=*"
+    },
+    {
+      "id": "step-3",
+      "type": "api-request",
+      "method": "GET",
+      "url": "https://www.wikidata.org/w/api.php?action=wbsearchentities&format=json&language=en&origin=*&type=item&limit=5&search=Hawaii"
+    },
+    {
+      "id": "step-4",
+      "type": "api-request",
+      "method": "GET",
+      "url": "https://www.wikidata.org/w/api.php?action=wbsearchentities&format=json&language=en&origin=*&type=property&limit=5&search=Hawaii"
+    },
+    {
+      "id": "step-5",
+      "type": "api-request",
+      "method": "GET",
+      "url": "https://en.wiktionary.org/api/rest_v1/page/definition/Hawaii"
+    },
+    {
+      "id": "step-6",
+      "type": "api-request",
+      "method": "GET",
+      "url": "https://en.wiktionary.org/api/rest_v1/page/definition/is"
+    },
+    {
+      "id": "step-7",
+      "type": "api-request",
+      "method": "GET",
+      "url": "https://en.wiktionary.org/api/rest_v1/page/definition/a"
+    },
+    {
+      "id": "step-8",
+      "type": "api-request",
+      "method": "GET",
+      "url": "https://en.wikipedia.org/w/api.php?action=query&format=json&list=search&srsearch=state&srlimit=5&origin=*"
+    },
+    {
+      "id": "step-9",
+      "type": "api-request",
+      "method": "GET",
+      "url": "https://www.wikidata.org/w/api.php?action=wbsearchentities&format=json&language=en&origin=*&type=item&limit=5&search=state"
+    },
+    {
+      "id": "step-10",
+      "type": "api-request",
+      "method": "GET",
+      "url": "https://www.wikidata.org/w/api.php?action=wbsearchentities&format=json&language=en&origin=*&type=item&limit=5&search=to+state"
+    },
+    {
+      "id": "step-11",
+      "type": "api-request",
+      "method": "GET",
+      "url": "https://www.wikidata.org/w/api.php?action=wbsearchentities&format=json&language=en&origin=*&type=property&limit=5&search=state"
+    },
+    {
+      "id": "step-12",
+      "type": "api-request",
+      "method": "GET",
+      "url": "https://www.wikidata.org/w/api.php?action=wbsearchentities&format=json&language=en&origin=*&type=property&limit=5&search=to+state"
+    },
+    {
+      "id": "step-13",
+      "type": "api-request",
+      "method": "GET",
+      "url": "https://en.wiktionary.org/api/rest_v1/page/definition/state"
+    },
+    {
+      "id": "step-14",
+      "type": "api-response",
+      "method": "GET",
+      "url": "https://en.wiktionary.org/api/rest_v1/page/definition/Hawaii",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "step-15",
+      "type": "api-response",
+      "method": "GET",
+      "url": "https://en.wiktionary.org/api/rest_v1/page/definition/is",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "step-16",
+      "type": "api-response",
+      "method": "GET",
+      "url": "https://en.wiktionary.org/api/rest_v1/page/definition/a",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "step-17",
+      "type": "api-response",
+      "method": "GET",
+      "url": "https://en.wiktionary.org/api/rest_v1/page/definition/state",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "step-18",
+      "type": "api-response",
+      "method": "GET",
+      "url": "https://www.wikidata.org/w/api.php?action=wbsearchentities&format=json&language=en&origin=*&type=property&limit=5&search=to+state",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "step-19",
+      "type": "api-response",
+      "method": "GET",
+      "url": "https://www.wikidata.org/w/api.php?action=wbsearchentities&format=json&language=en&origin=*&type=property&limit=5&search=Hawaii",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "step-20",
+      "type": "api-response",
+      "method": "GET",
+      "url": "https://www.wikidata.org/w/api.php?action=wbsearchentities&format=json&language=en&origin=*&type=item&limit=5&search=to+state",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "step-21",
+      "type": "api-response",
+      "method": "GET",
+      "url": "https://www.wikidata.org/w/api.php?action=wbsearchentities&format=json&language=en&origin=*&type=item&limit=5&search=Hawaii",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "step-22",
+      "type": "api-response",
+      "method": "GET",
+      "url": "https://www.wikidata.org/w/api.php?action=wbsearchentities&format=json&language=en&origin=*&type=property&limit=5&search=state",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "step-23",
+      "type": "api-response",
+      "method": "GET",
+      "url": "https://www.wikidata.org/w/api.php?action=wbsearchentities&format=json&language=en&origin=*&type=item&limit=5&search=state",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "step-24",
+      "type": "api-response",
+      "method": "GET",
+      "url": "https://en.wikipedia.org/w/api.php?action=query&format=json&list=search&srsearch=state&srlimit=5&origin=*",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "step-25",
+      "type": "api-request",
+      "method": "GET",
+      "url": "https://en.wikipedia.org/w/api.php?action=query&format=json&prop=pageprops&titles=State%7CU.S.+state%7CCalifornia%7CLouisiana%7CNew+York+%28state%29&ppprop=wikibase_item&origin=*"
+    },
+    {
+      "id": "step-26",
+      "type": "api-response",
+      "method": "GET",
+      "url": "https://en.wikipedia.org/w/api.php?action=query&format=json&prop=pageprops&titles=State%7CU.S.+state%7CCalifornia%7CLouisiana%7CNew+York+%28state%29&ppprop=wikibase_item&origin=*",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "step-27",
+      "type": "api-response",
+      "method": "GET",
+      "url": "https://en.wikipedia.org/w/api.php?action=query&format=json&list=search&srsearch=Hawaii&srlimit=5&origin=*",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "step-28",
+      "type": "api-request",
+      "method": "GET",
+      "url": "https://en.wikipedia.org/w/api.php?action=query&format=json&prop=pageprops&titles=Hawaii%7CHawaiian%7CHawai%CA%BBi+%28island%29%7CHonolulu%7CHawaiian+Kingdom&ppprop=wikibase_item&origin=*"
+    },
+    {
+      "id": "step-29",
+      "type": "api-response",
+      "method": "GET",
+      "url": "https://en.wikipedia.org/w/api.php?action=query&format=json&prop=pageprops&titles=Hawaii%7CHawaiian%7CHawai%CA%BBi+%28island%29%7CHonolulu%7CHawaiian+Kingdom&ppprop=wikibase_item&origin=*",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "step-30",
+      "type": "api-request",
+      "method": "GET",
+      "url": "https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&ids=Q782&languages=en&origin=*&props=labels%7Caliases%7Cdescriptions%7Cclaims%7Csitelinks&sitefilter=enwiki"
+    },
+    {
+      "id": "step-31",
+      "type": "api-request",
+      "method": "GET",
+      "url": "https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&ids=Q68740&languages=en&origin=*&props=labels%7Caliases%7Cdescriptions%7Cclaims%7Csitelinks&sitefilter=enwiki"
+    },
+    {
+      "id": "step-32",
+      "type": "api-request",
+      "method": "GET",
+      "url": "https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&ids=Q18703903&languages=en&origin=*&props=labels%7Caliases%7Cdescriptions%7Cclaims%7Csitelinks&sitefilter=enwiki"
+    },
+    {
+      "id": "step-33",
+      "type": "api-request",
+      "method": "GET",
+      "url": "https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&ids=Q7275&languages=en&origin=*&props=labels%7Caliases%7Cdescriptions%7Cclaims%7Csitelinks&sitefilter=enwiki"
+    },
+    {
+      "id": "step-34",
+      "type": "api-request",
+      "method": "GET",
+      "url": "https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&ids=Q37234491&languages=en&origin=*&props=labels%7Caliases%7Cdescriptions%7Cclaims%7Csitelinks&sitefilter=enwiki"
+    },
+    {
+      "id": "step-35",
+      "type": "api-response",
+      "method": "GET",
+      "url": "https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&ids=Q37234491&languages=en&origin=*&props=labels%7Caliases%7Cdescriptions%7Cclaims%7Csitelinks&sitefilter=enwiki",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "step-36",
+      "type": "api-response",
+      "method": "GET",
+      "url": "https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&ids=Q18703903&languages=en&origin=*&props=labels%7Caliases%7Cdescriptions%7Cclaims%7Csitelinks&sitefilter=enwiki",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "step-37",
+      "type": "api-response",
+      "method": "GET",
+      "url": "https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&ids=Q782&languages=en&origin=*&props=labels%7Caliases%7Cdescriptions%7Cclaims%7Csitelinks&sitefilter=enwiki",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "step-38",
+      "type": "api-response",
+      "method": "GET",
+      "url": "https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&ids=Q7275&languages=en&origin=*&props=labels%7Caliases%7Cdescriptions%7Cclaims%7Csitelinks&sitefilter=enwiki",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "step-39",
+      "type": "api-response",
+      "method": "GET",
+      "url": "https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&ids=Q68740&languages=en&origin=*&props=labels%7Caliases%7Cdescriptions%7Cclaims%7Csitelinks&sitefilter=enwiki",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "step-40",
+      "type": "api-request",
+      "method": "GET",
+      "url": "https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&ids=Q35657&languages=en&origin=*&props=labels%7Cclaims"
+    },
+    {
+      "id": "step-41",
+      "type": "api-response",
+      "method": "GET",
+      "url": "https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&ids=Q35657&languages=en&origin=*&props=labels%7Cclaims",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "step-42",
+      "type": "api-request",
+      "method": "GET",
+      "url": "https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&ids=Q1161185&languages=en&origin=*&props=labels%7Cclaims"
+    },
+    {
+      "id": "step-43",
+      "type": "api-response",
+      "method": "GET",
+      "url": "https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&ids=Q1161185&languages=en&origin=*&props=labels%7Cclaims",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "step-44",
+      "type": "api-request",
+      "method": "GET",
+      "url": "https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&ids=Q192626&languages=en&origin=*&props=labels%7Cclaims"
+    },
+    {
+      "id": "step-45",
+      "type": "api-response",
+      "method": "GET",
+      "url": "https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&ids=Q192626&languages=en&origin=*&props=labels%7Cclaims",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "step-46",
+      "type": "api-request",
+      "method": "GET",
+      "url": "https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&ids=Q11424&languages=en&origin=*&props=labels%7Cclaims"
+    },
+    {
+      "id": "step-47",
+      "type": "api-response",
+      "method": "GET",
+      "url": "https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&ids=Q11424&languages=en&origin=*&props=labels%7Cclaims",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "step-48",
+      "type": "api-request",
+      "method": "GET",
+      "url": "https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&ids=Q130232&languages=en&origin=*&props=labels%7Cclaims"
+    },
+    {
+      "id": "step-49",
+      "type": "api-response",
+      "method": "GET",
+      "url": "https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&ids=Q130232&languages=en&origin=*&props=labels%7Cclaims",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "step-50",
+      "type": "api-request",
+      "method": "GET",
+      "url": "https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&ids=Q20442589&languages=en&origin=*&props=labels%7Cclaims"
+    },
+    {
+      "id": "step-51",
+      "type": "api-response",
+      "method": "GET",
+      "url": "https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&ids=Q20442589&languages=en&origin=*&props=labels%7Cclaims",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "step-52",
+      "type": "api-request",
+      "method": "GET",
+      "url": "https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&ids=Q1054574&languages=en&origin=*&props=labels%7Cclaims"
+    },
+    {
+      "id": "step-53",
+      "type": "api-response",
+      "method": "GET",
+      "url": "https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&ids=Q1054574&languages=en&origin=*&props=labels%7Cclaims",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "step-54",
+      "type": "api-request",
+      "method": "GET",
+      "url": "https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&ids=Q211606&languages=en&origin=*&props=labels%7Cclaims"
+    },
+    {
+      "id": "step-55",
+      "type": "api-response",
+      "method": "GET",
+      "url": "https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&ids=Q211606&languages=en&origin=*&props=labels%7Cclaims",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "step-56",
+      "type": "api-request",
+      "method": "GET",
+      "url": "https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&ids=Q15617994&languages=en&origin=*&props=labels%7Cclaims"
+    },
+    {
+      "id": "step-57",
+      "type": "api-response",
+      "method": "GET",
+      "url": "https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&ids=Q15617994&languages=en&origin=*&props=labels%7Cclaims",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "step-58",
+      "type": "api-request",
+      "method": "GET",
+      "url": "https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&ids=Q155076&languages=en&origin=*&props=labels%7Cclaims"
+    },
+    {
+      "id": "step-59",
+      "type": "api-response",
+      "method": "GET",
+      "url": "https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&ids=Q155076&languages=en&origin=*&props=labels%7Cclaims",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "step-60",
+      "type": "api-request",
+      "method": "GET",
+      "url": "https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&ids=Q1048835&languages=en&origin=*&props=labels%7Cclaims"
+    },
+    {
+      "id": "step-61",
+      "type": "api-response",
+      "method": "GET",
+      "url": "https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&ids=Q1048835&languages=en&origin=*&props=labels%7Cclaims",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "step-62",
+      "type": "api-request",
+      "method": "GET",
+      "url": "https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&ids=Q1896989&languages=en&origin=*&props=labels%7Cclaims"
+    },
+    {
+      "id": "step-63",
+      "type": "api-response",
+      "method": "GET",
+      "url": "https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&ids=Q1896989&languages=en&origin=*&props=labels%7Cclaims",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "step-64",
+      "type": "api-request",
+      "method": "GET",
+      "url": "https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&ids=Q96196009&languages=en&origin=*&props=labels%7Cclaims"
+    },
+    {
+      "id": "step-65",
+      "type": "api-response",
+      "method": "GET",
+      "url": "https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&ids=Q96196009&languages=en&origin=*&props=labels%7Cclaims",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "step-66",
+      "type": "api-request",
+      "method": "GET",
+      "url": "https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&ids=Q179671&languages=en&origin=*&props=labels%7Cclaims"
+    },
+    {
+      "id": "step-67",
+      "type": "api-response",
+      "method": "GET",
+      "url": "https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&ids=Q179671&languages=en&origin=*&props=labels%7Cclaims",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "step-68",
+      "type": "api-request",
+      "method": "GET",
+      "url": "https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&ids=Q101352&languages=en&origin=*&props=labels%7Cclaims"
+    },
+    {
+      "id": "step-69",
+      "type": "api-response",
+      "method": "GET",
+      "url": "https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&ids=Q101352&languages=en&origin=*&props=labels%7Cclaims",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "step-70",
+      "type": "formalization",
+      "phraseCount": 4,
+      "markdown": "[Hawaii](https://en.wikipedia.org/wiki/Hawaii \"Q782\") [is](https://en.wiktionary.org/wiki/is \"wikt:en:is#Symbol:0\") [a](https://en.wiktionary.org/wiki/a \"wikt:en:a#Letter:0\") [state](https://en.wikipedia.org/wiki/State_(polity) \"Q7275\").",
+      "linksNotation": "(formalization: (Hawaii is a state.))\n(phrase-1: source (Hawaii) start 0 end 0 id Q782 label (Hawaii) kind entity markdownUrl (https://en.wikipedia.org/wiki/Hawaii))\n(phrase-2: source (is) start 1 end 1 id wikt:en:is#Symbol:0 label (is) kind entity markdownUrl (https://en.wiktionary.org/wiki/is))\n(phrase-3: source (a) start 2 end 2 id wikt:en:a#Letter:0 label (a) kind entity markdownUrl (https://en.wiktionary.org/wiki/a))\n(phrase-4: source (state) start 3 end 3 id Q7275 label (state) kind entity markdownUrl (https://en.wikipedia.org/wiki/State_ polity))\n(context-1: Q1161185 weight 0.3617021276595745 probability 7.2)\n(context-2: Q192626 weight 0.3617021276595745 probability 7.2)\n(context-3: Q35657 weight 0.3617021276595745 probability 7.2)\n(context-4: Q101352 weight 0.3577981651376147 probability 7.1)\n(context-5: Q1048835 weight 0.3577981651376147 probability 7.1)\n(context-6: Q155076 weight 0.3577981651376147 probability 7.1)\n(context-7: Q15617994 weight 0.3577981651376147 probability 7.1)\n(context-8: Q179671 weight 0.3577981651376147 probability 7.1)\n(context-9: Q1896989 weight 0.3577981651376147 probability 7.1)\n(context-10: Q211606 weight 0.3577981651376147 probability 7.1)\n(context-11: Q96196009 weight 0.3577981651376147 probability 7.1)\n(context-12: Q1054574 weight 0.2765957446808511 probability 5.5)\n(context-13: Q11424 weight 0.2765957446808511 probability 5.5)\n(context-14: Q130232 weight 0.2765957446808511 probability 5.5)\n(context-15: Q20442589 weight 0.2765957446808511 probability 5.5)"
+    },
+    {
+      "id": "step-71",
+      "type": "api-request",
+      "method": "GET",
+      "url": "https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&ids=Q782&languages=ru&origin=*&props=labels%7Cdescriptions%7Csitelinks&sitefilter=ruwiki"
+    },
+    {
+      "id": "step-72",
+      "type": "api-response",
+      "method": "GET",
+      "url": "https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&ids=Q782&languages=ru&origin=*&props=labels%7Cdescriptions%7Csitelinks&sitefilter=ruwiki",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "step-73",
+      "type": "translation-phrase",
+      "phraseId": "phrase-1",
+      "sourceText": "Hawaii",
+      "entityId": "Q782",
+      "status": "translated",
+      "targetText": "Гавайи"
+    },
+    {
+      "id": "step-74",
+      "type": "translation-phrase",
+      "phraseId": "phrase-2",
+      "sourceText": "is",
+      "entityId": null,
+      "status": "non-wikidata-source",
+      "targetText": "is"
+    },
+    {
+      "id": "step-75",
+      "type": "translation-phrase",
+      "phraseId": "phrase-3",
+      "sourceText": "a",
+      "entityId": null,
+      "status": "non-wikidata-source",
+      "targetText": "a"
+    },
+    {
+      "id": "step-76",
+      "type": "api-request",
+      "method": "GET",
+      "url": "https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&ids=Q7275&languages=ru&origin=*&props=labels%7Cdescriptions%7Csitelinks&sitefilter=ruwiki"
+    },
+    {
+      "id": "step-77",
+      "type": "api-response",
+      "method": "GET",
+      "url": "https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&ids=Q7275&languages=ru&origin=*&props=labels%7Cdescriptions%7Csitelinks&sitefilter=ruwiki",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "step-78",
+      "type": "translation-phrase",
+      "phraseId": "phrase-4",
+      "sourceText": "state",
+      "entityId": "Q7275",
+      "status": "translated",
+      "targetText": "государство"
+    },
+    {
+      "id": "step-79",
+      "type": "transformation-rule",
+      "sentenceId": "sentence-1",
+      "rule": "english-article-omission",
+      "sourceText": "Hawaii is a state.",
+      "affectedVariables": [
+        "variable-2"
+      ]
+    },
+    {
+      "id": "step-80",
+      "type": "transformation-rule",
+      "sentenceId": "sentence-1",
+      "rule": "english-copula-to-russian-eto",
+      "sourceText": "Hawaii is a state.",
+      "affectedVariables": [
+        "variable-1"
+      ]
+    },
+    {
+      "id": "step-81",
+      "type": "transformation-rule",
+      "sentenceId": "sentence-1",
+      "rule": "english-us-state-predicate-to-russian-shtat",
+      "sourceText": "Hawaii is a state.",
+      "affectedVariables": []
+    },
+    {
+      "id": "step-82",
+      "type": "sentence",
+      "sentenceId": "sentence-1",
+      "sourceText": "Hawaii is a state.",
+      "targetText": "Гавайи это штат.",
+      "transformations": [
+        "english-article-omission",
+        "english-copula-to-russian-eto",
+        "english-us-state-predicate-to-russian-shtat"
+      ]
+    },
+    {
+      "id": "step-83",
+      "type": "text",
+      "sentenceCount": 1,
+      "text": "Гавайи это штат."
+    }
+  ]
+}

@@ -1,0 +1,1 @@
+[Hawaii](https://en.wikipedia.org/wiki/Hawaii "Q782") [is](https://en.wiktionary.org/wiki/is "wikt:en:is#Symbol:0") [a](https://en.wiktionary.org/wiki/a "wikt:en:a#Letter:0") [state](https://en.wikipedia.org/wiki/State_(polity) "Q7275").

@@ -205,9 +205,9 @@ describe('issue 16 — translate through formalized Wikidata labels', () => {
         }),
         'Q7275|ru': entity({
           id: 'Q7275',
-          label: 'штат',
+          label: 'государство',
           language: 'ru',
-          sitelink: 'Штат',
+          sitelink: 'Государство',
         }),
       },
     });
@@ -224,14 +224,15 @@ describe('issue 16 — translate through formalized Wikidata labels', () => {
     expect(result.formalization.html.endsWith('.')).toBe(true);
     expect(result.sentences.length).toBe(1);
     expect(result.sentences[0].source.text).toBe('Hawaii is a state.');
-    expect(result.sentences[0].plainText).toBe('Гавайи - штат.');
+    expect(result.sentences[0].plainText).toBe('Гавайи это штат.');
     expect(result.sentences[0].transformations).toEqual([
       'english-article-omission',
-      'english-copula-to-russian-dash',
+      'english-copula-to-russian-eto',
+      'english-us-state-predicate-to-russian-shtat',
     ]);
-    expect(result.plainText).toBe('Гавайи - штат.');
+    expect(result.plainText).toBe('Гавайи это штат.');
     expect(result.markdown).toContain('[Гавайи](');
-    expect(result.markdown).toContain('- [штат](');
+    expect(result.markdown).toContain('это [штат](');
     expect(result.questions.length).toBe(0);
     expect(result.steps.some((step) => step.type === 'api-request')).toBe(true);
     expect(result.steps.some((step) => step.type === 'formalization')).toBe(
@@ -241,10 +242,10 @@ describe('issue 16 — translate through formalized Wikidata labels', () => {
       result.steps.some(
         (step) =>
           step.type === 'transformation-rule' &&
-          step.rule === 'english-copula-to-russian-dash'
+          step.rule === 'english-copula-to-russian-eto'
       )
     ).toBe(true);
-    expect(result.cst.sentences[0].targetText).toBe('Гавайи - штат.');
+    expect(result.cst.sentences[0].targetText).toBe('Гавайи это штат.');
     expect(result.linksNotation).toContain('sentence-1');
     expect(result.linksNotation).toContain('step-');
   });

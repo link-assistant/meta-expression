@@ -70,7 +70,7 @@ translation and leave room for grammar-aware transformation rules.
 Status: implemented. `translateTextWith()` now returns `sentences`, builds the
 text output from translated sentence renderings, keeps the default web example
 as `Hawaii is a state.`, and applies a deterministic English-to-Russian rule
-slice for article omission and copula-to-dash rewriting.
+slice for article omission and copula-to-`это` rewriting.
 
 ## R16.9 — Show formalization and collapsed translation steps
 

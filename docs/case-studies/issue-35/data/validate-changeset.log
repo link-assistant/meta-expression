@@ -1,0 +1,11 @@
+Validating changesets added by this PR...
+Comparing against base branch: main
+From https://github.com/link-assistant/meta-expression
+ * branch            main       -> FETCH_HEAD
+Found 1 changeset file(s) added by this PR
+Added changesets:
+  - issue-35-hawaii-translation.md
+Validating changeset: .changeset/issue-35-hawaii-translation.md
+Changeset validation passed
+   Type: patch
+   Description: Fix Hawaii sentence translation by identifying Wikimedia API requests, filtering grammar-fragment n-grams, demoting disambiguation candidates, keeping refined target ids in the phrase trace, and rendering the tested English/Russian copula plus U.S.-state predicate round trip. Add a narrow Rust semantic fixture for the same issue case.

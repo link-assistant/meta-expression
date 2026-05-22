@@ -1,0 +1,295 @@
+{
+  "text": "Hawaii is a state.",
+  "tokens": [
+    "Hawaii",
+    "is",
+    "a",
+    "state"
+  ],
+  "phrases": [
+    {
+      "text": "Hawaii",
+      "tokens": [
+        "Hawaii"
+      ],
+      "start": 0,
+      "end": 0,
+      "size": 1,
+      "candidates": [],
+      "entity": null
+    },
+    {
+      "text": "is",
+      "tokens": [
+        "is"
+      ],
+      "start": 1,
+      "end": 1,
+      "size": 1,
+      "candidates": [],
+      "entity": null
+    },
+    {
+      "text": "a",
+      "tokens": [
+        "a"
+      ],
+      "start": 2,
+      "end": 2,
+      "size": 1,
+      "candidates": [],
+      "entity": null
+    },
+    {
+      "text": "state",
+      "tokens": [
+        "state"
+      ],
+      "start": 3,
+      "end": 3,
+      "size": 1,
+      "candidates": [],
+      "entity": null
+    }
+  ],
+  "contexts": [],
+  "mainContext": null,
+  "additionalContexts": [],
+  "bigContexts": [],
+  "mainBigContext": null,
+  "additionalBigContexts": [],
+  "interpretations": [
+    {
+      "rank": 1,
+      "score": 0,
+      "phrases": [
+        {
+          "text": "Hawaii",
+          "entityId": null,
+          "kind": null,
+          "entityLabel": null,
+          "entityDescription": null
+        },
+        {
+          "text": "is",
+          "entityId": null,
+          "kind": null,
+          "entityLabel": null,
+          "entityDescription": null
+        },
+        {
+          "text": "a",
+          "entityId": null,
+          "kind": null,
+          "entityLabel": null,
+          "entityDescription": null
+        },
+        {
+          "text": "state",
+          "entityId": null,
+          "kind": null,
+          "entityLabel": null,
+          "entityDescription": null
+        }
+      ]
+    }
+  ],
+  "markdown": "Hawaii is a state.",
+  "html": "Hawaii is a state.",
+  "linksNotation": "(formalization: (Hawaii is a state.))\n(phrase-1: source (Hawaii) start 0 end 0 unresolved)\n(phrase-2: source (is) start 1 end 1 unresolved)\n(phrase-3: source (a) start 2 end 2 unresolved)\n(phrase-4: source (state) start 3 end 3 unresolved)",
+  "linksNetwork": {
+    "id": "formalize-links-network",
+    "kind": "links-network",
+    "version": 1,
+    "beliefSystem": {
+      "id": "formalize-default",
+      "name": "Formalize prototype",
+      "probabilityStrategy": "frequency-weighted-context",
+      "sourceWeights": {
+        "wikidata": 1,
+        "wordnet": 0.7,
+        "fandom": 0.6,
+        "algorithm": 0.5
+      }
+    },
+    "links": [
+      {
+        "id": "formalize-input-1",
+        "role": "input",
+        "references": [],
+        "value": {
+          "text": "Hawaii is a state."
+        },
+        "provenance": {
+          "sourceType": "algorithm",
+          "method": "formalize"
+        }
+      },
+      {
+        "id": "formalize-phrase-1",
+        "role": "phrase",
+        "references": [
+          "formalize-input-1"
+        ],
+        "value": {
+          "text": "Hawaii",
+          "position": 0,
+          "size": 1,
+          "wikidataId": null,
+          "wikidataLabel": null,
+          "wikidataKind": null,
+          "wikipediaUrl": null,
+          "source": null
+        },
+        "provenance": {
+          "sourceType": "algorithm",
+          "sourceUrl": null
+        }
+      },
+      {
+        "id": "formalize-phrase-2",
+        "role": "phrase",
+        "references": [
+          "formalize-input-1"
+        ],
+        "value": {
+          "text": "is",
+          "position": 1,
+          "size": 1,
+          "wikidataId": null,
+          "wikidataLabel": null,
+          "wikidataKind": null,
+          "wikipediaUrl": null,
+          "source": null
+        },
+        "provenance": {
+          "sourceType": "algorithm",
+          "sourceUrl": null
+        }
+      },
+      {
+        "id": "formalize-phrase-3",
+        "role": "phrase",
+        "references": [
+          "formalize-input-1"
+        ],
+        "value": {
+          "text": "a",
+          "position": 2,
+          "size": 1,
+          "wikidataId": null,
+          "wikidataLabel": null,
+          "wikidataKind": null,
+          "wikipediaUrl": null,
+          "source": null
+        },
+        "provenance": {
+          "sourceType": "algorithm",
+          "sourceUrl": null
+        }
+      },
+      {
+        "id": "formalize-phrase-4",
+        "role": "phrase",
+        "references": [
+          "formalize-input-1"
+        ],
+        "value": {
+          "text": "state",
+          "position": 3,
+          "size": 1,
+          "wikidataId": null,
+          "wikidataLabel": null,
+          "wikidataKind": null,
+          "wikipediaUrl": null,
+          "source": null
+        },
+        "provenance": {
+          "sourceType": "algorithm",
+          "sourceUrl": null
+        }
+      }
+    ]
+  },
+  "cst": {
+    "type": "formalization",
+    "version": 1,
+    "text": "Hawaii is a state.",
+    "tokens": [
+      "Hawaii",
+      "is",
+      "a",
+      "state"
+    ],
+    "linkTargetMode": "wikipedia",
+    "phrases": [
+      {
+        "type": "phrase",
+        "id": "phrase-1",
+        "text": "Hawaii",
+        "tokens": [
+          "Hawaii"
+        ],
+        "start": 0,
+        "end": 0,
+        "sourceStart": 0,
+        "sourceEnd": 6,
+        "size": 1,
+        "entity": null,
+        "candidates": []
+      },
+      {
+        "type": "phrase",
+        "id": "phrase-2",
+        "text": "is",
+        "tokens": [
+          "is"
+        ],
+        "start": 1,
+        "end": 1,
+        "sourceStart": 7,
+        "sourceEnd": 9,
+        "size": 1,
+        "entity": null,
+        "candidates": []
+      },
+      {
+        "type": "phrase",
+        "id": "phrase-3",
+        "text": "a",
+        "tokens": [
+          "a"
+        ],
+        "start": 2,
+        "end": 2,
+        "sourceStart": 10,
+        "sourceEnd": 11,
+        "size": 1,
+        "entity": null,
+        "candidates": []
+      },
+      {
+        "type": "phrase",
+        "id": "phrase-4",
+        "text": "state",
+        "tokens": [
+          "state"
+        ],
+        "start": 3,
+        "end": 3,
+        "sourceStart": 12,
+        "sourceEnd": 17,
+        "size": 1,
+        "entity": null,
+        "candidates": []
+      }
+    ],
+    "contexts": []
+  },
+  "linkTargetMode": "wikipedia",
+  "sources": [
+    "wikipedia",
+    "wikidata",
+    "wiktionary"
+  ]
+}

@@ -1,0 +1,260 @@
+name: Checks and release
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    types: [opened, synchronize, reopened]
+  # Manual release support - consolidated here to work with npm trusted publishing
+  # npm only allows ONE workflow file as trusted publisher, so all publishing
+  # must go through this workflow (release.yml)
+  workflow_dispatch:
+    inputs:
+      release_mode:
+        description: 'Manual release mode'
+        required: true
+        type: choice
+        default: 'instant'
+        options:
+          - instant
+          - changeset-pr
+      bump_type:
+        description: 'Manual release type'
+        required: true
+        type: choice
+        options:
+          - patch
+          - minor
+          - major
+      description:
+        description: 'Manual release description (optional)'
+        required: false
+        type: string
+
+# Concurrency: Only one workflow run per branch at a time
+# - For main branch (releases): cancel older runs to prevent blocking newer releases
+#   When multiple commits are pushed quickly, we want the latest to release, not wait
+# - For PR branches: queue runs to avoid cancelling checks on force-pushes
+# See: docs/case-studies/issue-25/DETAILED-COMPARISON.md for context
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: ${{ github.ref == 'refs/heads/main' }}
+
+jobs:
+  # === DETECT CHANGES - determines which jobs should run ===
+  detect-changes:
+    name: Detect Changes
+    runs-on: ubuntu-latest
+    if: github.event_name != 'workflow_dispatch'
+    outputs:
+      mjs-changed: ${{ steps.changes.outputs.mjs-changed }}
+      js-changed: ${{ steps.changes.outputs.js-changed }}
+      rust-changed: ${{ steps.changes.outputs.rust-changed }}
+      package-changed: ${{ steps.changes.outputs.package-changed }}
+      docs-changed: ${{ steps.changes.outputs.docs-changed }}
+      workflow-changed: ${{ steps.changes.outputs.workflow-changed }}
+      any-code-changed: ${{ steps.changes.outputs.any-code-changed }}
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+
+      - name: Detect changes
+        id: changes
+        run: node scripts/detect-code-changes.mjs
+
+  # === FAST CHECKS - run before slow tests for fastest feedback ===
+  # See: hive-mind CI/CD best practices principle #5 (fast-fail job ordering)
+
+  # Syntax check all .mjs files with node --check (~7s)
+  test-compilation:
+    name: Test Compilation
+    runs-on: ubuntu-latest
+    needs: [detect-changes]
+    if: |
+      github.event_name == 'push' ||
+      needs.detect-changes.outputs.mjs-changed == 'true' ||
+      needs.detect-changes.outputs.js-changed == 'true'
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Check .mjs syntax
+        run: bash scripts/check-mjs-syntax.sh
+
+  rust-check:
+    name: Rust Check
+    runs-on: ubuntu-latest
+    needs: [detect-changes]
+    if: |
+      github.event_name == 'push' ||
+      needs.detect-changes.outputs.rust-changed == 'true'
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Setup Rust
+        uses: dtolnay/rust-toolchain@stable
+
+      - name: Check Rust formatting
+        run: cargo fmt --check
+
+      - name: Test Rust workspace
+        run: cargo test --workspace
+
+  # Enforce 1500-line limit on .mjs files and release.yml
+  check-file-line-limits:
+    name: Check File Line Limits
+    runs-on: ubuntu-latest
+    needs: [detect-changes]
+    if: |
+      github.event_name == 'push' ||
+      needs.detect-changes.outputs.mjs-changed == 'true' ||
+      needs.detect-changes.outputs.js-changed == 'true' ||
+      needs.detect-changes.outputs.workflow-changed == 'true'
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+
+      - name: Simulate fresh merge with base branch (PR only)
+        if: github.event_name == 'pull_request'
+        env:
+          BASE_REF: ${{ github.base_ref }}
+        run: bash scripts/simulate-fresh-merge.sh
+
+      - name: Check file line limits
+        run: bash scripts/check-file-line-limits.sh
+
+  # === VERSION CHANGE CHECK ===
+  # Prohibit manual version changes in package.json - versions should only be changed by CI/CD
+  version-check:
+    name: Check for Manual Version Changes
+    runs-on: ubuntu-latest
+    if: github.event_name == 'pull_request'
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+
+      - name: Check for version changes in package.json
+        env:
+          GITHUB_HEAD_REF: ${{ github.head_ref }}
+          GITHUB_BASE_REF: ${{ github.base_ref }}
+        run: node scripts/check-version.mjs
+
+  # === CHANGESET CHECK - only runs on PRs with code changes ===
+  # Docs-only PRs (./docs folder, markdown files) don't require changesets
+  changeset-check:
+    name: Check for Changesets
+    runs-on: ubuntu-latest
+    needs: [detect-changes]
+    if: github.event_name == 'pull_request' && needs.detect-changes.outputs.any-code-changed == 'true'
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version: '24.x'
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Check for changesets
+        env:
+          # Pass PR context to the validation script
+          GITHUB_BASE_REF: ${{ github.base_ref }}
+          GITHUB_BASE_SHA: ${{ github.event.pull_request.base.sha }}
+          GITHUB_HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+        run: |
+          # Skip changeset check for automated version PRs
+          if [[ "${{ github.head_ref }}" == "changeset-release/"* ]]; then
+            echo "Skipping changeset check for automated release PR"
+            exit 0
+          fi
+
+          # Run changeset validation script
+          # This validates that exactly ONE changeset was ADDED by this PR
+          # Pre-existing changesets from other merged PRs are ignored
+          node scripts/validate-changeset.mjs
+
+  # === LINT AND FORMAT CHECK ===
+  # Lint runs independently of changeset-check - it's a fast check that should always run
+  # See: https://github.com/link-assistant/hive-mind/pull/1024 for why this dependency was removed
+  # IMPORTANT: ESLint includes max-lines rule (1500 lines) to ensure files stay maintainable
+  # See docs/case-studies/issue-23 for why fresh merge simulation is critical
+  lint:
+    name: Lint and Format Check
+    runs-on: ubuntu-latest
+    needs: [detect-changes]
+    if: |
+      github.event_name == 'push' ||
+      needs.detect-changes.outputs.mjs-changed == 'true' ||
+      needs.detect-changes.outputs.js-changed == 'true' ||
+      needs.detect-changes.outputs.docs-changed == 'true' ||
+      needs.detect-changes.outputs.package-changed == 'true' ||
+      needs.detect-changes.outputs.workflow-changed == 'true'
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          # For PRs, fetch enough history to merge with base branch
+          fetch-depth: 0
+
+      - name: Simulate fresh merge with base branch (PR only)
+        if: github.event_name == 'pull_request'
+        env:
+          BASE_REF: ${{ github.base_ref }}
+        run: bash scripts/simulate-fresh-merge.sh
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version: '24.x'
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Run ESLint
+        run: npm run lint
+
+      - name: Check formatting
+        run: npm run format:check
+
+      - name: Check code duplication
+        run: npm run check:duplication
+
+      - name: Check for secrets
+        run: npx --yes -p secretlint -p @secretlint/secretlint-rule-preset-recommend secretlint "**/*"
+
+  # Test matrix: 3 runtimes (Node.js, Bun, Deno) x 3 OS (Ubuntu, macOS, Windows)
+  # IMPORTANT: Tests must validate the ACTUAL merge result, not a stale merge preview.
+  # See docs/case-studies/issue-23 for why this is critical.
+  # Fast-fail: slow test matrix only runs after fast checks pass (hive-mind principle #5)
+  test:
+    name: Test (${{ matrix.runtime }} on ${{ matrix.os }})
+    runs-on: ${{ matrix.os }}
+    needs:
+      [
+        detect-changes,
+        changeset-check,
+        test-compilation,
+        rust-check,
+        lint,
+        check-file-line-limits,
+      ]
+    # Use !cancelled() instead of always() so cancellation propagates correctly (hive-mind issue #1278)
+    # Run if: push event, OR changeset-check succeeded, OR changeset-check was skipped (docs-only PR)
+    # AND all fast checks passed (or were skipped for irrelevant changes)
+    if: |
+      !cancelled() &&
+      (github.event_name == 'push' || needs.changeset-check.result == 'success' || needs.changeset-check.result == 'skipped') &&
+      (needs.test-compilation.result == 'success' || needs.test-compilation.result == 'skipped') &&
+      (needs.rust-check.result == 'success' || needs.rust-check.result == 'skipped') &&
+      (needs.lint.result == 'success' || needs.lint.result == 'skipped') &&
+      (needs.check-file-line-limits.result == 'success' || needs.check-file-line-limits.result == 'skipped')
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
