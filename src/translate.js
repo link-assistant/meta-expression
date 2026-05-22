@@ -1,5 +1,6 @@
 import { FORMALIZE_LINK_TARGETS, formalizeTextWith } from './formalize.js';
 import {
+  lookupExactGlossaryTranslation,
   lookupGlossaryTranslation,
   normalizeTranslationStrategy,
   TRANSLATION_STRATEGIES,
@@ -78,6 +79,11 @@ export async function translateTextWith(input, options = {}) {
     markdown: formalization.markdown,
     linksNotation: formalization.linksNotation,
   });
+  const semanticMetaLanguage = buildSemanticMetaLanguage(formalization, config);
+  recordStep(config, 'semantic-meta-language', {
+    linkCount: semanticMetaLanguage.links.length,
+    linksNotation: semanticMetaLanguage.linksNotation,
+  });
   const phrases = [];
   const variables = [];
   for (const phrase of formalization.cst.phrases) {
@@ -108,22 +114,32 @@ export async function translateTextWith(input, options = {}) {
   const plainText = renderSentenceOutput(sentences, 'plainText', phrases);
   const markdown = renderSentenceOutput(sentences, 'markdown', phrases);
   const html = renderSentenceOutput(sentences, 'html', phrases);
+  const naturalization = buildNaturalization(
+    semanticMetaLanguage,
+    phrases,
+    sentences,
+    config
+  );
   recordStep(config, 'text', {
     sentenceCount: sentences.length,
     text: plainText,
   });
-  const cst = buildTranslationCst(
+  const cst = buildTranslationCst({
     formalization,
+    semanticMetaLanguage,
+    naturalization,
     phrases,
     variables,
     sentences,
-    config
-  );
+    config,
+  });
   return {
     text: formalization.text,
     sourceLanguage: config.sourceLanguage,
     targetLanguage: config.targetLanguage,
     formalization,
+    semanticMetaLanguage,
+    naturalization,
     cst,
     phrases,
     sentences,
@@ -176,6 +192,93 @@ function normalizeLanguage(value) {
     .trim()
     .toLowerCase();
   return /^[a-z][a-z0-9-]{0,14}$/.test(normalized) ? normalized : 'en';
+}
+
+function buildSemanticMetaLanguage(formalization, config) {
+  const links = formalization.cst.phrases.map((phrase, index) =>
+    buildSemanticLink(phrase, index, config)
+  );
+  const semantic = {
+    type: 'semantic-meta-language',
+    version: 1,
+    text: formalization.text,
+    sourceLanguage: config.sourceLanguage,
+    targetLanguage: config.targetLanguage,
+    representation: 'links-notation',
+    sourceLinksNotation: formalization.linksNotation,
+    links,
+  };
+  return {
+    ...semantic,
+    linksNotation: renderSemanticMetaLanguageLinksNotation(semantic),
+  };
+}
+
+function buildSemanticLink(phrase, index, config) {
+  const entity = phrase.entity ?? null;
+  const glossaryTranslation = lookupGlossaryTranslation(phrase.text, config);
+  return {
+    id: `semantic-link-${index + 1}`,
+    sourceText: phrase.text,
+    sourceStart: phrase.sourceStart ?? null,
+    sourceEnd: phrase.sourceEnd ?? null,
+    tokenStart: phrase.start,
+    tokenEnd: phrase.end,
+    sourceLanguage: config.sourceLanguage,
+    meaning: buildSemanticMeaning(phrase, entity, glossaryTranslation, config),
+    targetHint: glossaryTranslation?.text ?? null,
+    status: semanticLinkStatus(entity, glossaryTranslation),
+  };
+}
+
+function buildSemanticMeaning(phrase, entity, glossaryTranslation, config) {
+  return {
+    id: semanticMeaningId(phrase, entity, glossaryTranslation, config),
+    label: entity?.label ?? phrase.text,
+    description: entity?.description ?? null,
+    url: entity ? sourceUrlForSemanticEntity(entity) : null,
+    source: semanticMeaningSource(entity, glossaryTranslation),
+  };
+}
+
+function semanticMeaningId(phrase, entity, glossaryTranslation, config) {
+  if (entity?.id) {
+    return entity.id;
+  }
+  return glossaryTranslation
+    ? lexicalSemanticId(phrase.text, config.sourceLanguage)
+    : null;
+}
+
+function semanticMeaningSource(entity, glossaryTranslation) {
+  return entity?.source ?? (glossaryTranslation ? 'glossary' : null);
+}
+
+function semanticLinkStatus(entity, glossaryTranslation) {
+  if (entity) {
+    return 'linked-entity';
+  }
+  return glossaryTranslation ? 'lexical-glossary' : 'unresolved';
+}
+
+function lexicalSemanticId(text, language) {
+  return `lex:${language}:${normalizePhrase(text).replace(/\s+/g, '_')}`;
+}
+
+function sourceUrlForSemanticEntity(entity) {
+  if (entity.wikipediaUrl) {
+    return entity.wikipediaUrl;
+  }
+  if (entity.sourceUrl) {
+    return entity.sourceUrl;
+  }
+  if (!entity.id) {
+    return null;
+  }
+  if (entity.kind === 'property') {
+    return `${wikidataPropertyBaseUrl}${entity.id}`;
+  }
+  return `${wikidataEntityBaseUrl}${entity.id}`;
 }
 
 async function translatePhrase(phrase, config) {
@@ -522,13 +625,41 @@ function buildVariableAnswerOptions(variable, config) {
   return options;
 }
 
-function buildTranslationCst(
+function buildNaturalization(semanticMetaLanguage, phrases, sentences, config) {
+  const naturalization = {
+    type: 'naturalization',
+    version: 1,
+    sourceLanguage: config.sourceLanguage,
+    targetLanguage: config.targetLanguage,
+    semanticMetaLanguageId: semanticMetaLanguage.type,
+    semanticLinkIds: semanticMetaLanguage.links.map((link) => link.id),
+    targetText: renderSentenceOutput(sentences, 'plainText', phrases),
+    targetMarkdown: renderSentenceOutput(sentences, 'markdown', phrases),
+    targetHtml: renderSentenceOutput(sentences, 'html', phrases),
+    sentences: sentences.map((sentence) => ({
+      id: sentence.id,
+      semanticLinkIds: sentence.phrases.map(
+        (phrase) => `semantic-link-${Number(phrase.id.split('-').pop()) || 1}`
+      ),
+      targetText: sentence.plainText,
+      transformations: [...sentence.transformations],
+    })),
+  };
+  return {
+    ...naturalization,
+    linksNotation: renderNaturalizationLinksNotation(naturalization),
+  };
+}
+
+function buildTranslationCst({
   formalization,
+  semanticMetaLanguage,
+  naturalization,
   phrases,
   variables,
   sentences,
-  config
-) {
+  config,
+}) {
   return {
     type: 'translation',
     version: 1,
@@ -536,6 +667,8 @@ function buildTranslationCst(
     sourceLanguage: config.sourceLanguage,
     targetLanguage: config.targetLanguage,
     formalization: formalization.cst,
+    semanticMetaLanguage,
+    naturalization,
     phrases,
     variables,
     sentences: sentences.map((sentence) => ({
@@ -664,16 +797,101 @@ function renderUnitFromPhrase(phrase) {
 }
 
 function applySentenceTransformations(units, segment, sentenceId, config) {
+  let rendered;
   if (config.sourceLanguage === 'en' && config.targetLanguage === 'ru') {
-    return applyEnglishToRussianRules(units, segment, sentenceId, config);
+    rendered = applyEnglishToRussianRules(units, segment, sentenceId, config);
+  } else if (config.sourceLanguage === 'ru' && config.targetLanguage === 'en') {
+    rendered = applyRussianToEnglishRules(units, segment, sentenceId, config);
+  } else {
+    rendered = {
+      units,
+      transformations: [],
+      resolvedVariableNames: new Set(),
+    };
   }
-  if (config.sourceLanguage === 'ru' && config.targetLanguage === 'en') {
-    return applyRussianToEnglishRules(units, segment, sentenceId, config);
+  return applyCommonNaturalizationRules(rendered, segment, sentenceId, config);
+}
+
+function applyCommonNaturalizationRules(rendered, segment, sentenceId, config) {
+  if (config.translationStrategy === TRANSLATION_STRATEGIES.SEMANTIC_LABEL) {
+    return rendered;
   }
+  const exactGlossary = applyExactGlossaryPhraseNaturalization(
+    rendered.units,
+    segment,
+    sentenceId,
+    config
+  );
   return {
-    units,
-    transformations: [],
-    resolvedVariableNames: new Set(),
+    units: rendered.units,
+    transformations: [
+      ...rendered.transformations,
+      ...exactGlossary.transformations,
+    ],
+    resolvedVariableNames: new Set([
+      ...rendered.resolvedVariableNames,
+      ...exactGlossary.resolvedVariableNames,
+    ]),
+  };
+}
+
+function applyExactGlossaryPhraseNaturalization(
+  units,
+  segment,
+  sentenceId,
+  config
+) {
+  const transformations = [];
+  const resolvedVariableNames = new Set();
+  const maxPhraseSize = 4;
+  for (let index = 0; index < units.length; index += 1) {
+    const maxSize = Math.min(maxPhraseSize, units.length - index);
+    for (let size = maxSize; size >= 2; size -= 1) {
+      const slice = units.slice(index, index + size);
+      const sourceText = slice
+        .map((unit) => unit.sourceText)
+        .filter(Boolean)
+        .join(' ');
+      if (!sourceText || sourceText.split(/\s+/).length !== size) {
+        continue;
+      }
+      const translation = lookupExactGlossaryTranslation(sourceText, config);
+      if (!translation) {
+        continue;
+      }
+      const affectedVariables = slice
+        .map((unit) => unit.variableName)
+        .filter(Boolean);
+      for (const name of affectedVariables) {
+        resolvedVariableNames.add(name);
+      }
+      units.splice(
+        index,
+        size,
+        buildGlossaryPhraseUnit(sourceText, translation)
+      );
+      transformations.push('exact-glossary-phrase-naturalization');
+      recordStep(config, 'transformation-rule', {
+        sentenceId,
+        rule: 'exact-glossary-phrase-naturalization',
+        sourceText: segment.text,
+        affectedVariables,
+      });
+      break;
+    }
+  }
+  return { transformations, resolvedVariableNames };
+}
+
+function buildGlossaryPhraseUnit(sourceText, translation) {
+  const text = translation.text;
+  return {
+    kind: 'glossary-phrase',
+    sourceText,
+    variableName: null,
+    plainText: text,
+    markdown: escapeMarkdown(text),
+    html: escapeHtml(text),
   };
 }
 
@@ -1120,6 +1338,12 @@ function renderPhraseHtml(phrase) {
 
 function renderTranslationLinksNotation(cst, questions) {
   const head = `(translation: ${toLino(cst.text)} from ${cst.sourceLanguage} to ${cst.targetLanguage})`;
+  const semantic = cst.semanticMetaLanguage?.linksNotation
+    ? [cst.semanticMetaLanguage.linksNotation]
+    : [];
+  const naturalization = cst.naturalization?.linksNotation
+    ? [cst.naturalization.linksNotation]
+    : [];
   const sentences = cst.sentences.map(
     (sentence) =>
       `(${sentence.id}: source ${toLino(sentence.sourceText)} target ${toLino(sentence.targetText)} transformations ${toLino(sentence.transformations.join(', ') || 'none')})`
@@ -1150,12 +1374,41 @@ function renderTranslationLinksNotation(cst, questions) {
   );
   return [
     head,
+    ...semantic,
+    ...naturalization,
     ...sentences,
     ...phrases,
     ...variables,
     ...questionLines,
     ...steps,
   ].join('\n');
+}
+
+function renderSemanticMetaLanguageLinksNotation(semantic) {
+  const head = `(semantic-meta-language: ${toLino(semantic.text)} from ${semantic.sourceLanguage} to ${semantic.targetLanguage})`;
+  const links = semantic.links.map((link) => {
+    const meaning = link.meaning.id
+      ? ` meaning ${toLino(link.meaning.id)}`
+      : '';
+    const label = link.meaning.label
+      ? ` label ${toLino(link.meaning.label)}`
+      : '';
+    const target = link.targetHint
+      ? ` targetHint ${toLino(link.targetHint)}`
+      : '';
+    const url = link.meaning.url ? ` url ${toLino(link.meaning.url)}` : '';
+    return `(${link.id}: source ${toLino(link.sourceText)} status ${link.status}${meaning}${label}${target}${url})`;
+  });
+  return [head, ...links].join('\n');
+}
+
+function renderNaturalizationLinksNotation(naturalization) {
+  const head = `(naturalization: target ${toLino(naturalization.targetText)} language ${naturalization.targetLanguage})`;
+  const sentences = naturalization.sentences.map(
+    (sentence) =>
+      `(${sentence.id}: semanticLinks ${toLino(sentence.semanticLinkIds.join(' '))} target ${toLino(sentence.targetText)} transformations ${toLino(sentence.transformations.join(', ') || 'none')})`
+  );
+  return [head, ...sentences].join('\n');
 }
 
 function recordPhraseStep(phrase, config) {

@@ -3,6 +3,78 @@ import { translateTextWith } from '../src/index.js';
 import { readFile } from 'node:fs/promises';
 
 const issue41Input = 'Найти синонимы или примеры согласования';
+const additionalTranslationExamples = Object.freeze([
+  {
+    label: 'Find synonyms',
+    sourceLanguage: 'ru',
+    targetLanguage: 'en',
+    text: 'Найти синонимы',
+    expected: 'Find synonyms',
+  },
+  {
+    label: 'Find translation examples',
+    sourceLanguage: 'ru',
+    targetLanguage: 'en',
+    text: 'Найти примеры перевода',
+    expected: 'Find examples of translation',
+  },
+  {
+    label: 'Translate text',
+    sourceLanguage: 'ru',
+    targetLanguage: 'en',
+    text: 'Перевести текст',
+    expected: 'Translate text',
+  },
+  {
+    label: 'Formalize text',
+    sourceLanguage: 'ru',
+    targetLanguage: 'en',
+    text: 'Формализовать текст',
+    expected: 'Formalize text',
+  },
+  {
+    label: 'Check statement',
+    sourceLanguage: 'ru',
+    targetLanguage: 'en',
+    text: 'Проверить утверждение',
+    expected: 'Check statement',
+  },
+  {
+    label: 'Compare values',
+    sourceLanguage: 'ru',
+    targetLanguage: 'en',
+    text: 'Сравнить значения',
+    expected: 'Compare values',
+  },
+  {
+    label: 'Show questions',
+    sourceLanguage: 'ru',
+    targetLanguage: 'en',
+    text: 'Показать вопросы',
+    expected: 'Show questions',
+  },
+  {
+    label: 'Open page',
+    sourceLanguage: 'ru',
+    targetLanguage: 'en',
+    text: 'Открыть страницу',
+    expected: 'Open page',
+  },
+  {
+    label: 'Save result',
+    sourceLanguage: 'ru',
+    targetLanguage: 'en',
+    text: 'Сохранить результат',
+    expected: 'Save result',
+  },
+  {
+    label: 'Add examples',
+    sourceLanguage: 'en',
+    targetLanguage: 'ru',
+    text: 'Add examples',
+    expected: 'Добавьте примеры',
+  },
+]);
 
 function jsonResponse(payload) {
   return Promise.resolve({
@@ -147,6 +219,49 @@ describe('issue 41 - Russian translate fallback', () => {
     expect(result.questions).toEqual([]);
   });
 
+  it('exposes semantic meta language before naturalizing the target text', async () => {
+    const result = await translateTextWith(issue41Input, {
+      fetch: () => emptyJsonResponse(),
+      sourceLanguage: 'ru',
+      targetLanguage: 'en',
+      now: () => 0,
+    });
+
+    expect(result.semanticMetaLanguage.type).toBe('semantic-meta-language');
+    expect(result.semanticMetaLanguage.links.length).toBeGreaterThan(0);
+    expect(result.semanticMetaLanguage.linksNotation).toContain(
+      '(semantic-meta-language:'
+    );
+    expect(result.semanticMetaLanguage.linksNotation).toContain(
+      'semantic-link-'
+    );
+    expect(result.naturalization.type).toBe('naturalization');
+    expect(result.naturalization.linksNotation).toContain('(naturalization:');
+    expect(result.cst.semanticMetaLanguage).toBe(result.semanticMetaLanguage);
+    expect(result.cst.naturalization).toBe(result.naturalization);
+    expect(result.linksNotation).toContain('(semantic-meta-language:');
+    expect(result.linksNotation).toContain('(naturalization:');
+    expect(result.steps.map((step) => step.type)).toContain(
+      'semantic-meta-language'
+    );
+  });
+
+  it('supports ten more Translate examples through reusable glossary naturalization', async () => {
+    for (const example of additionalTranslationExamples) {
+      const result = await translateTextWith(example.text, {
+        fetch: () => emptyJsonResponse(),
+        sourceLanguage: example.sourceLanguage,
+        targetLanguage: example.targetLanguage,
+        now: () => 0,
+      });
+
+      expect(result.plainText).toBe(example.expected);
+      expect(result.questions).toEqual([]);
+      expect(result.semanticMetaLanguage.links.length).toBeGreaterThan(0);
+      expect(result.naturalization.targetText).toBe(example.expected);
+    }
+  });
+
   it('exposes the reported phrase as a Translate sample', async () => {
     const samples = await readFile(
       new URL('../web/translate-samples.js', import.meta.url),
@@ -156,5 +271,8 @@ describe('issue 41 - Russian translate fallback', () => {
     expect(samples).toContain(issue41Input);
     expect(samples).toContain("sourceLanguage: 'ru'");
     expect(samples).toContain("targetLanguage: 'en'");
+    for (const example of additionalTranslationExamples) {
+      expect(samples).toContain(example.text);
+    }
   });
 });

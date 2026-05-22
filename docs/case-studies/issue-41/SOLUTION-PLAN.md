@@ -15,7 +15,10 @@
 4. Add Russian-to-English lexical fallback entries for the reported phrase
    class.
 5. Add a Russian genitive phrase rule for `примеры X` -> `examples of X`.
-6. Verify the fix against issue #41 and adjacent Translate/formalization tests.
+6. Add 10 more Translate examples and cover them in JavaScript and Rust tests.
+7. Make the intermediate semantic meta-language explicit in `translateTextWith`
+   with links-notation rendering before target-language naturalization.
+8. Verify the fix against issue #41 and adjacent Translate/formalization tests.
 
 ## Follow-Up Work
 

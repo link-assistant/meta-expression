@@ -755,6 +755,58 @@ export interface TranslationSentence {
   html: string;
 }
 
+export interface SemanticMetaLanguageLink {
+  id: string;
+  sourceText: string;
+  sourceStart: number | null;
+  sourceEnd: number | null;
+  tokenStart: number;
+  tokenEnd: number;
+  sourceLanguage: string;
+  meaning: {
+    id: string | null;
+    label: string | null;
+    description: string | null;
+    url: string | null;
+    source: string | null;
+  };
+  targetHint: string | null;
+  status: string;
+}
+
+export interface SemanticMetaLanguage {
+  type: 'semantic-meta-language';
+  version: number;
+  text: string;
+  sourceLanguage: string;
+  targetLanguage: string;
+  representation: 'links-notation';
+  sourceLinksNotation: string;
+  links: SemanticMetaLanguageLink[];
+  linksNotation: string;
+}
+
+export interface TranslationNaturalizationSentence {
+  id: string;
+  semanticLinkIds: string[];
+  targetText: string;
+  transformations: string[];
+}
+
+export interface TranslationNaturalization {
+  type: 'naturalization';
+  version: number;
+  sourceLanguage: string;
+  targetLanguage: string;
+  semanticMetaLanguageId: string;
+  semanticLinkIds: string[];
+  targetText: string;
+  targetMarkdown: string;
+  targetHtml: string;
+  sentences: TranslationNaturalizationSentence[];
+  linksNotation: string;
+}
+
 export interface TranslationStep {
   id: string;
   type: string;
@@ -780,6 +832,8 @@ export interface TranslationCst {
   sourceLanguage: string;
   targetLanguage: string;
   formalization: FormalizationCst;
+  semanticMetaLanguage: SemanticMetaLanguage;
+  naturalization: TranslationNaturalization;
   phrases: TranslationPhrase[];
   variables: TranslationVariable[];
   sentences: TranslationCstSentence[];
@@ -791,6 +845,8 @@ export interface TranslateResult {
   sourceLanguage: string;
   targetLanguage: string;
   formalization: FormalizeResult;
+  semanticMetaLanguage: SemanticMetaLanguage;
+  naturalization: TranslationNaturalization;
   cst: TranslationCst;
   phrases: TranslationPhrase[];
   sentences: TranslationSentence[];

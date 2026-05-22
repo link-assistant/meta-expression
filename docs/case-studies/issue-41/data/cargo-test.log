@@ -1,42 +1,15 @@
-   Compiling proc-macro2 v1.0.106
-   Compiling quote v1.0.45
-   Compiling unicode-ident v1.0.24
-   Compiling autocfg v1.5.0
-   Compiling libc v0.2.186
-   Compiling thiserror v2.0.18
-   Compiling getrandom v0.4.2
-   Compiling rustix v1.1.4
-   Compiling cfg-if v1.0.4
-   Compiling bitflags v2.11.1
-   Compiling linux-raw-sys v0.12.1
-   Compiling num-traits v0.2.19
-   Compiling fastrand v2.4.1
-   Compiling once_cell v1.21.4
-   Compiling beef v0.5.2
-   Compiling allocator-api2 v0.4.0
-   Compiling leak_slice v0.2.0
-   Compiling syn v2.0.117
-   Compiling tap v1.0.1
-   Compiling memmap2 v0.9.10
-   Compiling platform-num v0.8.0
-   Compiling platform-trees v0.3.4
-   Compiling tempfile v3.27.0
-   Compiling thiserror-impl v2.0.18
-   Compiling platform-mem v0.3.0
-   Compiling platform-data v2.0.0
-   Compiling doublets v0.3.0
-   Compiling meta-expression-core v0.1.0 (/tmp/gh-issue-solver-1779473704111/rust/core)
-    Finished `test` profile [unoptimized + debuginfo] target(s) in 4.65s
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.03s
      Running unittests src/lib.rs (target/debug/deps/meta_expression_core-7ef4c8c4a15273b0)
 
-running 5 tests
-test tests::translates_issue35_sentence_through_semantic_ids ... ok
+running 6 tests
 test tests::bounds_real_world_confidence ... ok
 test tests::encodes_relation_as_doublet ... ok
+test tests::translates_issue35_sentence_through_semantic_ids ... ok
 test tests::encodes_issue35_translation_phrase_relations_as_doublets ... ok
 test tests::classifies_supported_statement_templates ... ok
+test tests::translates_issue41_glossary_examples_through_semantic_links ... ok
 
-test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
 
    Doc-tests meta_expression_core
 

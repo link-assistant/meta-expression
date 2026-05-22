@@ -68,6 +68,12 @@ reproductions, and test logs used for this fix:
    longer pass on snippet evidence alone.
 6. The translator gained a small reusable Russian-to-English glossary and a
    Russian genitive `примеры X` -> `examples of X` sentence rule.
+7. PR feedback asked for 10 more real examples and an explicit
+   `source language -> semantic meta language -> target language` translation
+   path.
+8. The translator now exposes a `semanticMetaLanguage` links-notation layer and
+   a `naturalization` trace, and the JavaScript and Rust tests cover the 10
+   additional examples.
 
 ## Root Causes
 
@@ -90,9 +96,20 @@ Find synonyms or examples of agreement
 with no unresolved questions and without the Marilyn Monroe / two-person-rule
 links.
 
+The result also contains an explicit intermediate semantic form:
+
+```text
+source language --formalization-> semantic meta language
+semantic meta language --naturalization-> target language
+```
+
+`semanticMetaLanguage.linksNotation` records the intermediate links, and
+`naturalization.linksNotation` records how those links were rendered into the
+target sentence.
+
 ## Boundary
 
 This PR does not turn the project into a general-purpose machine translation
 engine. It improves the shared formalization guardrail that caused the bad links
 and adds a reusable lexical slice for the reported Russian-to-English phrase
-class.
+class plus adjacent Translate examples.
