@@ -37,7 +37,7 @@ Create `src/translate.js` with `translateTextWith()`:
 - emit variables/questions for unresolved terms.
 
 The first rule slice covers English-to-Russian article omission plus
-`X is a Y` -> `X - Y` copula rewriting. The result also keeps phrase-level
+`X is a Y` -> `X это Y` copula rewriting. The result also keeps phrase-level
 records so later parser-backed Links Notation transformations can replace this
 narrow rule table.
 

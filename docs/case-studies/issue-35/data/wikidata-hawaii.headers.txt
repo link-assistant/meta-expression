@@ -1,0 +1,32 @@
+HTTP/2 200
+date: Fri, 22 May 2026 11:41:12 GMT
+server: mw-api-ext.eqiad.main-d74644f9f-wg9r8
+x-content-type-options: nosniff
+mediawiki-login-suppressed: true
+access-control-allow-origin: *
+access-control-allow-credentials: false
+access-control-expose-headers: MediaWiki-API-Error, Retry-After, X-Database-Lag, MediaWiki-Login-Suppressed
+x-search-id: z2h760iw16yrpmagf1qd3mq2
+content-security-policy: default-src 'self'; script-src 'none'; object-src 'none'
+x-frame-options: DENY
+content-disposition: inline; filename=api-result.json
+cache-control: private, must-revalidate, max-age=0
+content-type: application/json; charset=utf-8
+age: 0
+accept-ranges: bytes
+x-cache: cp6013 miss, cp6014 pass
+x-cache-status: pass
+server-timing: cache;desc="pass", host;desc="cp6014"
+strict-transport-security: max-age=106384710; includeSubDomains; preload
+report-to: { "group": "wm_nel", "max_age": 604800, "endpoints": [{ "url": "https://intake-logging.wikimedia.org/v1/events?stream=w3c.reportingapi.network_error&schema_uri=/w3c/reportingapi/network_error/1.0.0" }] }
+nel: { "report_to": "wm_nel", "max_age": 604800, "failure_fraction": 0.05, "success_fraction": 0.0}
+set-cookie: WMF-Last-Access=22-May-2026;Path=/;HttpOnly;secure;Expires=Tue, 23 Jun 2026 00:00:00 GMT
+set-cookie: WMF-Last-Access-Global=22-May-2026;Path=/;Domain=.wikidata.org;HttpOnly;secure;Expires=Tue, 23 Jun 2026 00:00:00 GMT
+x-client-ip: 161.97.177.66
+vary: Accept-Encoding,X-Subdomain,Treat-as-Untrusted,X-Forwarded-Proto,Cookie,Authorization,User-Agent
+set-cookie: GeoIP=FR:GES:Lauterbourg:48.97:8.19:v4; Path=/; secure; Domain=.wikidata.org
+set-cookie: NetworkProbeLimit=0.001;Path=/;Secure;SameSite=None;Max-Age=3600
+set-cookie: WMF-Uniq=yyZwz2kR55BqgrcexoAK4wNoAAAAAFvdOKIL_prDRs6zUvCqz7462D9nAz6Tnjd1;Domain=.wikidata.org;Path=/;HttpOnly;secure;SameSite=None;Expires=Sat, 22 May 2027 00:00:00 GMT
+content-length: 2320
+x-request-id: 39f724c1-d1b8-4a5a-8e65-0d50febf4eab
+x-analytics:

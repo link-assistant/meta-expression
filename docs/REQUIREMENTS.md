@@ -87,7 +87,7 @@ The prototype must keep these examples working:
 - `Hawaii`: `/translate` can formalize `Q782` and emit target-language
   Wikidata labels such as Russian `Гавайи`.
 - `Hawaii is a state.`: `/translate` can formalize `Q782` and `Q7275`, show
-  the formalized input, record API/rule steps, and emit `Гавайи - штат.` for
+  the formalized input, record API/rule steps, and emit `Гавайи это штат.` for
   the tested English-to-Russian rule slice.
 
 ## Current Guardrails
