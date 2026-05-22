@@ -1,0 +1,51 @@
+TAP version 13
+# Subtest: issue 41 - Russian translate fallback
+    # Subtest: translates the reported Russian phrase through lexical glossary entries
+    not ok 1 - translates the reported Russian phrase through lexical glossary entries
+      ---
+      duration_ms: 6.742652
+      location: '/tmp/gh-issue-solver-1779473704111/node_modules/test-anywhere/src/index.js:174:12'
+      failureType: 'testCodeFailure'
+      error: 'Expected "Найти синонимы или примеры согласования" to be "Find synonyms or examples of agreement"'
+      code: 'ERR_TEST_FAILURE'
+      stack: |-
+        Object.toBe (file:///tmp/gh-issue-solver-1779473704111/node_modules/test-anywhere/src/index.js:391:15)
+        TestContext.<anonymous> (file:///tmp/gh-issue-solver-1779473704111/tests/issue-41.test.js:125:30)
+        async Test.run (node:internal/test_runner/test:797:9)
+        async Promise.all (index 0)
+        async Suite.run (node:internal/test_runner/test:1135:7)
+        async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+      ...
+    # Subtest: does not translate unrelated full-text search hits as phrase meanings
+    not ok 2 - does not translate unrelated full-text search hits as phrase meanings
+      ---
+      duration_ms: 7.6707
+      location: '/tmp/gh-issue-solver-1779473704111/node_modules/test-anywhere/src/index.js:174:12'
+      failureType: 'testCodeFailure'
+      error: 'Expected "Marilyn Monroe two-person rule" to be "Find synonyms or examples of agreement"'
+      code: 'ERR_TEST_FAILURE'
+      stack: |-
+        Object.toBe (file:///tmp/gh-issue-solver-1779473704111/node_modules/test-anywhere/src/index.js:391:15)
+        TestContext.<anonymous> (file:///tmp/gh-issue-solver-1779473704111/tests/issue-41.test.js:140:30)
+        async Test.run (node:internal/test_runner/test:797:9)
+        async Suite.processPendingSubtests (node:internal/test_runner/test:526:7)
+      ...
+    1..2
+not ok 1 - issue 41 - Russian translate fallback
+  ---
+  duration_ms: 15.370372
+  type: 'suite'
+  location: '/tmp/gh-issue-solver-1779473704111/node_modules/test-anywhere/src/index.js:205:12'
+  failureType: 'subtestsFailed'
+  error: '2 subtests failed'
+  code: 'ERR_TEST_FAILURE'
+  ...
+1..1
+# tests 2
+# suites 1
+# pass 0
+# fail 2
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 92.745028

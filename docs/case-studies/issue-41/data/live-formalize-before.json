@@ -1,0 +1,3528 @@
+{
+  "text": "Найти синонимы или примеры согласования",
+  "tokens": [
+    "Найти",
+    "синонимы",
+    "или",
+    "примеры",
+    "согласования"
+  ],
+  "phrases": [
+    {
+      "text": "Найти",
+      "tokens": [
+        "Найти"
+      ],
+      "start": 0,
+      "end": 0,
+      "size": 1,
+      "candidates": [
+        {
+          "id": "Q17254154",
+          "label": "Estas Tonne",
+          "description": " Oksana (1 November 2016) Отпустить и прыгнуть. Как довериться жизни и найти свой путь. focus.ua &quot;Essential Sounds of The Universe -Estas Tonne&quot; Archived",
+          "kind": "entity",
+          "source": "wikipedia",
+          "sourceUrl": "https://en.wikipedia.org/wiki/Estas_Tonne",
+          "matchText": "Estas Tonne",
+          "matchType": "label",
+          "wikipediaTitle": "Estas Tonne",
+          "wikipediaUrl": "https://en.wikipedia.org/wiki/Estas_Tonne",
+          "wikibaseId": "Q17254154",
+          "score": 17,
+          "ngramSize": 1,
+          "contextLabels": [
+            {
+              "property": "P31",
+              "propertyLabel": "instance of",
+              "targetId": "Q5"
+            },
+            {
+              "property": "P106",
+              "propertyLabel": "occupation",
+              "targetId": "Q855091"
+            },
+            {
+              "property": "P106",
+              "propertyLabel": "occupation",
+              "targetId": "Q6168364"
+            }
+          ],
+          "aliases": []
+        },
+        {
+          "id": "Q64494830",
+          "label": "Ida Galich",
+          "description": "blogger. In 2018, released the songs «Дима», «Ты попал», and «Найти тебя». The song «Найти тебя» came with a music video that featured Anna Sedokova, Nadezhda",
+          "kind": "entity",
+          "source": "wikipedia",
+          "sourceUrl": "https://en.wikipedia.org/wiki/Ida_Galich",
+          "matchText": "Ida Galich",
+          "matchType": "label",
+          "wikipediaTitle": "Ida Galich",
+          "wikipediaUrl": "https://en.wikipedia.org/wiki/Ida_Galich",
+          "wikibaseId": "Q64494830",
+          "score": 17,
+          "ngramSize": 1,
+          "contextLabels": [
+            {
+              "property": "P31",
+              "propertyLabel": "instance of",
+              "targetId": "Q5"
+            },
+            {
+              "property": "P106",
+              "propertyLabel": "occupation",
+              "targetId": "Q947873"
+            },
+            {
+              "property": "P106",
+              "propertyLabel": "occupation",
+              "targetId": "Q177220"
+            },
+            {
+              "property": "P106",
+              "propertyLabel": "occupation",
+              "targetId": "Q4110598"
+            },
+            {
+              "property": "P106",
+              "propertyLabel": "occupation",
+              "targetId": "Q45217546"
+            },
+            {
+              "property": "P106",
+              "propertyLabel": "occupation",
+              "targetId": "Q13590141"
+            }
+          ],
+          "aliases": [
+            "Ida Vasilievna Galich",
+            "Ida Vasilevna Galich"
+          ]
+        },
+        {
+          "id": "Q4312463",
+          "label": "Find and Neutralize",
+          "description": "Find and Neutralize (Russian: Найти и обезвредить, romanized: Nayti i obezvredit) is a 1983 Soviet action adventure film directed by Georgy Kuznetsov",
+          "kind": "entity",
+          "source": "wikipedia",
+          "sourceUrl": "https://en.wikipedia.org/wiki/Find_and_Neutralize",
+          "matchText": "Find and Neutralize",
+          "matchType": "label",
+          "wikipediaTitle": "Find and Neutralize",
+          "wikipediaUrl": "https://en.wikipedia.org/wiki/Find_and_Neutralize",
+          "wikibaseId": "Q4312463",
+          "score": 17,
+          "ngramSize": 1,
+          "contextLabels": [
+            {
+              "property": "P31",
+              "propertyLabel": "instance of",
+              "targetId": "Q11424"
+            },
+            {
+              "property": "P136",
+              "propertyLabel": "genre",
+              "targetId": "Q319221"
+            },
+            {
+              "property": "P136",
+              "propertyLabel": "genre",
+              "targetId": "Q188473"
+            },
+            {
+              "property": "P136",
+              "propertyLabel": "genre",
+              "targetId": "Q25533274"
+            }
+          ],
+          "aliases": []
+        }
+      ],
+      "entity": {
+        "id": "Q17254154",
+        "label": "Estas Tonne",
+        "description": " Oksana (1 November 2016) Отпустить и прыгнуть. Как довериться жизни и найти свой путь. focus.ua &quot;Essential Sounds of The Universe -Estas Tonne&quot; Archived",
+        "kind": "entity",
+        "source": "wikipedia",
+        "sourceUrl": "https://en.wikipedia.org/wiki/Estas_Tonne",
+        "score": 17,
+        "wikipediaUrl": "https://en.wikipedia.org/wiki/Estas_Tonne",
+        "wikipediaTitle": "Estas Tonne",
+        "contextLabels": [
+          {
+            "property": "P31",
+            "propertyLabel": "instance of",
+            "targetId": "Q5"
+          },
+          {
+            "property": "P106",
+            "propertyLabel": "occupation",
+            "targetId": "Q855091"
+          },
+          {
+            "property": "P106",
+            "propertyLabel": "occupation",
+            "targetId": "Q6168364"
+          }
+        ],
+        "overrideEntry": null
+      }
+    },
+    {
+      "text": "синонимы",
+      "tokens": [
+        "синонимы"
+      ],
+      "start": 1,
+      "end": 1,
+      "size": 1,
+      "candidates": [
+        {
+          "id": "Q1040689",
+          "label": "synonym",
+          "description": "one of two or more names that apply to the same taxon",
+          "kind": "entity",
+          "source": "wikidata",
+          "sourceUrl": "https://www.wikidata.org/wiki/Q1040689",
+          "matchText": "синонимы",
+          "matchType": "alias",
+          "aliases": [
+            "taxonomic synonym",
+            "synonym (taxonomy)",
+            "taxon synonym"
+          ],
+          "score": 19,
+          "ngramSize": 1,
+          "wikipediaTitle": "Synonym (taxonomy)",
+          "wikipediaUrl": "https://en.wikipedia.org/wiki/Synonym_(taxonomy)",
+          "contextLabels": [
+            {
+              "property": "P31",
+              "propertyLabel": "instance of",
+              "targetId": "Q10753560"
+            },
+            {
+              "property": "P279",
+              "propertyLabel": "subclass of",
+              "targetId": "Q10753560"
+            }
+          ]
+        },
+        {
+          "id": "Q42106",
+          "label": "synonym",
+          "description": "word or phrase that means exactly or nearly the same as another word or phrase in the same language",
+          "kind": "entity",
+          "source": "wikidata",
+          "sourceUrl": "https://www.wikidata.org/wiki/Q42106",
+          "matchText": "синонимы",
+          "matchType": "label",
+          "aliases": [
+            "synonyms",
+            "synonymum",
+            "synonymous",
+            "poecilonym",
+            "word with the same meaning"
+          ],
+          "score": 19,
+          "ngramSize": 1,
+          "wikipediaTitle": "Synonym",
+          "wikipediaUrl": "https://en.wikipedia.org/wiki/Synonym",
+          "contextLabels": [
+            {
+              "property": "P279",
+              "propertyLabel": "subclass of",
+              "targetId": "Q8171"
+            },
+            {
+              "property": "P361",
+              "propertyLabel": "part of",
+              "targetId": "Q315"
+            }
+          ]
+        },
+        {
+          "id": "Q61672685",
+          "label": "Synonyms",
+          "description": "2019 film by Nadav Lapid",
+          "kind": "entity",
+          "source": "wikidata",
+          "sourceUrl": "https://www.wikidata.org/wiki/Q61672685",
+          "matchText": "Синонимы",
+          "matchType": "label",
+          "aliases": [
+            "Synonymes"
+          ],
+          "score": 19,
+          "ngramSize": 1,
+          "wikipediaTitle": "Synonyms (film)",
+          "wikipediaUrl": "https://en.wikipedia.org/wiki/Synonyms_(film)",
+          "contextLabels": [
+            {
+              "property": "P31",
+              "propertyLabel": "instance of",
+              "targetId": "Q11424"
+            },
+            {
+              "property": "P136",
+              "propertyLabel": "genre",
+              "targetId": "Q130232"
+            }
+          ]
+        }
+      ],
+      "entity": {
+        "id": "Q1040689",
+        "label": "synonym",
+        "description": "one of two or more names that apply to the same taxon",
+        "kind": "entity",
+        "source": "wikidata",
+        "sourceUrl": "https://www.wikidata.org/wiki/Q1040689",
+        "score": 19,
+        "wikipediaUrl": "https://en.wikipedia.org/wiki/Synonym_(taxonomy)",
+        "wikipediaTitle": "Synonym (taxonomy)",
+        "contextLabels": [
+          {
+            "property": "P31",
+            "propertyLabel": "instance of",
+            "targetId": "Q10753560"
+          },
+          {
+            "property": "P279",
+            "propertyLabel": "subclass of",
+            "targetId": "Q10753560"
+          }
+        ],
+        "overrideEntry": null
+      }
+    },
+    {
+      "text": "или примеры",
+      "tokens": [
+        "или",
+        "примеры"
+      ],
+      "start": 2,
+      "end": 3,
+      "size": 2,
+      "candidates": [
+        {
+          "id": "Q20513367",
+          "label": "George Ter-Stepanian",
+          "description": "loosening of rock slopes in the Bohemian Massive. [Рыбарж Я., Вржба О., Примеры ослабления скальных склонов в Богемском массиве]. Translation from English",
+          "kind": "entity",
+          "source": "wikipedia",
+          "sourceUrl": "https://en.wikipedia.org/wiki/George_Ter-Stepanian",
+          "matchText": "George Ter-Stepanian",
+          "matchType": "label",
+          "wikipediaTitle": "George Ter-Stepanian",
+          "wikipediaUrl": "https://en.wikipedia.org/wiki/George_Ter-Stepanian",
+          "wikibaseId": "Q20513367",
+          "score": 20,
+          "ngramSize": 2,
+          "contextLabels": [
+            {
+              "property": "P31",
+              "propertyLabel": "instance of",
+              "targetId": "Q5"
+            },
+            {
+              "property": "P106",
+              "propertyLabel": "occupation",
+              "targetId": "Q520549"
+            }
+          ],
+          "aliases": [
+            "George I. Ter-Stephanyan",
+            "G. I. Ter-Stepanyan"
+          ]
+        }
+      ],
+      "entity": {
+        "id": "Q20513367",
+        "label": "George Ter-Stepanian",
+        "description": "loosening of rock slopes in the Bohemian Massive. [Рыбарж Я., Вржба О., Примеры ослабления скальных склонов в Богемском массиве]. Translation from English",
+        "kind": "entity",
+        "source": "wikipedia",
+        "sourceUrl": "https://en.wikipedia.org/wiki/George_Ter-Stepanian",
+        "score": 20,
+        "wikipediaUrl": "https://en.wikipedia.org/wiki/George_Ter-Stepanian",
+        "wikipediaTitle": "George Ter-Stepanian",
+        "contextLabels": [
+          {
+            "property": "P31",
+            "propertyLabel": "instance of",
+            "targetId": "Q5"
+          },
+          {
+            "property": "P106",
+            "propertyLabel": "occupation",
+            "targetId": "Q520549"
+          }
+        ],
+        "overrideEntry": null
+      }
+    },
+    {
+      "text": "согласования",
+      "tokens": [
+        "согласования"
+      ],
+      "start": 4,
+      "end": 4,
+      "size": 1,
+      "candidates": [
+        {
+          "id": "Q65158665",
+          "label": "Yandex Eda",
+          "description": "April 2019). &quot;&quot;Яндекс.Еда&quot; разрешила курьерам уходить на перерыв без согласования. Это сделали после смерти сотрудника в Петербурге — Технологии на TJ&quot;",
+          "kind": "entity",
+          "source": "wikipedia",
+          "sourceUrl": "https://en.wikipedia.org/wiki/Yandex_Eda",
+          "matchText": "Yandex Eda",
+          "matchType": "label",
+          "wikipediaTitle": "Yandex Eda",
+          "wikipediaUrl": "https://en.wikipedia.org/wiki/Yandex_Eda",
+          "wikibaseId": "Q65158665",
+          "score": 17,
+          "ngramSize": 1,
+          "contextLabels": [
+            {
+              "property": "P31",
+              "propertyLabel": "instance of",
+              "targetId": "Q620615"
+            },
+            {
+              "property": "P31",
+              "propertyLabel": "instance of",
+              "targetId": "Q98660409"
+            }
+          ],
+          "aliases": []
+        },
+        {
+          "id": "Q85743010",
+          "label": "Armenian population by country",
+          "description": "случае угрозы безопасности Ереван применит комплексы &quot;Искандер&quot; без согласования с Москвой&quot;. interfax.ru (in Russian). Interfax. 14 April 2017. Archived",
+          "kind": "entity",
+          "source": "wikipedia",
+          "sourceUrl": "https://en.wikipedia.org/wiki/Armenian_population_by_country",
+          "matchText": "Armenian population by country",
+          "matchType": "label",
+          "wikipediaTitle": "Armenian population by country",
+          "wikipediaUrl": "https://en.wikipedia.org/wiki/Armenian_population_by_country",
+          "wikibaseId": "Q85743010",
+          "score": 17,
+          "ngramSize": 1,
+          "contextLabels": [
+            {
+              "property": "P31",
+              "propertyLabel": "instance of",
+              "targetId": "Q79797"
+            },
+            {
+              "property": "P31",
+              "propertyLabel": "instance of",
+              "targetId": "Q33829"
+            }
+          ],
+          "aliases": []
+        },
+        {
+          "id": "Q113576038",
+          "label": "Unity of the People (South Ossetia)",
+          "description": "Information Agency. Retrieved 14 November 2022. &quot;Очевидна необходимость согласования всех шагов&quot;. south-ossetia.info. Retrieved 4 April 2024. Fuller, Liz",
+          "kind": "entity",
+          "source": "wikipedia",
+          "sourceUrl": "https://en.wikipedia.org/wiki/Unity_of_the_People_(South_Ossetia)",
+          "matchText": "Unity of the People (South Ossetia)",
+          "matchType": "label",
+          "wikipediaTitle": "Unity of the People (South Ossetia)",
+          "wikipediaUrl": "https://en.wikipedia.org/wiki/Unity_of_the_People_(South_Ossetia)",
+          "wikibaseId": "Q113576038",
+          "score": 17,
+          "ngramSize": 1,
+          "contextLabels": [
+            {
+              "property": "P31",
+              "propertyLabel": "instance of",
+              "targetId": "Q7278"
+            }
+          ],
+          "aliases": []
+        }
+      ],
+      "entity": {
+        "id": "Q65158665",
+        "label": "Yandex Eda",
+        "description": "April 2019). &quot;&quot;Яндекс.Еда&quot; разрешила курьерам уходить на перерыв без согласования. Это сделали после смерти сотрудника в Петербурге — Технологии на TJ&quot;",
+        "kind": "entity",
+        "source": "wikipedia",
+        "sourceUrl": "https://en.wikipedia.org/wiki/Yandex_Eda",
+        "score": 17,
+        "wikipediaUrl": "https://en.wikipedia.org/wiki/Yandex_Eda",
+        "wikipediaTitle": "Yandex Eda",
+        "contextLabels": [
+          {
+            "property": "P31",
+            "propertyLabel": "instance of",
+            "targetId": "Q620615"
+          },
+          {
+            "property": "P31",
+            "propertyLabel": "instance of",
+            "targetId": "Q98660409"
+          }
+        ],
+        "overrideEntry": null
+      }
+    }
+  ],
+  "contexts": [
+    {
+      "id": "Q5",
+      "property": "P31",
+      "propertyLabel": "instance of",
+      "weight": 1.6666666666666665,
+      "phrases": [
+        {
+          "text": "Найти",
+          "entityId": "Q17254154"
+        },
+        {
+          "text": "или примеры",
+          "entityId": "Q20513367"
+        }
+      ],
+      "candidates": [
+        {
+          "phrase": "Найти",
+          "candidateId": "Q17254154",
+          "candidateLabel": "Estas Tonne",
+          "weight": 0.3333333333333333
+        },
+        {
+          "phrase": "Найти",
+          "candidateId": "Q64494830",
+          "candidateLabel": "Ida Galich",
+          "weight": 0.3333333333333333
+        },
+        {
+          "phrase": "или примеры",
+          "candidateId": "Q20513367",
+          "candidateLabel": "George Ter-Stepanian",
+          "weight": 1
+        }
+      ],
+      "probability": 0.16666666666666663
+    },
+    {
+      "id": "Q520549",
+      "property": "P106",
+      "propertyLabel": "occupation",
+      "weight": 1,
+      "phrases": [
+        {
+          "text": "или примеры",
+          "entityId": "Q20513367"
+        }
+      ],
+      "candidates": [
+        {
+          "phrase": "или примеры",
+          "candidateId": "Q20513367",
+          "candidateLabel": "George Ter-Stepanian",
+          "weight": 1
+        }
+      ],
+      "probability": 0.09999999999999998
+    },
+    {
+      "id": "Q10753560",
+      "property": "P31",
+      "propertyLabel": "instance of",
+      "weight": 0.6666666666666666,
+      "phrases": [
+        {
+          "text": "синонимы",
+          "entityId": "Q1040689"
+        }
+      ],
+      "candidates": [
+        {
+          "phrase": "синонимы",
+          "candidateId": "Q1040689",
+          "candidateLabel": "synonym",
+          "weight": 0.3333333333333333
+        },
+        {
+          "phrase": "синонимы",
+          "candidateId": "Q1040689",
+          "candidateLabel": "synonym",
+          "weight": 0.3333333333333333
+        }
+      ],
+      "probability": 0.06666666666666665
+    },
+    {
+      "id": "Q11424",
+      "property": "P31",
+      "propertyLabel": "instance of",
+      "weight": 0.6666666666666666,
+      "phrases": [
+        {
+          "text": "Найти",
+          "entityId": "Q17254154"
+        },
+        {
+          "text": "синонимы",
+          "entityId": "Q1040689"
+        }
+      ],
+      "candidates": [
+        {
+          "phrase": "Найти",
+          "candidateId": "Q4312463",
+          "candidateLabel": "Find and Neutralize",
+          "weight": 0.3333333333333333
+        },
+        {
+          "phrase": "синонимы",
+          "candidateId": "Q61672685",
+          "candidateLabel": "Synonyms",
+          "weight": 0.3333333333333333
+        }
+      ],
+      "probability": 0.06666666666666665
+    },
+    {
+      "id": "Q130232",
+      "property": "P136",
+      "propertyLabel": "genre",
+      "weight": 0.3333333333333333,
+      "phrases": [
+        {
+          "text": "синонимы",
+          "entityId": "Q1040689"
+        }
+      ],
+      "candidates": [
+        {
+          "phrase": "синонимы",
+          "candidateId": "Q61672685",
+          "candidateLabel": "Synonyms",
+          "weight": 0.3333333333333333
+        }
+      ],
+      "probability": 0.033333333333333326
+    },
+    {
+      "id": "Q13590141",
+      "property": "P106",
+      "propertyLabel": "occupation",
+      "weight": 0.3333333333333333,
+      "phrases": [
+        {
+          "text": "Найти",
+          "entityId": "Q17254154"
+        }
+      ],
+      "candidates": [
+        {
+          "phrase": "Найти",
+          "candidateId": "Q64494830",
+          "candidateLabel": "Ida Galich",
+          "weight": 0.3333333333333333
+        }
+      ],
+      "probability": 0.033333333333333326
+    },
+    {
+      "id": "Q177220",
+      "property": "P106",
+      "propertyLabel": "occupation",
+      "weight": 0.3333333333333333,
+      "phrases": [
+        {
+          "text": "Найти",
+          "entityId": "Q17254154"
+        }
+      ],
+      "candidates": [
+        {
+          "phrase": "Найти",
+          "candidateId": "Q64494830",
+          "candidateLabel": "Ida Galich",
+          "weight": 0.3333333333333333
+        }
+      ],
+      "probability": 0.033333333333333326
+    },
+    {
+      "id": "Q188473",
+      "property": "P136",
+      "propertyLabel": "genre",
+      "weight": 0.3333333333333333,
+      "phrases": [
+        {
+          "text": "Найти",
+          "entityId": "Q17254154"
+        }
+      ],
+      "candidates": [
+        {
+          "phrase": "Найти",
+          "candidateId": "Q4312463",
+          "candidateLabel": "Find and Neutralize",
+          "weight": 0.3333333333333333
+        }
+      ],
+      "probability": 0.033333333333333326
+    },
+    {
+      "id": "Q25533274",
+      "property": "P136",
+      "propertyLabel": "genre",
+      "weight": 0.3333333333333333,
+      "phrases": [
+        {
+          "text": "Найти",
+          "entityId": "Q17254154"
+        }
+      ],
+      "candidates": [
+        {
+          "phrase": "Найти",
+          "candidateId": "Q4312463",
+          "candidateLabel": "Find and Neutralize",
+          "weight": 0.3333333333333333
+        }
+      ],
+      "probability": 0.033333333333333326
+    },
+    {
+      "id": "Q315",
+      "property": "P361",
+      "propertyLabel": "part of",
+      "weight": 0.3333333333333333,
+      "phrases": [
+        {
+          "text": "синонимы",
+          "entityId": "Q1040689"
+        }
+      ],
+      "candidates": [
+        {
+          "phrase": "синонимы",
+          "candidateId": "Q42106",
+          "candidateLabel": "synonym",
+          "weight": 0.3333333333333333
+        }
+      ],
+      "probability": 0.033333333333333326
+    },
+    {
+      "id": "Q319221",
+      "property": "P136",
+      "propertyLabel": "genre",
+      "weight": 0.3333333333333333,
+      "phrases": [
+        {
+          "text": "Найти",
+          "entityId": "Q17254154"
+        }
+      ],
+      "candidates": [
+        {
+          "phrase": "Найти",
+          "candidateId": "Q4312463",
+          "candidateLabel": "Find and Neutralize",
+          "weight": 0.3333333333333333
+        }
+      ],
+      "probability": 0.033333333333333326
+    },
+    {
+      "id": "Q33829",
+      "property": "P31",
+      "propertyLabel": "instance of",
+      "weight": 0.3333333333333333,
+      "phrases": [
+        {
+          "text": "согласования",
+          "entityId": "Q65158665"
+        }
+      ],
+      "candidates": [
+        {
+          "phrase": "согласования",
+          "candidateId": "Q85743010",
+          "candidateLabel": "Armenian population by country",
+          "weight": 0.3333333333333333
+        }
+      ],
+      "probability": 0.033333333333333326
+    },
+    {
+      "id": "Q4110598",
+      "property": "P106",
+      "propertyLabel": "occupation",
+      "weight": 0.3333333333333333,
+      "phrases": [
+        {
+          "text": "Найти",
+          "entityId": "Q17254154"
+        }
+      ],
+      "candidates": [
+        {
+          "phrase": "Найти",
+          "candidateId": "Q64494830",
+          "candidateLabel": "Ida Galich",
+          "weight": 0.3333333333333333
+        }
+      ],
+      "probability": 0.033333333333333326
+    },
+    {
+      "id": "Q45217546",
+      "property": "P106",
+      "propertyLabel": "occupation",
+      "weight": 0.3333333333333333,
+      "phrases": [
+        {
+          "text": "Найти",
+          "entityId": "Q17254154"
+        }
+      ],
+      "candidates": [
+        {
+          "phrase": "Найти",
+          "candidateId": "Q64494830",
+          "candidateLabel": "Ida Galich",
+          "weight": 0.3333333333333333
+        }
+      ],
+      "probability": 0.033333333333333326
+    },
+    {
+      "id": "Q6168364",
+      "property": "P106",
+      "propertyLabel": "occupation",
+      "weight": 0.3333333333333333,
+      "phrases": [
+        {
+          "text": "Найти",
+          "entityId": "Q17254154"
+        }
+      ],
+      "candidates": [
+        {
+          "phrase": "Найти",
+          "candidateId": "Q17254154",
+          "candidateLabel": "Estas Tonne",
+          "weight": 0.3333333333333333
+        }
+      ],
+      "probability": 0.033333333333333326
+    },
+    {
+      "id": "Q620615",
+      "property": "P31",
+      "propertyLabel": "instance of",
+      "weight": 0.3333333333333333,
+      "phrases": [
+        {
+          "text": "согласования",
+          "entityId": "Q65158665"
+        }
+      ],
+      "candidates": [
+        {
+          "phrase": "согласования",
+          "candidateId": "Q65158665",
+          "candidateLabel": "Yandex Eda",
+          "weight": 0.3333333333333333
+        }
+      ],
+      "probability": 0.033333333333333326
+    },
+    {
+      "id": "Q7278",
+      "property": "P31",
+      "propertyLabel": "instance of",
+      "weight": 0.3333333333333333,
+      "phrases": [
+        {
+          "text": "согласования",
+          "entityId": "Q65158665"
+        }
+      ],
+      "candidates": [
+        {
+          "phrase": "согласования",
+          "candidateId": "Q113576038",
+          "candidateLabel": "Unity of the People (South Ossetia)",
+          "weight": 0.3333333333333333
+        }
+      ],
+      "probability": 0.033333333333333326
+    },
+    {
+      "id": "Q79797",
+      "property": "P31",
+      "propertyLabel": "instance of",
+      "weight": 0.3333333333333333,
+      "phrases": [
+        {
+          "text": "согласования",
+          "entityId": "Q65158665"
+        }
+      ],
+      "candidates": [
+        {
+          "phrase": "согласования",
+          "candidateId": "Q85743010",
+          "candidateLabel": "Armenian population by country",
+          "weight": 0.3333333333333333
+        }
+      ],
+      "probability": 0.033333333333333326
+    },
+    {
+      "id": "Q8171",
+      "property": "P279",
+      "propertyLabel": "subclass of",
+      "weight": 0.3333333333333333,
+      "phrases": [
+        {
+          "text": "синонимы",
+          "entityId": "Q1040689"
+        }
+      ],
+      "candidates": [
+        {
+          "phrase": "синонимы",
+          "candidateId": "Q42106",
+          "candidateLabel": "synonym",
+          "weight": 0.3333333333333333
+        }
+      ],
+      "probability": 0.033333333333333326
+    },
+    {
+      "id": "Q855091",
+      "property": "P106",
+      "propertyLabel": "occupation",
+      "weight": 0.3333333333333333,
+      "phrases": [
+        {
+          "text": "Найти",
+          "entityId": "Q17254154"
+        }
+      ],
+      "candidates": [
+        {
+          "phrase": "Найти",
+          "candidateId": "Q17254154",
+          "candidateLabel": "Estas Tonne",
+          "weight": 0.3333333333333333
+        }
+      ],
+      "probability": 0.033333333333333326
+    },
+    {
+      "id": "Q947873",
+      "property": "P106",
+      "propertyLabel": "occupation",
+      "weight": 0.3333333333333333,
+      "phrases": [
+        {
+          "text": "Найти",
+          "entityId": "Q17254154"
+        }
+      ],
+      "candidates": [
+        {
+          "phrase": "Найти",
+          "candidateId": "Q64494830",
+          "candidateLabel": "Ida Galich",
+          "weight": 0.3333333333333333
+        }
+      ],
+      "probability": 0.033333333333333326
+    },
+    {
+      "id": "Q98660409",
+      "property": "P31",
+      "propertyLabel": "instance of",
+      "weight": 0.3333333333333333,
+      "phrases": [
+        {
+          "text": "согласования",
+          "entityId": "Q65158665"
+        }
+      ],
+      "candidates": [
+        {
+          "phrase": "согласования",
+          "candidateId": "Q65158665",
+          "candidateLabel": "Yandex Eda",
+          "weight": 0.3333333333333333
+        }
+      ],
+      "probability": 0.033333333333333326
+    }
+  ],
+  "mainContext": {
+    "id": "Q5",
+    "property": "P31",
+    "propertyLabel": "instance of",
+    "weight": 1.6666666666666665,
+    "phrases": [
+      {
+        "text": "Найти",
+        "entityId": "Q17254154"
+      },
+      {
+        "text": "или примеры",
+        "entityId": "Q20513367"
+      }
+    ],
+    "candidates": [
+      {
+        "phrase": "Найти",
+        "candidateId": "Q17254154",
+        "candidateLabel": "Estas Tonne",
+        "weight": 0.3333333333333333
+      },
+      {
+        "phrase": "Найти",
+        "candidateId": "Q64494830",
+        "candidateLabel": "Ida Galich",
+        "weight": 0.3333333333333333
+      },
+      {
+        "phrase": "или примеры",
+        "candidateId": "Q20513367",
+        "candidateLabel": "George Ter-Stepanian",
+        "weight": 1
+      }
+    ],
+    "probability": 0.16666666666666663
+  },
+  "additionalContexts": [
+    {
+      "id": "Q520549",
+      "property": "P106",
+      "propertyLabel": "occupation",
+      "weight": 1,
+      "phrases": [
+        {
+          "text": "или примеры",
+          "entityId": "Q20513367"
+        }
+      ],
+      "candidates": [
+        {
+          "phrase": "или примеры",
+          "candidateId": "Q20513367",
+          "candidateLabel": "George Ter-Stepanian",
+          "weight": 1
+        }
+      ],
+      "probability": 0.09999999999999998
+    },
+    {
+      "id": "Q10753560",
+      "property": "P31",
+      "propertyLabel": "instance of",
+      "weight": 0.6666666666666666,
+      "phrases": [
+        {
+          "text": "синонимы",
+          "entityId": "Q1040689"
+        }
+      ],
+      "candidates": [
+        {
+          "phrase": "синонимы",
+          "candidateId": "Q1040689",
+          "candidateLabel": "synonym",
+          "weight": 0.3333333333333333
+        },
+        {
+          "phrase": "синонимы",
+          "candidateId": "Q1040689",
+          "candidateLabel": "synonym",
+          "weight": 0.3333333333333333
+        }
+      ],
+      "probability": 0.06666666666666665
+    },
+    {
+      "id": "Q11424",
+      "property": "P31",
+      "propertyLabel": "instance of",
+      "weight": 0.6666666666666666,
+      "phrases": [
+        {
+          "text": "Найти",
+          "entityId": "Q17254154"
+        },
+        {
+          "text": "синонимы",
+          "entityId": "Q1040689"
+        }
+      ],
+      "candidates": [
+        {
+          "phrase": "Найти",
+          "candidateId": "Q4312463",
+          "candidateLabel": "Find and Neutralize",
+          "weight": 0.3333333333333333
+        },
+        {
+          "phrase": "синонимы",
+          "candidateId": "Q61672685",
+          "candidateLabel": "Synonyms",
+          "weight": 0.3333333333333333
+        }
+      ],
+      "probability": 0.06666666666666665
+    },
+    {
+      "id": "Q130232",
+      "property": "P136",
+      "propertyLabel": "genre",
+      "weight": 0.3333333333333333,
+      "phrases": [
+        {
+          "text": "синонимы",
+          "entityId": "Q1040689"
+        }
+      ],
+      "candidates": [
+        {
+          "phrase": "синонимы",
+          "candidateId": "Q61672685",
+          "candidateLabel": "Synonyms",
+          "weight": 0.3333333333333333
+        }
+      ],
+      "probability": 0.033333333333333326
+    },
+    {
+      "id": "Q13590141",
+      "property": "P106",
+      "propertyLabel": "occupation",
+      "weight": 0.3333333333333333,
+      "phrases": [
+        {
+          "text": "Найти",
+          "entityId": "Q17254154"
+        }
+      ],
+      "candidates": [
+        {
+          "phrase": "Найти",
+          "candidateId": "Q64494830",
+          "candidateLabel": "Ida Galich",
+          "weight": 0.3333333333333333
+        }
+      ],
+      "probability": 0.033333333333333326
+    },
+    {
+      "id": "Q177220",
+      "property": "P106",
+      "propertyLabel": "occupation",
+      "weight": 0.3333333333333333,
+      "phrases": [
+        {
+          "text": "Найти",
+          "entityId": "Q17254154"
+        }
+      ],
+      "candidates": [
+        {
+          "phrase": "Найти",
+          "candidateId": "Q64494830",
+          "candidateLabel": "Ida Galich",
+          "weight": 0.3333333333333333
+        }
+      ],
+      "probability": 0.033333333333333326
+    },
+    {
+      "id": "Q188473",
+      "property": "P136",
+      "propertyLabel": "genre",
+      "weight": 0.3333333333333333,
+      "phrases": [
+        {
+          "text": "Найти",
+          "entityId": "Q17254154"
+        }
+      ],
+      "candidates": [
+        {
+          "phrase": "Найти",
+          "candidateId": "Q4312463",
+          "candidateLabel": "Find and Neutralize",
+          "weight": 0.3333333333333333
+        }
+      ],
+      "probability": 0.033333333333333326
+    },
+    {
+      "id": "Q25533274",
+      "property": "P136",
+      "propertyLabel": "genre",
+      "weight": 0.3333333333333333,
+      "phrases": [
+        {
+          "text": "Найти",
+          "entityId": "Q17254154"
+        }
+      ],
+      "candidates": [
+        {
+          "phrase": "Найти",
+          "candidateId": "Q4312463",
+          "candidateLabel": "Find and Neutralize",
+          "weight": 0.3333333333333333
+        }
+      ],
+      "probability": 0.033333333333333326
+    },
+    {
+      "id": "Q315",
+      "property": "P361",
+      "propertyLabel": "part of",
+      "weight": 0.3333333333333333,
+      "phrases": [
+        {
+          "text": "синонимы",
+          "entityId": "Q1040689"
+        }
+      ],
+      "candidates": [
+        {
+          "phrase": "синонимы",
+          "candidateId": "Q42106",
+          "candidateLabel": "synonym",
+          "weight": 0.3333333333333333
+        }
+      ],
+      "probability": 0.033333333333333326
+    },
+    {
+      "id": "Q319221",
+      "property": "P136",
+      "propertyLabel": "genre",
+      "weight": 0.3333333333333333,
+      "phrases": [
+        {
+          "text": "Найти",
+          "entityId": "Q17254154"
+        }
+      ],
+      "candidates": [
+        {
+          "phrase": "Найти",
+          "candidateId": "Q4312463",
+          "candidateLabel": "Find and Neutralize",
+          "weight": 0.3333333333333333
+        }
+      ],
+      "probability": 0.033333333333333326
+    },
+    {
+      "id": "Q33829",
+      "property": "P31",
+      "propertyLabel": "instance of",
+      "weight": 0.3333333333333333,
+      "phrases": [
+        {
+          "text": "согласования",
+          "entityId": "Q65158665"
+        }
+      ],
+      "candidates": [
+        {
+          "phrase": "согласования",
+          "candidateId": "Q85743010",
+          "candidateLabel": "Armenian population by country",
+          "weight": 0.3333333333333333
+        }
+      ],
+      "probability": 0.033333333333333326
+    },
+    {
+      "id": "Q4110598",
+      "property": "P106",
+      "propertyLabel": "occupation",
+      "weight": 0.3333333333333333,
+      "phrases": [
+        {
+          "text": "Найти",
+          "entityId": "Q17254154"
+        }
+      ],
+      "candidates": [
+        {
+          "phrase": "Найти",
+          "candidateId": "Q64494830",
+          "candidateLabel": "Ida Galich",
+          "weight": 0.3333333333333333
+        }
+      ],
+      "probability": 0.033333333333333326
+    },
+    {
+      "id": "Q45217546",
+      "property": "P106",
+      "propertyLabel": "occupation",
+      "weight": 0.3333333333333333,
+      "phrases": [
+        {
+          "text": "Найти",
+          "entityId": "Q17254154"
+        }
+      ],
+      "candidates": [
+        {
+          "phrase": "Найти",
+          "candidateId": "Q64494830",
+          "candidateLabel": "Ida Galich",
+          "weight": 0.3333333333333333
+        }
+      ],
+      "probability": 0.033333333333333326
+    },
+    {
+      "id": "Q6168364",
+      "property": "P106",
+      "propertyLabel": "occupation",
+      "weight": 0.3333333333333333,
+      "phrases": [
+        {
+          "text": "Найти",
+          "entityId": "Q17254154"
+        }
+      ],
+      "candidates": [
+        {
+          "phrase": "Найти",
+          "candidateId": "Q17254154",
+          "candidateLabel": "Estas Tonne",
+          "weight": 0.3333333333333333
+        }
+      ],
+      "probability": 0.033333333333333326
+    },
+    {
+      "id": "Q620615",
+      "property": "P31",
+      "propertyLabel": "instance of",
+      "weight": 0.3333333333333333,
+      "phrases": [
+        {
+          "text": "согласования",
+          "entityId": "Q65158665"
+        }
+      ],
+      "candidates": [
+        {
+          "phrase": "согласования",
+          "candidateId": "Q65158665",
+          "candidateLabel": "Yandex Eda",
+          "weight": 0.3333333333333333
+        }
+      ],
+      "probability": 0.033333333333333326
+    },
+    {
+      "id": "Q7278",
+      "property": "P31",
+      "propertyLabel": "instance of",
+      "weight": 0.3333333333333333,
+      "phrases": [
+        {
+          "text": "согласования",
+          "entityId": "Q65158665"
+        }
+      ],
+      "candidates": [
+        {
+          "phrase": "согласования",
+          "candidateId": "Q113576038",
+          "candidateLabel": "Unity of the People (South Ossetia)",
+          "weight": 0.3333333333333333
+        }
+      ],
+      "probability": 0.033333333333333326
+    },
+    {
+      "id": "Q79797",
+      "property": "P31",
+      "propertyLabel": "instance of",
+      "weight": 0.3333333333333333,
+      "phrases": [
+        {
+          "text": "согласования",
+          "entityId": "Q65158665"
+        }
+      ],
+      "candidates": [
+        {
+          "phrase": "согласования",
+          "candidateId": "Q85743010",
+          "candidateLabel": "Armenian population by country",
+          "weight": 0.3333333333333333
+        }
+      ],
+      "probability": 0.033333333333333326
+    },
+    {
+      "id": "Q8171",
+      "property": "P279",
+      "propertyLabel": "subclass of",
+      "weight": 0.3333333333333333,
+      "phrases": [
+        {
+          "text": "синонимы",
+          "entityId": "Q1040689"
+        }
+      ],
+      "candidates": [
+        {
+          "phrase": "синонимы",
+          "candidateId": "Q42106",
+          "candidateLabel": "synonym",
+          "weight": 0.3333333333333333
+        }
+      ],
+      "probability": 0.033333333333333326
+    },
+    {
+      "id": "Q855091",
+      "property": "P106",
+      "propertyLabel": "occupation",
+      "weight": 0.3333333333333333,
+      "phrases": [
+        {
+          "text": "Найти",
+          "entityId": "Q17254154"
+        }
+      ],
+      "candidates": [
+        {
+          "phrase": "Найти",
+          "candidateId": "Q17254154",
+          "candidateLabel": "Estas Tonne",
+          "weight": 0.3333333333333333
+        }
+      ],
+      "probability": 0.033333333333333326
+    },
+    {
+      "id": "Q947873",
+      "property": "P106",
+      "propertyLabel": "occupation",
+      "weight": 0.3333333333333333,
+      "phrases": [
+        {
+          "text": "Найти",
+          "entityId": "Q17254154"
+        }
+      ],
+      "candidates": [
+        {
+          "phrase": "Найти",
+          "candidateId": "Q64494830",
+          "candidateLabel": "Ida Galich",
+          "weight": 0.3333333333333333
+        }
+      ],
+      "probability": 0.033333333333333326
+    },
+    {
+      "id": "Q98660409",
+      "property": "P31",
+      "propertyLabel": "instance of",
+      "weight": 0.3333333333333333,
+      "phrases": [
+        {
+          "text": "согласования",
+          "entityId": "Q65158665"
+        }
+      ],
+      "candidates": [
+        {
+          "phrase": "согласования",
+          "candidateId": "Q65158665",
+          "candidateLabel": "Yandex Eda",
+          "weight": 0.3333333333333333
+        }
+      ],
+      "probability": 0.033333333333333326
+    }
+  ],
+  "bigContexts": [
+    {
+      "id": "Q5",
+      "label": null,
+      "weight": 1.6666666666666665,
+      "depth": 1,
+      "paths": [
+        [
+          "Q5"
+        ],
+        [
+          "Q5"
+        ],
+        [
+          "Q5"
+        ]
+      ],
+      "propertyTrail": [
+        "P31"
+      ],
+      "sourcePhrases": [
+        {
+          "text": "Найти",
+          "entityId": "Q17254154"
+        },
+        {
+          "text": "или примеры",
+          "entityId": "Q20513367"
+        }
+      ],
+      "sourceCandidates": [
+        {
+          "phrase": "Найти",
+          "candidateId": "Q17254154",
+          "candidateLabel": "Estas Tonne",
+          "weight": 0.3333333333333333
+        },
+        {
+          "phrase": "Найти",
+          "candidateId": "Q64494830",
+          "candidateLabel": "Ida Galich",
+          "weight": 0.3333333333333333
+        },
+        {
+          "phrase": "или примеры",
+          "candidateId": "Q20513367",
+          "candidateLabel": "George Ter-Stepanian",
+          "weight": 1
+        }
+      ],
+      "probability": 0.17241379310344823
+    },
+    {
+      "id": "Q520549",
+      "label": null,
+      "weight": 1,
+      "depth": 1,
+      "paths": [
+        [
+          "Q520549"
+        ]
+      ],
+      "propertyTrail": [
+        "P106"
+      ],
+      "sourcePhrases": [
+        {
+          "text": "или примеры",
+          "entityId": "Q20513367"
+        }
+      ],
+      "sourceCandidates": [
+        {
+          "phrase": "или примеры",
+          "candidateId": "Q20513367",
+          "candidateLabel": "George Ter-Stepanian",
+          "weight": 1
+        }
+      ],
+      "probability": 0.10344827586206895
+    },
+    {
+      "id": "Q11424",
+      "label": null,
+      "weight": 0.6666666666666666,
+      "depth": 1,
+      "paths": [
+        [
+          "Q11424"
+        ],
+        [
+          "Q11424"
+        ]
+      ],
+      "propertyTrail": [
+        "P31"
+      ],
+      "sourcePhrases": [
+        {
+          "text": "Найти",
+          "entityId": "Q17254154"
+        },
+        {
+          "text": "синонимы",
+          "entityId": "Q1040689"
+        }
+      ],
+      "sourceCandidates": [
+        {
+          "phrase": "Найти",
+          "candidateId": "Q4312463",
+          "candidateLabel": "Find and Neutralize",
+          "weight": 0.3333333333333333
+        },
+        {
+          "phrase": "синонимы",
+          "candidateId": "Q61672685",
+          "candidateLabel": "Synonyms",
+          "weight": 0.3333333333333333
+        }
+      ],
+      "probability": 0.0689655172413793
+    },
+    {
+      "id": "Q10753560",
+      "label": null,
+      "weight": 0.3333333333333333,
+      "depth": 1,
+      "paths": [
+        [
+          "Q10753560"
+        ]
+      ],
+      "propertyTrail": [
+        "P31"
+      ],
+      "sourcePhrases": [
+        {
+          "text": "синонимы",
+          "entityId": "Q1040689"
+        }
+      ],
+      "sourceCandidates": [
+        {
+          "phrase": "синонимы",
+          "candidateId": "Q1040689",
+          "candidateLabel": "synonym",
+          "weight": 0.3333333333333333
+        }
+      ],
+      "probability": 0.03448275862068965
+    },
+    {
+      "id": "Q130232",
+      "label": null,
+      "weight": 0.3333333333333333,
+      "depth": 1,
+      "paths": [
+        [
+          "Q130232"
+        ]
+      ],
+      "propertyTrail": [
+        "P136"
+      ],
+      "sourcePhrases": [
+        {
+          "text": "синонимы",
+          "entityId": "Q1040689"
+        }
+      ],
+      "sourceCandidates": [
+        {
+          "phrase": "синонимы",
+          "candidateId": "Q61672685",
+          "candidateLabel": "Synonyms",
+          "weight": 0.3333333333333333
+        }
+      ],
+      "probability": 0.03448275862068965
+    },
+    {
+      "id": "Q13590141",
+      "label": null,
+      "weight": 0.3333333333333333,
+      "depth": 1,
+      "paths": [
+        [
+          "Q13590141"
+        ]
+      ],
+      "propertyTrail": [
+        "P106"
+      ],
+      "sourcePhrases": [
+        {
+          "text": "Найти",
+          "entityId": "Q17254154"
+        }
+      ],
+      "sourceCandidates": [
+        {
+          "phrase": "Найти",
+          "candidateId": "Q64494830",
+          "candidateLabel": "Ida Galich",
+          "weight": 0.3333333333333333
+        }
+      ],
+      "probability": 0.03448275862068965
+    },
+    {
+      "id": "Q177220",
+      "label": null,
+      "weight": 0.3333333333333333,
+      "depth": 1,
+      "paths": [
+        [
+          "Q177220"
+        ]
+      ],
+      "propertyTrail": [
+        "P106"
+      ],
+      "sourcePhrases": [
+        {
+          "text": "Найти",
+          "entityId": "Q17254154"
+        }
+      ],
+      "sourceCandidates": [
+        {
+          "phrase": "Найти",
+          "candidateId": "Q64494830",
+          "candidateLabel": "Ida Galich",
+          "weight": 0.3333333333333333
+        }
+      ],
+      "probability": 0.03448275862068965
+    },
+    {
+      "id": "Q188473",
+      "label": null,
+      "weight": 0.3333333333333333,
+      "depth": 1,
+      "paths": [
+        [
+          "Q188473"
+        ]
+      ],
+      "propertyTrail": [
+        "P136"
+      ],
+      "sourcePhrases": [
+        {
+          "text": "Найти",
+          "entityId": "Q17254154"
+        }
+      ],
+      "sourceCandidates": [
+        {
+          "phrase": "Найти",
+          "candidateId": "Q4312463",
+          "candidateLabel": "Find and Neutralize",
+          "weight": 0.3333333333333333
+        }
+      ],
+      "probability": 0.03448275862068965
+    },
+    {
+      "id": "Q25533274",
+      "label": null,
+      "weight": 0.3333333333333333,
+      "depth": 1,
+      "paths": [
+        [
+          "Q25533274"
+        ]
+      ],
+      "propertyTrail": [
+        "P136"
+      ],
+      "sourcePhrases": [
+        {
+          "text": "Найти",
+          "entityId": "Q17254154"
+        }
+      ],
+      "sourceCandidates": [
+        {
+          "phrase": "Найти",
+          "candidateId": "Q4312463",
+          "candidateLabel": "Find and Neutralize",
+          "weight": 0.3333333333333333
+        }
+      ],
+      "probability": 0.03448275862068965
+    },
+    {
+      "id": "Q315",
+      "label": null,
+      "weight": 0.3333333333333333,
+      "depth": 1,
+      "paths": [
+        [
+          "Q315"
+        ]
+      ],
+      "propertyTrail": [
+        "P361"
+      ],
+      "sourcePhrases": [
+        {
+          "text": "синонимы",
+          "entityId": "Q1040689"
+        }
+      ],
+      "sourceCandidates": [
+        {
+          "phrase": "синонимы",
+          "candidateId": "Q42106",
+          "candidateLabel": "synonym",
+          "weight": 0.3333333333333333
+        }
+      ],
+      "probability": 0.03448275862068965
+    },
+    {
+      "id": "Q319221",
+      "label": null,
+      "weight": 0.3333333333333333,
+      "depth": 1,
+      "paths": [
+        [
+          "Q319221"
+        ]
+      ],
+      "propertyTrail": [
+        "P136"
+      ],
+      "sourcePhrases": [
+        {
+          "text": "Найти",
+          "entityId": "Q17254154"
+        }
+      ],
+      "sourceCandidates": [
+        {
+          "phrase": "Найти",
+          "candidateId": "Q4312463",
+          "candidateLabel": "Find and Neutralize",
+          "weight": 0.3333333333333333
+        }
+      ],
+      "probability": 0.03448275862068965
+    },
+    {
+      "id": "Q33829",
+      "label": null,
+      "weight": 0.3333333333333333,
+      "depth": 1,
+      "paths": [
+        [
+          "Q33829"
+        ]
+      ],
+      "propertyTrail": [
+        "P31"
+      ],
+      "sourcePhrases": [
+        {
+          "text": "согласования",
+          "entityId": "Q65158665"
+        }
+      ],
+      "sourceCandidates": [
+        {
+          "phrase": "согласования",
+          "candidateId": "Q85743010",
+          "candidateLabel": "Armenian population by country",
+          "weight": 0.3333333333333333
+        }
+      ],
+      "probability": 0.03448275862068965
+    }
+  ],
+  "mainBigContext": {
+    "id": "Q5",
+    "label": null,
+    "weight": 1.6666666666666665,
+    "depth": 1,
+    "paths": [
+      [
+        "Q5"
+      ],
+      [
+        "Q5"
+      ],
+      [
+        "Q5"
+      ]
+    ],
+    "propertyTrail": [
+      "P31"
+    ],
+    "sourcePhrases": [
+      {
+        "text": "Найти",
+        "entityId": "Q17254154"
+      },
+      {
+        "text": "или примеры",
+        "entityId": "Q20513367"
+      }
+    ],
+    "sourceCandidates": [
+      {
+        "phrase": "Найти",
+        "candidateId": "Q17254154",
+        "candidateLabel": "Estas Tonne",
+        "weight": 0.3333333333333333
+      },
+      {
+        "phrase": "Найти",
+        "candidateId": "Q64494830",
+        "candidateLabel": "Ida Galich",
+        "weight": 0.3333333333333333
+      },
+      {
+        "phrase": "или примеры",
+        "candidateId": "Q20513367",
+        "candidateLabel": "George Ter-Stepanian",
+        "weight": 1
+      }
+    ],
+    "probability": 0.17241379310344823
+  },
+  "additionalBigContexts": [
+    {
+      "id": "Q520549",
+      "label": null,
+      "weight": 1,
+      "depth": 1,
+      "paths": [
+        [
+          "Q520549"
+        ]
+      ],
+      "propertyTrail": [
+        "P106"
+      ],
+      "sourcePhrases": [
+        {
+          "text": "или примеры",
+          "entityId": "Q20513367"
+        }
+      ],
+      "sourceCandidates": [
+        {
+          "phrase": "или примеры",
+          "candidateId": "Q20513367",
+          "candidateLabel": "George Ter-Stepanian",
+          "weight": 1
+        }
+      ],
+      "probability": 0.10344827586206895
+    },
+    {
+      "id": "Q11424",
+      "label": null,
+      "weight": 0.6666666666666666,
+      "depth": 1,
+      "paths": [
+        [
+          "Q11424"
+        ],
+        [
+          "Q11424"
+        ]
+      ],
+      "propertyTrail": [
+        "P31"
+      ],
+      "sourcePhrases": [
+        {
+          "text": "Найти",
+          "entityId": "Q17254154"
+        },
+        {
+          "text": "синонимы",
+          "entityId": "Q1040689"
+        }
+      ],
+      "sourceCandidates": [
+        {
+          "phrase": "Найти",
+          "candidateId": "Q4312463",
+          "candidateLabel": "Find and Neutralize",
+          "weight": 0.3333333333333333
+        },
+        {
+          "phrase": "синонимы",
+          "candidateId": "Q61672685",
+          "candidateLabel": "Synonyms",
+          "weight": 0.3333333333333333
+        }
+      ],
+      "probability": 0.0689655172413793
+    },
+    {
+      "id": "Q10753560",
+      "label": null,
+      "weight": 0.3333333333333333,
+      "depth": 1,
+      "paths": [
+        [
+          "Q10753560"
+        ]
+      ],
+      "propertyTrail": [
+        "P31"
+      ],
+      "sourcePhrases": [
+        {
+          "text": "синонимы",
+          "entityId": "Q1040689"
+        }
+      ],
+      "sourceCandidates": [
+        {
+          "phrase": "синонимы",
+          "candidateId": "Q1040689",
+          "candidateLabel": "synonym",
+          "weight": 0.3333333333333333
+        }
+      ],
+      "probability": 0.03448275862068965
+    },
+    {
+      "id": "Q130232",
+      "label": null,
+      "weight": 0.3333333333333333,
+      "depth": 1,
+      "paths": [
+        [
+          "Q130232"
+        ]
+      ],
+      "propertyTrail": [
+        "P136"
+      ],
+      "sourcePhrases": [
+        {
+          "text": "синонимы",
+          "entityId": "Q1040689"
+        }
+      ],
+      "sourceCandidates": [
+        {
+          "phrase": "синонимы",
+          "candidateId": "Q61672685",
+          "candidateLabel": "Synonyms",
+          "weight": 0.3333333333333333
+        }
+      ],
+      "probability": 0.03448275862068965
+    },
+    {
+      "id": "Q13590141",
+      "label": null,
+      "weight": 0.3333333333333333,
+      "depth": 1,
+      "paths": [
+        [
+          "Q13590141"
+        ]
+      ],
+      "propertyTrail": [
+        "P106"
+      ],
+      "sourcePhrases": [
+        {
+          "text": "Найти",
+          "entityId": "Q17254154"
+        }
+      ],
+      "sourceCandidates": [
+        {
+          "phrase": "Найти",
+          "candidateId": "Q64494830",
+          "candidateLabel": "Ida Galich",
+          "weight": 0.3333333333333333
+        }
+      ],
+      "probability": 0.03448275862068965
+    },
+    {
+      "id": "Q177220",
+      "label": null,
+      "weight": 0.3333333333333333,
+      "depth": 1,
+      "paths": [
+        [
+          "Q177220"
+        ]
+      ],
+      "propertyTrail": [
+        "P106"
+      ],
+      "sourcePhrases": [
+        {
+          "text": "Найти",
+          "entityId": "Q17254154"
+        }
+      ],
+      "sourceCandidates": [
+        {
+          "phrase": "Найти",
+          "candidateId": "Q64494830",
+          "candidateLabel": "Ida Galich",
+          "weight": 0.3333333333333333
+        }
+      ],
+      "probability": 0.03448275862068965
+    },
+    {
+      "id": "Q188473",
+      "label": null,
+      "weight": 0.3333333333333333,
+      "depth": 1,
+      "paths": [
+        [
+          "Q188473"
+        ]
+      ],
+      "propertyTrail": [
+        "P136"
+      ],
+      "sourcePhrases": [
+        {
+          "text": "Найти",
+          "entityId": "Q17254154"
+        }
+      ],
+      "sourceCandidates": [
+        {
+          "phrase": "Найти",
+          "candidateId": "Q4312463",
+          "candidateLabel": "Find and Neutralize",
+          "weight": 0.3333333333333333
+        }
+      ],
+      "probability": 0.03448275862068965
+    },
+    {
+      "id": "Q25533274",
+      "label": null,
+      "weight": 0.3333333333333333,
+      "depth": 1,
+      "paths": [
+        [
+          "Q25533274"
+        ]
+      ],
+      "propertyTrail": [
+        "P136"
+      ],
+      "sourcePhrases": [
+        {
+          "text": "Найти",
+          "entityId": "Q17254154"
+        }
+      ],
+      "sourceCandidates": [
+        {
+          "phrase": "Найти",
+          "candidateId": "Q4312463",
+          "candidateLabel": "Find and Neutralize",
+          "weight": 0.3333333333333333
+        }
+      ],
+      "probability": 0.03448275862068965
+    },
+    {
+      "id": "Q315",
+      "label": null,
+      "weight": 0.3333333333333333,
+      "depth": 1,
+      "paths": [
+        [
+          "Q315"
+        ]
+      ],
+      "propertyTrail": [
+        "P361"
+      ],
+      "sourcePhrases": [
+        {
+          "text": "синонимы",
+          "entityId": "Q1040689"
+        }
+      ],
+      "sourceCandidates": [
+        {
+          "phrase": "синонимы",
+          "candidateId": "Q42106",
+          "candidateLabel": "synonym",
+          "weight": 0.3333333333333333
+        }
+      ],
+      "probability": 0.03448275862068965
+    },
+    {
+      "id": "Q319221",
+      "label": null,
+      "weight": 0.3333333333333333,
+      "depth": 1,
+      "paths": [
+        [
+          "Q319221"
+        ]
+      ],
+      "propertyTrail": [
+        "P136"
+      ],
+      "sourcePhrases": [
+        {
+          "text": "Найти",
+          "entityId": "Q17254154"
+        }
+      ],
+      "sourceCandidates": [
+        {
+          "phrase": "Найти",
+          "candidateId": "Q4312463",
+          "candidateLabel": "Find and Neutralize",
+          "weight": 0.3333333333333333
+        }
+      ],
+      "probability": 0.03448275862068965
+    },
+    {
+      "id": "Q33829",
+      "label": null,
+      "weight": 0.3333333333333333,
+      "depth": 1,
+      "paths": [
+        [
+          "Q33829"
+        ]
+      ],
+      "propertyTrail": [
+        "P31"
+      ],
+      "sourcePhrases": [
+        {
+          "text": "согласования",
+          "entityId": "Q65158665"
+        }
+      ],
+      "sourceCandidates": [
+        {
+          "phrase": "согласования",
+          "candidateId": "Q85743010",
+          "candidateLabel": "Armenian population by country",
+          "weight": 0.3333333333333333
+        }
+      ],
+      "probability": 0.03448275862068965
+    }
+  ],
+  "interpretations": [
+    {
+      "rank": 1,
+      "score": 75,
+      "phrases": [
+        {
+          "text": "Найти",
+          "entityId": "Q17254154",
+          "kind": "entity",
+          "entityLabel": "Estas Tonne",
+          "entityDescription": " Oksana (1 November 2016) Отпустить и прыгнуть. Как довериться жизни и найти свой путь. focus.ua &quot;Essential Sounds of The Universe -Estas Tonne&quot; Archived"
+        },
+        {
+          "text": "синонимы",
+          "entityId": "Q1040689",
+          "kind": "entity",
+          "entityLabel": "synonym",
+          "entityDescription": "one of two or more names that apply to the same taxon"
+        },
+        {
+          "text": "или примеры",
+          "entityId": "Q20513367",
+          "kind": "entity",
+          "entityLabel": "George Ter-Stepanian",
+          "entityDescription": "loosening of rock slopes in the Bohemian Massive. [Рыбарж Я., Вржба О., Примеры ослабления скальных склонов в Богемском массиве]. Translation from English"
+        },
+        {
+          "text": "согласования",
+          "entityId": "Q65158665",
+          "kind": "entity",
+          "entityLabel": "Yandex Eda",
+          "entityDescription": "April 2019). &quot;&quot;Яндекс.Еда&quot; разрешила курьерам уходить на перерыв без согласования. Это сделали после смерти сотрудника в Петербурге — Технологии на TJ&quot;"
+        }
+      ]
+    },
+    {
+      "rank": 2,
+      "score": 75,
+      "phrases": [
+        {
+          "text": "Найти",
+          "entityId": "Q17254154",
+          "kind": "entity",
+          "entityLabel": "Estas Tonne",
+          "entityDescription": " Oksana (1 November 2016) Отпустить и прыгнуть. Как довериться жизни и найти свой путь. focus.ua &quot;Essential Sounds of The Universe -Estas Tonne&quot; Archived"
+        },
+        {
+          "text": "синонимы",
+          "entityId": "Q1040689",
+          "kind": "entity",
+          "entityLabel": "synonym",
+          "entityDescription": "one of two or more names that apply to the same taxon"
+        },
+        {
+          "text": "или примеры",
+          "entityId": "Q20513367",
+          "kind": "entity",
+          "entityLabel": "George Ter-Stepanian",
+          "entityDescription": "loosening of rock slopes in the Bohemian Massive. [Рыбарж Я., Вржба О., Примеры ослабления скальных склонов в Богемском массиве]. Translation from English"
+        },
+        {
+          "text": "согласования",
+          "entityId": "Q85743010",
+          "kind": "entity",
+          "entityLabel": "Armenian population by country",
+          "entityDescription": "случае угрозы безопасности Ереван применит комплексы &quot;Искандер&quot; без согласования с Москвой&quot;. interfax.ru (in Russian). Interfax. 14 April 2017. Archived"
+        }
+      ]
+    },
+    {
+      "rank": 3,
+      "score": 75,
+      "phrases": [
+        {
+          "text": "Найти",
+          "entityId": "Q17254154",
+          "kind": "entity",
+          "entityLabel": "Estas Tonne",
+          "entityDescription": " Oksana (1 November 2016) Отпустить и прыгнуть. Как довериться жизни и найти свой путь. focus.ua &quot;Essential Sounds of The Universe -Estas Tonne&quot; Archived"
+        },
+        {
+          "text": "синонимы",
+          "entityId": "Q1040689",
+          "kind": "entity",
+          "entityLabel": "synonym",
+          "entityDescription": "one of two or more names that apply to the same taxon"
+        },
+        {
+          "text": "или примеры",
+          "entityId": "Q20513367",
+          "kind": "entity",
+          "entityLabel": "George Ter-Stepanian",
+          "entityDescription": "loosening of rock slopes in the Bohemian Massive. [Рыбарж Я., Вржба О., Примеры ослабления скальных склонов в Богемском массиве]. Translation from English"
+        },
+        {
+          "text": "согласования",
+          "entityId": "Q113576038",
+          "kind": "entity",
+          "entityLabel": "Unity of the People (South Ossetia)",
+          "entityDescription": "Information Agency. Retrieved 14 November 2022. &quot;Очевидна необходимость согласования всех шагов&quot;. south-ossetia.info. Retrieved 4 April 2024. Fuller, Liz"
+        }
+      ]
+    },
+    {
+      "rank": 4,
+      "score": 75,
+      "phrases": [
+        {
+          "text": "Найти",
+          "entityId": "Q17254154",
+          "kind": "entity",
+          "entityLabel": "Estas Tonne",
+          "entityDescription": " Oksana (1 November 2016) Отпустить и прыгнуть. Как довериться жизни и найти свой путь. focus.ua &quot;Essential Sounds of The Universe -Estas Tonne&quot; Archived"
+        },
+        {
+          "text": "синонимы",
+          "entityId": "Q42106",
+          "kind": "entity",
+          "entityLabel": "synonym",
+          "entityDescription": "word or phrase that means exactly or nearly the same as another word or phrase in the same language"
+        },
+        {
+          "text": "или примеры",
+          "entityId": "Q20513367",
+          "kind": "entity",
+          "entityLabel": "George Ter-Stepanian",
+          "entityDescription": "loosening of rock slopes in the Bohemian Massive. [Рыбарж Я., Вржба О., Примеры ослабления скальных склонов в Богемском массиве]. Translation from English"
+        },
+        {
+          "text": "согласования",
+          "entityId": "Q65158665",
+          "kind": "entity",
+          "entityLabel": "Yandex Eda",
+          "entityDescription": "April 2019). &quot;&quot;Яндекс.Еда&quot; разрешила курьерам уходить на перерыв без согласования. Это сделали после смерти сотрудника в Петербурге — Технологии на TJ&quot;"
+        }
+      ]
+    },
+    {
+      "rank": 5,
+      "score": 75,
+      "phrases": [
+        {
+          "text": "Найти",
+          "entityId": "Q17254154",
+          "kind": "entity",
+          "entityLabel": "Estas Tonne",
+          "entityDescription": " Oksana (1 November 2016) Отпустить и прыгнуть. Как довериться жизни и найти свой путь. focus.ua &quot;Essential Sounds of The Universe -Estas Tonne&quot; Archived"
+        },
+        {
+          "text": "синонимы",
+          "entityId": "Q42106",
+          "kind": "entity",
+          "entityLabel": "synonym",
+          "entityDescription": "word or phrase that means exactly or nearly the same as another word or phrase in the same language"
+        },
+        {
+          "text": "или примеры",
+          "entityId": "Q20513367",
+          "kind": "entity",
+          "entityLabel": "George Ter-Stepanian",
+          "entityDescription": "loosening of rock slopes in the Bohemian Massive. [Рыбарж Я., Вржба О., Примеры ослабления скальных склонов в Богемском массиве]. Translation from English"
+        },
+        {
+          "text": "согласования",
+          "entityId": "Q85743010",
+          "kind": "entity",
+          "entityLabel": "Armenian population by country",
+          "entityDescription": "случае угрозы безопасности Ереван применит комплексы &quot;Искандер&quot; без согласования с Москвой&quot;. interfax.ru (in Russian). Interfax. 14 April 2017. Archived"
+        }
+      ]
+    },
+    {
+      "rank": 6,
+      "score": 75,
+      "phrases": [
+        {
+          "text": "Найти",
+          "entityId": "Q17254154",
+          "kind": "entity",
+          "entityLabel": "Estas Tonne",
+          "entityDescription": " Oksana (1 November 2016) Отпустить и прыгнуть. Как довериться жизни и найти свой путь. focus.ua &quot;Essential Sounds of The Universe -Estas Tonne&quot; Archived"
+        },
+        {
+          "text": "синонимы",
+          "entityId": "Q42106",
+          "kind": "entity",
+          "entityLabel": "synonym",
+          "entityDescription": "word or phrase that means exactly or nearly the same as another word or phrase in the same language"
+        },
+        {
+          "text": "или примеры",
+          "entityId": "Q20513367",
+          "kind": "entity",
+          "entityLabel": "George Ter-Stepanian",
+          "entityDescription": "loosening of rock slopes in the Bohemian Massive. [Рыбарж Я., Вржба О., Примеры ослабления скальных склонов в Богемском массиве]. Translation from English"
+        },
+        {
+          "text": "согласования",
+          "entityId": "Q113576038",
+          "kind": "entity",
+          "entityLabel": "Unity of the People (South Ossetia)",
+          "entityDescription": "Information Agency. Retrieved 14 November 2022. &quot;Очевидна необходимость согласования всех шагов&quot;. south-ossetia.info. Retrieved 4 April 2024. Fuller, Liz"
+        }
+      ]
+    },
+    {
+      "rank": 7,
+      "score": 75,
+      "phrases": [
+        {
+          "text": "Найти",
+          "entityId": "Q17254154",
+          "kind": "entity",
+          "entityLabel": "Estas Tonne",
+          "entityDescription": " Oksana (1 November 2016) Отпустить и прыгнуть. Как довериться жизни и найти свой путь. focus.ua &quot;Essential Sounds of The Universe -Estas Tonne&quot; Archived"
+        },
+        {
+          "text": "синонимы",
+          "entityId": "Q61672685",
+          "kind": "entity",
+          "entityLabel": "Synonyms",
+          "entityDescription": "2019 film by Nadav Lapid"
+        },
+        {
+          "text": "или примеры",
+          "entityId": "Q20513367",
+          "kind": "entity",
+          "entityLabel": "George Ter-Stepanian",
+          "entityDescription": "loosening of rock slopes in the Bohemian Massive. [Рыбарж Я., Вржба О., Примеры ослабления скальных склонов в Богемском массиве]. Translation from English"
+        },
+        {
+          "text": "согласования",
+          "entityId": "Q65158665",
+          "kind": "entity",
+          "entityLabel": "Yandex Eda",
+          "entityDescription": "April 2019). &quot;&quot;Яндекс.Еда&quot; разрешила курьерам уходить на перерыв без согласования. Это сделали после смерти сотрудника в Петербурге — Технологии на TJ&quot;"
+        }
+      ]
+    },
+    {
+      "rank": 8,
+      "score": 75,
+      "phrases": [
+        {
+          "text": "Найти",
+          "entityId": "Q17254154",
+          "kind": "entity",
+          "entityLabel": "Estas Tonne",
+          "entityDescription": " Oksana (1 November 2016) Отпустить и прыгнуть. Как довериться жизни и найти свой путь. focus.ua &quot;Essential Sounds of The Universe -Estas Tonne&quot; Archived"
+        },
+        {
+          "text": "синонимы",
+          "entityId": "Q61672685",
+          "kind": "entity",
+          "entityLabel": "Synonyms",
+          "entityDescription": "2019 film by Nadav Lapid"
+        },
+        {
+          "text": "или примеры",
+          "entityId": "Q20513367",
+          "kind": "entity",
+          "entityLabel": "George Ter-Stepanian",
+          "entityDescription": "loosening of rock slopes in the Bohemian Massive. [Рыбарж Я., Вржба О., Примеры ослабления скальных склонов в Богемском массиве]. Translation from English"
+        },
+        {
+          "text": "согласования",
+          "entityId": "Q85743010",
+          "kind": "entity",
+          "entityLabel": "Armenian population by country",
+          "entityDescription": "случае угрозы безопасности Ереван применит комплексы &quot;Искандер&quot; без согласования с Москвой&quot;. interfax.ru (in Russian). Interfax. 14 April 2017. Archived"
+        }
+      ]
+    },
+    {
+      "rank": 9,
+      "score": 75,
+      "phrases": [
+        {
+          "text": "Найти",
+          "entityId": "Q17254154",
+          "kind": "entity",
+          "entityLabel": "Estas Tonne",
+          "entityDescription": " Oksana (1 November 2016) Отпустить и прыгнуть. Как довериться жизни и найти свой путь. focus.ua &quot;Essential Sounds of The Universe -Estas Tonne&quot; Archived"
+        },
+        {
+          "text": "синонимы",
+          "entityId": "Q61672685",
+          "kind": "entity",
+          "entityLabel": "Synonyms",
+          "entityDescription": "2019 film by Nadav Lapid"
+        },
+        {
+          "text": "или примеры",
+          "entityId": "Q20513367",
+          "kind": "entity",
+          "entityLabel": "George Ter-Stepanian",
+          "entityDescription": "loosening of rock slopes in the Bohemian Massive. [Рыбарж Я., Вржба О., Примеры ослабления скальных склонов в Богемском массиве]. Translation from English"
+        },
+        {
+          "text": "согласования",
+          "entityId": "Q113576038",
+          "kind": "entity",
+          "entityLabel": "Unity of the People (South Ossetia)",
+          "entityDescription": "Information Agency. Retrieved 14 November 2022. &quot;Очевидна необходимость согласования всех шагов&quot;. south-ossetia.info. Retrieved 4 April 2024. Fuller, Liz"
+        }
+      ]
+    },
+    {
+      "rank": 10,
+      "score": 74,
+      "phrases": [
+        {
+          "text": "Найти",
+          "entityId": "Q64494830",
+          "kind": "entity",
+          "entityLabel": "Ida Galich",
+          "entityDescription": "blogger. In 2018, released the songs «Дима», «Ты попал», and «Найти тебя». The song «Найти тебя» came with a music video that featured Anna Sedokova, Nadezhda"
+        },
+        {
+          "text": "синонимы",
+          "entityId": "Q1040689",
+          "kind": "entity",
+          "entityLabel": "synonym",
+          "entityDescription": "one of two or more names that apply to the same taxon"
+        },
+        {
+          "text": "или примеры",
+          "entityId": "Q20513367",
+          "kind": "entity",
+          "entityLabel": "George Ter-Stepanian",
+          "entityDescription": "loosening of rock slopes in the Bohemian Massive. [Рыбарж Я., Вржба О., Примеры ослабления скальных склонов в Богемском массиве]. Translation from English"
+        },
+        {
+          "text": "согласования",
+          "entityId": "Q65158665",
+          "kind": "entity",
+          "entityLabel": "Yandex Eda",
+          "entityDescription": "April 2019). &quot;&quot;Яндекс.Еда&quot; разрешила курьерам уходить на перерыв без согласования. Это сделали после смерти сотрудника в Петербурге — Технологии на TJ&quot;"
+        }
+      ]
+    }
+  ],
+  "markdown": "[Найти](https://en.wikipedia.org/wiki/Estas_Tonne \"Q17254154\") [синонимы](https://en.wikipedia.org/wiki/Synonym_(taxonomy) \"Q1040689\") [или примеры](https://en.wikipedia.org/wiki/George_Ter-Stepanian \"Q20513367\") [согласования](https://en.wikipedia.org/wiki/Yandex_Eda \"Q65158665\")",
+  "html": "<a href=\"https://en.wikipedia.org/wiki/Estas_Tonne\" title=\"Q17254154\">Найти</a> <a href=\"https://en.wikipedia.org/wiki/Synonym_(taxonomy)\" title=\"Q1040689\">синонимы</a> <a href=\"https://en.wikipedia.org/wiki/George_Ter-Stepanian\" title=\"Q20513367\">или примеры</a> <a href=\"https://en.wikipedia.org/wiki/Yandex_Eda\" title=\"Q65158665\">согласования</a>",
+  "linksNotation": "(formalization: (Найти синонимы или примеры согласования))\n(phrase-1: source (Найти) start 0 end 0 id Q17254154 label (Estas Tonne) kind entity markdownUrl (https://en.wikipedia.org/wiki/Estas_Tonne))\n(phrase-2: source (синонимы) start 1 end 1 id Q1040689 label (synonym) kind entity markdownUrl (https://en.wikipedia.org/wiki/Synonym_ taxonomy))\n(phrase-3: source (или примеры) start 2 end 3 id Q20513367 label (George Ter-Stepanian) kind entity markdownUrl (https://en.wikipedia.org/wiki/George_Ter-Stepanian))\n(phrase-4: source (согласования) start 4 end 4 id Q65158665 label (Yandex Eda) kind entity markdownUrl (https://en.wikipedia.org/wiki/Yandex_Eda))\n(context-1: Q5 weight 1.6666666666666665 probability 16.7)\n(context-2: Q520549 weight 1 probability 10.0)\n(context-3: Q10753560 weight 0.6666666666666666 probability 6.7)\n(context-4: Q11424 weight 0.6666666666666666 probability 6.7)\n(context-5: Q130232 weight 0.3333333333333333 probability 3.3)\n(context-6: Q13590141 weight 0.3333333333333333 probability 3.3)\n(context-7: Q177220 weight 0.3333333333333333 probability 3.3)\n(context-8: Q188473 weight 0.3333333333333333 probability 3.3)\n(context-9: Q25533274 weight 0.3333333333333333 probability 3.3)\n(context-10: Q315 weight 0.3333333333333333 probability 3.3)\n(context-11: Q319221 weight 0.3333333333333333 probability 3.3)\n(context-12: Q33829 weight 0.3333333333333333 probability 3.3)\n(context-13: Q4110598 weight 0.3333333333333333 probability 3.3)\n(context-14: Q45217546 weight 0.3333333333333333 probability 3.3)\n(context-15: Q6168364 weight 0.3333333333333333 probability 3.3)\n(context-16: Q620615 weight 0.3333333333333333 probability 3.3)\n(context-17: Q7278 weight 0.3333333333333333 probability 3.3)\n(context-18: Q79797 weight 0.3333333333333333 probability 3.3)\n(context-19: Q8171 weight 0.3333333333333333 probability 3.3)\n(context-20: Q855091 weight 0.3333333333333333 probability 3.3)\n(context-21: Q947873 weight 0.3333333333333333 probability 3.3)\n(context-22: Q98660409 weight 0.3333333333333333 probability 3.3)",
+  "linksNetwork": {
+    "id": "formalize-links-network",
+    "kind": "links-network",
+    "version": 1,
+    "beliefSystem": {
+      "id": "formalize-default",
+      "name": "Formalize prototype",
+      "probabilityStrategy": "frequency-weighted-context",
+      "sourceWeights": {
+        "wikidata": 1,
+        "wordnet": 0.7,
+        "fandom": 0.6,
+        "algorithm": 0.5
+      }
+    },
+    "links": [
+      {
+        "id": "formalize-input-1",
+        "role": "input",
+        "references": [],
+        "value": {
+          "text": "Найти синонимы или примеры согласования"
+        },
+        "provenance": {
+          "sourceType": "algorithm",
+          "method": "formalize"
+        }
+      },
+      {
+        "id": "formalize-phrase-1",
+        "role": "phrase",
+        "references": [
+          "formalize-input-1"
+        ],
+        "value": {
+          "text": "Найти",
+          "position": 0,
+          "size": 1,
+          "wikidataId": "Q17254154",
+          "wikidataLabel": "Estas Tonne",
+          "wikidataKind": "entity",
+          "wikipediaUrl": "https://en.wikipedia.org/wiki/Estas_Tonne",
+          "source": "wikipedia"
+        },
+        "provenance": {
+          "sourceType": "wikipedia",
+          "sourceUrl": "https://en.wikipedia.org/wiki/Estas_Tonne"
+        }
+      },
+      {
+        "id": "formalize-phrase-2",
+        "role": "phrase",
+        "references": [
+          "formalize-input-1"
+        ],
+        "value": {
+          "text": "синонимы",
+          "position": 1,
+          "size": 1,
+          "wikidataId": "Q1040689",
+          "wikidataLabel": "synonym",
+          "wikidataKind": "entity",
+          "wikipediaUrl": "https://en.wikipedia.org/wiki/Synonym_(taxonomy)",
+          "source": "wikidata"
+        },
+        "provenance": {
+          "sourceType": "wikidata",
+          "sourceUrl": "https://www.wikidata.org/wiki/Q1040689"
+        }
+      },
+      {
+        "id": "formalize-phrase-3",
+        "role": "phrase",
+        "references": [
+          "formalize-input-1"
+        ],
+        "value": {
+          "text": "или примеры",
+          "position": 2,
+          "size": 2,
+          "wikidataId": "Q20513367",
+          "wikidataLabel": "George Ter-Stepanian",
+          "wikidataKind": "entity",
+          "wikipediaUrl": "https://en.wikipedia.org/wiki/George_Ter-Stepanian",
+          "source": "wikipedia"
+        },
+        "provenance": {
+          "sourceType": "wikipedia",
+          "sourceUrl": "https://en.wikipedia.org/wiki/George_Ter-Stepanian"
+        }
+      },
+      {
+        "id": "formalize-phrase-4",
+        "role": "phrase",
+        "references": [
+          "formalize-input-1"
+        ],
+        "value": {
+          "text": "согласования",
+          "position": 4,
+          "size": 1,
+          "wikidataId": "Q65158665",
+          "wikidataLabel": "Yandex Eda",
+          "wikidataKind": "entity",
+          "wikipediaUrl": "https://en.wikipedia.org/wiki/Yandex_Eda",
+          "source": "wikipedia"
+        },
+        "provenance": {
+          "sourceType": "wikipedia",
+          "sourceUrl": "https://en.wikipedia.org/wiki/Yandex_Eda"
+        }
+      },
+      {
+        "id": "formalize-context-1",
+        "role": "context",
+        "references": [
+          "formalize-input-1"
+        ],
+        "value": {
+          "wikidataId": "Q5",
+          "property": "P31",
+          "propertyLabel": "instance of",
+          "weight": 1.6666666666666665,
+          "probability": 0.16666666666666663
+        },
+        "provenance": {
+          "sourceType": "wikidata",
+          "sourceUrl": "https://www.wikidata.org/wiki/Q5"
+        }
+      },
+      {
+        "id": "formalize-context-2",
+        "role": "context",
+        "references": [
+          "formalize-input-1"
+        ],
+        "value": {
+          "wikidataId": "Q520549",
+          "property": "P106",
+          "propertyLabel": "occupation",
+          "weight": 1,
+          "probability": 0.09999999999999998
+        },
+        "provenance": {
+          "sourceType": "wikidata",
+          "sourceUrl": "https://www.wikidata.org/wiki/Q520549"
+        }
+      },
+      {
+        "id": "formalize-context-3",
+        "role": "context",
+        "references": [
+          "formalize-input-1"
+        ],
+        "value": {
+          "wikidataId": "Q10753560",
+          "property": "P31",
+          "propertyLabel": "instance of",
+          "weight": 0.6666666666666666,
+          "probability": 0.06666666666666665
+        },
+        "provenance": {
+          "sourceType": "wikidata",
+          "sourceUrl": "https://www.wikidata.org/wiki/Q10753560"
+        }
+      },
+      {
+        "id": "formalize-context-4",
+        "role": "context",
+        "references": [
+          "formalize-input-1"
+        ],
+        "value": {
+          "wikidataId": "Q11424",
+          "property": "P31",
+          "propertyLabel": "instance of",
+          "weight": 0.6666666666666666,
+          "probability": 0.06666666666666665
+        },
+        "provenance": {
+          "sourceType": "wikidata",
+          "sourceUrl": "https://www.wikidata.org/wiki/Q11424"
+        }
+      },
+      {
+        "id": "formalize-context-5",
+        "role": "context",
+        "references": [
+          "formalize-input-1"
+        ],
+        "value": {
+          "wikidataId": "Q130232",
+          "property": "P136",
+          "propertyLabel": "genre",
+          "weight": 0.3333333333333333,
+          "probability": 0.033333333333333326
+        },
+        "provenance": {
+          "sourceType": "wikidata",
+          "sourceUrl": "https://www.wikidata.org/wiki/Q130232"
+        }
+      },
+      {
+        "id": "formalize-context-6",
+        "role": "context",
+        "references": [
+          "formalize-input-1"
+        ],
+        "value": {
+          "wikidataId": "Q13590141",
+          "property": "P106",
+          "propertyLabel": "occupation",
+          "weight": 0.3333333333333333,
+          "probability": 0.033333333333333326
+        },
+        "provenance": {
+          "sourceType": "wikidata",
+          "sourceUrl": "https://www.wikidata.org/wiki/Q13590141"
+        }
+      },
+      {
+        "id": "formalize-context-7",
+        "role": "context",
+        "references": [
+          "formalize-input-1"
+        ],
+        "value": {
+          "wikidataId": "Q177220",
+          "property": "P106",
+          "propertyLabel": "occupation",
+          "weight": 0.3333333333333333,
+          "probability": 0.033333333333333326
+        },
+        "provenance": {
+          "sourceType": "wikidata",
+          "sourceUrl": "https://www.wikidata.org/wiki/Q177220"
+        }
+      },
+      {
+        "id": "formalize-context-8",
+        "role": "context",
+        "references": [
+          "formalize-input-1"
+        ],
+        "value": {
+          "wikidataId": "Q188473",
+          "property": "P136",
+          "propertyLabel": "genre",
+          "weight": 0.3333333333333333,
+          "probability": 0.033333333333333326
+        },
+        "provenance": {
+          "sourceType": "wikidata",
+          "sourceUrl": "https://www.wikidata.org/wiki/Q188473"
+        }
+      },
+      {
+        "id": "formalize-context-9",
+        "role": "context",
+        "references": [
+          "formalize-input-1"
+        ],
+        "value": {
+          "wikidataId": "Q25533274",
+          "property": "P136",
+          "propertyLabel": "genre",
+          "weight": 0.3333333333333333,
+          "probability": 0.033333333333333326
+        },
+        "provenance": {
+          "sourceType": "wikidata",
+          "sourceUrl": "https://www.wikidata.org/wiki/Q25533274"
+        }
+      },
+      {
+        "id": "formalize-context-10",
+        "role": "context",
+        "references": [
+          "formalize-input-1"
+        ],
+        "value": {
+          "wikidataId": "Q315",
+          "property": "P361",
+          "propertyLabel": "part of",
+          "weight": 0.3333333333333333,
+          "probability": 0.033333333333333326
+        },
+        "provenance": {
+          "sourceType": "wikidata",
+          "sourceUrl": "https://www.wikidata.org/wiki/Q315"
+        }
+      },
+      {
+        "id": "formalize-context-11",
+        "role": "context",
+        "references": [
+          "formalize-input-1"
+        ],
+        "value": {
+          "wikidataId": "Q319221",
+          "property": "P136",
+          "propertyLabel": "genre",
+          "weight": 0.3333333333333333,
+          "probability": 0.033333333333333326
+        },
+        "provenance": {
+          "sourceType": "wikidata",
+          "sourceUrl": "https://www.wikidata.org/wiki/Q319221"
+        }
+      },
+      {
+        "id": "formalize-context-12",
+        "role": "context",
+        "references": [
+          "formalize-input-1"
+        ],
+        "value": {
+          "wikidataId": "Q33829",
+          "property": "P31",
+          "propertyLabel": "instance of",
+          "weight": 0.3333333333333333,
+          "probability": 0.033333333333333326
+        },
+        "provenance": {
+          "sourceType": "wikidata",
+          "sourceUrl": "https://www.wikidata.org/wiki/Q33829"
+        }
+      },
+      {
+        "id": "formalize-context-13",
+        "role": "context",
+        "references": [
+          "formalize-input-1"
+        ],
+        "value": {
+          "wikidataId": "Q4110598",
+          "property": "P106",
+          "propertyLabel": "occupation",
+          "weight": 0.3333333333333333,
+          "probability": 0.033333333333333326
+        },
+        "provenance": {
+          "sourceType": "wikidata",
+          "sourceUrl": "https://www.wikidata.org/wiki/Q4110598"
+        }
+      },
+      {
+        "id": "formalize-context-14",
+        "role": "context",
+        "references": [
+          "formalize-input-1"
+        ],
+        "value": {
+          "wikidataId": "Q45217546",
+          "property": "P106",
+          "propertyLabel": "occupation",
+          "weight": 0.3333333333333333,
+          "probability": 0.033333333333333326
+        },
+        "provenance": {
+          "sourceType": "wikidata",
+          "sourceUrl": "https://www.wikidata.org/wiki/Q45217546"
+        }
+      },
+      {
+        "id": "formalize-context-15",
+        "role": "context",
+        "references": [
+          "formalize-input-1"
+        ],
+        "value": {
+          "wikidataId": "Q6168364",
+          "property": "P106",
+          "propertyLabel": "occupation",
+          "weight": 0.3333333333333333,
+          "probability": 0.033333333333333326
+        },
+        "provenance": {
+          "sourceType": "wikidata",
+          "sourceUrl": "https://www.wikidata.org/wiki/Q6168364"
+        }
+      },
+      {
+        "id": "formalize-context-16",
+        "role": "context",
+        "references": [
+          "formalize-input-1"
+        ],
+        "value": {
+          "wikidataId": "Q620615",
+          "property": "P31",
+          "propertyLabel": "instance of",
+          "weight": 0.3333333333333333,
+          "probability": 0.033333333333333326
+        },
+        "provenance": {
+          "sourceType": "wikidata",
+          "sourceUrl": "https://www.wikidata.org/wiki/Q620615"
+        }
+      },
+      {
+        "id": "formalize-context-17",
+        "role": "context",
+        "references": [
+          "formalize-input-1"
+        ],
+        "value": {
+          "wikidataId": "Q7278",
+          "property": "P31",
+          "propertyLabel": "instance of",
+          "weight": 0.3333333333333333,
+          "probability": 0.033333333333333326
+        },
+        "provenance": {
+          "sourceType": "wikidata",
+          "sourceUrl": "https://www.wikidata.org/wiki/Q7278"
+        }
+      },
+      {
+        "id": "formalize-context-18",
+        "role": "context",
+        "references": [
+          "formalize-input-1"
+        ],
+        "value": {
+          "wikidataId": "Q79797",
+          "property": "P31",
+          "propertyLabel": "instance of",
+          "weight": 0.3333333333333333,
+          "probability": 0.033333333333333326
+        },
+        "provenance": {
+          "sourceType": "wikidata",
+          "sourceUrl": "https://www.wikidata.org/wiki/Q79797"
+        }
+      },
+      {
+        "id": "formalize-context-19",
+        "role": "context",
+        "references": [
+          "formalize-input-1"
+        ],
+        "value": {
+          "wikidataId": "Q8171",
+          "property": "P279",
+          "propertyLabel": "subclass of",
+          "weight": 0.3333333333333333,
+          "probability": 0.033333333333333326
+        },
+        "provenance": {
+          "sourceType": "wikidata",
+          "sourceUrl": "https://www.wikidata.org/wiki/Q8171"
+        }
+      },
+      {
+        "id": "formalize-context-20",
+        "role": "context",
+        "references": [
+          "formalize-input-1"
+        ],
+        "value": {
+          "wikidataId": "Q855091",
+          "property": "P106",
+          "propertyLabel": "occupation",
+          "weight": 0.3333333333333333,
+          "probability": 0.033333333333333326
+        },
+        "provenance": {
+          "sourceType": "wikidata",
+          "sourceUrl": "https://www.wikidata.org/wiki/Q855091"
+        }
+      },
+      {
+        "id": "formalize-context-21",
+        "role": "context",
+        "references": [
+          "formalize-input-1"
+        ],
+        "value": {
+          "wikidataId": "Q947873",
+          "property": "P106",
+          "propertyLabel": "occupation",
+          "weight": 0.3333333333333333,
+          "probability": 0.033333333333333326
+        },
+        "provenance": {
+          "sourceType": "wikidata",
+          "sourceUrl": "https://www.wikidata.org/wiki/Q947873"
+        }
+      },
+      {
+        "id": "formalize-context-22",
+        "role": "context",
+        "references": [
+          "formalize-input-1"
+        ],
+        "value": {
+          "wikidataId": "Q98660409",
+          "property": "P31",
+          "propertyLabel": "instance of",
+          "weight": 0.3333333333333333,
+          "probability": 0.033333333333333326
+        },
+        "provenance": {
+          "sourceType": "wikidata",
+          "sourceUrl": "https://www.wikidata.org/wiki/Q98660409"
+        }
+      }
+    ]
+  },
+  "cst": {
+    "type": "formalization",
+    "version": 1,
+    "text": "Найти синонимы или примеры согласования",
+    "tokens": [
+      "Найти",
+      "синонимы",
+      "или",
+      "примеры",
+      "согласования"
+    ],
+    "linkTargetMode": "wikipedia",
+    "phrases": [
+      {
+        "type": "phrase",
+        "id": "phrase-1",
+        "text": "Найти",
+        "tokens": [
+          "Найти"
+        ],
+        "start": 0,
+        "end": 0,
+        "sourceStart": 0,
+        "sourceEnd": 5,
+        "size": 1,
+        "entity": {
+          "id": "Q17254154",
+          "label": "Estas Tonne",
+          "description": " Oksana (1 November 2016) Отпустить и прыгнуть. Как довериться жизни и найти свой путь. focus.ua &quot;Essential Sounds of The Universe -Estas Tonne&quot; Archived",
+          "kind": "entity",
+          "source": "wikipedia",
+          "sourceUrl": "https://en.wikipedia.org/wiki/Estas_Tonne",
+          "wikipediaUrl": "https://en.wikipedia.org/wiki/Estas_Tonne",
+          "wikipediaTitle": "Estas Tonne",
+          "score": 17,
+          "url": "https://en.wikipedia.org/wiki/Estas_Tonne"
+        },
+        "candidates": [
+          {
+            "id": "Q17254154",
+            "label": "Estas Tonne",
+            "description": " Oksana (1 November 2016) Отпустить и прыгнуть. Как довериться жизни и найти свой путь. focus.ua &quot;Essential Sounds of The Universe -Estas Tonne&quot; Archived",
+            "kind": "entity",
+            "source": "wikipedia",
+            "sourceUrl": "https://en.wikipedia.org/wiki/Estas_Tonne",
+            "wikipediaUrl": "https://en.wikipedia.org/wiki/Estas_Tonne",
+            "wikipediaTitle": "Estas Tonne",
+            "score": 17,
+            "url": "https://en.wikipedia.org/wiki/Estas_Tonne"
+          },
+          {
+            "id": "Q64494830",
+            "label": "Ida Galich",
+            "description": "blogger. In 2018, released the songs «Дима», «Ты попал», and «Найти тебя». The song «Найти тебя» came with a music video that featured Anna Sedokova, Nadezhda",
+            "kind": "entity",
+            "source": "wikipedia",
+            "sourceUrl": "https://en.wikipedia.org/wiki/Ida_Galich",
+            "wikipediaUrl": "https://en.wikipedia.org/wiki/Ida_Galich",
+            "wikipediaTitle": "Ida Galich",
+            "score": 17,
+            "url": "https://en.wikipedia.org/wiki/Ida_Galich"
+          },
+          {
+            "id": "Q4312463",
+            "label": "Find and Neutralize",
+            "description": "Find and Neutralize (Russian: Найти и обезвредить, romanized: Nayti i obezvredit) is a 1983 Soviet action adventure film directed by Georgy Kuznetsov",
+            "kind": "entity",
+            "source": "wikipedia",
+            "sourceUrl": "https://en.wikipedia.org/wiki/Find_and_Neutralize",
+            "wikipediaUrl": "https://en.wikipedia.org/wiki/Find_and_Neutralize",
+            "wikipediaTitle": "Find and Neutralize",
+            "score": 17,
+            "url": "https://en.wikipedia.org/wiki/Find_and_Neutralize"
+          }
+        ]
+      },
+      {
+        "type": "phrase",
+        "id": "phrase-2",
+        "text": "синонимы",
+        "tokens": [
+          "синонимы"
+        ],
+        "start": 1,
+        "end": 1,
+        "sourceStart": 6,
+        "sourceEnd": 14,
+        "size": 1,
+        "entity": {
+          "id": "Q1040689",
+          "label": "synonym",
+          "description": "one of two or more names that apply to the same taxon",
+          "kind": "entity",
+          "source": "wikidata",
+          "sourceUrl": "https://www.wikidata.org/wiki/Q1040689",
+          "wikipediaUrl": "https://en.wikipedia.org/wiki/Synonym_(taxonomy)",
+          "wikipediaTitle": "Synonym (taxonomy)",
+          "score": 19,
+          "url": "https://en.wikipedia.org/wiki/Synonym_(taxonomy)"
+        },
+        "candidates": [
+          {
+            "id": "Q1040689",
+            "label": "synonym",
+            "description": "one of two or more names that apply to the same taxon",
+            "kind": "entity",
+            "source": "wikidata",
+            "sourceUrl": "https://www.wikidata.org/wiki/Q1040689",
+            "wikipediaUrl": "https://en.wikipedia.org/wiki/Synonym_(taxonomy)",
+            "wikipediaTitle": "Synonym (taxonomy)",
+            "score": 19,
+            "url": "https://en.wikipedia.org/wiki/Synonym_(taxonomy)"
+          },
+          {
+            "id": "Q42106",
+            "label": "synonym",
+            "description": "word or phrase that means exactly or nearly the same as another word or phrase in the same language",
+            "kind": "entity",
+            "source": "wikidata",
+            "sourceUrl": "https://www.wikidata.org/wiki/Q42106",
+            "wikipediaUrl": "https://en.wikipedia.org/wiki/Synonym",
+            "wikipediaTitle": "Synonym",
+            "score": 19,
+            "url": "https://en.wikipedia.org/wiki/Synonym"
+          },
+          {
+            "id": "Q61672685",
+            "label": "Synonyms",
+            "description": "2019 film by Nadav Lapid",
+            "kind": "entity",
+            "source": "wikidata",
+            "sourceUrl": "https://www.wikidata.org/wiki/Q61672685",
+            "wikipediaUrl": "https://en.wikipedia.org/wiki/Synonyms_(film)",
+            "wikipediaTitle": "Synonyms (film)",
+            "score": 19,
+            "url": "https://en.wikipedia.org/wiki/Synonyms_(film)"
+          }
+        ]
+      },
+      {
+        "type": "phrase",
+        "id": "phrase-3",
+        "text": "или примеры",
+        "tokens": [
+          "или",
+          "примеры"
+        ],
+        "start": 2,
+        "end": 3,
+        "sourceStart": 15,
+        "sourceEnd": 26,
+        "size": 2,
+        "entity": {
+          "id": "Q20513367",
+          "label": "George Ter-Stepanian",
+          "description": "loosening of rock slopes in the Bohemian Massive. [Рыбарж Я., Вржба О., Примеры ослабления скальных склонов в Богемском массиве]. Translation from English",
+          "kind": "entity",
+          "source": "wikipedia",
+          "sourceUrl": "https://en.wikipedia.org/wiki/George_Ter-Stepanian",
+          "wikipediaUrl": "https://en.wikipedia.org/wiki/George_Ter-Stepanian",
+          "wikipediaTitle": "George Ter-Stepanian",
+          "score": 20,
+          "url": "https://en.wikipedia.org/wiki/George_Ter-Stepanian"
+        },
+        "candidates": [
+          {
+            "id": "Q20513367",
+            "label": "George Ter-Stepanian",
+            "description": "loosening of rock slopes in the Bohemian Massive. [Рыбарж Я., Вржба О., Примеры ослабления скальных склонов в Богемском массиве]. Translation from English",
+            "kind": "entity",
+            "source": "wikipedia",
+            "sourceUrl": "https://en.wikipedia.org/wiki/George_Ter-Stepanian",
+            "wikipediaUrl": "https://en.wikipedia.org/wiki/George_Ter-Stepanian",
+            "wikipediaTitle": "George Ter-Stepanian",
+            "score": 20,
+            "url": "https://en.wikipedia.org/wiki/George_Ter-Stepanian"
+          }
+        ]
+      },
+      {
+        "type": "phrase",
+        "id": "phrase-4",
+        "text": "согласования",
+        "tokens": [
+          "согласования"
+        ],
+        "start": 4,
+        "end": 4,
+        "sourceStart": 27,
+        "sourceEnd": 39,
+        "size": 1,
+        "entity": {
+          "id": "Q65158665",
+          "label": "Yandex Eda",
+          "description": "April 2019). &quot;&quot;Яндекс.Еда&quot; разрешила курьерам уходить на перерыв без согласования. Это сделали после смерти сотрудника в Петербурге — Технологии на TJ&quot;",
+          "kind": "entity",
+          "source": "wikipedia",
+          "sourceUrl": "https://en.wikipedia.org/wiki/Yandex_Eda",
+          "wikipediaUrl": "https://en.wikipedia.org/wiki/Yandex_Eda",
+          "wikipediaTitle": "Yandex Eda",
+          "score": 17,
+          "url": "https://en.wikipedia.org/wiki/Yandex_Eda"
+        },
+        "candidates": [
+          {
+            "id": "Q65158665",
+            "label": "Yandex Eda",
+            "description": "April 2019). &quot;&quot;Яндекс.Еда&quot; разрешила курьерам уходить на перерыв без согласования. Это сделали после смерти сотрудника в Петербурге — Технологии на TJ&quot;",
+            "kind": "entity",
+            "source": "wikipedia",
+            "sourceUrl": "https://en.wikipedia.org/wiki/Yandex_Eda",
+            "wikipediaUrl": "https://en.wikipedia.org/wiki/Yandex_Eda",
+            "wikipediaTitle": "Yandex Eda",
+            "score": 17,
+            "url": "https://en.wikipedia.org/wiki/Yandex_Eda"
+          },
+          {
+            "id": "Q85743010",
+            "label": "Armenian population by country",
+            "description": "случае угрозы безопасности Ереван применит комплексы &quot;Искандер&quot; без согласования с Москвой&quot;. interfax.ru (in Russian). Interfax. 14 April 2017. Archived",
+            "kind": "entity",
+            "source": "wikipedia",
+            "sourceUrl": "https://en.wikipedia.org/wiki/Armenian_population_by_country",
+            "wikipediaUrl": "https://en.wikipedia.org/wiki/Armenian_population_by_country",
+            "wikipediaTitle": "Armenian population by country",
+            "score": 17,
+            "url": "https://en.wikipedia.org/wiki/Armenian_population_by_country"
+          },
+          {
+            "id": "Q113576038",
+            "label": "Unity of the People (South Ossetia)",
+            "description": "Information Agency. Retrieved 14 November 2022. &quot;Очевидна необходимость согласования всех шагов&quot;. south-ossetia.info. Retrieved 4 April 2024. Fuller, Liz",
+            "kind": "entity",
+            "source": "wikipedia",
+            "sourceUrl": "https://en.wikipedia.org/wiki/Unity_of_the_People_(South_Ossetia)",
+            "wikipediaUrl": "https://en.wikipedia.org/wiki/Unity_of_the_People_(South_Ossetia)",
+            "wikipediaTitle": "Unity of the People (South Ossetia)",
+            "score": 17,
+            "url": "https://en.wikipedia.org/wiki/Unity_of_the_People_(South_Ossetia)"
+          }
+        ]
+      }
+    ],
+    "contexts": [
+      {
+        "id": "context-1",
+        "wikidataId": "Q5",
+        "property": "P31",
+        "propertyLabel": "instance of",
+        "weight": 1.6666666666666665,
+        "probability": 0.16666666666666663
+      },
+      {
+        "id": "context-2",
+        "wikidataId": "Q520549",
+        "property": "P106",
+        "propertyLabel": "occupation",
+        "weight": 1,
+        "probability": 0.09999999999999998
+      },
+      {
+        "id": "context-3",
+        "wikidataId": "Q10753560",
+        "property": "P31",
+        "propertyLabel": "instance of",
+        "weight": 0.6666666666666666,
+        "probability": 0.06666666666666665
+      },
+      {
+        "id": "context-4",
+        "wikidataId": "Q11424",
+        "property": "P31",
+        "propertyLabel": "instance of",
+        "weight": 0.6666666666666666,
+        "probability": 0.06666666666666665
+      },
+      {
+        "id": "context-5",
+        "wikidataId": "Q130232",
+        "property": "P136",
+        "propertyLabel": "genre",
+        "weight": 0.3333333333333333,
+        "probability": 0.033333333333333326
+      },
+      {
+        "id": "context-6",
+        "wikidataId": "Q13590141",
+        "property": "P106",
+        "propertyLabel": "occupation",
+        "weight": 0.3333333333333333,
+        "probability": 0.033333333333333326
+      },
+      {
+        "id": "context-7",
+        "wikidataId": "Q177220",
+        "property": "P106",
+        "propertyLabel": "occupation",
+        "weight": 0.3333333333333333,
+        "probability": 0.033333333333333326
+      },
+      {
+        "id": "context-8",
+        "wikidataId": "Q188473",
+        "property": "P136",
+        "propertyLabel": "genre",
+        "weight": 0.3333333333333333,
+        "probability": 0.033333333333333326
+      },
+      {
+        "id": "context-9",
+        "wikidataId": "Q25533274",
+        "property": "P136",
+        "propertyLabel": "genre",
+        "weight": 0.3333333333333333,
+        "probability": 0.033333333333333326
+      },
+      {
+        "id": "context-10",
+        "wikidataId": "Q315",
+        "property": "P361",
+        "propertyLabel": "part of",
+        "weight": 0.3333333333333333,
+        "probability": 0.033333333333333326
+      },
+      {
+        "id": "context-11",
+        "wikidataId": "Q319221",
+        "property": "P136",
+        "propertyLabel": "genre",
+        "weight": 0.3333333333333333,
+        "probability": 0.033333333333333326
+      },
+      {
+        "id": "context-12",
+        "wikidataId": "Q33829",
+        "property": "P31",
+        "propertyLabel": "instance of",
+        "weight": 0.3333333333333333,
+        "probability": 0.033333333333333326
+      },
+      {
+        "id": "context-13",
+        "wikidataId": "Q4110598",
+        "property": "P106",
+        "propertyLabel": "occupation",
+        "weight": 0.3333333333333333,
+        "probability": 0.033333333333333326
+      },
+      {
+        "id": "context-14",
+        "wikidataId": "Q45217546",
+        "property": "P106",
+        "propertyLabel": "occupation",
+        "weight": 0.3333333333333333,
+        "probability": 0.033333333333333326
+      },
+      {
+        "id": "context-15",
+        "wikidataId": "Q6168364",
+        "property": "P106",
+        "propertyLabel": "occupation",
+        "weight": 0.3333333333333333,
+        "probability": 0.033333333333333326
+      },
+      {
+        "id": "context-16",
+        "wikidataId": "Q620615",
+        "property": "P31",
+        "propertyLabel": "instance of",
+        "weight": 0.3333333333333333,
+        "probability": 0.033333333333333326
+      },
+      {
+        "id": "context-17",
+        "wikidataId": "Q7278",
+        "property": "P31",
+        "propertyLabel": "instance of",
+        "weight": 0.3333333333333333,
+        "probability": 0.033333333333333326
+      },
+      {
+        "id": "context-18",
+        "wikidataId": "Q79797",
+        "property": "P31",
+        "propertyLabel": "instance of",
+        "weight": 0.3333333333333333,
+        "probability": 0.033333333333333326
+      },
+      {
+        "id": "context-19",
+        "wikidataId": "Q8171",
+        "property": "P279",
+        "propertyLabel": "subclass of",
+        "weight": 0.3333333333333333,
+        "probability": 0.033333333333333326
+      },
+      {
+        "id": "context-20",
+        "wikidataId": "Q855091",
+        "property": "P106",
+        "propertyLabel": "occupation",
+        "weight": 0.3333333333333333,
+        "probability": 0.033333333333333326
+      },
+      {
+        "id": "context-21",
+        "wikidataId": "Q947873",
+        "property": "P106",
+        "propertyLabel": "occupation",
+        "weight": 0.3333333333333333,
+        "probability": 0.033333333333333326
+      },
+      {
+        "id": "context-22",
+        "wikidataId": "Q98660409",
+        "property": "P31",
+        "propertyLabel": "instance of",
+        "weight": 0.3333333333333333,
+        "probability": 0.033333333333333326
+      }
+    ]
+  },
+  "linkTargetMode": "wikipedia",
+  "sources": [
+    "wikipedia",
+    "wikidata",
+    "wiktionary"
+  ]
+}

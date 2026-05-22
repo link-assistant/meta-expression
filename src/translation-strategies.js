@@ -49,8 +49,22 @@ const enRuGlossary = Object.freeze({
   questions: 'вопросами',
 });
 
+const ruEnGlossary = Object.freeze({
+  найти: 'find',
+  синоним: 'synonym',
+  синонимы: 'synonyms',
+  или: 'or',
+  пример: 'example',
+  примеры: 'examples',
+  согласование: 'agreement',
+  согласования: 'agreement',
+  'найти синонимы или': 'find synonyms or',
+  'примеры согласования': 'examples of agreement',
+});
+
 const glossaries = Object.freeze({
   'en:ru': enRuGlossary,
+  'ru:en': ruEnGlossary,
 });
 
 export function listTranslationStrategies() {

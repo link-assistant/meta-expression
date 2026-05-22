@@ -1,5 +1,11 @@
 export const translateSamples = [
   {
+    label: 'Issue 41 — Russian phrase',
+    sourceLanguage: 'ru',
+    targetLanguage: 'en',
+    text: 'Найти синонимы или примеры согласования',
+  },
+  {
     label: 'Issue 39 — technical workflow',
     sourceLanguage: 'en',
     targetLanguage: 'ru',

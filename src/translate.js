@@ -997,8 +997,38 @@ function applyRussianToEnglishRules(units, segment, sentenceId, config) {
       });
     }
   }
+  if (
+    config.translationStrategy !== TRANSLATION_STRATEGIES.SEMANTIC_LABEL &&
+    applyRussianExamplesOfRule(nextUnits, segment, sentenceId, config)
+  ) {
+    transformations.push('russian-examples-genitive-to-english-of-phrase');
+  }
 
   return { units: nextUnits, transformations, resolvedVariableNames };
+}
+
+function applyRussianExamplesOfRule(units, segment, sentenceId, config) {
+  for (let index = 0; index < units.length - 1; index += 1) {
+    if (
+      normalizePhrase(units[index].sourceText) !== 'примеры' ||
+      normalizePhrase(units[index].plainText) !== 'examples'
+    ) {
+      continue;
+    }
+    const nextText = normalizePhrase(units[index + 1].plainText);
+    if (!nextText || isEnglishPreposition(nextText)) {
+      continue;
+    }
+    units.splice(index + 1, 0, buildRuleToken('', { text: 'of' }));
+    recordStep(config, 'transformation-rule', {
+      sentenceId,
+      rule: 'russian-examples-genitive-to-english-of-phrase',
+      sourceText: segment.text,
+      affectedVariables: [],
+    });
+    return true;
+  }
+  return false;
 }
 
 function isEnglishArticle(value) {

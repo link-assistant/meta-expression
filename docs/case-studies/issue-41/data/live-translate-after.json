@@ -1,0 +1,4235 @@
+{
+  "text": "Найти синонимы или примеры согласования",
+  "sourceLanguage": "ru",
+  "targetLanguage": "en",
+  "formalization": {
+    "text": "Найти синонимы или примеры согласования",
+    "tokens": [
+      "Найти",
+      "синонимы",
+      "или",
+      "примеры",
+      "согласования"
+    ],
+    "phrases": [
+      {
+        "text": "Найти",
+        "tokens": [
+          "Найти"
+        ],
+        "start": 0,
+        "end": 0,
+        "size": 1,
+        "candidates": [],
+        "entity": null
+      },
+      {
+        "text": "синонимы",
+        "tokens": [
+          "синонимы"
+        ],
+        "start": 1,
+        "end": 1,
+        "size": 1,
+        "candidates": [
+          {
+            "id": "Q42106",
+            "label": "synonym",
+            "description": "word or phrase that means exactly or nearly the same as another word or phrase in the same language",
+            "kind": "entity",
+            "source": "wikidata",
+            "sourceUrl": "https://www.wikidata.org/wiki/Q42106",
+            "matchText": "синонимы",
+            "matchType": "label",
+            "wikipediaTitle": "Synonym",
+            "wikipediaUrl": "https://en.wikipedia.org/wiki/Synonym",
+            "wikibaseId": "Q42106",
+            "aliases": [],
+            "sources": [
+              "wikipedia",
+              "wikidata"
+            ],
+            "score": 31,
+            "ngramSize": 1,
+            "contextLabels": [
+              {
+                "property": "P279",
+                "propertyLabel": "subclass of",
+                "targetId": "Q8171"
+              },
+              {
+                "property": "P361",
+                "propertyLabel": "part of",
+                "targetId": "Q315"
+              }
+            ]
+          },
+          {
+            "id": "Q1040689",
+            "label": "synonym",
+            "description": "one of two or more names that apply to the same taxon",
+            "kind": "entity",
+            "source": "wikidata",
+            "sourceUrl": "https://www.wikidata.org/wiki/Q1040689",
+            "matchText": "синонимы",
+            "matchType": "alias",
+            "wikipediaTitle": "Synonym (taxonomy)",
+            "wikipediaUrl": "https://en.wikipedia.org/wiki/Synonym_(taxonomy)",
+            "wikibaseId": "Q1040689",
+            "aliases": [],
+            "sources": [
+              "wikipedia",
+              "wikidata"
+            ],
+            "score": 31,
+            "ngramSize": 1,
+            "contextLabels": [
+              {
+                "property": "P31",
+                "propertyLabel": "instance of",
+                "targetId": "Q10753560"
+              },
+              {
+                "property": "P279",
+                "propertyLabel": "subclass of",
+                "targetId": "Q10753560"
+              }
+            ]
+          },
+          {
+            "id": "Q61672685",
+            "label": "Synonyms",
+            "description": "2019 film by Nadav Lapid",
+            "kind": "entity",
+            "source": "wikidata",
+            "sourceUrl": "https://www.wikidata.org/wiki/Q61672685",
+            "matchText": "Синонимы",
+            "matchType": "label",
+            "wikipediaTitle": "Synonyms (film)",
+            "wikipediaUrl": "https://en.wikipedia.org/wiki/Synonyms_(film)",
+            "wikibaseId": "Q61672685",
+            "aliases": [],
+            "sources": [
+              "wikipedia",
+              "wikidata"
+            ],
+            "score": 31,
+            "ngramSize": 1,
+            "contextLabels": [
+              {
+                "property": "P31",
+                "propertyLabel": "instance of",
+                "targetId": "Q11424"
+              },
+              {
+                "property": "P136",
+                "propertyLabel": "genre",
+                "targetId": "Q130232"
+              }
+            ]
+          }
+        ],
+        "entity": {
+          "id": "Q42106",
+          "label": "synonym",
+          "description": "word or phrase that means exactly or nearly the same as another word or phrase in the same language",
+          "kind": "entity",
+          "source": "wikidata",
+          "sourceUrl": "https://www.wikidata.org/wiki/Q42106",
+          "score": 31,
+          "wikipediaUrl": "https://en.wikipedia.org/wiki/Synonym",
+          "wikipediaTitle": "Synonym",
+          "contextLabels": [
+            {
+              "property": "P279",
+              "propertyLabel": "subclass of",
+              "targetId": "Q8171"
+            },
+            {
+              "property": "P361",
+              "propertyLabel": "part of",
+              "targetId": "Q315"
+            }
+          ],
+          "overrideEntry": null
+        }
+      },
+      {
+        "text": "или",
+        "tokens": [
+          "или"
+        ],
+        "start": 2,
+        "end": 2,
+        "size": 1,
+        "candidates": [
+          {
+            "id": "wikt:ru:или#Conjunction:0",
+            "label": "или",
+            "description": "or",
+            "kind": "entity",
+            "source": "wiktionary",
+            "sourceUrl": "https://en.wiktionary.org/wiki/%D0%B8%D0%BB%D0%B8",
+            "matchText": "или",
+            "matchType": "definition",
+            "partOfSpeech": "Conjunction",
+            "definition": "or",
+            "score": 31,
+            "ngramSize": 1,
+            "contextLabels": []
+          },
+          {
+            "id": "wikt:ru:или#Conjunction:1",
+            "label": "или",
+            "description": "or else",
+            "kind": "entity",
+            "source": "wiktionary",
+            "sourceUrl": "https://en.wiktionary.org/wiki/%D0%B8%D0%BB%D0%B8",
+            "matchText": "или",
+            "matchType": "definition",
+            "partOfSpeech": "Conjunction",
+            "definition": "or else",
+            "score": 31,
+            "ngramSize": 1,
+            "contextLabels": []
+          },
+          {
+            "id": "wikt:ru:или#Conjunction:2",
+            "label": "или",
+            "description": "either",
+            "kind": "entity",
+            "source": "wiktionary",
+            "sourceUrl": "https://en.wiktionary.org/wiki/%D0%B8%D0%BB%D0%B8",
+            "matchText": "или",
+            "matchType": "definition",
+            "partOfSpeech": "Conjunction",
+            "definition": "either",
+            "score": 31,
+            "ngramSize": 1,
+            "contextLabels": []
+          }
+        ],
+        "entity": {
+          "id": "wikt:ru:или#Conjunction:0",
+          "label": "или",
+          "description": "or",
+          "kind": "entity",
+          "source": "wiktionary",
+          "sourceUrl": "https://en.wiktionary.org/wiki/%D0%B8%D0%BB%D0%B8",
+          "score": 31,
+          "wikipediaUrl": null,
+          "wikipediaTitle": null,
+          "contextLabels": [],
+          "overrideEntry": null
+        }
+      },
+      {
+        "text": "примеры",
+        "tokens": [
+          "примеры"
+        ],
+        "start": 3,
+        "end": 3,
+        "size": 1,
+        "candidates": [
+          {
+            "id": "wikt:ru:примеры#Noun:0",
+            "label": "примеры",
+            "description": "nominative/accusative plural of приме́р (primér)",
+            "kind": "entity",
+            "source": "wiktionary",
+            "sourceUrl": "https://en.wiktionary.org/wiki/%D0%BF%D1%80%D0%B8%D0%BC%D0%B5%D1%80%D1%8B",
+            "matchText": "примеры",
+            "matchType": "definition",
+            "partOfSpeech": "Noun",
+            "definition": "nominative/accusative plural of приме́р (primér)",
+            "score": 31,
+            "ngramSize": 1,
+            "contextLabels": []
+          }
+        ],
+        "entity": {
+          "id": "wikt:ru:примеры#Noun:0",
+          "label": "примеры",
+          "description": "nominative/accusative plural of приме́р (primér)",
+          "kind": "entity",
+          "source": "wiktionary",
+          "sourceUrl": "https://en.wiktionary.org/wiki/%D0%BF%D1%80%D0%B8%D0%BC%D0%B5%D1%80%D1%8B",
+          "score": 31,
+          "wikipediaUrl": null,
+          "wikipediaTitle": null,
+          "contextLabels": [],
+          "overrideEntry": null
+        }
+      },
+      {
+        "text": "согласования",
+        "tokens": [
+          "согласования"
+        ],
+        "start": 4,
+        "end": 4,
+        "size": 1,
+        "candidates": [
+          {
+            "id": "wikt:ru:согласования#Noun:0",
+            "label": "согласования",
+            "description": "inflection of согласова́ние (soglasovánije):\ngenitive singular\nnominative/accusative plural",
+            "kind": "entity",
+            "source": "wiktionary",
+            "sourceUrl": "https://en.wiktionary.org/wiki/%D1%81%D0%BE%D0%B3%D0%BB%D0%B0%D1%81%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D1%8F",
+            "matchText": "согласования",
+            "matchType": "definition",
+            "partOfSpeech": "Noun",
+            "definition": "inflection of согласова́ние (soglasovánije):\ngenitive singular\nnominative/accusative plural",
+            "score": 31,
+            "ngramSize": 1,
+            "contextLabels": []
+          },
+          {
+            "id": "wikt:ru:согласования#Noun:1",
+            "label": "согласования",
+            "description": "genitive singular",
+            "kind": "entity",
+            "source": "wiktionary",
+            "sourceUrl": "https://en.wiktionary.org/wiki/%D1%81%D0%BE%D0%B3%D0%BB%D0%B0%D1%81%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D1%8F",
+            "matchText": "согласования",
+            "matchType": "definition",
+            "partOfSpeech": "Noun",
+            "definition": "genitive singular",
+            "score": 31,
+            "ngramSize": 1,
+            "contextLabels": []
+          },
+          {
+            "id": "wikt:ru:согласования#Noun:2",
+            "label": "согласования",
+            "description": "nominative/accusative plural",
+            "kind": "entity",
+            "source": "wiktionary",
+            "sourceUrl": "https://en.wiktionary.org/wiki/%D1%81%D0%BE%D0%B3%D0%BB%D0%B0%D1%81%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D1%8F",
+            "matchText": "согласования",
+            "matchType": "definition",
+            "partOfSpeech": "Noun",
+            "definition": "nominative/accusative plural",
+            "score": 31,
+            "ngramSize": 1,
+            "contextLabels": []
+          }
+        ],
+        "entity": {
+          "id": "wikt:ru:согласования#Noun:0",
+          "label": "согласования",
+          "description": "inflection of согласова́ние (soglasovánije):\ngenitive singular\nnominative/accusative plural",
+          "kind": "entity",
+          "source": "wiktionary",
+          "sourceUrl": "https://en.wiktionary.org/wiki/%D1%81%D0%BE%D0%B3%D0%BB%D0%B0%D1%81%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D1%8F",
+          "score": 31,
+          "wikipediaUrl": null,
+          "wikipediaTitle": null,
+          "contextLabels": [],
+          "overrideEntry": null
+        }
+      }
+    ],
+    "contexts": [
+      {
+        "id": "Q10753560",
+        "property": "P31",
+        "propertyLabel": "instance of",
+        "weight": 0.6666666666666666,
+        "phrases": [
+          {
+            "text": "синонимы",
+            "entityId": "Q42106"
+          }
+        ],
+        "candidates": [
+          {
+            "phrase": "синонимы",
+            "candidateId": "Q1040689",
+            "candidateLabel": "synonym",
+            "weight": 0.3333333333333333
+          },
+          {
+            "phrase": "синонимы",
+            "candidateId": "Q1040689",
+            "candidateLabel": "synonym",
+            "weight": 0.3333333333333333
+          }
+        ],
+        "probability": 0.33333333333333337
+      },
+      {
+        "id": "Q11424",
+        "property": "P31",
+        "propertyLabel": "instance of",
+        "weight": 0.3333333333333333,
+        "phrases": [
+          {
+            "text": "синонимы",
+            "entityId": "Q42106"
+          }
+        ],
+        "candidates": [
+          {
+            "phrase": "синонимы",
+            "candidateId": "Q61672685",
+            "candidateLabel": "Synonyms",
+            "weight": 0.3333333333333333
+          }
+        ],
+        "probability": 0.16666666666666669
+      },
+      {
+        "id": "Q130232",
+        "property": "P136",
+        "propertyLabel": "genre",
+        "weight": 0.3333333333333333,
+        "phrases": [
+          {
+            "text": "синонимы",
+            "entityId": "Q42106"
+          }
+        ],
+        "candidates": [
+          {
+            "phrase": "синонимы",
+            "candidateId": "Q61672685",
+            "candidateLabel": "Synonyms",
+            "weight": 0.3333333333333333
+          }
+        ],
+        "probability": 0.16666666666666669
+      },
+      {
+        "id": "Q315",
+        "property": "P361",
+        "propertyLabel": "part of",
+        "weight": 0.3333333333333333,
+        "phrases": [
+          {
+            "text": "синонимы",
+            "entityId": "Q42106"
+          }
+        ],
+        "candidates": [
+          {
+            "phrase": "синонимы",
+            "candidateId": "Q42106",
+            "candidateLabel": "synonym",
+            "weight": 0.3333333333333333
+          }
+        ],
+        "probability": 0.16666666666666669
+      },
+      {
+        "id": "Q8171",
+        "property": "P279",
+        "propertyLabel": "subclass of",
+        "weight": 0.3333333333333333,
+        "phrases": [
+          {
+            "text": "синонимы",
+            "entityId": "Q42106"
+          }
+        ],
+        "candidates": [
+          {
+            "phrase": "синонимы",
+            "candidateId": "Q42106",
+            "candidateLabel": "synonym",
+            "weight": 0.3333333333333333
+          }
+        ],
+        "probability": 0.16666666666666669
+      }
+    ],
+    "mainContext": {
+      "id": "Q10753560",
+      "property": "P31",
+      "propertyLabel": "instance of",
+      "weight": 0.6666666666666666,
+      "phrases": [
+        {
+          "text": "синонимы",
+          "entityId": "Q42106"
+        }
+      ],
+      "candidates": [
+        {
+          "phrase": "синонимы",
+          "candidateId": "Q1040689",
+          "candidateLabel": "synonym",
+          "weight": 0.3333333333333333
+        },
+        {
+          "phrase": "синонимы",
+          "candidateId": "Q1040689",
+          "candidateLabel": "synonym",
+          "weight": 0.3333333333333333
+        }
+      ],
+      "probability": 0.33333333333333337
+    },
+    "additionalContexts": [
+      {
+        "id": "Q11424",
+        "property": "P31",
+        "propertyLabel": "instance of",
+        "weight": 0.3333333333333333,
+        "phrases": [
+          {
+            "text": "синонимы",
+            "entityId": "Q42106"
+          }
+        ],
+        "candidates": [
+          {
+            "phrase": "синонимы",
+            "candidateId": "Q61672685",
+            "candidateLabel": "Synonyms",
+            "weight": 0.3333333333333333
+          }
+        ],
+        "probability": 0.16666666666666669
+      },
+      {
+        "id": "Q130232",
+        "property": "P136",
+        "propertyLabel": "genre",
+        "weight": 0.3333333333333333,
+        "phrases": [
+          {
+            "text": "синонимы",
+            "entityId": "Q42106"
+          }
+        ],
+        "candidates": [
+          {
+            "phrase": "синонимы",
+            "candidateId": "Q61672685",
+            "candidateLabel": "Synonyms",
+            "weight": 0.3333333333333333
+          }
+        ],
+        "probability": 0.16666666666666669
+      },
+      {
+        "id": "Q315",
+        "property": "P361",
+        "propertyLabel": "part of",
+        "weight": 0.3333333333333333,
+        "phrases": [
+          {
+            "text": "синонимы",
+            "entityId": "Q42106"
+          }
+        ],
+        "candidates": [
+          {
+            "phrase": "синонимы",
+            "candidateId": "Q42106",
+            "candidateLabel": "synonym",
+            "weight": 0.3333333333333333
+          }
+        ],
+        "probability": 0.16666666666666669
+      },
+      {
+        "id": "Q8171",
+        "property": "P279",
+        "propertyLabel": "subclass of",
+        "weight": 0.3333333333333333,
+        "phrases": [
+          {
+            "text": "синонимы",
+            "entityId": "Q42106"
+          }
+        ],
+        "candidates": [
+          {
+            "phrase": "синонимы",
+            "candidateId": "Q42106",
+            "candidateLabel": "synonym",
+            "weight": 0.3333333333333333
+          }
+        ],
+        "probability": 0.16666666666666669
+      }
+    ],
+    "bigContexts": [
+      {
+        "id": "Q10753560",
+        "label": null,
+        "weight": 0.3333333333333333,
+        "depth": 1,
+        "paths": [
+          [
+            "Q10753560"
+          ]
+        ],
+        "propertyTrail": [
+          "P31"
+        ],
+        "sourcePhrases": [
+          {
+            "text": "синонимы",
+            "entityId": "Q42106"
+          }
+        ],
+        "sourceCandidates": [
+          {
+            "phrase": "синонимы",
+            "candidateId": "Q1040689",
+            "candidateLabel": "synonym",
+            "weight": 0.3333333333333333
+          }
+        ],
+        "probability": 0.08333333333333334
+      },
+      {
+        "id": "Q11424",
+        "label": null,
+        "weight": 0.3333333333333333,
+        "depth": 1,
+        "paths": [
+          [
+            "Q11424"
+          ]
+        ],
+        "propertyTrail": [
+          "P31"
+        ],
+        "sourcePhrases": [
+          {
+            "text": "синонимы",
+            "entityId": "Q42106"
+          }
+        ],
+        "sourceCandidates": [
+          {
+            "phrase": "синонимы",
+            "candidateId": "Q61672685",
+            "candidateLabel": "Synonyms",
+            "weight": 0.3333333333333333
+          }
+        ],
+        "probability": 0.08333333333333334
+      },
+      {
+        "id": "Q130232",
+        "label": null,
+        "weight": 0.3333333333333333,
+        "depth": 1,
+        "paths": [
+          [
+            "Q130232"
+          ]
+        ],
+        "propertyTrail": [
+          "P136"
+        ],
+        "sourcePhrases": [
+          {
+            "text": "синонимы",
+            "entityId": "Q42106"
+          }
+        ],
+        "sourceCandidates": [
+          {
+            "phrase": "синонимы",
+            "candidateId": "Q61672685",
+            "candidateLabel": "Synonyms",
+            "weight": 0.3333333333333333
+          }
+        ],
+        "probability": 0.08333333333333334
+      },
+      {
+        "id": "Q315",
+        "label": null,
+        "weight": 0.3333333333333333,
+        "depth": 1,
+        "paths": [
+          [
+            "Q315"
+          ]
+        ],
+        "propertyTrail": [
+          "P361"
+        ],
+        "sourcePhrases": [
+          {
+            "text": "синонимы",
+            "entityId": "Q42106"
+          }
+        ],
+        "sourceCandidates": [
+          {
+            "phrase": "синонимы",
+            "candidateId": "Q42106",
+            "candidateLabel": "synonym",
+            "weight": 0.3333333333333333
+          }
+        ],
+        "probability": 0.08333333333333334
+      },
+      {
+        "id": "Q8171",
+        "label": null,
+        "weight": 0.3333333333333333,
+        "depth": 1,
+        "paths": [
+          [
+            "Q8171"
+          ]
+        ],
+        "propertyTrail": [
+          "P279"
+        ],
+        "sourcePhrases": [
+          {
+            "text": "синонимы",
+            "entityId": "Q42106"
+          }
+        ],
+        "sourceCandidates": [
+          {
+            "phrase": "синонимы",
+            "candidateId": "Q42106",
+            "candidateLabel": "synonym",
+            "weight": 0.3333333333333333
+          }
+        ],
+        "probability": 0.08333333333333334
+      },
+      {
+        "id": "Q10301427",
+        "label": null,
+        "weight": 0.16666666666666666,
+        "depth": 2,
+        "paths": [
+          [
+            "Q11424",
+            "Q10301427"
+          ]
+        ],
+        "propertyTrail": [
+          "P31",
+          "P279"
+        ],
+        "sourcePhrases": [
+          {
+            "text": "синонимы",
+            "entityId": "Q42106"
+          }
+        ],
+        "sourceCandidates": [
+          {
+            "phrase": "синонимы",
+            "candidateId": "Q61672685",
+            "candidateLabel": "Synonyms",
+            "weight": 0.3333333333333333
+          }
+        ],
+        "probability": 0.04166666666666667
+      },
+      {
+        "id": "Q11024",
+        "label": null,
+        "weight": 0.16666666666666666,
+        "depth": 2,
+        "paths": [
+          [
+            "Q315",
+            "Q11024"
+          ]
+        ],
+        "propertyTrail": [
+          "P361",
+          "P361"
+        ],
+        "sourcePhrases": [
+          {
+            "text": "синонимы",
+            "entityId": "Q42106"
+          }
+        ],
+        "sourceCandidates": [
+          {
+            "phrase": "синонимы",
+            "candidateId": "Q42106",
+            "candidateLabel": "synonym",
+            "weight": 0.3333333333333333
+          }
+        ],
+        "probability": 0.04166666666666667
+      },
+      {
+        "id": "Q1347367",
+        "label": null,
+        "weight": 0.16666666666666666,
+        "depth": 2,
+        "paths": [
+          [
+            "Q315",
+            "Q1347367"
+          ]
+        ],
+        "propertyTrail": [
+          "P361",
+          "P31"
+        ],
+        "sourcePhrases": [
+          {
+            "text": "синонимы",
+            "entityId": "Q42106"
+          }
+        ],
+        "sourceCandidates": [
+          {
+            "phrase": "синонимы",
+            "candidateId": "Q42106",
+            "candidateLabel": "synonym",
+            "weight": 0.3333333333333333
+          }
+        ],
+        "probability": 0.04166666666666667
+      },
+      {
+        "id": "Q17376908",
+        "label": null,
+        "weight": 0.16666666666666666,
+        "depth": 2,
+        "paths": [
+          [
+            "Q315",
+            "Q17376908"
+          ]
+        ],
+        "propertyTrail": [
+          "P361",
+          "P279"
+        ],
+        "sourcePhrases": [
+          {
+            "text": "синонимы",
+            "entityId": "Q42106"
+          }
+        ],
+        "sourceCandidates": [
+          {
+            "phrase": "синонимы",
+            "candidateId": "Q42106",
+            "candidateLabel": "synonym",
+            "weight": 0.3333333333333333
+          }
+        ],
+        "probability": 0.04166666666666667
+      },
+      {
+        "id": "Q1969448",
+        "label": null,
+        "weight": 0.16666666666666666,
+        "depth": 2,
+        "paths": [
+          [
+            "Q10753560",
+            "Q1969448"
+          ]
+        ],
+        "propertyTrail": [
+          "P31",
+          "P279"
+        ],
+        "sourcePhrases": [
+          {
+            "text": "синонимы",
+            "entityId": "Q42106"
+          }
+        ],
+        "sourceCandidates": [
+          {
+            "phrase": "синонимы",
+            "candidateId": "Q1040689",
+            "candidateLabel": "synonym",
+            "weight": 0.3333333333333333
+          }
+        ],
+        "probability": 0.04166666666666667
+      },
+      {
+        "id": "Q201658",
+        "label": null,
+        "weight": 0.16666666666666666,
+        "depth": 2,
+        "paths": [
+          [
+            "Q130232",
+            "Q201658"
+          ]
+        ],
+        "propertyTrail": [
+          "P136",
+          "P31"
+        ],
+        "sourcePhrases": [
+          {
+            "text": "синонимы",
+            "entityId": "Q42106"
+          }
+        ],
+        "sourceCandidates": [
+          {
+            "phrase": "синонимы",
+            "candidateId": "Q61672685",
+            "candidateLabel": "Synonyms",
+            "weight": 0.3333333333333333
+          }
+        ],
+        "probability": 0.04166666666666667
+      },
+      {
+        "id": "Q21010853",
+        "label": null,
+        "weight": 0.16666666666666666,
+        "depth": 2,
+        "paths": [
+          [
+            "Q130232",
+            "Q21010853"
+          ]
+        ],
+        "propertyTrail": [
+          "P136",
+          "P279"
+        ],
+        "sourcePhrases": [
+          {
+            "text": "синонимы",
+            "entityId": "Q42106"
+          }
+        ],
+        "sourceCandidates": [
+          {
+            "phrase": "синонимы",
+            "candidateId": "Q61672685",
+            "candidateLabel": "Synonyms",
+            "weight": 0.3333333333333333
+          }
+        ],
+        "probability": 0.04166666666666667
+      }
+    ],
+    "mainBigContext": {
+      "id": "Q10753560",
+      "label": null,
+      "weight": 0.3333333333333333,
+      "depth": 1,
+      "paths": [
+        [
+          "Q10753560"
+        ]
+      ],
+      "propertyTrail": [
+        "P31"
+      ],
+      "sourcePhrases": [
+        {
+          "text": "синонимы",
+          "entityId": "Q42106"
+        }
+      ],
+      "sourceCandidates": [
+        {
+          "phrase": "синонимы",
+          "candidateId": "Q1040689",
+          "candidateLabel": "synonym",
+          "weight": 0.3333333333333333
+        }
+      ],
+      "probability": 0.08333333333333334
+    },
+    "additionalBigContexts": [
+      {
+        "id": "Q11424",
+        "label": null,
+        "weight": 0.3333333333333333,
+        "depth": 1,
+        "paths": [
+          [
+            "Q11424"
+          ]
+        ],
+        "propertyTrail": [
+          "P31"
+        ],
+        "sourcePhrases": [
+          {
+            "text": "синонимы",
+            "entityId": "Q42106"
+          }
+        ],
+        "sourceCandidates": [
+          {
+            "phrase": "синонимы",
+            "candidateId": "Q61672685",
+            "candidateLabel": "Synonyms",
+            "weight": 0.3333333333333333
+          }
+        ],
+        "probability": 0.08333333333333334
+      },
+      {
+        "id": "Q130232",
+        "label": null,
+        "weight": 0.3333333333333333,
+        "depth": 1,
+        "paths": [
+          [
+            "Q130232"
+          ]
+        ],
+        "propertyTrail": [
+          "P136"
+        ],
+        "sourcePhrases": [
+          {
+            "text": "синонимы",
+            "entityId": "Q42106"
+          }
+        ],
+        "sourceCandidates": [
+          {
+            "phrase": "синонимы",
+            "candidateId": "Q61672685",
+            "candidateLabel": "Synonyms",
+            "weight": 0.3333333333333333
+          }
+        ],
+        "probability": 0.08333333333333334
+      },
+      {
+        "id": "Q315",
+        "label": null,
+        "weight": 0.3333333333333333,
+        "depth": 1,
+        "paths": [
+          [
+            "Q315"
+          ]
+        ],
+        "propertyTrail": [
+          "P361"
+        ],
+        "sourcePhrases": [
+          {
+            "text": "синонимы",
+            "entityId": "Q42106"
+          }
+        ],
+        "sourceCandidates": [
+          {
+            "phrase": "синонимы",
+            "candidateId": "Q42106",
+            "candidateLabel": "synonym",
+            "weight": 0.3333333333333333
+          }
+        ],
+        "probability": 0.08333333333333334
+      },
+      {
+        "id": "Q8171",
+        "label": null,
+        "weight": 0.3333333333333333,
+        "depth": 1,
+        "paths": [
+          [
+            "Q8171"
+          ]
+        ],
+        "propertyTrail": [
+          "P279"
+        ],
+        "sourcePhrases": [
+          {
+            "text": "синонимы",
+            "entityId": "Q42106"
+          }
+        ],
+        "sourceCandidates": [
+          {
+            "phrase": "синонимы",
+            "candidateId": "Q42106",
+            "candidateLabel": "synonym",
+            "weight": 0.3333333333333333
+          }
+        ],
+        "probability": 0.08333333333333334
+      },
+      {
+        "id": "Q10301427",
+        "label": null,
+        "weight": 0.16666666666666666,
+        "depth": 2,
+        "paths": [
+          [
+            "Q11424",
+            "Q10301427"
+          ]
+        ],
+        "propertyTrail": [
+          "P31",
+          "P279"
+        ],
+        "sourcePhrases": [
+          {
+            "text": "синонимы",
+            "entityId": "Q42106"
+          }
+        ],
+        "sourceCandidates": [
+          {
+            "phrase": "синонимы",
+            "candidateId": "Q61672685",
+            "candidateLabel": "Synonyms",
+            "weight": 0.3333333333333333
+          }
+        ],
+        "probability": 0.04166666666666667
+      },
+      {
+        "id": "Q11024",
+        "label": null,
+        "weight": 0.16666666666666666,
+        "depth": 2,
+        "paths": [
+          [
+            "Q315",
+            "Q11024"
+          ]
+        ],
+        "propertyTrail": [
+          "P361",
+          "P361"
+        ],
+        "sourcePhrases": [
+          {
+            "text": "синонимы",
+            "entityId": "Q42106"
+          }
+        ],
+        "sourceCandidates": [
+          {
+            "phrase": "синонимы",
+            "candidateId": "Q42106",
+            "candidateLabel": "synonym",
+            "weight": 0.3333333333333333
+          }
+        ],
+        "probability": 0.04166666666666667
+      },
+      {
+        "id": "Q1347367",
+        "label": null,
+        "weight": 0.16666666666666666,
+        "depth": 2,
+        "paths": [
+          [
+            "Q315",
+            "Q1347367"
+          ]
+        ],
+        "propertyTrail": [
+          "P361",
+          "P31"
+        ],
+        "sourcePhrases": [
+          {
+            "text": "синонимы",
+            "entityId": "Q42106"
+          }
+        ],
+        "sourceCandidates": [
+          {
+            "phrase": "синонимы",
+            "candidateId": "Q42106",
+            "candidateLabel": "synonym",
+            "weight": 0.3333333333333333
+          }
+        ],
+        "probability": 0.04166666666666667
+      },
+      {
+        "id": "Q17376908",
+        "label": null,
+        "weight": 0.16666666666666666,
+        "depth": 2,
+        "paths": [
+          [
+            "Q315",
+            "Q17376908"
+          ]
+        ],
+        "propertyTrail": [
+          "P361",
+          "P279"
+        ],
+        "sourcePhrases": [
+          {
+            "text": "синонимы",
+            "entityId": "Q42106"
+          }
+        ],
+        "sourceCandidates": [
+          {
+            "phrase": "синонимы",
+            "candidateId": "Q42106",
+            "candidateLabel": "synonym",
+            "weight": 0.3333333333333333
+          }
+        ],
+        "probability": 0.04166666666666667
+      },
+      {
+        "id": "Q1969448",
+        "label": null,
+        "weight": 0.16666666666666666,
+        "depth": 2,
+        "paths": [
+          [
+            "Q10753560",
+            "Q1969448"
+          ]
+        ],
+        "propertyTrail": [
+          "P31",
+          "P279"
+        ],
+        "sourcePhrases": [
+          {
+            "text": "синонимы",
+            "entityId": "Q42106"
+          }
+        ],
+        "sourceCandidates": [
+          {
+            "phrase": "синонимы",
+            "candidateId": "Q1040689",
+            "candidateLabel": "synonym",
+            "weight": 0.3333333333333333
+          }
+        ],
+        "probability": 0.04166666666666667
+      },
+      {
+        "id": "Q201658",
+        "label": null,
+        "weight": 0.16666666666666666,
+        "depth": 2,
+        "paths": [
+          [
+            "Q130232",
+            "Q201658"
+          ]
+        ],
+        "propertyTrail": [
+          "P136",
+          "P31"
+        ],
+        "sourcePhrases": [
+          {
+            "text": "синонимы",
+            "entityId": "Q42106"
+          }
+        ],
+        "sourceCandidates": [
+          {
+            "phrase": "синонимы",
+            "candidateId": "Q61672685",
+            "candidateLabel": "Synonyms",
+            "weight": 0.3333333333333333
+          }
+        ],
+        "probability": 0.04166666666666667
+      },
+      {
+        "id": "Q21010853",
+        "label": null,
+        "weight": 0.16666666666666666,
+        "depth": 2,
+        "paths": [
+          [
+            "Q130232",
+            "Q21010853"
+          ]
+        ],
+        "propertyTrail": [
+          "P136",
+          "P279"
+        ],
+        "sourcePhrases": [
+          {
+            "text": "синонимы",
+            "entityId": "Q42106"
+          }
+        ],
+        "sourceCandidates": [
+          {
+            "phrase": "синонимы",
+            "candidateId": "Q61672685",
+            "candidateLabel": "Synonyms",
+            "weight": 0.3333333333333333
+          }
+        ],
+        "probability": 0.04166666666666667
+      }
+    ],
+    "interpretations": [
+      {
+        "rank": 1,
+        "score": 125,
+        "phrases": [
+          {
+            "text": "синонимы",
+            "entityId": "Q42106",
+            "kind": "entity",
+            "entityLabel": "synonym",
+            "entityDescription": "word or phrase that means exactly or nearly the same as another word or phrase in the same language"
+          },
+          {
+            "text": "или",
+            "entityId": "wikt:ru:или#Conjunction:0",
+            "kind": "entity",
+            "entityLabel": "или",
+            "entityDescription": "or"
+          },
+          {
+            "text": "примеры",
+            "entityId": "wikt:ru:примеры#Noun:0",
+            "kind": "entity",
+            "entityLabel": "примеры",
+            "entityDescription": "nominative/accusative plural of приме́р (primér)"
+          },
+          {
+            "text": "согласования",
+            "entityId": "wikt:ru:согласования#Noun:0",
+            "kind": "entity",
+            "entityLabel": "согласования",
+            "entityDescription": "inflection of согласова́ние (soglasovánije):\ngenitive singular\nnominative/accusative plural"
+          }
+        ]
+      },
+      {
+        "rank": 2,
+        "score": 125,
+        "phrases": [
+          {
+            "text": "синонимы",
+            "entityId": "Q42106",
+            "kind": "entity",
+            "entityLabel": "synonym",
+            "entityDescription": "word or phrase that means exactly or nearly the same as another word or phrase in the same language"
+          },
+          {
+            "text": "или",
+            "entityId": "wikt:ru:или#Conjunction:0",
+            "kind": "entity",
+            "entityLabel": "или",
+            "entityDescription": "or"
+          },
+          {
+            "text": "примеры",
+            "entityId": "wikt:ru:примеры#Noun:0",
+            "kind": "entity",
+            "entityLabel": "примеры",
+            "entityDescription": "nominative/accusative plural of приме́р (primér)"
+          },
+          {
+            "text": "согласования",
+            "entityId": "wikt:ru:согласования#Noun:1",
+            "kind": "entity",
+            "entityLabel": "согласования",
+            "entityDescription": "genitive singular"
+          }
+        ]
+      },
+      {
+        "rank": 3,
+        "score": 125,
+        "phrases": [
+          {
+            "text": "синонимы",
+            "entityId": "Q42106",
+            "kind": "entity",
+            "entityLabel": "synonym",
+            "entityDescription": "word or phrase that means exactly or nearly the same as another word or phrase in the same language"
+          },
+          {
+            "text": "или",
+            "entityId": "wikt:ru:или#Conjunction:0",
+            "kind": "entity",
+            "entityLabel": "или",
+            "entityDescription": "or"
+          },
+          {
+            "text": "примеры",
+            "entityId": "wikt:ru:примеры#Noun:0",
+            "kind": "entity",
+            "entityLabel": "примеры",
+            "entityDescription": "nominative/accusative plural of приме́р (primér)"
+          },
+          {
+            "text": "согласования",
+            "entityId": "wikt:ru:согласования#Noun:2",
+            "kind": "entity",
+            "entityLabel": "согласования",
+            "entityDescription": "nominative/accusative plural"
+          }
+        ]
+      },
+      {
+        "rank": 4,
+        "score": 125,
+        "phrases": [
+          {
+            "text": "синонимы",
+            "entityId": "Q42106",
+            "kind": "entity",
+            "entityLabel": "synonym",
+            "entityDescription": "word or phrase that means exactly or nearly the same as another word or phrase in the same language"
+          },
+          {
+            "text": "или",
+            "entityId": "wikt:ru:или#Conjunction:1",
+            "kind": "entity",
+            "entityLabel": "или",
+            "entityDescription": "or else"
+          },
+          {
+            "text": "примеры",
+            "entityId": "wikt:ru:примеры#Noun:0",
+            "kind": "entity",
+            "entityLabel": "примеры",
+            "entityDescription": "nominative/accusative plural of приме́р (primér)"
+          },
+          {
+            "text": "согласования",
+            "entityId": "wikt:ru:согласования#Noun:0",
+            "kind": "entity",
+            "entityLabel": "согласования",
+            "entityDescription": "inflection of согласова́ние (soglasovánije):\ngenitive singular\nnominative/accusative plural"
+          }
+        ]
+      },
+      {
+        "rank": 5,
+        "score": 125,
+        "phrases": [
+          {
+            "text": "синонимы",
+            "entityId": "Q42106",
+            "kind": "entity",
+            "entityLabel": "synonym",
+            "entityDescription": "word or phrase that means exactly or nearly the same as another word or phrase in the same language"
+          },
+          {
+            "text": "или",
+            "entityId": "wikt:ru:или#Conjunction:1",
+            "kind": "entity",
+            "entityLabel": "или",
+            "entityDescription": "or else"
+          },
+          {
+            "text": "примеры",
+            "entityId": "wikt:ru:примеры#Noun:0",
+            "kind": "entity",
+            "entityLabel": "примеры",
+            "entityDescription": "nominative/accusative plural of приме́р (primér)"
+          },
+          {
+            "text": "согласования",
+            "entityId": "wikt:ru:согласования#Noun:1",
+            "kind": "entity",
+            "entityLabel": "согласования",
+            "entityDescription": "genitive singular"
+          }
+        ]
+      },
+      {
+        "rank": 6,
+        "score": 125,
+        "phrases": [
+          {
+            "text": "синонимы",
+            "entityId": "Q42106",
+            "kind": "entity",
+            "entityLabel": "synonym",
+            "entityDescription": "word or phrase that means exactly or nearly the same as another word or phrase in the same language"
+          },
+          {
+            "text": "или",
+            "entityId": "wikt:ru:или#Conjunction:1",
+            "kind": "entity",
+            "entityLabel": "или",
+            "entityDescription": "or else"
+          },
+          {
+            "text": "примеры",
+            "entityId": "wikt:ru:примеры#Noun:0",
+            "kind": "entity",
+            "entityLabel": "примеры",
+            "entityDescription": "nominative/accusative plural of приме́р (primér)"
+          },
+          {
+            "text": "согласования",
+            "entityId": "wikt:ru:согласования#Noun:2",
+            "kind": "entity",
+            "entityLabel": "согласования",
+            "entityDescription": "nominative/accusative plural"
+          }
+        ]
+      },
+      {
+        "rank": 7,
+        "score": 125,
+        "phrases": [
+          {
+            "text": "синонимы",
+            "entityId": "Q42106",
+            "kind": "entity",
+            "entityLabel": "synonym",
+            "entityDescription": "word or phrase that means exactly or nearly the same as another word or phrase in the same language"
+          },
+          {
+            "text": "или",
+            "entityId": "wikt:ru:или#Conjunction:2",
+            "kind": "entity",
+            "entityLabel": "или",
+            "entityDescription": "either"
+          },
+          {
+            "text": "примеры",
+            "entityId": "wikt:ru:примеры#Noun:0",
+            "kind": "entity",
+            "entityLabel": "примеры",
+            "entityDescription": "nominative/accusative plural of приме́р (primér)"
+          },
+          {
+            "text": "согласования",
+            "entityId": "wikt:ru:согласования#Noun:0",
+            "kind": "entity",
+            "entityLabel": "согласования",
+            "entityDescription": "inflection of согласова́ние (soglasovánije):\ngenitive singular\nnominative/accusative plural"
+          }
+        ]
+      },
+      {
+        "rank": 8,
+        "score": 125,
+        "phrases": [
+          {
+            "text": "синонимы",
+            "entityId": "Q42106",
+            "kind": "entity",
+            "entityLabel": "synonym",
+            "entityDescription": "word or phrase that means exactly or nearly the same as another word or phrase in the same language"
+          },
+          {
+            "text": "или",
+            "entityId": "wikt:ru:или#Conjunction:2",
+            "kind": "entity",
+            "entityLabel": "или",
+            "entityDescription": "either"
+          },
+          {
+            "text": "примеры",
+            "entityId": "wikt:ru:примеры#Noun:0",
+            "kind": "entity",
+            "entityLabel": "примеры",
+            "entityDescription": "nominative/accusative plural of приме́р (primér)"
+          },
+          {
+            "text": "согласования",
+            "entityId": "wikt:ru:согласования#Noun:1",
+            "kind": "entity",
+            "entityLabel": "согласования",
+            "entityDescription": "genitive singular"
+          }
+        ]
+      },
+      {
+        "rank": 9,
+        "score": 125,
+        "phrases": [
+          {
+            "text": "синонимы",
+            "entityId": "Q42106",
+            "kind": "entity",
+            "entityLabel": "synonym",
+            "entityDescription": "word or phrase that means exactly or nearly the same as another word or phrase in the same language"
+          },
+          {
+            "text": "или",
+            "entityId": "wikt:ru:или#Conjunction:2",
+            "kind": "entity",
+            "entityLabel": "или",
+            "entityDescription": "either"
+          },
+          {
+            "text": "примеры",
+            "entityId": "wikt:ru:примеры#Noun:0",
+            "kind": "entity",
+            "entityLabel": "примеры",
+            "entityDescription": "nominative/accusative plural of приме́р (primér)"
+          },
+          {
+            "text": "согласования",
+            "entityId": "wikt:ru:согласования#Noun:2",
+            "kind": "entity",
+            "entityLabel": "согласования",
+            "entityDescription": "nominative/accusative plural"
+          }
+        ]
+      },
+      {
+        "rank": 10,
+        "score": 124,
+        "phrases": [
+          {
+            "text": "синонимы",
+            "entityId": "Q1040689",
+            "kind": "entity",
+            "entityLabel": "synonym",
+            "entityDescription": "one of two or more names that apply to the same taxon"
+          },
+          {
+            "text": "или",
+            "entityId": "wikt:ru:или#Conjunction:0",
+            "kind": "entity",
+            "entityLabel": "или",
+            "entityDescription": "or"
+          },
+          {
+            "text": "примеры",
+            "entityId": "wikt:ru:примеры#Noun:0",
+            "kind": "entity",
+            "entityLabel": "примеры",
+            "entityDescription": "nominative/accusative plural of приме́р (primér)"
+          },
+          {
+            "text": "согласования",
+            "entityId": "wikt:ru:согласования#Noun:0",
+            "kind": "entity",
+            "entityLabel": "согласования",
+            "entityDescription": "inflection of согласова́ние (soglasovánije):\ngenitive singular\nnominative/accusative plural"
+          }
+        ]
+      }
+    ],
+    "markdown": "Найти [синонимы](https://en.wikipedia.org/wiki/Synonym \"Q42106\") [или](https://en.wiktionary.org/wiki/%D0%B8%D0%BB%D0%B8 \"wikt:ru:или#Conjunction:0\") [примеры](https://en.wiktionary.org/wiki/%D0%BF%D1%80%D0%B8%D0%BC%D0%B5%D1%80%D1%8B \"wikt:ru:примеры#Noun:0\") [согласования](https://en.wiktionary.org/wiki/%D1%81%D0%BE%D0%B3%D0%BB%D0%B0%D1%81%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D1%8F \"wikt:ru:согласования#Noun:0\")",
+    "html": "Найти <a href=\"https://en.wikipedia.org/wiki/Synonym\" title=\"Q42106\">синонимы</a> <a href=\"https://en.wiktionary.org/wiki/%D0%B8%D0%BB%D0%B8\" title=\"wikt:ru:или#Conjunction:0\">или</a> <a href=\"https://en.wiktionary.org/wiki/%D0%BF%D1%80%D0%B8%D0%BC%D0%B5%D1%80%D1%8B\" title=\"wikt:ru:примеры#Noun:0\">примеры</a> <a href=\"https://en.wiktionary.org/wiki/%D1%81%D0%BE%D0%B3%D0%BB%D0%B0%D1%81%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D1%8F\" title=\"wikt:ru:согласования#Noun:0\">согласования</a>",
+    "linksNotation": "(formalization: (Найти синонимы или примеры согласования))\n(phrase-1: source (Найти) start 0 end 0 unresolved)\n(phrase-2: source (синонимы) start 1 end 1 id Q42106 label (synonym) kind entity markdownUrl (https://en.wikipedia.org/wiki/Synonym))\n(phrase-3: source (или) start 2 end 2 id wikt:ru:или#Conjunction:0 label (или) kind entity markdownUrl (https://en.wiktionary.org/wiki/%D0%B8%D0%BB%D0%B8))\n(phrase-4: source (примеры) start 3 end 3 id wikt:ru:примеры#Noun:0 label (примеры) kind entity markdownUrl (https://en.wiktionary.org/wiki/%D0%BF%D1%80%D0%B8%D0%BC%D0%B5%D1%80%D1%8B))\n(phrase-5: source (согласования) start 4 end 4 id wikt:ru:согласования#Noun:0 label (согласования) kind entity markdownUrl (https://en.wiktionary.org/wiki/%D1%81%D0%BE%D0%B3%D0%BB%D0%B0%D1%81%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D1%8F))\n(context-1: Q10753560 weight 0.6666666666666666 probability 33.3)\n(context-2: Q11424 weight 0.3333333333333333 probability 16.7)\n(context-3: Q130232 weight 0.3333333333333333 probability 16.7)\n(context-4: Q315 weight 0.3333333333333333 probability 16.7)\n(context-5: Q8171 weight 0.3333333333333333 probability 16.7)",
+    "linksNetwork": {
+      "id": "formalize-links-network",
+      "kind": "links-network",
+      "version": 1,
+      "beliefSystem": {
+        "id": "formalize-default",
+        "name": "Formalize prototype",
+        "probabilityStrategy": "frequency-weighted-context",
+        "sourceWeights": {
+          "wikidata": 1,
+          "wordnet": 0.7,
+          "fandom": 0.6,
+          "algorithm": 0.5
+        }
+      },
+      "links": [
+        {
+          "id": "formalize-input-1",
+          "role": "input",
+          "references": [],
+          "value": {
+            "text": "Найти синонимы или примеры согласования"
+          },
+          "provenance": {
+            "sourceType": "algorithm",
+            "method": "formalize"
+          }
+        },
+        {
+          "id": "formalize-phrase-1",
+          "role": "phrase",
+          "references": [
+            "formalize-input-1"
+          ],
+          "value": {
+            "text": "Найти",
+            "position": 0,
+            "size": 1,
+            "wikidataId": null,
+            "wikidataLabel": null,
+            "wikidataKind": null,
+            "wikipediaUrl": null,
+            "source": null
+          },
+          "provenance": {
+            "sourceType": "algorithm",
+            "sourceUrl": null
+          }
+        },
+        {
+          "id": "formalize-phrase-2",
+          "role": "phrase",
+          "references": [
+            "formalize-input-1"
+          ],
+          "value": {
+            "text": "синонимы",
+            "position": 1,
+            "size": 1,
+            "wikidataId": "Q42106",
+            "wikidataLabel": "synonym",
+            "wikidataKind": "entity",
+            "wikipediaUrl": "https://en.wikipedia.org/wiki/Synonym",
+            "source": "wikidata"
+          },
+          "provenance": {
+            "sourceType": "wikidata",
+            "sourceUrl": "https://www.wikidata.org/wiki/Q42106"
+          }
+        },
+        {
+          "id": "formalize-phrase-3",
+          "role": "phrase",
+          "references": [
+            "formalize-input-1"
+          ],
+          "value": {
+            "text": "или",
+            "position": 2,
+            "size": 1,
+            "wikidataId": "wikt:ru:или#Conjunction:0",
+            "wikidataLabel": "или",
+            "wikidataKind": "entity",
+            "wikipediaUrl": null,
+            "source": "wiktionary"
+          },
+          "provenance": {
+            "sourceType": "wiktionary",
+            "sourceUrl": "https://en.wiktionary.org/wiki/%D0%B8%D0%BB%D0%B8"
+          }
+        },
+        {
+          "id": "formalize-phrase-4",
+          "role": "phrase",
+          "references": [
+            "formalize-input-1"
+          ],
+          "value": {
+            "text": "примеры",
+            "position": 3,
+            "size": 1,
+            "wikidataId": "wikt:ru:примеры#Noun:0",
+            "wikidataLabel": "примеры",
+            "wikidataKind": "entity",
+            "wikipediaUrl": null,
+            "source": "wiktionary"
+          },
+          "provenance": {
+            "sourceType": "wiktionary",
+            "sourceUrl": "https://en.wiktionary.org/wiki/%D0%BF%D1%80%D0%B8%D0%BC%D0%B5%D1%80%D1%8B"
+          }
+        },
+        {
+          "id": "formalize-phrase-5",
+          "role": "phrase",
+          "references": [
+            "formalize-input-1"
+          ],
+          "value": {
+            "text": "согласования",
+            "position": 4,
+            "size": 1,
+            "wikidataId": "wikt:ru:согласования#Noun:0",
+            "wikidataLabel": "согласования",
+            "wikidataKind": "entity",
+            "wikipediaUrl": null,
+            "source": "wiktionary"
+          },
+          "provenance": {
+            "sourceType": "wiktionary",
+            "sourceUrl": "https://en.wiktionary.org/wiki/%D1%81%D0%BE%D0%B3%D0%BB%D0%B0%D1%81%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D1%8F"
+          }
+        },
+        {
+          "id": "formalize-context-1",
+          "role": "context",
+          "references": [
+            "formalize-input-1"
+          ],
+          "value": {
+            "wikidataId": "Q10753560",
+            "property": "P31",
+            "propertyLabel": "instance of",
+            "weight": 0.6666666666666666,
+            "probability": 0.33333333333333337
+          },
+          "provenance": {
+            "sourceType": "wikidata",
+            "sourceUrl": "https://www.wikidata.org/wiki/Q10753560"
+          }
+        },
+        {
+          "id": "formalize-context-2",
+          "role": "context",
+          "references": [
+            "formalize-input-1"
+          ],
+          "value": {
+            "wikidataId": "Q11424",
+            "property": "P31",
+            "propertyLabel": "instance of",
+            "weight": 0.3333333333333333,
+            "probability": 0.16666666666666669
+          },
+          "provenance": {
+            "sourceType": "wikidata",
+            "sourceUrl": "https://www.wikidata.org/wiki/Q11424"
+          }
+        },
+        {
+          "id": "formalize-context-3",
+          "role": "context",
+          "references": [
+            "formalize-input-1"
+          ],
+          "value": {
+            "wikidataId": "Q130232",
+            "property": "P136",
+            "propertyLabel": "genre",
+            "weight": 0.3333333333333333,
+            "probability": 0.16666666666666669
+          },
+          "provenance": {
+            "sourceType": "wikidata",
+            "sourceUrl": "https://www.wikidata.org/wiki/Q130232"
+          }
+        },
+        {
+          "id": "formalize-context-4",
+          "role": "context",
+          "references": [
+            "formalize-input-1"
+          ],
+          "value": {
+            "wikidataId": "Q315",
+            "property": "P361",
+            "propertyLabel": "part of",
+            "weight": 0.3333333333333333,
+            "probability": 0.16666666666666669
+          },
+          "provenance": {
+            "sourceType": "wikidata",
+            "sourceUrl": "https://www.wikidata.org/wiki/Q315"
+          }
+        },
+        {
+          "id": "formalize-context-5",
+          "role": "context",
+          "references": [
+            "formalize-input-1"
+          ],
+          "value": {
+            "wikidataId": "Q8171",
+            "property": "P279",
+            "propertyLabel": "subclass of",
+            "weight": 0.3333333333333333,
+            "probability": 0.16666666666666669
+          },
+          "provenance": {
+            "sourceType": "wikidata",
+            "sourceUrl": "https://www.wikidata.org/wiki/Q8171"
+          }
+        }
+      ]
+    },
+    "cst": {
+      "type": "formalization",
+      "version": 1,
+      "text": "Найти синонимы или примеры согласования",
+      "tokens": [
+        "Найти",
+        "синонимы",
+        "или",
+        "примеры",
+        "согласования"
+      ],
+      "linkTargetMode": "wikipedia",
+      "phrases": [
+        {
+          "type": "phrase",
+          "id": "phrase-1",
+          "text": "Найти",
+          "tokens": [
+            "Найти"
+          ],
+          "start": 0,
+          "end": 0,
+          "sourceStart": 0,
+          "sourceEnd": 5,
+          "size": 1,
+          "entity": null,
+          "candidates": []
+        },
+        {
+          "type": "phrase",
+          "id": "phrase-2",
+          "text": "синонимы",
+          "tokens": [
+            "синонимы"
+          ],
+          "start": 1,
+          "end": 1,
+          "sourceStart": 6,
+          "sourceEnd": 14,
+          "size": 1,
+          "entity": {
+            "id": "Q42106",
+            "label": "synonym",
+            "description": "word or phrase that means exactly or nearly the same as another word or phrase in the same language",
+            "kind": "entity",
+            "source": "wikidata",
+            "sourceUrl": "https://www.wikidata.org/wiki/Q42106",
+            "wikipediaUrl": "https://en.wikipedia.org/wiki/Synonym",
+            "wikipediaTitle": "Synonym",
+            "score": 31,
+            "url": "https://en.wikipedia.org/wiki/Synonym"
+          },
+          "candidates": [
+            {
+              "id": "Q42106",
+              "label": "synonym",
+              "description": "word or phrase that means exactly or nearly the same as another word or phrase in the same language",
+              "kind": "entity",
+              "source": "wikidata",
+              "sourceUrl": "https://www.wikidata.org/wiki/Q42106",
+              "wikipediaUrl": "https://en.wikipedia.org/wiki/Synonym",
+              "wikipediaTitle": "Synonym",
+              "score": 31,
+              "url": "https://en.wikipedia.org/wiki/Synonym"
+            },
+            {
+              "id": "Q1040689",
+              "label": "synonym",
+              "description": "one of two or more names that apply to the same taxon",
+              "kind": "entity",
+              "source": "wikidata",
+              "sourceUrl": "https://www.wikidata.org/wiki/Q1040689",
+              "wikipediaUrl": "https://en.wikipedia.org/wiki/Synonym_(taxonomy)",
+              "wikipediaTitle": "Synonym (taxonomy)",
+              "score": 31,
+              "url": "https://en.wikipedia.org/wiki/Synonym_(taxonomy)"
+            },
+            {
+              "id": "Q61672685",
+              "label": "Synonyms",
+              "description": "2019 film by Nadav Lapid",
+              "kind": "entity",
+              "source": "wikidata",
+              "sourceUrl": "https://www.wikidata.org/wiki/Q61672685",
+              "wikipediaUrl": "https://en.wikipedia.org/wiki/Synonyms_(film)",
+              "wikipediaTitle": "Synonyms (film)",
+              "score": 31,
+              "url": "https://en.wikipedia.org/wiki/Synonyms_(film)"
+            }
+          ]
+        },
+        {
+          "type": "phrase",
+          "id": "phrase-3",
+          "text": "или",
+          "tokens": [
+            "или"
+          ],
+          "start": 2,
+          "end": 2,
+          "sourceStart": 15,
+          "sourceEnd": 18,
+          "size": 1,
+          "entity": {
+            "id": "wikt:ru:или#Conjunction:0",
+            "label": "или",
+            "description": "or",
+            "kind": "entity",
+            "source": "wiktionary",
+            "sourceUrl": "https://en.wiktionary.org/wiki/%D0%B8%D0%BB%D0%B8",
+            "wikipediaUrl": null,
+            "wikipediaTitle": null,
+            "score": 31,
+            "url": "https://en.wiktionary.org/wiki/%D0%B8%D0%BB%D0%B8"
+          },
+          "candidates": [
+            {
+              "id": "wikt:ru:или#Conjunction:0",
+              "label": "или",
+              "description": "or",
+              "kind": "entity",
+              "source": "wiktionary",
+              "sourceUrl": "https://en.wiktionary.org/wiki/%D0%B8%D0%BB%D0%B8",
+              "wikipediaUrl": null,
+              "wikipediaTitle": null,
+              "score": 31,
+              "url": "https://en.wiktionary.org/wiki/%D0%B8%D0%BB%D0%B8"
+            },
+            {
+              "id": "wikt:ru:или#Conjunction:1",
+              "label": "или",
+              "description": "or else",
+              "kind": "entity",
+              "source": "wiktionary",
+              "sourceUrl": "https://en.wiktionary.org/wiki/%D0%B8%D0%BB%D0%B8",
+              "wikipediaUrl": null,
+              "wikipediaTitle": null,
+              "score": 31,
+              "url": "https://en.wiktionary.org/wiki/%D0%B8%D0%BB%D0%B8"
+            },
+            {
+              "id": "wikt:ru:или#Conjunction:2",
+              "label": "или",
+              "description": "either",
+              "kind": "entity",
+              "source": "wiktionary",
+              "sourceUrl": "https://en.wiktionary.org/wiki/%D0%B8%D0%BB%D0%B8",
+              "wikipediaUrl": null,
+              "wikipediaTitle": null,
+              "score": 31,
+              "url": "https://en.wiktionary.org/wiki/%D0%B8%D0%BB%D0%B8"
+            }
+          ]
+        },
+        {
+          "type": "phrase",
+          "id": "phrase-4",
+          "text": "примеры",
+          "tokens": [
+            "примеры"
+          ],
+          "start": 3,
+          "end": 3,
+          "sourceStart": 19,
+          "sourceEnd": 26,
+          "size": 1,
+          "entity": {
+            "id": "wikt:ru:примеры#Noun:0",
+            "label": "примеры",
+            "description": "nominative/accusative plural of приме́р (primér)",
+            "kind": "entity",
+            "source": "wiktionary",
+            "sourceUrl": "https://en.wiktionary.org/wiki/%D0%BF%D1%80%D0%B8%D0%BC%D0%B5%D1%80%D1%8B",
+            "wikipediaUrl": null,
+            "wikipediaTitle": null,
+            "score": 31,
+            "url": "https://en.wiktionary.org/wiki/%D0%BF%D1%80%D0%B8%D0%BC%D0%B5%D1%80%D1%8B"
+          },
+          "candidates": [
+            {
+              "id": "wikt:ru:примеры#Noun:0",
+              "label": "примеры",
+              "description": "nominative/accusative plural of приме́р (primér)",
+              "kind": "entity",
+              "source": "wiktionary",
+              "sourceUrl": "https://en.wiktionary.org/wiki/%D0%BF%D1%80%D0%B8%D0%BC%D0%B5%D1%80%D1%8B",
+              "wikipediaUrl": null,
+              "wikipediaTitle": null,
+              "score": 31,
+              "url": "https://en.wiktionary.org/wiki/%D0%BF%D1%80%D0%B8%D0%BC%D0%B5%D1%80%D1%8B"
+            }
+          ]
+        },
+        {
+          "type": "phrase",
+          "id": "phrase-5",
+          "text": "согласования",
+          "tokens": [
+            "согласования"
+          ],
+          "start": 4,
+          "end": 4,
+          "sourceStart": 27,
+          "sourceEnd": 39,
+          "size": 1,
+          "entity": {
+            "id": "wikt:ru:согласования#Noun:0",
+            "label": "согласования",
+            "description": "inflection of согласова́ние (soglasovánije):\ngenitive singular\nnominative/accusative plural",
+            "kind": "entity",
+            "source": "wiktionary",
+            "sourceUrl": "https://en.wiktionary.org/wiki/%D1%81%D0%BE%D0%B3%D0%BB%D0%B0%D1%81%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D1%8F",
+            "wikipediaUrl": null,
+            "wikipediaTitle": null,
+            "score": 31,
+            "url": "https://en.wiktionary.org/wiki/%D1%81%D0%BE%D0%B3%D0%BB%D0%B0%D1%81%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D1%8F"
+          },
+          "candidates": [
+            {
+              "id": "wikt:ru:согласования#Noun:0",
+              "label": "согласования",
+              "description": "inflection of согласова́ние (soglasovánije):\ngenitive singular\nnominative/accusative plural",
+              "kind": "entity",
+              "source": "wiktionary",
+              "sourceUrl": "https://en.wiktionary.org/wiki/%D1%81%D0%BE%D0%B3%D0%BB%D0%B0%D1%81%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D1%8F",
+              "wikipediaUrl": null,
+              "wikipediaTitle": null,
+              "score": 31,
+              "url": "https://en.wiktionary.org/wiki/%D1%81%D0%BE%D0%B3%D0%BB%D0%B0%D1%81%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D1%8F"
+            },
+            {
+              "id": "wikt:ru:согласования#Noun:1",
+              "label": "согласования",
+              "description": "genitive singular",
+              "kind": "entity",
+              "source": "wiktionary",
+              "sourceUrl": "https://en.wiktionary.org/wiki/%D1%81%D0%BE%D0%B3%D0%BB%D0%B0%D1%81%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D1%8F",
+              "wikipediaUrl": null,
+              "wikipediaTitle": null,
+              "score": 31,
+              "url": "https://en.wiktionary.org/wiki/%D1%81%D0%BE%D0%B3%D0%BB%D0%B0%D1%81%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D1%8F"
+            },
+            {
+              "id": "wikt:ru:согласования#Noun:2",
+              "label": "согласования",
+              "description": "nominative/accusative plural",
+              "kind": "entity",
+              "source": "wiktionary",
+              "sourceUrl": "https://en.wiktionary.org/wiki/%D1%81%D0%BE%D0%B3%D0%BB%D0%B0%D1%81%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D1%8F",
+              "wikipediaUrl": null,
+              "wikipediaTitle": null,
+              "score": 31,
+              "url": "https://en.wiktionary.org/wiki/%D1%81%D0%BE%D0%B3%D0%BB%D0%B0%D1%81%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D1%8F"
+            }
+          ]
+        }
+      ],
+      "contexts": [
+        {
+          "id": "context-1",
+          "wikidataId": "Q10753560",
+          "property": "P31",
+          "propertyLabel": "instance of",
+          "weight": 0.6666666666666666,
+          "probability": 0.33333333333333337
+        },
+        {
+          "id": "context-2",
+          "wikidataId": "Q11424",
+          "property": "P31",
+          "propertyLabel": "instance of",
+          "weight": 0.3333333333333333,
+          "probability": 0.16666666666666669
+        },
+        {
+          "id": "context-3",
+          "wikidataId": "Q130232",
+          "property": "P136",
+          "propertyLabel": "genre",
+          "weight": 0.3333333333333333,
+          "probability": 0.16666666666666669
+        },
+        {
+          "id": "context-4",
+          "wikidataId": "Q315",
+          "property": "P361",
+          "propertyLabel": "part of",
+          "weight": 0.3333333333333333,
+          "probability": 0.16666666666666669
+        },
+        {
+          "id": "context-5",
+          "wikidataId": "Q8171",
+          "property": "P279",
+          "propertyLabel": "subclass of",
+          "weight": 0.3333333333333333,
+          "probability": 0.16666666666666669
+        }
+      ]
+    },
+    "linkTargetMode": "wikipedia",
+    "sources": [
+      "wikipedia",
+      "wikidata",
+      "wiktionary"
+    ]
+  },
+  "cst": {
+    "type": "translation",
+    "version": 1,
+    "text": "Найти синонимы или примеры согласования",
+    "sourceLanguage": "ru",
+    "targetLanguage": "en",
+    "formalization": {
+      "type": "formalization",
+      "version": 1,
+      "text": "Найти синонимы или примеры согласования",
+      "tokens": [
+        "Найти",
+        "синонимы",
+        "или",
+        "примеры",
+        "согласования"
+      ],
+      "linkTargetMode": "wikipedia",
+      "phrases": [
+        {
+          "type": "phrase",
+          "id": "phrase-1",
+          "text": "Найти",
+          "tokens": [
+            "Найти"
+          ],
+          "start": 0,
+          "end": 0,
+          "sourceStart": 0,
+          "sourceEnd": 5,
+          "size": 1,
+          "entity": null,
+          "candidates": []
+        },
+        {
+          "type": "phrase",
+          "id": "phrase-2",
+          "text": "синонимы",
+          "tokens": [
+            "синонимы"
+          ],
+          "start": 1,
+          "end": 1,
+          "sourceStart": 6,
+          "sourceEnd": 14,
+          "size": 1,
+          "entity": {
+            "id": "Q42106",
+            "label": "synonym",
+            "description": "word or phrase that means exactly or nearly the same as another word or phrase in the same language",
+            "kind": "entity",
+            "source": "wikidata",
+            "sourceUrl": "https://www.wikidata.org/wiki/Q42106",
+            "wikipediaUrl": "https://en.wikipedia.org/wiki/Synonym",
+            "wikipediaTitle": "Synonym",
+            "score": 31,
+            "url": "https://en.wikipedia.org/wiki/Synonym"
+          },
+          "candidates": [
+            {
+              "id": "Q42106",
+              "label": "synonym",
+              "description": "word or phrase that means exactly or nearly the same as another word or phrase in the same language",
+              "kind": "entity",
+              "source": "wikidata",
+              "sourceUrl": "https://www.wikidata.org/wiki/Q42106",
+              "wikipediaUrl": "https://en.wikipedia.org/wiki/Synonym",
+              "wikipediaTitle": "Synonym",
+              "score": 31,
+              "url": "https://en.wikipedia.org/wiki/Synonym"
+            },
+            {
+              "id": "Q1040689",
+              "label": "synonym",
+              "description": "one of two or more names that apply to the same taxon",
+              "kind": "entity",
+              "source": "wikidata",
+              "sourceUrl": "https://www.wikidata.org/wiki/Q1040689",
+              "wikipediaUrl": "https://en.wikipedia.org/wiki/Synonym_(taxonomy)",
+              "wikipediaTitle": "Synonym (taxonomy)",
+              "score": 31,
+              "url": "https://en.wikipedia.org/wiki/Synonym_(taxonomy)"
+            },
+            {
+              "id": "Q61672685",
+              "label": "Synonyms",
+              "description": "2019 film by Nadav Lapid",
+              "kind": "entity",
+              "source": "wikidata",
+              "sourceUrl": "https://www.wikidata.org/wiki/Q61672685",
+              "wikipediaUrl": "https://en.wikipedia.org/wiki/Synonyms_(film)",
+              "wikipediaTitle": "Synonyms (film)",
+              "score": 31,
+              "url": "https://en.wikipedia.org/wiki/Synonyms_(film)"
+            }
+          ]
+        },
+        {
+          "type": "phrase",
+          "id": "phrase-3",
+          "text": "или",
+          "tokens": [
+            "или"
+          ],
+          "start": 2,
+          "end": 2,
+          "sourceStart": 15,
+          "sourceEnd": 18,
+          "size": 1,
+          "entity": {
+            "id": "wikt:ru:или#Conjunction:0",
+            "label": "или",
+            "description": "or",
+            "kind": "entity",
+            "source": "wiktionary",
+            "sourceUrl": "https://en.wiktionary.org/wiki/%D0%B8%D0%BB%D0%B8",
+            "wikipediaUrl": null,
+            "wikipediaTitle": null,
+            "score": 31,
+            "url": "https://en.wiktionary.org/wiki/%D0%B8%D0%BB%D0%B8"
+          },
+          "candidates": [
+            {
+              "id": "wikt:ru:или#Conjunction:0",
+              "label": "или",
+              "description": "or",
+              "kind": "entity",
+              "source": "wiktionary",
+              "sourceUrl": "https://en.wiktionary.org/wiki/%D0%B8%D0%BB%D0%B8",
+              "wikipediaUrl": null,
+              "wikipediaTitle": null,
+              "score": 31,
+              "url": "https://en.wiktionary.org/wiki/%D0%B8%D0%BB%D0%B8"
+            },
+            {
+              "id": "wikt:ru:или#Conjunction:1",
+              "label": "или",
+              "description": "or else",
+              "kind": "entity",
+              "source": "wiktionary",
+              "sourceUrl": "https://en.wiktionary.org/wiki/%D0%B8%D0%BB%D0%B8",
+              "wikipediaUrl": null,
+              "wikipediaTitle": null,
+              "score": 31,
+              "url": "https://en.wiktionary.org/wiki/%D0%B8%D0%BB%D0%B8"
+            },
+            {
+              "id": "wikt:ru:или#Conjunction:2",
+              "label": "или",
+              "description": "either",
+              "kind": "entity",
+              "source": "wiktionary",
+              "sourceUrl": "https://en.wiktionary.org/wiki/%D0%B8%D0%BB%D0%B8",
+              "wikipediaUrl": null,
+              "wikipediaTitle": null,
+              "score": 31,
+              "url": "https://en.wiktionary.org/wiki/%D0%B8%D0%BB%D0%B8"
+            }
+          ]
+        },
+        {
+          "type": "phrase",
+          "id": "phrase-4",
+          "text": "примеры",
+          "tokens": [
+            "примеры"
+          ],
+          "start": 3,
+          "end": 3,
+          "sourceStart": 19,
+          "sourceEnd": 26,
+          "size": 1,
+          "entity": {
+            "id": "wikt:ru:примеры#Noun:0",
+            "label": "примеры",
+            "description": "nominative/accusative plural of приме́р (primér)",
+            "kind": "entity",
+            "source": "wiktionary",
+            "sourceUrl": "https://en.wiktionary.org/wiki/%D0%BF%D1%80%D0%B8%D0%BC%D0%B5%D1%80%D1%8B",
+            "wikipediaUrl": null,
+            "wikipediaTitle": null,
+            "score": 31,
+            "url": "https://en.wiktionary.org/wiki/%D0%BF%D1%80%D0%B8%D0%BC%D0%B5%D1%80%D1%8B"
+          },
+          "candidates": [
+            {
+              "id": "wikt:ru:примеры#Noun:0",
+              "label": "примеры",
+              "description": "nominative/accusative plural of приме́р (primér)",
+              "kind": "entity",
+              "source": "wiktionary",
+              "sourceUrl": "https://en.wiktionary.org/wiki/%D0%BF%D1%80%D0%B8%D0%BC%D0%B5%D1%80%D1%8B",
+              "wikipediaUrl": null,
+              "wikipediaTitle": null,
+              "score": 31,
+              "url": "https://en.wiktionary.org/wiki/%D0%BF%D1%80%D0%B8%D0%BC%D0%B5%D1%80%D1%8B"
+            }
+          ]
+        },
+        {
+          "type": "phrase",
+          "id": "phrase-5",
+          "text": "согласования",
+          "tokens": [
+            "согласования"
+          ],
+          "start": 4,
+          "end": 4,
+          "sourceStart": 27,
+          "sourceEnd": 39,
+          "size": 1,
+          "entity": {
+            "id": "wikt:ru:согласования#Noun:0",
+            "label": "согласования",
+            "description": "inflection of согласова́ние (soglasovánije):\ngenitive singular\nnominative/accusative plural",
+            "kind": "entity",
+            "source": "wiktionary",
+            "sourceUrl": "https://en.wiktionary.org/wiki/%D1%81%D0%BE%D0%B3%D0%BB%D0%B0%D1%81%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D1%8F",
+            "wikipediaUrl": null,
+            "wikipediaTitle": null,
+            "score": 31,
+            "url": "https://en.wiktionary.org/wiki/%D1%81%D0%BE%D0%B3%D0%BB%D0%B0%D1%81%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D1%8F"
+          },
+          "candidates": [
+            {
+              "id": "wikt:ru:согласования#Noun:0",
+              "label": "согласования",
+              "description": "inflection of согласова́ние (soglasovánije):\ngenitive singular\nnominative/accusative plural",
+              "kind": "entity",
+              "source": "wiktionary",
+              "sourceUrl": "https://en.wiktionary.org/wiki/%D1%81%D0%BE%D0%B3%D0%BB%D0%B0%D1%81%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D1%8F",
+              "wikipediaUrl": null,
+              "wikipediaTitle": null,
+              "score": 31,
+              "url": "https://en.wiktionary.org/wiki/%D1%81%D0%BE%D0%B3%D0%BB%D0%B0%D1%81%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D1%8F"
+            },
+            {
+              "id": "wikt:ru:согласования#Noun:1",
+              "label": "согласования",
+              "description": "genitive singular",
+              "kind": "entity",
+              "source": "wiktionary",
+              "sourceUrl": "https://en.wiktionary.org/wiki/%D1%81%D0%BE%D0%B3%D0%BB%D0%B0%D1%81%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D1%8F",
+              "wikipediaUrl": null,
+              "wikipediaTitle": null,
+              "score": 31,
+              "url": "https://en.wiktionary.org/wiki/%D1%81%D0%BE%D0%B3%D0%BB%D0%B0%D1%81%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D1%8F"
+            },
+            {
+              "id": "wikt:ru:согласования#Noun:2",
+              "label": "согласования",
+              "description": "nominative/accusative plural",
+              "kind": "entity",
+              "source": "wiktionary",
+              "sourceUrl": "https://en.wiktionary.org/wiki/%D1%81%D0%BE%D0%B3%D0%BB%D0%B0%D1%81%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D1%8F",
+              "wikipediaUrl": null,
+              "wikipediaTitle": null,
+              "score": 31,
+              "url": "https://en.wiktionary.org/wiki/%D1%81%D0%BE%D0%B3%D0%BB%D0%B0%D1%81%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D1%8F"
+            }
+          ]
+        }
+      ],
+      "contexts": [
+        {
+          "id": "context-1",
+          "wikidataId": "Q10753560",
+          "property": "P31",
+          "propertyLabel": "instance of",
+          "weight": 0.6666666666666666,
+          "probability": 0.33333333333333337
+        },
+        {
+          "id": "context-2",
+          "wikidataId": "Q11424",
+          "property": "P31",
+          "propertyLabel": "instance of",
+          "weight": 0.3333333333333333,
+          "probability": 0.16666666666666669
+        },
+        {
+          "id": "context-3",
+          "wikidataId": "Q130232",
+          "property": "P136",
+          "propertyLabel": "genre",
+          "weight": 0.3333333333333333,
+          "probability": 0.16666666666666669
+        },
+        {
+          "id": "context-4",
+          "wikidataId": "Q315",
+          "property": "P361",
+          "propertyLabel": "part of",
+          "weight": 0.3333333333333333,
+          "probability": 0.16666666666666669
+        },
+        {
+          "id": "context-5",
+          "wikidataId": "Q8171",
+          "property": "P279",
+          "propertyLabel": "subclass of",
+          "weight": 0.3333333333333333,
+          "probability": 0.16666666666666669
+        }
+      ]
+    },
+    "phrases": [
+      {
+        "id": "phrase-1",
+        "source": {
+          "text": "Найти",
+          "start": 0,
+          "end": 0,
+          "sourceStart": 0,
+          "sourceEnd": 5,
+          "language": "ru",
+          "entityId": null,
+          "label": null,
+          "description": null
+        },
+        "entityId": null,
+        "target": {
+          "text": "Find",
+          "language": "en",
+          "entityId": null,
+          "description": null,
+          "url": null,
+          "status": "translated",
+          "strategy": "contextual-glossary"
+        },
+        "variable": null
+      },
+      {
+        "id": "phrase-2",
+        "source": {
+          "text": "синонимы",
+          "start": 1,
+          "end": 1,
+          "sourceStart": 6,
+          "sourceEnd": 14,
+          "language": "ru",
+          "entityId": "Q42106",
+          "label": "synonym",
+          "description": "word or phrase that means exactly or nearly the same as another word or phrase in the same language"
+        },
+        "entityId": "Q42106",
+        "target": {
+          "text": "synonyms",
+          "language": "en",
+          "entityId": "Q42106",
+          "description": "word or phrase that means exactly or nearly the same as another word or phrase in the same language",
+          "url": null,
+          "status": "translated",
+          "strategy": "contextual-glossary"
+        },
+        "variable": null
+      },
+      {
+        "id": "phrase-3",
+        "source": {
+          "text": "или",
+          "start": 2,
+          "end": 2,
+          "sourceStart": 15,
+          "sourceEnd": 18,
+          "language": "ru",
+          "entityId": "wikt:ru:или#Conjunction:0",
+          "label": "или",
+          "description": "or"
+        },
+        "entityId": "wikt:ru:или#Conjunction:0",
+        "target": {
+          "text": "or",
+          "language": "en",
+          "entityId": "wikt:ru:или#Conjunction:0",
+          "description": "or",
+          "url": null,
+          "status": "translated",
+          "strategy": "contextual-glossary"
+        },
+        "variable": null
+      },
+      {
+        "id": "phrase-4",
+        "source": {
+          "text": "примеры",
+          "start": 3,
+          "end": 3,
+          "sourceStart": 19,
+          "sourceEnd": 26,
+          "language": "ru",
+          "entityId": "wikt:ru:примеры#Noun:0",
+          "label": "примеры",
+          "description": "nominative/accusative plural of приме́р (primér)"
+        },
+        "entityId": "wikt:ru:примеры#Noun:0",
+        "target": {
+          "text": "examples",
+          "language": "en",
+          "entityId": "wikt:ru:примеры#Noun:0",
+          "description": "nominative/accusative plural of приме́р (primér)",
+          "url": null,
+          "status": "translated",
+          "strategy": "contextual-glossary"
+        },
+        "variable": null
+      },
+      {
+        "id": "phrase-5",
+        "source": {
+          "text": "согласования",
+          "start": 4,
+          "end": 4,
+          "sourceStart": 27,
+          "sourceEnd": 39,
+          "language": "ru",
+          "entityId": "wikt:ru:согласования#Noun:0",
+          "label": "согласования",
+          "description": "inflection of согласова́ние (soglasovánije):\ngenitive singular\nnominative/accusative plural"
+        },
+        "entityId": "wikt:ru:согласования#Noun:0",
+        "target": {
+          "text": "agreement",
+          "language": "en",
+          "entityId": "wikt:ru:согласования#Noun:0",
+          "description": "inflection of согласова́ние (soglasovánije):\ngenitive singular\nnominative/accusative plural",
+          "url": null,
+          "status": "translated",
+          "strategy": "contextual-glossary"
+        },
+        "variable": null
+      }
+    ],
+    "variables": [],
+    "sentences": [
+      {
+        "type": "sentence",
+        "id": "sentence-1",
+        "sourceText": "Найти синонимы или примеры согласования",
+        "sourceStart": 0,
+        "sourceEnd": 39,
+        "targetText": "Find synonyms or examples of agreement",
+        "targetMarkdown": "Find synonyms or examples of agreement",
+        "transformations": [
+          "russian-examples-genitive-to-english-of-phrase"
+        ],
+        "phraseIds": [
+          "phrase-1",
+          "phrase-2",
+          "phrase-3",
+          "phrase-4",
+          "phrase-5"
+        ]
+      }
+    ],
+    "steps": [
+      {
+        "id": "step-1",
+        "type": "input",
+        "sourceLanguage": "ru",
+        "targetLanguage": "en",
+        "text": "Найти синонимы или примеры согласования"
+      },
+      {
+        "id": "step-2",
+        "type": "api-request",
+        "method": "GET",
+        "url": "https://ru.wikipedia.org/w/api.php?action=query&format=json&list=search&srsearch=%D0%9D%D0%B0%D0%B9%D1%82%D0%B8&srlimit=5&origin=*"
+      },
+      {
+        "id": "step-3",
+        "type": "api-request",
+        "method": "GET",
+        "url": "https://www.wikidata.org/w/api.php?action=wbsearchentities&format=json&language=ru&origin=*&type=item&limit=5&search=%D0%9D%D0%B0%D0%B9%D1%82%D0%B8"
+      },
+      {
+        "id": "step-4",
+        "type": "api-request",
+        "method": "GET",
+        "url": "https://www.wikidata.org/w/api.php?action=wbsearchentities&format=json&language=ru&origin=*&type=property&limit=5&search=%D0%9D%D0%B0%D0%B9%D1%82%D0%B8"
+      },
+      {
+        "id": "step-5",
+        "type": "api-request",
+        "method": "GET",
+        "url": "https://en.wiktionary.org/api/rest_v1/page/definition/%D0%9D%D0%B0%D0%B9%D1%82%D0%B8"
+      },
+      {
+        "id": "step-6",
+        "type": "api-request",
+        "method": "GET",
+        "url": "https://ru.wikipedia.org/w/api.php?action=query&format=json&list=search&srsearch=%D1%81%D0%B8%D0%BD%D0%BE%D0%BD%D0%B8%D0%BC%D1%8B&srlimit=5&origin=*"
+      },
+      {
+        "id": "step-7",
+        "type": "api-request",
+        "method": "GET",
+        "url": "https://www.wikidata.org/w/api.php?action=wbsearchentities&format=json&language=ru&origin=*&type=item&limit=5&search=%D1%81%D0%B8%D0%BD%D0%BE%D0%BD%D0%B8%D0%BC%D1%8B"
+      },
+      {
+        "id": "step-8",
+        "type": "api-request",
+        "method": "GET",
+        "url": "https://www.wikidata.org/w/api.php?action=wbsearchentities&format=json&language=ru&origin=*&type=property&limit=5&search=%D1%81%D0%B8%D0%BD%D0%BE%D0%BD%D0%B8%D0%BC%D1%8B"
+      },
+      {
+        "id": "step-9",
+        "type": "api-request",
+        "method": "GET",
+        "url": "https://en.wiktionary.org/api/rest_v1/page/definition/%D1%81%D0%B8%D0%BD%D0%BE%D0%BD%D0%B8%D0%BC%D1%8B"
+      },
+      {
+        "id": "step-10",
+        "type": "api-request",
+        "method": "GET",
+        "url": "https://en.wiktionary.org/api/rest_v1/page/definition/%D0%B8%D0%BB%D0%B8"
+      },
+      {
+        "id": "step-11",
+        "type": "api-request",
+        "method": "GET",
+        "url": "https://ru.wikipedia.org/w/api.php?action=query&format=json&list=search&srsearch=%D0%BF%D1%80%D0%B8%D0%BC%D0%B5%D1%80%D1%8B&srlimit=5&origin=*"
+      },
+      {
+        "id": "step-12",
+        "type": "api-request",
+        "method": "GET",
+        "url": "https://www.wikidata.org/w/api.php?action=wbsearchentities&format=json&language=ru&origin=*&type=item&limit=5&search=%D0%BF%D1%80%D0%B8%D0%BC%D0%B5%D1%80%D1%8B"
+      },
+      {
+        "id": "step-13",
+        "type": "api-request",
+        "method": "GET",
+        "url": "https://www.wikidata.org/w/api.php?action=wbsearchentities&format=json&language=ru&origin=*&type=property&limit=5&search=%D0%BF%D1%80%D0%B8%D0%BC%D0%B5%D1%80%D1%8B"
+      },
+      {
+        "id": "step-14",
+        "type": "api-request",
+        "method": "GET",
+        "url": "https://en.wiktionary.org/api/rest_v1/page/definition/%D0%BF%D1%80%D0%B8%D0%BC%D0%B5%D1%80%D1%8B"
+      },
+      {
+        "id": "step-15",
+        "type": "api-request",
+        "method": "GET",
+        "url": "https://ru.wikipedia.org/w/api.php?action=query&format=json&list=search&srsearch=%D1%81%D0%BE%D0%B3%D0%BB%D0%B0%D1%81%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D1%8F&srlimit=5&origin=*"
+      },
+      {
+        "id": "step-16",
+        "type": "api-request",
+        "method": "GET",
+        "url": "https://www.wikidata.org/w/api.php?action=wbsearchentities&format=json&language=ru&origin=*&type=item&limit=5&search=%D1%81%D0%BE%D0%B3%D0%BB%D0%B0%D1%81%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D1%8F"
+      },
+      {
+        "id": "step-17",
+        "type": "api-request",
+        "method": "GET",
+        "url": "https://www.wikidata.org/w/api.php?action=wbsearchentities&format=json&language=ru&origin=*&type=property&limit=5&search=%D1%81%D0%BE%D0%B3%D0%BB%D0%B0%D1%81%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D1%8F"
+      },
+      {
+        "id": "step-18",
+        "type": "api-request",
+        "method": "GET",
+        "url": "https://en.wiktionary.org/api/rest_v1/page/definition/%D1%81%D0%BE%D0%B3%D0%BB%D0%B0%D1%81%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D1%8F"
+      },
+      {
+        "id": "step-19",
+        "type": "api-request",
+        "method": "GET",
+        "url": "https://ru.wikipedia.org/w/api.php?action=query&format=json&list=search&srsearch=%D0%9D%D0%B0%D0%B9%D1%82%D0%B8+%D1%81%D0%B8%D0%BD%D0%BE%D0%BD%D0%B8%D0%BC%D1%8B&srlimit=5&origin=*"
+      },
+      {
+        "id": "step-20",
+        "type": "api-request",
+        "method": "GET",
+        "url": "https://www.wikidata.org/w/api.php?action=wbsearchentities&format=json&language=ru&origin=*&type=item&limit=5&search=%D0%9D%D0%B0%D0%B9%D1%82%D0%B8+%D1%81%D0%B8%D0%BD%D0%BE%D0%BD%D0%B8%D0%BC%D1%8B"
+      },
+      {
+        "id": "step-21",
+        "type": "api-request",
+        "method": "GET",
+        "url": "https://www.wikidata.org/w/api.php?action=wbsearchentities&format=json&language=ru&origin=*&type=property&limit=5&search=%D0%9D%D0%B0%D0%B9%D1%82%D0%B8+%D1%81%D0%B8%D0%BD%D0%BE%D0%BD%D0%B8%D0%BC%D1%8B"
+      },
+      {
+        "id": "step-22",
+        "type": "api-request",
+        "method": "GET",
+        "url": "https://ru.wikipedia.org/w/api.php?action=query&format=json&list=search&srsearch=%D0%BF%D1%80%D0%B8%D0%BC%D0%B5%D1%80%D1%8B+%D1%81%D0%BE%D0%B3%D0%BB%D0%B0%D1%81%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D1%8F&srlimit=5&origin=*"
+      },
+      {
+        "id": "step-23",
+        "type": "api-request",
+        "method": "GET",
+        "url": "https://www.wikidata.org/w/api.php?action=wbsearchentities&format=json&language=ru&origin=*&type=item&limit=5&search=%D0%BF%D1%80%D0%B8%D0%BC%D0%B5%D1%80%D1%8B+%D1%81%D0%BE%D0%B3%D0%BB%D0%B0%D1%81%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D1%8F"
+      },
+      {
+        "id": "step-24",
+        "type": "api-request",
+        "method": "GET",
+        "url": "https://www.wikidata.org/w/api.php?action=wbsearchentities&format=json&language=ru&origin=*&type=property&limit=5&search=%D0%BF%D1%80%D0%B8%D0%BC%D0%B5%D1%80%D1%8B+%D1%81%D0%BE%D0%B3%D0%BB%D0%B0%D1%81%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D1%8F"
+      },
+      {
+        "id": "step-25",
+        "type": "api-request",
+        "method": "GET",
+        "url": "https://ru.wikipedia.org/w/api.php?action=query&format=json&list=search&srsearch=%D1%81%D0%B8%D0%BD%D0%BE%D0%BD%D0%B8%D0%BC%D1%8B+%D0%B8%D0%BB%D0%B8+%D0%BF%D1%80%D0%B8%D0%BC%D0%B5%D1%80%D1%8B&srlimit=5&origin=*"
+      },
+      {
+        "id": "step-26",
+        "type": "api-request",
+        "method": "GET",
+        "url": "https://www.wikidata.org/w/api.php?action=wbsearchentities&format=json&language=ru&origin=*&type=item&limit=5&search=%D1%81%D0%B8%D0%BD%D0%BE%D0%BD%D0%B8%D0%BC%D1%8B+%D0%B8%D0%BB%D0%B8+%D0%BF%D1%80%D0%B8%D0%BC%D0%B5%D1%80%D1%8B"
+      },
+      {
+        "id": "step-27",
+        "type": "api-request",
+        "method": "GET",
+        "url": "https://www.wikidata.org/w/api.php?action=wbsearchentities&format=json&language=ru&origin=*&type=property&limit=5&search=%D1%81%D0%B8%D0%BD%D0%BE%D0%BD%D0%B8%D0%BC%D1%8B+%D0%B8%D0%BB%D0%B8+%D0%BF%D1%80%D0%B8%D0%BC%D0%B5%D1%80%D1%8B"
+      },
+      {
+        "id": "step-28",
+        "type": "api-response",
+        "method": "GET",
+        "url": "https://en.wiktionary.org/api/rest_v1/page/definition/%D0%9D%D0%B0%D0%B9%D1%82%D0%B8",
+        "status": 404,
+        "ok": false
+      },
+      {
+        "id": "step-29",
+        "type": "api-response",
+        "method": "GET",
+        "url": "https://en.wiktionary.org/api/rest_v1/page/definition/%D1%81%D0%B8%D0%BD%D0%BE%D0%BD%D0%B8%D0%BC%D1%8B",
+        "status": 200,
+        "ok": true
+      },
+      {
+        "id": "step-30",
+        "type": "api-response",
+        "method": "GET",
+        "url": "https://en.wiktionary.org/api/rest_v1/page/definition/%D0%B8%D0%BB%D0%B8",
+        "status": 200,
+        "ok": true
+      },
+      {
+        "id": "step-31",
+        "type": "api-response",
+        "method": "GET",
+        "url": "https://www.wikidata.org/w/api.php?action=wbsearchentities&format=json&language=ru&origin=*&type=property&limit=5&search=%D0%9D%D0%B0%D0%B9%D1%82%D0%B8",
+        "status": 200,
+        "ok": true
+      },
+      {
+        "id": "step-32",
+        "type": "api-response",
+        "method": "GET",
+        "url": "https://www.wikidata.org/w/api.php?action=wbsearchentities&format=json&language=ru&origin=*&type=item&limit=5&search=%D0%9D%D0%B0%D0%B9%D1%82%D0%B8",
+        "status": 200,
+        "ok": true
+      },
+      {
+        "id": "step-33",
+        "type": "api-response",
+        "method": "GET",
+        "url": "https://en.wiktionary.org/api/rest_v1/page/definition/%D0%BF%D1%80%D0%B8%D0%BC%D0%B5%D1%80%D1%8B",
+        "status": 200,
+        "ok": true
+      },
+      {
+        "id": "step-34",
+        "type": "api-response",
+        "method": "GET",
+        "url": "https://ru.wikipedia.org/w/api.php?action=query&format=json&list=search&srsearch=%D0%9D%D0%B0%D0%B9%D1%82%D0%B8&srlimit=5&origin=*",
+        "status": 200,
+        "ok": true
+      },
+      {
+        "id": "step-35",
+        "type": "api-request",
+        "method": "GET",
+        "url": "https://ru.wikipedia.org/w/api.php?action=query&format=json&prop=pageprops&titles=%D0%A5%D0%BE%D1%87%D1%83+%D0%BD%D0%B0%D0%B9%D1%82%D0%B8%7C%D0%9D%D0%B0%D0%B9%D1%82%D0%B8+%D0%A4%D0%BE%D1%80%D1%80%D0%B5%D1%81%D1%82%D0%B5%D1%80%D0%B0%7C%D0%9D%D0%B0%D0%B9%D1%82%D0%B8+%D1%81%D1%8B%D0%BD%D0%B0%7C%D0%9D%D0%B0%D0%B9%D1%82%2C+%D0%A4%D0%B8%D0%BB%7C%D0%9D%D0%B0%D0%B9%D1%82%D0%B8+%D1%87%D0%B5%D0%BB%D0%BE%D0%B2%D0%B5%D0%BA%D0%B0&ppprop=wikibase_item&origin=*"
+      },
+      {
+        "id": "step-36",
+        "type": "api-response",
+        "method": "GET",
+        "url": "https://en.wiktionary.org/api/rest_v1/page/definition/%D1%81%D0%BE%D0%B3%D0%BB%D0%B0%D1%81%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D1%8F",
+        "status": 200,
+        "ok": true
+      },
+      {
+        "id": "step-37",
+        "type": "api-response",
+        "method": "GET",
+        "url": "https://www.wikidata.org/w/api.php?action=wbsearchentities&format=json&language=ru&origin=*&type=property&limit=5&search=%D1%81%D0%B8%D0%BD%D0%BE%D0%BD%D0%B8%D0%BC%D1%8B",
+        "status": 200,
+        "ok": true
+      },
+      {
+        "id": "step-38",
+        "type": "api-response",
+        "method": "GET",
+        "url": "https://www.wikidata.org/w/api.php?action=wbsearchentities&format=json&language=ru&origin=*&type=item&limit=5&search=%D1%81%D0%B8%D0%BD%D0%BE%D0%BD%D0%B8%D0%BC%D1%8B",
+        "status": 200,
+        "ok": true
+      },
+      {
+        "id": "step-39",
+        "type": "api-response",
+        "method": "GET",
+        "url": "https://ru.wikipedia.org/w/api.php?action=query&format=json&list=search&srsearch=%D1%81%D0%B8%D0%BD%D0%BE%D0%BD%D0%B8%D0%BC%D1%8B&srlimit=5&origin=*",
+        "status": 200,
+        "ok": true
+      },
+      {
+        "id": "step-40",
+        "type": "api-request",
+        "method": "GET",
+        "url": "https://ru.wikipedia.org/w/api.php?action=query&format=json&prop=pageprops&titles=%D0%A1%D0%B8%D0%BD%D0%BE%D0%BD%D0%B8%D0%BC%D1%8B%7C%D0%A1%D0%B8%D0%BD%D0%BE%D0%BD%D0%B8%D0%BC+%28%D1%82%D0%B0%D0%BA%D1%81%D0%BE%D0%BD%D0%BE%D0%BC%D0%B8%D1%8F%29%7C%D0%A1%D0%B8%D0%BD%D0%BE%D0%BD%D0%B8%D0%BC%D1%8B+%28%D1%84%D0%B8%D0%BB%D1%8C%D0%BC%29%7C%D0%9A%D1%83%D0%BD%D0%BD%D0%B8%D0%BB%D0%B8%D0%BD%D0%B3%D1%83%D1%81%7C%D0%9E%D1%80%D0%B0%D0%BB%D1%8C%D0%BD%D1%8B%D0%B9+%D1%81%D0%B5%D0%BA%D1%81&ppprop=wikibase_item&origin=*"
+      },
+      {
+        "id": "step-41",
+        "type": "api-response",
+        "method": "GET",
+        "url": "https://www.wikidata.org/w/api.php?action=wbsearchentities&format=json&language=ru&origin=*&type=item&limit=5&search=%D0%BF%D1%80%D0%B8%D0%BC%D0%B5%D1%80%D1%8B",
+        "status": 200,
+        "ok": true
+      },
+      {
+        "id": "step-42",
+        "type": "api-response",
+        "method": "GET",
+        "url": "https://www.wikidata.org/w/api.php?action=wbsearchentities&format=json&language=ru&origin=*&type=property&limit=5&search=%D0%BF%D1%80%D0%B8%D0%BC%D0%B5%D1%80%D1%8B",
+        "status": 200,
+        "ok": true
+      },
+      {
+        "id": "step-43",
+        "type": "api-response",
+        "method": "GET",
+        "url": "https://ru.wikipedia.org/w/api.php?action=query&format=json&prop=pageprops&titles=%D0%A5%D0%BE%D1%87%D1%83+%D0%BD%D0%B0%D0%B9%D1%82%D0%B8%7C%D0%9D%D0%B0%D0%B9%D1%82%D0%B8+%D0%A4%D0%BE%D1%80%D1%80%D0%B5%D1%81%D1%82%D0%B5%D1%80%D0%B0%7C%D0%9D%D0%B0%D0%B9%D1%82%D0%B8+%D1%81%D1%8B%D0%BD%D0%B0%7C%D0%9D%D0%B0%D0%B9%D1%82%2C+%D0%A4%D0%B8%D0%BB%7C%D0%9D%D0%B0%D0%B9%D1%82%D0%B8+%D1%87%D0%B5%D0%BB%D0%BE%D0%B2%D0%B5%D0%BA%D0%B0&ppprop=wikibase_item&origin=*",
+        "status": 200,
+        "ok": true
+      },
+      {
+        "id": "step-44",
+        "type": "api-response",
+        "method": "GET",
+        "url": "https://www.wikidata.org/w/api.php?action=wbsearchentities&format=json&language=ru&origin=*&type=item&limit=5&search=%D1%81%D0%BE%D0%B3%D0%BB%D0%B0%D1%81%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D1%8F",
+        "status": 200,
+        "ok": true
+      },
+      {
+        "id": "step-45",
+        "type": "api-response",
+        "method": "GET",
+        "url": "https://ru.wikipedia.org/w/api.php?action=query&format=json&list=search&srsearch=%D0%BF%D1%80%D0%B8%D0%BC%D0%B5%D1%80%D1%8B&srlimit=5&origin=*",
+        "status": 200,
+        "ok": true
+      },
+      {
+        "id": "step-46",
+        "type": "api-request",
+        "method": "GET",
+        "url": "https://ru.wikipedia.org/w/api.php?action=query&format=json&prop=pageprops&titles=%D0%9F%D1%80%D0%B8%D0%BC%D0%B5%D1%80%7C%D0%A7%D0%B5%D0%BC%D0%BF%D0%B8%D0%BE%D0%BD%D0%B0%D1%82+%D0%98%D1%81%D0%BF%D0%B0%D0%BD%D0%B8%D0%B8+%D0%BF%D0%BE+%D1%84%D1%83%D1%82%D0%B1%D0%BE%D0%BB%D1%83%7C%D0%9F%D1%80%D0%B8%D0%BC%D0%B5%D1%80%D0%B0%7C%D0%A1%D0%BE%D1%81%D1%83%D0%B4%D0%BE%D1%80%D0%B0%D1%81%D1%88%D0%B8%D1%80%D1%8F%D1%8E%D1%89%D0%B8%D0%B5+%D1%81%D1%80%D0%B5%D0%B4%D1%81%D1%82%D0%B2%D0%B0%7C%D0%9F%D1%80%D0%B8%D0%BC%D0%B5%D1%80+%D0%90%D0%B4%D0%B0%D0%BC%D0%B0%D1%80%D0%B0&ppprop=wikibase_item&origin=*"
+      },
+      {
+        "id": "step-47",
+        "type": "api-response",
+        "method": "GET",
+        "url": "https://ru.wikipedia.org/w/api.php?action=query&format=json&prop=pageprops&titles=%D0%A1%D0%B8%D0%BD%D0%BE%D0%BD%D0%B8%D0%BC%D1%8B%7C%D0%A1%D0%B8%D0%BD%D0%BE%D0%BD%D0%B8%D0%BC+%28%D1%82%D0%B0%D0%BA%D1%81%D0%BE%D0%BD%D0%BE%D0%BC%D0%B8%D1%8F%29%7C%D0%A1%D0%B8%D0%BD%D0%BE%D0%BD%D0%B8%D0%BC%D1%8B+%28%D1%84%D0%B8%D0%BB%D1%8C%D0%BC%29%7C%D0%9A%D1%83%D0%BD%D0%BD%D0%B8%D0%BB%D0%B8%D0%BD%D0%B3%D1%83%D1%81%7C%D0%9E%D1%80%D0%B0%D0%BB%D1%8C%D0%BD%D1%8B%D0%B9+%D1%81%D0%B5%D0%BA%D1%81&ppprop=wikibase_item&origin=*",
+        "status": 200,
+        "ok": true
+      },
+      {
+        "id": "step-48",
+        "type": "api-response",
+        "method": "GET",
+        "url": "https://www.wikidata.org/w/api.php?action=wbsearchentities&format=json&language=ru&origin=*&type=property&limit=5&search=%D1%81%D0%BE%D0%B3%D0%BB%D0%B0%D1%81%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D1%8F",
+        "status": 200,
+        "ok": true
+      },
+      {
+        "id": "step-49",
+        "type": "api-response",
+        "method": "GET",
+        "url": "https://www.wikidata.org/w/api.php?action=wbsearchentities&format=json&language=ru&origin=*&type=property&limit=5&search=%D0%9D%D0%B0%D0%B9%D1%82%D0%B8+%D1%81%D0%B8%D0%BD%D0%BE%D0%BD%D0%B8%D0%BC%D1%8B",
+        "status": 200,
+        "ok": true
+      },
+      {
+        "id": "step-50",
+        "type": "api-response",
+        "method": "GET",
+        "url": "https://www.wikidata.org/w/api.php?action=wbsearchentities&format=json&language=ru&origin=*&type=item&limit=5&search=%D0%9D%D0%B0%D0%B9%D1%82%D0%B8+%D1%81%D0%B8%D0%BD%D0%BE%D0%BD%D0%B8%D0%BC%D1%8B",
+        "status": 200,
+        "ok": true
+      },
+      {
+        "id": "step-51",
+        "type": "api-response",
+        "method": "GET",
+        "url": "https://ru.wikipedia.org/w/api.php?action=query&format=json&list=search&srsearch=%D1%81%D0%BE%D0%B3%D0%BB%D0%B0%D1%81%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D1%8F&srlimit=5&origin=*",
+        "status": 200,
+        "ok": true
+      },
+      {
+        "id": "step-52",
+        "type": "api-request",
+        "method": "GET",
+        "url": "https://ru.wikipedia.org/w/api.php?action=query&format=json&prop=pageprops&titles=%D0%9C%D0%BE%D0%B4%D0%B5%D0%BB%D1%8C+%D1%81%D0%BE%D0%B3%D0%BB%D0%B0%D1%81%D0%BE%D0%B2%D0%B0%D0%BD%D0%BD%D0%BE%D1%81%D1%82%D0%B8%7C%D0%A1%D0%BE%D0%B3%D0%BB%D0%B0%D1%81%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5+%28%D0%B3%D1%80%D0%B0%D0%BC%D0%BC%D0%B0%D1%82%D0%B8%D0%BA%D0%B0%29%7C%D0%A1%D0%BE%D0%B3%D0%BB%D0%B0%D1%81%D0%BE%D0%B2%D0%B0%D0%BD%D0%BD%D0%BE%D1%81%D1%82%D1%8C+%D0%B4%D0%B0%D0%BD%D0%BD%D1%8B%D1%85%7C%D0%A2%D0%B8%D0%BF%D0%BE%D0%B1%D0%B5%D0%B7%D0%BE%D0%BF%D0%B0%D1%81%D0%BD%D0%BE%D1%81%D1%82%D1%8C%7C%D0%9F%D0%BE%D1%81%D0%BB%D0%B5%D0%B4%D0%BE%D0%B2%D0%B0%D1%82%D0%B5%D0%BB%D1%8C%D0%BD%D0%B0%D1%8F+%D1%81%D0%BE%D0%B3%D0%BB%D0%B0%D1%81%D0%BE%D0%B2%D0%B0%D0%BD%D0%BD%D0%BE%D1%81%D1%82%D1%8C&ppprop=wikibase_item&origin=*"
+      },
+      {
+        "id": "step-53",
+        "type": "api-response",
+        "method": "GET",
+        "url": "https://www.wikidata.org/w/api.php?action=wbsearchentities&format=json&language=ru&origin=*&type=property&limit=5&search=%D0%BF%D1%80%D0%B8%D0%BC%D0%B5%D1%80%D1%8B+%D1%81%D0%BE%D0%B3%D0%BB%D0%B0%D1%81%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D1%8F",
+        "status": 200,
+        "ok": true
+      },
+      {
+        "id": "step-54",
+        "type": "api-response",
+        "method": "GET",
+        "url": "https://www.wikidata.org/w/api.php?action=wbsearchentities&format=json&language=ru&origin=*&type=item&limit=5&search=%D0%BF%D1%80%D0%B8%D0%BC%D0%B5%D1%80%D1%8B+%D1%81%D0%BE%D0%B3%D0%BB%D0%B0%D1%81%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D1%8F",
+        "status": 200,
+        "ok": true
+      },
+      {
+        "id": "step-55",
+        "type": "api-response",
+        "method": "GET",
+        "url": "https://ru.wikipedia.org/w/api.php?action=query&format=json&list=search&srsearch=%D0%9D%D0%B0%D0%B9%D1%82%D0%B8+%D1%81%D0%B8%D0%BD%D0%BE%D0%BD%D0%B8%D0%BC%D1%8B&srlimit=5&origin=*",
+        "status": 200,
+        "ok": true
+      },
+      {
+        "id": "step-56",
+        "type": "api-response",
+        "method": "GET",
+        "url": "https://www.wikidata.org/w/api.php?action=wbsearchentities&format=json&language=ru&origin=*&type=item&limit=5&search=%D1%81%D0%B8%D0%BD%D0%BE%D0%BD%D0%B8%D0%BC%D1%8B+%D0%B8%D0%BB%D0%B8+%D0%BF%D1%80%D0%B8%D0%BC%D0%B5%D1%80%D1%8B",
+        "status": 200,
+        "ok": true
+      },
+      {
+        "id": "step-57",
+        "type": "api-response",
+        "method": "GET",
+        "url": "https://ru.wikipedia.org/w/api.php?action=query&format=json&prop=pageprops&titles=%D0%9F%D1%80%D0%B8%D0%BC%D0%B5%D1%80%7C%D0%A7%D0%B5%D0%BC%D0%BF%D0%B8%D0%BE%D0%BD%D0%B0%D1%82+%D0%98%D1%81%D0%BF%D0%B0%D0%BD%D0%B8%D0%B8+%D0%BF%D0%BE+%D1%84%D1%83%D1%82%D0%B1%D0%BE%D0%BB%D1%83%7C%D0%9F%D1%80%D0%B8%D0%BC%D0%B5%D1%80%D0%B0%7C%D0%A1%D0%BE%D1%81%D1%83%D0%B4%D0%BE%D1%80%D0%B0%D1%81%D1%88%D0%B8%D1%80%D1%8F%D1%8E%D1%89%D0%B8%D0%B5+%D1%81%D1%80%D0%B5%D0%B4%D1%81%D1%82%D0%B2%D0%B0%7C%D0%9F%D1%80%D0%B8%D0%BC%D0%B5%D1%80+%D0%90%D0%B4%D0%B0%D0%BC%D0%B0%D1%80%D0%B0&ppprop=wikibase_item&origin=*",
+        "status": 200,
+        "ok": true
+      },
+      {
+        "id": "step-58",
+        "type": "api-request",
+        "method": "GET",
+        "url": "https://ru.wikipedia.org/w/api.php?action=query&format=json&prop=pageprops&titles=%D0%9C%D0%BE%D0%BD%D1%80%D0%BE%2C+%D0%9C%D1%8D%D1%80%D0%B8%D0%BB%D0%B8%D0%BD%7C%D0%96%D0%B8%D0%BC%D0%BE%D0%BB%D0%BE%D1%81%D1%82%D1%8C%7C%D0%9E%D1%88%D0%B8%D0%B1%D0%BA%D0%B0+404%7C%D0%93%D0%B8%D0%BF%D0%BE%D1%84%D0%B8%D0%B7+%D1%87%D0%B5%D0%BB%D0%BE%D0%B2%D0%B5%D0%BA%D0%B0%7C%D0%9C%D0%BE%D0%B6%D0%B6%D0%B5%D0%B2%D0%B5%D0%BB%D1%8C%D0%BD%D0%B8%D0%BA+%D0%BE%D0%B1%D1%8B%D0%BA%D0%BD%D0%BE%D0%B2%D0%B5%D0%BD%D0%BD%D1%8B%D0%B9&ppprop=wikibase_item&origin=*"
+      },
+      {
+        "id": "step-59",
+        "type": "api-response",
+        "method": "GET",
+        "url": "https://www.wikidata.org/w/api.php?action=wbsearchentities&format=json&language=ru&origin=*&type=property&limit=5&search=%D1%81%D0%B8%D0%BD%D0%BE%D0%BD%D0%B8%D0%BC%D1%8B+%D0%B8%D0%BB%D0%B8+%D0%BF%D1%80%D0%B8%D0%BC%D0%B5%D1%80%D1%8B",
+        "status": 200,
+        "ok": true
+      },
+      {
+        "id": "step-60",
+        "type": "api-response",
+        "method": "GET",
+        "url": "https://ru.wikipedia.org/w/api.php?action=query&format=json&list=search&srsearch=%D0%BF%D1%80%D0%B8%D0%BC%D0%B5%D1%80%D1%8B+%D1%81%D0%BE%D0%B3%D0%BB%D0%B0%D1%81%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D1%8F&srlimit=5&origin=*",
+        "status": 200,
+        "ok": true
+      },
+      {
+        "id": "step-61",
+        "type": "api-request",
+        "method": "GET",
+        "url": "https://ru.wikipedia.org/w/api.php?action=query&format=json&prop=pageprops&titles=%D0%9F%D1%80%D0%B8%D0%BD%D1%86%D0%B8%D0%BF+%D1%87%D0%B5%D1%82%D1%8B%D1%80%D1%91%D1%85+%D0%B3%D0%BB%D0%B0%D0%B7%7C%D0%93%D1%80%D0%B0%D0%BC%D0%BC%D0%B0%D1%82%D0%B8%D1%87%D0%B5%D1%81%D0%BA%D0%BE%D0%B5+%D1%87%D0%B8%D1%81%D0%BB%D0%BE%7C%D0%93%D1%80%D0%B0%D0%BC%D0%BC%D0%B0%D1%82%D0%B8%D0%BA%D0%B0+%D0%B0%D0%BD%D0%B3%D0%BB%D0%B8%D0%B9%D1%81%D0%BA%D0%BE%D0%B3%D0%BE+%D1%8F%D0%B7%D1%8B%D0%BA%D0%B0%7C%D0%A1%D0%BE%D0%B3%D0%BB%D0%B0%D1%81%D0%BE%D0%B2%D0%B0%D0%BD%D0%BD%D0%BE%D1%81%D1%82%D1%8C+%D0%B2+%D0%BA%D0%BE%D0%BD%D0%B5%D1%87%D0%BD%D0%BE%D0%BC+%D1%81%D1%87%D1%91%D1%82%D0%B5%7C%D0%A1%D0%BE%D0%B3%D0%BB%D0%B0%D1%81%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5+%28%D0%B3%D1%80%D0%B0%D0%BC%D0%BC%D0%B0%D1%82%D0%B8%D0%BA%D0%B0%29&ppprop=wikibase_item&origin=*"
+      },
+      {
+        "id": "step-62",
+        "type": "api-response",
+        "method": "GET",
+        "url": "https://ru.wikipedia.org/w/api.php?action=query&format=json&prop=pageprops&titles=%D0%9C%D0%BE%D0%B4%D0%B5%D0%BB%D1%8C+%D1%81%D0%BE%D0%B3%D0%BB%D0%B0%D1%81%D0%BE%D0%B2%D0%B0%D0%BD%D0%BD%D0%BE%D1%81%D1%82%D0%B8%7C%D0%A1%D0%BE%D0%B3%D0%BB%D0%B0%D1%81%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5+%28%D0%B3%D1%80%D0%B0%D0%BC%D0%BC%D0%B0%D1%82%D0%B8%D0%BA%D0%B0%29%7C%D0%A1%D0%BE%D0%B3%D0%BB%D0%B0%D1%81%D0%BE%D0%B2%D0%B0%D0%BD%D0%BD%D0%BE%D1%81%D1%82%D1%8C+%D0%B4%D0%B0%D0%BD%D0%BD%D1%8B%D1%85%7C%D0%A2%D0%B8%D0%BF%D0%BE%D0%B1%D0%B5%D0%B7%D0%BE%D0%BF%D0%B0%D1%81%D0%BD%D0%BE%D1%81%D1%82%D1%8C%7C%D0%9F%D0%BE%D1%81%D0%BB%D0%B5%D0%B4%D0%BE%D0%B2%D0%B0%D1%82%D0%B5%D0%BB%D1%8C%D0%BD%D0%B0%D1%8F+%D1%81%D0%BE%D0%B3%D0%BB%D0%B0%D1%81%D0%BE%D0%B2%D0%B0%D0%BD%D0%BD%D0%BE%D1%81%D1%82%D1%8C&ppprop=wikibase_item&origin=*",
+        "status": 200,
+        "ok": true
+      },
+      {
+        "id": "step-63",
+        "type": "api-response",
+        "method": "GET",
+        "url": "https://ru.wikipedia.org/w/api.php?action=query&format=json&prop=pageprops&titles=%D0%9C%D0%BE%D0%BD%D1%80%D0%BE%2C+%D0%9C%D1%8D%D1%80%D0%B8%D0%BB%D0%B8%D0%BD%7C%D0%96%D0%B8%D0%BC%D0%BE%D0%BB%D0%BE%D1%81%D1%82%D1%8C%7C%D0%9E%D1%88%D0%B8%D0%B1%D0%BA%D0%B0+404%7C%D0%93%D0%B8%D0%BF%D0%BE%D1%84%D0%B8%D0%B7+%D1%87%D0%B5%D0%BB%D0%BE%D0%B2%D0%B5%D0%BA%D0%B0%7C%D0%9C%D0%BE%D0%B6%D0%B6%D0%B5%D0%B2%D0%B5%D0%BB%D1%8C%D0%BD%D0%B8%D0%BA+%D0%BE%D0%B1%D1%8B%D0%BA%D0%BD%D0%BE%D0%B2%D0%B5%D0%BD%D0%BD%D1%8B%D0%B9&ppprop=wikibase_item&origin=*",
+        "status": 200,
+        "ok": true
+      },
+      {
+        "id": "step-64",
+        "type": "api-response",
+        "method": "GET",
+        "url": "https://ru.wikipedia.org/w/api.php?action=query&format=json&list=search&srsearch=%D1%81%D0%B8%D0%BD%D0%BE%D0%BD%D0%B8%D0%BC%D1%8B+%D0%B8%D0%BB%D0%B8+%D0%BF%D1%80%D0%B8%D0%BC%D0%B5%D1%80%D1%8B&srlimit=5&origin=*",
+        "status": 200,
+        "ok": true
+      },
+      {
+        "id": "step-65",
+        "type": "api-request",
+        "method": "GET",
+        "url": "https://ru.wikipedia.org/w/api.php?action=query&format=json&prop=pageprops&titles=%D0%A1%D0%B8%D0%BD%D0%BE%D0%BD%D0%B8%D0%BC%D1%8B%7C%D0%A1%D0%B8%D0%BD%D0%BE%D0%BD%D0%B8%D0%BC+%28%D1%82%D0%B0%D0%BA%D1%81%D0%BE%D0%BD%D0%BE%D0%BC%D0%B8%D1%8F%29%7C%D0%A0%D0%B0%D0%B7%D0%B2%D0%B8%D0%BB%D0%BA%D0%B0%7C%D0%A5%D0%BB%D0%B5%D0%B2%7C%D0%9F%D1%80%D0%BE%D0%B1%D0%BB%D0%B5%D0%BC%D0%B0+%C2%AB%D1%8F%D0%B7%D1%8B%D0%BA+%D0%B8%D0%BB%D0%B8+%D0%B4%D0%B8%D0%B0%D0%BB%D0%B5%D0%BA%D1%82%C2%BB&ppprop=wikibase_item&origin=*"
+      },
+      {
+        "id": "step-66",
+        "type": "api-response",
+        "method": "GET",
+        "url": "https://ru.wikipedia.org/w/api.php?action=query&format=json&prop=pageprops&titles=%D0%9F%D1%80%D0%B8%D0%BD%D1%86%D0%B8%D0%BF+%D1%87%D0%B5%D1%82%D1%8B%D1%80%D1%91%D1%85+%D0%B3%D0%BB%D0%B0%D0%B7%7C%D0%93%D1%80%D0%B0%D0%BC%D0%BC%D0%B0%D1%82%D0%B8%D1%87%D0%B5%D1%81%D0%BA%D0%BE%D0%B5+%D1%87%D0%B8%D1%81%D0%BB%D0%BE%7C%D0%93%D1%80%D0%B0%D0%BC%D0%BC%D0%B0%D1%82%D0%B8%D0%BA%D0%B0+%D0%B0%D0%BD%D0%B3%D0%BB%D0%B8%D0%B9%D1%81%D0%BA%D0%BE%D0%B3%D0%BE+%D1%8F%D0%B7%D1%8B%D0%BA%D0%B0%7C%D0%A1%D0%BE%D0%B3%D0%BB%D0%B0%D1%81%D0%BE%D0%B2%D0%B0%D0%BD%D0%BD%D0%BE%D1%81%D1%82%D1%8C+%D0%B2+%D0%BA%D0%BE%D0%BD%D0%B5%D1%87%D0%BD%D0%BE%D0%BC+%D1%81%D1%87%D1%91%D1%82%D0%B5%7C%D0%A1%D0%BE%D0%B3%D0%BB%D0%B0%D1%81%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5+%28%D0%B3%D1%80%D0%B0%D0%BC%D0%BC%D0%B0%D1%82%D0%B8%D0%BA%D0%B0%29&ppprop=wikibase_item&origin=*",
+        "status": 200,
+        "ok": true
+      },
+      {
+        "id": "step-67",
+        "type": "api-response",
+        "method": "GET",
+        "url": "https://ru.wikipedia.org/w/api.php?action=query&format=json&prop=pageprops&titles=%D0%A1%D0%B8%D0%BD%D0%BE%D0%BD%D0%B8%D0%BC%D1%8B%7C%D0%A1%D0%B8%D0%BD%D0%BE%D0%BD%D0%B8%D0%BC+%28%D1%82%D0%B0%D0%BA%D1%81%D0%BE%D0%BD%D0%BE%D0%BC%D0%B8%D1%8F%29%7C%D0%A0%D0%B0%D0%B7%D0%B2%D0%B8%D0%BB%D0%BA%D0%B0%7C%D0%A5%D0%BB%D0%B5%D0%B2%7C%D0%9F%D1%80%D0%BE%D0%B1%D0%BB%D0%B5%D0%BC%D0%B0+%C2%AB%D1%8F%D0%B7%D1%8B%D0%BA+%D0%B8%D0%BB%D0%B8+%D0%B4%D0%B8%D0%B0%D0%BB%D0%B5%D0%BA%D1%82%C2%BB&ppprop=wikibase_item&origin=*",
+        "status": 200,
+        "ok": true
+      },
+      {
+        "id": "step-68",
+        "type": "api-request",
+        "method": "GET",
+        "url": "https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&ids=Q42106&languages=ru&origin=*&props=labels%7Caliases%7Cdescriptions%7Cclaims%7Csitelinks&sitefilter=enwiki"
+      },
+      {
+        "id": "step-69",
+        "type": "api-request",
+        "method": "GET",
+        "url": "https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&ids=Q1040689&languages=ru&origin=*&props=labels%7Caliases%7Cdescriptions%7Cclaims%7Csitelinks&sitefilter=enwiki"
+      },
+      {
+        "id": "step-70",
+        "type": "api-request",
+        "method": "GET",
+        "url": "https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&ids=Q61672685&languages=ru&origin=*&props=labels%7Caliases%7Cdescriptions%7Cclaims%7Csitelinks&sitefilter=enwiki"
+      },
+      {
+        "id": "step-71",
+        "type": "api-response",
+        "method": "GET",
+        "url": "https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&ids=Q1040689&languages=ru&origin=*&props=labels%7Caliases%7Cdescriptions%7Cclaims%7Csitelinks&sitefilter=enwiki",
+        "status": 200,
+        "ok": true
+      },
+      {
+        "id": "step-72",
+        "type": "api-response",
+        "method": "GET",
+        "url": "https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&ids=Q61672685&languages=ru&origin=*&props=labels%7Caliases%7Cdescriptions%7Cclaims%7Csitelinks&sitefilter=enwiki",
+        "status": 200,
+        "ok": true
+      },
+      {
+        "id": "step-73",
+        "type": "api-response",
+        "method": "GET",
+        "url": "https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&ids=Q42106&languages=ru&origin=*&props=labels%7Caliases%7Cdescriptions%7Cclaims%7Csitelinks&sitefilter=enwiki",
+        "status": 200,
+        "ok": true
+      },
+      {
+        "id": "step-74",
+        "type": "api-request",
+        "method": "GET",
+        "url": "https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&ids=Q8171&languages=ru&origin=*&props=labels%7Cclaims"
+      },
+      {
+        "id": "step-75",
+        "type": "api-response",
+        "method": "GET",
+        "url": "https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&ids=Q8171&languages=ru&origin=*&props=labels%7Cclaims",
+        "status": 200,
+        "ok": true
+      },
+      {
+        "id": "step-76",
+        "type": "api-request",
+        "method": "GET",
+        "url": "https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&ids=Q315&languages=ru&origin=*&props=labels%7Cclaims"
+      },
+      {
+        "id": "step-77",
+        "type": "api-response",
+        "method": "GET",
+        "url": "https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&ids=Q315&languages=ru&origin=*&props=labels%7Cclaims",
+        "status": 200,
+        "ok": true
+      },
+      {
+        "id": "step-78",
+        "type": "api-request",
+        "method": "GET",
+        "url": "https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&ids=Q10753560&languages=ru&origin=*&props=labels%7Cclaims"
+      },
+      {
+        "id": "step-79",
+        "type": "api-response",
+        "method": "GET",
+        "url": "https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&ids=Q10753560&languages=ru&origin=*&props=labels%7Cclaims",
+        "status": 200,
+        "ok": true
+      },
+      {
+        "id": "step-80",
+        "type": "api-request",
+        "method": "GET",
+        "url": "https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&ids=Q11424&languages=ru&origin=*&props=labels%7Cclaims"
+      },
+      {
+        "id": "step-81",
+        "type": "api-response",
+        "method": "GET",
+        "url": "https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&ids=Q11424&languages=ru&origin=*&props=labels%7Cclaims",
+        "status": 200,
+        "ok": true
+      },
+      {
+        "id": "step-82",
+        "type": "api-request",
+        "method": "GET",
+        "url": "https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&ids=Q130232&languages=ru&origin=*&props=labels%7Cclaims"
+      },
+      {
+        "id": "step-83",
+        "type": "api-response",
+        "method": "GET",
+        "url": "https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&ids=Q130232&languages=ru&origin=*&props=labels%7Cclaims",
+        "status": 200,
+        "ok": true
+      },
+      {
+        "id": "step-84",
+        "type": "formalization",
+        "phraseCount": 5,
+        "markdown": "Найти [синонимы](https://en.wikipedia.org/wiki/Synonym \"Q42106\") [или](https://en.wiktionary.org/wiki/%D0%B8%D0%BB%D0%B8 \"wikt:ru:или#Conjunction:0\") [примеры](https://en.wiktionary.org/wiki/%D0%BF%D1%80%D0%B8%D0%BC%D0%B5%D1%80%D1%8B \"wikt:ru:примеры#Noun:0\") [согласования](https://en.wiktionary.org/wiki/%D1%81%D0%BE%D0%B3%D0%BB%D0%B0%D1%81%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D1%8F \"wikt:ru:согласования#Noun:0\")",
+        "linksNotation": "(formalization: (Найти синонимы или примеры согласования))\n(phrase-1: source (Найти) start 0 end 0 unresolved)\n(phrase-2: source (синонимы) start 1 end 1 id Q42106 label (synonym) kind entity markdownUrl (https://en.wikipedia.org/wiki/Synonym))\n(phrase-3: source (или) start 2 end 2 id wikt:ru:или#Conjunction:0 label (или) kind entity markdownUrl (https://en.wiktionary.org/wiki/%D0%B8%D0%BB%D0%B8))\n(phrase-4: source (примеры) start 3 end 3 id wikt:ru:примеры#Noun:0 label (примеры) kind entity markdownUrl (https://en.wiktionary.org/wiki/%D0%BF%D1%80%D0%B8%D0%BC%D0%B5%D1%80%D1%8B))\n(phrase-5: source (согласования) start 4 end 4 id wikt:ru:согласования#Noun:0 label (согласования) kind entity markdownUrl (https://en.wiktionary.org/wiki/%D1%81%D0%BE%D0%B3%D0%BB%D0%B0%D1%81%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D1%8F))\n(context-1: Q10753560 weight 0.6666666666666666 probability 33.3)\n(context-2: Q11424 weight 0.3333333333333333 probability 16.7)\n(context-3: Q130232 weight 0.3333333333333333 probability 16.7)\n(context-4: Q315 weight 0.3333333333333333 probability 16.7)\n(context-5: Q8171 weight 0.3333333333333333 probability 16.7)"
+      },
+      {
+        "id": "step-85",
+        "type": "translation-phrase",
+        "phraseId": "phrase-1",
+        "sourceText": "Найти",
+        "entityId": null,
+        "status": "translated",
+        "targetText": "Find",
+        "strategy": "contextual-glossary"
+      },
+      {
+        "id": "step-86",
+        "type": "translation-phrase",
+        "phraseId": "phrase-2",
+        "sourceText": "синонимы",
+        "entityId": "Q42106",
+        "status": "translated",
+        "targetText": "synonyms",
+        "strategy": "contextual-glossary"
+      },
+      {
+        "id": "step-87",
+        "type": "translation-phrase",
+        "phraseId": "phrase-3",
+        "sourceText": "или",
+        "entityId": "wikt:ru:или#Conjunction:0",
+        "status": "translated",
+        "targetText": "or",
+        "strategy": "contextual-glossary"
+      },
+      {
+        "id": "step-88",
+        "type": "translation-phrase",
+        "phraseId": "phrase-4",
+        "sourceText": "примеры",
+        "entityId": "wikt:ru:примеры#Noun:0",
+        "status": "translated",
+        "targetText": "examples",
+        "strategy": "contextual-glossary"
+      },
+      {
+        "id": "step-89",
+        "type": "translation-phrase",
+        "phraseId": "phrase-5",
+        "sourceText": "согласования",
+        "entityId": "wikt:ru:согласования#Noun:0",
+        "status": "translated",
+        "targetText": "agreement",
+        "strategy": "contextual-glossary"
+      },
+      {
+        "id": "step-90",
+        "type": "transformation-rule",
+        "sentenceId": "sentence-1",
+        "rule": "russian-examples-genitive-to-english-of-phrase",
+        "sourceText": "Найти синонимы или примеры согласования",
+        "affectedVariables": []
+      },
+      {
+        "id": "step-91",
+        "type": "sentence",
+        "sentenceId": "sentence-1",
+        "sourceText": "Найти синонимы или примеры согласования",
+        "targetText": "Find synonyms or examples of agreement",
+        "transformations": [
+          "russian-examples-genitive-to-english-of-phrase"
+        ]
+      },
+      {
+        "id": "step-92",
+        "type": "text",
+        "sentenceCount": 1,
+        "text": "Find synonyms or examples of agreement"
+      }
+    ]
+  },
+  "phrases": [
+    {
+      "id": "phrase-1",
+      "source": {
+        "text": "Найти",
+        "start": 0,
+        "end": 0,
+        "sourceStart": 0,
+        "sourceEnd": 5,
+        "language": "ru",
+        "entityId": null,
+        "label": null,
+        "description": null
+      },
+      "entityId": null,
+      "target": {
+        "text": "Find",
+        "language": "en",
+        "entityId": null,
+        "description": null,
+        "url": null,
+        "status": "translated",
+        "strategy": "contextual-glossary"
+      },
+      "variable": null
+    },
+    {
+      "id": "phrase-2",
+      "source": {
+        "text": "синонимы",
+        "start": 1,
+        "end": 1,
+        "sourceStart": 6,
+        "sourceEnd": 14,
+        "language": "ru",
+        "entityId": "Q42106",
+        "label": "synonym",
+        "description": "word or phrase that means exactly or nearly the same as another word or phrase in the same language"
+      },
+      "entityId": "Q42106",
+      "target": {
+        "text": "synonyms",
+        "language": "en",
+        "entityId": "Q42106",
+        "description": "word or phrase that means exactly or nearly the same as another word or phrase in the same language",
+        "url": null,
+        "status": "translated",
+        "strategy": "contextual-glossary"
+      },
+      "variable": null
+    },
+    {
+      "id": "phrase-3",
+      "source": {
+        "text": "или",
+        "start": 2,
+        "end": 2,
+        "sourceStart": 15,
+        "sourceEnd": 18,
+        "language": "ru",
+        "entityId": "wikt:ru:или#Conjunction:0",
+        "label": "или",
+        "description": "or"
+      },
+      "entityId": "wikt:ru:или#Conjunction:0",
+      "target": {
+        "text": "or",
+        "language": "en",
+        "entityId": "wikt:ru:или#Conjunction:0",
+        "description": "or",
+        "url": null,
+        "status": "translated",
+        "strategy": "contextual-glossary"
+      },
+      "variable": null
+    },
+    {
+      "id": "phrase-4",
+      "source": {
+        "text": "примеры",
+        "start": 3,
+        "end": 3,
+        "sourceStart": 19,
+        "sourceEnd": 26,
+        "language": "ru",
+        "entityId": "wikt:ru:примеры#Noun:0",
+        "label": "примеры",
+        "description": "nominative/accusative plural of приме́р (primér)"
+      },
+      "entityId": "wikt:ru:примеры#Noun:0",
+      "target": {
+        "text": "examples",
+        "language": "en",
+        "entityId": "wikt:ru:примеры#Noun:0",
+        "description": "nominative/accusative plural of приме́р (primér)",
+        "url": null,
+        "status": "translated",
+        "strategy": "contextual-glossary"
+      },
+      "variable": null
+    },
+    {
+      "id": "phrase-5",
+      "source": {
+        "text": "согласования",
+        "start": 4,
+        "end": 4,
+        "sourceStart": 27,
+        "sourceEnd": 39,
+        "language": "ru",
+        "entityId": "wikt:ru:согласования#Noun:0",
+        "label": "согласования",
+        "description": "inflection of согласова́ние (soglasovánije):\ngenitive singular\nnominative/accusative plural"
+      },
+      "entityId": "wikt:ru:согласования#Noun:0",
+      "target": {
+        "text": "agreement",
+        "language": "en",
+        "entityId": "wikt:ru:согласования#Noun:0",
+        "description": "inflection of согласова́ние (soglasovánije):\ngenitive singular\nnominative/accusative plural",
+        "url": null,
+        "status": "translated",
+        "strategy": "contextual-glossary"
+      },
+      "variable": null
+    }
+  ],
+  "sentences": [
+    {
+      "id": "sentence-1",
+      "source": {
+        "text": "Найти синонимы или примеры согласования",
+        "start": 0,
+        "end": 39,
+        "language": "ru"
+      },
+      "target": {
+        "text": "Find synonyms or examples of agreement",
+        "markdown": "Find synonyms or examples of agreement",
+        "html": "Find synonyms or examples of agreement",
+        "language": "en"
+      },
+      "phrases": [
+        {
+          "id": "phrase-1",
+          "source": {
+            "text": "Найти",
+            "start": 0,
+            "end": 0,
+            "sourceStart": 0,
+            "sourceEnd": 5,
+            "language": "ru",
+            "entityId": null,
+            "label": null,
+            "description": null
+          },
+          "entityId": null,
+          "target": {
+            "text": "Find",
+            "language": "en",
+            "entityId": null,
+            "description": null,
+            "url": null,
+            "status": "translated",
+            "strategy": "contextual-glossary"
+          },
+          "variable": null
+        },
+        {
+          "id": "phrase-2",
+          "source": {
+            "text": "синонимы",
+            "start": 1,
+            "end": 1,
+            "sourceStart": 6,
+            "sourceEnd": 14,
+            "language": "ru",
+            "entityId": "Q42106",
+            "label": "synonym",
+            "description": "word or phrase that means exactly or nearly the same as another word or phrase in the same language"
+          },
+          "entityId": "Q42106",
+          "target": {
+            "text": "synonyms",
+            "language": "en",
+            "entityId": "Q42106",
+            "description": "word or phrase that means exactly or nearly the same as another word or phrase in the same language",
+            "url": null,
+            "status": "translated",
+            "strategy": "contextual-glossary"
+          },
+          "variable": null
+        },
+        {
+          "id": "phrase-3",
+          "source": {
+            "text": "или",
+            "start": 2,
+            "end": 2,
+            "sourceStart": 15,
+            "sourceEnd": 18,
+            "language": "ru",
+            "entityId": "wikt:ru:или#Conjunction:0",
+            "label": "или",
+            "description": "or"
+          },
+          "entityId": "wikt:ru:или#Conjunction:0",
+          "target": {
+            "text": "or",
+            "language": "en",
+            "entityId": "wikt:ru:или#Conjunction:0",
+            "description": "or",
+            "url": null,
+            "status": "translated",
+            "strategy": "contextual-glossary"
+          },
+          "variable": null
+        },
+        {
+          "id": "phrase-4",
+          "source": {
+            "text": "примеры",
+            "start": 3,
+            "end": 3,
+            "sourceStart": 19,
+            "sourceEnd": 26,
+            "language": "ru",
+            "entityId": "wikt:ru:примеры#Noun:0",
+            "label": "примеры",
+            "description": "nominative/accusative plural of приме́р (primér)"
+          },
+          "entityId": "wikt:ru:примеры#Noun:0",
+          "target": {
+            "text": "examples",
+            "language": "en",
+            "entityId": "wikt:ru:примеры#Noun:0",
+            "description": "nominative/accusative plural of приме́р (primér)",
+            "url": null,
+            "status": "translated",
+            "strategy": "contextual-glossary"
+          },
+          "variable": null
+        },
+        {
+          "id": "phrase-5",
+          "source": {
+            "text": "согласования",
+            "start": 4,
+            "end": 4,
+            "sourceStart": 27,
+            "sourceEnd": 39,
+            "language": "ru",
+            "entityId": "wikt:ru:согласования#Noun:0",
+            "label": "согласования",
+            "description": "inflection of согласова́ние (soglasovánije):\ngenitive singular\nnominative/accusative plural"
+          },
+          "entityId": "wikt:ru:согласования#Noun:0",
+          "target": {
+            "text": "agreement",
+            "language": "en",
+            "entityId": "wikt:ru:согласования#Noun:0",
+            "description": "inflection of согласова́ние (soglasovánije):\ngenitive singular\nnominative/accusative plural",
+            "url": null,
+            "status": "translated",
+            "strategy": "contextual-glossary"
+          },
+          "variable": null
+        }
+      ],
+      "transformations": [
+        "russian-examples-genitive-to-english-of-phrase"
+      ],
+      "resolvedVariableNames": [],
+      "plainText": "Find synonyms or examples of agreement",
+      "markdown": "Find synonyms or examples of agreement",
+      "html": "Find synonyms or examples of agreement"
+    }
+  ],
+  "plainText": "Find synonyms or examples of agreement",
+  "markdown": "Find synonyms or examples of agreement",
+  "html": "Find synonyms or examples of agreement",
+  "linksNotation": "(translation: (Найти синонимы или примеры согласования) from ru to en)\n(sentence-1: source (Найти синонимы или примеры согласования) target (Find synonyms or examples of agreement) transformations (russian-examples-genitive-to-english-of-phrase))\n(phrase-1: source (Найти) target (Find) status translated)\n(phrase-2: source (синонимы) target (synonyms) status translated id Q42106)\n(phrase-3: source (или) target (or) status translated id wikt:ru:или#Conjunction:0)\n(phrase-4: source (примеры) target (examples) status translated id wikt:ru:примеры#Noun:0)\n(phrase-5: source (согласования) target (agreement) status translated id wikt:ru:согласования#Noun:0)\n(step-1: type input (Найти синонимы или примеры согласования))\n(step-2: type api-request (https://ru.wikipedia.org/w/api.php?action=query&format=json&list=search&srsearch=%D0%9D%D0%B0%D0%B9%D1%82%D0%B8&srlimit=5&origin=*))\n(step-3: type api-request (https://www.wikidata.org/w/api.php?action=wbsearchentities&format=json&language=ru&origin=*&type=item&limit=5&search=%D0%9D%D0%B0%D0%B9%D1%82%D0%B8))\n(step-4: type api-request (https://www.wikidata.org/w/api.php?action=wbsearchentities&format=json&language=ru&origin=*&type=property&limit=5&search=%D0%9D%D0%B0%D0%B9%D1%82%D0%B8))\n(step-5: type api-request (https://en.wiktionary.org/api/rest_v1/page/definition/%D0%9D%D0%B0%D0%B9%D1%82%D0%B8))\n(step-6: type api-request (https://ru.wikipedia.org/w/api.php?action=query&format=json&list=search&srsearch=%D1%81%D0%B8%D0%BD%D0%BE%D0%BD%D0%B8%D0%BC%D1%8B&srlimit=5&origin=*))\n(step-7: type api-request (https://www.wikidata.org/w/api.php?action=wbsearchentities&format=json&language=ru&origin=*&type=item&limit=5&search=%D1%81%D0%B8%D0%BD%D0%BE%D0%BD%D0%B8%D0%BC%D1%8B))\n(step-8: type api-request (https://www.wikidata.org/w/api.php?action=wbsearchentities&format=json&language=ru&origin=*&type=property&limit=5&search=%D1%81%D0%B8%D0%BD%D0%BE%D0%BD%D0%B8%D0%BC%D1%8B))\n(step-9: type api-request (https://en.wiktionary.org/api/rest_v1/page/definition/%D1%81%D0%B8%D0%BD%D0%BE%D0%BD%D0%B8%D0%BC%D1%8B))\n(step-10: type api-request (https://en.wiktionary.org/api/rest_v1/page/definition/%D0%B8%D0%BB%D0%B8))\n(step-11: type api-request (https://ru.wikipedia.org/w/api.php?action=query&format=json&list=search&srsearch=%D0%BF%D1%80%D0%B8%D0%BC%D0%B5%D1%80%D1%8B&srlimit=5&origin=*))\n(step-12: type api-request (https://www.wikidata.org/w/api.php?action=wbsearchentities&format=json&language=ru&origin=*&type=item&limit=5&search=%D0%BF%D1%80%D0%B8%D0%BC%D0%B5%D1%80%D1%8B))\n(step-13: type api-request (https://www.wikidata.org/w/api.php?action=wbsearchentities&format=json&language=ru&origin=*&type=property&limit=5&search=%D0%BF%D1%80%D0%B8%D0%BC%D0%B5%D1%80%D1%8B))\n(step-14: type api-request (https://en.wiktionary.org/api/rest_v1/page/definition/%D0%BF%D1%80%D0%B8%D0%BC%D0%B5%D1%80%D1%8B))\n(step-15: type api-request (https://ru.wikipedia.org/w/api.php?action=query&format=json&list=search&srsearch=%D1%81%D0%BE%D0%B3%D0%BB%D0%B0%D1%81%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D1%8F&srlimit=5&origin=*))\n(step-16: type api-request (https://www.wikidata.org/w/api.php?action=wbsearchentities&format=json&language=ru&origin=*&type=item&limit=5&search=%D1%81%D0%BE%D0%B3%D0%BB%D0%B0%D1%81%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D1%8F))\n(step-17: type api-request (https://www.wikidata.org/w/api.php?action=wbsearchentities&format=json&language=ru&origin=*&type=property&limit=5&search=%D1%81%D0%BE%D0%B3%D0%BB%D0%B0%D1%81%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D1%8F))\n(step-18: type api-request (https://en.wiktionary.org/api/rest_v1/page/definition/%D1%81%D0%BE%D0%B3%D0%BB%D0%B0%D1%81%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D1%8F))\n(step-19: type api-request (https://ru.wikipedia.org/w/api.php?action=query&format=json&list=search&srsearch=%D0%9D%D0%B0%D0%B9%D1%82%D0%B8+%D1%81%D0%B8%D0%BD%D0%BE%D0%BD%D0%B8%D0%BC%D1%8B&srlimit=5&origin=*))\n(step-20: type api-request (https://www.wikidata.org/w/api.php?action=wbsearchentities&format=json&language=ru&origin=*&type=item&limit=5&search=%D0%9D%D0%B0%D0%B9%D1%82%D0%B8+%D1%81%D0%B8%D0%BD%D0%BE%D0%BD%D0%B8%D0%BC%D1%8B))\n(step-21: type api-request (https://www.wikidata.org/w/api.php?action=wbsearchentities&format=json&language=ru&origin=*&type=property&limit=5&search=%D0%9D%D0%B0%D0%B9%D1%82%D0%B8+%D1%81%D0%B8%D0%BD%D0%BE%D0%BD%D0%B8%D0%BC%D1%8B))\n(step-22: type api-request (https://ru.wikipedia.org/w/api.php?action=query&format=json&list=search&srsearch=%D0%BF%D1%80%D0%B8%D0%BC%D0%B5%D1%80%D1%8B+%D1%81%D0%BE%D0%B3%D0%BB%D0%B0%D1%81%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D1%8F&srlimit=5&origin=*))\n(step-23: type api-request (https://www.wikidata.org/w/api.php?action=wbsearchentities&format=json&language=ru&origin=*&type=item&limit=5&search=%D0%BF%D1%80%D0%B8%D0%BC%D0%B5%D1%80%D1%8B+%D1%81%D0%BE%D0%B3%D0%BB%D0%B0%D1%81%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D1%8F))\n(step-24: type api-request (https://www.wikidata.org/w/api.php?action=wbsearchentities&format=json&language=ru&origin=*&type=property&limit=5&search=%D0%BF%D1%80%D0%B8%D0%BC%D0%B5%D1%80%D1%8B+%D1%81%D0%BE%D0%B3%D0%BB%D0%B0%D1%81%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D1%8F))\n(step-25: type api-request (https://ru.wikipedia.org/w/api.php?action=query&format=json&list=search&srsearch=%D1%81%D0%B8%D0%BD%D0%BE%D0%BD%D0%B8%D0%BC%D1%8B+%D0%B8%D0%BB%D0%B8+%D0%BF%D1%80%D0%B8%D0%BC%D0%B5%D1%80%D1%8B&srlimit=5&origin=*))\n(step-26: type api-request (https://www.wikidata.org/w/api.php?action=wbsearchentities&format=json&language=ru&origin=*&type=item&limit=5&search=%D1%81%D0%B8%D0%BD%D0%BE%D0%BD%D0%B8%D0%BC%D1%8B+%D0%B8%D0%BB%D0%B8+%D0%BF%D1%80%D0%B8%D0%BC%D0%B5%D1%80%D1%8B))\n(step-27: type api-request (https://www.wikidata.org/w/api.php?action=wbsearchentities&format=json&language=ru&origin=*&type=property&limit=5&search=%D1%81%D0%B8%D0%BD%D0%BE%D0%BD%D0%B8%D0%BC%D1%8B+%D0%B8%D0%BB%D0%B8+%D0%BF%D1%80%D0%B8%D0%BC%D0%B5%D1%80%D1%8B))\n(step-28: type api-response (https://en.wiktionary.org/api/rest_v1/page/definition/%D0%9D%D0%B0%D0%B9%D1%82%D0%B8))\n(step-29: type api-response (https://en.wiktionary.org/api/rest_v1/page/definition/%D1%81%D0%B8%D0%BD%D0%BE%D0%BD%D0%B8%D0%BC%D1%8B))\n(step-30: type api-response (https://en.wiktionary.org/api/rest_v1/page/definition/%D0%B8%D0%BB%D0%B8))\n(step-31: type api-response (https://www.wikidata.org/w/api.php?action=wbsearchentities&format=json&language=ru&origin=*&type=property&limit=5&search=%D0%9D%D0%B0%D0%B9%D1%82%D0%B8))\n(step-32: type api-response (https://www.wikidata.org/w/api.php?action=wbsearchentities&format=json&language=ru&origin=*&type=item&limit=5&search=%D0%9D%D0%B0%D0%B9%D1%82%D0%B8))\n(step-33: type api-response (https://en.wiktionary.org/api/rest_v1/page/definition/%D0%BF%D1%80%D0%B8%D0%BC%D0%B5%D1%80%D1%8B))\n(step-34: type api-response (https://ru.wikipedia.org/w/api.php?action=query&format=json&list=search&srsearch=%D0%9D%D0%B0%D0%B9%D1%82%D0%B8&srlimit=5&origin=*))\n(step-35: type api-request (https://ru.wikipedia.org/w/api.php?action=query&format=json&prop=pageprops&titles=%D0%A5%D0%BE%D1%87%D1%83+%D0%BD%D0%B0%D0%B9%D1%82%D0%B8%7C%D0%9D%D0%B0%D0%B9%D1%82%D0%B8+%D0%A4%D0%BE%D1%80%D1%80%D0%B5%D1%81%D1%82%D0%B5%D1%80%D0%B0%7C%D0%9D%D0%B0%D0%B9%D1%82%D0%B8+%D1%81%D1%8B%D0%BD%D0%B0%7C%D0%9D%D0%B0%D0%B9%D1%82%2C+%D0%A4%D0%B8%D0%BB%7C%D0%9D%D0%B0%D0%B9%D1%82%D0%B8+%D1%87%D0%B5%D0%BB%D0%BE%D0%B2%D0%B5%D0%BA%D0%B0&ppprop=wikibase_item&origin=*))\n(step-36: type api-response (https://en.wiktionary.org/api/rest_v1/page/definition/%D1%81%D0%BE%D0%B3%D0%BB%D0%B0%D1%81%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D1%8F))\n(step-37: type api-response (https://www.wikidata.org/w/api.php?action=wbsearchentities&format=json&language=ru&origin=*&type=property&limit=5&search=%D1%81%D0%B8%D0%BD%D0%BE%D0%BD%D0%B8%D0%BC%D1%8B))\n(step-38: type api-response (https://www.wikidata.org/w/api.php?action=wbsearchentities&format=json&language=ru&origin=*&type=item&limit=5&search=%D1%81%D0%B8%D0%BD%D0%BE%D0%BD%D0%B8%D0%BC%D1%8B))\n(step-39: type api-response (https://ru.wikipedia.org/w/api.php?action=query&format=json&list=search&srsearch=%D1%81%D0%B8%D0%BD%D0%BE%D0%BD%D0%B8%D0%BC%D1%8B&srlimit=5&origin=*))\n(step-40: type api-request (https://ru.wikipedia.org/w/api.php?action=query&format=json&prop=pageprops&titles=%D0%A1%D0%B8%D0%BD%D0%BE%D0%BD%D0%B8%D0%BC%D1%8B%7C%D0%A1%D0%B8%D0%BD%D0%BE%D0%BD%D0%B8%D0%BC+%28%D1%82%D0%B0%D0%BA%D1%81%D0%BE%D0%BD%D0%BE%D0%BC%D0%B8%D1%8F%29%7C%D0%A1%D0%B8%D0%BD%D0%BE%D0%BD%D0%B8%D0%BC%D1%8B+%28%D1%84%D0%B8%D0%BB%D1%8C%D0%BC%29%7C%D0%9A%D1%83%D0%BD%D0%BD%D0%B8%D0%BB%D0%B8%D0%BD%D0%B3%D1%83%D1%81%7C%D0%9E%D1%80%D0%B0%D0%BB%D1%8C%D0%BD%D1%8B%D0%B9+%D1%81%D0%B5%D0%BA%D1%81&ppprop=wikibase_item&origin=*))\n(step-41: type api-response (https://www.wikidata.org/w/api.php?action=wbsearchentities&format=json&language=ru&origin=*&type=item&limit=5&search=%D0%BF%D1%80%D0%B8%D0%BC%D0%B5%D1%80%D1%8B))\n(step-42: type api-response (https://www.wikidata.org/w/api.php?action=wbsearchentities&format=json&language=ru&origin=*&type=property&limit=5&search=%D0%BF%D1%80%D0%B8%D0%BC%D0%B5%D1%80%D1%8B))\n(step-43: type api-response (https://ru.wikipedia.org/w/api.php?action=query&format=json&prop=pageprops&titles=%D0%A5%D0%BE%D1%87%D1%83+%D0%BD%D0%B0%D0%B9%D1%82%D0%B8%7C%D0%9D%D0%B0%D0%B9%D1%82%D0%B8+%D0%A4%D0%BE%D1%80%D1%80%D0%B5%D1%81%D1%82%D0%B5%D1%80%D0%B0%7C%D0%9D%D0%B0%D0%B9%D1%82%D0%B8+%D1%81%D1%8B%D0%BD%D0%B0%7C%D0%9D%D0%B0%D0%B9%D1%82%2C+%D0%A4%D0%B8%D0%BB%7C%D0%9D%D0%B0%D0%B9%D1%82%D0%B8+%D1%87%D0%B5%D0%BB%D0%BE%D0%B2%D0%B5%D0%BA%D0%B0&ppprop=wikibase_item&origin=*))\n(step-44: type api-response (https://www.wikidata.org/w/api.php?action=wbsearchentities&format=json&language=ru&origin=*&type=item&limit=5&search=%D1%81%D0%BE%D0%B3%D0%BB%D0%B0%D1%81%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D1%8F))\n(step-45: type api-response (https://ru.wikipedia.org/w/api.php?action=query&format=json&list=search&srsearch=%D0%BF%D1%80%D0%B8%D0%BC%D0%B5%D1%80%D1%8B&srlimit=5&origin=*))\n(step-46: type api-request (https://ru.wikipedia.org/w/api.php?action=query&format=json&prop=pageprops&titles=%D0%9F%D1%80%D0%B8%D0%BC%D0%B5%D1%80%7C%D0%A7%D0%B5%D0%BC%D0%BF%D0%B8%D0%BE%D0%BD%D0%B0%D1%82+%D0%98%D1%81%D0%BF%D0%B0%D0%BD%D0%B8%D0%B8+%D0%BF%D0%BE+%D1%84%D1%83%D1%82%D0%B1%D0%BE%D0%BB%D1%83%7C%D0%9F%D1%80%D0%B8%D0%BC%D0%B5%D1%80%D0%B0%7C%D0%A1%D0%BE%D1%81%D1%83%D0%B4%D0%BE%D1%80%D0%B0%D1%81%D1%88%D0%B8%D1%80%D1%8F%D1%8E%D1%89%D0%B8%D0%B5+%D1%81%D1%80%D0%B5%D0%B4%D1%81%D1%82%D0%B2%D0%B0%7C%D0%9F%D1%80%D0%B8%D0%BC%D0%B5%D1%80+%D0%90%D0%B4%D0%B0%D0%BC%D0%B0%D1%80%D0%B0&ppprop=wikibase_item&origin=*))\n(step-47: type api-response (https://ru.wikipedia.org/w/api.php?action=query&format=json&prop=pageprops&titles=%D0%A1%D0%B8%D0%BD%D0%BE%D0%BD%D0%B8%D0%BC%D1%8B%7C%D0%A1%D0%B8%D0%BD%D0%BE%D0%BD%D0%B8%D0%BC+%28%D1%82%D0%B0%D0%BA%D1%81%D0%BE%D0%BD%D0%BE%D0%BC%D0%B8%D1%8F%29%7C%D0%A1%D0%B8%D0%BD%D0%BE%D0%BD%D0%B8%D0%BC%D1%8B+%28%D1%84%D0%B8%D0%BB%D1%8C%D0%BC%29%7C%D0%9A%D1%83%D0%BD%D0%BD%D0%B8%D0%BB%D0%B8%D0%BD%D0%B3%D1%83%D1%81%7C%D0%9E%D1%80%D0%B0%D0%BB%D1%8C%D0%BD%D1%8B%D0%B9+%D1%81%D0%B5%D0%BA%D1%81&ppprop=wikibase_item&origin=*))\n(step-48: type api-response (https://www.wikidata.org/w/api.php?action=wbsearchentities&format=json&language=ru&origin=*&type=property&limit=5&search=%D1%81%D0%BE%D0%B3%D0%BB%D0%B0%D1%81%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D1%8F))\n(step-49: type api-response (https://www.wikidata.org/w/api.php?action=wbsearchentities&format=json&language=ru&origin=*&type=property&limit=5&search=%D0%9D%D0%B0%D0%B9%D1%82%D0%B8+%D1%81%D0%B8%D0%BD%D0%BE%D0%BD%D0%B8%D0%BC%D1%8B))\n(step-50: type api-response (https://www.wikidata.org/w/api.php?action=wbsearchentities&format=json&language=ru&origin=*&type=item&limit=5&search=%D0%9D%D0%B0%D0%B9%D1%82%D0%B8+%D1%81%D0%B8%D0%BD%D0%BE%D0%BD%D0%B8%D0%BC%D1%8B))\n(step-51: type api-response (https://ru.wikipedia.org/w/api.php?action=query&format=json&list=search&srsearch=%D1%81%D0%BE%D0%B3%D0%BB%D0%B0%D1%81%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D1%8F&srlimit=5&origin=*))\n(step-52: type api-request (https://ru.wikipedia.org/w/api.php?action=query&format=json&prop=pageprops&titles=%D0%9C%D0%BE%D0%B4%D0%B5%D0%BB%D1%8C+%D1%81%D0%BE%D0%B3%D0%BB%D0%B0%D1%81%D0%BE%D0%B2%D0%B0%D0%BD%D0%BD%D0%BE%D1%81%D1%82%D0%B8%7C%D0%A1%D0%BE%D0%B3%D0%BB%D0%B0%D1%81%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5+%28%D0%B3%D1%80%D0%B0%D0%BC%D0%BC%D0%B0%D1%82%D0%B8%D0%BA%D0%B0%29%7C%D0%A1%D0%BE%D0%B3%D0%BB%D0%B0%D1%81%D0%BE%D0%B2%D0%B0%D0%BD%D0%BD%D0%BE%D1%81%D1%82%D1%8C+%D0%B4%D0%B0%D0%BD%D0%BD%D1%8B%D1%85%7C%D0%A2%D0%B8%D0%BF%D0%BE%D0%B1%D0%B5%D0%B7%D0%BE%D0%BF%D0%B0%D1%81%D0%BD%D0%BE%D1%81%D1%82%D1%8C%7C%D0%9F%D0%BE%D1%81%D0%BB%D0%B5%D0%B4%D0%BE%D0%B2%D0%B0%D1%82%D0%B5%D0%BB%D1%8C%D0%BD%D0%B0%D1%8F+%D1%81%D0%BE%D0%B3%D0%BB%D0%B0%D1%81%D0%BE%D0%B2%D0%B0%D0%BD%D0%BD%D0%BE%D1%81%D1%82%D1%8C&ppprop=wikibase_item&origin=*))\n(step-53: type api-response (https://www.wikidata.org/w/api.php?action=wbsearchentities&format=json&language=ru&origin=*&type=property&limit=5&search=%D0%BF%D1%80%D0%B8%D0%BC%D0%B5%D1%80%D1%8B+%D1%81%D0%BE%D0%B3%D0%BB%D0%B0%D1%81%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D1%8F))\n(step-54: type api-response (https://www.wikidata.org/w/api.php?action=wbsearchentities&format=json&language=ru&origin=*&type=item&limit=5&search=%D0%BF%D1%80%D0%B8%D0%BC%D0%B5%D1%80%D1%8B+%D1%81%D0%BE%D0%B3%D0%BB%D0%B0%D1%81%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D1%8F))\n(step-55: type api-response (https://ru.wikipedia.org/w/api.php?action=query&format=json&list=search&srsearch=%D0%9D%D0%B0%D0%B9%D1%82%D0%B8+%D1%81%D0%B8%D0%BD%D0%BE%D0%BD%D0%B8%D0%BC%D1%8B&srlimit=5&origin=*))\n(step-56: type api-response (https://www.wikidata.org/w/api.php?action=wbsearchentities&format=json&language=ru&origin=*&type=item&limit=5&search=%D1%81%D0%B8%D0%BD%D0%BE%D0%BD%D0%B8%D0%BC%D1%8B+%D0%B8%D0%BB%D0%B8+%D0%BF%D1%80%D0%B8%D0%BC%D0%B5%D1%80%D1%8B))\n(step-57: type api-response (https://ru.wikipedia.org/w/api.php?action=query&format=json&prop=pageprops&titles=%D0%9F%D1%80%D0%B8%D0%BC%D0%B5%D1%80%7C%D0%A7%D0%B5%D0%BC%D0%BF%D0%B8%D0%BE%D0%BD%D0%B0%D1%82+%D0%98%D1%81%D0%BF%D0%B0%D0%BD%D0%B8%D0%B8+%D0%BF%D0%BE+%D1%84%D1%83%D1%82%D0%B1%D0%BE%D0%BB%D1%83%7C%D0%9F%D1%80%D0%B8%D0%BC%D0%B5%D1%80%D0%B0%7C%D0%A1%D0%BE%D1%81%D1%83%D0%B4%D0%BE%D1%80%D0%B0%D1%81%D1%88%D0%B8%D1%80%D1%8F%D1%8E%D1%89%D0%B8%D0%B5+%D1%81%D1%80%D0%B5%D0%B4%D1%81%D1%82%D0%B2%D0%B0%7C%D0%9F%D1%80%D0%B8%D0%BC%D0%B5%D1%80+%D0%90%D0%B4%D0%B0%D0%BC%D0%B0%D1%80%D0%B0&ppprop=wikibase_item&origin=*))\n(step-58: type api-request (https://ru.wikipedia.org/w/api.php?action=query&format=json&prop=pageprops&titles=%D0%9C%D0%BE%D0%BD%D1%80%D0%BE%2C+%D0%9C%D1%8D%D1%80%D0%B8%D0%BB%D0%B8%D0%BD%7C%D0%96%D0%B8%D0%BC%D0%BE%D0%BB%D0%BE%D1%81%D1%82%D1%8C%7C%D0%9E%D1%88%D0%B8%D0%B1%D0%BA%D0%B0+404%7C%D0%93%D0%B8%D0%BF%D0%BE%D1%84%D0%B8%D0%B7+%D1%87%D0%B5%D0%BB%D0%BE%D0%B2%D0%B5%D0%BA%D0%B0%7C%D0%9C%D0%BE%D0%B6%D0%B6%D0%B5%D0%B2%D0%B5%D0%BB%D1%8C%D0%BD%D0%B8%D0%BA+%D0%BE%D0%B1%D1%8B%D0%BA%D0%BD%D0%BE%D0%B2%D0%B5%D0%BD%D0%BD%D1%8B%D0%B9&ppprop=wikibase_item&origin=*))\n(step-59: type api-response (https://www.wikidata.org/w/api.php?action=wbsearchentities&format=json&language=ru&origin=*&type=property&limit=5&search=%D1%81%D0%B8%D0%BD%D0%BE%D0%BD%D0%B8%D0%BC%D1%8B+%D0%B8%D0%BB%D0%B8+%D0%BF%D1%80%D0%B8%D0%BC%D0%B5%D1%80%D1%8B))\n(step-60: type api-response (https://ru.wikipedia.org/w/api.php?action=query&format=json&list=search&srsearch=%D0%BF%D1%80%D0%B8%D0%BC%D0%B5%D1%80%D1%8B+%D1%81%D0%BE%D0%B3%D0%BB%D0%B0%D1%81%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D1%8F&srlimit=5&origin=*))\n(step-61: type api-request (https://ru.wikipedia.org/w/api.php?action=query&format=json&prop=pageprops&titles=%D0%9F%D1%80%D0%B8%D0%BD%D1%86%D0%B8%D0%BF+%D1%87%D0%B5%D1%82%D1%8B%D1%80%D1%91%D1%85+%D0%B3%D0%BB%D0%B0%D0%B7%7C%D0%93%D1%80%D0%B0%D0%BC%D0%BC%D0%B0%D1%82%D0%B8%D1%87%D0%B5%D1%81%D0%BA%D0%BE%D0%B5+%D1%87%D0%B8%D1%81%D0%BB%D0%BE%7C%D0%93%D1%80%D0%B0%D0%BC%D0%BC%D0%B0%D1%82%D0%B8%D0%BA%D0%B0+%D0%B0%D0%BD%D0%B3%D0%BB%D0%B8%D0%B9%D1%81%D0%BA%D0%BE%D0%B3%D0%BE+%D1%8F%D0%B7%D1%8B%D0%BA%D0%B0%7C%D0%A1%D0%BE%D0%B3%D0%BB%D0%B0%D1%81%D0%BE%D0%B2%D0%B0%D0%BD%D0%BD%D0%BE%D1%81%D1%82%D1%8C+%D0%B2+%D0%BA%D0%BE%D0%BD%D0%B5%D1%87%D0%BD%D0%BE%D0%BC+%D1%81%D1%87%D1%91%D1%82%D0%B5%7C%D0%A1%D0%BE%D0%B3%D0%BB%D0%B0%D1%81%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5+%28%D0%B3%D1%80%D0%B0%D0%BC%D0%BC%D0%B0%D1%82%D0%B8%D0%BA%D0%B0%29&ppprop=wikibase_item&origin=*))\n(step-62: type api-response (https://ru.wikipedia.org/w/api.php?action=query&format=json&prop=pageprops&titles=%D0%9C%D0%BE%D0%B4%D0%B5%D0%BB%D1%8C+%D1%81%D0%BE%D0%B3%D0%BB%D0%B0%D1%81%D0%BE%D0%B2%D0%B0%D0%BD%D0%BD%D0%BE%D1%81%D1%82%D0%B8%7C%D0%A1%D0%BE%D0%B3%D0%BB%D0%B0%D1%81%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5+%28%D0%B3%D1%80%D0%B0%D0%BC%D0%BC%D0%B0%D1%82%D0%B8%D0%BA%D0%B0%29%7C%D0%A1%D0%BE%D0%B3%D0%BB%D0%B0%D1%81%D0%BE%D0%B2%D0%B0%D0%BD%D0%BD%D0%BE%D1%81%D1%82%D1%8C+%D0%B4%D0%B0%D0%BD%D0%BD%D1%8B%D1%85%7C%D0%A2%D0%B8%D0%BF%D0%BE%D0%B1%D0%B5%D0%B7%D0%BE%D0%BF%D0%B0%D1%81%D0%BD%D0%BE%D1%81%D1%82%D1%8C%7C%D0%9F%D0%BE%D1%81%D0%BB%D0%B5%D0%B4%D0%BE%D0%B2%D0%B0%D1%82%D0%B5%D0%BB%D1%8C%D0%BD%D0%B0%D1%8F+%D1%81%D0%BE%D0%B3%D0%BB%D0%B0%D1%81%D0%BE%D0%B2%D0%B0%D0%BD%D0%BD%D0%BE%D1%81%D1%82%D1%8C&ppprop=wikibase_item&origin=*))\n(step-63: type api-response (https://ru.wikipedia.org/w/api.php?action=query&format=json&prop=pageprops&titles=%D0%9C%D0%BE%D0%BD%D1%80%D0%BE%2C+%D0%9C%D1%8D%D1%80%D0%B8%D0%BB%D0%B8%D0%BD%7C%D0%96%D0%B8%D0%BC%D0%BE%D0%BB%D0%BE%D1%81%D1%82%D1%8C%7C%D0%9E%D1%88%D0%B8%D0%B1%D0%BA%D0%B0+404%7C%D0%93%D0%B8%D0%BF%D0%BE%D1%84%D0%B8%D0%B7+%D1%87%D0%B5%D0%BB%D0%BE%D0%B2%D0%B5%D0%BA%D0%B0%7C%D0%9C%D0%BE%D0%B6%D0%B6%D0%B5%D0%B2%D0%B5%D0%BB%D1%8C%D0%BD%D0%B8%D0%BA+%D0%BE%D0%B1%D1%8B%D0%BA%D0%BD%D0%BE%D0%B2%D0%B5%D0%BD%D0%BD%D1%8B%D0%B9&ppprop=wikibase_item&origin=*))\n(step-64: type api-response (https://ru.wikipedia.org/w/api.php?action=query&format=json&list=search&srsearch=%D1%81%D0%B8%D0%BD%D0%BE%D0%BD%D0%B8%D0%BC%D1%8B+%D0%B8%D0%BB%D0%B8+%D0%BF%D1%80%D0%B8%D0%BC%D0%B5%D1%80%D1%8B&srlimit=5&origin=*))\n(step-65: type api-request (https://ru.wikipedia.org/w/api.php?action=query&format=json&prop=pageprops&titles=%D0%A1%D0%B8%D0%BD%D0%BE%D0%BD%D0%B8%D0%BC%D1%8B%7C%D0%A1%D0%B8%D0%BD%D0%BE%D0%BD%D0%B8%D0%BC+%28%D1%82%D0%B0%D0%BA%D1%81%D0%BE%D0%BD%D0%BE%D0%BC%D0%B8%D1%8F%29%7C%D0%A0%D0%B0%D0%B7%D0%B2%D0%B8%D0%BB%D0%BA%D0%B0%7C%D0%A5%D0%BB%D0%B5%D0%B2%7C%D0%9F%D1%80%D0%BE%D0%B1%D0%BB%D0%B5%D0%BC%D0%B0+%C2%AB%D1%8F%D0%B7%D1%8B%D0%BA+%D0%B8%D0%BB%D0%B8+%D0%B4%D0%B8%D0%B0%D0%BB%D0%B5%D0%BA%D1%82%C2%BB&ppprop=wikibase_item&origin=*))\n(step-66: type api-response (https://ru.wikipedia.org/w/api.php?action=query&format=json&prop=pageprops&titles=%D0%9F%D1%80%D0%B8%D0%BD%D1%86%D0%B8%D0%BF+%D1%87%D0%B5%D1%82%D1%8B%D1%80%D1%91%D1%85+%D0%B3%D0%BB%D0%B0%D0%B7%7C%D0%93%D1%80%D0%B0%D0%BC%D0%BC%D0%B0%D1%82%D0%B8%D1%87%D0%B5%D1%81%D0%BA%D0%BE%D0%B5+%D1%87%D0%B8%D1%81%D0%BB%D0%BE%7C%D0%93%D1%80%D0%B0%D0%BC%D0%BC%D0%B0%D1%82%D0%B8%D0%BA%D0%B0+%D0%B0%D0%BD%D0%B3%D0%BB%D0%B8%D0%B9%D1%81%D0%BA%D0%BE%D0%B3%D0%BE+%D1%8F%D0%B7%D1%8B%D0%BA%D0%B0%7C%D0%A1%D0%BE%D0%B3%D0%BB%D0%B0%D1%81%D0%BE%D0%B2%D0%B0%D0%BD%D0%BD%D0%BE%D1%81%D1%82%D1%8C+%D0%B2+%D0%BA%D0%BE%D0%BD%D0%B5%D1%87%D0%BD%D0%BE%D0%BC+%D1%81%D1%87%D1%91%D1%82%D0%B5%7C%D0%A1%D0%BE%D0%B3%D0%BB%D0%B0%D1%81%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5+%28%D0%B3%D1%80%D0%B0%D0%BC%D0%BC%D0%B0%D1%82%D0%B8%D0%BA%D0%B0%29&ppprop=wikibase_item&origin=*))\n(step-67: type api-response (https://ru.wikipedia.org/w/api.php?action=query&format=json&prop=pageprops&titles=%D0%A1%D0%B8%D0%BD%D0%BE%D0%BD%D0%B8%D0%BC%D1%8B%7C%D0%A1%D0%B8%D0%BD%D0%BE%D0%BD%D0%B8%D0%BC+%28%D1%82%D0%B0%D0%BA%D1%81%D0%BE%D0%BD%D0%BE%D0%BC%D0%B8%D1%8F%29%7C%D0%A0%D0%B0%D0%B7%D0%B2%D0%B8%D0%BB%D0%BA%D0%B0%7C%D0%A5%D0%BB%D0%B5%D0%B2%7C%D0%9F%D1%80%D0%BE%D0%B1%D0%BB%D0%B5%D0%BC%D0%B0+%C2%AB%D1%8F%D0%B7%D1%8B%D0%BA+%D0%B8%D0%BB%D0%B8+%D0%B4%D0%B8%D0%B0%D0%BB%D0%B5%D0%BA%D1%82%C2%BB&ppprop=wikibase_item&origin=*))\n(step-68: type api-request (https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&ids=Q42106&languages=ru&origin=*&props=labels%7Caliases%7Cdescriptions%7Cclaims%7Csitelinks&sitefilter=enwiki))\n(step-69: type api-request (https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&ids=Q1040689&languages=ru&origin=*&props=labels%7Caliases%7Cdescriptions%7Cclaims%7Csitelinks&sitefilter=enwiki))\n(step-70: type api-request (https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&ids=Q61672685&languages=ru&origin=*&props=labels%7Caliases%7Cdescriptions%7Cclaims%7Csitelinks&sitefilter=enwiki))\n(step-71: type api-response (https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&ids=Q1040689&languages=ru&origin=*&props=labels%7Caliases%7Cdescriptions%7Cclaims%7Csitelinks&sitefilter=enwiki))\n(step-72: type api-response (https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&ids=Q61672685&languages=ru&origin=*&props=labels%7Caliases%7Cdescriptions%7Cclaims%7Csitelinks&sitefilter=enwiki))\n(step-73: type api-response (https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&ids=Q42106&languages=ru&origin=*&props=labels%7Caliases%7Cdescriptions%7Cclaims%7Csitelinks&sitefilter=enwiki))\n(step-74: type api-request (https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&ids=Q8171&languages=ru&origin=*&props=labels%7Cclaims))\n(step-75: type api-response (https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&ids=Q8171&languages=ru&origin=*&props=labels%7Cclaims))\n(step-76: type api-request (https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&ids=Q315&languages=ru&origin=*&props=labels%7Cclaims))\n(step-77: type api-response (https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&ids=Q315&languages=ru&origin=*&props=labels%7Cclaims))\n(step-78: type api-request (https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&ids=Q10753560&languages=ru&origin=*&props=labels%7Cclaims))\n(step-79: type api-response (https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&ids=Q10753560&languages=ru&origin=*&props=labels%7Cclaims))\n(step-80: type api-request (https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&ids=Q11424&languages=ru&origin=*&props=labels%7Cclaims))\n(step-81: type api-response (https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&ids=Q11424&languages=ru&origin=*&props=labels%7Cclaims))\n(step-82: type api-request (https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&ids=Q130232&languages=ru&origin=*&props=labels%7Cclaims))\n(step-83: type api-response (https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&ids=Q130232&languages=ru&origin=*&props=labels%7Cclaims))\n(step-84: type formalization (formalization))\n(step-85: type translation-phrase (phrase-1))\n(step-86: type translation-phrase (phrase-2))\n(step-87: type translation-phrase (phrase-3))\n(step-88: type translation-phrase (phrase-4))\n(step-89: type translation-phrase (phrase-5))\n(step-90: type transformation-rule (russian-examples-genitive-to-english-of-phrase))\n(step-91: type sentence (sentence-1))\n(step-92: type text (Find synonyms or examples of agreement))",
+  "variables": [],
+  "questions": [],
+  "questionDetails": [],
+  "steps": [
+    {
+      "id": "step-1",
+      "type": "input",
+      "sourceLanguage": "ru",
+      "targetLanguage": "en",
+      "text": "Найти синонимы или примеры согласования"
+    },
+    {
+      "id": "step-2",
+      "type": "api-request",
+      "method": "GET",
+      "url": "https://ru.wikipedia.org/w/api.php?action=query&format=json&list=search&srsearch=%D0%9D%D0%B0%D0%B9%D1%82%D0%B8&srlimit=5&origin=*"
+    },
+    {
+      "id": "step-3",
+      "type": "api-request",
+      "method": "GET",
+      "url": "https://www.wikidata.org/w/api.php?action=wbsearchentities&format=json&language=ru&origin=*&type=item&limit=5&search=%D0%9D%D0%B0%D0%B9%D1%82%D0%B8"
+    },
+    {
+      "id": "step-4",
+      "type": "api-request",
+      "method": "GET",
+      "url": "https://www.wikidata.org/w/api.php?action=wbsearchentities&format=json&language=ru&origin=*&type=property&limit=5&search=%D0%9D%D0%B0%D0%B9%D1%82%D0%B8"
+    },
+    {
+      "id": "step-5",
+      "type": "api-request",
+      "method": "GET",
+      "url": "https://en.wiktionary.org/api/rest_v1/page/definition/%D0%9D%D0%B0%D0%B9%D1%82%D0%B8"
+    },
+    {
+      "id": "step-6",
+      "type": "api-request",
+      "method": "GET",
+      "url": "https://ru.wikipedia.org/w/api.php?action=query&format=json&list=search&srsearch=%D1%81%D0%B8%D0%BD%D0%BE%D0%BD%D0%B8%D0%BC%D1%8B&srlimit=5&origin=*"
+    },
+    {
+      "id": "step-7",
+      "type": "api-request",
+      "method": "GET",
+      "url": "https://www.wikidata.org/w/api.php?action=wbsearchentities&format=json&language=ru&origin=*&type=item&limit=5&search=%D1%81%D0%B8%D0%BD%D0%BE%D0%BD%D0%B8%D0%BC%D1%8B"
+    },
+    {
+      "id": "step-8",
+      "type": "api-request",
+      "method": "GET",
+      "url": "https://www.wikidata.org/w/api.php?action=wbsearchentities&format=json&language=ru&origin=*&type=property&limit=5&search=%D1%81%D0%B8%D0%BD%D0%BE%D0%BD%D0%B8%D0%BC%D1%8B"
+    },
+    {
+      "id": "step-9",
+      "type": "api-request",
+      "method": "GET",
+      "url": "https://en.wiktionary.org/api/rest_v1/page/definition/%D1%81%D0%B8%D0%BD%D0%BE%D0%BD%D0%B8%D0%BC%D1%8B"
+    },
+    {
+      "id": "step-10",
+      "type": "api-request",
+      "method": "GET",
+      "url": "https://en.wiktionary.org/api/rest_v1/page/definition/%D0%B8%D0%BB%D0%B8"
+    },
+    {
+      "id": "step-11",
+      "type": "api-request",
+      "method": "GET",
+      "url": "https://ru.wikipedia.org/w/api.php?action=query&format=json&list=search&srsearch=%D0%BF%D1%80%D0%B8%D0%BC%D0%B5%D1%80%D1%8B&srlimit=5&origin=*"
+    },
+    {
+      "id": "step-12",
+      "type": "api-request",
+      "method": "GET",
+      "url": "https://www.wikidata.org/w/api.php?action=wbsearchentities&format=json&language=ru&origin=*&type=item&limit=5&search=%D0%BF%D1%80%D0%B8%D0%BC%D0%B5%D1%80%D1%8B"
+    },
+    {
+      "id": "step-13",
+      "type": "api-request",
+      "method": "GET",
+      "url": "https://www.wikidata.org/w/api.php?action=wbsearchentities&format=json&language=ru&origin=*&type=property&limit=5&search=%D0%BF%D1%80%D0%B8%D0%BC%D0%B5%D1%80%D1%8B"
+    },
+    {
+      "id": "step-14",
+      "type": "api-request",
+      "method": "GET",
+      "url": "https://en.wiktionary.org/api/rest_v1/page/definition/%D0%BF%D1%80%D0%B8%D0%BC%D0%B5%D1%80%D1%8B"
+    },
+    {
+      "id": "step-15",
+      "type": "api-request",
+      "method": "GET",
+      "url": "https://ru.wikipedia.org/w/api.php?action=query&format=json&list=search&srsearch=%D1%81%D0%BE%D0%B3%D0%BB%D0%B0%D1%81%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D1%8F&srlimit=5&origin=*"
+    },
+    {
+      "id": "step-16",
+      "type": "api-request",
+      "method": "GET",
+      "url": "https://www.wikidata.org/w/api.php?action=wbsearchentities&format=json&language=ru&origin=*&type=item&limit=5&search=%D1%81%D0%BE%D0%B3%D0%BB%D0%B0%D1%81%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D1%8F"
+    },
+    {
+      "id": "step-17",
+      "type": "api-request",
+      "method": "GET",
+      "url": "https://www.wikidata.org/w/api.php?action=wbsearchentities&format=json&language=ru&origin=*&type=property&limit=5&search=%D1%81%D0%BE%D0%B3%D0%BB%D0%B0%D1%81%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D1%8F"
+    },
+    {
+      "id": "step-18",
+      "type": "api-request",
+      "method": "GET",
+      "url": "https://en.wiktionary.org/api/rest_v1/page/definition/%D1%81%D0%BE%D0%B3%D0%BB%D0%B0%D1%81%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D1%8F"
+    },
+    {
+      "id": "step-19",
+      "type": "api-request",
+      "method": "GET",
+      "url": "https://ru.wikipedia.org/w/api.php?action=query&format=json&list=search&srsearch=%D0%9D%D0%B0%D0%B9%D1%82%D0%B8+%D1%81%D0%B8%D0%BD%D0%BE%D0%BD%D0%B8%D0%BC%D1%8B&srlimit=5&origin=*"
+    },
+    {
+      "id": "step-20",
+      "type": "api-request",
+      "method": "GET",
+      "url": "https://www.wikidata.org/w/api.php?action=wbsearchentities&format=json&language=ru&origin=*&type=item&limit=5&search=%D0%9D%D0%B0%D0%B9%D1%82%D0%B8+%D1%81%D0%B8%D0%BD%D0%BE%D0%BD%D0%B8%D0%BC%D1%8B"
+    },
+    {
+      "id": "step-21",
+      "type": "api-request",
+      "method": "GET",
+      "url": "https://www.wikidata.org/w/api.php?action=wbsearchentities&format=json&language=ru&origin=*&type=property&limit=5&search=%D0%9D%D0%B0%D0%B9%D1%82%D0%B8+%D1%81%D0%B8%D0%BD%D0%BE%D0%BD%D0%B8%D0%BC%D1%8B"
+    },
+    {
+      "id": "step-22",
+      "type": "api-request",
+      "method": "GET",
+      "url": "https://ru.wikipedia.org/w/api.php?action=query&format=json&list=search&srsearch=%D0%BF%D1%80%D0%B8%D0%BC%D0%B5%D1%80%D1%8B+%D1%81%D0%BE%D0%B3%D0%BB%D0%B0%D1%81%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D1%8F&srlimit=5&origin=*"
+    },
+    {
+      "id": "step-23",
+      "type": "api-request",
+      "method": "GET",
+      "url": "https://www.wikidata.org/w/api.php?action=wbsearchentities&format=json&language=ru&origin=*&type=item&limit=5&search=%D0%BF%D1%80%D0%B8%D0%BC%D0%B5%D1%80%D1%8B+%D1%81%D0%BE%D0%B3%D0%BB%D0%B0%D1%81%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D1%8F"
+    },
+    {
+      "id": "step-24",
+      "type": "api-request",
+      "method": "GET",
+      "url": "https://www.wikidata.org/w/api.php?action=wbsearchentities&format=json&language=ru&origin=*&type=property&limit=5&search=%D0%BF%D1%80%D0%B8%D0%BC%D0%B5%D1%80%D1%8B+%D1%81%D0%BE%D0%B3%D0%BB%D0%B0%D1%81%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D1%8F"
+    },
+    {
+      "id": "step-25",
+      "type": "api-request",
+      "method": "GET",
+      "url": "https://ru.wikipedia.org/w/api.php?action=query&format=json&list=search&srsearch=%D1%81%D0%B8%D0%BD%D0%BE%D0%BD%D0%B8%D0%BC%D1%8B+%D0%B8%D0%BB%D0%B8+%D0%BF%D1%80%D0%B8%D0%BC%D0%B5%D1%80%D1%8B&srlimit=5&origin=*"
+    },
+    {
+      "id": "step-26",
+      "type": "api-request",
+      "method": "GET",
+      "url": "https://www.wikidata.org/w/api.php?action=wbsearchentities&format=json&language=ru&origin=*&type=item&limit=5&search=%D1%81%D0%B8%D0%BD%D0%BE%D0%BD%D0%B8%D0%BC%D1%8B+%D0%B8%D0%BB%D0%B8+%D0%BF%D1%80%D0%B8%D0%BC%D0%B5%D1%80%D1%8B"
+    },
+    {
+      "id": "step-27",
+      "type": "api-request",
+      "method": "GET",
+      "url": "https://www.wikidata.org/w/api.php?action=wbsearchentities&format=json&language=ru&origin=*&type=property&limit=5&search=%D1%81%D0%B8%D0%BD%D0%BE%D0%BD%D0%B8%D0%BC%D1%8B+%D0%B8%D0%BB%D0%B8+%D0%BF%D1%80%D0%B8%D0%BC%D0%B5%D1%80%D1%8B"
+    },
+    {
+      "id": "step-28",
+      "type": "api-response",
+      "method": "GET",
+      "url": "https://en.wiktionary.org/api/rest_v1/page/definition/%D0%9D%D0%B0%D0%B9%D1%82%D0%B8",
+      "status": 404,
+      "ok": false
+    },
+    {
+      "id": "step-29",
+      "type": "api-response",
+      "method": "GET",
+      "url": "https://en.wiktionary.org/api/rest_v1/page/definition/%D1%81%D0%B8%D0%BD%D0%BE%D0%BD%D0%B8%D0%BC%D1%8B",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "step-30",
+      "type": "api-response",
+      "method": "GET",
+      "url": "https://en.wiktionary.org/api/rest_v1/page/definition/%D0%B8%D0%BB%D0%B8",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "step-31",
+      "type": "api-response",
+      "method": "GET",
+      "url": "https://www.wikidata.org/w/api.php?action=wbsearchentities&format=json&language=ru&origin=*&type=property&limit=5&search=%D0%9D%D0%B0%D0%B9%D1%82%D0%B8",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "step-32",
+      "type": "api-response",
+      "method": "GET",
+      "url": "https://www.wikidata.org/w/api.php?action=wbsearchentities&format=json&language=ru&origin=*&type=item&limit=5&search=%D0%9D%D0%B0%D0%B9%D1%82%D0%B8",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "step-33",
+      "type": "api-response",
+      "method": "GET",
+      "url": "https://en.wiktionary.org/api/rest_v1/page/definition/%D0%BF%D1%80%D0%B8%D0%BC%D0%B5%D1%80%D1%8B",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "step-34",
+      "type": "api-response",
+      "method": "GET",
+      "url": "https://ru.wikipedia.org/w/api.php?action=query&format=json&list=search&srsearch=%D0%9D%D0%B0%D0%B9%D1%82%D0%B8&srlimit=5&origin=*",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "step-35",
+      "type": "api-request",
+      "method": "GET",
+      "url": "https://ru.wikipedia.org/w/api.php?action=query&format=json&prop=pageprops&titles=%D0%A5%D0%BE%D1%87%D1%83+%D0%BD%D0%B0%D0%B9%D1%82%D0%B8%7C%D0%9D%D0%B0%D0%B9%D1%82%D0%B8+%D0%A4%D0%BE%D1%80%D1%80%D0%B5%D1%81%D1%82%D0%B5%D1%80%D0%B0%7C%D0%9D%D0%B0%D0%B9%D1%82%D0%B8+%D1%81%D1%8B%D0%BD%D0%B0%7C%D0%9D%D0%B0%D0%B9%D1%82%2C+%D0%A4%D0%B8%D0%BB%7C%D0%9D%D0%B0%D0%B9%D1%82%D0%B8+%D1%87%D0%B5%D0%BB%D0%BE%D0%B2%D0%B5%D0%BA%D0%B0&ppprop=wikibase_item&origin=*"
+    },
+    {
+      "id": "step-36",
+      "type": "api-response",
+      "method": "GET",
+      "url": "https://en.wiktionary.org/api/rest_v1/page/definition/%D1%81%D0%BE%D0%B3%D0%BB%D0%B0%D1%81%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D1%8F",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "step-37",
+      "type": "api-response",
+      "method": "GET",
+      "url": "https://www.wikidata.org/w/api.php?action=wbsearchentities&format=json&language=ru&origin=*&type=property&limit=5&search=%D1%81%D0%B8%D0%BD%D0%BE%D0%BD%D0%B8%D0%BC%D1%8B",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "step-38",
+      "type": "api-response",
+      "method": "GET",
+      "url": "https://www.wikidata.org/w/api.php?action=wbsearchentities&format=json&language=ru&origin=*&type=item&limit=5&search=%D1%81%D0%B8%D0%BD%D0%BE%D0%BD%D0%B8%D0%BC%D1%8B",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "step-39",
+      "type": "api-response",
+      "method": "GET",
+      "url": "https://ru.wikipedia.org/w/api.php?action=query&format=json&list=search&srsearch=%D1%81%D0%B8%D0%BD%D0%BE%D0%BD%D0%B8%D0%BC%D1%8B&srlimit=5&origin=*",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "step-40",
+      "type": "api-request",
+      "method": "GET",
+      "url": "https://ru.wikipedia.org/w/api.php?action=query&format=json&prop=pageprops&titles=%D0%A1%D0%B8%D0%BD%D0%BE%D0%BD%D0%B8%D0%BC%D1%8B%7C%D0%A1%D0%B8%D0%BD%D0%BE%D0%BD%D0%B8%D0%BC+%28%D1%82%D0%B0%D0%BA%D1%81%D0%BE%D0%BD%D0%BE%D0%BC%D0%B8%D1%8F%29%7C%D0%A1%D0%B8%D0%BD%D0%BE%D0%BD%D0%B8%D0%BC%D1%8B+%28%D1%84%D0%B8%D0%BB%D1%8C%D0%BC%29%7C%D0%9A%D1%83%D0%BD%D0%BD%D0%B8%D0%BB%D0%B8%D0%BD%D0%B3%D1%83%D1%81%7C%D0%9E%D1%80%D0%B0%D0%BB%D1%8C%D0%BD%D1%8B%D0%B9+%D1%81%D0%B5%D0%BA%D1%81&ppprop=wikibase_item&origin=*"
+    },
+    {
+      "id": "step-41",
+      "type": "api-response",
+      "method": "GET",
+      "url": "https://www.wikidata.org/w/api.php?action=wbsearchentities&format=json&language=ru&origin=*&type=item&limit=5&search=%D0%BF%D1%80%D0%B8%D0%BC%D0%B5%D1%80%D1%8B",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "step-42",
+      "type": "api-response",
+      "method": "GET",
+      "url": "https://www.wikidata.org/w/api.php?action=wbsearchentities&format=json&language=ru&origin=*&type=property&limit=5&search=%D0%BF%D1%80%D0%B8%D0%BC%D0%B5%D1%80%D1%8B",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "step-43",
+      "type": "api-response",
+      "method": "GET",
+      "url": "https://ru.wikipedia.org/w/api.php?action=query&format=json&prop=pageprops&titles=%D0%A5%D0%BE%D1%87%D1%83+%D0%BD%D0%B0%D0%B9%D1%82%D0%B8%7C%D0%9D%D0%B0%D0%B9%D1%82%D0%B8+%D0%A4%D0%BE%D1%80%D1%80%D0%B5%D1%81%D1%82%D0%B5%D1%80%D0%B0%7C%D0%9D%D0%B0%D0%B9%D1%82%D0%B8+%D1%81%D1%8B%D0%BD%D0%B0%7C%D0%9D%D0%B0%D0%B9%D1%82%2C+%D0%A4%D0%B8%D0%BB%7C%D0%9D%D0%B0%D0%B9%D1%82%D0%B8+%D1%87%D0%B5%D0%BB%D0%BE%D0%B2%D0%B5%D0%BA%D0%B0&ppprop=wikibase_item&origin=*",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "step-44",
+      "type": "api-response",
+      "method": "GET",
+      "url": "https://www.wikidata.org/w/api.php?action=wbsearchentities&format=json&language=ru&origin=*&type=item&limit=5&search=%D1%81%D0%BE%D0%B3%D0%BB%D0%B0%D1%81%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D1%8F",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "step-45",
+      "type": "api-response",
+      "method": "GET",
+      "url": "https://ru.wikipedia.org/w/api.php?action=query&format=json&list=search&srsearch=%D0%BF%D1%80%D0%B8%D0%BC%D0%B5%D1%80%D1%8B&srlimit=5&origin=*",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "step-46",
+      "type": "api-request",
+      "method": "GET",
+      "url": "https://ru.wikipedia.org/w/api.php?action=query&format=json&prop=pageprops&titles=%D0%9F%D1%80%D0%B8%D0%BC%D0%B5%D1%80%7C%D0%A7%D0%B5%D0%BC%D0%BF%D0%B8%D0%BE%D0%BD%D0%B0%D1%82+%D0%98%D1%81%D0%BF%D0%B0%D0%BD%D0%B8%D0%B8+%D0%BF%D0%BE+%D1%84%D1%83%D1%82%D0%B1%D0%BE%D0%BB%D1%83%7C%D0%9F%D1%80%D0%B8%D0%BC%D0%B5%D1%80%D0%B0%7C%D0%A1%D0%BE%D1%81%D1%83%D0%B4%D0%BE%D1%80%D0%B0%D1%81%D1%88%D0%B8%D1%80%D1%8F%D1%8E%D1%89%D0%B8%D0%B5+%D1%81%D1%80%D0%B5%D0%B4%D1%81%D1%82%D0%B2%D0%B0%7C%D0%9F%D1%80%D0%B8%D0%BC%D0%B5%D1%80+%D0%90%D0%B4%D0%B0%D0%BC%D0%B0%D1%80%D0%B0&ppprop=wikibase_item&origin=*"
+    },
+    {
+      "id": "step-47",
+      "type": "api-response",
+      "method": "GET",
+      "url": "https://ru.wikipedia.org/w/api.php?action=query&format=json&prop=pageprops&titles=%D0%A1%D0%B8%D0%BD%D0%BE%D0%BD%D0%B8%D0%BC%D1%8B%7C%D0%A1%D0%B8%D0%BD%D0%BE%D0%BD%D0%B8%D0%BC+%28%D1%82%D0%B0%D0%BA%D1%81%D0%BE%D0%BD%D0%BE%D0%BC%D0%B8%D1%8F%29%7C%D0%A1%D0%B8%D0%BD%D0%BE%D0%BD%D0%B8%D0%BC%D1%8B+%28%D1%84%D0%B8%D0%BB%D1%8C%D0%BC%29%7C%D0%9A%D1%83%D0%BD%D0%BD%D0%B8%D0%BB%D0%B8%D0%BD%D0%B3%D1%83%D1%81%7C%D0%9E%D1%80%D0%B0%D0%BB%D1%8C%D0%BD%D1%8B%D0%B9+%D1%81%D0%B5%D0%BA%D1%81&ppprop=wikibase_item&origin=*",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "step-48",
+      "type": "api-response",
+      "method": "GET",
+      "url": "https://www.wikidata.org/w/api.php?action=wbsearchentities&format=json&language=ru&origin=*&type=property&limit=5&search=%D1%81%D0%BE%D0%B3%D0%BB%D0%B0%D1%81%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D1%8F",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "step-49",
+      "type": "api-response",
+      "method": "GET",
+      "url": "https://www.wikidata.org/w/api.php?action=wbsearchentities&format=json&language=ru&origin=*&type=property&limit=5&search=%D0%9D%D0%B0%D0%B9%D1%82%D0%B8+%D1%81%D0%B8%D0%BD%D0%BE%D0%BD%D0%B8%D0%BC%D1%8B",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "step-50",
+      "type": "api-response",
+      "method": "GET",
+      "url": "https://www.wikidata.org/w/api.php?action=wbsearchentities&format=json&language=ru&origin=*&type=item&limit=5&search=%D0%9D%D0%B0%D0%B9%D1%82%D0%B8+%D1%81%D0%B8%D0%BD%D0%BE%D0%BD%D0%B8%D0%BC%D1%8B",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "step-51",
+      "type": "api-response",
+      "method": "GET",
+      "url": "https://ru.wikipedia.org/w/api.php?action=query&format=json&list=search&srsearch=%D1%81%D0%BE%D0%B3%D0%BB%D0%B0%D1%81%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D1%8F&srlimit=5&origin=*",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "step-52",
+      "type": "api-request",
+      "method": "GET",
+      "url": "https://ru.wikipedia.org/w/api.php?action=query&format=json&prop=pageprops&titles=%D0%9C%D0%BE%D0%B4%D0%B5%D0%BB%D1%8C+%D1%81%D0%BE%D0%B3%D0%BB%D0%B0%D1%81%D0%BE%D0%B2%D0%B0%D0%BD%D0%BD%D0%BE%D1%81%D1%82%D0%B8%7C%D0%A1%D0%BE%D0%B3%D0%BB%D0%B0%D1%81%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5+%28%D0%B3%D1%80%D0%B0%D0%BC%D0%BC%D0%B0%D1%82%D0%B8%D0%BA%D0%B0%29%7C%D0%A1%D0%BE%D0%B3%D0%BB%D0%B0%D1%81%D0%BE%D0%B2%D0%B0%D0%BD%D0%BD%D0%BE%D1%81%D1%82%D1%8C+%D0%B4%D0%B0%D0%BD%D0%BD%D1%8B%D1%85%7C%D0%A2%D0%B8%D0%BF%D0%BE%D0%B1%D0%B5%D0%B7%D0%BE%D0%BF%D0%B0%D1%81%D0%BD%D0%BE%D1%81%D1%82%D1%8C%7C%D0%9F%D0%BE%D1%81%D0%BB%D0%B5%D0%B4%D0%BE%D0%B2%D0%B0%D1%82%D0%B5%D0%BB%D1%8C%D0%BD%D0%B0%D1%8F+%D1%81%D0%BE%D0%B3%D0%BB%D0%B0%D1%81%D0%BE%D0%B2%D0%B0%D0%BD%D0%BD%D0%BE%D1%81%D1%82%D1%8C&ppprop=wikibase_item&origin=*"
+    },
+    {
+      "id": "step-53",
+      "type": "api-response",
+      "method": "GET",
+      "url": "https://www.wikidata.org/w/api.php?action=wbsearchentities&format=json&language=ru&origin=*&type=property&limit=5&search=%D0%BF%D1%80%D0%B8%D0%BC%D0%B5%D1%80%D1%8B+%D1%81%D0%BE%D0%B3%D0%BB%D0%B0%D1%81%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D1%8F",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "step-54",
+      "type": "api-response",
+      "method": "GET",
+      "url": "https://www.wikidata.org/w/api.php?action=wbsearchentities&format=json&language=ru&origin=*&type=item&limit=5&search=%D0%BF%D1%80%D0%B8%D0%BC%D0%B5%D1%80%D1%8B+%D1%81%D0%BE%D0%B3%D0%BB%D0%B0%D1%81%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D1%8F",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "step-55",
+      "type": "api-response",
+      "method": "GET",
+      "url": "https://ru.wikipedia.org/w/api.php?action=query&format=json&list=search&srsearch=%D0%9D%D0%B0%D0%B9%D1%82%D0%B8+%D1%81%D0%B8%D0%BD%D0%BE%D0%BD%D0%B8%D0%BC%D1%8B&srlimit=5&origin=*",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "step-56",
+      "type": "api-response",
+      "method": "GET",
+      "url": "https://www.wikidata.org/w/api.php?action=wbsearchentities&format=json&language=ru&origin=*&type=item&limit=5&search=%D1%81%D0%B8%D0%BD%D0%BE%D0%BD%D0%B8%D0%BC%D1%8B+%D0%B8%D0%BB%D0%B8+%D0%BF%D1%80%D0%B8%D0%BC%D0%B5%D1%80%D1%8B",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "step-57",
+      "type": "api-response",
+      "method": "GET",
+      "url": "https://ru.wikipedia.org/w/api.php?action=query&format=json&prop=pageprops&titles=%D0%9F%D1%80%D0%B8%D0%BC%D0%B5%D1%80%7C%D0%A7%D0%B5%D0%BC%D0%BF%D0%B8%D0%BE%D0%BD%D0%B0%D1%82+%D0%98%D1%81%D0%BF%D0%B0%D0%BD%D0%B8%D0%B8+%D0%BF%D0%BE+%D1%84%D1%83%D1%82%D0%B1%D0%BE%D0%BB%D1%83%7C%D0%9F%D1%80%D0%B8%D0%BC%D0%B5%D1%80%D0%B0%7C%D0%A1%D0%BE%D1%81%D1%83%D0%B4%D0%BE%D1%80%D0%B0%D1%81%D1%88%D0%B8%D1%80%D1%8F%D1%8E%D1%89%D0%B8%D0%B5+%D1%81%D1%80%D0%B5%D0%B4%D1%81%D1%82%D0%B2%D0%B0%7C%D0%9F%D1%80%D0%B8%D0%BC%D0%B5%D1%80+%D0%90%D0%B4%D0%B0%D0%BC%D0%B0%D1%80%D0%B0&ppprop=wikibase_item&origin=*",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "step-58",
+      "type": "api-request",
+      "method": "GET",
+      "url": "https://ru.wikipedia.org/w/api.php?action=query&format=json&prop=pageprops&titles=%D0%9C%D0%BE%D0%BD%D1%80%D0%BE%2C+%D0%9C%D1%8D%D1%80%D0%B8%D0%BB%D0%B8%D0%BD%7C%D0%96%D0%B8%D0%BC%D0%BE%D0%BB%D0%BE%D1%81%D1%82%D1%8C%7C%D0%9E%D1%88%D0%B8%D0%B1%D0%BA%D0%B0+404%7C%D0%93%D0%B8%D0%BF%D0%BE%D1%84%D0%B8%D0%B7+%D1%87%D0%B5%D0%BB%D0%BE%D0%B2%D0%B5%D0%BA%D0%B0%7C%D0%9C%D0%BE%D0%B6%D0%B6%D0%B5%D0%B2%D0%B5%D0%BB%D1%8C%D0%BD%D0%B8%D0%BA+%D0%BE%D0%B1%D1%8B%D0%BA%D0%BD%D0%BE%D0%B2%D0%B5%D0%BD%D0%BD%D1%8B%D0%B9&ppprop=wikibase_item&origin=*"
+    },
+    {
+      "id": "step-59",
+      "type": "api-response",
+      "method": "GET",
+      "url": "https://www.wikidata.org/w/api.php?action=wbsearchentities&format=json&language=ru&origin=*&type=property&limit=5&search=%D1%81%D0%B8%D0%BD%D0%BE%D0%BD%D0%B8%D0%BC%D1%8B+%D0%B8%D0%BB%D0%B8+%D0%BF%D1%80%D0%B8%D0%BC%D0%B5%D1%80%D1%8B",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "step-60",
+      "type": "api-response",
+      "method": "GET",
+      "url": "https://ru.wikipedia.org/w/api.php?action=query&format=json&list=search&srsearch=%D0%BF%D1%80%D0%B8%D0%BC%D0%B5%D1%80%D1%8B+%D1%81%D0%BE%D0%B3%D0%BB%D0%B0%D1%81%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D1%8F&srlimit=5&origin=*",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "step-61",
+      "type": "api-request",
+      "method": "GET",
+      "url": "https://ru.wikipedia.org/w/api.php?action=query&format=json&prop=pageprops&titles=%D0%9F%D1%80%D0%B8%D0%BD%D1%86%D0%B8%D0%BF+%D1%87%D0%B5%D1%82%D1%8B%D1%80%D1%91%D1%85+%D0%B3%D0%BB%D0%B0%D0%B7%7C%D0%93%D1%80%D0%B0%D0%BC%D0%BC%D0%B0%D1%82%D0%B8%D1%87%D0%B5%D1%81%D0%BA%D0%BE%D0%B5+%D1%87%D0%B8%D1%81%D0%BB%D0%BE%7C%D0%93%D1%80%D0%B0%D0%BC%D0%BC%D0%B0%D1%82%D0%B8%D0%BA%D0%B0+%D0%B0%D0%BD%D0%B3%D0%BB%D0%B8%D0%B9%D1%81%D0%BA%D0%BE%D0%B3%D0%BE+%D1%8F%D0%B7%D1%8B%D0%BA%D0%B0%7C%D0%A1%D0%BE%D0%B3%D0%BB%D0%B0%D1%81%D0%BE%D0%B2%D0%B0%D0%BD%D0%BD%D0%BE%D1%81%D1%82%D1%8C+%D0%B2+%D0%BA%D0%BE%D0%BD%D0%B5%D1%87%D0%BD%D0%BE%D0%BC+%D1%81%D1%87%D1%91%D1%82%D0%B5%7C%D0%A1%D0%BE%D0%B3%D0%BB%D0%B0%D1%81%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5+%28%D0%B3%D1%80%D0%B0%D0%BC%D0%BC%D0%B0%D1%82%D0%B8%D0%BA%D0%B0%29&ppprop=wikibase_item&origin=*"
+    },
+    {
+      "id": "step-62",
+      "type": "api-response",
+      "method": "GET",
+      "url": "https://ru.wikipedia.org/w/api.php?action=query&format=json&prop=pageprops&titles=%D0%9C%D0%BE%D0%B4%D0%B5%D0%BB%D1%8C+%D1%81%D0%BE%D0%B3%D0%BB%D0%B0%D1%81%D0%BE%D0%B2%D0%B0%D0%BD%D0%BD%D0%BE%D1%81%D1%82%D0%B8%7C%D0%A1%D0%BE%D0%B3%D0%BB%D0%B0%D1%81%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5+%28%D0%B3%D1%80%D0%B0%D0%BC%D0%BC%D0%B0%D1%82%D0%B8%D0%BA%D0%B0%29%7C%D0%A1%D0%BE%D0%B3%D0%BB%D0%B0%D1%81%D0%BE%D0%B2%D0%B0%D0%BD%D0%BD%D0%BE%D1%81%D1%82%D1%8C+%D0%B4%D0%B0%D0%BD%D0%BD%D1%8B%D1%85%7C%D0%A2%D0%B8%D0%BF%D0%BE%D0%B1%D0%B5%D0%B7%D0%BE%D0%BF%D0%B0%D1%81%D0%BD%D0%BE%D1%81%D1%82%D1%8C%7C%D0%9F%D0%BE%D1%81%D0%BB%D0%B5%D0%B4%D0%BE%D0%B2%D0%B0%D1%82%D0%B5%D0%BB%D1%8C%D0%BD%D0%B0%D1%8F+%D1%81%D0%BE%D0%B3%D0%BB%D0%B0%D1%81%D0%BE%D0%B2%D0%B0%D0%BD%D0%BD%D0%BE%D1%81%D1%82%D1%8C&ppprop=wikibase_item&origin=*",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "step-63",
+      "type": "api-response",
+      "method": "GET",
+      "url": "https://ru.wikipedia.org/w/api.php?action=query&format=json&prop=pageprops&titles=%D0%9C%D0%BE%D0%BD%D1%80%D0%BE%2C+%D0%9C%D1%8D%D1%80%D0%B8%D0%BB%D0%B8%D0%BD%7C%D0%96%D0%B8%D0%BC%D0%BE%D0%BB%D0%BE%D1%81%D1%82%D1%8C%7C%D0%9E%D1%88%D0%B8%D0%B1%D0%BA%D0%B0+404%7C%D0%93%D0%B8%D0%BF%D0%BE%D1%84%D0%B8%D0%B7+%D1%87%D0%B5%D0%BB%D0%BE%D0%B2%D0%B5%D0%BA%D0%B0%7C%D0%9C%D0%BE%D0%B6%D0%B6%D0%B5%D0%B2%D0%B5%D0%BB%D1%8C%D0%BD%D0%B8%D0%BA+%D0%BE%D0%B1%D1%8B%D0%BA%D0%BD%D0%BE%D0%B2%D0%B5%D0%BD%D0%BD%D1%8B%D0%B9&ppprop=wikibase_item&origin=*",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "step-64",
+      "type": "api-response",
+      "method": "GET",
+      "url": "https://ru.wikipedia.org/w/api.php?action=query&format=json&list=search&srsearch=%D1%81%D0%B8%D0%BD%D0%BE%D0%BD%D0%B8%D0%BC%D1%8B+%D0%B8%D0%BB%D0%B8+%D0%BF%D1%80%D0%B8%D0%BC%D0%B5%D1%80%D1%8B&srlimit=5&origin=*",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "step-65",
+      "type": "api-request",
+      "method": "GET",
+      "url": "https://ru.wikipedia.org/w/api.php?action=query&format=json&prop=pageprops&titles=%D0%A1%D0%B8%D0%BD%D0%BE%D0%BD%D0%B8%D0%BC%D1%8B%7C%D0%A1%D0%B8%D0%BD%D0%BE%D0%BD%D0%B8%D0%BC+%28%D1%82%D0%B0%D0%BA%D1%81%D0%BE%D0%BD%D0%BE%D0%BC%D0%B8%D1%8F%29%7C%D0%A0%D0%B0%D0%B7%D0%B2%D0%B8%D0%BB%D0%BA%D0%B0%7C%D0%A5%D0%BB%D0%B5%D0%B2%7C%D0%9F%D1%80%D0%BE%D0%B1%D0%BB%D0%B5%D0%BC%D0%B0+%C2%AB%D1%8F%D0%B7%D1%8B%D0%BA+%D0%B8%D0%BB%D0%B8+%D0%B4%D0%B8%D0%B0%D0%BB%D0%B5%D0%BA%D1%82%C2%BB&ppprop=wikibase_item&origin=*"
+    },
+    {
+      "id": "step-66",
+      "type": "api-response",
+      "method": "GET",
+      "url": "https://ru.wikipedia.org/w/api.php?action=query&format=json&prop=pageprops&titles=%D0%9F%D1%80%D0%B8%D0%BD%D1%86%D0%B8%D0%BF+%D1%87%D0%B5%D1%82%D1%8B%D1%80%D1%91%D1%85+%D0%B3%D0%BB%D0%B0%D0%B7%7C%D0%93%D1%80%D0%B0%D0%BC%D0%BC%D0%B0%D1%82%D0%B8%D1%87%D0%B5%D1%81%D0%BA%D0%BE%D0%B5+%D1%87%D0%B8%D1%81%D0%BB%D0%BE%7C%D0%93%D1%80%D0%B0%D0%BC%D0%BC%D0%B0%D1%82%D0%B8%D0%BA%D0%B0+%D0%B0%D0%BD%D0%B3%D0%BB%D0%B8%D0%B9%D1%81%D0%BA%D0%BE%D0%B3%D0%BE+%D1%8F%D0%B7%D1%8B%D0%BA%D0%B0%7C%D0%A1%D0%BE%D0%B3%D0%BB%D0%B0%D1%81%D0%BE%D0%B2%D0%B0%D0%BD%D0%BD%D0%BE%D1%81%D1%82%D1%8C+%D0%B2+%D0%BA%D0%BE%D0%BD%D0%B5%D1%87%D0%BD%D0%BE%D0%BC+%D1%81%D1%87%D1%91%D1%82%D0%B5%7C%D0%A1%D0%BE%D0%B3%D0%BB%D0%B0%D1%81%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5+%28%D0%B3%D1%80%D0%B0%D0%BC%D0%BC%D0%B0%D1%82%D0%B8%D0%BA%D0%B0%29&ppprop=wikibase_item&origin=*",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "step-67",
+      "type": "api-response",
+      "method": "GET",
+      "url": "https://ru.wikipedia.org/w/api.php?action=query&format=json&prop=pageprops&titles=%D0%A1%D0%B8%D0%BD%D0%BE%D0%BD%D0%B8%D0%BC%D1%8B%7C%D0%A1%D0%B8%D0%BD%D0%BE%D0%BD%D0%B8%D0%BC+%28%D1%82%D0%B0%D0%BA%D1%81%D0%BE%D0%BD%D0%BE%D0%BC%D0%B8%D1%8F%29%7C%D0%A0%D0%B0%D0%B7%D0%B2%D0%B8%D0%BB%D0%BA%D0%B0%7C%D0%A5%D0%BB%D0%B5%D0%B2%7C%D0%9F%D1%80%D0%BE%D0%B1%D0%BB%D0%B5%D0%BC%D0%B0+%C2%AB%D1%8F%D0%B7%D1%8B%D0%BA+%D0%B8%D0%BB%D0%B8+%D0%B4%D0%B8%D0%B0%D0%BB%D0%B5%D0%BA%D1%82%C2%BB&ppprop=wikibase_item&origin=*",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "step-68",
+      "type": "api-request",
+      "method": "GET",
+      "url": "https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&ids=Q42106&languages=ru&origin=*&props=labels%7Caliases%7Cdescriptions%7Cclaims%7Csitelinks&sitefilter=enwiki"
+    },
+    {
+      "id": "step-69",
+      "type": "api-request",
+      "method": "GET",
+      "url": "https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&ids=Q1040689&languages=ru&origin=*&props=labels%7Caliases%7Cdescriptions%7Cclaims%7Csitelinks&sitefilter=enwiki"
+    },
+    {
+      "id": "step-70",
+      "type": "api-request",
+      "method": "GET",
+      "url": "https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&ids=Q61672685&languages=ru&origin=*&props=labels%7Caliases%7Cdescriptions%7Cclaims%7Csitelinks&sitefilter=enwiki"
+    },
+    {
+      "id": "step-71",
+      "type": "api-response",
+      "method": "GET",
+      "url": "https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&ids=Q1040689&languages=ru&origin=*&props=labels%7Caliases%7Cdescriptions%7Cclaims%7Csitelinks&sitefilter=enwiki",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "step-72",
+      "type": "api-response",
+      "method": "GET",
+      "url": "https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&ids=Q61672685&languages=ru&origin=*&props=labels%7Caliases%7Cdescriptions%7Cclaims%7Csitelinks&sitefilter=enwiki",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "step-73",
+      "type": "api-response",
+      "method": "GET",
+      "url": "https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&ids=Q42106&languages=ru&origin=*&props=labels%7Caliases%7Cdescriptions%7Cclaims%7Csitelinks&sitefilter=enwiki",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "step-74",
+      "type": "api-request",
+      "method": "GET",
+      "url": "https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&ids=Q8171&languages=ru&origin=*&props=labels%7Cclaims"
+    },
+    {
+      "id": "step-75",
+      "type": "api-response",
+      "method": "GET",
+      "url": "https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&ids=Q8171&languages=ru&origin=*&props=labels%7Cclaims",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "step-76",
+      "type": "api-request",
+      "method": "GET",
+      "url": "https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&ids=Q315&languages=ru&origin=*&props=labels%7Cclaims"
+    },
+    {
+      "id": "step-77",
+      "type": "api-response",
+      "method": "GET",
+      "url": "https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&ids=Q315&languages=ru&origin=*&props=labels%7Cclaims",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "step-78",
+      "type": "api-request",
+      "method": "GET",
+      "url": "https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&ids=Q10753560&languages=ru&origin=*&props=labels%7Cclaims"
+    },
+    {
+      "id": "step-79",
+      "type": "api-response",
+      "method": "GET",
+      "url": "https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&ids=Q10753560&languages=ru&origin=*&props=labels%7Cclaims",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "step-80",
+      "type": "api-request",
+      "method": "GET",
+      "url": "https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&ids=Q11424&languages=ru&origin=*&props=labels%7Cclaims"
+    },
+    {
+      "id": "step-81",
+      "type": "api-response",
+      "method": "GET",
+      "url": "https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&ids=Q11424&languages=ru&origin=*&props=labels%7Cclaims",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "step-82",
+      "type": "api-request",
+      "method": "GET",
+      "url": "https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&ids=Q130232&languages=ru&origin=*&props=labels%7Cclaims"
+    },
+    {
+      "id": "step-83",
+      "type": "api-response",
+      "method": "GET",
+      "url": "https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&ids=Q130232&languages=ru&origin=*&props=labels%7Cclaims",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "id": "step-84",
+      "type": "formalization",
+      "phraseCount": 5,
+      "markdown": "Найти [синонимы](https://en.wikipedia.org/wiki/Synonym \"Q42106\") [или](https://en.wiktionary.org/wiki/%D0%B8%D0%BB%D0%B8 \"wikt:ru:или#Conjunction:0\") [примеры](https://en.wiktionary.org/wiki/%D0%BF%D1%80%D0%B8%D0%BC%D0%B5%D1%80%D1%8B \"wikt:ru:примеры#Noun:0\") [согласования](https://en.wiktionary.org/wiki/%D1%81%D0%BE%D0%B3%D0%BB%D0%B0%D1%81%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D1%8F \"wikt:ru:согласования#Noun:0\")",
+      "linksNotation": "(formalization: (Найти синонимы или примеры согласования))\n(phrase-1: source (Найти) start 0 end 0 unresolved)\n(phrase-2: source (синонимы) start 1 end 1 id Q42106 label (synonym) kind entity markdownUrl (https://en.wikipedia.org/wiki/Synonym))\n(phrase-3: source (или) start 2 end 2 id wikt:ru:или#Conjunction:0 label (или) kind entity markdownUrl (https://en.wiktionary.org/wiki/%D0%B8%D0%BB%D0%B8))\n(phrase-4: source (примеры) start 3 end 3 id wikt:ru:примеры#Noun:0 label (примеры) kind entity markdownUrl (https://en.wiktionary.org/wiki/%D0%BF%D1%80%D0%B8%D0%BC%D0%B5%D1%80%D1%8B))\n(phrase-5: source (согласования) start 4 end 4 id wikt:ru:согласования#Noun:0 label (согласования) kind entity markdownUrl (https://en.wiktionary.org/wiki/%D1%81%D0%BE%D0%B3%D0%BB%D0%B0%D1%81%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D1%8F))\n(context-1: Q10753560 weight 0.6666666666666666 probability 33.3)\n(context-2: Q11424 weight 0.3333333333333333 probability 16.7)\n(context-3: Q130232 weight 0.3333333333333333 probability 16.7)\n(context-4: Q315 weight 0.3333333333333333 probability 16.7)\n(context-5: Q8171 weight 0.3333333333333333 probability 16.7)"
+    },
+    {
+      "id": "step-85",
+      "type": "translation-phrase",
+      "phraseId": "phrase-1",
+      "sourceText": "Найти",
+      "entityId": null,
+      "status": "translated",
+      "targetText": "Find",
+      "strategy": "contextual-glossary"
+    },
+    {
+      "id": "step-86",
+      "type": "translation-phrase",
+      "phraseId": "phrase-2",
+      "sourceText": "синонимы",
+      "entityId": "Q42106",
+      "status": "translated",
+      "targetText": "synonyms",
+      "strategy": "contextual-glossary"
+    },
+    {
+      "id": "step-87",
+      "type": "translation-phrase",
+      "phraseId": "phrase-3",
+      "sourceText": "или",
+      "entityId": "wikt:ru:или#Conjunction:0",
+      "status": "translated",
+      "targetText": "or",
+      "strategy": "contextual-glossary"
+    },
+    {
+      "id": "step-88",
+      "type": "translation-phrase",
+      "phraseId": "phrase-4",
+      "sourceText": "примеры",
+      "entityId": "wikt:ru:примеры#Noun:0",
+      "status": "translated",
+      "targetText": "examples",
+      "strategy": "contextual-glossary"
+    },
+    {
+      "id": "step-89",
+      "type": "translation-phrase",
+      "phraseId": "phrase-5",
+      "sourceText": "согласования",
+      "entityId": "wikt:ru:согласования#Noun:0",
+      "status": "translated",
+      "targetText": "agreement",
+      "strategy": "contextual-glossary"
+    },
+    {
+      "id": "step-90",
+      "type": "transformation-rule",
+      "sentenceId": "sentence-1",
+      "rule": "russian-examples-genitive-to-english-of-phrase",
+      "sourceText": "Найти синонимы или примеры согласования",
+      "affectedVariables": []
+    },
+    {
+      "id": "step-91",
+      "type": "sentence",
+      "sentenceId": "sentence-1",
+      "sourceText": "Найти синонимы или примеры согласования",
+      "targetText": "Find synonyms or examples of agreement",
+      "transformations": [
+        "russian-examples-genitive-to-english-of-phrase"
+      ]
+    },
+    {
+      "id": "step-92",
+      "type": "text",
+      "sentenceCount": 1,
+      "text": "Find synonyms or examples of agreement"
+    }
+  ]
+}
