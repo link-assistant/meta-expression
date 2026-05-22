@@ -20,6 +20,8 @@ const wikipediaArticleBaseUrl = 'https://en.wikipedia.org/wiki/';
 const wordnetApiUrl = 'https://en.wiktionary.org/w/api.php';
 const wiktionaryDefinitionApiUrl =
   'https://en.wiktionary.org/api/rest_v1/page/definition/';
+const wiktionaryArticleBaseUrl = 'https://en.wiktionary.org/wiki/';
+const wiktionaryCompoundPageTitles = new Map([['is a', 'is-a']]);
 
 export const SOURCE_KIND = Object.freeze({
   WIKIPEDIA: 'wikipedia',
@@ -283,17 +285,34 @@ export function createWiktionarySource({
   };
 }
 
-function normalizeWiktionaryQuery(text) {
-  const trimmed = String(text).trim();
-  if (!trimmed || /\s/.test(trimmed)) {
+export function normalizeWiktionaryLookupText(text) {
+  const phrase = String(text).trim().replace(/\s+/g, ' ');
+  if (!phrase) {
     return null;
   }
-  return trimmed;
+  if (phrase.includes(' ')) {
+    const pageTitle = wiktionaryCompoundPageTitles.get(phrase.toLowerCase());
+    if (!pageTitle) {
+      return null;
+    }
+    return {
+      phrase,
+      pageTitle,
+    };
+  }
+  return {
+    phrase,
+    pageTitle: phrase,
+  };
 }
 
-async function fetchWiktionaryDefinitions(trimmed, ctx) {
+function normalizeWiktionaryQuery(text) {
+  return normalizeWiktionaryLookupText(text);
+}
+
+async function fetchWiktionaryDefinitions(query, ctx) {
   const url = new URL(
-    `${wiktionaryDefinitionApiUrl}${encodeURIComponent(trimmed)}`
+    `${wiktionaryDefinitionApiUrl}${encodeURIComponent(query.pageTitle)}`
   );
   try {
     return await ctx.fetchJson(url);
@@ -302,7 +321,7 @@ async function fetchWiktionaryDefinitions(trimmed, ctx) {
   }
 }
 
-function buildWiktionaryCandidates(entries, trimmed, language, maxDefinitions) {
+function buildWiktionaryCandidates(entries, query, language, maxDefinitions) {
   if (!Array.isArray(entries)) {
     return [];
   }
@@ -320,7 +339,7 @@ function buildWiktionaryCandidates(entries, trimmed, language, maxDefinitions) {
         makeWiktionaryCandidate(
           entry,
           definitionText,
-          trimmed,
+          query,
           language,
           candidates.length
         )
@@ -333,21 +352,21 @@ function buildWiktionaryCandidates(entries, trimmed, language, maxDefinitions) {
 function makeWiktionaryCandidate(
   entry,
   definitionText,
-  trimmed,
+  query,
   language,
   index
 ) {
   const partOfSpeech = entry.partOfSpeech ?? 'definition';
   return {
-    id: `wikt:${language}:${slugifyTitle(trimmed)}#${partOfSpeech}:${index}`,
-    label: trimmed,
+    id: `wikt:${language}:${slugifyTitle(query.pageTitle)}#${partOfSpeech}:${index}`,
+    label: query.phrase,
     description: definitionText,
     kind: 'entity',
     source: SOURCE_KIND.WIKTIONARY,
-    sourceUrl: `https://${language}.wiktionary.org/wiki/${encodeURIComponent(
-      trimmed
+    sourceUrl: `${wiktionaryArticleBaseUrl}${encodeURIComponent(
+      query.pageTitle
     )}`,
-    matchText: trimmed,
+    matchText: query.phrase,
     matchType: 'definition',
     partOfSpeech: entry.partOfSpeech ?? null,
     definition: definitionText,

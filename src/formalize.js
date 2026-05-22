@@ -23,6 +23,7 @@ import {
   createSourceRegistry,
   createDefaultSourceTiers,
   SOURCE_KIND,
+  normalizeWiktionaryLookupText,
 } from './formalize-sources.js';
 import { aggregateBigContexts } from './formalize-contexts.js';
 import {
@@ -317,11 +318,10 @@ export function tokenize(text) {
 }
 
 /**
- * Build all n-grams up to `maxSize` tokens. Multi-token stop-only
- * n-grams are skipped (they're useless on their own), but single-token
- * stop words are kept and tagged with `stopOnly: true` so the issue
- * #21 Wiktionary fallback can resolve a definition for `the`, `of`,
- * etc. Non-stop-word n-grams remain unchanged.
+ * Build all n-grams up to `maxSize` tokens. Generic multi-token stop-only
+ * n-grams are skipped, but single-token stop words and exact Wiktionary
+ * grammar compounds are kept with `stopOnly: true` so lexical definitions
+ * remain linkable without flooding every source tier with glue words.
  *
  * @param {string[]} tokens
  * @param {number} [maxSize]
@@ -334,7 +334,11 @@ export function generateNgrams(tokens, maxSize = defaultMaxNgramSize) {
     for (let start = 0; start + size <= tokens.length; start += 1) {
       const slice = tokens.slice(start, start + size);
       const stopOnly = isStopOnly(slice);
-      if (stopOnly && size > 1) {
+      if (
+        stopOnly &&
+        size > 1 &&
+        !normalizeWiktionaryLookupText(slice.join(' '))
+      ) {
         continue;
       }
       ngrams.push({
@@ -484,9 +488,9 @@ async function searchNgramCandidates(ngram, config) {
   }
   const sourceCtx = buildSourceContext(config);
   const propertyBias = isPropertyIndicator(ngram.text);
-  // Stop-only single-token n-grams go ONLY to Wiktionary so we never
-  // burn Wikipedia/Wikidata calls on `the`, `and`, etc. but still
-  // have a definition to attach for tooltips.
+  // Stop-only n-grams go ONLY to Wiktionary so we never burn
+  // Wikipedia/Wikidata calls on `the`, `and`, etc. but still have a
+  // definition to attach for tooltips when a supported lexical entry exists.
   const eligibleSources = ngram.stopOnly
     ? config.sources.all.filter(
         (source) => source.name === SOURCE_KIND.WIKTIONARY
@@ -529,6 +533,9 @@ function isPropertyIndicator(text) {
 function shouldSearchNgram(ngram) {
   if (ngram.size <= 1) {
     return true;
+  }
+  if (ngram.stopOnly) {
+    return normalizeWiktionaryLookupText(ngram.text) !== null;
   }
   const lowered = String(ngram.text).toLowerCase();
   if (propertyIndicators.has(lowered)) {

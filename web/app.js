@@ -711,7 +711,7 @@ function setupFormalizeDisplayMode() {
 setupLocale();
 setupTheme();
 setupFormalizeDisplayMode();
-setupTranslatePage({ cache: wikimediaCache });
+const translatePage = setupTranslatePage({ cache: wikimediaCache });
 const checkPage = setupCheckPage({
   cache: wikimediaCache,
   userBeliefs,
@@ -798,6 +798,7 @@ setupPageIssueReporting({
   getFormalizeSourcesSpec: collectFormalizeSourcesSpec,
   getFormalizeLinkTargetMode: selectedLinkTargetMode,
   getInterpretationDisplayMode: () => interpretationDisplayMode,
+  getTranslateResult: translatePage.getResult,
   getCheckResult: checkPage.getResult,
   getUniquenessResult: uniquenessPage.getResult,
 });

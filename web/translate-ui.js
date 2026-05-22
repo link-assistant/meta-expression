@@ -21,13 +21,13 @@ export function setupTranslatePage({
   const linoPre = document.querySelector('#translate-lino');
   const cstPre = document.querySelector('#translate-cst');
   const stepsList = document.querySelector('#translate-steps');
+  let currentResult = null;
 
   if (!input || !run || !output || !status) {
-    return;
+    return { getResult: () => currentResult };
   }
 
   let requestId = 0;
-  let currentResult = null;
 
   run.addEventListener('click', () => {
     runTranslate();
@@ -94,8 +94,8 @@ export function setupTranslatePage({
       );
     }
     renderLinkedHtml(output, result.html || escapeHtml(result.plainText));
-    renderQuestions(result.questions);
-    renderSteps(result.steps);
+    renderQuestionList(questions, result.questions);
+    renderStepList(stepsList, result.steps);
     if (markdownPre) {
       markdownPre.textContent = result.markdown;
     }
@@ -123,43 +123,46 @@ export function setupTranslatePage({
     } (${translated}/${total} linked phrases${ruleText}${unresolvedText}).`;
   }
 
-  function renderQuestions(list) {
-    if (!questions) {
-      return;
-    }
-    questions.replaceChildren();
-    if (!list.length) {
-      const empty = document.createElement('li');
-      empty.className = 'section-empty';
-      empty.textContent = 'No unresolved variables.';
-      questions.append(empty);
-      return;
-    }
-    for (const question of list) {
-      const item = document.createElement('li');
-      item.textContent = question;
-      questions.append(item);
-    }
-  }
+  return { getResult: () => currentResult };
+}
 
-  function renderSteps(list) {
-    if (!stepsList) {
-      return;
-    }
-    stepsList.replaceChildren();
-    if (!list.length) {
-      const empty = document.createElement('li');
-      empty.className = 'section-empty';
-      empty.textContent = 'No recorded steps.';
-      stepsList.append(empty);
-      return;
-    }
-    for (const step of list) {
-      const item = document.createElement('li');
-      item.textContent = formatStep(step);
-      stepsList.append(item);
-    }
+function renderQuestionList(container, list) {
+  if (!container) {
+    return;
   }
+  container.replaceChildren();
+  if (!list.length) {
+    appendEmptyListItem(container, 'No unresolved variables.');
+    return;
+  }
+  for (const question of list) {
+    const item = document.createElement('li');
+    item.textContent = question;
+    container.append(item);
+  }
+}
+
+function renderStepList(container, list) {
+  if (!container) {
+    return;
+  }
+  container.replaceChildren();
+  if (!list.length) {
+    appendEmptyListItem(container, 'No recorded steps.');
+    return;
+  }
+  for (const step of list) {
+    const item = document.createElement('li');
+    item.textContent = formatStep(step);
+    container.append(item);
+  }
+}
+
+function appendEmptyListItem(container, text) {
+  const empty = document.createElement('li');
+  empty.className = 'section-empty';
+  empty.textContent = text;
+  container.append(empty);
 }
 
 function renderLinkedHtml(container, html) {
