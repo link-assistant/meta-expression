@@ -1,0 +1,42 @@
+TAP version 13
+# Subtest: issue 39 - technical sentence translation
+    # Subtest: uses contextual glossary and Russian grammar rules for the reported text
+    ok 1 - uses contextual glossary and Russian grammar rules for the reported text
+      ---
+      duration_ms: 23.043057
+      ...
+    # Subtest: does not let formalized phrases cross sentence boundaries
+    ok 2 - does not let formalized phrases cross sentence boundaries
+      ---
+      duration_ms: 12.012367
+      ...
+    # Subtest: keeps a strict semantic-label strategy for traceable fallback behavior
+    ok 3 - keeps a strict semantic-label strategy for traceable fallback behavior
+      ---
+      duration_ms: 5.091733
+      ...
+    # Subtest: returns structured answer options for unresolved translation questions
+    ok 4 - returns structured answer options for unresolved translation questions
+      ---
+      duration_ms: 0.638744
+      ...
+    # Subtest: exposes translation strategies and prepared Translate examples in the web app
+    ok 5 - exposes translation strategies and prepared Translate examples in the web app
+      ---
+      duration_ms: 12.057565
+      ...
+    1..5
+ok 1 - issue 39 - technical sentence translation
+  ---
+  duration_ms: 54.571149
+  type: 'suite'
+  ...
+1..1
+# tests 5
+# suites 1
+# pass 5
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 134.788867

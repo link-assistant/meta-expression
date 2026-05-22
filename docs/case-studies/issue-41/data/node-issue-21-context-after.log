@@ -1,0 +1,117 @@
+TAP version 13
+# Subtest: issue 21 — verb-form disambiguation
+    # Subtest: routes "formalize" through the "to formalize" alias to Q115492965
+    ok 1 - routes "formalize" through the "to formalize" alias to Q115492965
+      ---
+      duration_ms: 7.700983
+      ...
+    # Subtest: does not expand multi-token phrases or non-verb-like tokens
+    ok 2 - does not expand multi-token phrases or non-verb-like tokens
+      ---
+      duration_ms: 1.071672
+      ...
+    1..2
+ok 1 - issue 21 — verb-form disambiguation
+  ---
+  duration_ms: 9.765478
+  type: 'suite'
+  ...
+# Subtest: issue 21 — multi-candidate context aggregation
+    # Subtest: lets weaker candidates contribute weighted votes to the shared context
+    ok 1 - lets weaker candidates contribute weighted votes to the shared context
+      ---
+      duration_ms: 6.34769
+      ...
+    # Subtest: records sourceCandidates with the per-candidate weight
+    ok 2 - records sourceCandidates with the per-candidate weight
+      ---
+      duration_ms: 0.425826
+      ...
+    1..2
+ok 2 - issue 21 — multi-candidate context aggregation
+  ---
+  duration_ms: 6.981837
+  type: 'suite'
+  ...
+# Subtest: issue 21 — disambiguation tier registry
+    # Subtest: exposes the three default tiers in priority order
+    ok 1 - exposes the three default tiers in priority order
+      ---
+      duration_ms: 0.179659
+      ...
+    # Subtest: keeps single-token stop words in the n-gram list with stopOnly=true
+    ok 2 - keeps single-token stop words in the n-gram list with stopOnly=true
+      ---
+      duration_ms: 0.1873
+      ...
+    1..2
+ok 3 - issue 21 — disambiguation tier registry
+  ---
+  duration_ms: 0.545345
+  type: 'suite'
+  ...
+# Subtest: issue 21 — Wikipedia tier
+    # Subtest: Wikipedia source backfills wikibase_item Q-ids onto its candidates
+    ok 1 - Wikipedia source backfills wikibase_item Q-ids onto its candidates
+      ---
+      duration_ms: 0.731623
+      ...
+    # Subtest: falls back to a wp:<slug> id when Wikipedia returns no wikibase_item
+    ok 2 - falls back to a wp:<slug> id when Wikipedia returns no wikibase_item
+      ---
+      duration_ms: 0.501479
+      ...
+    1..2
+ok 4 - issue 21 — Wikipedia tier
+  ---
+  duration_ms: 1.421105
+  type: 'suite'
+  ...
+# Subtest: issue 21 — Wiktionary tier
+    # Subtest: Wiktionary source returns one candidate per definition for single tokens
+    ok 1 - Wiktionary source returns one candidate per definition for single tokens
+      ---
+      duration_ms: 0.433498
+      ...
+    # Subtest: skips Wiktionary lookups for multi-token phrases
+    ok 2 - skips Wiktionary lookups for multi-token phrases
+      ---
+      duration_ms: 0.248381
+      ...
+    1..2
+ok 5 - issue 21 — Wiktionary tier
+  ---
+  duration_ms: 0.820347
+  type: 'suite'
+  ...
+# Subtest: issue 21 — pipeline integration of new tiers
+    # Subtest: routes stop words ONLY to the Wiktionary tier in the full pipeline
+    ok 1 - routes stop words ONLY to the Wiktionary tier in the full pipeline
+      ---
+      duration_ms: 0.812796
+      ...
+    # Subtest: Wikipedia-confirmed Wikidata Q-id outranks a bare Wikidata-only hit
+    ok 2 - Wikipedia-confirmed Wikidata Q-id outranks a bare Wikidata-only hit
+      ---
+      duration_ms: 1.68597
+      ...
+    # Subtest: still allows callers to disable the new tiers by passing explicit sources
+    ok 3 - still allows callers to disable the new tiers by passing explicit sources
+      ---
+      duration_ms: 0.697843
+      ...
+    1..3
+ok 6 - issue 21 — pipeline integration of new tiers
+  ---
+  duration_ms: 3.457248
+  type: 'suite'
+  ...
+1..6
+# tests 13
+# suites 6
+# pass 13
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 124.708779

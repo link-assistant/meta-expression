@@ -1,5 +1,71 @@
 export const translateSamples = [
   {
+    label: 'Issue 41 — Russian phrase',
+    sourceLanguage: 'ru',
+    targetLanguage: 'en',
+    text: 'Найти синонимы или примеры согласования',
+  },
+  {
+    label: 'Russian — find synonyms',
+    sourceLanguage: 'ru',
+    targetLanguage: 'en',
+    text: 'Найти синонимы',
+  },
+  {
+    label: 'Russian — find translation examples',
+    sourceLanguage: 'ru',
+    targetLanguage: 'en',
+    text: 'Найти примеры перевода',
+  },
+  {
+    label: 'Russian — translate text',
+    sourceLanguage: 'ru',
+    targetLanguage: 'en',
+    text: 'Перевести текст',
+  },
+  {
+    label: 'Russian — formalize text',
+    sourceLanguage: 'ru',
+    targetLanguage: 'en',
+    text: 'Формализовать текст',
+  },
+  {
+    label: 'Russian — check statement',
+    sourceLanguage: 'ru',
+    targetLanguage: 'en',
+    text: 'Проверить утверждение',
+  },
+  {
+    label: 'Russian — compare values',
+    sourceLanguage: 'ru',
+    targetLanguage: 'en',
+    text: 'Сравнить значения',
+  },
+  {
+    label: 'Russian — show questions',
+    sourceLanguage: 'ru',
+    targetLanguage: 'en',
+    text: 'Показать вопросы',
+  },
+  {
+    label: 'Russian — open page',
+    sourceLanguage: 'ru',
+    targetLanguage: 'en',
+    text: 'Открыть страницу',
+  },
+  {
+    label: 'Russian — save result',
+    sourceLanguage: 'ru',
+    targetLanguage: 'en',
+    text: 'Сохранить результат',
+  },
+  {
+    label: 'English — add examples',
+    sourceLanguage: 'en',
+    targetLanguage: 'ru',
+    text: 'Add examples',
+  },
+  {
     label: 'Issue 39 — technical workflow',
     sourceLanguage: 'en',
     targetLanguage: 'ru',

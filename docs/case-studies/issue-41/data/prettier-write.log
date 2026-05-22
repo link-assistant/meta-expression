@@ -1,0 +1,10 @@
+src/formalize.js 207ms (unchanged)
+src/translate.js 82ms (unchanged)
+src/translation-strategies.js 9ms (unchanged)
+web/translate-samples.js 2ms (unchanged)
+tests/issue-41.test.js 11ms
+docs/case-studies/issue-41/README.md 33ms (unchanged)
+docs/case-studies/issue-41/REQUIREMENTS.md 11ms
+docs/case-studies/issue-41/SOLUTION-PLAN.md 12ms (unchanged)
+docs/case-studies/issue-41/ONLINE-RESEARCH.md 6ms (unchanged)
+.changeset/issue-41-russian-translate.md 7ms (unchanged)

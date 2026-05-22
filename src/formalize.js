@@ -55,6 +55,8 @@ const stopWords = new Set([
   'with', 'by', 'from', 'as', 'into', 'onto', 'than', 'that', 'this', 'then',
   'these', 'those', 'it', 'its', 'each', 'through', 'am', 'is', 'are', 'was',
   'were', 'be', 'being', 'been', 'so',
+  'и', 'или', 'а', 'но', 'в', 'во', 'на', 'с', 'со', 'к', 'ко', 'от', 'по',
+  'для', 'из', 'за', 'что', 'это',
 ]); // prettier-ignore
 
 // English verbs / relation phrases that bias an n-gram toward properties.
@@ -589,17 +591,48 @@ function shouldSearchNgram(ngram) {
 }
 
 function candidateMatchesNgramShape(ngram, candidate) {
-  if (ngram.size <= 1 || candidate?.kind === 'property') {
-    return true;
-  }
-  if (!ngram.tokens.some((token) => isEnglishGrammarGlue(token))) {
+  if (candidate?.kind === 'property') {
     return true;
   }
   const phrase = normalizeLabel(ngram.text);
-  return (
-    normalizeLabel(candidate.label) === phrase ||
-    normalizeLabel(candidate.matchText) === phrase
+  if (candidateHasDirectPhraseEvidence(phrase, candidate)) {
+    return true;
+  }
+  if (ngram.size <= 1) {
+    return isLatinText(ngram.text);
+  }
+  if (!ngram.tokens.some((token) => isEnglishGrammarGlue(token))) {
+    return candidateHasPrefixPhraseEvidence(phrase, candidate);
+  }
+  return false;
+}
+
+function candidateHasDirectPhraseEvidence(phrase, candidate) {
+  return candidateEvidenceTexts(candidate).some(
+    (text) => normalizeLabel(text) === phrase
   );
+}
+
+function candidateHasPrefixPhraseEvidence(phrase, candidate) {
+  if (!phrase) {
+    return false;
+  }
+  return candidateEvidenceTexts(candidate).some((text) => {
+    const normalized = normalizeLabel(text);
+    return normalized === phrase || normalized.startsWith(`${phrase} `);
+  });
+}
+
+function candidateEvidenceTexts(candidate) {
+  return [
+    candidate?.label,
+    candidate?.matchText,
+    ...(Array.isArray(candidate?.aliases) ? candidate.aliases : []),
+  ].filter(Boolean);
+}
+
+function isLatinText(text) {
+  return /^[\p{Script=Latin}\p{Number}\s'’._-]+$/u.test(String(text ?? ''));
 }
 
 function isEnglishGrammarGlue(value) {

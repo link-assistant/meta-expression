@@ -27,8 +27,19 @@ const strategyDefinitions = Object.freeze([
 ]);
 
 const enRuGlossary = Object.freeze({
+  add: 'добавьте',
+  check: 'проверьте',
+  compare: 'сравните',
+  example: 'пример',
+  examples: 'примеры',
   formalize: 'формализуйте',
+  open: 'откройте',
+  page: 'страницу',
+  result: 'результат',
+  save: 'сохраните',
+  show: 'покажите',
   source: 'исходный',
+  statement: 'утверждение',
   text: 'текст',
   with: 'с',
   wikidata: 'Викиданные',
@@ -47,10 +58,46 @@ const enRuGlossary = Object.freeze({
   remain: 'остаются',
   variables: 'переменными',
   questions: 'вопросами',
+  value: 'значение',
+  values: 'значения',
+});
+
+const ruEnGlossary = Object.freeze({
+  добавить: 'add',
+  найти: 'find',
+  синоним: 'synonym',
+  синонимы: 'synonyms',
+  или: 'or',
+  пример: 'example',
+  примеры: 'examples',
+  согласование: 'agreement',
+  согласования: 'agreement',
+  перевод: 'translation',
+  перевода: 'translation',
+  перевести: 'translate',
+  формализовать: 'formalize',
+  текст: 'text',
+  проверить: 'check',
+  утверждение: 'statement',
+  сравнить: 'compare',
+  значение: 'value',
+  значения: 'values',
+  показать: 'show',
+  вопрос: 'question',
+  вопросы: 'questions',
+  открыть: 'open',
+  страница: 'page',
+  страницу: 'page',
+  сохранить: 'save',
+  результат: 'result',
+  'найти синонимы или': 'find synonyms or',
+  'примеры согласования': 'examples of agreement',
+  'примеры перевода': 'examples of translation',
 });
 
 const glossaries = Object.freeze({
   'en:ru': enRuGlossary,
+  'ru:en': ruEnGlossary,
 });
 
 export function listTranslationStrategies() {
@@ -70,6 +117,18 @@ export function translationStrategyUsesGlossary(strategy) {
 }
 
 export function lookupGlossaryTranslation(sourceText, config) {
+  return lookupGlossaryTranslationWithMode(sourceText, config, {
+    exactOnly: false,
+  });
+}
+
+export function lookupExactGlossaryTranslation(sourceText, config) {
+  return lookupGlossaryTranslationWithMode(sourceText, config, {
+    exactOnly: true,
+  });
+}
+
+function lookupGlossaryTranslationWithMode(sourceText, config, options) {
   if (!translationStrategyUsesGlossary(config.translationStrategy)) {
     return null;
   }
@@ -84,6 +143,9 @@ export function lookupGlossaryTranslation(sourceText, config) {
       text: applySourceCasing(sourceText, translation, config.targetLanguage),
       strategy: config.translationStrategy,
     };
+  }
+  if (options.exactOnly) {
+    return null;
   }
   const words = normalizeGlossaryKey(sourceText).split(' ').filter(Boolean);
   const wordTranslations = words.map((word) => glossary[word]);

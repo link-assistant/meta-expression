@@ -102,6 +102,12 @@ pub fn translate_known_semantic_sentence(
     let target_language = normalize_language_key(target_language);
     let sentence_key = normalize_sentence_key(input);
 
+    if let Some(translation) =
+        translate_glossary_semantic_sentence(input, &source_language, &target_language)
+    {
+        return Some(translation);
+    }
+
     match (
         source_language.as_str(),
         target_language.as_str(),
@@ -111,6 +117,85 @@ pub fn translate_known_semantic_sentence(
         ("ru", "en", "гавайи это штат") => Some(issue35_russian_to_english(input)),
         _ => None,
     }
+}
+
+pub fn translate_glossary_semantic_sentence(
+    input: &str,
+    source_language: &str,
+    target_language: &str,
+) -> Option<SemanticTranslation> {
+    let source_language = normalize_language_key(source_language);
+    let target_language = normalize_language_key(target_language);
+    let source_text = input.trim();
+    let tokens = tokenize_translation_words(source_text);
+    if tokens.is_empty() {
+        return None;
+    }
+
+    let mut target_tokens = Vec::new();
+    for (index, token) in tokens.iter().enumerate() {
+        let translated =
+            lookup_lexical_translation(&source_language, &target_language, &token.normalized)?;
+        target_tokens.push(TargetToken {
+            text: translated.to_string(),
+            source_index: Some(index),
+        });
+    }
+
+    let mut transformation_steps = Vec::new();
+    if source_language == "ru" && target_language == "en" {
+        if insert_russian_examples_of(&tokens, &mut target_tokens) {
+            transformation_steps.push("russian-examples-genitive-to-english-of-phrase".to_string());
+        }
+    }
+
+    if starts_with_uppercase(source_text) {
+        if let Some(first) = target_tokens.first_mut() {
+            first.text = uppercase_first(&first.text);
+        }
+    }
+
+    let target_text = append_terminal_punctuation(
+        &target_tokens
+            .iter()
+            .map(|token| token.text.as_str())
+            .collect::<Vec<_>>()
+            .join(" "),
+        source_text,
+    );
+    let source_phrases = tokens
+        .iter()
+        .map(|token| SemanticPhrase {
+            text: token.text.clone(),
+            meaning_id: lexical_meaning_id(&source_language, &token.normalized),
+            start: token.start,
+            end: token.end,
+        })
+        .collect::<Vec<_>>();
+    let target_phrases = target_tokens
+        .iter()
+        .filter_map(|target| {
+            target.source_index.map(|source_index| {
+                let source = &tokens[source_index];
+                semantic_phrase_in_text_with_id(
+                    &target.text,
+                    lexical_meaning_id(&source_language, &source.normalized),
+                    &target_text,
+                    0,
+                )
+            })
+        })
+        .collect::<Vec<_>>();
+
+    Some(SemanticTranslation {
+        source_text: source_text.to_string(),
+        source_language,
+        target_language,
+        target_text,
+        source_phrases,
+        target_phrases,
+        transformation_steps,
+    })
 }
 
 pub fn issue35_translation_relations() -> Vec<Doublet<u64>> {
@@ -257,12 +342,161 @@ fn semantic_phrase_in_text(
     )
 }
 
+fn semantic_phrase_in_text_with_id(
+    text: &str,
+    meaning_id: String,
+    source_text: &str,
+    fallback_start: usize,
+) -> SemanticPhrase {
+    let start = source_text.find(text).unwrap_or(fallback_start);
+    SemanticPhrase {
+        text: text.to_string(),
+        meaning_id,
+        start,
+        end: start + text.len(),
+    }
+}
+
 fn semantic_phrase(text: &str, meaning: u64, start: usize) -> SemanticPhrase {
     SemanticPhrase {
         text: text.to_string(),
         meaning_id: format!("Q{meaning}"),
         start,
         end: start + text.len(),
+    }
+}
+
+#[derive(Debug, Clone)]
+struct TranslationToken {
+    text: String,
+    normalized: String,
+    start: usize,
+    end: usize,
+}
+
+#[derive(Debug, Clone)]
+struct TargetToken {
+    text: String,
+    source_index: Option<usize>,
+}
+
+fn tokenize_translation_words(source: &str) -> Vec<TranslationToken> {
+    let mut tokens = Vec::new();
+    let mut cursor = 0;
+    for raw in source.split_whitespace() {
+        let text = raw.trim_matches([',', '.', '!', '?', ';', ':']);
+        if text.is_empty() {
+            continue;
+        }
+        let start = source[cursor..]
+            .find(text)
+            .map(|offset| cursor + offset)
+            .unwrap_or(cursor);
+        let end = start + text.len();
+        cursor = end;
+        tokens.push(TranslationToken {
+            text: text.to_string(),
+            normalized: normalize_text(text),
+            start,
+            end,
+        });
+    }
+    tokens
+}
+
+fn lookup_lexical_translation(
+    source_language: &str,
+    target_language: &str,
+    word: &str,
+) -> Option<&'static str> {
+    match (source_language, target_language, word) {
+        ("ru", "en", "добавить") => Some("add"),
+        ("ru", "en", "найти") => Some("find"),
+        ("ru", "en", "синоним") => Some("synonym"),
+        ("ru", "en", "синонимы") => Some("synonyms"),
+        ("ru", "en", "или") => Some("or"),
+        ("ru", "en", "пример") => Some("example"),
+        ("ru", "en", "примеры") => Some("examples"),
+        ("ru", "en", "согласование") => Some("agreement"),
+        ("ru", "en", "согласования") => Some("agreement"),
+        ("ru", "en", "перевод") => Some("translation"),
+        ("ru", "en", "перевода") => Some("translation"),
+        ("ru", "en", "перевести") => Some("translate"),
+        ("ru", "en", "формализовать") => Some("formalize"),
+        ("ru", "en", "текст") => Some("text"),
+        ("ru", "en", "проверить") => Some("check"),
+        ("ru", "en", "утверждение") => Some("statement"),
+        ("ru", "en", "сравнить") => Some("compare"),
+        ("ru", "en", "значение") => Some("value"),
+        ("ru", "en", "значения") => Some("values"),
+        ("ru", "en", "показать") => Some("show"),
+        ("ru", "en", "вопрос") => Some("question"),
+        ("ru", "en", "вопросы") => Some("questions"),
+        ("ru", "en", "открыть") => Some("open"),
+        ("ru", "en", "страница") => Some("page"),
+        ("ru", "en", "страницу") => Some("page"),
+        ("ru", "en", "сохранить") => Some("save"),
+        ("ru", "en", "результат") => Some("result"),
+        ("en", "ru", "add") => Some("добавьте"),
+        ("en", "ru", "example") => Some("пример"),
+        ("en", "ru", "examples") => Some("примеры"),
+        _ => None,
+    }
+}
+
+fn insert_russian_examples_of(
+    source_tokens: &[TranslationToken],
+    target_tokens: &mut Vec<TargetToken>,
+) -> bool {
+    for index in 0..source_tokens.len().saturating_sub(1) {
+        if source_tokens[index].normalized != "примеры" {
+            continue;
+        }
+        let target_index = target_tokens
+            .iter()
+            .position(|target| target.source_index == Some(index));
+        if let Some(target_index) = target_index {
+            target_tokens.insert(
+                target_index + 1,
+                TargetToken {
+                    text: "of".to_string(),
+                    source_index: None,
+                },
+            );
+            return true;
+        }
+    }
+    false
+}
+
+fn lexical_meaning_id(language: &str, normalized: &str) -> String {
+    format!("lex:{language}:{}", normalized.replace(' ', "_"))
+}
+
+fn starts_with_uppercase(value: &str) -> bool {
+    value
+        .chars()
+        .next()
+        .map(|first| first.is_uppercase())
+        .unwrap_or(false)
+}
+
+fn uppercase_first(value: &str) -> String {
+    let mut chars = value.chars();
+    match chars.next() {
+        Some(first) => first.to_uppercase().chain(chars).collect(),
+        None => String::new(),
+    }
+}
+
+fn append_terminal_punctuation(value: &str, source: &str) -> String {
+    let punctuation = source
+        .chars()
+        .rev()
+        .find(|ch| matches!(ch, '.' | '!' | '?'));
+    match punctuation {
+        Some(mark) if !value.ends_with(mark) => format!("{value}{mark}"),
+        _ => value.to_string(),
     }
 }
 
@@ -361,6 +595,38 @@ mod tests {
             translate_known_semantic_sentence(&translation.target_text, "ru", "en").unwrap();
 
         assert_eq!(round_trip.target_text, "Hawaii is a state.");
+    }
+
+    #[test]
+    fn translates_issue41_glossary_examples_through_semantic_links() {
+        let examples = [
+            ("Найти синонимы", "ru", "en", "Find synonyms"),
+            (
+                "Найти примеры перевода",
+                "ru",
+                "en",
+                "Find examples of translation",
+            ),
+            ("Перевести текст", "ru", "en", "Translate text"),
+            ("Формализовать текст", "ru", "en", "Formalize text"),
+            ("Проверить утверждение", "ru", "en", "Check statement"),
+            ("Сравнить значения", "ru", "en", "Compare values"),
+            ("Показать вопросы", "ru", "en", "Show questions"),
+            ("Открыть страницу", "ru", "en", "Open page"),
+            ("Сохранить результат", "ru", "en", "Save result"),
+            ("Add examples", "en", "ru", "Добавьте примеры"),
+        ];
+
+        for (source, from, to, expected) in examples {
+            let translation = translate_known_semantic_sentence(source, from, to).unwrap();
+
+            assert_eq!(translation.target_text, expected);
+            assert!(translation
+                .source_phrases
+                .iter()
+                .all(|phrase| phrase.meaning_id.starts_with("lex:")));
+            assert!(!translation.target_phrases.is_empty());
+        }
     }
 
     #[test]
