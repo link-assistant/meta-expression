@@ -197,6 +197,15 @@ describe('issue 35 — Hawaii translation through semantic phrases', () => {
     expect(result.plainText).toBe('Гавайи это штат.');
     expect(result.markdown).toContain('[Гавайи](');
     expect(result.markdown).toContain('это [штат](');
+    const stateTranslation = result.phrases.find(
+      (phrase) => phrase.source.text === 'state'
+    );
+    expect(stateTranslation.entityId).toBe('Q7275');
+    expect(stateTranslation.target.text).toBe('штат');
+    expect(stateTranslation.target.entityId).toBe('Q35657');
+    expect(result.linksNotation).toContain(
+      'source (state) target (штат) status translated id Q7275 targetId Q35657'
+    );
     expect(result.sentences[0].transformations).toEqual([
       'english-article-omission',
       'english-copula-to-russian-eto',

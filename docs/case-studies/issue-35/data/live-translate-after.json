@@ -3309,6 +3309,7 @@
         "target": {
           "text": "Гавайи",
           "language": "ru",
+          "entityId": "Q782",
           "description": "штат в США, в центральной части Тихого океана",
           "url": "https://ru.wikipedia.org/wiki/%D0%93%D0%B0%D0%B2%D0%B0%D0%B9%D0%B8",
           "status": "translated"
@@ -3332,6 +3333,7 @@
         "target": {
           "text": "is",
           "language": null,
+          "entityId": null,
           "description": null,
           "url": null,
           "status": "non-wikidata-source"
@@ -3361,6 +3363,7 @@
         "target": {
           "text": "a",
           "language": null,
+          "entityId": null,
           "description": null,
           "url": null,
           "status": "non-wikidata-source"
@@ -3388,10 +3391,11 @@
         },
         "entityId": "Q7275",
         "target": {
-          "text": "государство",
+          "text": "штат",
           "language": "ru",
-          "description": "суверенная территориальная организация",
-          "url": "https://ru.wikipedia.org/wiki/%D0%93%D0%BE%D1%81%D1%83%D0%B4%D0%B0%D1%80%D1%81%D1%82%D0%B2%D0%BE",
+          "entityId": "Q35657",
+          "description": "state of the United States",
+          "url": "https://ru.wikipedia.org/wiki/%D0%A8%D1%82%D0%B0%D1%82_%D0%A1%D0%A8%D0%90",
           "status": "translated"
         },
         "variable": null
@@ -3519,7 +3523,7 @@
         "id": "step-14",
         "type": "api-response",
         "method": "GET",
-        "url": "https://en.wiktionary.org/api/rest_v1/page/definition/is",
+        "url": "https://en.wiktionary.org/api/rest_v1/page/definition/Hawaii",
         "status": 200,
         "ok": true
       },
@@ -3527,7 +3531,7 @@
         "id": "step-15",
         "type": "api-response",
         "method": "GET",
-        "url": "https://en.wiktionary.org/api/rest_v1/page/definition/Hawaii",
+        "url": "https://en.wiktionary.org/api/rest_v1/page/definition/is",
         "status": 200,
         "ok": true
       },
@@ -3551,7 +3555,7 @@
         "id": "step-18",
         "type": "api-response",
         "method": "GET",
-        "url": "https://www.wikidata.org/w/api.php?action=wbsearchentities&format=json&language=en&origin=*&type=property&limit=5&search=Hawaii",
+        "url": "https://www.wikidata.org/w/api.php?action=wbsearchentities&format=json&language=en&origin=*&type=property&limit=5&search=to+state",
         "status": 200,
         "ok": true
       },
@@ -3559,7 +3563,7 @@
         "id": "step-19",
         "type": "api-response",
         "method": "GET",
-        "url": "https://www.wikidata.org/w/api.php?action=wbsearchentities&format=json&language=en&origin=*&type=item&limit=5&search=Hawaii",
+        "url": "https://www.wikidata.org/w/api.php?action=wbsearchentities&format=json&language=en&origin=*&type=property&limit=5&search=Hawaii",
         "status": 200,
         "ok": true
       },
@@ -3567,7 +3571,7 @@
         "id": "step-20",
         "type": "api-response",
         "method": "GET",
-        "url": "https://www.wikidata.org/w/api.php?action=wbsearchentities&format=json&language=en&origin=*&type=property&limit=5&search=to+state",
+        "url": "https://www.wikidata.org/w/api.php?action=wbsearchentities&format=json&language=en&origin=*&type=item&limit=5&search=to+state",
         "status": 200,
         "ok": true
       },
@@ -3575,7 +3579,7 @@
         "id": "step-21",
         "type": "api-response",
         "method": "GET",
-        "url": "https://www.wikidata.org/w/api.php?action=wbsearchentities&format=json&language=en&origin=*&type=item&limit=5&search=to+state",
+        "url": "https://www.wikidata.org/w/api.php?action=wbsearchentities&format=json&language=en&origin=*&type=item&limit=5&search=Hawaii",
         "status": 200,
         "ok": true
       },
@@ -3599,7 +3603,7 @@
         "id": "step-24",
         "type": "api-response",
         "method": "GET",
-        "url": "https://en.wikipedia.org/w/api.php?action=query&format=json&list=search&srsearch=Hawaii&srlimit=5&origin=*",
+        "url": "https://en.wikipedia.org/w/api.php?action=query&format=json&list=search&srsearch=state&srlimit=5&origin=*",
         "status": 200,
         "ok": true
       },
@@ -3607,13 +3611,13 @@
         "id": "step-25",
         "type": "api-request",
         "method": "GET",
-        "url": "https://en.wikipedia.org/w/api.php?action=query&format=json&prop=pageprops&titles=Hawaii%7CHawaiian%7CHawaiian+Kingdom%7CHawai%CA%BBi+%28island%29%7CHawaiian+language&ppprop=wikibase_item&origin=*"
+        "url": "https://en.wikipedia.org/w/api.php?action=query&format=json&prop=pageprops&titles=State%7CU.S.+state%7CCalifornia%7CLouisiana%7CNew+York+%28state%29&ppprop=wikibase_item&origin=*"
       },
       {
         "id": "step-26",
         "type": "api-response",
         "method": "GET",
-        "url": "https://en.wikipedia.org/w/api.php?action=query&format=json&prop=pageprops&titles=Hawaii%7CHawaiian%7CHawaiian+Kingdom%7CHawai%CA%BBi+%28island%29%7CHawaiian+language&ppprop=wikibase_item&origin=*",
+        "url": "https://en.wikipedia.org/w/api.php?action=query&format=json&prop=pageprops&titles=State%7CU.S.+state%7CCalifornia%7CLouisiana%7CNew+York+%28state%29&ppprop=wikibase_item&origin=*",
         "status": 200,
         "ok": true
       },
@@ -3621,7 +3625,7 @@
         "id": "step-27",
         "type": "api-response",
         "method": "GET",
-        "url": "https://en.wikipedia.org/w/api.php?action=query&format=json&list=search&srsearch=state&srlimit=5&origin=*",
+        "url": "https://en.wikipedia.org/w/api.php?action=query&format=json&list=search&srsearch=Hawaii&srlimit=5&origin=*",
         "status": 200,
         "ok": true
       },
@@ -3629,13 +3633,13 @@
         "id": "step-28",
         "type": "api-request",
         "method": "GET",
-        "url": "https://en.wikipedia.org/w/api.php?action=query&format=json&prop=pageprops&titles=State%7CU.S.+state%7CCalifornia%7CLouisiana%7CNew+York+%28state%29&ppprop=wikibase_item&origin=*"
+        "url": "https://en.wikipedia.org/w/api.php?action=query&format=json&prop=pageprops&titles=Hawaii%7CHawaiian%7CHawai%CA%BBi+%28island%29%7CHonolulu%7CHawaiian+Kingdom&ppprop=wikibase_item&origin=*"
       },
       {
         "id": "step-29",
         "type": "api-response",
         "method": "GET",
-        "url": "https://en.wikipedia.org/w/api.php?action=query&format=json&prop=pageprops&titles=State%7CU.S.+state%7CCalifornia%7CLouisiana%7CNew+York+%28state%29&ppprop=wikibase_item&origin=*",
+        "url": "https://en.wikipedia.org/w/api.php?action=query&format=json&prop=pageprops&titles=Hawaii%7CHawaiian%7CHawai%CA%BBi+%28island%29%7CHonolulu%7CHawaiian+Kingdom&ppprop=wikibase_item&origin=*",
         "status": 200,
         "ok": true
       },
@@ -3689,7 +3693,7 @@
         "id": "step-37",
         "type": "api-response",
         "method": "GET",
-        "url": "https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&ids=Q7275&languages=en&origin=*&props=labels%7Caliases%7Cdescriptions%7Cclaims%7Csitelinks&sitefilter=enwiki",
+        "url": "https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&ids=Q782&languages=en&origin=*&props=labels%7Caliases%7Cdescriptions%7Cclaims%7Csitelinks&sitefilter=enwiki",
         "status": 200,
         "ok": true
       },
@@ -3697,7 +3701,7 @@
         "id": "step-38",
         "type": "api-response",
         "method": "GET",
-        "url": "https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&ids=Q68740&languages=en&origin=*&props=labels%7Caliases%7Cdescriptions%7Cclaims%7Csitelinks&sitefilter=enwiki",
+        "url": "https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&ids=Q7275&languages=en&origin=*&props=labels%7Caliases%7Cdescriptions%7Cclaims%7Csitelinks&sitefilter=enwiki",
         "status": 200,
         "ok": true
       },
@@ -3705,7 +3709,7 @@
         "id": "step-39",
         "type": "api-response",
         "method": "GET",
-        "url": "https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&ids=Q782&languages=en&origin=*&props=labels%7Caliases%7Cdescriptions%7Cclaims%7Csitelinks&sitefilter=enwiki",
+        "url": "https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&ids=Q68740&languages=en&origin=*&props=labels%7Caliases%7Cdescriptions%7Cclaims%7Csitelinks&sitefilter=enwiki",
         "status": 200,
         "ok": true
       },
@@ -4056,6 +4060,7 @@
       "target": {
         "text": "Гавайи",
         "language": "ru",
+        "entityId": "Q782",
         "description": "штат в США, в центральной части Тихого океана",
         "url": "https://ru.wikipedia.org/wiki/%D0%93%D0%B0%D0%B2%D0%B0%D0%B9%D0%B8",
         "status": "translated"
@@ -4079,6 +4084,7 @@
       "target": {
         "text": "is",
         "language": null,
+        "entityId": null,
         "description": null,
         "url": null,
         "status": "non-wikidata-source"
@@ -4108,6 +4114,7 @@
       "target": {
         "text": "a",
         "language": null,
+        "entityId": null,
         "description": null,
         "url": null,
         "status": "non-wikidata-source"
@@ -4135,10 +4142,11 @@
       },
       "entityId": "Q7275",
       "target": {
-        "text": "государство",
+        "text": "штат",
         "language": "ru",
-        "description": "суверенная территориальная организация",
-        "url": "https://ru.wikipedia.org/wiki/%D0%93%D0%BE%D1%81%D1%83%D0%B4%D0%B0%D1%80%D1%81%D1%82%D0%B2%D0%BE",
+        "entityId": "Q35657",
+        "description": "state of the United States",
+        "url": "https://ru.wikipedia.org/wiki/%D0%A8%D1%82%D0%B0%D1%82_%D0%A1%D0%A8%D0%90",
         "status": "translated"
       },
       "variable": null
@@ -4177,6 +4185,7 @@
           "target": {
             "text": "Гавайи",
             "language": "ru",
+            "entityId": "Q782",
             "description": "штат в США, в центральной части Тихого океана",
             "url": "https://ru.wikipedia.org/wiki/%D0%93%D0%B0%D0%B2%D0%B0%D0%B9%D0%B8",
             "status": "translated"
@@ -4200,6 +4209,7 @@
           "target": {
             "text": "is",
             "language": null,
+            "entityId": null,
             "description": null,
             "url": null,
             "status": "non-wikidata-source"
@@ -4229,6 +4239,7 @@
           "target": {
             "text": "a",
             "language": null,
+            "entityId": null,
             "description": null,
             "url": null,
             "status": "non-wikidata-source"
@@ -4256,10 +4267,11 @@
           },
           "entityId": "Q7275",
           "target": {
-            "text": "государство",
+            "text": "штат",
             "language": "ru",
-            "description": "суверенная территориальная организация",
-            "url": "https://ru.wikipedia.org/wiki/%D0%93%D0%BE%D1%81%D1%83%D0%B4%D0%B0%D1%80%D1%81%D1%82%D0%B2%D0%BE",
+            "entityId": "Q35657",
+            "description": "state of the United States",
+            "url": "https://ru.wikipedia.org/wiki/%D0%A8%D1%82%D0%B0%D1%82_%D0%A1%D0%A8%D0%90",
             "status": "translated"
           },
           "variable": null
@@ -4282,7 +4294,7 @@
   "plainText": "Гавайи это штат.",
   "markdown": "[Гавайи](https://ru.wikipedia.org/wiki/%D0%93%D0%B0%D0%B2%D0%B0%D0%B9%D0%B8 \"Q782\") это [штат](https://ru.wikipedia.org/wiki/%D0%A8%D1%82%D0%B0%D1%82_%D0%A1%D0%A8%D0%90 \"Q35657\").",
   "html": "<a href=\"https://ru.wikipedia.org/wiki/%D0%93%D0%B0%D0%B2%D0%B0%D0%B9%D0%B8\" title=\"Q782\">Гавайи</a> это <a href=\"https://ru.wikipedia.org/wiki/%D0%A8%D1%82%D0%B0%D1%82_%D0%A1%D0%A8%D0%90\" title=\"Q35657\">штат</a>.",
-  "linksNotation": "(translation: (Hawaii is a state.) from en to ru)\n(sentence-1: source (Hawaii is a state.) target (Гавайи это штат.) transformations (english-article-omission, english-copula-to-russian-eto, english-us-state-predicate-to-russian-shtat))\n(phrase-1: source (Hawaii) target (Гавайи) status translated id Q782 markdownUrl (https://ru.wikipedia.org/wiki/%D0%93%D0%B0%D0%B2%D0%B0%D0%B9%D0%B8))\n(phrase-2: source (is) target (is) status non-wikidata-source variable variable-1)\n(phrase-3: source (a) target (a) status non-wikidata-source variable variable-2)\n(phrase-4: source (state) target (государство) status translated id Q7275 markdownUrl (https://ru.wikipedia.org/wiki/%D0%93%D0%BE%D1%81%D1%83%D0%B4%D0%B0%D1%80%D1%81%D1%82%D0%B2%D0%BE))\n(variable-1: source (is) reason non-wikidata-source)\n(variable-2: source (a) reason non-wikidata-source)\n(step-1: type input (Hawaii is a state.))\n(step-2: type api-request (https://en.wikipedia.org/w/api.php?action=query&format=json&list=search&srsearch=Hawaii&srlimit=5&origin=*))\n(step-3: type api-request (https://www.wikidata.org/w/api.php?action=wbsearchentities&format=json&language=en&origin=*&type=item&limit=5&search=Hawaii))\n(step-4: type api-request (https://www.wikidata.org/w/api.php?action=wbsearchentities&format=json&language=en&origin=*&type=property&limit=5&search=Hawaii))\n(step-5: type api-request (https://en.wiktionary.org/api/rest_v1/page/definition/Hawaii))\n(step-6: type api-request (https://en.wiktionary.org/api/rest_v1/page/definition/is))\n(step-7: type api-request (https://en.wiktionary.org/api/rest_v1/page/definition/a))\n(step-8: type api-request (https://en.wikipedia.org/w/api.php?action=query&format=json&list=search&srsearch=state&srlimit=5&origin=*))\n(step-9: type api-request (https://www.wikidata.org/w/api.php?action=wbsearchentities&format=json&language=en&origin=*&type=item&limit=5&search=state))\n(step-10: type api-request (https://www.wikidata.org/w/api.php?action=wbsearchentities&format=json&language=en&origin=*&type=item&limit=5&search=to+state))\n(step-11: type api-request (https://www.wikidata.org/w/api.php?action=wbsearchentities&format=json&language=en&origin=*&type=property&limit=5&search=state))\n(step-12: type api-request (https://www.wikidata.org/w/api.php?action=wbsearchentities&format=json&language=en&origin=*&type=property&limit=5&search=to+state))\n(step-13: type api-request (https://en.wiktionary.org/api/rest_v1/page/definition/state))\n(step-14: type api-response (https://en.wiktionary.org/api/rest_v1/page/definition/is))\n(step-15: type api-response (https://en.wiktionary.org/api/rest_v1/page/definition/Hawaii))\n(step-16: type api-response (https://en.wiktionary.org/api/rest_v1/page/definition/a))\n(step-17: type api-response (https://en.wiktionary.org/api/rest_v1/page/definition/state))\n(step-18: type api-response (https://www.wikidata.org/w/api.php?action=wbsearchentities&format=json&language=en&origin=*&type=property&limit=5&search=Hawaii))\n(step-19: type api-response (https://www.wikidata.org/w/api.php?action=wbsearchentities&format=json&language=en&origin=*&type=item&limit=5&search=Hawaii))\n(step-20: type api-response (https://www.wikidata.org/w/api.php?action=wbsearchentities&format=json&language=en&origin=*&type=property&limit=5&search=to+state))\n(step-21: type api-response (https://www.wikidata.org/w/api.php?action=wbsearchentities&format=json&language=en&origin=*&type=item&limit=5&search=to+state))\n(step-22: type api-response (https://www.wikidata.org/w/api.php?action=wbsearchentities&format=json&language=en&origin=*&type=property&limit=5&search=state))\n(step-23: type api-response (https://www.wikidata.org/w/api.php?action=wbsearchentities&format=json&language=en&origin=*&type=item&limit=5&search=state))\n(step-24: type api-response (https://en.wikipedia.org/w/api.php?action=query&format=json&list=search&srsearch=Hawaii&srlimit=5&origin=*))\n(step-25: type api-request (https://en.wikipedia.org/w/api.php?action=query&format=json&prop=pageprops&titles=Hawaii%7CHawaiian%7CHawaiian+Kingdom%7CHawai%CA%BBi+%28island%29%7CHawaiian+language&ppprop=wikibase_item&origin=*))\n(step-26: type api-response (https://en.wikipedia.org/w/api.php?action=query&format=json&prop=pageprops&titles=Hawaii%7CHawaiian%7CHawaiian+Kingdom%7CHawai%CA%BBi+%28island%29%7CHawaiian+language&ppprop=wikibase_item&origin=*))\n(step-27: type api-response (https://en.wikipedia.org/w/api.php?action=query&format=json&list=search&srsearch=state&srlimit=5&origin=*))\n(step-28: type api-request (https://en.wikipedia.org/w/api.php?action=query&format=json&prop=pageprops&titles=State%7CU.S.+state%7CCalifornia%7CLouisiana%7CNew+York+%28state%29&ppprop=wikibase_item&origin=*))\n(step-29: type api-response (https://en.wikipedia.org/w/api.php?action=query&format=json&prop=pageprops&titles=State%7CU.S.+state%7CCalifornia%7CLouisiana%7CNew+York+%28state%29&ppprop=wikibase_item&origin=*))\n(step-30: type api-request (https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&ids=Q782&languages=en&origin=*&props=labels%7Caliases%7Cdescriptions%7Cclaims%7Csitelinks&sitefilter=enwiki))\n(step-31: type api-request (https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&ids=Q68740&languages=en&origin=*&props=labels%7Caliases%7Cdescriptions%7Cclaims%7Csitelinks&sitefilter=enwiki))\n(step-32: type api-request (https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&ids=Q18703903&languages=en&origin=*&props=labels%7Caliases%7Cdescriptions%7Cclaims%7Csitelinks&sitefilter=enwiki))\n(step-33: type api-request (https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&ids=Q7275&languages=en&origin=*&props=labels%7Caliases%7Cdescriptions%7Cclaims%7Csitelinks&sitefilter=enwiki))\n(step-34: type api-request (https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&ids=Q37234491&languages=en&origin=*&props=labels%7Caliases%7Cdescriptions%7Cclaims%7Csitelinks&sitefilter=enwiki))\n(step-35: type api-response (https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&ids=Q37234491&languages=en&origin=*&props=labels%7Caliases%7Cdescriptions%7Cclaims%7Csitelinks&sitefilter=enwiki))\n(step-36: type api-response (https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&ids=Q18703903&languages=en&origin=*&props=labels%7Caliases%7Cdescriptions%7Cclaims%7Csitelinks&sitefilter=enwiki))\n(step-37: type api-response (https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&ids=Q7275&languages=en&origin=*&props=labels%7Caliases%7Cdescriptions%7Cclaims%7Csitelinks&sitefilter=enwiki))\n(step-38: type api-response (https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&ids=Q68740&languages=en&origin=*&props=labels%7Caliases%7Cdescriptions%7Cclaims%7Csitelinks&sitefilter=enwiki))\n(step-39: type api-response (https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&ids=Q782&languages=en&origin=*&props=labels%7Caliases%7Cdescriptions%7Cclaims%7Csitelinks&sitefilter=enwiki))\n(step-40: type api-request (https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&ids=Q35657&languages=en&origin=*&props=labels%7Cclaims))\n(step-41: type api-response (https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&ids=Q35657&languages=en&origin=*&props=labels%7Cclaims))\n(step-42: type api-request (https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&ids=Q1161185&languages=en&origin=*&props=labels%7Cclaims))\n(step-43: type api-response (https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&ids=Q1161185&languages=en&origin=*&props=labels%7Cclaims))\n(step-44: type api-request (https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&ids=Q192626&languages=en&origin=*&props=labels%7Cclaims))\n(step-45: type api-response (https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&ids=Q192626&languages=en&origin=*&props=labels%7Cclaims))\n(step-46: type api-request (https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&ids=Q11424&languages=en&origin=*&props=labels%7Cclaims))\n(step-47: type api-response (https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&ids=Q11424&languages=en&origin=*&props=labels%7Cclaims))\n(step-48: type api-request (https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&ids=Q130232&languages=en&origin=*&props=labels%7Cclaims))\n(step-49: type api-response (https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&ids=Q130232&languages=en&origin=*&props=labels%7Cclaims))\n(step-50: type api-request (https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&ids=Q20442589&languages=en&origin=*&props=labels%7Cclaims))\n(step-51: type api-response (https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&ids=Q20442589&languages=en&origin=*&props=labels%7Cclaims))\n(step-52: type api-request (https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&ids=Q1054574&languages=en&origin=*&props=labels%7Cclaims))\n(step-53: type api-response (https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&ids=Q1054574&languages=en&origin=*&props=labels%7Cclaims))\n(step-54: type api-request (https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&ids=Q211606&languages=en&origin=*&props=labels%7Cclaims))\n(step-55: type api-response (https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&ids=Q211606&languages=en&origin=*&props=labels%7Cclaims))\n(step-56: type api-request (https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&ids=Q15617994&languages=en&origin=*&props=labels%7Cclaims))\n(step-57: type api-response (https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&ids=Q15617994&languages=en&origin=*&props=labels%7Cclaims))\n(step-58: type api-request (https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&ids=Q155076&languages=en&origin=*&props=labels%7Cclaims))\n(step-59: type api-response (https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&ids=Q155076&languages=en&origin=*&props=labels%7Cclaims))\n(step-60: type api-request (https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&ids=Q1048835&languages=en&origin=*&props=labels%7Cclaims))\n(step-61: type api-response (https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&ids=Q1048835&languages=en&origin=*&props=labels%7Cclaims))\n(step-62: type api-request (https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&ids=Q1896989&languages=en&origin=*&props=labels%7Cclaims))\n(step-63: type api-response (https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&ids=Q1896989&languages=en&origin=*&props=labels%7Cclaims))\n(step-64: type api-request (https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&ids=Q96196009&languages=en&origin=*&props=labels%7Cclaims))\n(step-65: type api-response (https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&ids=Q96196009&languages=en&origin=*&props=labels%7Cclaims))\n(step-66: type api-request (https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&ids=Q179671&languages=en&origin=*&props=labels%7Cclaims))\n(step-67: type api-response (https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&ids=Q179671&languages=en&origin=*&props=labels%7Cclaims))\n(step-68: type api-request (https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&ids=Q101352&languages=en&origin=*&props=labels%7Cclaims))\n(step-69: type api-response (https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&ids=Q101352&languages=en&origin=*&props=labels%7Cclaims))\n(step-70: type formalization (formalization))\n(step-71: type api-request (https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&ids=Q782&languages=ru&origin=*&props=labels%7Cdescriptions%7Csitelinks&sitefilter=ruwiki))\n(step-72: type api-response (https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&ids=Q782&languages=ru&origin=*&props=labels%7Cdescriptions%7Csitelinks&sitefilter=ruwiki))\n(step-73: type translation-phrase (phrase-1))\n(step-74: type translation-phrase (phrase-2))\n(step-75: type translation-phrase (phrase-3))\n(step-76: type api-request (https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&ids=Q7275&languages=ru&origin=*&props=labels%7Cdescriptions%7Csitelinks&sitefilter=ruwiki))\n(step-77: type api-response (https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&ids=Q7275&languages=ru&origin=*&props=labels%7Cdescriptions%7Csitelinks&sitefilter=ruwiki))\n(step-78: type translation-phrase (phrase-4))\n(step-79: type transformation-rule (english-article-omission))\n(step-80: type transformation-rule (english-copula-to-russian-eto))\n(step-81: type transformation-rule (english-us-state-predicate-to-russian-shtat))\n(step-82: type sentence (sentence-1))\n(step-83: type text (Гавайи это штат.))",
+  "linksNotation": "(translation: (Hawaii is a state.) from en to ru)\n(sentence-1: source (Hawaii is a state.) target (Гавайи это штат.) transformations (english-article-omission, english-copula-to-russian-eto, english-us-state-predicate-to-russian-shtat))\n(phrase-1: source (Hawaii) target (Гавайи) status translated id Q782 markdownUrl (https://ru.wikipedia.org/wiki/%D0%93%D0%B0%D0%B2%D0%B0%D0%B9%D0%B8))\n(phrase-2: source (is) target (is) status non-wikidata-source variable variable-1)\n(phrase-3: source (a) target (a) status non-wikidata-source variable variable-2)\n(phrase-4: source (state) target (штат) status translated id Q7275 targetId Q35657 markdownUrl (https://ru.wikipedia.org/wiki/%D0%A8%D1%82%D0%B0%D1%82_%D0%A1%D0%A8%D0%90))\n(variable-1: source (is) reason non-wikidata-source)\n(variable-2: source (a) reason non-wikidata-source)\n(step-1: type input (Hawaii is a state.))\n(step-2: type api-request (https://en.wikipedia.org/w/api.php?action=query&format=json&list=search&srsearch=Hawaii&srlimit=5&origin=*))\n(step-3: type api-request (https://www.wikidata.org/w/api.php?action=wbsearchentities&format=json&language=en&origin=*&type=item&limit=5&search=Hawaii))\n(step-4: type api-request (https://www.wikidata.org/w/api.php?action=wbsearchentities&format=json&language=en&origin=*&type=property&limit=5&search=Hawaii))\n(step-5: type api-request (https://en.wiktionary.org/api/rest_v1/page/definition/Hawaii))\n(step-6: type api-request (https://en.wiktionary.org/api/rest_v1/page/definition/is))\n(step-7: type api-request (https://en.wiktionary.org/api/rest_v1/page/definition/a))\n(step-8: type api-request (https://en.wikipedia.org/w/api.php?action=query&format=json&list=search&srsearch=state&srlimit=5&origin=*))\n(step-9: type api-request (https://www.wikidata.org/w/api.php?action=wbsearchentities&format=json&language=en&origin=*&type=item&limit=5&search=state))\n(step-10: type api-request (https://www.wikidata.org/w/api.php?action=wbsearchentities&format=json&language=en&origin=*&type=item&limit=5&search=to+state))\n(step-11: type api-request (https://www.wikidata.org/w/api.php?action=wbsearchentities&format=json&language=en&origin=*&type=property&limit=5&search=state))\n(step-12: type api-request (https://www.wikidata.org/w/api.php?action=wbsearchentities&format=json&language=en&origin=*&type=property&limit=5&search=to+state))\n(step-13: type api-request (https://en.wiktionary.org/api/rest_v1/page/definition/state))\n(step-14: type api-response (https://en.wiktionary.org/api/rest_v1/page/definition/Hawaii))\n(step-15: type api-response (https://en.wiktionary.org/api/rest_v1/page/definition/is))\n(step-16: type api-response (https://en.wiktionary.org/api/rest_v1/page/definition/a))\n(step-17: type api-response (https://en.wiktionary.org/api/rest_v1/page/definition/state))\n(step-18: type api-response (https://www.wikidata.org/w/api.php?action=wbsearchentities&format=json&language=en&origin=*&type=property&limit=5&search=to+state))\n(step-19: type api-response (https://www.wikidata.org/w/api.php?action=wbsearchentities&format=json&language=en&origin=*&type=property&limit=5&search=Hawaii))\n(step-20: type api-response (https://www.wikidata.org/w/api.php?action=wbsearchentities&format=json&language=en&origin=*&type=item&limit=5&search=to+state))\n(step-21: type api-response (https://www.wikidata.org/w/api.php?action=wbsearchentities&format=json&language=en&origin=*&type=item&limit=5&search=Hawaii))\n(step-22: type api-response (https://www.wikidata.org/w/api.php?action=wbsearchentities&format=json&language=en&origin=*&type=property&limit=5&search=state))\n(step-23: type api-response (https://www.wikidata.org/w/api.php?action=wbsearchentities&format=json&language=en&origin=*&type=item&limit=5&search=state))\n(step-24: type api-response (https://en.wikipedia.org/w/api.php?action=query&format=json&list=search&srsearch=state&srlimit=5&origin=*))\n(step-25: type api-request (https://en.wikipedia.org/w/api.php?action=query&format=json&prop=pageprops&titles=State%7CU.S.+state%7CCalifornia%7CLouisiana%7CNew+York+%28state%29&ppprop=wikibase_item&origin=*))\n(step-26: type api-response (https://en.wikipedia.org/w/api.php?action=query&format=json&prop=pageprops&titles=State%7CU.S.+state%7CCalifornia%7CLouisiana%7CNew+York+%28state%29&ppprop=wikibase_item&origin=*))\n(step-27: type api-response (https://en.wikipedia.org/w/api.php?action=query&format=json&list=search&srsearch=Hawaii&srlimit=5&origin=*))\n(step-28: type api-request (https://en.wikipedia.org/w/api.php?action=query&format=json&prop=pageprops&titles=Hawaii%7CHawaiian%7CHawai%CA%BBi+%28island%29%7CHonolulu%7CHawaiian+Kingdom&ppprop=wikibase_item&origin=*))\n(step-29: type api-response (https://en.wikipedia.org/w/api.php?action=query&format=json&prop=pageprops&titles=Hawaii%7CHawaiian%7CHawai%CA%BBi+%28island%29%7CHonolulu%7CHawaiian+Kingdom&ppprop=wikibase_item&origin=*))\n(step-30: type api-request (https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&ids=Q782&languages=en&origin=*&props=labels%7Caliases%7Cdescriptions%7Cclaims%7Csitelinks&sitefilter=enwiki))\n(step-31: type api-request (https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&ids=Q68740&languages=en&origin=*&props=labels%7Caliases%7Cdescriptions%7Cclaims%7Csitelinks&sitefilter=enwiki))\n(step-32: type api-request (https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&ids=Q18703903&languages=en&origin=*&props=labels%7Caliases%7Cdescriptions%7Cclaims%7Csitelinks&sitefilter=enwiki))\n(step-33: type api-request (https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&ids=Q7275&languages=en&origin=*&props=labels%7Caliases%7Cdescriptions%7Cclaims%7Csitelinks&sitefilter=enwiki))\n(step-34: type api-request (https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&ids=Q37234491&languages=en&origin=*&props=labels%7Caliases%7Cdescriptions%7Cclaims%7Csitelinks&sitefilter=enwiki))\n(step-35: type api-response (https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&ids=Q37234491&languages=en&origin=*&props=labels%7Caliases%7Cdescriptions%7Cclaims%7Csitelinks&sitefilter=enwiki))\n(step-36: type api-response (https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&ids=Q18703903&languages=en&origin=*&props=labels%7Caliases%7Cdescriptions%7Cclaims%7Csitelinks&sitefilter=enwiki))\n(step-37: type api-response (https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&ids=Q782&languages=en&origin=*&props=labels%7Caliases%7Cdescriptions%7Cclaims%7Csitelinks&sitefilter=enwiki))\n(step-38: type api-response (https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&ids=Q7275&languages=en&origin=*&props=labels%7Caliases%7Cdescriptions%7Cclaims%7Csitelinks&sitefilter=enwiki))\n(step-39: type api-response (https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&ids=Q68740&languages=en&origin=*&props=labels%7Caliases%7Cdescriptions%7Cclaims%7Csitelinks&sitefilter=enwiki))\n(step-40: type api-request (https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&ids=Q35657&languages=en&origin=*&props=labels%7Cclaims))\n(step-41: type api-response (https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&ids=Q35657&languages=en&origin=*&props=labels%7Cclaims))\n(step-42: type api-request (https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&ids=Q1161185&languages=en&origin=*&props=labels%7Cclaims))\n(step-43: type api-response (https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&ids=Q1161185&languages=en&origin=*&props=labels%7Cclaims))\n(step-44: type api-request (https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&ids=Q192626&languages=en&origin=*&props=labels%7Cclaims))\n(step-45: type api-response (https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&ids=Q192626&languages=en&origin=*&props=labels%7Cclaims))\n(step-46: type api-request (https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&ids=Q11424&languages=en&origin=*&props=labels%7Cclaims))\n(step-47: type api-response (https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&ids=Q11424&languages=en&origin=*&props=labels%7Cclaims))\n(step-48: type api-request (https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&ids=Q130232&languages=en&origin=*&props=labels%7Cclaims))\n(step-49: type api-response (https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&ids=Q130232&languages=en&origin=*&props=labels%7Cclaims))\n(step-50: type api-request (https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&ids=Q20442589&languages=en&origin=*&props=labels%7Cclaims))\n(step-51: type api-response (https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&ids=Q20442589&languages=en&origin=*&props=labels%7Cclaims))\n(step-52: type api-request (https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&ids=Q1054574&languages=en&origin=*&props=labels%7Cclaims))\n(step-53: type api-response (https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&ids=Q1054574&languages=en&origin=*&props=labels%7Cclaims))\n(step-54: type api-request (https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&ids=Q211606&languages=en&origin=*&props=labels%7Cclaims))\n(step-55: type api-response (https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&ids=Q211606&languages=en&origin=*&props=labels%7Cclaims))\n(step-56: type api-request (https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&ids=Q15617994&languages=en&origin=*&props=labels%7Cclaims))\n(step-57: type api-response (https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&ids=Q15617994&languages=en&origin=*&props=labels%7Cclaims))\n(step-58: type api-request (https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&ids=Q155076&languages=en&origin=*&props=labels%7Cclaims))\n(step-59: type api-response (https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&ids=Q155076&languages=en&origin=*&props=labels%7Cclaims))\n(step-60: type api-request (https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&ids=Q1048835&languages=en&origin=*&props=labels%7Cclaims))\n(step-61: type api-response (https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&ids=Q1048835&languages=en&origin=*&props=labels%7Cclaims))\n(step-62: type api-request (https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&ids=Q1896989&languages=en&origin=*&props=labels%7Cclaims))\n(step-63: type api-response (https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&ids=Q1896989&languages=en&origin=*&props=labels%7Cclaims))\n(step-64: type api-request (https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&ids=Q96196009&languages=en&origin=*&props=labels%7Cclaims))\n(step-65: type api-response (https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&ids=Q96196009&languages=en&origin=*&props=labels%7Cclaims))\n(step-66: type api-request (https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&ids=Q179671&languages=en&origin=*&props=labels%7Cclaims))\n(step-67: type api-response (https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&ids=Q179671&languages=en&origin=*&props=labels%7Cclaims))\n(step-68: type api-request (https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&ids=Q101352&languages=en&origin=*&props=labels%7Cclaims))\n(step-69: type api-response (https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&ids=Q101352&languages=en&origin=*&props=labels%7Cclaims))\n(step-70: type formalization (formalization))\n(step-71: type api-request (https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&ids=Q782&languages=ru&origin=*&props=labels%7Cdescriptions%7Csitelinks&sitefilter=ruwiki))\n(step-72: type api-response (https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&ids=Q782&languages=ru&origin=*&props=labels%7Cdescriptions%7Csitelinks&sitefilter=ruwiki))\n(step-73: type translation-phrase (phrase-1))\n(step-74: type translation-phrase (phrase-2))\n(step-75: type translation-phrase (phrase-3))\n(step-76: type api-request (https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&ids=Q7275&languages=ru&origin=*&props=labels%7Cdescriptions%7Csitelinks&sitefilter=ruwiki))\n(step-77: type api-response (https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&ids=Q7275&languages=ru&origin=*&props=labels%7Cdescriptions%7Csitelinks&sitefilter=ruwiki))\n(step-78: type translation-phrase (phrase-4))\n(step-79: type transformation-rule (english-article-omission))\n(step-80: type transformation-rule (english-copula-to-russian-eto))\n(step-81: type transformation-rule (english-us-state-predicate-to-russian-shtat))\n(step-82: type sentence (sentence-1))\n(step-83: type text (Гавайи это штат.))",
   "variables": [
     {
       "name": "variable-1",
@@ -4384,7 +4396,7 @@
       "id": "step-14",
       "type": "api-response",
       "method": "GET",
-      "url": "https://en.wiktionary.org/api/rest_v1/page/definition/is",
+      "url": "https://en.wiktionary.org/api/rest_v1/page/definition/Hawaii",
       "status": 200,
       "ok": true
     },
@@ -4392,7 +4404,7 @@
       "id": "step-15",
       "type": "api-response",
       "method": "GET",
-      "url": "https://en.wiktionary.org/api/rest_v1/page/definition/Hawaii",
+      "url": "https://en.wiktionary.org/api/rest_v1/page/definition/is",
       "status": 200,
       "ok": true
     },
@@ -4416,7 +4428,7 @@
       "id": "step-18",
       "type": "api-response",
       "method": "GET",
-      "url": "https://www.wikidata.org/w/api.php?action=wbsearchentities&format=json&language=en&origin=*&type=property&limit=5&search=Hawaii",
+      "url": "https://www.wikidata.org/w/api.php?action=wbsearchentities&format=json&language=en&origin=*&type=property&limit=5&search=to+state",
       "status": 200,
       "ok": true
     },
@@ -4424,7 +4436,7 @@
       "id": "step-19",
       "type": "api-response",
       "method": "GET",
-      "url": "https://www.wikidata.org/w/api.php?action=wbsearchentities&format=json&language=en&origin=*&type=item&limit=5&search=Hawaii",
+      "url": "https://www.wikidata.org/w/api.php?action=wbsearchentities&format=json&language=en&origin=*&type=property&limit=5&search=Hawaii",
       "status": 200,
       "ok": true
     },
@@ -4432,7 +4444,7 @@
       "id": "step-20",
       "type": "api-response",
       "method": "GET",
-      "url": "https://www.wikidata.org/w/api.php?action=wbsearchentities&format=json&language=en&origin=*&type=property&limit=5&search=to+state",
+      "url": "https://www.wikidata.org/w/api.php?action=wbsearchentities&format=json&language=en&origin=*&type=item&limit=5&search=to+state",
       "status": 200,
       "ok": true
     },
@@ -4440,7 +4452,7 @@
       "id": "step-21",
       "type": "api-response",
       "method": "GET",
-      "url": "https://www.wikidata.org/w/api.php?action=wbsearchentities&format=json&language=en&origin=*&type=item&limit=5&search=to+state",
+      "url": "https://www.wikidata.org/w/api.php?action=wbsearchentities&format=json&language=en&origin=*&type=item&limit=5&search=Hawaii",
       "status": 200,
       "ok": true
     },
@@ -4464,7 +4476,7 @@
       "id": "step-24",
       "type": "api-response",
       "method": "GET",
-      "url": "https://en.wikipedia.org/w/api.php?action=query&format=json&list=search&srsearch=Hawaii&srlimit=5&origin=*",
+      "url": "https://en.wikipedia.org/w/api.php?action=query&format=json&list=search&srsearch=state&srlimit=5&origin=*",
       "status": 200,
       "ok": true
     },
@@ -4472,13 +4484,13 @@
       "id": "step-25",
       "type": "api-request",
       "method": "GET",
-      "url": "https://en.wikipedia.org/w/api.php?action=query&format=json&prop=pageprops&titles=Hawaii%7CHawaiian%7CHawaiian+Kingdom%7CHawai%CA%BBi+%28island%29%7CHawaiian+language&ppprop=wikibase_item&origin=*"
+      "url": "https://en.wikipedia.org/w/api.php?action=query&format=json&prop=pageprops&titles=State%7CU.S.+state%7CCalifornia%7CLouisiana%7CNew+York+%28state%29&ppprop=wikibase_item&origin=*"
     },
     {
       "id": "step-26",
       "type": "api-response",
       "method": "GET",
-      "url": "https://en.wikipedia.org/w/api.php?action=query&format=json&prop=pageprops&titles=Hawaii%7CHawaiian%7CHawaiian+Kingdom%7CHawai%CA%BBi+%28island%29%7CHawaiian+language&ppprop=wikibase_item&origin=*",
+      "url": "https://en.wikipedia.org/w/api.php?action=query&format=json&prop=pageprops&titles=State%7CU.S.+state%7CCalifornia%7CLouisiana%7CNew+York+%28state%29&ppprop=wikibase_item&origin=*",
       "status": 200,
       "ok": true
     },
@@ -4486,7 +4498,7 @@
       "id": "step-27",
       "type": "api-response",
       "method": "GET",
-      "url": "https://en.wikipedia.org/w/api.php?action=query&format=json&list=search&srsearch=state&srlimit=5&origin=*",
+      "url": "https://en.wikipedia.org/w/api.php?action=query&format=json&list=search&srsearch=Hawaii&srlimit=5&origin=*",
       "status": 200,
       "ok": true
     },
@@ -4494,13 +4506,13 @@
       "id": "step-28",
       "type": "api-request",
       "method": "GET",
-      "url": "https://en.wikipedia.org/w/api.php?action=query&format=json&prop=pageprops&titles=State%7CU.S.+state%7CCalifornia%7CLouisiana%7CNew+York+%28state%29&ppprop=wikibase_item&origin=*"
+      "url": "https://en.wikipedia.org/w/api.php?action=query&format=json&prop=pageprops&titles=Hawaii%7CHawaiian%7CHawai%CA%BBi+%28island%29%7CHonolulu%7CHawaiian+Kingdom&ppprop=wikibase_item&origin=*"
     },
     {
       "id": "step-29",
       "type": "api-response",
       "method": "GET",
-      "url": "https://en.wikipedia.org/w/api.php?action=query&format=json&prop=pageprops&titles=State%7CU.S.+state%7CCalifornia%7CLouisiana%7CNew+York+%28state%29&ppprop=wikibase_item&origin=*",
+      "url": "https://en.wikipedia.org/w/api.php?action=query&format=json&prop=pageprops&titles=Hawaii%7CHawaiian%7CHawai%CA%BBi+%28island%29%7CHonolulu%7CHawaiian+Kingdom&ppprop=wikibase_item&origin=*",
       "status": 200,
       "ok": true
     },
@@ -4554,7 +4566,7 @@
       "id": "step-37",
       "type": "api-response",
       "method": "GET",
-      "url": "https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&ids=Q7275&languages=en&origin=*&props=labels%7Caliases%7Cdescriptions%7Cclaims%7Csitelinks&sitefilter=enwiki",
+      "url": "https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&ids=Q782&languages=en&origin=*&props=labels%7Caliases%7Cdescriptions%7Cclaims%7Csitelinks&sitefilter=enwiki",
       "status": 200,
       "ok": true
     },
@@ -4562,7 +4574,7 @@
       "id": "step-38",
       "type": "api-response",
       "method": "GET",
-      "url": "https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&ids=Q68740&languages=en&origin=*&props=labels%7Caliases%7Cdescriptions%7Cclaims%7Csitelinks&sitefilter=enwiki",
+      "url": "https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&ids=Q7275&languages=en&origin=*&props=labels%7Caliases%7Cdescriptions%7Cclaims%7Csitelinks&sitefilter=enwiki",
       "status": 200,
       "ok": true
     },
@@ -4570,7 +4582,7 @@
       "id": "step-39",
       "type": "api-response",
       "method": "GET",
-      "url": "https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&ids=Q782&languages=en&origin=*&props=labels%7Caliases%7Cdescriptions%7Cclaims%7Csitelinks&sitefilter=enwiki",
+      "url": "https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&ids=Q68740&languages=en&origin=*&props=labels%7Caliases%7Cdescriptions%7Cclaims%7Csitelinks&sitefilter=enwiki",
       "status": 200,
       "ok": true
     },

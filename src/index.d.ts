@@ -684,6 +684,7 @@ export interface TranslationPhrase {
   target: {
     text: string;
     language: string | null;
+    entityId: string | null;
     description: string | null;
     url: string | null;
     status: string;

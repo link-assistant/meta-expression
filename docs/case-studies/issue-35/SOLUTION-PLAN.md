@@ -15,6 +15,11 @@
    U.S.-state predicate `штат`.
 5. There was no round-trip regression for the reported sentence, so a
    back-translation loss could pass unnoticed.
+6. The first fix rendered the sentence correctly but did not propagate the
+   contextual target refinement back into phrase target metadata, CST phrase
+   records, and Links Notation.
+7. The issue explicitly asked for Rust/WASM availability, while the initial
+   translation fix only changed JavaScript.
 
 ## Implemented Fix
 
@@ -27,11 +32,17 @@
 - Change the English-to-Russian copula rule to emit `это`.
 - Add a contextual English-to-Russian predicate rule for
   `U.S. state subject + is a state`, rendering the predicate as `штат`.
+- Propagate contextual target rewrites into phrase target metadata, Markdown,
+  HTML, CST, and Links Notation, preserving source `Q7275` separately from
+  target `Q35657`.
 - Add a narrow Russian-to-English rule that turns the fixed output back into
   `Hawaii is a state.` for the issue's quality loop.
 - Add `tests/issue-35.test.js` with mocked Wikimedia routes that fail without
   identification headers, expose bad grammar-fragment searches, and reproduce
   the live `State` disambiguation ambiguity.
+- Add a Rust core semantic translation fixture for issue #35, including phrase
+  Q ids, doublet relations, and C ABI helpers that are exportable from the
+  existing `cdylib` crate.
 
 ## Requirement Plans
 
@@ -51,7 +62,7 @@ Next planned layer:
    a doublet-backed rule graph that can run in Rust/WASM and JavaScript.
 
 This PR performs step 1 more safely by preventing grammar glue from becoming a
-false meaning id.
+false meaning id, and adds an issue-sized Rust doublet fixture for step 3.
 
 ### Translation Quality Loop
 
@@ -72,7 +83,8 @@ Next planned layer:
 
 Current state: phrase ids, entity ids, source ranges, sentence ids,
 transformation steps, CST, and Links Notation already connect the source text,
-semantic phrase records, and target renderings.
+semantic phrase records, and target renderings. Contextual target rewrites now
+carry both source and target meaning ids when they differ.
 
 Next planned layer: expose those relationships as explicit doublets so the
 formalized sentence can be transformed independently from the current

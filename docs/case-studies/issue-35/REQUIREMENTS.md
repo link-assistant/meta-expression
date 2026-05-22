@@ -7,7 +7,7 @@ live before-output, and investigation logs under `docs/case-studies/issue-35`.
 
 Status: implemented. Raw artifacts are stored in [`data/`](./data/), including
 the issue body, PR metadata, code searches, workflow captures, live CLI output,
-Wikimedia HTTP evidence, and test logs.
+Wikimedia HTTP evidence, CI logs, and before/after test logs.
 
 ## R35.2 — Keep semantic phrases separate from grammar glue
 
@@ -50,10 +50,13 @@ semantic Q ids and a narrow Russian-to-English copula/article rule.
 The result must keep links between source phrase spans, target phrase labels,
 sentence renderings, transformation steps, and formalization data.
 
-Status: already supported and preserved. Translation output includes phrase
+Status: implemented and regression-tested. Translation output includes phrase
 ids, source ranges, target labels, sentence records, transformation steps, CST,
-and Links Notation. The issue #35 tests assert phrase ids and entity ids in the
-formalization CST.
+and Links Notation. Rule-based target rewrites now update phrase target
+metadata as well as sentence rendering, so the source `state` phrase remains
+`Q7275` while the Russian target predicate is recorded as `штат`/`Q35657`.
+The issue #35 tests assert formalization entity ids, target entity ids, and the
+`targetId Q35657` Links Notation trace.
 
 ## R35.7 — Expand tests before and after the fix
 
@@ -63,7 +66,8 @@ network dependencies.
 Status: implemented. `tests/issue-35.test.js` uses mocked Wikimedia responses
 and fails if request identification is removed, if grammar-fragment searches
 return, if a Wikipedia disambiguation page outranks the direct state concept,
-or if the target output regresses.
+if phrase target metadata drifts from sentence rendering, or if the target
+output regresses. Rust unit tests cover the same issue-sized semantic mapping.
 
 ## R35.8 — Research translation-quality data and metrics
 
@@ -91,6 +95,9 @@ The long-term architecture should be
 `source language -> semantic meta language -> target language`, with distinct
 meanings represented by Wikidata Q/P ids and later doublet links.
 
-Status: planned in [`SOLUTION-PLAN.md`](./SOLUTION-PLAN.md). This PR strengthens
-the current CST/Q-id substrate and leaves the doublet-backed Rust/WASM layer as
-a staged architecture item.
+Status: partially implemented with a narrow parity slice. JavaScript remains
+the main translation pipeline, but `rust/core` now includes a deterministic
+issue #35 semantic translation record, source/target phrase Q ids, doublet
+relations between sentence nodes and meanings, and C ABI helpers suitable for
+WASM exports. The broader doublet-backed rule graph remains staged in
+[`SOLUTION-PLAN.md`](./SOLUTION-PLAN.md).

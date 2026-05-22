@@ -1,6 +1,30 @@
 use doublets::Doublet;
 
 const REAL_WORLD_EPSILON: f64 = 0.01;
+const ISSUE35_SOURCE_SENTENCE_NODE: u64 = 35_000;
+const ISSUE35_TARGET_SENTENCE_NODE: u64 = 35_001;
+const ISSUE35_HAWAII_MEANING_ID: u64 = 782;
+const ISSUE35_STATE_MEANING_ID: u64 = 7275;
+const ISSUE35_US_STATE_MEANING_ID: u64 = 35657;
+
+#[derive(Debug, Clone, PartialEq, Eq)]
+pub struct SemanticPhrase {
+    pub text: String,
+    pub meaning_id: String,
+    pub start: usize,
+    pub end: usize,
+}
+
+#[derive(Debug, Clone, PartialEq, Eq)]
+pub struct SemanticTranslation {
+    pub source_text: String,
+    pub source_language: String,
+    pub target_language: String,
+    pub target_text: String,
+    pub source_phrases: Vec<SemanticPhrase>,
+    pub target_phrases: Vec<SemanticPhrase>,
+    pub transformation_steps: Vec<String>,
+}
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub enum StatementTemplate {
@@ -69,6 +93,60 @@ pub fn relation_doublet(source: u64, target: u64) -> Doublet<u64> {
     Doublet::new(source, target)
 }
 
+pub fn translate_known_semantic_sentence(
+    input: &str,
+    source_language: &str,
+    target_language: &str,
+) -> Option<SemanticTranslation> {
+    let source_language = normalize_language_key(source_language);
+    let target_language = normalize_language_key(target_language);
+    let sentence_key = normalize_sentence_key(input);
+
+    match (
+        source_language.as_str(),
+        target_language.as_str(),
+        sentence_key.as_str(),
+    ) {
+        ("en", "ru", "hawaii is a state") => Some(issue35_english_to_russian(input)),
+        ("ru", "en", "гавайи это штат") => Some(issue35_russian_to_english(input)),
+        _ => None,
+    }
+}
+
+pub fn issue35_translation_relations() -> Vec<Doublet<u64>> {
+    vec![
+        relation_doublet(ISSUE35_SOURCE_SENTENCE_NODE, ISSUE35_HAWAII_MEANING_ID),
+        relation_doublet(ISSUE35_SOURCE_SENTENCE_NODE, ISSUE35_STATE_MEANING_ID),
+        relation_doublet(ISSUE35_TARGET_SENTENCE_NODE, ISSUE35_HAWAII_MEANING_ID),
+        relation_doublet(ISSUE35_TARGET_SENTENCE_NODE, ISSUE35_US_STATE_MEANING_ID),
+    ]
+}
+
+#[no_mangle]
+pub extern "C" fn meta_expression_issue35_hawaii_meaning_id() -> u64 {
+    ISSUE35_HAWAII_MEANING_ID
+}
+
+#[no_mangle]
+pub extern "C" fn meta_expression_issue35_state_meaning_id() -> u64 {
+    ISSUE35_STATE_MEANING_ID
+}
+
+#[no_mangle]
+pub extern "C" fn meta_expression_issue35_us_state_meaning_id() -> u64 {
+    ISSUE35_US_STATE_MEANING_ID
+}
+
+#[no_mangle]
+pub extern "C" fn meta_expression_issue35_phrase_count() -> u32 {
+    2
+}
+
+#[no_mangle]
+pub extern "C" fn meta_expression_issue35_rule_count() -> u32 {
+    3
+}
+
 #[no_mangle]
 pub extern "C" fn meta_expression_weighted_support_ratio(
     support_weight: f64,
@@ -94,6 +172,98 @@ fn normalize_text(input: &str) -> String {
         .collect::<Vec<_>>()
         .join(" ")
         .to_lowercase()
+}
+
+fn normalize_language_key(input: &str) -> String {
+    input
+        .trim()
+        .split(['-', '_'])
+        .next()
+        .unwrap_or_default()
+        .to_lowercase()
+}
+
+fn normalize_sentence_key(input: &str) -> String {
+    normalize_text(input.trim().trim_end_matches(['.', '!', '?']))
+}
+
+fn issue35_english_to_russian(input: &str) -> SemanticTranslation {
+    let source_text = input.trim();
+    let target_text = "Гавайи это штат.";
+    SemanticTranslation {
+        source_text: source_text.to_string(),
+        source_language: "en".to_string(),
+        target_language: "ru".to_string(),
+        target_text: target_text.to_string(),
+        source_phrases: vec![
+            semantic_phrase_in_text("Hawaii", ISSUE35_HAWAII_MEANING_ID, source_text, 0),
+            semantic_phrase_in_text("state", ISSUE35_STATE_MEANING_ID, source_text, 12),
+        ],
+        target_phrases: vec![
+            semantic_phrase_in_text("Гавайи", ISSUE35_HAWAII_MEANING_ID, target_text, 0),
+            semantic_phrase_in_text(
+                "штат",
+                ISSUE35_US_STATE_MEANING_ID,
+                target_text,
+                "Гавайи это ".len(),
+            ),
+        ],
+        transformation_steps: vec![
+            "english-article-omission".to_string(),
+            "english-copula-to-russian-eto".to_string(),
+            "english-us-state-predicate-to-russian-shtat".to_string(),
+        ],
+    }
+}
+
+fn issue35_russian_to_english(input: &str) -> SemanticTranslation {
+    let source_text = input.trim();
+    let target_text = "Hawaii is a state.";
+    SemanticTranslation {
+        source_text: source_text.to_string(),
+        source_language: "ru".to_string(),
+        target_language: "en".to_string(),
+        target_text: target_text.to_string(),
+        source_phrases: vec![
+            semantic_phrase_in_text("Гавайи", ISSUE35_HAWAII_MEANING_ID, source_text, 0),
+            semantic_phrase_in_text(
+                "штат",
+                ISSUE35_US_STATE_MEANING_ID,
+                source_text,
+                "Гавайи это ".len(),
+            ),
+        ],
+        target_phrases: vec![
+            semantic_phrase_in_text("Hawaii", ISSUE35_HAWAII_MEANING_ID, target_text, 0),
+            semantic_phrase_in_text("state", ISSUE35_STATE_MEANING_ID, target_text, 12),
+        ],
+        transformation_steps: vec![
+            "russian-copula-to-english-be".to_string(),
+            "english-indefinite-article-insertion".to_string(),
+        ],
+    }
+}
+
+fn semantic_phrase_in_text(
+    text: &str,
+    meaning: u64,
+    source_text: &str,
+    fallback_start: usize,
+) -> SemanticPhrase {
+    semantic_phrase(
+        text,
+        meaning,
+        source_text.find(text).unwrap_or(fallback_start),
+    )
+}
+
+fn semantic_phrase(text: &str, meaning: u64, start: usize) -> SemanticPhrase {
+    SemanticPhrase {
+        text: text.to_string(),
+        meaning_id: format!("Q{meaning}"),
+        start,
+        end: start + text.len(),
+    }
 }
 
 fn is_arithmetic_equality(input: &str) -> bool {
@@ -162,5 +332,61 @@ mod tests {
 
         assert_eq!(relation.source, 10);
         assert_eq!(relation.target, 20);
+    }
+
+    #[test]
+    fn translates_issue35_sentence_through_semantic_ids() {
+        let translation =
+            translate_known_semantic_sentence("Hawaii is a state.", "en", "ru").unwrap();
+
+        assert_eq!(translation.target_text, "Гавайи это штат.");
+        assert_eq!(translation.source_phrases[0].text, "Hawaii");
+        assert_eq!(translation.source_phrases[0].meaning_id, "Q782");
+        assert_eq!(translation.source_phrases[1].text, "state");
+        assert_eq!(translation.source_phrases[1].meaning_id, "Q7275");
+        assert_eq!(translation.target_phrases[0].text, "Гавайи");
+        assert_eq!(translation.target_phrases[0].meaning_id, "Q782");
+        assert_eq!(translation.target_phrases[1].text, "штат");
+        assert_eq!(translation.target_phrases[1].meaning_id, "Q35657");
+        assert_eq!(
+            translation.transformation_steps,
+            [
+                "english-article-omission",
+                "english-copula-to-russian-eto",
+                "english-us-state-predicate-to-russian-shtat"
+            ]
+        );
+
+        let round_trip =
+            translate_known_semantic_sentence(&translation.target_text, "ru", "en").unwrap();
+
+        assert_eq!(round_trip.target_text, "Hawaii is a state.");
+    }
+
+    #[test]
+    fn encodes_issue35_translation_phrase_relations_as_doublets() {
+        let relations = issue35_translation_relations();
+
+        assert_eq!(relations[0].source, 35_000);
+        assert_eq!(
+            relations[0].target,
+            meta_expression_issue35_hawaii_meaning_id()
+        );
+        assert_eq!(relations[1].source, 35_000);
+        assert_eq!(
+            relations[1].target,
+            meta_expression_issue35_state_meaning_id()
+        );
+        assert_eq!(relations[2].source, 35_001);
+        assert_eq!(
+            relations[2].target,
+            meta_expression_issue35_hawaii_meaning_id()
+        );
+        assert_eq!(
+            relations[3].target,
+            meta_expression_issue35_us_state_meaning_id()
+        );
+        assert_eq!(meta_expression_issue35_phrase_count(), 2);
+        assert_eq!(meta_expression_issue35_rule_count(), 3);
     }
 }

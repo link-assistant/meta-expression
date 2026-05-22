@@ -92,11 +92,13 @@ Candidate helpers considered:
 - COMET: useful for future neural scoring and span-level diagnostics.
 - doublet-rs/doublet-web: target substrate for the semantic meta-language
   layer, not needed for this narrow bug fix.
-- Rust/WASM: appropriate when the doublet-backed representation becomes the
-  canonical transformation engine.
+- Rust/WASM: appropriate for deterministic semantic records that should remain
+  available outside the JavaScript runtime.
 
-Decision: add no runtime dependency in this PR. The fix stays inside the
-existing formalize/translate fetch, CST, and rule-table architecture.
+Decision: add no runtime dependency in this PR. The JavaScript fix stays inside
+the existing formalize/translate fetch, CST, and rule-table architecture, while
+the Rust core gets a narrow issue #35 semantic fixture and ABI-safe Q-id helper
+functions.
 
 ## CI/CD Template Review
 
@@ -107,9 +109,9 @@ lint/format/duplication checks, documentation validation, file-line limits,
 manual version-change protection, secret scanning, and Node/Bun/Deno tests
 across Ubuntu, macOS, and Windows.
 
-The Rust template is relevant for the issue's future Rust/WASM work. The
-current repository already has a `rust-check` job gated on Rust file changes,
-so no workflow change was required for this JavaScript bug fix.
+The Rust template is relevant for the issue's Rust/WASM work. The current
+repository already has a `rust-check` job gated on Rust file changes, so the
+new Rust core fixture is covered without a workflow change.
 
 Captured data:
 

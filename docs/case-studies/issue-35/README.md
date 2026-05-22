@@ -23,7 +23,7 @@ which left translation with unresolved or source-language labels.
 ## Captured Inputs
 
 The data folder stores the issue, PR, related code searches, workflow captures,
-CI-template references, live reproductions, and focused test logs:
+CI-template references, live reproductions, CI logs, and focused test logs:
 
 - [`data/issue-35.json`](./data/issue-35.json)
 - [`data/issue-35-body.md`](./data/issue-35-body.md)
@@ -32,6 +32,7 @@ CI-template references, live reproductions, and focused test logs:
 - [`data/pr-36-comments.json`](./data/pr-36-comments.json)
 - [`data/pr-36-review-comments.json`](./data/pr-36-review-comments.json)
 - [`data/pr-36-reviews.json`](./data/pr-36-reviews.json)
+- [`data/pr-36-diff-files.txt`](./data/pr-36-diff-files.txt)
 - [`data/recent-merged-translation-prs.json`](./data/recent-merged-translation-prs.json)
 - [`data/search-formalizeTextWith.json`](./data/search-formalizeTextWith.json)
 - [`data/search-translateTextWith.json`](./data/search-translateTextWith.json)
@@ -54,9 +55,19 @@ CI-template references, live reproductions, and focused test logs:
 - [`data/npm-test-before.log`](./data/npm-test-before.log)
 - [`data/node-issue-35-test.log`](./data/node-issue-35-test.log)
 - [`data/node-focused-test.log`](./data/node-focused-test.log)
+- [`data/node-issue-35-target-consistency-before.log`](./data/node-issue-35-target-consistency-before.log)
+- [`data/node-issue-35-target-consistency-after.log`](./data/node-issue-35-target-consistency-after.log)
+- [`data/cargo-test-issue-35-rust-before.log`](./data/cargo-test-issue-35-rust-before.log)
+- [`data/cargo-test-issue-35-rust-after.log`](./data/cargo-test-issue-35-rust-after.log)
+- [`data/npm-ci-continue.log`](./data/npm-ci-continue.log)
+- [`ci-logs/recent-runs.json`](./ci-logs/recent-runs.json)
+- [`ci-logs/checks-and-release-26285529955.log`](./ci-logs/checks-and-release-26285529955.log)
+- [`ci-logs/checks-and-release-26287486926.log`](./ci-logs/checks-and-release-26287486926.log)
+- [`ci-logs/broken-link-checker-26287486920.log`](./ci-logs/broken-link-checker-26287486920.log)
 
-There were no issue comments, PR conversation comments, review comments, or PR
-reviews when captured.
+Latest capture: there are no issue comments, five PR conversation comments, no
+inline review comments, and no submitted PR reviews. The newest PR comment
+requested a full requirements audit rather than a single inline code change.
 
 ## Timeline
 
@@ -74,6 +85,13 @@ reviews when captured.
 6. Live after-output showed one more semantic ambiguity: `state` selected the
    broad `Q7275` target label `государство`, while the subject `Hawaii`
    supplies the narrower U.S.-state context.
+7. The continuation audit found one consistency gap after the sentence output
+   was fixed: sentence rendering used `штат`/`Q35657`, but phrase-level target
+   metadata and Links Notation could still expose the broader
+   `государство`/`Q7275` target.
+8. CI investigation preserved the old failed run and the latest passing run.
+   The old failure was a dependency-install failure on the placeholder commit;
+   the latest checks for `a7a0b15` passed.
 
 ## Implemented Slice
 
@@ -89,15 +107,23 @@ reviews when captured.
   slice.
 - The English-to-Russian rule slice uses the subject description to render
   `X is a state` as `X это штат` when `X` is a U.S. state.
+- Rule-based target rewrites now propagate back into the phrase target object,
+  CST, Markdown/HTML links, and Links Notation, preserving source concept
+  `Q7275` while exposing the refined target concept `Q35657`.
 - Russian-to-English rendering adds a narrow back-translation rule for this
   issue's round-trip quality check: `Гавайи это штат.` -> `Hawaii is a state.`
 - `tests/issue-35.test.js` verifies identified Wikimedia calls, phrase
-  boundaries, target Russian output, and round-trip stability.
+  boundaries, target Russian output, refined target ids, and round-trip
+  stability.
+- `rust/core` now contains a deterministic issue #35 semantic translation
+  fixture, doublet relation records, and C ABI helpers for the involved Q ids.
 
 ## Boundary
 
 This PR does not claim a general-purpose machine-translation engine. It fixes
 the reported sentence and adds guardrails so the current semantic-label
 translator does not overlink grammar fragments. The broader
-doublet-backed semantic meta-language, Rust/WASM execution, and dataset-scale
-quality loop are specified in [`SOLUTION-PLAN.md`](./SOLUTION-PLAN.md).
+doublet-backed semantic meta-language and dataset-scale quality loop are
+specified in [`SOLUTION-PLAN.md`](./SOLUTION-PLAN.md). The Rust implementation
+added here is a narrow parity slice, not a replacement for the JavaScript
+translation pipeline.

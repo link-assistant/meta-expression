@@ -1,0 +1,102 @@
+    Updating crates.io index
+ Downloading crates ...
+  Downloaded beef v0.5.2
+  Downloaded memmap2 v0.9.10
+  Downloaded thiserror v2.0.18
+  Downloaded unicode-ident v1.0.24
+  Downloaded proc-macro2 v1.0.106
+  Downloaded allocator-api2 v0.4.0
+  Downloaded thiserror-impl v2.0.18
+  Downloaded quote v1.0.45
+  Downloaded syn v2.0.117
+  Downloaded leak_slice v0.2.0
+  Downloaded platform-mem v0.3.0
+  Downloaded doublets v0.3.0
+  Downloaded platform-num v0.8.0
+  Downloaded platform-trees v0.3.4
+  Downloaded platform-data v2.0.0
+   Compiling proc-macro2 v1.0.106
+   Compiling unicode-ident v1.0.24
+   Compiling quote v1.0.45
+   Compiling autocfg v1.5.0
+   Compiling libc v0.2.186
+   Compiling thiserror v2.0.18
+   Compiling getrandom v0.4.2
+   Compiling rustix v1.1.4
+   Compiling cfg-if v1.0.4
+   Compiling linux-raw-sys v0.12.1
+   Compiling bitflags v2.11.1
+   Compiling num-traits v0.2.19
+   Compiling once_cell v1.21.4
+   Compiling fastrand v2.4.1
+   Compiling beef v0.5.2
+   Compiling allocator-api2 v0.4.0
+   Compiling syn v2.0.117
+   Compiling leak_slice v0.2.0
+   Compiling tap v1.0.1
+   Compiling platform-num v0.8.0
+   Compiling memmap2 v0.9.10
+   Compiling platform-trees v0.3.4
+   Compiling tempfile v3.27.0
+   Compiling thiserror-impl v2.0.18
+   Compiling platform-mem v0.3.0
+   Compiling platform-data v2.0.0
+   Compiling doublets v0.3.0
+   Compiling meta-expression-core v0.1.0 (/tmp/gh-issue-solver-1779453061125/rust/core)
+error[E0425]: cannot find function `translate_known_semantic_sentence` in this scope
+   --> rust/core/src/lib.rs:170:13
+    |
+170 |             translate_known_semantic_sentence("Hawaii is a state.", "en", "ru").unwrap();
+    |             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ not found in this scope
+
+error[E0425]: cannot find function `translate_known_semantic_sentence` in this scope
+   --> rust/core/src/lib.rs:191:13
+    |
+191 |             translate_known_semantic_sentence(&translation.target_text, "ru", "en").unwrap();
+    |             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ not found in this scope
+
+error[E0425]: cannot find function `issue35_translation_relations` in this scope
+   --> rust/core/src/lib.rs:198:25
+    |
+198 |         let relations = issue35_translation_relations();
+    |                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ not found in this scope
+
+error[E0425]: cannot find function `meta_expression_issue35_hawaii_meaning_id` in this scope
+   --> rust/core/src/lib.rs:201:41
+    |
+201 |         assert_eq!(relations[0].target, meta_expression_issue35_hawaii_meaning_id());
+    |                                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ not found in this scope
+
+error[E0425]: cannot find function `meta_expression_issue35_state_meaning_id` in this scope
+   --> rust/core/src/lib.rs:203:41
+    |
+203 |         assert_eq!(relations[1].target, meta_expression_issue35_state_meaning_id());
+    |                                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ not found in this scope
+
+error[E0425]: cannot find function `meta_expression_issue35_hawaii_meaning_id` in this scope
+   --> rust/core/src/lib.rs:205:41
+    |
+205 |         assert_eq!(relations[2].target, meta_expression_issue35_hawaii_meaning_id());
+    |                                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ not found in this scope
+
+error[E0425]: cannot find function `meta_expression_issue35_us_state_meaning_id` in this scope
+   --> rust/core/src/lib.rs:208:13
+    |
+208 |             meta_expression_issue35_us_state_meaning_id()
+    |             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ not found in this scope
+
+error[E0425]: cannot find function `meta_expression_issue35_phrase_count` in this scope
+   --> rust/core/src/lib.rs:210:20
+    |
+210 |         assert_eq!(meta_expression_issue35_phrase_count(), 2);
+    |                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ not found in this scope
+
+error[E0425]: cannot find function `meta_expression_issue35_rule_count` in this scope
+   --> rust/core/src/lib.rs:211:20
+    |
+211 |         assert_eq!(meta_expression_issue35_rule_count(), 3);
+    |                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ not found in this scope
+
+For more information about this error, try `rustc --explain E0425`.
+error: could not compile `meta-expression-core` (lib test) due to 9 previous errors
+warning: build failed, waiting for other jobs to finish...

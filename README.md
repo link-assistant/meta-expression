@@ -49,7 +49,8 @@ Core exports:
 - `translateTextWith(input, options)` formalizes first, then translates
   sentences through resolved Wikidata Q/P target-language labels and explicit
   transformation rules while preserving unresolved parts as variables with
-  questions and trace steps.
+  questions and trace steps. When a contextual rule refines a target phrase,
+  the result keeps the source meaning id and the refined target meaning id.
 - `checkText(input, options)` detects statements in longer text, analyzes each
   statement, and returns red-to-green correctness coloring as JSON, HTML,
   Markdown, and Links Notation.
@@ -170,7 +171,9 @@ preserved unchanged for backwards compatibility.
 ## Rust Core
 
 The Rust workspace under [`rust/core`](rust/core) contains WASM-ready core
-primitives and uses the `doublets` crate for relation-link doublet encoding:
+primitives and uses the `doublets` crate for relation-link doublet encoding.
+It also includes a deterministic issue #35 semantic translation fixture for
+`Hawaii is a state.` with source/target Q ids and ABI-safe helper exports:
 
 ```bash
 cargo test --workspace

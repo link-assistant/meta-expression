@@ -10,6 +10,7 @@ const russianUsStatePredicate = Object.freeze({
   text: 'штат',
   entityId: 'Q35657',
   url: 'https://ru.wikipedia.org/wiki/%D0%A8%D1%82%D0%B0%D1%82_%D0%A1%D0%A8%D0%90',
+  description: 'state of the United States',
 });
 
 /**
@@ -203,6 +204,7 @@ async function translatePhrase(phrase, config) {
     target: {
       text: targetLabel,
       language: config.targetLanguage,
+      entityId: translationEntity.id,
       description: targetDescriptionFor(
         targetResult.entity,
         config.targetLanguage
@@ -273,6 +275,7 @@ function unresolvedPhrase(base, reason, entityId = null) {
     target: {
       text: base.source.text,
       language: null,
+      entityId,
       description: null,
       url: null,
       status: reason,
@@ -550,7 +553,9 @@ function renderUnitFromPhrase(phrase) {
     sourceLabel: phrase.source.label ?? null,
     sourceDescription: phrase.source.description ?? null,
     entityId: phrase.entityId ?? null,
+    targetEntityId: phrase.target.entityId ?? phrase.entityId ?? null,
     targetUrl: phrase.target.url ?? null,
+    phraseRef: phrase,
     variableName: phrase.variable?.name ?? null,
     plainText: phrase.target.text,
     markdown: renderPhraseMarkdown(phrase),
@@ -679,17 +684,29 @@ function normalizePhrase(value) {
 
 function setUnitTargetText(unit, target) {
   unit.plainText = target.text;
-  unit.entityId = target.entityId ?? unit.entityId;
+  unit.targetEntityId = target.entityId ?? unit.targetEntityId ?? unit.entityId;
   unit.targetUrl = target.url ?? unit.targetUrl;
-  if (unit.entityId && unit.targetUrl) {
-    unit.markdown = `[${escapeMarkdown(unit.plainText)}](${unit.targetUrl} "${unit.entityId}")`;
+  applyUnitTargetToPhrase(unit, target);
+  if (unit.targetEntityId && unit.targetUrl) {
+    unit.markdown = `[${escapeMarkdown(unit.plainText)}](${unit.targetUrl} "${unit.targetEntityId}")`;
     unit.html = `<a href="${escapeAttribute(unit.targetUrl)}" title="${escapeAttribute(
-      unit.entityId
+      unit.targetEntityId
     )}">${escapeHtml(unit.plainText)}</a>`;
     return;
   }
   unit.markdown = unit.plainText;
   unit.html = escapeHtml(unit.plainText);
+}
+
+function applyUnitTargetToPhrase(unit, target) {
+  if (!unit.phraseRef) {
+    return;
+  }
+  unit.phraseRef.target.text = target.text;
+  unit.phraseRef.target.entityId = unit.targetEntityId;
+  unit.phraseRef.target.url = unit.targetUrl;
+  unit.phraseRef.target.description =
+    target.description ?? unit.phraseRef.target.description;
 }
 
 function applyRussianToEnglishRules(units, segment, sentenceId, config) {
@@ -813,18 +830,20 @@ function renderSentenceOutput(sentences, key, fallbackPhrases) {
 }
 
 function renderPhraseMarkdown(phrase) {
-  if (!phrase.entityId || !phrase.target.url) {
+  const targetEntityId = phrase.target.entityId ?? phrase.entityId;
+  if (!targetEntityId || !phrase.target.url) {
     return phrase.target.text;
   }
-  return `[${escapeMarkdown(phrase.target.text)}](${phrase.target.url} "${phrase.entityId}")`;
+  return `[${escapeMarkdown(phrase.target.text)}](${phrase.target.url} "${targetEntityId}")`;
 }
 
 function renderPhraseHtml(phrase) {
-  if (!phrase.entityId || !phrase.target.url) {
+  const targetEntityId = phrase.target.entityId ?? phrase.entityId;
+  if (!targetEntityId || !phrase.target.url) {
     return escapeHtml(phrase.target.text);
   }
   return `<a href="${escapeAttribute(phrase.target.url)}" title="${escapeAttribute(
-    phrase.entityId
+    targetEntityId
   )}">${escapeHtml(phrase.target.text)}</a>`;
 }
 
@@ -836,13 +855,17 @@ function renderTranslationLinksNotation(cst, questions) {
   );
   const phrases = cst.phrases.map((phrase, index) => {
     const id = phrase.entityId ? ` id ${phrase.entityId}` : '';
+    const targetId =
+      phrase.target.entityId && phrase.target.entityId !== phrase.entityId
+        ? ` targetId ${phrase.target.entityId}`
+        : '';
     const variable = phrase.variable?.name
       ? ` variable ${phrase.variable.name}`
       : '';
     const url = phrase.target.url
       ? ` markdownUrl ${toLino(phrase.target.url)}`
       : '';
-    return `(phrase-${index + 1}: source ${toLino(phrase.source.text)} target ${toLino(phrase.target.text)} status ${phrase.target.status}${id}${variable}${url})`;
+    return `(phrase-${index + 1}: source ${toLino(phrase.source.text)} target ${toLino(phrase.target.text)} status ${phrase.target.status}${id}${targetId}${variable}${url})`;
   });
   const variables = cst.variables.map(
     (variable) =>
