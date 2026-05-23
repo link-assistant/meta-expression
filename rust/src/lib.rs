@@ -143,10 +143,11 @@ pub fn translate_glossary_semantic_sentence(
     }
 
     let mut transformation_steps = Vec::new();
-    if source_language == "ru" && target_language == "en" {
-        if insert_russian_examples_of(&tokens, &mut target_tokens) {
-            transformation_steps.push("russian-examples-genitive-to-english-of-phrase".to_string());
-        }
+    if source_language == "ru"
+        && target_language == "en"
+        && insert_russian_examples_of(&tokens, &mut target_tokens)
+    {
+        transformation_steps.push("russian-examples-genitive-to-english-of-phrase".to_string());
     }
 
     if starts_with_uppercase(source_text) {
@@ -304,9 +305,7 @@ fn strip_parenthetical_glosses(text: &str) -> String {
             continue;
         }
         if ch == ')' {
-            if depth > 0 {
-                depth -= 1;
-            }
+            depth = depth.saturating_sub(1);
             let contains_letters = buffer.chars().any(|c| c.is_alphabetic());
             if !contains_letters {
                 result.push('(');
@@ -399,7 +398,7 @@ pub fn tokenize_for_match(text: &str) -> Vec<String> {
             if token.chars().all(|c| c.is_ascii_digit()) {
                 return false;
             }
-            !stopwords.iter().any(|stop| *stop == token.as_str())
+            !stopwords.contains(&token.as_str())
         })
         .collect()
 }
@@ -446,9 +445,7 @@ pub fn token_coverage(candidate: &str, target: &str) -> TokenCoverage {
 
 pub fn normalize_statement_key(text: &str) -> String {
     let collapsed = text.split_whitespace().collect::<Vec<_>>().join(" ");
-    collapsed
-        .trim_end_matches(|ch: char| matches!(ch, '.' | '!' | '?' | ' '))
-        .to_string()
+    collapsed.trim_end_matches(['.', '!', '?', ' ']).to_string()
 }
 
 #[no_mangle]
@@ -661,8 +658,9 @@ fn insert_russian_examples_of(
     source_tokens: &[TranslationToken],
     target_tokens: &mut Vec<TargetToken>,
 ) -> bool {
-    for index in 0..source_tokens.len().saturating_sub(1) {
-        if source_tokens[index].normalized != "примеры" {
+    let last_index = source_tokens.len().saturating_sub(1);
+    for (index, source_token) in source_tokens.iter().enumerate().take(last_index) {
+        if source_token.normalized != "примеры" {
             continue;
         }
         let target_index = target_tokens

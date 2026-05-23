@@ -105,7 +105,7 @@ describe('issue 29 - page issue reporting', () => {
       'utf8'
     );
     const workflow = await readFile(
-      new URL('../../../.github/workflows/release.yml', import.meta.url),
+      new URL('../../../.github/workflows/js.yml', import.meta.url),
       'utf8'
     );
 
