@@ -249,7 +249,7 @@ function syncTranslationCst(result) {
   result.cst.phrases = cloneValue(result.phrases ?? []);
   result.cst.variables = cloneValue(result.variables ?? []);
   result.cst.sentences = (result.sentences ?? []).map(cstSentence);
-  result.cst.naturalization = cloneValue(result.naturalization);
+  result.cst.naturalization = result.naturalization;
   result.cst.steps = cloneValue(result.steps ?? []);
 }
 

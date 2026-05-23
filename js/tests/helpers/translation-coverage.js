@@ -8,7 +8,10 @@ export function assertCompleteTranslationCoverage(result, sourceText) {
 }
 
 export function assertFormalizedSourceCoverage(result, sourceText) {
-  const cst = result.formalization?.cst ?? result.cst?.formalization;
+  const cst =
+    result.formalization?.cst ??
+    result.cst?.formalization ??
+    (result.cst?.type === 'formalization' ? result.cst : null);
   expect(cst?.type).toBe('formalization');
   expect(cst.text).toBe(String(sourceText ?? cst.text));
   expect(cst.tokens.length).toBeGreaterThan(0);
