@@ -1457,6 +1457,24 @@ pre {
   font-size: 0.86rem;
 }
 
+.translate-question-option:disabled {
+  cursor: not-allowed;
+  opacity: 0.55;
+}
+
+.translate-question-manual {
+  border: 1px solid var(--border-strong);
+  border-radius: 4px;
+  background: var(--surface);
+  color: var(--ink);
+  flex: 1 1 160px;
+  font: inherit;
+  font-size: 0.86rem;
+  max-width: 240px;
+  min-width: 140px;
+  padding: 6px 9px;
+}
+
 .translate-target-option {
   align-items: center;
   cursor: pointer;

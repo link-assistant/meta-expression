@@ -11,7 +11,7 @@ import { fetchWikimediaJson } from './wikimedia-fetch.js';
 const wikidataApiUrl = 'https://www.wikidata.org/w/api.php';
 const wikidataEntityBaseUrl = 'https://www.wikidata.org/wiki/';
 const wikidataPropertyBaseUrl = 'https://www.wikidata.org/wiki/Property:';
-const defaultCacheTtlMs = 60 * 60 * 1000;
+const defaultCacheTtlMs = 7 * 24 * 60 * 60 * 1000;
 const russianUsStatePredicate = Object.freeze({
   text: 'штат',
   entityId: 'Q35657',

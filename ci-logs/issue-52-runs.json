@@ -1,0 +1,18 @@
+[
+  {
+    "conclusion": "success",
+    "createdAt": "2026-05-23T18:04:45Z",
+    "databaseId": 26339787888,
+    "headSha": "4d1f02cc54cb6dfb2c1a48db157fb553974006e6",
+    "status": "completed",
+    "workflowName": "Rust Checks"
+  },
+  {
+    "conclusion": "failure",
+    "createdAt": "2026-05-23T18:04:45Z",
+    "databaseId": 26339787897,
+    "headSha": "4d1f02cc54cb6dfb2c1a48db157fb553974006e6",
+    "status": "completed",
+    "workflowName": "JS Checks and release"
+  }
+]

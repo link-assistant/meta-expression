@@ -688,12 +688,30 @@ export interface TranslationStrategy {
 
 export declare function listTranslationStrategies(): TranslationStrategy[];
 
+export interface TranslationAnswer {
+  optionId?: string | null;
+  selectedOptionId?: string | null;
+  targetText?: string | null;
+  entityId?: string | null;
+  targetUrl?: string | null;
+  description?: string | null;
+}
+
+export declare function applyTranslationQuestionAnswers(
+  result: TranslateResult,
+  answers:
+    | Record<string, string | TranslationAnswer>
+    | Map<string, string | TranslationAnswer>
+    | Array<TranslationAnswer & { variableName: string }>
+): TranslateResult;
+
 export interface TranslationVariable {
   name: string;
   sourceText: string;
   entityId: string | null;
   reason: string;
   resolvedByRule?: boolean;
+  resolvedByAnswer?: boolean;
 }
 
 export interface TranslationPhrase {
@@ -743,6 +761,7 @@ export interface TranslationQuestionOption {
   label: string;
   targetText: string | null;
   entityId?: string | null;
+  targetUrl?: string | null;
   description: string;
   confidence: number;
 }

@@ -1,4 +1,5 @@
 import {
+  applyTranslationQuestionAnswers,
   FORMALIZE_LINK_TARGETS,
   listTranslationStrategies,
   translateTextWith,
@@ -83,6 +84,9 @@ export function setupTranslatePage({
     const id = String((requestId += 1));
     status.dataset.requestId = id;
     status.textContent = 'Translating...';
+    run.dataset.defaultLabel ??= run.textContent;
+    run.disabled = true;
+    run.textContent = 'Translating...';
     try {
       const result = await translateTextWith(text, {
         fetch: globalThis.fetch?.bind(globalThis),
@@ -103,6 +107,11 @@ export function setupTranslatePage({
           error instanceof Error ? error.message : String(error)
         }`;
       }
+    } finally {
+      if (status.dataset.requestId === id) {
+        run.disabled = false;
+        run.textContent = run.dataset.defaultLabel || 'Translate';
+      }
     }
   }
 
@@ -114,7 +123,19 @@ export function setupTranslatePage({
       );
     }
     renderLinkedHtml(output, result.html || escapeHtml(result.plainText));
-    renderQuestionList(questions, result.questionDetails ?? result.questions);
+    renderQuestionList(
+      questions,
+      result.questionDetails ?? result.questions,
+      (question, answer) => {
+        currentResult = applyTranslationQuestionAnswers(
+          currentResult ?? result,
+          {
+            [question.variableName]: answer,
+          }
+        );
+        renderTranslateResult(currentResult);
+      }
+    );
     renderStepList(stepsList, result.steps);
     if (markdownPre) {
       markdownPre.textContent = result.markdown;
@@ -125,22 +146,7 @@ export function setupTranslatePage({
     if (cstPre) {
       cstPre.textContent = JSON.stringify(result.cst, null, 2);
     }
-    const translated = result.phrases.filter(
-      (phrase) => phrase.target.status === 'translated'
-    ).length;
-    const total = result.phrases.length;
-    const unresolved = result.variables.filter(
-      (variable) => !variable.resolvedByRule
-    ).length;
-    const sentenceCount = result.sentences?.length ?? 0;
-    const resolvedByRule = result.variables.filter(
-      (variable) => variable.resolvedByRule
-    ).length;
-    const ruleText = resolvedByRule ? `, ${resolvedByRule} rule-resolved` : '';
-    const unresolvedText = unresolved ? `; ${unresolved} unresolved` : '';
-    status.textContent = `Translated ${sentenceCount} sentence${
-      sentenceCount === 1 ? '' : 's'
-    } (${translated}/${total} linked phrases${ruleText}${unresolvedText}).`;
+    status.textContent = translateStatusText(result);
   }
 
   return { getResult: () => currentResult };
@@ -157,6 +163,34 @@ function selectedTranslateLinkTargetMode(linkTargetGroup) {
     return FORMALIZE_LINK_TARGETS.WIKIPEDIA;
   }
   return FORMALIZE_LINK_TARGETS.WIKIDATA;
+}
+
+function translateStatusText(result) {
+  const translated = result.phrases.filter((phrase) =>
+    [
+      'translated',
+      'answered-manual',
+      'answered-option',
+      'answered-preserve-source',
+    ].includes(phrase.target.status)
+  ).length;
+  const total = result.phrases.length;
+  const unresolved = result.variables.filter(
+    (variable) => !variable.resolvedByRule && !variable.resolvedByAnswer
+  ).length;
+  const sentenceCount = result.sentences?.length ?? 0;
+  const resolvedByRule = result.variables.filter(
+    (variable) => variable.resolvedByRule
+  ).length;
+  const resolvedByAnswer = result.variables.filter(
+    (variable) => variable.resolvedByAnswer
+  ).length;
+  const ruleText = resolvedByRule ? `, ${resolvedByRule} rule-resolved` : '';
+  const answerText = resolvedByAnswer ? `, ${resolvedByAnswer} answered` : '';
+  const unresolvedText = unresolved ? `; ${unresolved} unresolved` : '';
+  return `Translated ${sentenceCount} sentence${
+    sentenceCount === 1 ? '' : 's'
+  } (${translated}/${total} linked phrases${ruleText}${answerText}${unresolvedText}).`;
 }
 
 function setupTranslateSamples({
@@ -217,7 +251,7 @@ function syncStrategyButtons(strategyGroup, state) {
   }
 }
 
-function renderQuestionList(container, list) {
+function renderQuestionList(container, list, onAnswer) {
   if (!container) {
     return;
   }
@@ -233,32 +267,57 @@ function renderQuestionList(container, list) {
       typeof question === 'string' ? question : question.question;
     item.append(text);
     if (typeof question !== 'string' && question.options?.length) {
-      item.append(renderQuestionOptions(question));
+      item.append(renderQuestionOptions(question, onAnswer));
     }
     container.append(item);
   }
 }
 
-function renderQuestionOptions(question) {
+function renderQuestionOptions(question, onAnswer) {
   const group = document.createElement('div');
   group.className = 'translate-question-options';
+  const manualInput = document.createElement('input');
+  manualInput.type = 'text';
+  manualInput.className = 'translate-question-manual';
+  manualInput.placeholder = 'Manual answer';
   for (const option of question.options) {
     const button = document.createElement('button');
     button.type = 'button';
     button.className = 'translate-question-option';
     button.textContent = option.label;
     button.title = option.description;
+    button.disabled =
+      !option.targetText &&
+      option.id !== 'manual-entry' &&
+      option.id !== 'preserve-source';
     button.setAttribute(
       'aria-pressed',
       String(option.id === question.selectedOptionId)
     );
     button.addEventListener('click', () => {
+      const targetText =
+        option.id === 'manual-entry'
+          ? manualInput.value.trim()
+          : option.targetText;
+      if (option.id === 'manual-entry' && !targetText) {
+        manualInput.focus();
+        return;
+      }
       question.selectedOptionId = option.id;
       for (const peer of group.querySelectorAll('button')) {
         peer.setAttribute('aria-pressed', String(peer === button));
       }
+      onAnswer?.(question, {
+        optionId: option.id,
+        targetText,
+        entityId: option.entityId ?? question.entityId ?? null,
+        targetUrl: option.targetUrl ?? null,
+      });
     });
     group.append(button);
+    if (option.id === 'manual-entry') {
+      group.append(manualInput);
+    }
   }
   return group;
 }
