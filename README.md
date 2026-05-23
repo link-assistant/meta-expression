@@ -173,7 +173,10 @@ preserved unchanged for backwards compatibility.
 The Rust workspace under [`rust`](rust) contains WASM-ready core
 primitives and uses the `doublets` crate for relation-link doublet encoding.
 It also includes a deterministic issue #35 semantic translation fixture for
-`Hawaii is a state.` with source/target Q ids and ABI-safe helper exports:
+`Hawaii is a state.` plus issue #52 full-text Translate coverage with
+source/target semantic phrase ids, round-trip checks, Wikimedia entity-batch
+planning, stable seven-day cache TTL plus one-to-three-day jitter, and
+ABI-safe helper exports:
 
 ```bash
 cargo test --workspace

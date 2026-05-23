@@ -132,7 +132,7 @@ keep its skip entry.
 - **Web app** (`web/translate-samples.js`): two new Translate samples for the
   Artemis II and Michael Jackson leads, giving manual reviewers a fast way to
   reproduce the integration snapshot in the UI.
-- **Rust core** (`rust/core/src/lib.rs`): mirrors the helpers and exposes
+- **Rust core** (`rust/src/lib.rs`): mirrors the helpers and exposes
   `meta_expression_translation_quality_status_code()` over the C ABI so native
   consumers can adopt the same status enum.
 

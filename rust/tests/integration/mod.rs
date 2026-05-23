@@ -6,4 +6,5 @@
 
 mod issue35_translation;
 mod issue41_glossary;
+mod issue52_translation;
 mod semantic_relations;

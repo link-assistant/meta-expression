@@ -143,9 +143,9 @@ products. Meta-expression intentionally bounds the role of LLMs (R12).
 
 ## 7. Links Notation and knowledge representation
 
-**meta-expression role**: Links Notation text export everywhere, Rust
-core (`rust/core`) for durable doublets storage, future React+WASM
-binding (R5).
+**meta-expression role**: Links Notation text export everywhere, Rust core
+(`rust`) for durable doublets storage and WASM-ready translation/cache planning,
+future React+WASM binding (R5).
 
 | Project                  | License                                 | Pricing (USD)                                                    | URL                                | Concept overlap                         |
 | ------------------------ | --------------------------------------- | ---------------------------------------------------------------- | ---------------------------------- | --------------------------------------- |

@@ -10,3 +10,4 @@ mod support_ratio;
 mod token_coverage;
 mod tokenize_for_match;
 mod translation_quality;
+mod wikimedia_plan;

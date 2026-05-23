@@ -96,7 +96,7 @@ The long-term architecture should be
 meanings represented by Wikidata Q/P ids and later doublet links.
 
 Status: partially implemented with a narrow parity slice. JavaScript remains
-the main translation pipeline, but `rust/core` now includes a deterministic
+the main translation pipeline, but `rust` now includes a deterministic
 issue #35 semantic translation record, source/target phrase Q ids, doublet
 relations between sentence nodes and meanings, and C ABI helpers suitable for
 WASM exports. The broader doublet-backed rule graph remains staged in

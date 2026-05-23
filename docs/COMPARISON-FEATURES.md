@@ -31,25 +31,25 @@ process in [`COMPARISON-CONCEPTS.md`](./COMPARISON-CONCEPTS.md).
 These are the surfaces the project exposes today (see
 [`README.md`](../README.md) and [`docs/REQUIREMENTS.md`](./REQUIREMENTS.md)):
 
-| ID  | Surface                                                                                                                 | Where                                  |
-| --- | ----------------------------------------------------------------------------------------------------------------------- | -------------------------------------- |
-| F1  | Reusable JS library (`analyzeStatement`, `formalizeTextWith`, `translateTextWith`, `checkText`, `searchTextUniqueness`) | `js/src/index.js`, `js/src/index.d.ts` |
-| F2  | CLI                                                                                                                     | `js/src/cli.js`                        |
-| F3  | Microservice (`GET /health`, `/analyze`, `/formalize`, `/translate`, `/check`, `/fact-check`, `/uniqueness`)            | `js/src/server.js`                     |
-| F4  | Static web prototype (Analyse / Compare / Check / Uniqueness / Formalize / Translate / Preferences)                     | `web/index.html`, `web/app.js`         |
-| F5  | Statement interpretation pipeline (top-3 paraphrases, selection link)                                                   | `js/src/index.js`                      |
-| F6  | Formal levels (`describeFormalizationLevel`) with executable flag                                                       | `js/src/index.js`                      |
-| F7  | Exact arithmetic evaluation (equality + question shape)                                                                 | `js/src/index.js`                      |
-| F8  | Real-world evidence with bounded confidence (Wikidata P36/P397/P398/P570 templates)                                     | `js/src/wikimedia-evidence.js`         |
-| F9  | `correctness` (0..1) and `signedConfidence` (-1..+1) result metrics                                                     | `js/src/index.js`, issue #13 tests     |
-| F10 | `/formalize` returning Markdown / Links Notation / HTML / CST                                                           | `js/src/formalize.js`                  |
-| F11 | `/translate` via formalized Wikidata Q/P + sentence rules                                                               | `js/src/translate.js`                  |
-| F12 | `/check` (`/fact-check`) with red-to-green coloring                                                                     | `js/src/check.js`                      |
-| F13 | `/uniqueness` over public web + scholarly APIs                                                                          | `js/src/uniqueness.js`                 |
-| F14 | Preference profiles (worldview / context / God-slider)                                                                  | `js/src/preferences.js`                |
-| F15 | Links Notation export everywhere                                                                                        | `js/src/lino.js`                       |
-| F16 | Issue-report URL prefilled with the analysis state                                                                      | `js/src/index.js`                      |
-| F17 | Rust core with `doublets` relation-link encoding (WASM-ready)                                                           | `rust/core`                            |
+| ID  | Surface                                                                                                                           | Where                                  |
+| --- | --------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------- |
+| F1  | Reusable JS library (`analyzeStatement`, `formalizeTextWith`, `translateTextWith`, `checkText`, `searchTextUniqueness`)           | `js/src/index.js`, `js/src/index.d.ts` |
+| F2  | CLI                                                                                                                               | `js/src/cli.js`                        |
+| F3  | Microservice (`GET /health`, `/analyze`, `/formalize`, `/translate`, `/check`, `/fact-check`, `/uniqueness`)                      | `js/src/server.js`                     |
+| F4  | Static web prototype (Analyse / Compare / Check / Uniqueness / Formalize / Translate / Preferences)                               | `web/index.html`, `web/app.js`         |
+| F5  | Statement interpretation pipeline (top-3 paraphrases, selection link)                                                             | `js/src/index.js`                      |
+| F6  | Formal levels (`describeFormalizationLevel`) with executable flag                                                                 | `js/src/index.js`                      |
+| F7  | Exact arithmetic evaluation (equality + question shape)                                                                           | `js/src/index.js`                      |
+| F8  | Real-world evidence with bounded confidence (Wikidata P36/P397/P398/P570 templates)                                               | `js/src/wikimedia-evidence.js`         |
+| F9  | `correctness` (0..1) and `signedConfidence` (-1..+1) result metrics                                                               | `js/src/index.js`, issue #13 tests     |
+| F10 | `/formalize` returning Markdown / Links Notation / HTML / CST                                                                     | `js/src/formalize.js`                  |
+| F11 | `/translate` via formalized Wikidata Q/P + sentence rules                                                                         | `js/src/translate.js`                  |
+| F12 | `/check` (`/fact-check`) with red-to-green coloring                                                                               | `js/src/check.js`                      |
+| F13 | `/uniqueness` over public web + scholarly APIs                                                                                    | `js/src/uniqueness.js`                 |
+| F14 | Preference profiles (worldview / context / God-slider)                                                                            | `js/src/preferences.js`                |
+| F15 | Links Notation export everywhere                                                                                                  | `js/src/lino.js`                       |
+| F16 | Issue-report URL prefilled with the analysis state                                                                                | `js/src/index.js`                      |
+| F17 | Rust core with `doublets` relation-link encoding, issue #52 translation coverage, and Wikimedia cache/batch planning (WASM-ready) | `rust`                                 |
 
 ## 2. Per-cluster matrix
 

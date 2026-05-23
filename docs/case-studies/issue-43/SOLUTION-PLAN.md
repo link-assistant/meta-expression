@@ -37,7 +37,7 @@
    `strip_parenthetical_glosses`, `tokenize_for_match`, `token_coverage`,
    `normalize_statement_key`) plus the `TranslationQualityStatus` enum and
    the `meta_expression_translation_quality_status_code` C ABI surface.
-   Cover them with 8 unit tests in `rust/core/src/lib.rs`.
+   Cover them with unit tests under `rust/tests/unit/`.
 8. **Compile the case study.** Capture issue/PR metadata, full test logs,
    CLI output, and write `README.md`, `REQUIREMENTS.md`, `SOLUTION-PLAN.md`,
    and `ONLINE-RESEARCH.md`.
