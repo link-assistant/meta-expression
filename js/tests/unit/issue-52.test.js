@@ -109,6 +109,49 @@ describe('issue 52 - Translate request churn and answers', () => {
     expect(urls[0].searchParams.get('ids')).toBe('Q1|Q2');
   });
 
+  it('batches target-language Wikidata label requests during translation', async () => {
+    const urls = [];
+    const source = {
+      name: 'test-wikidata-source',
+      async searchPhrase(text) {
+        if (text === 'alpha') {
+          return [wikidataCandidate('Q1', 'alpha')];
+        }
+        if (text === 'beta') {
+          return [wikidataCandidate('Q2', 'beta')];
+        }
+        return [];
+      },
+    };
+
+    const result = await translateTextWith('alpha beta', {
+      fetch: async (url) => {
+        urls.push(new URL(String(url)));
+        return {
+          ok: true,
+          status: 200,
+          async json() {
+            return targetEntityPayload(url);
+          },
+        };
+      },
+      sources: [source],
+      sourceLanguage: 'en',
+      targetLanguage: 'ru',
+      now: () => 0,
+    });
+
+    const targetLookups = urls.filter(
+      (url) =>
+        url.hostname === 'www.wikidata.org' &&
+        url.searchParams.get('action') === 'wbgetentities' &&
+        url.searchParams.get('languages') === 'ru'
+    );
+    expect(result.plainText).toBe('альфа бета');
+    expect(targetLookups.length).toBe(1);
+    expect(targetLookups[0].searchParams.get('ids')).toBe('Q1|Q2');
+  });
+
   it('applies selected question answers to translated output', async () => {
     const result = await translateTextWith('xyzzy', {
       fetch: () => emptyJsonResponse(),
@@ -133,3 +176,44 @@ describe('issue 52 - Translate request churn and answers', () => {
     expect(answered.variables[0].resolvedByAnswer).toBe(true);
   });
 });
+
+function wikidataCandidate(id, label) {
+  return {
+    id,
+    label,
+    description: `${label} test entity`,
+    kind: 'entity',
+    source: 'wikidata',
+    sourceUrl: `https://www.wikidata.org/wiki/${id}`,
+    matchText: label,
+  };
+}
+
+function targetEntityPayload(url) {
+  const ids = new URL(String(url)).searchParams.get('ids')?.split('|') ?? [];
+  const values = {
+    Q1: 'альфа',
+    Q2: 'бета',
+  };
+  return {
+    entities: Object.fromEntries(
+      ids.map((id) => [
+        id,
+        {
+          id,
+          labels: {
+            ru: {
+              value: values[id],
+            },
+          },
+          descriptions: {
+            ru: {
+              value: `${values[id]} test entity`,
+            },
+          },
+          sitelinks: {},
+        },
+      ])
+    ),
+  };
+}
