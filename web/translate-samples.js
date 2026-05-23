@@ -83,4 +83,16 @@ export const translateSamples = [
     targetLanguage: 'en',
     text: 'Гавайи это штат.',
   },
+  {
+    label: 'Issue 43 — Artemis II lead sentence',
+    sourceLanguage: 'en',
+    targetLanguage: 'ru',
+    text: 'Artemis II was a crewed flyby of the Moon.',
+  },
+  {
+    label: 'Issue 43 — Russian biographical lead',
+    sourceLanguage: 'ru',
+    targetLanguage: 'en',
+    text: 'Майкл Джозеф Джексон — американский певец и автор песен.',
+  },
 ];
