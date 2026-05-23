@@ -251,6 +251,180 @@ pub extern "C" fn meta_expression_relation_target(source: u64, target: u64) -> u
     relation_doublet(source, target).target
 }
 
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub enum TranslationQualityStatus {
+    Matched,
+    Skipped,
+    TranslationFix,
+    FixSuggested,
+    Failed,
+    NoStatement,
+}
+
+impl TranslationQualityStatus {
+    pub const fn code(self) -> u32 {
+        match self {
+            Self::Matched => 1,
+            Self::Skipped => 2,
+            Self::TranslationFix => 3,
+            Self::FixSuggested => 4,
+            Self::Failed => 5,
+            Self::NoStatement => 6,
+        }
+    }
+}
+
+pub fn extract_first_statement(text: &str) -> String {
+    let normalized = strip_parenthetical_glosses(text);
+    if normalized.is_empty() {
+        return String::new();
+    }
+    let mut end = normalized.len();
+    let bytes = normalized.as_bytes();
+    for (index, byte) in bytes.iter().enumerate() {
+        if matches!(byte, b'.' | b'!' | b'?') {
+            let after = bytes.get(index + 1).copied().unwrap_or(b' ');
+            if after == b' ' || index + 1 == bytes.len() {
+                end = index + 1;
+                break;
+            }
+        }
+    }
+    normalized[..end].trim().to_string()
+}
+
+fn strip_parenthetical_glosses(text: &str) -> String {
+    let mut result = String::with_capacity(text.len());
+    let mut depth = 0usize;
+    let mut buffer = String::new();
+    for ch in text.chars() {
+        if ch == '(' {
+            depth += 1;
+            buffer.clear();
+            continue;
+        }
+        if ch == ')' {
+            if depth > 0 {
+                depth -= 1;
+            }
+            let contains_letters = buffer
+                .chars()
+                .any(|c| c.is_alphabetic());
+            if !contains_letters {
+                result.push('(');
+                result.push_str(&buffer);
+                result.push(')');
+            }
+            buffer.clear();
+            continue;
+        }
+        if depth > 0 {
+            buffer.push(ch);
+            continue;
+        }
+        result.push(ch);
+    }
+    result
+        .split_whitespace()
+        .collect::<Vec<_>>()
+        .join(" ")
+        .trim()
+        .to_string()
+}
+
+pub fn tokenize_for_match(text: &str) -> Vec<String> {
+    let stopwords: &[&str] = &[
+        "a", "an", "the", "is", "are", "was", "were", "be", "been", "being", "as", "of", "in",
+        "on", "at", "to", "and", "or", "for", "by", "with", "from", "this", "that", "it", "its",
+        "also", "но", "не", "и", "или", "для", "по", "в", "на", "из", "с", "о", "об", "это", "как",
+        "что", "который", "которая", "которое",
+    ];
+    let mut tokens = Vec::new();
+    let mut current = String::new();
+    for ch in text.chars() {
+        if ch.is_alphanumeric() {
+            current.extend(ch.to_lowercase());
+        } else if !current.is_empty() {
+            tokens.push(std::mem::take(&mut current));
+        }
+    }
+    if !current.is_empty() {
+        tokens.push(current);
+    }
+    tokens
+        .into_iter()
+        .filter(|token| {
+            if token.len() < 2 {
+                return false;
+            }
+            if token.chars().all(|c| c.is_ascii_digit()) {
+                return false;
+            }
+            !stopwords.iter().any(|stop| *stop == token.as_str())
+        })
+        .collect()
+}
+
+#[derive(Debug, Clone, PartialEq)]
+pub struct TokenCoverage {
+    pub ratio: f64,
+    pub found: Vec<String>,
+    pub missing: Vec<String>,
+}
+
+pub fn token_coverage(candidate: &str, target: &str) -> TokenCoverage {
+    let mut unique_candidates = Vec::new();
+    for token in tokenize_for_match(candidate) {
+        if !unique_candidates.contains(&token) {
+            unique_candidates.push(token);
+        }
+    }
+    if unique_candidates.is_empty() {
+        return TokenCoverage {
+            ratio: 0.0,
+            found: Vec::new(),
+            missing: Vec::new(),
+        };
+    }
+    let target_tokens: std::collections::HashSet<String> =
+        tokenize_for_match(target).into_iter().collect();
+    let mut found = Vec::new();
+    let mut missing = Vec::new();
+    for token in unique_candidates.iter() {
+        if target_tokens.contains(token) {
+            found.push(token.clone());
+        } else {
+            missing.push(token.clone());
+        }
+    }
+    let ratio = found.len() as f64 / unique_candidates.len() as f64;
+    TokenCoverage {
+        ratio,
+        found,
+        missing,
+    }
+}
+
+pub fn normalize_statement_key(text: &str) -> String {
+    let collapsed = text.split_whitespace().collect::<Vec<_>>().join(" ");
+    collapsed
+        .trim_end_matches(|ch: char| matches!(ch, '.' | '!' | '?' | ' '))
+        .to_string()
+}
+
+#[no_mangle]
+pub extern "C" fn meta_expression_translation_quality_status_code(code: u32) -> u32 {
+    match code {
+        1 => TranslationQualityStatus::Matched.code(),
+        2 => TranslationQualityStatus::Skipped.code(),
+        3 => TranslationQualityStatus::TranslationFix.code(),
+        4 => TranslationQualityStatus::FixSuggested.code(),
+        5 => TranslationQualityStatus::Failed.code(),
+        6 => TranslationQualityStatus::NoStatement.code(),
+        _ => 0,
+    }
+}
+
 fn normalize_text(input: &str) -> String {
     input
         .split_whitespace()
@@ -654,5 +828,73 @@ mod tests {
         );
         assert_eq!(meta_expression_issue35_phrase_count(), 2);
         assert_eq!(meta_expression_issue35_rule_count(), 3);
+    }
+
+    #[test]
+    fn extracts_first_statement_from_multi_paragraph_extract() {
+        let text = "Hello world. Second sentence.\n\nNext paragraph that should not appear.";
+        assert_eq!(extract_first_statement(text), "Hello world.");
+    }
+
+    #[test]
+    fn drops_parenthetical_glosses_from_leading_statement() {
+        let text =
+            "Артемида-2 (англ. Artemis II) — миссия по пилотируемому облёту Луны.";
+        assert_eq!(
+            extract_first_statement(text),
+            "Артемида-2 — миссия по пилотируемому облёту Луны."
+        );
+    }
+
+    #[test]
+    fn returns_empty_statement_for_blank_text() {
+        assert_eq!(extract_first_statement(""), "");
+        assert_eq!(extract_first_statement("   \n\n  "), "");
+    }
+
+    #[test]
+    fn tokenizes_with_unicode_and_drops_stopwords() {
+        let tokens = tokenize_for_match("The fox and the dog 42 на Луне");
+        assert_eq!(tokens, vec!["fox", "dog", "луне"]);
+    }
+
+    #[test]
+    fn computes_token_coverage_as_overlap_ratio() {
+        let coverage = token_coverage(
+            "Find synonyms of agreement",
+            "You can find synonyms here and search for examples of agreement",
+        );
+        assert!(coverage.ratio > 0.6);
+        assert!(coverage.missing.is_empty());
+        assert!(coverage.found.iter().any(|t| t == "synonyms"));
+        assert!(coverage.found.iter().any(|t| t == "agreement"));
+    }
+
+    #[test]
+    fn reports_zero_coverage_for_disjoint_text() {
+        let coverage = token_coverage("alpha beta gamma", "дельта эпсилон зета");
+        assert_eq!(coverage.ratio, 0.0);
+        assert_eq!(coverage.missing, vec!["alpha", "beta", "gamma"]);
+    }
+
+    #[test]
+    fn normalizes_statement_keys_by_collapsing_whitespace_and_punctuation() {
+        assert_eq!(normalize_statement_key("  Hello   world!  "), "Hello world");
+        assert_eq!(normalize_statement_key("Hello world.\n"), "Hello world");
+    }
+
+    #[test]
+    fn translation_quality_status_codes_round_trip_through_extern() {
+        assert_eq!(TranslationQualityStatus::Matched.code(), 1);
+        assert_eq!(TranslationQualityStatus::Skipped.code(), 2);
+        assert_eq!(TranslationQualityStatus::TranslationFix.code(), 3);
+        assert_eq!(TranslationQualityStatus::FixSuggested.code(), 4);
+        assert_eq!(TranslationQualityStatus::Failed.code(), 5);
+        assert_eq!(TranslationQualityStatus::NoStatement.code(), 6);
+        for code in 1u32..=6 {
+            assert_eq!(meta_expression_translation_quality_status_code(code), code);
+        }
+        assert_eq!(meta_expression_translation_quality_status_code(0), 0);
+        assert_eq!(meta_expression_translation_quality_status_code(7), 0);
     }
 }
