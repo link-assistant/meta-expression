@@ -19,7 +19,7 @@ import {
   parseSourceSpec,
   resolveFormalizeLinkTarget,
   serializeLinksNotation,
-} from '../src/index.js';
+} from '../js/src/index.js';
 import {
   applyTranslations,
   listLocales,

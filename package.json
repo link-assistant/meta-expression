@@ -3,24 +3,27 @@
   "version": "0.9.0",
   "description": "A JavaScript/TypeScript package template for AI-driven development",
   "type": "module",
-  "main": "src/index.js",
-  "types": "src/index.d.ts",
+  "main": "js/src/index.js",
+  "types": "js/src/index.d.ts",
   "bin": {
-    "meta-expression": "src/cli.js"
+    "meta-expression": "js/src/cli.js"
   },
   "exports": {
     ".": {
-      "types": "./src/index.d.ts",
-      "import": "./src/index.js"
+      "types": "./js/src/index.d.ts",
+      "import": "./js/src/index.js"
     },
     "./server": {
-      "types": "./src/server.d.ts",
-      "import": "./src/server.js"
+      "types": "./js/src/server.d.ts",
+      "import": "./js/src/server.js"
     }
   },
   "scripts": {
-    "test": "node --test tests/*.test.js",
-    "start": "node src/server.js",
+    "test": "npm run test:unit && npm run test:integration && npm run test:e2e",
+    "test:unit": "node --test js/tests/unit/*.test.js",
+    "test:integration": "node --test js/tests/integration/*.test.js",
+    "test:e2e": "node --test js/tests/e2e/*.test.js",
+    "start": "node js/src/server.js",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
     "format": "prettier --write .",

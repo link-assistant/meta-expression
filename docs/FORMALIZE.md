@@ -1,6 +1,6 @@
 # Formalize library reference
 
-> Auto-generated from JSDoc blocks in `src/formalize*.js` by
+> Auto-generated from JSDoc blocks in `js/src/formalize*.js` by
 > [`scripts/generate-formalize-docs.mjs`](../scripts/generate-formalize-docs.mjs).
 > Run `npm run docs:formalize` to regenerate this file. The CI check
 > `npm run docs:formalize:check` fails if the committed output is stale.
@@ -12,7 +12,7 @@ to a Wikidata Q/P (or another knowledge-graph) entity. Public surface:
 
 - **Library**: `import { formalizeTextWith, parseSourceSpec, … } from 'meta-expression';`
 - **CLI**: `meta-expression formalize "Barack Obama was born in Hawaii."`
-- **HTTP**: `POST /formalize` (see `src/server.js`); responses are cached on
+- **HTTP**: `POST /formalize` (see `js/src/server.js`); responses are cached on
   disk in both JSON and Links Notation form for cross-validation.
 - **Web demo**: `web/index.html` → Formalize tab.
 
@@ -21,7 +21,7 @@ for the design rationale and acceptance examples.
 
 ## Pipeline & rendering
 
-Source: [`src/formalize.js`](../src/formalize.js)
+Source: [`js/src/formalize.js`](../js/src/formalize.js)
 
 High-level entry points (`formalizeText`, `formalizeTextWith`), tokenization, n-gram generation, and link/markdown/HTML rendering.
 
@@ -150,7 +150,7 @@ configured `linkTargetMode`. Supports any source-tagged entity.
 
 ## Knowledge-graph sources
 
-Source: [`src/formalize-sources.js`](../src/formalize-sources.js)
+Source: [`js/src/formalize-sources.js`](../js/src/formalize-sources.js)
 
 Pluggable resolvers for Wikidata, WordNet (Wiktionary opensearch), and Fandom wikis. `parseSourceSpec` accepts the human-readable spec used by the CLI / web UI.
 
@@ -294,7 +294,7 @@ Default tier order per issue #21:
 
 ## Lazy overrides
 
-Source: [`src/formalize-overrides.js`](../src/formalize-overrides.js)
+Source: [`js/src/formalize-overrides.js`](../js/src/formalize-overrides.js)
 
 Repository-level (`docs/formalize/overrides.lino`, JSON accepted as legacy fallback) and user-level overrides that pin a phrase to a specific entity, bypassing live lookups.
 
@@ -384,7 +384,7 @@ Auto-detects `.lino` vs `.json` by file content.
 
 ## Big-context aggregation
 
-Source: [`src/formalize-contexts.js`](../src/formalize-contexts.js)
+Source: [`js/src/formalize-contexts.js`](../js/src/formalize-contexts.js)
 
 Walks `instance of` / `subclass of` / `part of` chains to surface broad worlds (Math, Geography, Star Wars, Genshin Impact, …) the input touches.
 
@@ -423,7 +423,7 @@ graph in memory (no network needed). Same shape as the async version.
 
 ## Persistent cache
 
-Source: [`src/formalize-cache.js`](../src/formalize-cache.js)
+Source: [`js/src/formalize-cache.js`](../js/src/formalize-cache.js)
 
 Filesystem cache used by the HTTP server. Each entry is written atomically as a binary doublets blob (`payload.bin`, the same shape used by `linksplatform/doublets-rs` / `link-foundation/link-cli`) plus a Links Notation echo (`payload.lino`) for cross-validation.
 
@@ -474,7 +474,7 @@ to the same 32-char hex digest so cache entries collide deterministically.
 
 ## Links Notation codec
 
-Source: [`src/lino.js`](../src/lino.js)
+Source: [`js/src/lino.js`](../js/src/lino.js)
 
 Pure JS parser/serializer for indented Links Notation (`.lino`). Used for the repository overrides file, cache echo files, and any future configuration we want to keep in link-graph form rather than JSON.
 
@@ -561,7 +561,7 @@ overrides files so the document is always rooted under a stable name.
 
 ## Doublets binary store
 
-Source: [`src/doublets.js`](../src/doublets.js)
+Source: [`js/src/doublets.js`](../js/src/doublets.js)
 
 In-memory port of the link primitives used by `linksplatform/doublets-rs` / `link-foundation/link-cli`. Encodes arbitrary JS values as chains of `(index source target)` doublets — strings via unicode-sequence chains — and serializes the resulting graph as a flat `Uint8Array` blob ready for a future WebAssembly bridge.
 

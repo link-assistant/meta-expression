@@ -1,0 +1,45 @@
+{
+  "comment": "Source statements whose target-language Wikipedia article describes the same entity with substantially different wording. Each entry documents the divergence so future automation can replay the same decision.",
+  "entries": [
+    {
+      "source": ".xxx — общий домен верхнего уровня, предлагаемый компанией ICM Registry для порнографических сайтов и порноиндустрии",
+      "reason": "Russian Wikipedia frames the domain through its sponsoring registry; English Wikipedia frames it through ICANN sponsorship status and pornography hosting policy."
+    },
+    {
+      "source": "Artemis II was a crewed flyby of the Moon",
+      "reason": "Russian Wikipedia's first sentence introduces the mission as part of the broader NASA Artemis program and pairs it with the Orion spacecraft, omitting the crewed-flyby framing of the English lead."
+    },
+    {
+      "source": "В настоящей статье представлен список людей, соответствующих критериям значимости, которые умерли в 2026 году",
+      "reason": "Russian Wikipedia opens with a meta description of the list; English Wikipedia opens with a sentence about the deaths themselves and the entry format."
+    },
+    {
+      "source": "WrestleMania 42, also promoted as WrestleMania Vegas, was a 2026 professional wrestling pay-per-view and livestreaming event produced by WWE",
+      "reason": "Russian Wikipedia leads with the ordinal numbering of the event; the English lead summarises the production and distribution details first."
+    },
+    {
+      "source": "Since 28 February 2026, the United States and Israel have been engaged in a war with Iran and its regional allies",
+      "reason": "Russian Wikipedia leads with the operation names ('Эпическая ярость', 'Рёв льва') before the participants; English Wikipedia leads with the date and participants."
+    },
+    {
+      "source": "Michael is a 2026 biographical film directed by Antoine Fuqua and written by John Logan",
+      "reason": "Russian Wikipedia describes the film as 'американский биографический музыкальный драматический фильм … о жизни и творчестве музыканта Майкла Джексона'; the English lead omits the subject of the biopic in the first sentence."
+    },
+    {
+      "source": "Майкл Джо́зеф Дже́ксон — американский певец и автор песен",
+      "reason": "English Wikipedia uses past-tense biographical framing ('was an American singer, songwriter, dancer, and philanthropist'), while Russian Wikipedia uses present-tense identity framing."
+    },
+    {
+      "source": "Project Hail Mary is a 2026 American epic science fiction film produced and directed by Phil Lord and Christopher Miller and written by Drew Goddard, based on the 2021 novel by Andy Weir",
+      "reason": "The Russian Wikipedia title is translated as «Проект „Конец света“» and the lead omits the source novel and screenwriter; the English lead foregrounds them."
+    },
+    {
+      "source": "Parliamentary elections were held in Hungary on 12 April 2026 to elect all 199 members of the National Assembly",
+      "reason": "Russian Wikipedia introduces the event as 'очередные выборы' and references the National Assembly without seat count; English Wikipedia foregrounds the seat count."
+    },
+    {
+      "source": "The Drama is a 2026 American romantic black comedy film written and directed by Kristoffer Borgli",
+      "reason": "Russian Wikipedia title is «Вот это драма!» and characterizes the film as 'американская романтическая комедийная драма'; English Wikipedia uses the 'romantic black comedy' classification."
+    }
+  ]
+}

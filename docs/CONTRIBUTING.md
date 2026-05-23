@@ -119,7 +119,7 @@ npm package publication:
 3. **Version bump** - Package version is updated based on changeset type
 4. **Changelog update** - `CHANGELOG.md` is updated automatically
 5. **GitHub Pages** - The static web prototype is published from `web/` and
-   `src/` after tests pass
+   `js/src/` after tests pass
 6. **npm publish** - Package publication runs only when repository variable
    `NPM_PUBLISH_ENABLED` is set to `true`
 7. **GitHub Release** - A release is created with formatted notes after a

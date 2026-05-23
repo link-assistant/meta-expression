@@ -1,4 +1,4 @@
-import { analyzeStatement } from '../src/index.js';
+import { analyzeStatement } from '../js/src/index.js';
 import {
   escapeHtml,
   formatCorrectness,

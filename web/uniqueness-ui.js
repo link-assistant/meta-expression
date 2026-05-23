@@ -1,4 +1,4 @@
-import { searchTextUniqueness } from '../src/index.js';
+import { searchTextUniqueness } from '../js/src/index.js';
 
 export function setupUniquenessPage() {
   const input = document.querySelector('#uniqueness-input');

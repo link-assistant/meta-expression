@@ -2,7 +2,7 @@ import {
   FORMALIZE_LINK_TARGETS,
   listTranslationStrategies,
   translateTextWith,
-} from '../src/index.js';
+} from '../js/src/index.js';
 import { escapeHtml } from './format-helpers.js';
 import { createPersistentWikimediaCache } from './persistent-cache.js';
 import { translateSamples } from './translate-samples.js';

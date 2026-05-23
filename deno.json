@@ -1,7 +1,7 @@
 {
   "nodeModulesDir": "auto",
   "test": {
-    "include": ["tests/"],
-    "exclude": ["examples/", "node_modules/"]
+    "include": ["js/tests/"],
+    "exclude": ["examples/", "node_modules/", "js/tests/fixtures/"]
   }
 }
