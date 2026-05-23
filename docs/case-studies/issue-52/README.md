@@ -16,6 +16,10 @@ initial CI run metadata is preserved in `ci-logs/issue-52-runs.json`.
 - 2026-05-23 18:05:02 UTC: JS workflow failed during `Setup Bun` before tests
   ran, with GitHub API `401 Bad credentials` while fetching Bun tags. The full
   log was saved locally under `ci-logs/` for this investigation.
+- 2026-05-23 18:34:42 UTC: Rust and JS workflows passed for commit
+  `80e60c3c3226c9d1c8b8ca361ec2247d12d5dd18`, while Broken Link Checker
+  failed on a stale local `rust/core` link and a timed-out DBpedia homepage.
+  The run list and failing log were saved under `ci-logs/`.
 
 ## Root causes
 
@@ -32,6 +36,11 @@ initial CI run metadata is preserved in `ci-logs/issue-52-runs.json`.
    not change the rendered translation, CST snapshot, or Links Notation.
 6. The default live Wikimedia cache TTL was one hour, which made browser
    reloads much more likely to repeat expensive lookups.
+7. The first regression pass covered request churn and answer application, but
+   not the full seven-sentence issue text through translate, formalize, and
+   back-translate flows.
+8. The latest Broken Link Checker run found a stale README link to `rust/core`
+   and a transient timeout from `https://www.dbpedia.org/`.
 
 ## Fixes in PR 53
 
@@ -41,10 +50,17 @@ initial CI run metadata is preserved in `ci-logs/issue-52-runs.json`.
 - Normalize Wiktionary lookup surfaces before API calls, while preserving the
   cleaned display text.
 - Batch same-tick Wikidata entity hydration into one `ids=Q1|Q2` request.
+- Batch same-tick target-language Wikidata label hydration during Translate.
 - Apply Translate question answers to phrases, variables, sentences,
   naturalization, CST, and Links Notation.
 - Disable the Translate button while a request is in progress and re-render
   the UI when an answer is selected.
+- Add exact full-text integration coverage for English-to-Russian translation,
+  Russian formalization, and Russian-to-English back translation.
+- Extend the deterministic glossary for the issue text so offline regression
+  tests do not ask unresolved questions.
+- Correct the README Rust workspace link and ignore the DBpedia homepage in the
+  link checker, matching the existing external-resource ignore policy.
 
 ## Regression coverage
 
@@ -54,4 +70,11 @@ answer application:
 - concurrent 404 coalescing and negative caching
 - Wiktionary punctuation/case normalization
 - same-tick Wikidata entity batching
+- same-tick target-language Wikidata label batching during Translate
 - question-answer application to Translate output
+
+`js/tests/integration/issue-52.test.js` covers the exact reported source text:
+
+- translate the full text from English to Russian without questions
+- formalize the translated Russian text and verify every token is linked
+- back-translate the Russian output to English and verify full token coverage

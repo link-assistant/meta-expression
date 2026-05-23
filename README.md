@@ -170,7 +170,7 @@ preserved unchanged for backwards compatibility.
 
 ## Rust Core
 
-The Rust workspace under [`rust/core`](rust/core) contains WASM-ready core
+The Rust workspace under [`rust`](rust) contains WASM-ready core
 primitives and uses the `doublets` crate for relation-link doublet encoding.
 It also includes a deterministic issue #35 semantic translation fixture for
 `Hawaii is a state.` with source/target Q ids and ABI-safe helper exports:
