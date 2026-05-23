@@ -307,9 +307,7 @@ fn strip_parenthetical_glosses(text: &str) -> String {
             if depth > 0 {
                 depth -= 1;
             }
-            let contains_letters = buffer
-                .chars()
-                .any(|c| c.is_alphabetic());
+            let contains_letters = buffer.chars().any(|c| c.is_alphabetic());
             if !contains_letters {
                 result.push('(');
                 result.push_str(&buffer);
@@ -334,10 +332,51 @@ fn strip_parenthetical_glosses(text: &str) -> String {
 
 pub fn tokenize_for_match(text: &str) -> Vec<String> {
     let stopwords: &[&str] = &[
-        "a", "an", "the", "is", "are", "was", "were", "be", "been", "being", "as", "of", "in",
-        "on", "at", "to", "and", "or", "for", "by", "with", "from", "this", "that", "it", "its",
-        "also", "но", "не", "и", "или", "для", "по", "в", "на", "из", "с", "о", "об", "это", "как",
-        "что", "который", "которая", "которое",
+        "a",
+        "an",
+        "the",
+        "is",
+        "are",
+        "was",
+        "were",
+        "be",
+        "been",
+        "being",
+        "as",
+        "of",
+        "in",
+        "on",
+        "at",
+        "to",
+        "and",
+        "or",
+        "for",
+        "by",
+        "with",
+        "from",
+        "this",
+        "that",
+        "it",
+        "its",
+        "also",
+        "но",
+        "не",
+        "и",
+        "или",
+        "для",
+        "по",
+        "в",
+        "на",
+        "из",
+        "с",
+        "о",
+        "об",
+        "это",
+        "как",
+        "что",
+        "который",
+        "которая",
+        "которое",
     ];
     let mut tokens = Vec::new();
     let mut current = String::new();
@@ -696,205 +735,4 @@ fn is_binary_arithmetic(input: &str) -> bool {
 
 fn is_number(value: &str) -> bool {
     value.parse::<f64>().is_ok()
-}
-
-#[cfg(test)]
-mod tests {
-    use super::*;
-
-    #[test]
-    fn classifies_supported_statement_templates() {
-        assert_eq!(
-            classify_statement("1 + 1 = 2"),
-            StatementTemplate::ArithmeticEquality
-        );
-        assert_eq!(
-            classify_statement("1 + 1"),
-            StatementTemplate::ArithmeticQuestion
-        );
-        assert_eq!(
-            classify_statement("Elon Musk is alive"),
-            StatementTemplate::PersonLiveness
-        );
-        assert_eq!(
-            classify_statement("Paris is the capital of France"),
-            StatementTemplate::Capital
-        );
-        assert_eq!(
-            classify_statement("Earth orbits the Sun"),
-            StatementTemplate::Orbit
-        );
-        assert_eq!(classify_statement("unknown"), StatementTemplate::Unknown);
-    }
-
-    #[test]
-    fn bounds_real_world_confidence() {
-        assert_eq!(bounded_weighted_support_ratio(1.0, 0.0, 0.01), Some(0.99));
-        assert_eq!(bounded_weighted_support_ratio(0.0, 1.0, 0.01), Some(0.01));
-        assert_eq!(bounded_weighted_support_ratio(0.0, 0.0, 0.01), None);
-    }
-
-    #[test]
-    fn encodes_relation_as_doublet() {
-        let relation = relation_doublet(10, 20);
-
-        assert_eq!(relation.source, 10);
-        assert_eq!(relation.target, 20);
-    }
-
-    #[test]
-    fn translates_issue35_sentence_through_semantic_ids() {
-        let translation =
-            translate_known_semantic_sentence("Hawaii is a state.", "en", "ru").unwrap();
-
-        assert_eq!(translation.target_text, "Гавайи это штат.");
-        assert_eq!(translation.source_phrases[0].text, "Hawaii");
-        assert_eq!(translation.source_phrases[0].meaning_id, "Q782");
-        assert_eq!(translation.source_phrases[1].text, "state");
-        assert_eq!(translation.source_phrases[1].meaning_id, "Q7275");
-        assert_eq!(translation.target_phrases[0].text, "Гавайи");
-        assert_eq!(translation.target_phrases[0].meaning_id, "Q782");
-        assert_eq!(translation.target_phrases[1].text, "штат");
-        assert_eq!(translation.target_phrases[1].meaning_id, "Q35657");
-        assert_eq!(
-            translation.transformation_steps,
-            [
-                "english-article-omission",
-                "english-copula-to-russian-eto",
-                "english-us-state-predicate-to-russian-shtat"
-            ]
-        );
-
-        let round_trip =
-            translate_known_semantic_sentence(&translation.target_text, "ru", "en").unwrap();
-
-        assert_eq!(round_trip.target_text, "Hawaii is a state.");
-    }
-
-    #[test]
-    fn translates_issue41_glossary_examples_through_semantic_links() {
-        let examples = [
-            ("Найти синонимы", "ru", "en", "Find synonyms"),
-            (
-                "Найти примеры перевода",
-                "ru",
-                "en",
-                "Find examples of translation",
-            ),
-            ("Перевести текст", "ru", "en", "Translate text"),
-            ("Формализовать текст", "ru", "en", "Formalize text"),
-            ("Проверить утверждение", "ru", "en", "Check statement"),
-            ("Сравнить значения", "ru", "en", "Compare values"),
-            ("Показать вопросы", "ru", "en", "Show questions"),
-            ("Открыть страницу", "ru", "en", "Open page"),
-            ("Сохранить результат", "ru", "en", "Save result"),
-            ("Add examples", "en", "ru", "Добавьте примеры"),
-        ];
-
-        for (source, from, to, expected) in examples {
-            let translation = translate_known_semantic_sentence(source, from, to).unwrap();
-
-            assert_eq!(translation.target_text, expected);
-            assert!(translation
-                .source_phrases
-                .iter()
-                .all(|phrase| phrase.meaning_id.starts_with("lex:")));
-            assert!(!translation.target_phrases.is_empty());
-        }
-    }
-
-    #[test]
-    fn encodes_issue35_translation_phrase_relations_as_doublets() {
-        let relations = issue35_translation_relations();
-
-        assert_eq!(relations[0].source, 35_000);
-        assert_eq!(
-            relations[0].target,
-            meta_expression_issue35_hawaii_meaning_id()
-        );
-        assert_eq!(relations[1].source, 35_000);
-        assert_eq!(
-            relations[1].target,
-            meta_expression_issue35_state_meaning_id()
-        );
-        assert_eq!(relations[2].source, 35_001);
-        assert_eq!(
-            relations[2].target,
-            meta_expression_issue35_hawaii_meaning_id()
-        );
-        assert_eq!(
-            relations[3].target,
-            meta_expression_issue35_us_state_meaning_id()
-        );
-        assert_eq!(meta_expression_issue35_phrase_count(), 2);
-        assert_eq!(meta_expression_issue35_rule_count(), 3);
-    }
-
-    #[test]
-    fn extracts_first_statement_from_multi_paragraph_extract() {
-        let text = "Hello world. Second sentence.\n\nNext paragraph that should not appear.";
-        assert_eq!(extract_first_statement(text), "Hello world.");
-    }
-
-    #[test]
-    fn drops_parenthetical_glosses_from_leading_statement() {
-        let text =
-            "Артемида-2 (англ. Artemis II) — миссия по пилотируемому облёту Луны.";
-        assert_eq!(
-            extract_first_statement(text),
-            "Артемида-2 — миссия по пилотируемому облёту Луны."
-        );
-    }
-
-    #[test]
-    fn returns_empty_statement_for_blank_text() {
-        assert_eq!(extract_first_statement(""), "");
-        assert_eq!(extract_first_statement("   \n\n  "), "");
-    }
-
-    #[test]
-    fn tokenizes_with_unicode_and_drops_stopwords() {
-        let tokens = tokenize_for_match("The fox and the dog 42 на Луне");
-        assert_eq!(tokens, vec!["fox", "dog", "луне"]);
-    }
-
-    #[test]
-    fn computes_token_coverage_as_overlap_ratio() {
-        let coverage = token_coverage(
-            "Find synonyms of agreement",
-            "You can find synonyms here and search for examples of agreement",
-        );
-        assert!(coverage.ratio > 0.6);
-        assert!(coverage.missing.is_empty());
-        assert!(coverage.found.iter().any(|t| t == "synonyms"));
-        assert!(coverage.found.iter().any(|t| t == "agreement"));
-    }
-
-    #[test]
-    fn reports_zero_coverage_for_disjoint_text() {
-        let coverage = token_coverage("alpha beta gamma", "дельта эпсилон зета");
-        assert_eq!(coverage.ratio, 0.0);
-        assert_eq!(coverage.missing, vec!["alpha", "beta", "gamma"]);
-    }
-
-    #[test]
-    fn normalizes_statement_keys_by_collapsing_whitespace_and_punctuation() {
-        assert_eq!(normalize_statement_key("  Hello   world!  "), "Hello world");
-        assert_eq!(normalize_statement_key("Hello world.\n"), "Hello world");
-    }
-
-    #[test]
-    fn translation_quality_status_codes_round_trip_through_extern() {
-        assert_eq!(TranslationQualityStatus::Matched.code(), 1);
-        assert_eq!(TranslationQualityStatus::Skipped.code(), 2);
-        assert_eq!(TranslationQualityStatus::TranslationFix.code(), 3);
-        assert_eq!(TranslationQualityStatus::FixSuggested.code(), 4);
-        assert_eq!(TranslationQualityStatus::Failed.code(), 5);
-        assert_eq!(TranslationQualityStatus::NoStatement.code(), 6);
-        for code in 1u32..=6 {
-            assert_eq!(meta_expression_translation_quality_status_code(code), code);
-        }
-        assert_eq!(meta_expression_translation_quality_status_code(0), 0);
-        assert_eq!(meta_expression_translation_quality_status_code(7), 0);
-    }
 }

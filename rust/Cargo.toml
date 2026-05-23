@@ -6,7 +6,21 @@ license = "Unlicense"
 description = "Rust core primitives for the meta-expression prototype"
 
 [lib]
+name = "meta_expression_core"
+path = "src/lib.rs"
 crate-type = ["rlib", "cdylib"]
 
 [dependencies]
 doublets = "0.3.0"
+
+[[test]]
+name = "unit"
+path = "tests/unit/mod.rs"
+
+[[test]]
+name = "integration"
+path = "tests/integration/mod.rs"
+
+[[test]]
+name = "e2e"
+path = "tests/e2e/mod.rs"
