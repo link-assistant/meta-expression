@@ -91,6 +91,10 @@ export {
   aggregateBigContextsFromGraph,
 } from './formalize-contexts.js';
 export {
+  annotateLinguisticMetadataPhraseRefs,
+  extractLinguisticMetadata,
+} from './linguistic-metadata.js';
+export {
   buildOverrideMap,
   lookupOverride,
   overrideToCandidate,

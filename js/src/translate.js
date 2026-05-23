@@ -13,6 +13,7 @@ import {
   applyTextTransformationRules,
   collectTranslationTransformationRules,
 } from './transformation-rules.js';
+import { buildSemanticSourceFragment } from './translation-source-fragment.js';
 
 const wikidataEntityBaseUrl = 'https://www.wikidata.org/wiki/';
 const wikidataPropertyBaseUrl = 'https://www.wikidata.org/wiki/Property:';
@@ -234,6 +235,7 @@ function buildSemanticLink(phrase, index, config) {
     tokenStart: phrase.start,
     tokenEnd: phrase.end,
     sourceLanguage: config.sourceLanguage,
+    sourceFragment: buildSemanticSourceFragment(phrase),
     meaning: buildSemanticMeaning(phrase, entity, glossaryTranslation, config),
     targetHint: glossaryTranslation?.text ?? null,
     status: semanticLinkStatus(entity, glossaryTranslation),
@@ -1501,7 +1503,10 @@ function renderSemanticMetaLanguageLinksNotation(semantic) {
       ? ` targetHint ${toLino(link.targetHint)}`
       : '';
     const url = link.meaning.url ? ` url ${toLino(link.meaning.url)}` : '';
-    return `(${link.id}: source ${toLino(link.sourceText)} status ${link.status}${meaning}${label}${target}${url})`;
+    const role = link.sourceFragment?.role
+      ? ` sourceRole ${link.sourceFragment.role}`
+      : '';
+    return `(${link.id}: source ${toLino(link.sourceText)} status ${link.status}${role}${meaning}${label}${target}${url})`;
   });
   return [head, ...links].join('\n');
 }

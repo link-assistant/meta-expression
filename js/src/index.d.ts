@@ -536,6 +536,73 @@ export interface FormalizePhraseEntity {
   }>;
 }
 
+export interface LinguisticFragment {
+  id: string;
+  type:
+    | 'word'
+    | 'symbol'
+    | 'noun-phrase'
+    | 'verb-phrase'
+    | 'subject'
+    | 'predicate'
+    | 'object'
+    | string;
+  role: string;
+  text: string;
+  tokens: string[];
+  tokenStart: number | null;
+  tokenEnd: number | null;
+  sourceStart: number | null;
+  sourceEnd: number | null;
+  phraseIds: string[];
+}
+
+export interface LinguisticDependency {
+  id: string;
+  relation: 'nsubj' | 'root' | 'obj' | string;
+  headFragmentId: string;
+  dependentFragmentId: string;
+  source: string;
+}
+
+export interface LinguisticRelation {
+  id: string;
+  type: 'subject-predicate-object' | 'subject-predicate' | string;
+  subjectFragmentId: string;
+  predicateFragmentId: string;
+  objectFragmentId: string | null;
+  text: string;
+  sourceStart: number;
+  sourceEnd: number;
+}
+
+export interface LinguisticAstNode {
+  type: string;
+  id?: string;
+  version?: number;
+  text: string;
+  body?: LinguisticAstNode[];
+  tokenStart?: number;
+  tokenEnd?: number;
+  sourceStart?: number;
+  sourceEnd?: number;
+  subject?: Record<string, unknown> | null;
+  predicate?: Record<string, unknown> | null;
+  object?: Record<string, unknown> | null;
+  relationId?: string | null;
+  dependencyIds?: string[];
+}
+
+export interface LinguisticMetadata {
+  version: number;
+  language: string;
+  text: string;
+  fragments: LinguisticFragment[];
+  dependencies: LinguisticDependency[];
+  relations: LinguisticRelation[];
+  ast: LinguisticAstNode;
+}
+
 export interface FormalizePhrase {
   text: string;
   tokens: string[];
@@ -630,6 +697,8 @@ export interface FormalizationCstPhrase {
   sourceStart: number | null;
   sourceEnd: number | null;
   size: number;
+  linguisticRole: string | null;
+  linguisticFragmentIds: string[];
   entity: FormalizationCstEntity | null;
   candidates: FormalizationCstCandidate[];
 }
@@ -640,6 +709,8 @@ export interface FormalizationCst {
   text: string;
   tokens: string[];
   linkTargetMode: FormalizeLinkTargetMode;
+  ast: LinguisticAstNode;
+  linguisticMetadata: LinguisticMetadata;
   phrases: FormalizationCstPhrase[];
   contexts: FormalizeContext[];
 }
@@ -666,6 +737,8 @@ export interface FormalizeOptions {
 export interface FormalizeResult {
   text: string;
   tokens: string[];
+  ast: LinguisticAstNode;
+  linguisticMetadata: LinguisticMetadata;
   phrases: FormalizePhrase[];
   contexts: FormalizeContext[];
   mainContext: FormalizeContext | null;
@@ -693,6 +766,18 @@ export declare function formalizeTextWith(
 export declare function markdownFromFormalizationCst(
   cst: FormalizationCst
 ): string;
+
+export declare function extractLinguisticMetadata(
+  input: string,
+  options?: {
+    language?: string;
+    tokenSpans?: Array<Record<string, unknown>>;
+  }
+): LinguisticMetadata;
+
+export declare function annotateLinguisticMetadataPhraseRefs<
+  T extends { start: number; end: number; id: string },
+>(metadata: LinguisticMetadata, phrases: T[]): LinguisticMetadata;
 
 export interface TranslateOptions extends FormalizeOptions {
   sourceLanguage?: string;
@@ -850,6 +935,11 @@ export interface SemanticMetaLanguageLink {
   tokenStart: number;
   tokenEnd: number;
   sourceLanguage: string;
+  sourceFragment: {
+    phraseId: string;
+    role: string | null;
+    fragmentIds: string[];
+  } | null;
   meaning: {
     id: string | null;
     label: string | null;

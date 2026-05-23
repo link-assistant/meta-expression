@@ -37,6 +37,11 @@ import {
   applyTextTransformationRules,
   collectFormalizationTransformationRules,
 } from './transformation-rules.js';
+import {
+  annotateLinguisticMetadataPhraseRefs,
+  extractLinguisticMetadata,
+} from './linguistic-metadata.js';
+import { buildLinksNetwork } from './formalize-links-network.js';
 
 const wikidataEntityBaseUrl = 'https://www.wikidata.org/wiki/';
 const wikidataPropertyBaseUrl = 'https://www.wikidata.org/wiki/Property:';
@@ -266,13 +271,18 @@ export async function formalizeTextWith(input, options = {}) {
     flatContexts,
     config
   );
-  const linksNetwork = buildLinksNetwork(text, reranked, flatContexts);
   const cst = buildFormalizationCst(
     text,
     tokens,
     reranked,
     flatContexts,
     config
+  );
+  const linksNetwork = buildLinksNetwork(
+    text,
+    reranked,
+    flatContexts,
+    cst.linguisticMetadata
   );
   const markdown = markdownFromFormalizationCst(cst);
   const html = htmlFromFormalizationCst(cst);
@@ -281,6 +291,8 @@ export async function formalizeTextWith(input, options = {}) {
   let result = {
     text,
     tokens,
+    ast: cst.ast,
+    linguisticMetadata: cst.linguisticMetadata,
     phrases: reranked,
     contexts: flatContexts.all,
     mainContext: flatContexts.main,
@@ -1309,15 +1321,25 @@ function generateFormalizeInterpretations(phrases, contexts, config) {
 
 function buildFormalizationCst(text, tokens, phrases, contexts, config) {
   const tokenSpans = sourceTokenSpans(text, tokens);
+  const cstPhrases = phrases.map((phrase, index) =>
+    buildCstPhrase(phrase, index, config, tokenSpans)
+  );
+  const linguisticMetadata = annotateLinguisticMetadataPhraseRefs(
+    extractLinguisticMetadata(text, {
+      language: config.language,
+      tokenSpans,
+    }),
+    cstPhrases
+  );
   return {
     type: 'formalization',
     version: 1,
     text,
     tokens: [...tokens],
     linkTargetMode: config.linkTargetMode,
-    phrases: phrases.map((phrase, index) =>
-      buildCstPhrase(phrase, index, config, tokenSpans)
-    ),
+    ast: linguisticMetadata.ast,
+    linguisticMetadata,
+    phrases: cstPhrases,
     contexts: contexts.all.map((context, index) => ({
       id: `context-${index + 1}`,
       wikidataId: context.id,
@@ -1342,6 +1364,8 @@ function buildCstPhrase(phrase, index, config, tokenSpans) {
     sourceStart: firstToken?.start ?? null,
     sourceEnd: lastToken?.end ?? null,
     size: phrase.size,
+    linguisticRole: null,
+    linguisticFragmentIds: [],
     entity: phrase.entity ? buildCstEntity(phrase.entity, config) : null,
     candidates: (phrase.candidates ?? []).map((candidate) =>
       buildCstEntity(candidate, config)
@@ -1355,12 +1379,25 @@ function sourceTokenSpans(text, tokens) {
   for (const token of tokens) {
     const start = text.indexOf(token, cursor);
     if (start === -1) {
-      spans.push({ start: null, end: null });
+      spans.push({
+        token,
+        start: null,
+        end: null,
+        sentenceBoundaryAfter: false,
+      });
       continue;
     }
     const end = start + token.length;
-    spans.push({ start, end });
+    spans.push({ token, start, end, sentenceBoundaryAfter: false });
     cursor = end;
+  }
+  for (let index = 0; index < spans.length - 1; index += 1) {
+    const delimiter = text.slice(spans[index].end, spans[index + 1].start);
+    spans[index].sentenceBoundaryAfter = /[.!?]/.test(delimiter);
+  }
+  if (spans.length > 0) {
+    const tail = text.slice(spans[spans.length - 1].end);
+    spans[spans.length - 1].sentenceBoundaryAfter = /[.!?]/.test(tail);
   }
   return spans;
 }
@@ -1386,96 +1423,6 @@ function buildCstEntity(entity, config) {
   };
 }
 
-function buildLinksNetwork(text, phrases, contexts) {
-  const inputId = 'formalize-input-1';
-  const links = [
-    {
-      id: inputId,
-      role: 'input',
-      references: [],
-      value: { text },
-      provenance: { sourceType: 'algorithm', method: 'formalize' },
-    },
-  ];
-  phrases.forEach((phrase, index) => {
-    links.push(buildPhraseLink(phrase, index, inputId));
-  });
-  contexts.all.forEach((context, index) => {
-    links.push(buildContextLink(context, index, inputId));
-  });
-  return {
-    id: 'formalize-links-network',
-    kind: 'links-network',
-    version: 1,
-    beliefSystem: {
-      id: 'formalize-default',
-      name: 'Formalize prototype',
-      probabilityStrategy: 'frequency-weighted-context',
-      sourceWeights: {
-        wikidata: 1,
-        wordnet: 0.7,
-        fandom: 0.6,
-        lexical: 0.5,
-        algorithm: 0.5,
-      },
-    },
-    links,
-  };
-}
-
-function buildPhraseLink(phrase, index, inputId) {
-  const entity = phrase.entity ?? null;
-  return {
-    id: `formalize-phrase-${index + 1}`,
-    role: 'phrase',
-    references: [inputId],
-    value: phraseLinkValue(phrase, entity),
-    provenance: phraseLinkProvenance(entity),
-  };
-}
-
-function phraseLinkValue(phrase, entity) {
-  return {
-    text: phrase.text,
-    position: phrase.start,
-    size: phrase.size,
-    wikidataId: entity?.id ?? null,
-    wikidataLabel: entity?.label ?? null,
-    wikidataKind: entity?.kind ?? null,
-    wikipediaUrl: entity?.wikipediaUrl ?? null,
-    source: entity?.source ?? null,
-  };
-}
-
-function phraseLinkProvenance(entity) {
-  if (!entity) {
-    return { sourceType: 'algorithm', sourceUrl: null };
-  }
-  return {
-    sourceType: entity.source ?? 'algorithm',
-    sourceUrl: entity.sourceUrl ?? wikidataPageUrl(entity),
-  };
-}
-
-function buildContextLink(context, index, inputId) {
-  return {
-    id: `formalize-context-${index + 1}`,
-    role: 'context',
-    references: [inputId],
-    value: {
-      wikidataId: context.id,
-      property: context.property,
-      propertyLabel: context.propertyLabel,
-      weight: context.weight,
-      probability: context.probability,
-    },
-    provenance: {
-      sourceType: 'wikidata',
-      sourceUrl: `${wikidataEntityBaseUrl}${context.id}`,
-    },
-  };
-}
-
 function htmlFromFormalizationCst(cst) {
   if (canRenderCstWithSourceText(cst)) {
     return htmlFromCstSourceText(cst);
@@ -1497,7 +1444,30 @@ function renderLinksNotation(cst) {
     const probability = (context.probability * 100).toFixed(1);
     return `(${context.id}: ${context.wikidataId} weight ${context.weight} probability ${probability})`;
   });
-  return [head, ...phraseLines, ...contextLines].join('\n');
+  const fragmentLines = (cst.linguisticMetadata?.fragments ?? [])
+    .filter(
+      (fragment) => fragment.role !== 'word' && fragment.role !== 'symbol'
+    )
+    .map(
+      (fragment) =>
+        `(${fragment.id}: ${fragment.type} role ${fragment.role} source ${toLino(fragment.text)} start ${fragment.tokenStart} end ${fragment.tokenEnd} phrases ${toLino((fragment.phraseIds ?? []).join(' ') || 'none')})`
+    );
+  const dependencyLines = (cst.linguisticMetadata?.dependencies ?? []).map(
+    (dependency) =>
+      `(${dependency.id}: ${dependency.relation} head ${dependency.headFragmentId} dependent ${dependency.dependentFragmentId})`
+  );
+  const relationLines = (cst.linguisticMetadata?.relations ?? []).map(
+    (relation) =>
+      `(${relation.id}: ${relation.type} subject ${relation.subjectFragmentId} predicate ${relation.predicateFragmentId} object ${relation.objectFragmentId ?? 'none'})`
+  );
+  return [
+    head,
+    ...phraseLines,
+    ...fragmentLines,
+    ...dependencyLines,
+    ...relationLines,
+    ...contextLines,
+  ].join('\n');
 }
 
 function markdownFromCstPhrase(phrase) {

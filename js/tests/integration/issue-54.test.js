@@ -11,14 +11,17 @@ function emptyJsonResponse() {
   });
 }
 
-function wikidataCandidate(id, label) {
+function wikidataCandidate(id, label, kind = 'entity') {
   return {
     id,
     label,
     description: `${label} test entity`,
-    kind: 'entity',
+    kind,
     source: 'wikidata',
-    sourceUrl: `https://www.wikidata.org/wiki/${id}`,
+    sourceUrl:
+      kind === 'property'
+        ? `https://www.wikidata.org/wiki/Property:${id}`
+        : `https://www.wikidata.org/wiki/${id}`,
     matchText: label,
     score: 1,
     ngramSize: label.split(/\s+/).length,

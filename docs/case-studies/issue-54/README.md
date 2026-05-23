@@ -1,4 +1,4 @@
-# Issue 54 Case Study: Formal AI Compatibility Hooks
+# Issue 54 Case Study: Formal AI Compatibility
 
 Issue: https://github.com/link-assistant/meta-expression/issues/54
 PR: https://github.com/link-assistant/meta-expression/pull/55
@@ -10,20 +10,31 @@ foundation for `link-assistant/formal-ai`, especially around formalization,
 translation, naturalization/deformalization, customization hooks, and trace
 metadata.
 
-The issue is intentionally broad. This PR imports the immediately reusable
-compatibility contract into focused tests and code:
+The issue is intentionally broad. This PR now covers the shared compatibility
+contract with focused tests and code:
 
 - JavaScript formalization supports configurable rules before and after the
   core formalizer.
+- JavaScript formalization publishes deterministic AST/CST linguistic metadata:
+  words, symbols, noun phrases, verb phrases, subject, predicate, object, SVO
+  relations, dependency-like links, and source span mappings.
+- The Links Network includes linguistic fragment, dependency, and relation
+  records so downstream Formal AI traces can point from text parts to formal
+  parts.
 - JavaScript translation supports configurable rules before translation, before
   naturalization/deformalization, after naturalization/deformalization, and
   after translation.
 - Translation results expose `deformalization` as an alias of
   `naturalization`, including the CST.
+- Translation semantic links carry source linguistic fragment references, so
+  the semantic meta-language can preserve roles such as predicate across the
+  formalize -> translate -> naturalize flow.
 - Formalization now returns a `steps` trace so custom hooks are visible in the
   same style as translation traces.
 - Rust exposes the matching small deterministic transformation primitive and a
   `deformalize_semantic_translation()` alias.
+- Rust also exposes `extract_linguistic_metadata()` with the same deterministic
+  baseline categories for Formal AI's Rust-side tests.
 
 ## Captured Data
 
@@ -34,9 +45,9 @@ large generated artifacts; the tracked markdown files summarize the findings.
 The `formal-ai` repository was studied at:
 
 ```text
-3d9cd564934d23e80aadf539d0c8fdb5694df076
-2026-05-22T21:23:24+00:00
-chore: release v0.105.0
+a4999861759ad688f55198b893af378f3da350df
+2026-05-23T22:40:21+00:00
+chore: release v0.106.0
 ```
 
 Relevant upstream tests and specifications:
@@ -45,8 +56,8 @@ Relevant upstream tests and specifications:
 | ------------------------------------------ | ------------------------------------------------------------------- | ------------------------------------------------------------------------------- |
 | Translation via links                      | `tests/unit/specification/translation_via_links.rs`                 | `js/tests/integration/issue-54.test.js`, `rust/tests/unit/issue54_formal_ai.rs` |
 | Natural translation surface                | `issue_230_russian_compositional_translation_handles_search_phrase` | Translation naturalization/deformalization alias assertions                     |
-| Formalize, summarize, deformalize pipeline | `tests/unit/specification/summarization_pipeline.rs`                | Rust naturalize/deformalize alias and JS hook surface                           |
-| Traceable symbolic answers                 | `tests/unit/formal_ai.rs`                                           | Hook steps are recorded with phase and rule id                                  |
+| Formalize, summarize, deformalize pipeline | `tests/unit/specification/summarization_pipeline.rs`                | Rust naturalize/deformalize alias, JS hook surface, source linguistic metadata  |
+| Traceable symbolic answers                 | `tests/unit/formal_ai.rs`                                           | Hook steps plus linguistic CST/AST relations are recorded with source spans     |
 
 ## Implemented Solution
 
@@ -62,9 +73,15 @@ hook changes a value and tracing is enabled, the pipeline records a
 `custom-transformation-rule` step with the phase, rule id, and before/after
 summary.
 
-Rust support is intentionally smaller but compatible with the deterministic
-contract: text replacement rules apply in order, and semantic translation
-naturalization can be addressed through the `deformalize_` alias.
+Formalization now also adds a zero-configuration deterministic linguistic layer.
+It is intentionally parser-free for this baseline: every output records exact
+source spans and stable ids, and a later parser can enrich the same AST/CST
+fields without breaking consumers.
+
+Rust support mirrors the deterministic contract: text replacement rules apply
+in order, semantic translation naturalization can be addressed through the
+`deformalize_` alias, and `extract_linguistic_metadata()` exposes the same
+structural categories used by the JS CST.
 
 ## Verification
 
