@@ -60,6 +60,21 @@ describe('js workflow publishing boundaries', () => {
     expect(test.includes('Run tests (Node.js)')).toBe(false);
     expect(test.includes('Run tests (Deno)')).toBe(false);
   });
+
+  it('uses targeted checkout for changeset validation', () => {
+    const changesetCheck = getJobBlock(jsWorkflow, 'changeset-check');
+
+    expect(
+      changesetCheck.includes('ref: ${{ github.event.pull_request.head.sha }}')
+    ).toBe(true);
+    expect(changesetCheck.includes('fetch-depth: 1')).toBe(true);
+    expect(
+      changesetCheck.includes(
+        'git fetch --no-tags --depth=1 origin "$GITHUB_BASE_SHA"'
+      )
+    ).toBe(true);
+    expect(changesetCheck.includes('fetch-depth: 0')).toBe(false);
+  });
 });
 
 describe('rust workflow checks coverage', () => {

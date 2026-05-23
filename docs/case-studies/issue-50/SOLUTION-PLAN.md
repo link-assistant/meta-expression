@@ -43,7 +43,8 @@
 8. Add a patch changeset and case-study documentation.
 9. Follow up on PR CI feedback by reducing JavaScript tests to Bun on Linux,
    running full Rust tests on Linux, adding CI job timeouts from the templates,
-   and filing matching upstream template issues.
+   using targeted checkout for changeset validation, and filing matching
+   upstream template issues.
 
 ## Follow-Up Work
 

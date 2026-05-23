@@ -17,6 +17,7 @@
 | R11 | Add debug output if root cause cannot be found.                                     | Not needed | Existing translation steps and CLI JSON output were sufficient to identify 429 fan-out and unresolved target causes.                                                                                    |
 | R12 | File upstream issues if another project is at fault.                                | Done       | The Translate failure was internal; the later CI follow-up found matching broad test matrices in the JS and Rust CI/CD templates and filed upstream template issues 66 and 59.                          |
 | R13 | Keep only Bun/Linux JavaScript tests and full Linux Rust tests in CI.               | Done       | The JS workflow now has a single `Test (bun on ubuntu-latest)` job, and the Rust workflow now has a single `Test (ubuntu-latest)` job using `cargo test --workspace --all-targets --all-features`.      |
+| R14 | Avoid unnecessary full-history checkout in the changeset validation job.            | Done       | The changeset check now checks out the PR head at depth 1 and fetches only the base commit needed for the changeset diff.                                                                               |
 
 ## Reproduction
 

@@ -103,8 +103,11 @@ The process 'C:\Program Files\Git\bin\git.exe' failed with exit code 128
 
 The CI follow-up keeps JavaScript tests to the maintained Bun/Linux target,
 keeps Node-based lint/release jobs where the repository scripts require them,
-and runs Rust tests fully on Linux with `--all-targets --all-features`. Matching
-template findings were filed upstream:
+and runs Rust tests fully on Linux with `--all-targets --all-features`. A fresh
+run at `2026-05-23T17:10:41Z` also exposed that `Check for Changesets` did not
+need a full-history, all-refs checkout; it now checks out only the PR head and
+fetches the base commit needed for the changeset diff. Matching template
+findings were filed upstream:
 
 - https://github.com/link-foundation/js-ai-driven-development-pipeline-template/issues/66
 - https://github.com/link-foundation/rust-ai-driven-development-pipeline-template/issues/59
