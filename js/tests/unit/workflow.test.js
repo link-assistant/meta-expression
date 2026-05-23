@@ -46,6 +46,20 @@ describe('js workflow publishing boundaries', () => {
 
     expect(release.includes("vars.NPM_PUBLISH_ENABLED == 'true'")).toBe(true);
   });
+
+  it('runs JavaScript tests only on Bun and Linux', () => {
+    const test = getJobBlock(jsWorkflow, 'test');
+
+    expect(test.includes('name: Test (bun on ubuntu-latest)')).toBe(true);
+    expect(test.includes('runs-on: ubuntu-latest')).toBe(true);
+    expect(test.includes('oven-sh/setup-bun@v2')).toBe(true);
+    expect(test.includes('bun test --timeout 30000')).toBe(true);
+    expect(test.includes('matrix:')).toBe(false);
+    expect(test.includes('windows-latest')).toBe(false);
+    expect(test.includes('macos-latest')).toBe(false);
+    expect(test.includes('Run tests (Node.js)')).toBe(false);
+    expect(test.includes('Run tests (Deno)')).toBe(false);
+  });
 });
 
 describe('rust workflow checks coverage', () => {
@@ -58,14 +72,18 @@ describe('rust workflow checks coverage', () => {
     ).toBe(true);
   });
 
-  it('runs the workspace test suite across operating systems', () => {
+  it('runs the full workspace test suite on Linux', () => {
     const test = getJobBlock(rustWorkflow, 'test');
 
+    expect(test.includes('name: Test (ubuntu-latest)')).toBe(true);
     expect(test.includes('ubuntu-latest')).toBe(true);
-    expect(test.includes('macos-latest')).toBe(true);
-    expect(test.includes('windows-latest')).toBe(true);
+    expect(test.includes('macos-latest')).toBe(false);
+    expect(test.includes('windows-latest')).toBe(false);
+    expect(test.includes('matrix:')).toBe(false);
     expect(
-      test.includes('cargo test --workspace --all-features --verbose')
+      test.includes(
+        'cargo test --workspace --all-targets --all-features --verbose'
+      )
     ).toBe(true);
     expect(test.includes('cargo test --workspace --doc --verbose')).toBe(true);
   });

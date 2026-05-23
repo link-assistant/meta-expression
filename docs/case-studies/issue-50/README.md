@@ -87,6 +87,28 @@ The after output from the live CLI run was:
 - Live CLI before/after capture against Wikimedia APIs
 - Browser verification of the Translate link-target selector
 
+## CI Follow-Up
+
+The latest PR run at `2026-05-23T16:45:44Z` used head
+`600fa79a990a0bb22b5d65c898990012ae8d40c1`. The only failing check was
+`JS Checks and release`, job `Test (node on windows-latest)`. The saved log
+showed the job failed during `actions/checkout@v6`, before dependencies or
+tests:
+
+```text
+fatal: Cannot prompt because user interactivity has been disabled.
+fatal: could not read Username for 'https://github.com': terminal prompts disabled
+The process 'C:\Program Files\Git\bin\git.exe' failed with exit code 128
+```
+
+The CI follow-up keeps JavaScript tests to the maintained Bun/Linux target,
+keeps Node-based lint/release jobs where the repository scripts require them,
+and runs Rust tests fully on Linux with `--all-targets --all-features`. Matching
+template findings were filed upstream:
+
+- https://github.com/link-foundation/js-ai-driven-development-pipeline-template/issues/66
+- https://github.com/link-foundation/rust-ai-driven-development-pipeline-template/issues/59
+
 See also:
 
 - [Requirements](./REQUIREMENTS.md)

@@ -41,6 +41,9 @@
 7. Preserve interior punctuation during naturalization so translated clauses
    keep the reported comma structure.
 8. Add a patch changeset and case-study documentation.
+9. Follow up on PR CI feedback by reducing JavaScript tests to Bun on Linux,
+   running full Rust tests on Linux, adding CI job timeouts from the templates,
+   and filing matching upstream template issues.
 
 ## Follow-Up Work
 
@@ -50,3 +53,6 @@
   by source and target language label availability before phrase cover selection.
 - Add a target-language morphology layer so future Russian output can improve
   grammar beyond glossary phrase quality.
+- Consider exposing optional macOS, Windows, Node.js, and Deno test matrices
+  behind explicit repository variables if future cross-platform validation is
+  needed.

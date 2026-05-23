@@ -15,7 +15,8 @@
 | R9  | Capture issue data, logs, and a case study.                                         | Done       | Raw captures are in the ignored `data/` directory; tracked markdown summarizes the root cause and verification.                                                                                         |
 | R10 | Search online for additional facts and data.                                        | Done       | See `ONLINE-RESEARCH.md`.                                                                                                                                                                               |
 | R11 | Add debug output if root cause cannot be found.                                     | Not needed | Existing translation steps and CLI JSON output were sufficient to identify 429 fan-out and unresolved target causes.                                                                                    |
-| R12 | File upstream issues if another project is at fault.                                | Not needed | The failure came from our request pattern and target fallback behavior, not a third-party bug.                                                                                                          |
+| R12 | File upstream issues if another project is at fault.                                | Done       | The Translate failure was internal; the later CI follow-up found matching broad test matrices in the JS and Rust CI/CD templates and filed upstream template issues 66 and 59.                          |
+| R13 | Keep only Bun/Linux JavaScript tests and full Linux Rust tests in CI.               | Done       | The JS workflow now has a single `Test (bun on ubuntu-latest)` job, and the Rust workflow now has a single `Test (ubuntu-latest)` job using `cargo test --workspace --all-targets --all-features`.      |
 
 ## Reproduction
 
