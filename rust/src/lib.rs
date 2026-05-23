@@ -448,6 +448,72 @@ pub fn normalize_statement_key(text: &str) -> String {
     collapsed.trim_end_matches(['.', '!', '?', ' ']).to_string()
 }
 
+pub const DEFAULT_TRANSLATION_MATCH_THRESHOLD: f64 = 0.5;
+
+pub fn translation_meets_threshold(coverage: &TokenCoverage, threshold: f64) -> bool {
+    coverage.ratio >= threshold
+}
+
+#[derive(Debug, Default, Clone, PartialEq, Eq)]
+pub struct TranslationQualitySummary {
+    pub total: u32,
+    pub matched: u32,
+    pub skipped: u32,
+    pub translation_fix: u32,
+    pub fix_suggested: u32,
+    pub failed: u32,
+    pub no_statement: u32,
+}
+
+pub fn summarize_translation_quality(
+    statuses: &[TranslationQualityStatus],
+) -> TranslationQualitySummary {
+    let mut summary = TranslationQualitySummary {
+        total: statuses.len() as u32,
+        ..TranslationQualitySummary::default()
+    };
+    for status in statuses {
+        match status {
+            TranslationQualityStatus::Matched => summary.matched += 1,
+            TranslationQualityStatus::Skipped => summary.skipped += 1,
+            TranslationQualityStatus::TranslationFix => summary.translation_fix += 1,
+            TranslationQualityStatus::FixSuggested => summary.fix_suggested += 1,
+            TranslationQualityStatus::Failed => summary.failed += 1,
+            TranslationQualityStatus::NoStatement => summary.no_statement += 1,
+        }
+    }
+    summary
+}
+
+pub fn statement_in_skip_list(statement: &str, skip_list: &[&str]) -> bool {
+    let key = normalize_statement_key(statement);
+    skip_list
+        .iter()
+        .any(|entry| normalize_statement_key(entry) == key)
+}
+
+#[derive(Debug, Clone, PartialEq, Eq)]
+pub struct TranslationFix {
+    pub source: String,
+    pub target: String,
+    pub note: Option<String>,
+}
+
+pub fn find_translation_fix<'a>(
+    fixes: &'a [TranslationFix],
+    statement: &str,
+) -> Option<&'a TranslationFix> {
+    let key = normalize_statement_key(statement);
+    fixes
+        .iter()
+        .find(|fix| normalize_statement_key(&fix.source) == key)
+}
+
+#[no_mangle]
+pub extern "C" fn meta_expression_default_translation_match_threshold() -> f64 {
+    DEFAULT_TRANSLATION_MATCH_THRESHOLD
+}
+
 #[no_mangle]
 pub extern "C" fn meta_expression_translation_quality_status_code(code: u32) -> u32 {
     match code {
