@@ -38,16 +38,17 @@ contract with focused tests and code:
 
 ## Captured Data
 
-Raw issue, PR, and comment captures are stored under
-`docs/case-studies/issue-54/data/`. That folder is intentionally ignored for
-large generated artifacts; the tracked markdown files summarize the findings.
+The tracked markdown files in this directory summarize the issue, PR comments,
+formal-ai audit, implementation plan, and verification evidence. If raw GitHub
+captures are regenerated locally, `docs/case-studies/issue-54/data/` remains
+available as an ignored scratch location for large generated artifacts.
 
 The `formal-ai` repository was studied at:
 
 ```text
-a4999861759ad688f55198b893af378f3da350df
-2026-05-23T22:40:21+00:00
-chore: release v0.106.0
+e1467d531534af582a2f457e69695ac6861131b8
+2026-05-23T23:02:47+00:00
+chore: release v0.107.0
 ```
 
 Relevant upstream tests and specifications:

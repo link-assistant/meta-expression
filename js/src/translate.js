@@ -100,9 +100,6 @@ export async function translateTextWith(input, options = {}) {
   );
   const questionDetails = questions;
   const questionTexts = questionDetails.map((question) => question.question);
-  const plainText = renderSentenceOutput(sentences, 'plainText', phrases);
-  const markdown = renderSentenceOutput(sentences, 'markdown', phrases);
-  const html = renderSentenceOutput(sentences, 'html', phrases);
   let naturalization = buildNaturalization(
     semanticMetaLanguage,
     phrases,
@@ -114,6 +111,10 @@ export async function translateTextWith(input, options = {}) {
     config.afterNaturalizationRules,
     transformationContext(config, 'after-naturalization')
   );
+  naturalization = refreshNaturalizationLinksNotation(naturalization);
+  const plainText = naturalization.targetText;
+  const markdown = naturalization.targetMarkdown;
+  const html = naturalization.targetHtml;
   recordStep(config, 'text', {
     sentenceCount: sentences.length,
     text: plainText,
@@ -633,6 +634,13 @@ function buildNaturalization(semanticMetaLanguage, phrases, sentences, config) {
       transformations: [...sentence.transformations],
     })),
   };
+  return {
+    ...naturalization,
+    linksNotation: renderNaturalizationLinksNotation(naturalization),
+  };
+}
+
+function refreshNaturalizationLinksNotation(naturalization) {
   return {
     ...naturalization,
     linksNotation: renderNaturalizationLinksNotation(naturalization),
@@ -1493,20 +1501,13 @@ function renderTranslationLinksNotation(cst, questions) {
 function renderSemanticMetaLanguageLinksNotation(semantic) {
   const head = `(semantic-meta-language: ${toLino(semantic.text)} from ${semantic.sourceLanguage} to ${semantic.targetLanguage})`;
   const links = semantic.links.map((link) => {
-    const meaning = link.meaning.id
-      ? ` meaning ${toLino(link.meaning.id)}`
-      : '';
-    const label = link.meaning.label
-      ? ` label ${toLino(link.meaning.label)}`
-      : '';
-    const target = link.targetHint
-      ? ` targetHint ${toLino(link.targetHint)}`
-      : '';
+    const meaning = link.meaning.id && ` meaning ${toLino(link.meaning.id)}`;
+    const label = link.meaning.label && ` label ${toLino(link.meaning.label)}`;
+    const target = link.targetHint && ` targetHint ${toLino(link.targetHint)}`;
     const url = link.meaning.url ? ` url ${toLino(link.meaning.url)}` : '';
-    const role = link.sourceFragment?.role
-      ? ` sourceRole ${link.sourceFragment.role}`
-      : '';
-    return `(${link.id}: source ${toLino(link.sourceText)} status ${link.status}${role}${meaning}${label}${target}${url})`;
+    const role =
+      link.sourceFragment?.role && ` sourceRole ${link.sourceFragment.role}`;
+    return `(${link.id}: source ${toLino(link.sourceText)} status ${link.status}${role || ''}${meaning || ''}${label || ''}${target || ''}${url})`;
   });
   return [head, ...links].join('\n');
 }
@@ -1519,16 +1520,11 @@ function renderNaturalizationLinksNotation(naturalization) {
   );
   const targetUnits = naturalization.sentences.flatMap((sentence) =>
     sentence.targetUnits.map((unit) => {
-      const semantic = unit.semanticLinkId
-        ? ` semanticLink ${unit.semanticLinkId}`
-        : '';
-      const entity = unit.targetEntityId
-        ? ` targetId ${unit.targetEntityId}`
-        : '';
-      const url = unit.targetUrl
-        ? ` markdownUrl ${toLino(unit.targetUrl)}`
-        : '';
-      return `(${unit.id}: target ${toLino(unit.targetText)}${semantic}${entity}${url})`;
+      const semantic =
+        unit.semanticLinkId && ` semanticLink ${unit.semanticLinkId}`;
+      const entity = unit.targetEntityId && ` targetId ${unit.targetEntityId}`;
+      const url = unit.targetUrl && ` markdownUrl ${toLino(unit.targetUrl)}`;
+      return `(${unit.id}: target ${toLino(unit.targetText)}${semantic || ''}${entity || ''}${url || ''})`;
     })
   );
   return [head, ...sentences, ...targetUnits].join('\n');

@@ -112,4 +112,55 @@ describe('issue 54 - formal-ai compatibility hooks', () => {
     expect(ruleIds).toContain('prefer-razyskat');
     expect(ruleIds).toContain('tag-translation');
   });
+
+  it('keeps deformalization aliases and transformed artifacts consistent', async () => {
+    const result = await translateTextWith('search', {
+      fetch: () => emptyJsonResponse(),
+      sourceLanguage: 'en',
+      targetLanguage: 'ru',
+      beforeTranslationRules: [
+        {
+          id: 'search-to-find',
+          pattern: 'search',
+          replacement: 'find',
+        },
+      ],
+      beforeDeformalizationRules: [
+        {
+          id: 'deformalization-before-alias',
+          pattern: 'найти',
+          replacement: 'разыскать',
+        },
+      ],
+      postDeformalizationRules: [
+        {
+          id: 'deformalization-post-alias',
+          apply(naturalization) {
+            return {
+              ...naturalization,
+              targetText: 'итог',
+              targetMarkdown: 'итог',
+              targetHtml: 'итог',
+            };
+          },
+        },
+      ],
+      now: () => 0,
+    });
+
+    expect(result.plainText).toBe('итог');
+    expect(result.markdown).toBe('итог');
+    expect(result.html).toBe('итог');
+    expect(result.naturalization.targetText).toBe('итог');
+    expect(result.deformalization).toBe(result.naturalization);
+    expect(result.cst.naturalization.targetText).toBe('итог');
+    expect(result.cst.deformalization.targetText).toBe('итог');
+    expect(result.linksNotation).toContain('(naturalization: target (итог)');
+    expect(result.cst.naturalization.linksNotation).toContain(
+      '(naturalization: target (итог)'
+    );
+    const ruleIds = result.steps.map((step) => step.rule);
+    expect(ruleIds).toContain('deformalization-before-alias');
+    expect(ruleIds).toContain('deformalization-post-alias');
+  });
 });

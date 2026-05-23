@@ -36,12 +36,17 @@ export function collectTranslationTransformationRules(options) {
     ]),
     beforeNaturalizationRules: collectTransformationRules(options, [
       'beforeNaturalizationRules',
+      'preNaturalizationRules',
       'naturalizationRules',
+      'beforeDeformalizationRules',
+      'preDeformalizationRules',
       'deformalizationRules',
     ]),
     afterNaturalizationRules: collectTransformationRules(options, [
       'afterNaturalizationRules',
+      'postNaturalizationRules',
       'afterDeformalizationRules',
+      'postDeformalizationRules',
     ]),
   };
 }
@@ -195,11 +200,49 @@ function summarizeValue(value) {
     return value;
   }
   if (isPlainObject(value)) {
-    return JSON.stringify(value, Object.keys(value).sort()).slice(0, 500);
+    return compactSummary(stableStringify(value));
   }
   return String(value ?? '');
 }
 
 function isPlainObject(value) {
   return Boolean(value) && typeof value === 'object' && !Array.isArray(value);
+}
+
+function stableStringify(value, seen = new Set()) {
+  if (value === null || typeof value !== 'object') {
+    return JSON.stringify(value);
+  }
+  if (seen.has(value)) {
+    return '"[Circular]"';
+  }
+  seen.add(value);
+  if (Array.isArray(value)) {
+    const items = value.map((item) => stableStringify(item, seen));
+    seen.delete(value);
+    return `[${items.join(',')}]`;
+  }
+  const entries = Object.keys(value)
+    .sort()
+    .map(
+      (key) => `${JSON.stringify(key)}:${stableStringify(value[key], seen)}`
+    );
+  seen.delete(value);
+  return `{${entries.join(',')}}`;
+}
+
+function compactSummary(serialized) {
+  const limit = 1000;
+  if (serialized.length <= limit) {
+    return serialized;
+  }
+  return `${serialized.slice(0, limit)}...(${serialized.length} chars, hash ${hashString(serialized)})`;
+}
+
+function hashString(value) {
+  let hash = 0;
+  for (let index = 0; index < value.length; index += 1) {
+    hash = (hash * 31 + value.charCodeAt(index)) >>> 0;
+  }
+  return hash.toString(16).padStart(8, '0');
 }

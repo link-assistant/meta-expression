@@ -791,10 +791,15 @@ export interface TranslateOptions extends FormalizeOptions {
   afterTranslationRules?: TransformationRule | TransformationRule[];
   postTranslationRules?: TransformationRule | TransformationRule[];
   beforeNaturalizationRules?: TransformationRule | TransformationRule[];
+  preNaturalizationRules?: TransformationRule | TransformationRule[];
   naturalizationRules?: TransformationRule | TransformationRule[];
   afterNaturalizationRules?: TransformationRule | TransformationRule[];
+  postNaturalizationRules?: TransformationRule | TransformationRule[];
+  beforeDeformalizationRules?: TransformationRule | TransformationRule[];
+  preDeformalizationRules?: TransformationRule | TransformationRule[];
   deformalizationRules?: TransformationRule | TransformationRule[];
   afterDeformalizationRules?: TransformationRule | TransformationRule[];
+  postDeformalizationRules?: TransformationRule | TransformationRule[];
 }
 
 export type TranslationStrategyId =
