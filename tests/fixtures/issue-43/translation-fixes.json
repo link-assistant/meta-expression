@@ -1,0 +1,10 @@
+{
+  "comment": "Curated translations the project intends to push back to Wikipedia (or to its own glossary). They are always treated as passing in the quality assessment.",
+  "entries": [
+    {
+      "source": "Найти синонимы или примеры согласования",
+      "target": "Find synonyms or examples of agreement",
+      "note": "Issue 41 baseline translation, preserved here so issue 43 quality runs stay green when issue 41 regression suites are removed."
+    }
+  ]
+}
