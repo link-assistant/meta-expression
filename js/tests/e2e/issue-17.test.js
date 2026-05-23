@@ -1,8 +1,8 @@
 import { readFile } from 'node:fs/promises';
 import { describe, expect, it } from 'test-anywhere';
-import { checkText, checkTextWithLiveEvidence } from '../src/index.js';
-import { parseCliArguments, runCliAsync } from '../src/cli.js';
-import { createMetaExpressionServer } from '../src/server.js';
+import { checkText, checkTextWithLiveEvidence } from '../../src/index.js';
+import { parseCliArguments, runCliAsync } from '../../src/cli.js';
+import { createMetaExpressionServer } from '../../src/server.js';
 
 function startServer() {
   return new Promise((resolve, reject) => {
@@ -225,15 +225,15 @@ describe('issue 17 - check integration surfaces', () => {
 
   it('wires the static web app with check and fact-check hash aliases', async () => {
     const html = await readFile(
-      new URL('../web/index.html', import.meta.url),
+      new URL('../../../web/index.html', import.meta.url),
       'utf8'
     );
     const app = await readFile(
-      new URL('../web/app.js', import.meta.url),
+      new URL('../../../web/app.js', import.meta.url),
       'utf8'
     );
     const pageReport = await readFile(
-      new URL('../web/page-report.js', import.meta.url),
+      new URL('../../../web/page-report.js', import.meta.url),
       'utf8'
     );
 

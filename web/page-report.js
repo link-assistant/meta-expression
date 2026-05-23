@@ -1,4 +1,4 @@
-import { serializeLinksNotation } from '../src/index.js';
+import { serializeLinksNotation } from '../js/src/index.js';
 import { formatAppVersion, loadAppVersionInfo } from './app-version.js';
 
 const repositoryUrl = 'https://github.com/link-assistant/meta-expression';

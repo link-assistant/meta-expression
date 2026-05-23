@@ -3,7 +3,7 @@ import {
   FORMALIZE_SOURCE_KIND,
   createWikidataSource,
   translateTextWith,
-} from '../src/index.js';
+} from '../../src/index.js';
 
 function jsonResponse(payload, status = 200) {
   return Promise.resolve({

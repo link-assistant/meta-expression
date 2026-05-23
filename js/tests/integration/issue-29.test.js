@@ -1,10 +1,13 @@
 import { readFile } from 'node:fs/promises';
 import { describe, expect, it } from 'test-anywhere';
-import { formatAppVersion, loadAppVersionInfo } from '../web/app-version.js';
+import {
+  formatAppVersion,
+  loadAppVersionInfo,
+} from '../../../web/app-version.js';
 import {
   createPageIssueReport,
   createPageIssueReportUrl,
-} from '../web/page-report.js';
+} from '../../../web/page-report.js';
 
 describe('issue 29 - page issue reporting', () => {
   it('creates a GitHub issue URL with page state and version diagnostics', () => {
@@ -94,15 +97,15 @@ describe('issue 29 - page issue reporting', () => {
 
   it('wires the static web app and Pages workflow for reporting', async () => {
     const html = await readFile(
-      new URL('../web/index.html', import.meta.url),
+      new URL('../../../web/index.html', import.meta.url),
       'utf8'
     );
     const app = await readFile(
-      new URL('../web/app.js', import.meta.url),
+      new URL('../../../web/app.js', import.meta.url),
       'utf8'
     );
     const workflow = await readFile(
-      new URL('../.github/workflows/release.yml', import.meta.url),
+      new URL('../../../.github/workflows/release.yml', import.meta.url),
       'utf8'
     );
 

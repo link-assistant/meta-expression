@@ -1,4 +1,4 @@
-import { createWikimediaEvidenceClient } from '../src/index.js';
+import { createWikimediaEvidenceClient } from '../js/src/index.js';
 
 const wikimediaCacheStorageKey = 'meta-expression.wikimedia-cache.v1';
 const cache = new Map();

@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'test-anywhere';
-import { translateTextWith } from '../src/index.js';
+import { translateTextWith } from '../../src/index.js';
 import { readFile } from 'node:fs/promises';
 
 const issue39Input =
@@ -110,7 +110,7 @@ describe('issue 39 - technical sentence translation', () => {
   });
 
   it('exposes translation strategies and prepared Translate examples in the web app', async () => {
-    const { listTranslationStrategies } = await import('../src/index.js');
+    const { listTranslationStrategies } = await import('../../src/index.js');
     const strategies = listTranslationStrategies();
     expect(strategies.map((strategy) => strategy.id)).toEqual([
       TRANSLATION_STRATEGIES.CONTEXTUAL_GLOSSARY,
@@ -119,15 +119,15 @@ describe('issue 39 - technical sentence translation', () => {
     ]);
 
     const html = await readFile(
-      new URL('../web/index.html', import.meta.url),
+      new URL('../../../web/index.html', import.meta.url),
       'utf8'
     );
     const translateUi = await readFile(
-      new URL('../web/translate-ui.js', import.meta.url),
+      new URL('../../../web/translate-ui.js', import.meta.url),
       'utf8'
     );
     const samples = await readFile(
-      new URL('../web/translate-samples.js', import.meta.url),
+      new URL('../../../web/translate-samples.js', import.meta.url),
       'utf8'
     );
 

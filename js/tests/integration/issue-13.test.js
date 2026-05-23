@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'test-anywhere';
-import { analyzeStatement } from '../src/index.js';
+import { analyzeStatement } from '../../src/index.js';
 
 describe('issue 13 - default metrics: correctness and signed confidence', () => {
   it('exposes both correctness and signedConfidence on every result', () => {

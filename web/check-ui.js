@@ -1,4 +1,4 @@
-import { checkText, checkTextWithLiveEvidence } from '../src/index.js';
+import { checkText, checkTextWithLiveEvidence } from '../js/src/index.js';
 
 export function setupCheckPage({
   cache,

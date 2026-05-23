@@ -4,8 +4,8 @@ import {
   createWiktionarySource,
   formalizeTextWith,
   translateTextWith,
-} from '../src/index.js';
-import { createPageIssueReportUrl } from '../web/page-report.js';
+} from '../../src/index.js';
+import { createPageIssueReportUrl } from '../../../web/page-report.js';
 
 function jsonResponse(payload) {
   return Promise.resolve({

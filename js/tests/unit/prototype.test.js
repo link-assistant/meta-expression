@@ -8,7 +8,7 @@ import {
   describeFormalizationLevel,
   getPreparedExamples,
   serializeLinksNotation,
-} from '../src/index.js';
+} from '../../src/index.js';
 
 describe('meta-expression prototype pipeline', () => {
   it('keeps user selection as an explicit pipeline boundary', () => {

@@ -18,7 +18,7 @@ formalization reference at
 ## Library
 
 ```js
-import { analyzeStatement, serializeLinksNotation } from './src/index.js';
+import { analyzeStatement, serializeLinksNotation } from './js/src/index.js';
 
 const analysis = analyzeStatement('1 + 1 = 2');
 
@@ -81,14 +81,14 @@ Real-world confidence is intentionally bounded away from absolute `0%` and
 ## CLI
 
 ```bash
-node src/cli.js analyze "1 + 1 = 2"
-node src/cli.js analyze --input "Earth orbits the Sun" --format links
-node src/cli.js analyze --input "Paris is the capital of France" --live
-node src/cli.js formalize --input "Hawaii is a state." --format markdown
-node src/cli.js translate --input "Hawaii is a state." --to ru --format markdown
-node src/cli.js check --input "Earth orbits the Sun. 1 + 1 = 1." --format html
-node src/cli.js fact-check --input "Paris is the capital of France." --live
-node src/cli.js uniqueness --input "Earth orbits the Sun." --format markdown
+node js/src/cli.js analyze "1 + 1 = 2"
+node js/src/cli.js analyze --input "Earth orbits the Sun" --format links
+node js/src/cli.js analyze --input "Paris is the capital of France" --live
+node js/src/cli.js formalize --input "Hawaii is a state." --format markdown
+node js/src/cli.js translate --input "Hawaii is a state." --to ru --format markdown
+node js/src/cli.js check --input "Earth orbits the Sun. 1 + 1 = 1." --format html
+node js/src/cli.js fact-check --input "Paris is the capital of France." --live
+node js/src/cli.js uniqueness --input "Earth orbits the Sun." --format markdown
 ```
 
 ## Microservice

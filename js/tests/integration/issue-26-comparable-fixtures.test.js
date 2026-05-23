@@ -22,7 +22,7 @@
 
 import { existsSync, readFileSync } from 'node:fs';
 import { describe, it, expect } from 'test-anywhere';
-import { analyzeStatement } from '../src/index.js';
+import { analyzeStatement } from '../../src/index.js';
 
 const TEST_CASES_PATH = 'docs/case-studies/issue-26/TEST-CASES.md';
 const COMPARISON_CONCEPTS_PATH = 'docs/COMPARISON-CONCEPTS.md';

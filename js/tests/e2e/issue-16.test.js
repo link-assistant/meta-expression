@@ -5,9 +5,9 @@ import {
   formalizeTextWith,
   markdownFromFormalizationCst,
   translateTextWith,
-} from '../src/index.js';
-import { parseCliArguments, runCliAsync } from '../src/cli.js';
-import { createMetaExpressionServer } from '../src/server.js';
+} from '../../src/index.js';
+import { parseCliArguments, runCliAsync } from '../../src/cli.js';
+import { createMetaExpressionServer } from '../../src/server.js';
 
 function jsonResponse(payload) {
   return Promise.resolve({
@@ -396,11 +396,11 @@ describe('issue 16 — CLI and HTTP translate surfaces', () => {
 describe('issue 16 — web translate surface', () => {
   it('adds a translated workspace to the static web app', async () => {
     const html = await readFile(
-      new URL('../web/index.html', import.meta.url),
+      new URL('../../../web/index.html', import.meta.url),
       'utf8'
     );
     const app = await readFile(
-      new URL('../web/app.js', import.meta.url),
+      new URL('../../../web/app.js', import.meta.url),
       'utf8'
     );
 

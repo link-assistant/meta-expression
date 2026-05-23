@@ -6,7 +6,7 @@
  * Downloads top monthly pageviews from Wikimedia, then for each candidate
  * article downloads the Wikidata sitelinks and the first-paragraph extracts
  * for the two largest language versions. The data is written to
- * `tests/fixtures/issue-43/articles.json` so the integration test can replay
+ * `js/tests/fixtures/issue-43/articles.json` so the integration test can replay
  * the same payloads offline.
  *
  * Usage:
@@ -22,7 +22,7 @@ import { fileURLToPath } from 'node:url';
 import { dirname, resolve } from 'node:path';
 
 const here = dirname(fileURLToPath(import.meta.url));
-const fixturesDir = resolve(here, '..', 'tests', 'fixtures', 'issue-43');
+const fixturesDir = resolve(here, '..', 'js', 'tests', 'fixtures', 'issue-43');
 const defaultUserAgent =
   'meta-expression/0.10.0 (https://github.com/link-assistant/meta-expression)';
 const skipNamespacePrefixes = [

@@ -6,7 +6,7 @@ import {
   isPreferenceBeliefVisible,
   parsePreferenceProfile,
   serializePreferenceProfile,
-} from '../src/index.js';
+} from '../../src/index.js';
 
 describe('issue 18 - preference profiles', () => {
   it('round-trips a profile through Links Notation', () => {

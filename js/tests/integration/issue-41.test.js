@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'test-anywhere';
-import { translateTextWith } from '../src/index.js';
+import { translateTextWith } from '../../src/index.js';
 import { readFile } from 'node:fs/promises';
 
 const issue41Input = 'Найти синонимы или примеры согласования';
@@ -264,7 +264,7 @@ describe('issue 41 - Russian translate fallback', () => {
 
   it('exposes the reported phrase as a Translate sample', async () => {
     const samples = await readFile(
-      new URL('../web/translate-samples.js', import.meta.url),
+      new URL('../../../web/translate-samples.js', import.meta.url),
       'utf8'
     );
 

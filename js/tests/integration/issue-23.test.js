@@ -6,17 +6,22 @@ import {
   INTERPRETATION_DISPLAY_MODES,
   formatInterpretationPhrase,
   interpretationKey,
-} from '../src/index.js';
+} from '../../src/index.js';
 import {
   detectLocale,
   translate,
   listLocales,
   SUPPORTED_LOCALES,
-} from '../web/i18n.js';
-import { effectiveTheme, nextTheme, themeIcon, THEMES } from '../web/theme.js';
+} from '../../../web/i18n.js';
+import {
+  effectiveTheme,
+  nextTheme,
+  themeIcon,
+  THEMES,
+} from '../../../web/theme.js';
 
 const here = dirname(fileURLToPath(import.meta.url));
-const webDir = resolve(here, '..', 'web');
+const webDir = resolve(here, '..', '..', '..', 'web');
 
 async function loadFile(name) {
   return readFile(resolve(webDir, name), 'utf8');

@@ -4,7 +4,7 @@ import {
   formalizeTextWith,
   parseSourceSpec,
   createWikidataSource,
-} from '../src/index.js';
+} from '../js/src/index.js';
 
 // v2: cache entries are stored as base64-encoded doublets blobs. The
 // previous v1 key held a JSON snapshot — we leave it for one release so

@@ -11,7 +11,7 @@ import {
   getReasoningStrategy,
   listReasoningStrategies,
   orderReasoningSteps,
-} from '../src/index.js';
+} from '../../src/index.js';
 
 describe('issue 9 - prepared examples and opposites', () => {
   it('exposes opposites for every prepared example', () => {

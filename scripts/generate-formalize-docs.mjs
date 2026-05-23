@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-// Generates docs/FORMALIZE.md from JSDoc blocks in src/formalize*.js.
+// Generates docs/FORMALIZE.md from JSDoc blocks in js/src/formalize*.js.
 //
 // Usage:
 //   node scripts/generate-formalize-docs.mjs           # write docs/FORMALIZE.md
@@ -20,43 +20,43 @@ const repoRoot = join(here, '..');
 
 const sources = [
   {
-    path: 'src/formalize.js',
+    path: 'js/src/formalize.js',
     title: 'Pipeline & rendering',
     summary:
       'High-level entry points (`formalizeText`, `formalizeTextWith`), tokenization, n-gram generation, and link/markdown/HTML rendering.',
   },
   {
-    path: 'src/formalize-sources.js',
+    path: 'js/src/formalize-sources.js',
     title: 'Knowledge-graph sources',
     summary:
       'Pluggable resolvers for Wikidata, WordNet (Wiktionary opensearch), and Fandom wikis. `parseSourceSpec` accepts the human-readable spec used by the CLI / web UI.',
   },
   {
-    path: 'src/formalize-overrides.js',
+    path: 'js/src/formalize-overrides.js',
     title: 'Lazy overrides',
     summary:
       'Repository-level (`docs/formalize/overrides.lino`, JSON accepted as legacy fallback) and user-level overrides that pin a phrase to a specific entity, bypassing live lookups.',
   },
   {
-    path: 'src/formalize-contexts.js',
+    path: 'js/src/formalize-contexts.js',
     title: 'Big-context aggregation',
     summary:
       'Walks `instance of` / `subclass of` / `part of` chains to surface broad worlds (Math, Geography, Star Wars, Genshin Impact, …) the input touches.',
   },
   {
-    path: 'src/formalize-cache.js',
+    path: 'js/src/formalize-cache.js',
     title: 'Persistent cache',
     summary:
       'Filesystem cache used by the HTTP server. Each entry is written atomically as a binary doublets blob (`payload.bin`, the same shape used by `linksplatform/doublets-rs` / `link-foundation/link-cli`) plus a Links Notation echo (`payload.lino`) for cross-validation.',
   },
   {
-    path: 'src/lino.js',
+    path: 'js/src/lino.js',
     title: 'Links Notation codec',
     summary:
       'Pure JS parser/serializer for indented Links Notation (`.lino`). Used for the repository overrides file, cache echo files, and any future configuration we want to keep in link-graph form rather than JSON.',
   },
   {
-    path: 'src/doublets.js',
+    path: 'js/src/doublets.js',
     title: 'Doublets binary store',
     summary:
       'In-memory port of the link primitives used by `linksplatform/doublets-rs` / `link-foundation/link-cli`. Encodes arbitrary JS values as chains of `(index source target)` doublets — strings via unicode-sequence chains — and serializes the resulting graph as a flat `Uint8Array` blob ready for a future WebAssembly bridge.',
@@ -193,7 +193,7 @@ async function buildSection(source) {
 function buildHeader() {
   return `# Formalize library reference
 
-> Auto-generated from JSDoc blocks in \`src/formalize*.js\` by
+> Auto-generated from JSDoc blocks in \`js/src/formalize*.js\` by
 > [\`scripts/generate-formalize-docs.mjs\`](../scripts/generate-formalize-docs.mjs).
 > Run \`npm run docs:formalize\` to regenerate this file. The CI check
 > \`npm run docs:formalize:check\` fails if the committed output is stale.
@@ -205,7 +205,7 @@ to a Wikidata Q/P (or another knowledge-graph) entity. Public surface:
 
 - **Library**: \`import { formalizeTextWith, parseSourceSpec, … } from 'meta-expression';\`
 - **CLI**: \`meta-expression formalize "Barack Obama was born in Hawaii."\`
-- **HTTP**: \`POST /formalize\` (see \`src/server.js\`); responses are cached on
+- **HTTP**: \`POST /formalize\` (see \`js/src/server.js\`); responses are cached on
   disk in both JSON and Links Notation form for cross-validation.
 - **Web demo**: \`web/index.html\` → Formalize tab.
 

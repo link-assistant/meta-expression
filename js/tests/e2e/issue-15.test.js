@@ -24,9 +24,9 @@ import {
   decodeFromDoublets,
   decodeOverridesText,
   encodeOverridesAsLino,
-} from '../src/index.js';
-import { parseCliArguments, runCliAsync } from '../src/cli.js';
-import { createMetaExpressionServer } from '../src/server.js';
+} from '../../src/index.js';
+import { parseCliArguments, runCliAsync } from '../../src/cli.js';
+import { createMetaExpressionServer } from '../../src/server.js';
 import { mkdtemp, readFile, rm } from 'node:fs/promises';
 import { join } from 'node:path';
 

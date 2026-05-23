@@ -11,10 +11,10 @@ import {
   tokenCoverage,
   tokenizeForMatch,
   translateTextWith,
-} from '../src/index.js';
-import { runCliAsync } from '../src/cli.js';
+} from '../../src/index.js';
+import { runCliAsync } from '../../src/cli.js';
 
-const fixturesUrl = new URL('./fixtures/issue-43/', import.meta.url);
+const fixturesUrl = new URL('../fixtures/issue-43/', import.meta.url);
 
 async function loadJson(name) {
   return JSON.parse(await readFile(new URL(name, fixturesUrl), 'utf8'));

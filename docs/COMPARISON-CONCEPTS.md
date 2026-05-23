@@ -65,8 +65,8 @@ evidence.
 ## 2. Knowledge graphs and reasoning systems
 
 **meta-expression role**: live evidence resolver
-(`src/wikimedia-evidence.js`), interpretation pipeline
-(`src/index.js`), reasoning trace.
+(`js/src/wikimedia-evidence.js`), interpretation pipeline
+(`js/src/index.js`), reasoning trace.
 
 | Project                | License                                              | Pricing (USD)                                         | URL                             | Concept overlap                                               |
 | ---------------------- | ---------------------------------------------------- | ----------------------------------------------------- | ------------------------------- | ------------------------------------------------------------- |
@@ -80,7 +80,7 @@ evidence.
 ## 3. Formal verification and logic kernels
 
 **meta-expression role**: deterministic arithmetic evaluation
-(`src/index.js`); future Rust + WASM core (R5, R8).
+(`js/src/index.js`); future Rust + WASM core (R5, R8).
 
 | Project             | License             | Pricing (USD)                              | URL                                    | Concept overlap                                               |
 | ------------------- | ------------------- | ------------------------------------------ | -------------------------------------- | ------------------------------------------------------------- |
@@ -96,7 +96,7 @@ evidence.
 ## 4. NL→logic, entity linking, AMR
 
 **meta-expression role**: `/formalize` and the interpretation pipeline
-in `src/formalize.js` and `src/disambiguation.js`.
+in `js/src/formalize.js` and `js/src/disambiguation.js`.
 
 | Project                         | License                          | Pricing (USD)                    | URL                                             | Concept overlap                    |
 | ------------------------------- | -------------------------------- | -------------------------------- | ----------------------------------------------- | ---------------------------------- |
@@ -113,7 +113,7 @@ in `src/formalize.js` and `src/disambiguation.js`.
 ## 5. Uniqueness and paraphrase
 
 **meta-expression role**: `/uniqueness` and citation/rewording
-suggestions in `src/uniqueness.js`.
+suggestions in `js/src/uniqueness.js`.
 
 | Project                                 | License     | Pricing (USD)                                  | URL                            | Concept overlap                              |
 | --------------------------------------- | ----------- | ---------------------------------------------- | ------------------------------ | -------------------------------------------- |

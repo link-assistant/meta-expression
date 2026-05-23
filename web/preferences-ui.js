@@ -12,7 +12,7 @@ import {
   setPreferenceBelief,
   setPreferenceContext,
   setPreferenceEvidenceSituation,
-} from '../src/index.js';
+} from '../js/src/index.js';
 
 const preferenceStorageKey = 'meta-expression.preferences.v1';
 

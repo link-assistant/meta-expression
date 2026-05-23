@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # check-mjs-syntax.sh
 #
-# Checks Node.js syntax for all .mjs files in src/, scripts/, and tests/.
+# Checks Node.js syntax for all .mjs files in js/src/, scripts/, and js/tests/.
 #
 # Usage:
 #   bash scripts/check-mjs-syntax.sh
@@ -13,17 +13,11 @@ set -euo pipefail
 echo "Checking syntax for all .mjs files..."
 
 CHECKED=0
-for dir in src scripts tests; do
-  if [ -d "$dir" ]; then
-    for file in "$dir"/*.mjs; do
-      if [ -f "$file" ]; then
-        echo "Checking $file..."
-        timeout 10s node --check "$file"
-        CHECKED=$((CHECKED + 1))
-      fi
-    done
-  fi
-done
+while IFS= read -r -d '' file; do
+  echo "Checking $file..."
+  timeout 10s node --check "$file"
+  CHECKED=$((CHECKED + 1))
+done < <(find js/src scripts js/tests -name "*.mjs" -type f -print0 2>/dev/null)
 
 echo ""
 echo "Syntax check passed for $CHECKED file(s)."

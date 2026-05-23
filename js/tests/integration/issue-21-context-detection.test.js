@@ -26,7 +26,7 @@ import {
   FORMALIZE_SOURCES,
   generateFormalizeNgrams,
   tokenizeForFormalize,
-} from '../src/index.js';
+} from '../../src/index.js';
 
 const wikidataApiUrl = 'https://www.wikidata.org/w/api.php';
 

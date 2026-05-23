@@ -1,8 +1,8 @@
 import { readFile } from 'node:fs/promises';
 import { describe, it, expect } from 'test-anywhere';
-import { searchTextUniqueness } from '../src/index.js';
-import { parseCliArguments, runCliAsync } from '../src/cli.js';
-import { createMetaExpressionServer } from '../src/server.js';
+import { searchTextUniqueness } from '../../src/index.js';
+import { parseCliArguments, runCliAsync } from '../../src/cli.js';
+import { createMetaExpressionServer } from '../../src/server.js';
 
 function startServer() {
   return new Promise((resolve, reject) => {

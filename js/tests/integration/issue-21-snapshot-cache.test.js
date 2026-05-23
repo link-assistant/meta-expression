@@ -17,7 +17,7 @@ import {
 } from 'test-anywhere';
 import { mkdtemp, readFile, rm } from 'node:fs/promises';
 import { join } from 'node:path';
-import { formalizeTextWith } from '../src/index.js';
+import { formalizeTextWith } from '../../src/index.js';
 import {
   SNAPSHOT_MODES,
   createSnapshotCache,
@@ -26,7 +26,7 @@ import {
   loadSnapshotMap,
   snapshotKey,
   writeSnapshot,
-} from '../src/formalize-snapshots.js';
+} from '../../src/formalize-snapshots.js';
 
 const fixturesRoot = new URL(
   '../tests/fixtures/wikimedia-snapshots/',
