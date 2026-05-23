@@ -30,9 +30,17 @@ The observed failures were:
    - Verify every semantic link has an id and URL.
    - Verify every target unit has an id and URL.
    - Verify round-trip stability for all three reported phrases.
-5. Preserve nearby behavior.
+5. Generalize the same coverage rule across existing Translate tests.
+   - Add a shared test helper for source formalization, semantic meta language,
+     and target naturalization coverage.
+   - Apply it to issue 16, 35, 37, 39, 41, 43, and 48 test coverage.
+   - Use source/semantic-only checks for intentionally unresolved translation
+     cases.
+6. Preserve nearby behavior.
    - Update the issue 35 test to distinguish Wikidata links from lexical
      fallback links.
+   - Link the Russian-to-English copula rule token `is` through the same
+     lexical target mechanism used by other rule-inserted tokens.
    - Keep existing issue 41, issue 35, and issue 16 Translate tests passing.
 
 ## Verification Status
@@ -43,6 +51,10 @@ Full local checks passed and are recorded in:
 
 - `data/npm-test.log`
 - `data/npm-check.log`
+- `data/coverage-suite-before-rule-token-fix.log`
+- `data/coverage-suite-after-format.log`
+- `data/npm-test-after-coverage-helper.log`
+- `data/npm-check-final-coverage-helper.log`
 - `data/cargo-fmt-check.log`
 - `data/cargo-clippy.log`
 - `data/cargo-test.log`

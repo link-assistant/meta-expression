@@ -1,0 +1,351 @@
+TAP version 13
+# Subtest: issue 16 — formalize CST for translation
+    # Subtest: emits a CST that can regenerate formalize Markdown
+    ok 1 - emits a CST that can regenerate formalize Markdown
+      ---
+      duration_ms: 4.762095
+      ...
+    1..1
+ok 1 - issue 16 — formalize CST for translation
+  ---
+  duration_ms: 5.718722
+  type: 'suite'
+  ...
+# Subtest: issue 16 — translate through formalized Wikidata labels
+    # Subtest: translates linked phrases with target-language labels and links
+    ok 1 - translates linked phrases with target-language labels and links
+      ---
+      duration_ms: 4.445241
+      ...
+    # Subtest: translates full sentences and records formalization plus rule steps
+    ok 2 - translates full sentences and records formalization plus rule steps
+      ---
+      duration_ms: 4.73135
+      ...
+    # Subtest: keeps unresolved parts as variables with clarifying questions
+    ok 3 - keeps unresolved parts as variables with clarifying questions
+      ---
+      duration_ms: 0.753535
+      ...
+    1..3
+ok 2 - issue 16 — translate through formalized Wikidata labels
+  ---
+  duration_ms: 10.203993
+  type: 'suite'
+  ...
+# Subtest: issue 16 — CLI and HTTP translate surfaces
+    # Subtest: parses translate-specific flags
+    ok 1 - parses translate-specific flags
+      ---
+      duration_ms: 0.331814
+      ...
+    # Subtest: runs the translate command as Markdown
+    ok 2 - runs the translate command as Markdown
+      ---
+      duration_ms: 1.34075
+      ...
+    # Subtest: serves POST /translate
+    ok 3 - serves POST /translate
+      ---
+      duration_ms: 64.561871
+      ...
+    1..3
+ok 3 - issue 16 — CLI and HTTP translate surfaces
+  ---
+  duration_ms: 66.677949
+  type: 'suite'
+  ...
+# Subtest: issue 16 — web translate surface
+    # Subtest: adds a translated workspace to the static web app
+    ok 1 - adds a translated workspace to the static web app
+      ---
+      duration_ms: 5.531602
+      ...
+    1..1
+ok 4 - issue 16 — web translate surface
+  ---
+  duration_ms: 5.904249
+  type: 'suite'
+  ...
+# Subtest: issue 43 - translation quality assessment helpers
+    # Subtest: extracts a first statement from a multi-paragraph extract
+    ok 1 - extracts a first statement from a multi-paragraph extract
+      ---
+      duration_ms: 0.966973
+      ...
+    # Subtest: drops parenthetical Latin and Cyrillic asides from leading sentences
+    ok 2 - drops parenthetical Latin and Cyrillic asides from leading sentences
+      ---
+      duration_ms: 0.276182
+      ...
+    # Subtest: returns an empty string when the extract is blank or whitespace
+    ok 3 - returns an empty string when the extract is blank or whitespace
+      ---
+      duration_ms: 0.167209
+      ...
+    # Subtest: tokenizes Unicode-aware content tokens and drops stop words
+    ok 4 - tokenizes Unicode-aware content tokens and drops stop words
+      ---
+      duration_ms: 1.543893
+      ...
+    # Subtest: computes token coverage as the fraction of unique tokens that overlap
+    ok 5 - computes token coverage as the fraction of unique tokens that overlap
+      ---
+      duration_ms: 0.531683
+      ...
+    # Subtest: reports zero coverage for completely disjoint texts
+    ok 6 - reports zero coverage for completely disjoint texts
+      ---
+      duration_ms: 0.168962
+      ...
+    # Subtest: normalizes statement keys by collapsing whitespace and trailing punctuation
+    ok 7 - normalizes statement keys by collapsing whitespace and trailing punctuation
+      ---
+      duration_ms: 0.183785
+      ...
+    # Subtest: selects the two largest language versions from a fixture-style entry
+    ok 8 - selects the two largest language versions from a fixture-style entry
+      ---
+      duration_ms: 0.248721
+      ...
+    1..8
+ok 5 - issue 43 - translation quality assessment helpers
+  ---
+  duration_ms: 5.382931
+  type: 'suite'
+  ...
+# Subtest: issue 43 - assessArticleTranslation status routing
+    # Subtest: returns no-statement when the source extract is empty
+    ok 1 - returns no-statement when the source extract is empty
+      ---
+      duration_ms: 0.369812
+      ...
+    # Subtest: uses a curated translation-fix when the source statement matches
+    ok 2 - uses a curated translation-fix when the source statement matches
+      ---
+      duration_ms: 0.303873
+      ...
+    # Subtest: marks a source statement as skipped when it is on the skip list
+    ok 3 - marks a source statement as skipped when it is on the skip list
+      ---
+      duration_ms: 0.223864
+      ...
+    # Subtest: matches when the translated tokens cover the target extract
+    ok 4 - matches when the translated tokens cover the target extract
+      ---
+      duration_ms: 7.942249
+      ...
+    # Subtest: promotes round-trip-stable translations to fix-suggested
+    ok 5 - promotes round-trip-stable translations to fix-suggested
+      ---
+      duration_ms: 9.217802
+      ...
+    1..5
+ok 6 - issue 43 - assessArticleTranslation status routing
+  ---
+  duration_ms: 18.411709
+  type: 'suite'
+  ...
+# Subtest: issue 43 - Wikipedia top-views integration test
+    # Subtest: passes the quality bar for every captured article
+    ok 1 - passes the quality bar for every captured article
+      ---
+      duration_ms: 13.283027
+      ...
+    # Subtest: uses the formalize → semantic meta language → naturalize pipeline for every assessed statement
+    ok 2 - uses the formalize → semantic meta language → naturalize pipeline for every assessed statement
+      ---
+      duration_ms: 16.524983
+      ...
+    # Subtest: summarises results into per-status counts and exposes failures
+    ok 3 - summarises results into per-status counts and exposes failures
+      ---
+      duration_ms: 2.115185
+      ...
+    # Subtest: captures a top-10 fixture for April 2026 with two language versions per article
+    ok 4 - captures a top-10 fixture for April 2026 with two language versions per article
+      ---
+      duration_ms: 1.410213
+      ...
+    # Subtest: exposes the assessment as a translation-quality CLI command
+    ok 5 - exposes the assessment as a translation-quality CLI command
+      ---
+      duration_ms: 2.883082
+      ...
+    # Subtest: exits non-zero from the CLI when any article fails
+    ok 6 - exits non-zero from the CLI when any article fails
+      ---
+      duration_ms: 0.294079
+      ...
+    # Subtest: keeps every skip-list entry referenced by a captured article statement
+    ok 7 - keeps every skip-list entry referenced by a captured article statement
+      ---
+      duration_ms: 2.09157
+      ...
+    1..7
+ok 7 - issue 43 - Wikipedia top-views integration test
+  ---
+  duration_ms: 39.239012
+  type: 'suite'
+  ...
+# Subtest: issue 35 — Hawaii translation through semantic phrases
+    # Subtest: identifies Wikimedia calls, rejects grammar-fragment n-grams, and emits Russian
+    ok 1 - identifies Wikimedia calls, rejects grammar-fragment n-grams, and emits Russian
+      ---
+      duration_ms: 10.773352
+      ...
+    # Subtest: round-trips the fixed sentence through Russian without semantic loss
+    ok 2 - round-trips the fixed sentence through Russian without semantic loss
+      ---
+      duration_ms: 5.780214
+      ...
+    # Subtest: prefers the Wikidata state concept over a Wikipedia disambiguation page
+    ok 3 - prefers the Wikidata state concept over a Wikipedia disambiguation page
+      ---
+      duration_ms: 8.6931
+      ...
+    1..3
+ok 8 - issue 35 — Hawaii translation through semantic phrases
+  ---
+  duration_ms: 26.461129
+  type: 'suite'
+  ...
+# Subtest: issue 37 - bounded page issue reports
+    # Subtest: keeps essential Translate sections while omitting oversized diagnostics
+    ok 1 - keeps essential Translate sections while omitting oversized diagnostics
+      ---
+      duration_ms: 6.154872
+      ...
+    1..1
+ok 9 - issue 37 - bounded page issue reports
+  ---
+  duration_ms: 6.998381
+  type: 'suite'
+  ...
+# Subtest: issue 37 - Wiktionary grammar compounds
+    # Subtest: prefers the exact Wiktionary compound over separate stop words
+    ok 1 - prefers the exact Wiktionary compound over separate stop words
+      ---
+      duration_ms: 4.079717
+      ...
+    # Subtest: translates a linked `is a` grammar phrase to linked Russian `это`
+    ok 2 - translates a linked `is a` grammar phrase to linked Russian `это`
+      ---
+      duration_ms: 7.814919
+      ...
+    1..2
+ok 10 - issue 37 - Wiktionary grammar compounds
+  ---
+  duration_ms: 12.226702
+  type: 'suite'
+  ...
+# Subtest: issue 39 - technical sentence translation
+    # Subtest: uses contextual glossary and Russian grammar rules for the reported text
+    ok 1 - uses contextual glossary and Russian grammar rules for the reported text
+      ---
+      duration_ms: 28.322555
+      ...
+    # Subtest: does not let formalized phrases cross sentence boundaries
+    ok 2 - does not let formalized phrases cross sentence boundaries
+      ---
+      duration_ms: 11.013571
+      ...
+    # Subtest: keeps a strict semantic-label strategy for traceable fallback behavior
+    ok 3 - keeps a strict semantic-label strategy for traceable fallback behavior
+      ---
+      duration_ms: 11.894947
+      ...
+    # Subtest: returns structured answer options for unresolved translation questions
+    ok 4 - returns structured answer options for unresolved translation questions
+      ---
+      duration_ms: 1.035144
+      ...
+    # Subtest: exposes translation strategies and prepared Translate examples in the web app
+    ok 5 - exposes translation strategies and prepared Translate examples in the web app
+      ---
+      duration_ms: 15.652372
+      ...
+    1..5
+ok 11 - issue 39 - technical sentence translation
+  ---
+  duration_ms: 69.337396
+  type: 'suite'
+  ...
+# Subtest: issue 41 - Russian translate fallback
+    # Subtest: translates the reported Russian phrase through lexical glossary entries
+    ok 1 - translates the reported Russian phrase through lexical glossary entries
+      ---
+      duration_ms: 15.509498
+      ...
+    # Subtest: does not translate unrelated full-text search hits as phrase meanings
+    ok 2 - does not translate unrelated full-text search hits as phrase meanings
+      ---
+      duration_ms: 6.518134
+      ...
+    # Subtest: exposes semantic meta language before naturalizing the target text
+    ok 3 - exposes semantic meta language before naturalizing the target text
+      ---
+      duration_ms: 4.503679
+      ...
+    # Subtest: supports ten more Translate examples through reusable glossary naturalization
+    ok 4 - supports ten more Translate examples through reusable glossary naturalization
+      ---
+      duration_ms: 28.759197
+      ...
+    # Subtest: exposes the reported phrase as a Translate sample
+    ok 5 - exposes the reported phrase as a Translate sample
+      ---
+      duration_ms: 11.394049
+      ...
+    1..5
+ok 12 - issue 41 - Russian translate fallback
+  ---
+  duration_ms: 68.274108
+  type: 'suite'
+  ...
+# Subtest: issue 48 - complete formalize -> semantic -> naturalize coverage
+    # Subtest: formalizes and naturalizes every word from issue 45
+    ok 1 - formalizes and naturalizes every word from issue 45
+      ---
+      duration_ms: 18.89557
+      ...
+    # Subtest: keeps issue 45 stable through a round trip
+    ok 2 - keeps issue 45 stable through a round trip
+      ---
+      duration_ms: 24.256869
+      ...
+    # Subtest: formalizes and naturalizes every word from issue 46
+    ok 3 - formalizes and naturalizes every word from issue 46
+      ---
+      duration_ms: 1.641068
+      ...
+    # Subtest: keeps issue 46 stable through a round trip
+    ok 4 - keeps issue 46 stable through a round trip
+      ---
+      duration_ms: 2.855149
+      ...
+    # Subtest: formalizes and naturalizes every word from issue 47
+    ok 5 - formalizes and naturalizes every word from issue 47
+      ---
+      duration_ms: 1.916219
+      ...
+    # Subtest: keeps issue 47 stable through a round trip
+    ok 6 - keeps issue 47 stable through a round trip
+      ---
+      duration_ms: 6.970529
+      ...
+    1..6
+ok 13 - issue 48 - complete formalize -> semantic -> naturalize coverage
+  ---
+  duration_ms: 58.148433
+  type: 'suite'
+  ...
+1..13
+# tests 50
+# suites 13
+# pass 50
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 317.906208

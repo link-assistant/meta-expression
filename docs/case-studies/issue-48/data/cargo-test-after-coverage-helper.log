@@ -1,0 +1,84 @@
+   Compiling proc-macro2 v1.0.106
+   Compiling unicode-ident v1.0.24
+   Compiling quote v1.0.45
+   Compiling libc v0.2.186
+   Compiling autocfg v1.5.0
+   Compiling thiserror v2.0.18
+   Compiling getrandom v0.4.2
+   Compiling rustix v1.1.4
+   Compiling bitflags v2.11.1
+   Compiling linux-raw-sys v0.12.1
+   Compiling num-traits v0.2.19
+   Compiling cfg-if v1.0.4
+   Compiling once_cell v1.21.4
+   Compiling fastrand v2.4.1
+   Compiling allocator-api2 v0.4.0
+   Compiling beef v0.5.2
+   Compiling syn v2.0.117
+   Compiling leak_slice v0.2.0
+   Compiling memmap2 v0.9.10
+   Compiling tap v1.0.1
+   Compiling platform-num v0.8.0
+   Compiling platform-trees v0.3.4
+   Compiling tempfile v3.27.0
+   Compiling thiserror-impl v2.0.18
+   Compiling platform-mem v0.3.0
+   Compiling platform-data v2.0.0
+   Compiling doublets v0.3.0
+   Compiling meta-expression-core v0.1.0 (/tmp/gh-issue-solver-1779545150366/rust)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 4.73s
+     Running unittests src/lib.rs (target/debug/deps/meta_expression_core-66858d096a3714ff)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/e2e/mod.rs (target/debug/deps/e2e-786121946d54b799)
+
+running 5 tests
+test ffi_translation_quality::default_translation_match_threshold_is_exposed_through_extern ... ok
+test ffi_translation_quality::relation_source_and_target_match_the_doublet_constructor ... ok
+test ffi_translation_quality::translation_quality_status_codes_round_trip_through_extern ... ok
+test ffi_weighted_support::weighted_support_ratio_extern_matches_safe_helper ... ok
+test ffi_weighted_support::weighted_support_ratio_extern_returns_nan_when_undefined ... ok
+
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/integration/mod.rs (target/debug/deps/integration-19d1f63735dc4ff0)
+
+running 4 tests
+test semantic_relations::encodes_issue35_translation_phrase_relations_as_doublets ... ok
+test issue41_glossary::translates_issue41_glossary_examples_through_semantic_links ... ok
+test semantic_relations::encodes_relation_as_doublet ... ok
+test issue35_translation::translates_issue35_sentence_through_semantic_ids ... ok
+
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/unit/mod.rs (target/debug/deps/unit-6e54ffb89dfdd233)
+
+running 17 tests
+test classify_statement::classifies_supported_statement_templates ... ok
+test classify_statement::statement_template_codes_round_trip ... ok
+test extract_first_statement::extracts_first_statement_from_multi_paragraph_extract ... ok
+test extract_first_statement::returns_empty_statement_for_blank_text ... ok
+test normalize_statement_key::normalizes_statement_keys_by_collapsing_whitespace_and_punctuation ... ok
+test support_ratio::returns_none_when_total_weight_is_not_finite ... ok
+test token_coverage::computes_token_coverage_as_overlap_ratio ... ok
+test token_coverage::reports_zero_coverage_for_disjoint_text ... ok
+test tokenize_for_match::tokenizes_with_unicode_and_drops_stopwords ... ok
+test translation_quality::find_translation_fix_returns_matching_entry_or_none ... ok
+test support_ratio::caps_uncertainty_below_one_half ... ok
+test translation_quality::statement_in_skip_list_normalizes_punctuation_and_whitespace ... ok
+test extract_first_statement::drops_parenthetical_glosses_from_leading_statement ... ok
+test support_ratio::bounds_real_world_confidence ... ok
+test translation_quality::summarize_translation_quality_counts_statuses_by_kind ... ok
+test translation_quality::default_translation_match_threshold_matches_javascript ... ok
+test translation_quality::translation_meets_threshold_compares_against_supplied_threshold ... ok
+
+test result: ok. 17 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+   Doc-tests meta_expression_core
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s

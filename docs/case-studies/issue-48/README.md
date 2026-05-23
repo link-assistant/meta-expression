@@ -34,9 +34,13 @@ linkable target units for glossary words or rule-inserted words.
   `lex:en:find`.
 - Naturalization now exposes `targetUnits` on both sentence-level results and
   the naturalization CST so reviewers can inspect the target-side concept graph.
-- Rule-inserted naturalization tokens such as English `of` are also linked.
+- Rule-inserted naturalization tokens such as English `of`, English `is`, and
+  Russian `это` are also linked.
+- A shared translation coverage helper now applies the same checks across the
+  existing Translate-focused tests, not only the issue 48 regression file.
 - The regression suite checks source formalization, semantic links, target
-  naturalization, and round-trip stability for all three subissues.
+  naturalization, and round-trip stability for all three subissues and nearby
+  translation workflows.
 
 ## Evidence
 
@@ -51,6 +55,14 @@ Saved data:
 - `data/targeted-tests-final.log` captures the passing focused test run.
 - `data/npm-test.log` and `data/npm-check.log` capture the full JS test and
   quality checks.
+- `data/coverage-suite-before-rule-token-fix.log` captures the generalized
+  coverage assertion exposing an unlinked English `is` rule token during the
+  issue 35 Russian-to-English round trip.
+- `data/coverage-suite-after-format.log` captures the generalized coverage
+  suite passing after the rule-token fix.
+- `data/npm-test-after-coverage-helper.log` and
+  `data/npm-check-final-coverage-helper.log` capture the full JS verification
+  after applying the shared coverage helper across existing tests.
 - `data/cargo-fmt-check.log`, `data/cargo-clippy.log`, `data/cargo-test.log`,
   `data/cargo-doc-test.log`, and `data/cargo-build-release.log` capture the
   Rust workflow parity checks.
@@ -65,3 +77,11 @@ node --test js/tests/integration/issue-48.test.js js/tests/integration/issue-41.
 ```
 
 Expected result: all focused tests pass.
+
+Generalized coverage command:
+
+```sh
+node --test js/tests/integration/issue-35.test.js js/tests/integration/issue-37.test.js js/tests/integration/issue-39.test.js js/tests/integration/issue-41.test.js js/tests/integration/issue-48.test.js js/tests/e2e/issue-16.test.js js/tests/e2e/issue-43.test.js
+```
+
+Expected result: all generalized translation coverage tests pass.

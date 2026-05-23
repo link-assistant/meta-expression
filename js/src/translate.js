@@ -1286,14 +1286,11 @@ function applyRussianToEnglishRules(units, segment, sentenceId, config) {
     copulaIndex < nextUnits.length - 1 &&
     !isEnglishPreposition(nextUnits[copulaIndex + 1].plainText)
   ) {
-    const [copula] = nextUnits.splice(copulaIndex, 1, {
-      kind: 'rule-token',
-      sourceText: nextUnits[copulaIndex].sourceText,
-      variableName: null,
-      plainText: 'is',
-      markdown: 'is',
-      html: 'is',
-    });
+    const [copula] = nextUnits.splice(
+      copulaIndex,
+      1,
+      buildRuleToken(nextUnits[copulaIndex].sourceText, { text: 'is' }, config)
+    );
     if (copula.variableName) {
       resolvedVariableNames.add(copula.variableName);
     }

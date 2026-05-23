@@ -4,6 +4,7 @@ import {
   createWikidataSource,
   translateTextWith,
 } from '../../src/index.js';
+import { assertCompleteTranslationCoverage } from '../helpers/translation-coverage.js';
 
 function jsonResponse(payload, status = 200) {
   return Promise.resolve({
@@ -212,7 +213,7 @@ describe('issue 35 — Hawaii translation through semantic phrases', () => {
       'english-copula-to-russian-eto',
       'english-us-state-predicate-to-russian-shtat',
     ]);
-    expect(result.questions).toEqual([]);
+    assertCompleteTranslationCoverage(result, 'Hawaii is a state.');
   });
 
   it('round-trips the fixed sentence through Russian without semantic loss', async () => {
@@ -240,6 +241,8 @@ describe('issue 35 — Hawaii translation through semantic phrases', () => {
       'russian-copula-to-english-be',
       'english-indefinite-article-insertion',
     ]);
+    assertCompleteTranslationCoverage(ru, 'Hawaii is a state.');
+    assertCompleteTranslationCoverage(en, 'Гавайи это штат.');
     expect(calls.map((call) => call.search)).not.toContain('Гавайи это');
     expect(calls.map((call) => call.search)).not.toContain('это штат');
     expect(en.questions).toEqual([]);
@@ -265,5 +268,6 @@ describe('issue 35 — Hawaii translation through semantic phrases', () => {
     );
     expect(statePhrase.entity.id).toBe('Q7275');
     expect(result.plainText).toBe('Гавайи это штат.');
+    assertCompleteTranslationCoverage(result, 'Hawaii is a state.');
   });
 });

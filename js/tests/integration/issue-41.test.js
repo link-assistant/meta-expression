@@ -1,6 +1,7 @@
 import { describe, expect, it } from 'test-anywhere';
 import { translateTextWith } from '../../src/index.js';
 import { readFile } from 'node:fs/promises';
+import { assertCompleteTranslationCoverage } from '../helpers/translation-coverage.js';
 
 const issue41Input = 'Найти синонимы или примеры согласования';
 const additionalTranslationExamples = Object.freeze([
@@ -194,7 +195,7 @@ describe('issue 41 - Russian translate fallback', () => {
     });
 
     expect(result.plainText).toBe('Find synonyms or examples of agreement');
-    expect(result.questions).toEqual([]);
+    assertCompleteTranslationCoverage(result, issue41Input);
     expect(result.sentences[0].transformations).toContain(
       'russian-examples-genitive-to-english-of-phrase'
     );
@@ -216,7 +217,7 @@ describe('issue 41 - Russian translate fallback', () => {
         ['Q4616', 'Q2523390'].includes(phrase.entity?.id)
       )
     ).toBe(false);
-    expect(result.questions).toEqual([]);
+    assertCompleteTranslationCoverage(result, issue41Input);
   });
 
   it('exposes semantic meta language before naturalizing the target text', async () => {
@@ -244,6 +245,7 @@ describe('issue 41 - Russian translate fallback', () => {
     expect(result.steps.map((step) => step.type)).toContain(
       'semantic-meta-language'
     );
+    assertCompleteTranslationCoverage(result, issue41Input);
   });
 
   it('supports ten more Translate examples through reusable glossary naturalization', async () => {
@@ -256,7 +258,7 @@ describe('issue 41 - Russian translate fallback', () => {
       });
 
       expect(result.plainText).toBe(example.expected);
-      expect(result.questions).toEqual([]);
+      assertCompleteTranslationCoverage(result, example.text);
       expect(result.semanticMetaLanguage.links.length).toBeGreaterThan(0);
       expect(result.naturalization.targetText).toBe(example.expected);
     }

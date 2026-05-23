@@ -21,6 +21,8 @@ Source issue: https://github.com/link-assistant/meta-expression/issues/48
 ## Quality Requirements
 
 - Add verification for every word, not only the final translation string.
+- Apply the same verification rule to existing Translate tests so future
+  regressions are caught outside the new issue 48 examples.
 - Verify source formalization, semantic meta language, naturalization, and
   round trips.
 - Recheck similar projects and competitors for relevant best practices.

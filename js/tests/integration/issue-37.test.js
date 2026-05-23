@@ -6,6 +6,7 @@ import {
   translateTextWith,
 } from '../../src/index.js';
 import { createPageIssueReportUrl } from '../../../web/page-report.js';
+import { assertCompleteTranslationCoverage } from '../helpers/translation-coverage.js';
 
 function jsonResponse(payload) {
   return Promise.resolve({
@@ -215,6 +216,6 @@ describe('issue 37 - Wiktionary grammar compounds', () => {
     expect(result.markdown).toContain(
       '[это](https://en.wiktionary.org/wiki/%D1%8D%D1%82%D0%BE "wikt:ru:это#Determiner:0")'
     );
-    expect(result.questions).toEqual([]);
+    assertCompleteTranslationCoverage(result, 'Hawaii is a state.');
   });
 });

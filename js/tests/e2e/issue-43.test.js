@@ -13,6 +13,10 @@ import {
   translateTextWith,
 } from '../../src/index.js';
 import { runCliAsync } from '../../src/cli.js';
+import {
+  assertFormalizedSourceCoverage,
+  assertSemanticMetaLanguageCoverage,
+} from '../helpers/translation-coverage.js';
 
 const fixturesUrl = new URL('../fixtures/issue-43/', import.meta.url);
 
@@ -261,6 +265,8 @@ describe('issue 43 - Wikipedia top-views integration test', () => {
       'semantic-meta-language'
     );
     expect(translation.cst.naturalization).toBe(translation.naturalization);
+    assertFormalizedSourceCoverage(translation, statement);
+    assertSemanticMetaLanguageCoverage(translation);
   });
 
   it('summarises results into per-status counts and exposes failures', () => {

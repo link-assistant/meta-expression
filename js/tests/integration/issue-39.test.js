@@ -1,6 +1,11 @@
 import { describe, expect, it } from 'test-anywhere';
 import { translateTextWith } from '../../src/index.js';
 import { readFile } from 'node:fs/promises';
+import {
+  assertCompleteTranslationCoverage,
+  assertFormalizedSourceCoverage,
+  assertSemanticMetaLanguageCoverage,
+} from '../helpers/translation-coverage.js';
 
 const issue39Input =
   'Formalize source text with Wikidata, then translate each sentence through labels and transformation rules. Unresolved parts remain variables with questions.';
@@ -49,6 +54,7 @@ describe('issue 39 - technical sentence translation', () => {
           step.strategy === TRANSLATION_STRATEGIES.CONTEXTUAL_GLOSSARY
       )
     ).toBe(true);
+    assertCompleteTranslationCoverage(result, issue39Input);
   });
 
   it('does not let formalized phrases cross sentence boundaries', async () => {
@@ -75,6 +81,7 @@ describe('issue 39 - technical sentence translation', () => {
         (phrase) => phrase.text === 'transformation rules Unresolved'
       )
     ).toBe(false);
+    assertCompleteTranslationCoverage(result, issue39Input);
   });
 
   it('keeps a strict semantic-label strategy for traceable fallback behavior', async () => {
@@ -90,6 +97,8 @@ describe('issue 39 - technical sentence translation', () => {
       'Formalize source text with Wikidata then translate each sentence through labels and transformation rules. Unresolved parts remain variables with questions.'
     );
     expect(result.questions.length).toBeGreaterThan(0);
+    assertFormalizedSourceCoverage(result, issue39Input);
+    assertSemanticMetaLanguageCoverage(result);
   });
 
   it('returns structured answer options for unresolved translation questions', async () => {
@@ -107,6 +116,8 @@ describe('issue 39 - technical sentence translation', () => {
     expect(
       result.questionDetails[0].options.map((option) => option.id)
     ).toEqual(['preserve-source', 'map-entity', 'manual-entry']);
+    assertFormalizedSourceCoverage(result, 'xyzzy');
+    assertSemanticMetaLanguageCoverage(result);
   });
 
   it('exposes translation strategies and prepared Translate examples in the web app', async () => {
