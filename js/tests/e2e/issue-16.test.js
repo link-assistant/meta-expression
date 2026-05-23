@@ -65,8 +65,11 @@ function makeFetch(routes) {
     if (action === 'wbgetentities') {
       const ids = parsed.searchParams.get('ids');
       const languages = parsed.searchParams.get('languages') ?? 'en';
-      const route = routes.entities?.[`${ids}|${languages}`];
-      return jsonResponse(route ? entityPayload([route]) : { entities: {} });
+      const entries = String(ids ?? '')
+        .split('|')
+        .map((id) => routes.entities?.[`${id}|${languages}`])
+        .filter(Boolean);
+      return jsonResponse(entries.length ? entityPayload(entries) : {});
     }
     return jsonResponse({});
   };

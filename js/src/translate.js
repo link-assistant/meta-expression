@@ -6,12 +6,11 @@ import {
   TRANSLATION_STRATEGIES,
 } from './translation-strategies.js';
 import { buildLexicalTarget, lexicalSemanticId } from './lexical-entities.js';
-import { fetchWikimediaJson } from './wikimedia-fetch.js';
+import { createTargetEntityBatchLoader } from './target-entity-loader.js';
 
-const wikidataApiUrl = 'https://www.wikidata.org/w/api.php';
 const wikidataEntityBaseUrl = 'https://www.wikidata.org/wiki/';
 const wikidataPropertyBaseUrl = 'https://www.wikidata.org/wiki/Property:';
-const defaultCacheTtlMs = 60 * 60 * 1000;
+const defaultCacheTtlMs = 7 * 24 * 60 * 60 * 1000;
 const russianUsStatePredicate = Object.freeze({
   text: 'штат',
   entityId: 'Q35657',
@@ -84,15 +83,15 @@ export async function translateTextWith(input, options = {}) {
     linkCount: semanticMetaLanguage.links.length,
     linksNotation: semanticMetaLanguage.linksNotation,
   });
-  const phrases = [];
   const variables = [];
-  for (const phrase of formalization.cst.phrases) {
-    const translated = await translatePhrase(phrase, config);
+  const phrases = await Promise.all(
+    formalization.cst.phrases.map((phrase) => translatePhrase(phrase, config))
+  );
+  for (const translated of phrases) {
     if (translated.variable) {
       translated.variable.name = `variable-${variables.length + 1}`;
       variables.push(translated.variable);
     }
-    phrases.push(translated);
   }
   const sentences = buildTranslatedSentences(formalization, phrases, config);
   const resolvedVariableNames = new Set(
@@ -176,6 +175,10 @@ function createTranslateConfig(options) {
     translationStrategy: normalizeTranslationStrategy(
       options.translationStrategy ?? options.strategy
     ),
+    targetEntityLoader: createTargetEntityBatchLoader({
+      onCacheHit: (config, cachedUrl) =>
+        recordStep(config, 'api-cache-hit', { url: cachedUrl }),
+    }),
   };
   config.fetchImpl = rawFetch
     ? (url, init) => traceFetch(url, init, config)
@@ -493,27 +496,11 @@ function isGrammarPhrase(value, language) {
   );
 }
 
-async function fetchTargetEntity(id, config) {
+function fetchTargetEntity(id, config) {
   if (!config.fetchImpl) {
     return null;
   }
-  const site = `${config.targetLanguage}wiki`;
-  const url = new URL(wikidataApiUrl);
-  url.search = new URLSearchParams({
-    action: 'wbgetentities',
-    format: 'json',
-    ids: id,
-    languages: config.targetLanguage,
-    origin: '*',
-    props: 'labels|descriptions|sitelinks',
-    sitefilter: site,
-  }).toString();
-  const payload = await fetchWikimediaJson(url, config, {
-    onCacheHit: (cachedUrl) =>
-      recordStep(config, 'api-cache-hit', { url: cachedUrl }),
-  });
-  const entity = payload?.entities?.[id];
-  return entity && !entity.missing ? entity : null;
+  return config.targetEntityLoader(id, config);
 }
 
 async function traceFetch(url, init, config) {

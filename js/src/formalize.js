@@ -42,7 +42,7 @@ const localEntityViewerBaseUrl =
   'https://link-assistant.github.io/human-language/entities.html';
 const localPropertyViewerBaseUrl =
   'https://link-assistant.github.io/human-language/properties.html';
-const defaultCacheTtlMs = 60 * 60 * 1000;
+const defaultCacheTtlMs = 7 * 24 * 60 * 60 * 1000;
 const defaultMaxNgramSize = 3;
 const defaultSearchLimit = 5;
 const defaultTopKCandidates = 3;

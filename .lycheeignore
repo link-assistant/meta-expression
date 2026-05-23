@@ -47,6 +47,7 @@ https://allenai\.org
 https://www\.let\.rug\.nl
 https://query\.wikidata\.org
 https://yago-knowledge\.org
+https://www\.dbpedia\.org
 
 # GitHub "new issue" page requires a logged-in session — link is intentional
 # but the unauthenticated bot probe is rejected.

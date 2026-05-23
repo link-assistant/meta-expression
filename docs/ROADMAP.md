@@ -26,7 +26,8 @@ Implemented or added in PR #6:
 - Prefilled GitHub issue reporting with interpretations, Q/P reasoning traces,
   evidence, and Links Notation.
 - Rust core workspace with Doublets-based relation-link encoding and WASM-ready
-  crate type.
+  crate type, including deterministic issue #35/#52 translation fixtures and
+  Wikimedia cache/batch planning helpers.
 - Canonical top-level requirements and roadmap docs.
 
 ## Phase 1: Stabilize Public Surfaces
@@ -50,7 +51,7 @@ Exit criteria:
 
 Goal: move deterministic reasoning and links operations into Rust.
 
-- Expand `rust/core` structs for links, relation links, evidence, belief
+- Expand `rust` structs for links, relation links, evidence, belief
   systems, formalizations, and results.
 - Add parity tests between JavaScript fixtures and Rust outputs.
 - Add `wasm-bindgen` packaging once the repository installs the WASM target.

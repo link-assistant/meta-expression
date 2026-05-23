@@ -1,5 +1,19 @@
 use doublets::Doublet;
 
+mod issue52;
+mod wikimedia_plan;
+
+pub use issue52::{
+    issue52_english_text, issue52_russian_text, issue52_translation_relations,
+    translate_issue52_semantic_text,
+};
+pub use wikimedia_plan::{
+    plan_wikidata_entity_batches, stable_wikimedia_cache_ttl_days, stable_wikimedia_cache_ttl_ms,
+    wikimedia_cache_ttl_days_from_hash, WikidataEntityBatch, WIKIDATA_DEFAULT_ENTITY_BATCH_LIMIT,
+    WIKIMEDIA_CACHE_BASE_TTL_DAYS, WIKIMEDIA_CACHE_MAX_JITTER_DAYS,
+    WIKIMEDIA_CACHE_MIN_JITTER_DAYS,
+};
+
 const REAL_WORLD_EPSILON: f64 = 0.01;
 const ISSUE35_SOURCE_SENTENCE_NODE: u64 = 35_000;
 const ISSUE35_TARGET_SENTENCE_NODE: u64 = 35_001;
@@ -98,6 +112,12 @@ pub fn translate_known_semantic_sentence(
     source_language: &str,
     target_language: &str,
 ) -> Option<SemanticTranslation> {
+    if let Some(translation) =
+        translate_issue52_semantic_text(input, source_language, target_language)
+    {
+        return Some(translation);
+    }
+
     let source_language = normalize_language_key(source_language);
     let target_language = normalize_language_key(target_language);
     let sentence_key = normalize_sentence_key(input);
@@ -117,6 +137,15 @@ pub fn translate_known_semantic_sentence(
         ("ru", "en", "гавайи это штат") => Some(issue35_russian_to_english(input)),
         _ => None,
     }
+}
+
+pub fn translate_known_semantic_text(
+    input: &str,
+    source_language: &str,
+    target_language: &str,
+) -> Option<SemanticTranslation> {
+    translate_issue52_semantic_text(input, source_language, target_language)
+        .or_else(|| translate_known_semantic_sentence(input, source_language, target_language))
 }
 
 pub fn translate_glossary_semantic_sentence(
@@ -231,6 +260,46 @@ pub extern "C" fn meta_expression_issue35_phrase_count() -> u32 {
 #[no_mangle]
 pub extern "C" fn meta_expression_issue35_rule_count() -> u32 {
     3
+}
+
+#[no_mangle]
+pub extern "C" fn meta_expression_issue52_sentence_count() -> u32 {
+    7
+}
+
+#[no_mangle]
+pub extern "C" fn meta_expression_issue52_source_phrase_count() -> u32 {
+    24
+}
+
+#[no_mangle]
+pub extern "C" fn meta_expression_issue52_target_phrase_count() -> u32 {
+    24
+}
+
+#[no_mangle]
+pub extern "C" fn meta_expression_wikimedia_cache_base_ttl_days() -> u32 {
+    WIKIMEDIA_CACHE_BASE_TTL_DAYS
+}
+
+#[no_mangle]
+pub extern "C" fn meta_expression_wikimedia_cache_min_jitter_days() -> u32 {
+    WIKIMEDIA_CACHE_MIN_JITTER_DAYS
+}
+
+#[no_mangle]
+pub extern "C" fn meta_expression_wikimedia_cache_max_jitter_days() -> u32 {
+    WIKIMEDIA_CACHE_MAX_JITTER_DAYS
+}
+
+#[no_mangle]
+pub extern "C" fn meta_expression_wikimedia_cache_ttl_days_from_hash(hash: u64) -> u32 {
+    wikimedia_cache_ttl_days_from_hash(hash)
+}
+
+#[no_mangle]
+pub extern "C" fn meta_expression_wikidata_default_entity_batch_limit() -> u32 {
+    WIKIDATA_DEFAULT_ENTITY_BATCH_LIMIT as u32
 }
 
 #[no_mangle]

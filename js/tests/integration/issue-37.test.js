@@ -124,8 +124,11 @@ function makeIssue37Fetch() {
           sitelink: 'Государство',
         }),
       };
-      const route = routes[`${ids}|${languages}`];
-      return jsonResponse(route ? entityPayload([route]) : { entities: {} });
+      const entries = String(ids ?? '')
+        .split('|')
+        .map((id) => routes[`${id}|${languages}`])
+        .filter(Boolean);
+      return jsonResponse(entries.length ? entityPayload(entries) : {});
     }
     return jsonResponse({});
   };

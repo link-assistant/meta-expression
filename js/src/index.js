@@ -62,6 +62,7 @@ export {
   parseSourceSpec,
 } from './formalize-sources.js';
 export { translateText, translateTextWith } from './translate.js';
+export { applyTranslationQuestionAnswers } from './translation-answers.js';
 export {
   listTranslationStrategies,
   TRANSLATION_STRATEGIES,

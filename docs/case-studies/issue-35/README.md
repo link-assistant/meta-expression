@@ -115,7 +115,7 @@ requested a full requirements audit rather than a single inline code change.
 - `tests/issue-35.test.js` verifies identified Wikimedia calls, phrase
   boundaries, target Russian output, refined target ids, and round-trip
   stability.
-- `rust/core` now contains a deterministic issue #35 semantic translation
+- `rust` now contains a deterministic issue #35 semantic translation
   fixture, doublet relation records, and C ABI helpers for the involved Q ids.
 
 ## Boundary

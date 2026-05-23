@@ -55,6 +55,7 @@ export function createWikidataSource({
   language = 'en',
   searchLimit = 5,
 } = {}) {
+  const loadEntity = createWikidataEntityBatchLoader(language);
   return {
     name: SOURCE_KIND.WIKIDATA,
     /** @type {(text: string, ctx: object) => Promise<SourceCandidate[]>} */
@@ -79,7 +80,7 @@ export function createWikidataSource({
       return settled.flat();
     },
     getEntity(id, ctx) {
-      return fetchWikidataEntity(id, ctx, language);
+      return loadEntity(id, ctx);
     },
     resolveUrl(entity) {
       if (entity?.kind === 'property') {
@@ -287,12 +288,13 @@ export function createWiktionarySource({
 }
 
 export function normalizeWiktionaryLookupText(text) {
-  const phrase = String(text).trim().replace(/\s+/g, ' ');
+  const phrase = normalizeWiktionaryLookupSurface(text);
   if (!phrase) {
     return null;
   }
+  const lower = phrase.toLowerCase();
   if (phrase.includes(' ')) {
-    const pageTitle = wiktionaryCompoundPageTitles.get(phrase.toLowerCase());
+    const pageTitle = wiktionaryCompoundPageTitles.get(lower);
     if (!pageTitle) {
       return null;
     }
@@ -303,12 +305,20 @@ export function normalizeWiktionaryLookupText(text) {
   }
   return {
     phrase,
-    pageTitle: phrase,
+    pageTitle: lower,
   };
 }
 
 function normalizeWiktionaryQuery(text) {
   return normalizeWiktionaryLookupText(text);
+}
+
+function normalizeWiktionaryLookupSurface(text) {
+  return String(text)
+    .trim()
+    .replace(/\s+/g, ' ')
+    .replace(/^[^\p{Letter}\p{Number}+#]+/u, '')
+    .replace(/[^\p{Letter}\p{Number}+#]+$/u, '');
 }
 
 async function fetchWiktionaryDefinitions(query, ctx) {
@@ -578,14 +588,19 @@ async function searchWikidataEntities(query, type, ctx, language, searchLimit) {
 }
 
 async function fetchWikidataEntity(id, ctx, language) {
-  if (!ctx.fetchImpl) {
-    return null;
+  const entities = await fetchWikidataEntities([id], ctx, language);
+  return entities.get(id) ?? null;
+}
+
+async function fetchWikidataEntities(ids, ctx, language) {
+  if (!ctx?.fetchImpl) {
+    return new Map();
   }
   const url = new URL(wikidataApiUrl);
   url.search = new URLSearchParams({
     action: 'wbgetentities',
     format: 'json',
-    ids: id,
+    ids: ids.join('|'),
     languages: language,
     origin: '*',
     props: 'labels|aliases|descriptions|claims|sitelinks',
@@ -595,10 +610,47 @@ async function fetchWikidataEntity(id, ctx, language) {
   try {
     payload = await ctx.fetchJson(url);
   } catch {
-    return null;
+    return new Map();
   }
-  const entity = payload.entities?.[id];
-  return entity && !entity.missing ? entity : null;
+  return new Map(
+    ids
+      .map((id) => [id, payload.entities?.[id]])
+      .filter(([, entity]) => entity && !entity.missing)
+  );
+}
+
+function createWikidataEntityBatchLoader(language) {
+  const batches = new WeakMap();
+  return (id, ctx) => {
+    if (!ctx?.fetchImpl || typeof ctx !== 'object') {
+      return fetchWikidataEntity(id, ctx, language);
+    }
+    let batch = batches.get(ctx);
+    if (!batch) {
+      batch = { ids: new Set(), resolvers: new Map() };
+      batches.set(ctx, batch);
+      Promise.resolve().then(() => {
+        batches.delete(ctx);
+        flushWikidataEntityBatch(batch, ctx, language);
+      });
+    }
+    batch.ids.add(id);
+    return new Promise((resolve) => {
+      const resolvers = batch.resolvers.get(id) ?? [];
+      resolvers.push(resolve);
+      batch.resolvers.set(id, resolvers);
+    });
+  };
+}
+
+async function flushWikidataEntityBatch(batch, ctx, language) {
+  const ids = [...batch.ids];
+  const entities = await fetchWikidataEntities(ids, ctx, language);
+  for (const id of ids) {
+    for (const resolve of batch.resolvers.get(id) ?? []) {
+      resolve(entities.get(id) ?? null);
+    }
+  }
 }
 
 /**

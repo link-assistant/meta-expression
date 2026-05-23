@@ -67,8 +67,11 @@ function makeIdentifiedFetch(routes, calls) {
       return jsonResponse(searchPayload(route ?? []));
     }
     if (action === 'wbgetentities') {
-      const route = routes.entities?.[`${call.ids}|${call.languages}`];
-      return jsonResponse(route ? entityPayload([route]) : { entities: {} });
+      const entries = String(call.ids ?? '')
+        .split('|')
+        .map((id) => routes.entities?.[`${id}|${call.languages}`])
+        .filter(Boolean);
+      return jsonResponse(entries.length ? entityPayload(entries) : {});
     }
     return jsonResponse({});
   };
