@@ -1,0 +1,9 @@
+Validating changesets added by this PR...
+Comparing ad816f7d5ba0a0d39ec37aedc74f20dee882856c...466c641f8d8930345c474f975aa83e88928b5b0c
+Found 1 changeset file(s) added by this PR
+Added changesets:
+  - issue-48-translation-coverage.md
+Validating changeset: .changeset/issue-48-translation-coverage.md
+Changeset validation passed
+   Type: patch
+   Description: Link every fallback lexical token through source formalization and target naturalization so Translate reports complete concept coverage for glossary-backed phrases, rule-inserted words, and existing Translate workflows.

@@ -8,6 +8,11 @@ import {
 } from '../../src/index.js';
 import { parseCliArguments, runCliAsync } from '../../src/cli.js';
 import { createMetaExpressionServer } from '../../src/server.js';
+import {
+  assertCompleteTranslationCoverage,
+  assertFormalizedSourceCoverage,
+  assertSemanticMetaLanguageCoverage,
+} from '../helpers/translation-coverage.js';
 
 function jsonResponse(payload) {
   return Promise.resolve({
@@ -172,6 +177,7 @@ describe('issue 16 — translate through formalized Wikidata labels', () => {
     expect(result.variables.length).toBe(0);
     expect(result.questions.length).toBe(0);
     expect(result.linksNotation).toContain('(translation:');
+    assertCompleteTranslationCoverage(result, 'Hawaii');
   });
 
   it('translates full sentences and records formalization plus rule steps', async () => {
@@ -249,6 +255,7 @@ describe('issue 16 — translate through formalized Wikidata labels', () => {
     expect(result.cst.sentences[0].targetText).toBe('Гавайи это штат.');
     expect(result.linksNotation).toContain('sentence-1');
     expect(result.linksNotation).toContain('step-');
+    assertCompleteTranslationCoverage(result, 'Hawaii is a state.');
   });
 
   it('keeps unresolved parts as variables with clarifying questions', async () => {
@@ -265,6 +272,8 @@ describe('issue 16 — translate through formalized Wikidata labels', () => {
     expect(result.variables[0].name).toBe('variable-1');
     expect(result.questions[0]).toContain('xyzzy');
     expect(result.linksNotation).toContain('variable-1');
+    assertFormalizedSourceCoverage(result, 'xyzzy');
+    assertSemanticMetaLanguageCoverage(result);
   });
 });
 

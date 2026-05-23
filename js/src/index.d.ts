@@ -512,6 +512,8 @@ export interface FormalizeCandidate {
   label: string;
   description: string;
   kind: 'entity' | 'property';
+  source?: string | null;
+  sourceUrl?: string | null;
   matchText?: string;
   score: number;
   ngramSize: number;
@@ -522,6 +524,8 @@ export interface FormalizePhraseEntity {
   label: string;
   description: string;
   kind: 'entity' | 'property';
+  source?: string | null;
+  sourceUrl?: string | null;
   score: number;
   wikipediaUrl: string | null;
   wikipediaTitle: string | null;
@@ -583,6 +587,8 @@ export interface FormalizationCstCandidate {
   kind: 'entity' | 'property' | string;
   score: number;
   source: string | null;
+  sourceUrl: string | null;
+  url: string;
 }
 
 export interface FormalizationCstPhrase {
@@ -701,6 +707,9 @@ export interface TranslationPhrase {
     language: string;
     entityId: string | null;
     label: string | null;
+    description: string | null;
+    url: string | null;
+    source: string | null;
   };
   target: {
     text: string;
@@ -712,6 +721,20 @@ export interface TranslationPhrase {
     strategy?: string | null;
   };
   variable: TranslationVariable | null;
+}
+
+export interface TranslationTargetUnit {
+  id: string;
+  kind: string;
+  phraseId: string | null;
+  semanticLinkId: string | null;
+  sourceText: string | null;
+  targetText: string;
+  plainText: string;
+  markdown: string;
+  html: string;
+  targetEntityId: string | null;
+  targetUrl: string | null;
 }
 
 export interface TranslationQuestionOption {
@@ -750,6 +773,7 @@ export interface TranslationSentence {
   phrases: TranslationPhrase[];
   transformations: string[];
   resolvedVariableNames: string[];
+  targetUnits: TranslationTargetUnit[];
   plainText: string;
   markdown: string;
   html: string;
@@ -790,6 +814,9 @@ export interface TranslationNaturalizationSentence {
   id: string;
   semanticLinkIds: string[];
   targetText: string;
+  targetMarkdown: string;
+  targetHtml: string;
+  targetUnits: TranslationTargetUnit[];
   transformations: string[];
 }
 
@@ -821,6 +848,8 @@ export interface TranslationCstSentence {
   sourceEnd: number;
   targetText: string;
   targetMarkdown: string;
+  targetHtml: string;
+  targetUnits: TranslationTargetUnit[];
   transformations: string[];
   phraseIds: string[];
 }
