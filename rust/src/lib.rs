@@ -40,6 +40,41 @@ pub struct SemanticTranslation {
     pub transformation_steps: Vec<String>,
 }
 
+#[derive(Debug, Clone, PartialEq, Eq)]
+pub struct TextTransformationRule {
+    pub id: String,
+    pub from: String,
+    pub to: String,
+}
+
+impl TextTransformationRule {
+    pub fn new(id: impl Into<String>, from: impl Into<String>, to: impl Into<String>) -> Self {
+        Self {
+            id: id.into(),
+            from: from.into(),
+            to: to.into(),
+        }
+    }
+}
+
+pub fn apply_text_transformation_rules(input: &str, rules: &[TextTransformationRule]) -> String {
+    rules.iter().fold(input.to_string(), |current, rule| {
+        if rule.from.is_empty() {
+            current
+        } else {
+            current.replace(&rule.from, &rule.to)
+        }
+    })
+}
+
+pub fn naturalize_semantic_translation(translation: &SemanticTranslation) -> &str {
+    &translation.target_text
+}
+
+pub fn deformalize_semantic_translation(translation: &SemanticTranslation) -> &str {
+    naturalize_semantic_translation(translation)
+}
+
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub enum StatementTemplate {
     ArithmeticEquality,

@@ -555,6 +555,35 @@ export interface FormalizeContext {
   phrases: Array<{ text: string; entityId: string }>;
 }
 
+export type TransformationRule =
+  | {
+      id?: string;
+      pattern: string | RegExp;
+      replacement?: string;
+      flags?: string;
+    }
+  | {
+      id?: string;
+      assign: Record<string, unknown>;
+    }
+  | {
+      id?: string;
+      apply(
+        value: unknown,
+        context: TransformationContext
+      ): unknown | Promise<unknown>;
+    }
+  | ((
+      value: unknown,
+      context: TransformationContext
+    ) => unknown | Promise<unknown>);
+
+export interface TransformationContext {
+  phase: string;
+  steps: TranslationStep[];
+  trace?: boolean;
+}
+
 export interface FormalizeInterpretation {
   rank: number;
   score: number;
@@ -628,6 +657,10 @@ export interface FormalizeOptions {
   linkTargetMode?: FormalizeLinkTargetMode;
   contextLens?: string | { id: string } | null;
   language?: string;
+  beforeFormalizationRules?: TransformationRule | TransformationRule[];
+  preFormalizationRules?: TransformationRule | TransformationRule[];
+  afterFormalizationRules?: TransformationRule | TransformationRule[];
+  postFormalizationRules?: TransformationRule | TransformationRule[];
 }
 
 export interface FormalizeResult {
@@ -644,6 +677,7 @@ export interface FormalizeResult {
   cst: FormalizationCst;
   linksNetwork: LinksNetwork;
   linkTargetMode: FormalizeLinkTargetMode;
+  steps: TranslationStep[];
 }
 
 export declare function formalizeText(
@@ -667,6 +701,15 @@ export interface TranslateOptions extends FormalizeOptions {
   to?: string;
   translationStrategy?: TranslationStrategyId;
   strategy?: TranslationStrategyId;
+  beforeTranslationRules?: TransformationRule | TransformationRule[];
+  preTranslationRules?: TransformationRule | TransformationRule[];
+  afterTranslationRules?: TransformationRule | TransformationRule[];
+  postTranslationRules?: TransformationRule | TransformationRule[];
+  beforeNaturalizationRules?: TransformationRule | TransformationRule[];
+  naturalizationRules?: TransformationRule | TransformationRule[];
+  afterNaturalizationRules?: TransformationRule | TransformationRule[];
+  deformalizationRules?: TransformationRule | TransformationRule[];
+  afterDeformalizationRules?: TransformationRule | TransformationRule[];
 }
 
 export type TranslationStrategyId =
@@ -883,6 +926,7 @@ export interface TranslationCst {
   formalization: FormalizationCst;
   semanticMetaLanguage: SemanticMetaLanguage;
   naturalization: TranslationNaturalization;
+  deformalization: TranslationNaturalization;
   phrases: TranslationPhrase[];
   variables: TranslationVariable[];
   sentences: TranslationCstSentence[];
@@ -896,6 +940,7 @@ export interface TranslateResult {
   formalization: FormalizeResult;
   semanticMetaLanguage: SemanticMetaLanguage;
   naturalization: TranslationNaturalization;
+  deformalization: TranslationNaturalization;
   cst: TranslationCst;
   phrases: TranslationPhrase[];
   sentences: TranslationSentence[];

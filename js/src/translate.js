@@ -7,6 +7,12 @@ import {
 } from './translation-strategies.js';
 import { buildLexicalTarget, lexicalSemanticId } from './lexical-entities.js';
 import { createTargetEntityBatchLoader } from './target-entity-loader.js';
+import {
+  applyObjectTransformationRules,
+  applySentenceTextTransformationRules,
+  applyTextTransformationRules,
+  collectTranslationTransformationRules,
+} from './transformation-rules.js';
 
 const wikidataEntityBaseUrl = 'https://www.wikidata.org/wiki/';
 const wikidataPropertyBaseUrl = 'https://www.wikidata.org/wiki/Property:';
@@ -24,13 +30,6 @@ const russianEtoCopula = Object.freeze({
   description: 'Russian demonstrative/copula-like predicate marker',
 });
 
-/**
- * Deterministic convenience wrapper for `translateTextWith()`.
- *
- * @param {string} input
- * @param {object} [options]
- * @returns {Promise<object>}
- */
 export function translateText(input, options = {}) {
   return translateTextWith(input, {
     fetch: null,
@@ -40,33 +39,19 @@ export function translateText(input, options = {}) {
   });
 }
 
-/**
- * Translate text by first formalizing source phrases, then replacing every
- * resolved Wikidata Q/P phrase with its target-language label.
- *
- * Unresolved source phrases, non-Wikidata sources, and entities that lack a
- * target-language label are preserved as variables with explicit questions.
- * This keeps the output traceable instead of pretending every token was
- * understood.
- *
- * @param {string} input
- * @param {object} [options]
- * @param {string} [options.sourceLanguage]
- * @param {string} [options.targetLanguage]
- * @param {Function|null} [options.fetch]
- * @param {Map<string,unknown>|null} [options.cache]
- * @param {number} [options.cacheTtlMs]
- * @param {Function} [options.now]
- * @returns {Promise<object>}
- */
 export async function translateTextWith(input, options = {}) {
   const config = createTranslateConfig(options);
+  const sourceText = await applyTextTransformationRules(
+    input,
+    config.beforeTranslationRules,
+    transformationContext(config, 'before-translation')
+  );
   recordStep(config, 'input', {
     sourceLanguage: config.sourceLanguage,
     targetLanguage: config.targetLanguage,
-    text: input,
+    text: sourceText,
   });
-  const formalization = await formalizeTextWith(input, {
+  const formalization = await formalizeTextWith(sourceText, {
     ...options,
     fetch: config.fetchImpl,
     cache: config.cache,
@@ -93,7 +78,11 @@ export async function translateTextWith(input, options = {}) {
       variables.push(translated.variable);
     }
   }
-  const sentences = buildTranslatedSentences(formalization, phrases, config);
+  const sentences = await applySentenceTextTransformationRules(
+    buildTranslatedSentences(formalization, phrases, config),
+    config.beforeNaturalizationRules,
+    transformationContext(config, 'before-naturalization')
+  );
   const resolvedVariableNames = new Set(
     sentences.flatMap((sentence) => sentence.resolvedVariableNames)
   );
@@ -113,11 +102,16 @@ export async function translateTextWith(input, options = {}) {
   const plainText = renderSentenceOutput(sentences, 'plainText', phrases);
   const markdown = renderSentenceOutput(sentences, 'markdown', phrases);
   const html = renderSentenceOutput(sentences, 'html', phrases);
-  const naturalization = buildNaturalization(
+  let naturalization = buildNaturalization(
     semanticMetaLanguage,
     phrases,
     sentences,
     config
+  );
+  naturalization = await applyObjectTransformationRules(
+    naturalization,
+    config.afterNaturalizationRules,
+    transformationContext(config, 'after-naturalization')
   );
   recordStep(config, 'text', {
     sentenceCount: sentences.length,
@@ -132,13 +126,14 @@ export async function translateTextWith(input, options = {}) {
     sentences,
     config,
   });
-  return {
+  let result = {
     text: formalization.text,
     sourceLanguage: config.sourceLanguage,
     targetLanguage: config.targetLanguage,
     formalization,
     semanticMetaLanguage,
     naturalization,
+    deformalization: naturalization,
     cst,
     phrases,
     sentences,
@@ -151,6 +146,12 @@ export async function translateTextWith(input, options = {}) {
     questionDetails,
     steps: [...config.steps],
   };
+  result = await applyObjectTransformationRules(
+    result,
+    config.afterTranslationRules,
+    transformationContext(config, 'after-translation')
+  );
+  return { ...result, steps: [...config.steps] };
 }
 
 function createTranslateConfig(options) {
@@ -175,6 +176,7 @@ function createTranslateConfig(options) {
     translationStrategy: normalizeTranslationStrategy(
       options.translationStrategy ?? options.strategy
     ),
+    ...collectTranslationTransformationRules(options),
     targetEntityLoader: createTargetEntityBatchLoader({
       onCacheHit: (config, cachedUrl) =>
         recordStep(config, 'api-cache-hit', { url: cachedUrl }),
@@ -184,6 +186,10 @@ function createTranslateConfig(options) {
     ? (url, init) => traceFetch(url, init, config)
     : null;
   return config;
+}
+
+function transformationContext(config, phase) {
+  return { phase, steps: config.steps, trace: config.trace };
 }
 
 function defaultTargetLanguage(sourceLanguage) {
@@ -649,6 +655,7 @@ function buildTranslationCst({
     formalization: formalization.cst,
     semanticMetaLanguage,
     naturalization,
+    deformalization: naturalization,
     phrases,
     variables,
     sentences: sentences.map((sentence) => ({

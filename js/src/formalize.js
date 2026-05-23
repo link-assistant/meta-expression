@@ -11,9 +11,7 @@
 //   phrases -> bounded cartesian product -> top-N interpretations
 //   render: HTML <a title="Q…">, Markdown [phrase](url "Q…"), Lino payload.
 //
-// Every link target must carry the Q/P id in the title attribute (issue F6).
-// All network I/O is cache-injectable and fetch-injectable so unit tests
-// don't hit the network. The implementation is split across:
+// Network I/O is cache-injectable. The implementation is split across:
 //   - formalize.js          (this file: pipeline orchestration + rendering)
 //   - formalize-sources.js  (pluggable knowledge-graph sources)
 //   - formalize-contexts.js (big-context aggregation)
@@ -34,6 +32,11 @@ import {
   overrideToEntity,
 } from './formalize-overrides.js';
 import { lexicalSemanticId, lexicalSemanticUrl } from './lexical-entities.js';
+import {
+  applyObjectTransformationRules,
+  applyTextTransformationRules,
+  collectFormalizationTransformationRules,
+} from './transformation-rules.js';
 
 const wikidataEntityBaseUrl = 'https://www.wikidata.org/wiki/';
 const wikidataPropertyBaseUrl = 'https://www.wikidata.org/wiki/Property:';
@@ -220,8 +223,12 @@ export function formalizeText(input, options = {}) {
  * @returns {Promise<object>}
  */
 export async function formalizeTextWith(input, options = {}) {
-  const text = normalizeInput(input);
   const config = createConfig(options);
+  const text = await applyTextTransformationRules(
+    normalizeInput(input),
+    config.beforeFormalizationRules,
+    transformationContext(config, 'before-formalization')
+  );
   const tokenSpans = tokenizeWithSpans(text);
   const tokens = tokenSpans.map((span) => span.token);
   const ngrams = generateNgrams(tokens, config.maxNgramSize, tokenSpans);
@@ -271,7 +278,7 @@ export async function formalizeTextWith(input, options = {}) {
   const html = htmlFromFormalizationCst(cst);
   const linksNotation = renderLinksNotation(cst);
 
-  return {
+  let result = {
     text,
     tokens,
     phrases: reranked,
@@ -289,7 +296,14 @@ export async function formalizeTextWith(input, options = {}) {
     cst,
     linkTargetMode: config.linkTargetMode,
     sources: config.sources.all.map((source) => source.name),
+    steps: [...config.steps],
   };
+  result = await applyObjectTransformationRules(
+    result,
+    config.afterFormalizationRules,
+    transformationContext(config, 'after-formalization')
+  );
+  return { ...result, steps: [...config.steps] };
 }
 
 /**
@@ -468,8 +482,15 @@ function createConfig(options) {
     sources,
     cache: options.cache ?? new Map(),
     overrides: buildOverrideMap(options.overrides ?? []),
+    trace: options.trace !== false,
+    steps: [],
+    ...collectFormalizationTransformationRules(options),
     ...resolveScalarConfigDefaults(options),
   };
+}
+
+function transformationContext(config, phase) {
+  return { phase, steps: config.steps, trace: config.trace };
 }
 
 function resolveScalarConfigDefaults(options) {
