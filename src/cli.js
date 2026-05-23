@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 
 import { fileURLToPath } from 'node:url';
+import { readFile } from 'node:fs/promises';
 import {
   analyzeStatement,
   analyzeStatementWithLiveEvidence,
@@ -12,6 +13,7 @@ import { checkText, checkTextWithLiveEvidence } from './check.js';
 import { searchTextUniqueness } from './uniqueness.js';
 import { parseSourceSpec } from './formalize-sources.js';
 import { loadRepoOverrides, loadUserOverrides } from './formalize-overrides.js';
+import { assessArticleSet } from './translation-quality.js';
 
 export function parseCliArguments(args) {
   const options = {
@@ -66,6 +68,18 @@ export function parseCliArguments(args) {
     '--no-repo-overrides': () => {
       options.noRepoOverrides = true;
     },
+    '--articles': () => {
+      options.articlesPath = args[++index] ?? '';
+    },
+    '--skip-list': () => {
+      options.skipListPath = args[++index] ?? '';
+    },
+    '--fixes': () => {
+      options.translationFixesPath = args[++index] ?? '';
+    },
+    '--match-threshold': () => {
+      options.matchThreshold = Number(args[++index] ?? '');
+    },
     '--max-ngram': () => {
       options.maxNgramSize = Number(args[++index] ?? 3);
     },
@@ -115,6 +129,9 @@ export function runCli(args = process.argv.slice(2), output = console) {
   if (options.command === 'translate') {
     throw new Error('Use runCliAsync for the translate command.');
   }
+  if (options.command === 'translation-quality') {
+    throw new Error('Use runCliAsync for the translation-quality command.');
+  }
   if (isUniquenessCommand(options.command)) {
     throw new Error('Use runCliAsync for the uniqueness command.');
   }
@@ -155,6 +172,9 @@ export async function runCliAsync(
   }
   if (options.command === 'translate') {
     return runTranslateCommand(options, output);
+  }
+  if (options.command === 'translation-quality') {
+    return runTranslationQualityCommand(options, output);
   }
   if (isCheckCommand(options.command)) {
     return runCheckCommand(options, output);
@@ -255,6 +275,79 @@ async function runCheckCommand(options, output) {
   return emitCheckResult(options, output, result);
 }
 
+async function runTranslationQualityCommand(options, output) {
+  if (!options.articlesPath) {
+    output.error('translation-quality requires --articles <path>.');
+    return 1;
+  }
+  const articlesPayload = await readJsonFile(options.articlesPath);
+  const articles = Array.isArray(articlesPayload)
+    ? articlesPayload
+    : (articlesPayload.articles ?? []);
+  const skipList = options.skipListPath
+    ? extractEntries(await readJsonFile(options.skipListPath))
+    : [];
+  const translationFixes = options.translationFixesPath
+    ? extractEntries(await readJsonFile(options.translationFixesPath))
+    : [];
+  const report = await assessArticleSet(articles, {
+    fetch: globalThis.fetch?.bind(globalThis),
+    skipList,
+    translationFixes,
+    matchThreshold: Number.isFinite(options.matchThreshold)
+      ? options.matchThreshold
+      : undefined,
+    translationStrategy: options.translationStrategy,
+  });
+  if (options.format === 'json' || !options.format) {
+    output.log(JSON.stringify(report, null, 2));
+  } else if (options.format === 'summary') {
+    output.log(formatQualitySummary(report));
+  } else {
+    output.error(
+      `Unsupported format for translation-quality: ${options.format}`
+    );
+    return 1;
+  }
+  return report.summary.failed === 0 ? 0 : 1;
+}
+
+async function readJsonFile(path) {
+  const raw = await readFile(path, 'utf8');
+  return JSON.parse(raw);
+}
+
+function extractEntries(payload) {
+  if (Array.isArray(payload)) {
+    return payload;
+  }
+  return payload.entries ?? [];
+}
+
+function formatQualitySummary(report) {
+  const { summary } = report;
+  const lines = [
+    `Total articles: ${summary.total}`,
+    `  matched:         ${summary.matched}`,
+    `  skipped:         ${summary.skipped}`,
+    `  translation-fix: ${summary['translation-fix']}`,
+    `  fix-suggested:   ${summary['fix-suggested']}`,
+    `  failed:          ${summary.failed}`,
+    `  no-statement:    ${summary['no-statement']}`,
+  ];
+  if (summary.failures.length > 0) {
+    lines.push('', 'Failures:');
+    for (const failure of summary.failures) {
+      lines.push(
+        `- ${failure.enTitle ?? failure.qId ?? 'unknown'}: ${
+          failure.sourceStatement
+        }`
+      );
+    }
+  }
+  return lines.join('\n');
+}
+
 async function runUniquenessCommand(options, output) {
   const result = await searchTextUniqueness(options.input, {
     fetch: globalThis.fetch?.bind(globalThis),
@@ -286,6 +379,7 @@ function validateCliOptions(options, output) {
     'analyze',
     'formalize',
     'translate',
+    'translation-quality',
     'check',
     'fact-check',
     'uniqueness',
@@ -295,6 +389,10 @@ function validateCliOptions(options, output) {
     output.error(`Unsupported command: ${options.command}`);
     output.error(helpText());
     return 1;
+  }
+
+  if (options.command === 'translation-quality') {
+    return null;
   }
 
   if (!options.input) {
@@ -376,6 +474,9 @@ function helpText() {
   meta-expression formalize --input "Genshin Impact" --sources wikidata,fandom:genshin-impact
   meta-expression formalize --input "Hawaii" --format markdown --target wikipedia
   meta-expression translate --input "Hawaii is a state." --to ru --format markdown
+  meta-expression translation-quality --articles tests/fixtures/issue-43/articles.json \\
+    --skip-list tests/fixtures/issue-43/skip-list.json \\
+    --fixes tests/fixtures/issue-43/translation-fixes.json --format summary
   meta-expression check --input "Earth orbits the Sun. 1 + 1 = 1." --format html
   meta-expression check --input "Earth orbits the Sun." --score wikidata-structured-claim=0.7
   meta-expression fact-check --input "Paris is the capital of France." --live
@@ -385,6 +486,8 @@ Commands:
   analyze     Run the disambiguation/evaluation prototype.
   formalize   Tokenise text and link each phrase to a knowledge graph entity.
   translate   Formalize text, then translate resolved Wikidata phrases.
+  translation-quality
+              Assess a recorded set of Wikipedia articles end-to-end.
   check       Color detected statements by correctness.
   fact-check  Alias for check.
   uniqueness  Search public sources for prior exact or similar statements.
@@ -405,6 +508,10 @@ Options:
   --override <file.lino|.json>   formalize: extra user override file (.lino preferred)
   --no-repo-overrides            formalize: ignore docs/formalize/overrides.lino
   --max-ngram <n>                formalize: maximum n-gram size (default 3)
+  --articles <file.json>         translation-quality: fixture with article extracts
+  --skip-list <file.json>        translation-quality: known Wikipedia translation deltas
+  --fixes <file.json>            translation-quality: curated translation fixes
+  --match-threshold <0..1>       translation-quality: token coverage threshold
   --score <situation=probability>
                                  check/fact-check: override evidence scoring
   -h, --help                     Show this help`;
