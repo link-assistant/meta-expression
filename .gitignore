@@ -149,3 +149,6 @@ target/
 
 # Deno lockfile (regenerated on every test run)
 deno.lock
+
+# Local issue investigation captures
+docs/case-studies/*/data/

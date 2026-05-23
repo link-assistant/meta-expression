@@ -622,6 +622,7 @@ export interface FormalizeOptions {
   now?: () => number;
   maxNgramSize?: number;
   searchLimit?: number;
+  searchConcurrency?: number;
   topKCandidates?: number;
   maxInterpretations?: number;
   linkTargetMode?: FormalizeLinkTargetMode;

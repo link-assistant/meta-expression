@@ -33,19 +33,20 @@ on:
         type: string
 
 # Concurrency: Only one workflow run per branch at a time
-# - For main branch (releases): cancel older runs to prevent blocking newer releases
-#   When multiple commits are pushed quickly, we want the latest to release, not wait
-# - For PR branches: queue runs to avoid cancelling checks on force-pushes
+# - For main branch (releases): let runs finish so a newer push does not cancel
+#   an in-flight publish, release update, or GitHub Pages deployment.
+# - For PR branches: cancel older runs so new pushes supersede stale checks.
 # See: docs/case-studies/issue-25/DETAILED-COMPARISON.md for context
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
-  cancel-in-progress: ${{ github.ref == 'refs/heads/main' }}
+  cancel-in-progress: ${{ github.ref != 'refs/heads/main' }}
 
 jobs:
   # === DETECT CHANGES - determines which jobs should run ===
   detect-changes:
     name: Detect Changes
     runs-on: ubuntu-latest
+    timeout-minutes: 5
     if: github.event_name != 'workflow_dispatch'
     outputs:
       mjs-changed: ${{ steps.changes.outputs.mjs-changed }}
@@ -70,6 +71,7 @@ jobs:
   test-compilation:
     name: Test Compilation
     runs-on: ubuntu-latest
+    timeout-minutes: 5
     needs: [detect-changes]
     if: |
       github.event_name == 'push' ||
@@ -85,6 +87,7 @@ jobs:
   check-file-line-limits:
     name: Check File Line Limits
     runs-on: ubuntu-latest
+    timeout-minutes: 5
     needs: [detect-changes]
     if: |
       github.event_name == 'push' ||
@@ -110,6 +113,7 @@ jobs:
   version-check:
     name: Check for Manual Version Changes
     runs-on: ubuntu-latest
+    timeout-minutes: 5
     if: github.event_name == 'pull_request'
     steps:
       - uses: actions/checkout@v6
@@ -127,12 +131,19 @@ jobs:
   changeset-check:
     name: Check for Changesets
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     needs: [detect-changes]
     if: github.event_name == 'pull_request' && needs.detect-changes.outputs.any-code-changed == 'true'
     steps:
       - uses: actions/checkout@v6
         with:
-          fetch-depth: 0
+          ref: ${{ github.event.pull_request.head.sha }}
+          fetch-depth: 1
+
+      - name: Fetch base commit for changeset diff
+        env:
+          GITHUB_BASE_SHA: ${{ github.event.pull_request.base.sha }}
+        run: git fetch --no-tags --depth=1 origin "$GITHUB_BASE_SHA"
 
       - name: Setup Node.js
         uses: actions/setup-node@v6
@@ -168,6 +179,7 @@ jobs:
   lint:
     name: Lint and Format Check
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     needs: [detect-changes]
     if: |
       github.event_name == 'push' ||
@@ -208,13 +220,14 @@ jobs:
       - name: Check for secrets
         run: npx --yes -p secretlint -p @secretlint/secretlint-rule-preset-recommend secretlint "**/*"
 
-  # Test matrix: 3 runtimes (Node.js, Bun, Deno) x 3 OS (Ubuntu, macOS, Windows)
+  # Test the maintained JavaScript runtime target only: Bun on Linux.
   # IMPORTANT: Tests must validate the ACTUAL merge result, not a stale merge preview.
   # See docs/case-studies/issue-23 for why this is critical.
-  # Fast-fail: slow test matrix only runs after fast checks pass (hive-mind principle #5)
+  # Fast-fail: tests only run after fast checks pass (hive-mind principle #5)
   test:
-    name: Test (${{ matrix.runtime }} on ${{ matrix.os }})
-    runs-on: ${{ matrix.os }}
+    name: Test (bun on ubuntu-latest)
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
     needs:
       [
         detect-changes,
@@ -232,11 +245,6 @@ jobs:
       (needs.test-compilation.result == 'success' || needs.test-compilation.result == 'skipped') &&
       (needs.lint.result == 'success' || needs.lint.result == 'skipped') &&
       (needs.check-file-line-limits.result == 'success' || needs.check-file-line-limits.result == 'skipped')
-    strategy:
-      fail-fast: false
-      matrix:
-        os: [ubuntu-latest, macos-latest, windows-latest]
-        runtime: [node, bun, deno]
     steps:
       - uses: actions/checkout@v6
         with:
@@ -250,49 +258,23 @@ jobs:
         shell: bash
         run: bash scripts/simulate-fresh-merge.sh
 
-      - name: Setup Node.js
-        if: matrix.runtime == 'node'
-        uses: actions/setup-node@v6
-        with:
-          node-version: '24.x'
-
-      - name: Install dependencies (Node.js)
-        if: matrix.runtime == 'node'
-        run: npm install
-
-      - name: Run tests (Node.js)
-        if: matrix.runtime == 'node'
-        run: npm test
-
       - name: Setup Bun
-        if: matrix.runtime == 'bun'
         uses: oven-sh/setup-bun@v2
         with:
           bun-version: latest
 
       - name: Install dependencies (Bun)
-        if: matrix.runtime == 'bun'
         run: bun install
 
       - name: Run tests (Bun)
-        if: matrix.runtime == 'bun'
-        run: bun test
-
-      - name: Setup Deno
-        if: matrix.runtime == 'deno'
-        uses: denoland/setup-deno@v2
-        with:
-          deno-version: v2.x
-
-      - name: Run tests (Deno)
-        if: matrix.runtime == 'deno'
-        run: deno test --allow-read
+        run: bun test --timeout 30000
 
   # === DOCUMENTATION VALIDATION ===
   # Validate documentation files when docs change (hive-mind principle #12)
   validate-docs:
     name: Validate Documentation
     runs-on: ubuntu-latest
+    timeout-minutes: 5
     needs: [detect-changes]
     if: |
       github.event_name == 'push' ||
@@ -358,6 +340,7 @@ jobs:
   build-pages:
     name: Build GitHub Pages
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     needs: [lint, test]
     if: |
       !cancelled() &&
@@ -442,6 +425,7 @@ jobs:
   release:
     name: Release
     needs: [lint, test]
+    timeout-minutes: 30
     # Use !cancelled() instead of always() so cancellation propagates correctly (hive-mind issue #1278)
     # This is needed because lint/test jobs have a transitive dependency on changeset-check
     if: |
@@ -524,6 +508,7 @@ jobs:
     name: Instant Release
     if: github.event_name == 'workflow_dispatch' && github.event.inputs.release_mode == 'instant'
     runs-on: ubuntu-latest
+    timeout-minutes: 30
     # Permissions required for npm OIDC trusted publishing
     permissions:
       contents: write
@@ -573,6 +558,7 @@ jobs:
     name: Create Changeset PR
     if: github.event_name == 'workflow_dispatch' && github.event.inputs.release_mode == 'changeset-pr'
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     permissions:
       contents: write
       pull-requests: write

@@ -26,12 +26,14 @@ import {
   normalizeWiktionaryLookupText,
 } from './formalize-sources.js';
 import { aggregateBigContexts } from './formalize-contexts.js';
+import { fetchWikimediaJson } from './wikimedia-fetch.js';
 import {
   buildOverrideMap,
   lookupOverride,
   overrideToCandidate,
   overrideToEntity,
 } from './formalize-overrides.js';
+import { lexicalSemanticId, lexicalSemanticUrl } from './lexical-entities.js';
 
 const wikidataEntityBaseUrl = 'https://www.wikidata.org/wiki/';
 const wikidataPropertyBaseUrl = 'https://www.wikidata.org/wiki/Property:';
@@ -45,8 +47,7 @@ const defaultMaxNgramSize = 3;
 const defaultSearchLimit = 5;
 const defaultTopKCandidates = 3;
 const defaultInterpretationsCount = 10;
-const wikimediaApiUserAgent =
-  'meta-expression/0.9.0 (https://github.com/link-assistant/meta-expression)';
+const defaultSearchConcurrency = 1;
 
 // English glue words that must not anchor an n-gram on their own. They still
 // appear in the rendered output, just without a hyperlink.
@@ -224,8 +225,10 @@ export async function formalizeTextWith(input, options = {}) {
   const tokenSpans = tokenizeWithSpans(text);
   const tokens = tokenSpans.map((span) => span.token);
   const ngrams = generateNgrams(tokens, config.maxNgramSize, tokenSpans);
-  const ngramCandidates = await Promise.all(
-    ngrams.map((ngram) => searchNgramCandidates(ngram, config))
+  const ngramCandidates = await mapWithConcurrency(
+    ngrams,
+    config.searchConcurrency,
+    (ngram) => searchNgramCandidates(ngram, config)
   );
   const ngramsWithCandidates = ngrams
     .map((ngram, index) => ({
@@ -243,7 +246,7 @@ export async function formalizeTextWith(input, options = {}) {
   );
   const flatContexts = aggregateContexts(phrases);
   const bigContexts = await aggregateBigContexts(phrases, {
-    fetchJson: (url) => fetchJson(url, config),
+    fetchJson: (url) => fetchWikimediaJson(url, config),
     now: config.now,
     language: config.language,
     maxDepth: config.bigContextDepth,
@@ -478,6 +481,7 @@ function resolveScalarConfigDefaults(options) {
     topKCandidates: options.topKCandidates ?? defaultTopKCandidates,
     maxInterpretations:
       options.maxInterpretations ?? defaultInterpretationsCount,
+    searchConcurrency: options.searchConcurrency ?? defaultSearchConcurrency,
     linkTargetMode: options.linkTargetMode ?? linkTargetModes.WIKIPEDIA,
     contextLens: options.contextLens ?? null,
     language: options.language ?? 'en',
@@ -523,6 +527,27 @@ function crossesSentenceBoundary(tokenSpans, start, end) {
   return false;
 }
 
+async function mapWithConcurrency(items, limit, mapper) {
+  if (items.length === 0) {
+    return [];
+  }
+  const concurrency = Math.max(
+    1,
+    Math.min(items.length, Number.isFinite(limit) ? Math.floor(limit) : 1)
+  );
+  const results = new Array(items.length);
+  let nextIndex = 0;
+  async function worker() {
+    while (nextIndex < items.length) {
+      const index = nextIndex;
+      nextIndex += 1;
+      results[index] = await mapper(items[index], index);
+    }
+  }
+  await Promise.all(Array.from({ length: concurrency }, () => worker()));
+  return results;
+}
+
 async function searchNgramCandidates(ngram, config) {
   // Overrides short-circuit live search entirely.
   const override = lookupOverride(config.overrides, ngram.text);
@@ -558,7 +583,7 @@ async function searchNgramCandidates(ngram, config) {
 function buildSourceContext(config) {
   return {
     fetchImpl: config.fetchImpl,
-    fetchJson: (url) => fetchJson(url, config),
+    fetchJson: (url) => fetchWikimediaJson(url, config),
     isPropertyIndicator,
   };
 }
@@ -907,7 +932,7 @@ function buildLexicalFallbackEntity(token, config) {
     description: `Lexical ${config.language} token`,
     kind: 'entity',
     source: SOURCE_KIND.LEXICAL,
-    sourceUrl: lexicalEntityUrl(id),
+    sourceUrl: lexicalEntityUrl(id, token, config),
     score: 0,
     wikipediaUrl: null,
     wikipediaTitle: null,
@@ -916,12 +941,14 @@ function buildLexicalFallbackEntity(token, config) {
 }
 
 function lexicalEntityId(text, language) {
-  const normalized = normalizeLabel(text).replace(/\s+/g, '_') || 'token';
-  return `lex:${language}:${normalized}`;
+  return lexicalSemanticId(text, language);
 }
 
-function lexicalEntityUrl(id) {
-  return `${localEntityViewerBaseUrl}#${encodeURIComponent(id)}`;
+function lexicalEntityUrl(id, text, config) {
+  return lexicalSemanticUrl(id, {
+    text,
+    linkTargetMode: config.linkTargetMode,
+  });
 }
 
 async function attachEntityDetails(phrase, config) {
@@ -1044,38 +1071,6 @@ function extractAliases(entity) {
   return aliases
     .map((alias) => alias?.value)
     .filter((value) => typeof value === 'string' && value.length > 0);
-}
-
-async function fetchJson(url, config) {
-  const key = String(url);
-  const now = Number(config.now());
-  const cached = config.cache.get(key);
-  if (cached && cached.expiresAt > now) {
-    return cached.value;
-  }
-  const response = await config.fetchImpl(key, {
-    headers: wikimediaRequestHeaders(),
-  });
-  if (!response.ok) {
-    throw new Error(`Wikimedia request failed with status ${response.status}.`);
-  }
-  const value = await response.json();
-  config.cache.set(key, {
-    expiresAt: now + config.cacheTtlMs,
-    value,
-  });
-  return value;
-}
-
-function wikimediaRequestHeaders() {
-  const headers = {
-    accept: 'application/json',
-    'Api-User-Agent': wikimediaApiUserAgent,
-  };
-  if (typeof process !== 'undefined' && process.versions?.node) {
-    headers['User-Agent'] = wikimediaApiUserAgent;
-  }
-  return headers;
 }
 
 function aggregateContexts(phrases) {

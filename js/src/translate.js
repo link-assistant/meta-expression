@@ -6,13 +6,12 @@ import {
   TRANSLATION_STRATEGIES,
 } from './translation-strategies.js';
 import { buildLexicalTarget, lexicalSemanticId } from './lexical-entities.js';
+import { fetchWikimediaJson } from './wikimedia-fetch.js';
 
 const wikidataApiUrl = 'https://www.wikidata.org/w/api.php';
 const wikidataEntityBaseUrl = 'https://www.wikidata.org/wiki/';
 const wikidataPropertyBaseUrl = 'https://www.wikidata.org/wiki/Property:';
 const defaultCacheTtlMs = 60 * 60 * 1000;
-const wikimediaApiUserAgent =
-  'meta-expression/0.9.0 (https://github.com/link-assistant/meta-expression)';
 const russianUsStatePredicate = Object.freeze({
   text: 'штат',
   entityId: 'Q35657',
@@ -173,7 +172,7 @@ function createTranslateConfig(options) {
     targetLanguage: String(requestedTargetLanguage ?? '').trim()
       ? normalizeLanguage(requestedTargetLanguage)
       : defaultTargetLanguage(sourceLanguage),
-    linkTargetMode: options.linkTargetMode ?? FORMALIZE_LINK_TARGETS.WIKIPEDIA,
+    linkTargetMode: options.linkTargetMode ?? FORMALIZE_LINK_TARGETS.WIKIDATA,
     translationStrategy: normalizeTranslationStrategy(
       options.translationStrategy ?? options.strategy
     ),
@@ -283,12 +282,15 @@ function sourceUrlForSemanticEntity(entity) {
 
 async function translatePhrase(phrase, config) {
   const translationEntity = translatableEntityForPhrase(phrase, config);
-  const base = buildPhraseTranslationBase(phrase, translationEntity, config);
   const glossaryTranslation = lookupGlossaryTranslation(phrase.text, config);
+  const base = buildPhraseTranslationBase(
+    phrase,
+    glossaryTranslation ? null : translationEntity,
+    config
+  );
   if (glossaryTranslation) {
     const translated = translatedGlossaryPhrase(
       base,
-      translationEntity,
       glossaryTranslation,
       config
     );
@@ -353,19 +355,9 @@ async function translatePhrase(phrase, config) {
   return translated;
 }
 
-function translatedGlossaryPhrase(
-  base,
-  translationEntity,
-  translation,
-  config
-) {
-  const entityId = translationEntity?.id ?? base.source.entityId ?? null;
-  const target = targetForGlossaryTranslation(
-    base,
-    translationEntity,
-    translation,
-    config
-  );
+function translatedGlossaryPhrase(base, translation, config) {
+  const entityId = base.source.entityId ?? null;
+  const target = targetForGlossaryTranslation(translation, config);
   return {
     ...base,
     entityId,
@@ -382,22 +374,18 @@ function translatedGlossaryPhrase(
   };
 }
 
-function targetForGlossaryTranslation(
-  base,
-  translationEntity,
-  translation,
-  config
-) {
-  if (isWikidataId(translationEntity?.id)) {
+function targetForGlossaryTranslation(translation, config) {
+  if (translation.target) {
     return {
-      entityId: translationEntity.id,
-      description: base.source.description,
-      url: wikidataUrlForEntity(translationEntity),
+      entityId: translation.target.entityId ?? null,
+      description: translation.target.description ?? null,
+      url: translation.target.url ?? null,
     };
   }
   const lexicalTarget = buildLexicalTarget(
     translation.text,
-    config.targetLanguage
+    config.targetLanguage,
+    { linkTargetMode: config.linkTargetMode }
   );
   return {
     entityId: lexicalTarget.entityId,
@@ -520,42 +508,12 @@ async function fetchTargetEntity(id, config) {
     props: 'labels|descriptions|sitelinks',
     sitefilter: site,
   }).toString();
-  const payload = await fetchJson(url, config);
+  const payload = await fetchWikimediaJson(url, config, {
+    onCacheHit: (cachedUrl) =>
+      recordStep(config, 'api-cache-hit', { url: cachedUrl }),
+  });
   const entity = payload?.entities?.[id];
   return entity && !entity.missing ? entity : null;
-}
-
-async function fetchJson(url, config) {
-  const key = String(url);
-  const now = Number(config.now());
-  const cached = config.cache.get(key);
-  if (cached && cached.expiresAt > now) {
-    recordStep(config, 'api-cache-hit', { url: key });
-    return cached.value;
-  }
-  const response = await config.fetchImpl(key, {
-    headers: wikimediaRequestHeaders(),
-  });
-  if (!response.ok) {
-    throw new Error(`Wikimedia request failed with status ${response.status}.`);
-  }
-  const value = await response.json();
-  config.cache.set(key, {
-    expiresAt: now + config.cacheTtlMs,
-    value,
-  });
-  return value;
-}
-
-function wikimediaRequestHeaders() {
-  const headers = {
-    accept: 'application/json',
-    'Api-User-Agent': wikimediaApiUserAgent,
-  };
-  if (typeof process !== 'undefined' && process.versions?.node) {
-    headers['User-Agent'] = wikimediaApiUserAgent;
-  }
-  return headers;
 }
 
 async function traceFetch(url, init, config) {
@@ -600,13 +558,6 @@ function targetUrlFor(entity, sourceEntity, language) {
     return `${wikidataPropertyBaseUrl}${sourceEntity.id}`;
   }
   return `${wikidataEntityBaseUrl}${sourceEntity.id}`;
-}
-
-function wikidataUrlForEntity(entity) {
-  if (entity?.kind === 'property') {
-    return `${wikidataPropertyBaseUrl}${entity.id}`;
-  }
-  return `${wikidataEntityBaseUrl}${entity.id}`;
 }
 
 function buildVariableQuestionDetails(variable, config) {
@@ -771,20 +722,26 @@ function buildTranslatedSentence(segment, index, phrases, config) {
     `sentence-${index + 1}`,
     config
   );
-  const punctuation = terminalPunctuation(segment.text);
+  const punctuated = applySourceInteriorPunctuation(
+    rendered.units,
+    segment,
+    `sentence-${index + 1}`,
+    config
+  );
+  const terminal = terminalPunctuation(segment.text);
   const plainText = appendTerminalPunctuation(
-    rendered.units.map((unit) => unit.plainText).join(' '),
-    punctuation
+    punctuated.units.map((unit) => unit.plainText).join(' '),
+    terminal
   );
   const markdown = appendTerminalPunctuation(
-    rendered.units.map((unit) => unit.markdown).join(' '),
-    punctuation
+    punctuated.units.map((unit) => unit.markdown).join(' '),
+    terminal
   );
   const html = appendTerminalPunctuation(
-    rendered.units.map((unit) => unit.html).join(' '),
-    punctuation
+    punctuated.units.map((unit) => unit.html).join(' '),
+    terminal
   );
-  const targetUnits = rendered.units.map((unit, unitIndex) =>
+  const targetUnits = punctuated.units.map((unit, unitIndex) =>
     buildTargetUnit(unit, `target-unit-${index + 1}-${unitIndex + 1}`)
   );
   const sentence = {
@@ -802,7 +759,10 @@ function buildTranslatedSentence(segment, index, phrases, config) {
       language: config.targetLanguage,
     },
     phrases: sentencePhrases,
-    transformations: rendered.transformations,
+    transformations: [
+      ...rendered.transformations,
+      ...punctuated.transformations,
+    ],
     resolvedVariableNames: [...rendered.resolvedVariableNames],
     targetUnits,
     plainText,
@@ -831,6 +791,8 @@ function renderUnitFromPhrase(phrase) {
     kind: 'phrase',
     phraseId: phrase.id,
     sourceText: phrase.source.text,
+    sourceStart: phrase.source.sourceStart,
+    sourceEnd: phrase.source.sourceEnd,
     sourceLabel: phrase.source.label ?? null,
     sourceDescription: phrase.source.description ?? null,
     entityId: phrase.entityId ?? null,
@@ -857,6 +819,44 @@ function buildTargetUnit(unit, id) {
     html: unit.html,
     targetEntityId: unit.targetEntityId ?? unit.entityId ?? null,
     targetUrl: unit.targetUrl ?? null,
+  };
+}
+
+function applySourceInteriorPunctuation(units, segment, sentenceId, config) {
+  if (config.translationStrategy === TRANSLATION_STRATEGIES.SEMANTIC_LABEL) {
+    return { units, transformations: [] };
+  }
+  const nextUnits = [...units];
+  let changed = false;
+  for (const unit of nextUnits) {
+    const sourceEnd = unit.sourceEnd;
+    if (!Number.isInteger(sourceEnd)) {
+      continue;
+    }
+    const offset = sourceEnd - segment.start;
+    if (offset < 0 || offset >= segment.text.length) {
+      continue;
+    }
+    const trailing = segment.text.slice(offset);
+    const match = trailing.match(/^\s*([,;:])/);
+    if (!match) {
+      continue;
+    }
+    appendUnitSuffix(unit, match[1]);
+    changed = true;
+  }
+  if (!changed) {
+    return { units: nextUnits, transformations: [] };
+  }
+  recordStep(config, 'transformation-rule', {
+    sentenceId,
+    rule: 'source-interior-punctuation-preserved',
+    sourceText: segment.text,
+    affectedVariables: [],
+  });
+  return {
+    units: nextUnits,
+    transformations: ['source-interior-punctuation-preserved'],
   };
 }
 
@@ -956,7 +956,9 @@ function applyExactGlossaryPhraseNaturalization(
 }
 
 function buildGlossaryPhraseUnit(sourceText, translation, config) {
-  const target = buildLexicalTarget(translation.text, config.targetLanguage);
+  const target = buildLexicalTarget(translation.text, config.targetLanguage, {
+    linkTargetMode: config.linkTargetMode,
+  });
   return {
     kind: 'glossary-phrase',
     sourceText,
@@ -1218,7 +1220,9 @@ function resolveUnitTarget(unit, target, config) {
   const lexicalTarget =
     target.entityId || !target.text || !config
       ? null
-      : buildLexicalTarget(target.text, config.targetLanguage);
+      : buildLexicalTarget(target.text, config.targetLanguage, {
+          linkTargetMode: config.linkTargetMode,
+        });
   return {
     entityId:
       target.entityId ??
@@ -1242,7 +1246,9 @@ function appendUnitSuffix(unit, suffix) {
 function buildRuleToken(sourceText, target, config = null) {
   const lexicalTarget =
     !target.entityId && target.text && config
-      ? buildLexicalTarget(target.text, config.targetLanguage)
+      ? buildLexicalTarget(target.text, config.targetLanguage, {
+          linkTargetMode: config.linkTargetMode,
+        })
       : null;
   const unit = {
     kind: 'rule-token',

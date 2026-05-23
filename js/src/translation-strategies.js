@@ -28,17 +28,36 @@ const strategyDefinitions = Object.freeze([
 
 const enRuGlossary = Object.freeze({
   add: 'добавьте',
+  accepts: 'принимает',
+  attaches: 'прикрепляет',
+  based: 'основанный',
   check: 'проверьте',
   compare: 'сравните',
+  computable: 'вычислимые',
+  evidence: 'доказательства',
+  evaluates: 'вычисляет',
   example: 'пример',
   examples: 'примеры',
   find: 'найти',
+  first: 'первый',
   formalize: 'формализуйте',
+  formalizes: 'формализует',
+  for: 'для',
+  fragments: 'фрагменты',
+  generates: 'создает',
+  'human-language': 'человеко-языковое',
   open: 'откройте',
   or: 'или',
   page: 'страницу',
+  playground: 'площадка',
+  possible: 'возможно',
+  provenance: 'происхождением',
+  prototype: 'прототип',
+  reasoning: 'рассуждения',
   result: 'результат',
   save: 'сохраните',
+  selectable: 'выбираемые',
+  selected: 'выбранный',
   show: 'покажите',
   source: 'исходный',
   statement: 'утверждение',
@@ -60,8 +79,17 @@ const enRuGlossary = Object.freeze({
   remain: 'остаются',
   variables: 'переменными',
   questions: 'вопросами',
+  claims: 'утверждений',
+  interpretations: 'интерпретации',
+  it: 'он',
+  'links-network': 'сеть ссылок',
+  'links-network based reasoning playground':
+    'основанной на сети ссылок площадки для рассуждений',
+  meaning: 'смысл',
+  'non-computable': 'невычислимых',
   value: 'значение',
   values: 'значения',
+  when: 'когда',
   synonym: 'синоним',
   synonyms: 'синонимы',
   agreement: 'согласования',
@@ -142,10 +170,17 @@ function lookupGlossaryTranslationWithMode(sourceText, config, options) {
   if (!glossary) {
     return null;
   }
-  const translation = glossary[normalizeGlossaryKey(sourceText)];
+  const translation = normalizeGlossaryEntry(
+    glossary[normalizeGlossaryKey(sourceText)]
+  );
   if (translation) {
     return {
-      text: applySourceCasing(sourceText, translation, config.targetLanguage),
+      text: applySourceCasing(
+        sourceText,
+        translation.text,
+        config.targetLanguage
+      ),
+      target: translation.target ?? null,
       strategy: config.translationStrategy,
     };
   }
@@ -153,18 +188,33 @@ function lookupGlossaryTranslationWithMode(sourceText, config, options) {
     return null;
   }
   const words = normalizeGlossaryKey(sourceText).split(' ').filter(Boolean);
-  const wordTranslations = words.map((word) => glossary[word]);
+  const wordTranslations = words.map((word) =>
+    normalizeGlossaryEntry(glossary[word])
+  );
   if (wordTranslations.length === 0 || wordTranslations.some((word) => !word)) {
     return null;
   }
   return {
     text: applySourceCasing(
       sourceText,
-      wordTranslations.join(' '),
+      wordTranslations.map((entry) => entry.text).join(' '),
       config.targetLanguage
     ),
     strategy: config.translationStrategy,
   };
+}
+
+function normalizeGlossaryEntry(entry) {
+  if (typeof entry === 'string') {
+    return { text: entry };
+  }
+  if (entry && typeof entry === 'object' && typeof entry.text === 'string') {
+    return {
+      text: entry.text,
+      target: entry.target ?? null,
+    };
+  }
+  return null;
 }
 
 function normalizeGlossaryKey(value) {

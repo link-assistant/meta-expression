@@ -17,6 +17,7 @@ export function setupTranslatePage({
   const sourceLanguage = document.querySelector('#translate-source-language');
   const targetLanguage = document.querySelector('#translate-target-language');
   const strategyGroup = document.querySelector('#translate-strategy');
+  const linkTargetGroup = document.querySelector('#translate-link-target');
   const run = document.querySelector('#translate-run');
   const copyMarkdown = document.querySelector('#translate-copy-markdown');
   const copyLino = document.querySelector('#translate-copy-lino');
@@ -88,7 +89,7 @@ export function setupTranslatePage({
         cache,
         sourceLanguage: sourceLanguage?.value ?? 'en',
         targetLanguage: targetLanguage?.value ?? 'ru',
-        linkTargetMode: FORMALIZE_LINK_TARGETS.WIKIPEDIA,
+        linkTargetMode: selectedTranslateLinkTargetMode(linkTargetGroup),
         translationStrategy: strategyState.selected,
       });
       if (status.dataset.requestId !== id) {
@@ -143,6 +144,19 @@ export function setupTranslatePage({
   }
 
   return { getResult: () => currentResult };
+}
+
+function selectedTranslateLinkTargetMode(linkTargetGroup) {
+  const selected = linkTargetGroup?.querySelector(
+    'input[name="translate-target"]:checked'
+  )?.value;
+  if (selected === FORMALIZE_LINK_TARGETS.LOCAL) {
+    return FORMALIZE_LINK_TARGETS.LOCAL;
+  }
+  if (selected === FORMALIZE_LINK_TARGETS.WIKIPEDIA) {
+    return FORMALIZE_LINK_TARGETS.WIKIPEDIA;
+  }
+  return FORMALIZE_LINK_TARGETS.WIKIDATA;
 }
 
 function setupTranslateSamples({
