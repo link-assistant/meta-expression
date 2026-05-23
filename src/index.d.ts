@@ -1055,3 +1055,119 @@ export declare function resolveFormalizeLinkTarget(
   phrase: FormalizePhrase,
   options?: { linkTargetMode?: FormalizeLinkTargetMode }
 ): string | null;
+
+export type TranslationQualityStatus =
+  | 'matched'
+  | 'skipped'
+  | 'translation-fix'
+  | 'fix-suggested'
+  | 'failed'
+  | 'no-statement';
+
+export interface TranslationQualityArticle {
+  enTitle?: string | null;
+  qId?: string | null;
+  sourceLanguage: string;
+  targetLanguage: string;
+  sourceExtract: string;
+  targetExtract: string;
+}
+
+export interface TranslationQualitySkipEntry {
+  source: string;
+  reason?: string;
+}
+
+export interface TranslationQualityFixEntry {
+  source: string;
+  target: string;
+  note?: string;
+}
+
+export interface TranslationQualityOptions {
+  skipList?: Array<string | TranslationQualitySkipEntry>;
+  translationFixes?: TranslationQualityFixEntry[];
+  fetch?: typeof fetch;
+  cache?: Map<string, unknown> | null;
+  now?: () => number | Date | string;
+  matchThreshold?: number;
+  translationStrategy?: string;
+}
+
+export interface TranslationCoverage {
+  ratio: number;
+  found: string[];
+  missing: string[];
+}
+
+export interface TranslationQualityResult {
+  enTitle: string | null;
+  qId: string | null;
+  sourceLanguage: string;
+  targetLanguage: string;
+  sourceStatement: string;
+  status: TranslationQualityStatus;
+  translatedStatement?: string;
+  reason?: string;
+  coverage?: TranslationCoverage;
+  roundTripText?: string;
+  roundTripCoverage?: TranslationCoverage;
+  suggestedTranslation?: string;
+  note?: string | null;
+}
+
+export interface TranslationQualitySummary {
+  total: number;
+  matched: number;
+  skipped: number;
+  'translation-fix': number;
+  'fix-suggested': number;
+  failed: number;
+  'no-statement': number;
+  failures: TranslationQualityResult[];
+}
+
+export interface TranslationQualityReport {
+  results: TranslationQualityResult[];
+  summary: TranslationQualitySummary;
+}
+
+export declare function assessArticleTranslation(
+  article: TranslationQualityArticle,
+  options?: TranslationQualityOptions
+): Promise<TranslationQualityResult>;
+
+export declare function assessArticleSet(
+  articles: Array<{
+    enTitle?: string;
+    qId?: string;
+    languages?: string[];
+    pages?: Record<string, { extract: string }>;
+  }>,
+  options?: TranslationQualityOptions
+): Promise<TranslationQualityReport>;
+
+export declare function selectLanguagePair(entry: {
+  languages?: string[];
+  pages?: Record<string, { extract: string }>;
+}): {
+  sourceLanguage: string | null;
+  targetLanguage: string | null;
+  sourceExtract: string;
+  targetExtract: string;
+};
+
+export declare function summarizeAssessment(
+  results: TranslationQualityResult[]
+): TranslationQualitySummary;
+
+export declare function extractFirstStatement(text: string): string;
+
+export declare function tokenCoverage(
+  candidate: string,
+  target: string
+): TranslationCoverage;
+
+export declare function tokenizeForMatch(text: string): string[];
+
+export declare function normalizeStatementKey(text: string): string;

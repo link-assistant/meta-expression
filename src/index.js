@@ -66,6 +66,16 @@ export {
   listTranslationStrategies,
   TRANSLATION_STRATEGIES,
 } from './translation-strategies.js';
+export {
+  assessArticleTranslation,
+  assessArticleSet,
+  selectLanguagePair,
+  summarizeAssessment,
+  extractFirstStatement,
+  tokenCoverage,
+  tokenizeForMatch,
+  normalizeStatementKey,
+} from './translation-quality.js';
 export { checkText, checkTextWithLiveEvidence } from './check.js';
 export {
   createCrossrefUniquenessSource,
