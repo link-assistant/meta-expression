@@ -1,0 +1,39 @@
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on artifact directory
+       Fresh unicode-ident v1.0.24
+       Fresh proc-macro2 v1.0.106
+       Fresh autocfg v1.5.0
+       Fresh quote v1.0.45
+       Fresh libc v0.2.186
+       Fresh syn v2.0.117
+       Fresh num-traits v0.2.19
+       Fresh thiserror-impl v2.0.18
+       Fresh cfg-if v1.0.4
+       Fresh bitflags v2.11.1
+       Fresh linux-raw-sys v0.12.1
+       Fresh once_cell v1.21.4
+       Fresh rustix v1.1.4
+       Fresh thiserror v2.0.18
+       Fresh getrandom v0.4.2
+       Fresh platform-num v0.8.0
+       Fresh fastrand v2.4.1
+       Fresh memmap2 v0.9.10
+       Fresh tempfile v3.27.0
+       Fresh allocator-api2 v0.4.0
+       Fresh beef v0.5.2
+       Fresh platform-trees v0.3.4
+       Fresh tap v1.0.1
+       Fresh leak_slice v0.2.0
+       Fresh platform-mem v0.3.0
+       Fresh platform-data v2.0.0
+       Fresh doublets v0.3.0
+       Fresh meta-expression-core v0.1.0 (/tmp/gh-issue-solver-1779542464052/rust)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 4.85s
+   Doc-tests meta_expression_core
+     Running `/home/box/.rustup/toolchains/stable-x86_64-unknown-linux-gnu/bin/rustdoc --edition=2021 --crate-type rlib --crate-type cdylib --color auto --crate-name meta_expression_core --test rust/src/lib.rs --test-run-directory /tmp/gh-issue-solver-1779542464052/rust --extern doublets=/tmp/gh-issue-solver-1779542464052/target/debug/deps/libdoublets-253f3052b0b50b28.rlib --extern meta_expression_core=/tmp/gh-issue-solver-1779542464052/target/debug/deps/libmeta_expression_core.rlib -L dependency=/tmp/gh-issue-solver-1779542464052/target/debug/deps -C embed-bitcode=no --check-cfg 'cfg(docsrs,test)' --check-cfg 'cfg(feature, values())' --error-format human`
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s

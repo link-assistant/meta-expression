@@ -1,0 +1,9 @@
+
+> my-package@0.9.0 lint
+> eslint .
+
+
+/tmp/gh-issue-solver-1779542464052/js/src/translate.js
+  1195:1  warning  Function 'setUnitTargetText' has a complexity of 16. Maximum allowed is 15  complexity
+
+✖ 1 problem (0 errors, 1 warning)

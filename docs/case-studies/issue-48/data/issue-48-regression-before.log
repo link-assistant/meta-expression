@@ -1,0 +1,92 @@
+TAP version 13
+# Subtest: issue 48 - complete formalize -> semantic -> naturalize coverage
+    # Subtest: formalizes and naturalizes every word from issue 45
+    not ok 1 - formalizes and naturalizes every word from issue 45
+      ---
+      duration_ms: 10.167765
+      location: '/tmp/gh-issue-solver-1779542464052/node_modules/test-anywhere/src/index.js:174:12'
+      failureType: 'testCodeFailure'
+      error: 'Expected false to be true'
+      code: 'ERR_TEST_FAILURE'
+      stack: |-
+        Object.toBe (file:///tmp/gh-issue-solver-1779542464052/node_modules/test-anywhere/src/index.js:391:15)
+        assertSourceFormalizationIsComplete (file:///tmp/gh-issue-solver-1779542464052/js/tests/integration/issue-48.test.js:51:56)
+        TestContext.<anonymous> (file:///tmp/gh-issue-solver-1779542464052/js/tests/integration/issue-48.test.js:84:7)
+        async Test.run (node:internal/test_runner/test:797:9)
+        async Promise.all (index 0)
+        async Suite.run (node:internal/test_runner/test:1135:7)
+        async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+      ...
+    # Subtest: keeps issue 45 stable through a round trip
+    not ok 2 - keeps issue 45 stable through a round trip
+      ---
+      duration_ms: 8.713484
+      location: '/tmp/gh-issue-solver-1779542464052/node_modules/test-anywhere/src/index.js:174:12'
+      failureType: 'testCodeFailure'
+      error: 'Expected ["What entity or expression should \\"Find\\" map to before translating it from en to ru?","What entity or expression should \\"synonyms\\" map to before translating it from en to ru?","What entity or expression should \\"or\\" map to before translating it from en to ru?","What entity or expression should \\"of\\" map to before translating it from en to ru?","What entity or expression should \\"agreement\\" map to before translating it from en to ru?"] to equal []'
+      code: 'ERR_TEST_FAILURE'
+      stack: |-
+        Object.toEqual (file:///tmp/gh-issue-solver-1779542464052/node_modules/test-anywhere/src/index.js:399:15)
+        TestContext.<anonymous> (file:///tmp/gh-issue-solver-1779542464052/js/tests/integration/issue-48.test.js:94:33)
+        async Test.run (node:internal/test_runner/test:797:9)
+        async Suite.processPendingSubtests (node:internal/test_runner/test:526:7)
+      ...
+    # Subtest: formalizes and naturalizes every word from issue 46
+    not ok 3 - formalizes and naturalizes every word from issue 46
+      ---
+      duration_ms: 1.425439
+      location: '/tmp/gh-issue-solver-1779542464052/node_modules/test-anywhere/src/index.js:174:12'
+      failureType: 'testCodeFailure'
+      error: 'Expected false to be true'
+      code: 'ERR_TEST_FAILURE'
+      stack: |-
+        Object.toBe (file:///tmp/gh-issue-solver-1779542464052/node_modules/test-anywhere/src/index.js:391:15)
+        assertSourceFormalizationIsComplete (file:///tmp/gh-issue-solver-1779542464052/js/tests/integration/issue-48.test.js:51:56)
+        TestContext.<anonymous> (file:///tmp/gh-issue-solver-1779542464052/js/tests/integration/issue-48.test.js:84:7)
+        async Test.run (node:internal/test_runner/test:797:9)
+        async Suite.processPendingSubtests (node:internal/test_runner/test:526:7)
+      ...
+    # Subtest: keeps issue 46 stable through a round trip
+    ok 4 - keeps issue 46 stable through a round trip
+      ---
+      duration_ms: 2.438973
+      ...
+    # Subtest: formalizes and naturalizes every word from issue 47
+    not ok 5 - formalizes and naturalizes every word from issue 47
+      ---
+      duration_ms: 2.422057
+      location: '/tmp/gh-issue-solver-1779542464052/node_modules/test-anywhere/src/index.js:174:12'
+      failureType: 'testCodeFailure'
+      error: 'Expected false to be true'
+      code: 'ERR_TEST_FAILURE'
+      stack: |-
+        Object.toBe (file:///tmp/gh-issue-solver-1779542464052/node_modules/test-anywhere/src/index.js:391:15)
+        assertSourceFormalizationIsComplete (file:///tmp/gh-issue-solver-1779542464052/js/tests/integration/issue-48.test.js:51:56)
+        TestContext.<anonymous> (file:///tmp/gh-issue-solver-1779542464052/js/tests/integration/issue-48.test.js:84:7)
+        async Test.run (node:internal/test_runner/test:797:9)
+        async Suite.processPendingSubtests (node:internal/test_runner/test:526:7)
+      ...
+    # Subtest: keeps issue 47 stable through a round trip
+    ok 6 - keeps issue 47 stable through a round trip
+      ---
+      duration_ms: 2.119125
+      ...
+    1..6
+not ok 1 - issue 48 - complete formalize -> semantic -> naturalize coverage
+  ---
+  duration_ms: 28.781733
+  type: 'suite'
+  location: '/tmp/gh-issue-solver-1779542464052/node_modules/test-anywhere/src/index.js:205:12'
+  failureType: 'subtestsFailed'
+  error: '4 subtests failed'
+  code: 'ERR_TEST_FAILURE'
+  ...
+1..1
+# tests 6
+# suites 1
+# pass 2
+# fail 4
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 126.201944

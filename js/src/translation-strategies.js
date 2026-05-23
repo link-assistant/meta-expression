@@ -32,8 +32,10 @@ const enRuGlossary = Object.freeze({
   compare: 'сравните',
   example: 'пример',
   examples: 'примеры',
+  find: 'найти',
   formalize: 'формализуйте',
   open: 'откройте',
+  or: 'или',
   page: 'страницу',
   result: 'результат',
   save: 'сохраните',
@@ -60,6 +62,10 @@ const enRuGlossary = Object.freeze({
   questions: 'вопросами',
   value: 'значение',
   values: 'значения',
+  synonym: 'синоним',
+  synonyms: 'синонимы',
+  agreement: 'согласования',
+  'examples of agreement': 'примеры согласования',
 });
 
 const ruEnGlossary = Object.freeze({
@@ -90,7 +96,6 @@ const ruEnGlossary = Object.freeze({
   страницу: 'page',
   сохранить: 'save',
   результат: 'result',
-  'найти синонимы или': 'find synonyms or',
   'примеры согласования': 'examples of agreement',
   'примеры перевода': 'examples of translation',
 });

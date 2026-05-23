@@ -1,0 +1,249 @@
+[
+  {
+    "issue": 45,
+    "source": "Найти синонимы или примеры согласования",
+    "expected": "Find synonyms or examples of agreement",
+    "plainText": "Find synonyms or examples of agreement",
+    "sourceFormalizationMarkdown": "[Найти](https://link-assistant.github.io/human-language/entities.html#lex%3Aru%3A%D0%BD%D0%B0%D0%B9%D1%82%D0%B8 \"lex:ru:найти\") [синонимы](https://link-assistant.github.io/human-language/entities.html#lex%3Aru%3A%D1%81%D0%B8%D0%BD%D0%BE%D0%BD%D0%B8%D0%BC%D1%8B \"lex:ru:синонимы\") [или](https://link-assistant.github.io/human-language/entities.html#lex%3Aru%3A%D0%B8%D0%BB%D0%B8 \"lex:ru:или\") [примеры](https://link-assistant.github.io/human-language/entities.html#lex%3Aru%3A%D0%BF%D1%80%D0%B8%D0%BC%D0%B5%D1%80%D1%8B \"lex:ru:примеры\") [согласования](https://link-assistant.github.io/human-language/entities.html#lex%3Aru%3A%D1%81%D0%BE%D0%B3%D0%BB%D0%B0%D1%81%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D1%8F \"lex:ru:согласования\")",
+    "targetMarkdown": "[Find](https://link-assistant.github.io/human-language/entities.html#lex%3Aen%3Afind \"lex:en:find\") [synonyms](https://link-assistant.github.io/human-language/entities.html#lex%3Aen%3Asynonyms \"lex:en:synonyms\") [or](https://link-assistant.github.io/human-language/entities.html#lex%3Aen%3Aor \"lex:en:or\") [examples](https://link-assistant.github.io/human-language/entities.html#lex%3Aen%3Aexamples \"lex:en:examples\") [of](https://link-assistant.github.io/human-language/entities.html#lex%3Aen%3Aof \"lex:en:of\") [agreement](https://link-assistant.github.io/human-language/entities.html#lex%3Aen%3Aagreement \"lex:en:agreement\")",
+    "sourcePhrases": [
+      {
+        "text": "Найти",
+        "entityId": "lex:ru:найти",
+        "url": "https://link-assistant.github.io/human-language/entities.html#lex%3Aru%3A%D0%BD%D0%B0%D0%B9%D1%82%D0%B8"
+      },
+      {
+        "text": "синонимы",
+        "entityId": "lex:ru:синонимы",
+        "url": "https://link-assistant.github.io/human-language/entities.html#lex%3Aru%3A%D1%81%D0%B8%D0%BD%D0%BE%D0%BD%D0%B8%D0%BC%D1%8B"
+      },
+      {
+        "text": "или",
+        "entityId": "lex:ru:или",
+        "url": "https://link-assistant.github.io/human-language/entities.html#lex%3Aru%3A%D0%B8%D0%BB%D0%B8"
+      },
+      {
+        "text": "примеры",
+        "entityId": "lex:ru:примеры",
+        "url": "https://link-assistant.github.io/human-language/entities.html#lex%3Aru%3A%D0%BF%D1%80%D0%B8%D0%BC%D0%B5%D1%80%D1%8B"
+      },
+      {
+        "text": "согласования",
+        "entityId": "lex:ru:согласования",
+        "url": "https://link-assistant.github.io/human-language/entities.html#lex%3Aru%3A%D1%81%D0%BE%D0%B3%D0%BB%D0%B0%D1%81%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D1%8F"
+      }
+    ],
+    "semanticLinks": [
+      {
+        "sourceText": "Найти",
+        "status": "lexical-glossary",
+        "meaningId": "lex:ru:найти",
+        "url": "https://link-assistant.github.io/human-language/entities.html#lex%3Aru%3A%D0%BD%D0%B0%D0%B9%D1%82%D0%B8",
+        "targetHint": "Find"
+      },
+      {
+        "sourceText": "синонимы",
+        "status": "lexical-glossary",
+        "meaningId": "lex:ru:синонимы",
+        "url": "https://link-assistant.github.io/human-language/entities.html#lex%3Aru%3A%D1%81%D0%B8%D0%BD%D0%BE%D0%BD%D0%B8%D0%BC%D1%8B",
+        "targetHint": "synonyms"
+      },
+      {
+        "sourceText": "или",
+        "status": "lexical-glossary",
+        "meaningId": "lex:ru:или",
+        "url": "https://link-assistant.github.io/human-language/entities.html#lex%3Aru%3A%D0%B8%D0%BB%D0%B8",
+        "targetHint": "or"
+      },
+      {
+        "sourceText": "примеры",
+        "status": "lexical-glossary",
+        "meaningId": "lex:ru:примеры",
+        "url": "https://link-assistant.github.io/human-language/entities.html#lex%3Aru%3A%D0%BF%D1%80%D0%B8%D0%BC%D0%B5%D1%80%D1%8B",
+        "targetHint": "examples"
+      },
+      {
+        "sourceText": "согласования",
+        "status": "lexical-glossary",
+        "meaningId": "lex:ru:согласования",
+        "url": "https://link-assistant.github.io/human-language/entities.html#lex%3Aru%3A%D1%81%D0%BE%D0%B3%D0%BB%D0%B0%D1%81%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D1%8F",
+        "targetHint": "agreement"
+      }
+    ],
+    "targetUnits": [
+      {
+        "targetText": "Find",
+        "targetEntityId": "lex:en:find",
+        "targetUrl": "https://link-assistant.github.io/human-language/entities.html#lex%3Aen%3Afind",
+        "semanticLinkId": "semantic-link-1"
+      },
+      {
+        "targetText": "synonyms",
+        "targetEntityId": "lex:en:synonyms",
+        "targetUrl": "https://link-assistant.github.io/human-language/entities.html#lex%3Aen%3Asynonyms",
+        "semanticLinkId": "semantic-link-2"
+      },
+      {
+        "targetText": "or",
+        "targetEntityId": "lex:en:or",
+        "targetUrl": "https://link-assistant.github.io/human-language/entities.html#lex%3Aen%3Aor",
+        "semanticLinkId": "semantic-link-3"
+      },
+      {
+        "targetText": "examples",
+        "targetEntityId": "lex:en:examples",
+        "targetUrl": "https://link-assistant.github.io/human-language/entities.html#lex%3Aen%3Aexamples",
+        "semanticLinkId": "semantic-link-4"
+      },
+      {
+        "targetText": "of",
+        "targetEntityId": "lex:en:of",
+        "targetUrl": "https://link-assistant.github.io/human-language/entities.html#lex%3Aen%3Aof",
+        "semanticLinkId": null
+      },
+      {
+        "targetText": "agreement",
+        "targetEntityId": "lex:en:agreement",
+        "targetUrl": "https://link-assistant.github.io/human-language/entities.html#lex%3Aen%3Aagreement",
+        "semanticLinkId": "semantic-link-5"
+      }
+    ],
+    "naturalizationLinksNotation": "(naturalization: target (Find synonyms or examples of agreement) language en)\n(sentence-1: semanticLinks (semantic-link-1 semantic-link-2 semantic-link-3 semantic-link-4 semantic-link-5) target (Find synonyms or examples of agreement) transformations (russian-examples-genitive-to-english-of-phrase))\n(target-unit-1-1: target (Find) semanticLink semantic-link-1 targetId lex:en:find markdownUrl (https://link-assistant.github.io/human-language/entities.html#lex%3Aen%3Afind))\n(target-unit-1-2: target (synonyms) semanticLink semantic-link-2 targetId lex:en:synonyms markdownUrl (https://link-assistant.github.io/human-language/entities.html#lex%3Aen%3Asynonyms))\n(target-unit-1-3: target (or) semanticLink semantic-link-3 targetId lex:en:or markdownUrl (https://link-assistant.github.io/human-language/entities.html#lex%3Aen%3Aor))\n(target-unit-1-4: target (examples) semanticLink semantic-link-4 targetId lex:en:examples markdownUrl (https://link-assistant.github.io/human-language/entities.html#lex%3Aen%3Aexamples))\n(target-unit-1-5: target (of) targetId lex:en:of markdownUrl (https://link-assistant.github.io/human-language/entities.html#lex%3Aen%3Aof))\n(target-unit-1-6: target (agreement) semanticLink semantic-link-5 targetId lex:en:agreement markdownUrl (https://link-assistant.github.io/human-language/entities.html#lex%3Aen%3Aagreement))",
+    "reversePlainText": "Найти синонимы или примеры согласования",
+    "reverseQuestions": [],
+    "roundTripCoverage": {
+      "ratio": 1,
+      "found": [
+        "найти",
+        "синонимы",
+        "примеры",
+        "согласования"
+      ],
+      "missing": []
+    }
+  },
+  {
+    "issue": 46,
+    "source": "Перевести текст",
+    "expected": "Translate text",
+    "plainText": "Translate text",
+    "sourceFormalizationMarkdown": "[Перевести](https://link-assistant.github.io/human-language/entities.html#lex%3Aru%3A%D0%BF%D0%B5%D1%80%D0%B5%D0%B2%D0%B5%D1%81%D1%82%D0%B8 \"lex:ru:перевести\") [текст](https://link-assistant.github.io/human-language/entities.html#lex%3Aru%3A%D1%82%D0%B5%D0%BA%D1%81%D1%82 \"lex:ru:текст\")",
+    "targetMarkdown": "[Translate](https://link-assistant.github.io/human-language/entities.html#lex%3Aen%3Atranslate \"lex:en:translate\") [text](https://link-assistant.github.io/human-language/entities.html#lex%3Aen%3Atext \"lex:en:text\")",
+    "sourcePhrases": [
+      {
+        "text": "Перевести",
+        "entityId": "lex:ru:перевести",
+        "url": "https://link-assistant.github.io/human-language/entities.html#lex%3Aru%3A%D0%BF%D0%B5%D1%80%D0%B5%D0%B2%D0%B5%D1%81%D1%82%D0%B8"
+      },
+      {
+        "text": "текст",
+        "entityId": "lex:ru:текст",
+        "url": "https://link-assistant.github.io/human-language/entities.html#lex%3Aru%3A%D1%82%D0%B5%D0%BA%D1%81%D1%82"
+      }
+    ],
+    "semanticLinks": [
+      {
+        "sourceText": "Перевести",
+        "status": "lexical-glossary",
+        "meaningId": "lex:ru:перевести",
+        "url": "https://link-assistant.github.io/human-language/entities.html#lex%3Aru%3A%D0%BF%D0%B5%D1%80%D0%B5%D0%B2%D0%B5%D1%81%D1%82%D0%B8",
+        "targetHint": "Translate"
+      },
+      {
+        "sourceText": "текст",
+        "status": "lexical-glossary",
+        "meaningId": "lex:ru:текст",
+        "url": "https://link-assistant.github.io/human-language/entities.html#lex%3Aru%3A%D1%82%D0%B5%D0%BA%D1%81%D1%82",
+        "targetHint": "text"
+      }
+    ],
+    "targetUnits": [
+      {
+        "targetText": "Translate",
+        "targetEntityId": "lex:en:translate",
+        "targetUrl": "https://link-assistant.github.io/human-language/entities.html#lex%3Aen%3Atranslate",
+        "semanticLinkId": "semantic-link-1"
+      },
+      {
+        "targetText": "text",
+        "targetEntityId": "lex:en:text",
+        "targetUrl": "https://link-assistant.github.io/human-language/entities.html#lex%3Aen%3Atext",
+        "semanticLinkId": "semantic-link-2"
+      }
+    ],
+    "naturalizationLinksNotation": "(naturalization: target (Translate text) language en)\n(sentence-1: semanticLinks (semantic-link-1 semantic-link-2) target (Translate text) transformations (none))\n(target-unit-1-1: target (Translate) semanticLink semantic-link-1 targetId lex:en:translate markdownUrl (https://link-assistant.github.io/human-language/entities.html#lex%3Aen%3Atranslate))\n(target-unit-1-2: target (text) semanticLink semantic-link-2 targetId lex:en:text markdownUrl (https://link-assistant.github.io/human-language/entities.html#lex%3Aen%3Atext))",
+    "reversePlainText": "Переведите текст",
+    "reverseQuestions": [],
+    "roundTripCoverage": {
+      "ratio": 0.5,
+      "found": [
+        "текст"
+      ],
+      "missing": [
+        "переведите"
+      ]
+    }
+  },
+  {
+    "issue": 47,
+    "source": "Сравнить значения",
+    "expected": "Compare values",
+    "plainText": "Compare values",
+    "sourceFormalizationMarkdown": "[Сравнить](https://link-assistant.github.io/human-language/entities.html#lex%3Aru%3A%D1%81%D1%80%D0%B0%D0%B2%D0%BD%D0%B8%D1%82%D1%8C \"lex:ru:сравнить\") [значения](https://link-assistant.github.io/human-language/entities.html#lex%3Aru%3A%D0%B7%D0%BD%D0%B0%D1%87%D0%B5%D0%BD%D0%B8%D1%8F \"lex:ru:значения\")",
+    "targetMarkdown": "[Compare](https://link-assistant.github.io/human-language/entities.html#lex%3Aen%3Acompare \"lex:en:compare\") [values](https://link-assistant.github.io/human-language/entities.html#lex%3Aen%3Avalues \"lex:en:values\")",
+    "sourcePhrases": [
+      {
+        "text": "Сравнить",
+        "entityId": "lex:ru:сравнить",
+        "url": "https://link-assistant.github.io/human-language/entities.html#lex%3Aru%3A%D1%81%D1%80%D0%B0%D0%B2%D0%BD%D0%B8%D1%82%D1%8C"
+      },
+      {
+        "text": "значения",
+        "entityId": "lex:ru:значения",
+        "url": "https://link-assistant.github.io/human-language/entities.html#lex%3Aru%3A%D0%B7%D0%BD%D0%B0%D1%87%D0%B5%D0%BD%D0%B8%D1%8F"
+      }
+    ],
+    "semanticLinks": [
+      {
+        "sourceText": "Сравнить",
+        "status": "lexical-glossary",
+        "meaningId": "lex:ru:сравнить",
+        "url": "https://link-assistant.github.io/human-language/entities.html#lex%3Aru%3A%D1%81%D1%80%D0%B0%D0%B2%D0%BD%D0%B8%D1%82%D1%8C",
+        "targetHint": "Compare"
+      },
+      {
+        "sourceText": "значения",
+        "status": "lexical-glossary",
+        "meaningId": "lex:ru:значения",
+        "url": "https://link-assistant.github.io/human-language/entities.html#lex%3Aru%3A%D0%B7%D0%BD%D0%B0%D1%87%D0%B5%D0%BD%D0%B8%D1%8F",
+        "targetHint": "values"
+      }
+    ],
+    "targetUnits": [
+      {
+        "targetText": "Compare",
+        "targetEntityId": "lex:en:compare",
+        "targetUrl": "https://link-assistant.github.io/human-language/entities.html#lex%3Aen%3Acompare",
+        "semanticLinkId": "semantic-link-1"
+      },
+      {
+        "targetText": "values",
+        "targetEntityId": "lex:en:values",
+        "targetUrl": "https://link-assistant.github.io/human-language/entities.html#lex%3Aen%3Avalues",
+        "semanticLinkId": "semantic-link-2"
+      }
+    ],
+    "naturalizationLinksNotation": "(naturalization: target (Compare values) language en)\n(sentence-1: semanticLinks (semantic-link-1 semantic-link-2) target (Compare values) transformations (none))\n(target-unit-1-1: target (Compare) semanticLink semantic-link-1 targetId lex:en:compare markdownUrl (https://link-assistant.github.io/human-language/entities.html#lex%3Aen%3Acompare))\n(target-unit-1-2: target (values) semanticLink semantic-link-2 targetId lex:en:values markdownUrl (https://link-assistant.github.io/human-language/entities.html#lex%3Aen%3Avalues))",
+    "reversePlainText": "Сравните значения",
+    "reverseQuestions": [],
+    "roundTripCoverage": {
+      "ratio": 0.5,
+      "found": [
+        "значения"
+      ],
+      "missing": [
+        "сравните"
+      ]
+    }
+  }
+]

@@ -5,6 +5,7 @@ import {
   normalizeTranslationStrategy,
   TRANSLATION_STRATEGIES,
 } from './translation-strategies.js';
+import { buildLexicalTarget, lexicalSemanticId } from './lexical-entities.js';
 
 const wikidataApiUrl = 'https://www.wikidata.org/w/api.php';
 const wikidataEntityBaseUrl = 'https://www.wikidata.org/wiki/';
@@ -255,14 +256,13 @@ function semanticMeaningSource(entity, glossaryTranslation) {
 }
 
 function semanticLinkStatus(entity, glossaryTranslation) {
+  if (entity?.source === 'lexical') {
+    return glossaryTranslation ? 'lexical-glossary' : 'lexical-fallback';
+  }
   if (entity) {
     return 'linked-entity';
   }
   return glossaryTranslation ? 'lexical-glossary' : 'unresolved';
-}
-
-function lexicalSemanticId(text, language) {
-  return `lex:${language}:${normalizePhrase(text).replace(/\s+/g, '_')}`;
 }
 
 function sourceUrlForSemanticEntity(entity) {
@@ -360,19 +360,49 @@ function translatedGlossaryPhrase(
   config
 ) {
   const entityId = translationEntity?.id ?? base.source.entityId ?? null;
+  const target = targetForGlossaryTranslation(
+    base,
+    translationEntity,
+    translation,
+    config
+  );
   return {
     ...base,
     entityId,
     target: {
       text: translation.text,
       language: config.targetLanguage,
-      entityId,
-      description: base.source.description,
-      url: null,
+      entityId: target.entityId,
+      description: target.description,
+      url: target.url,
       status: 'translated',
       strategy: translation.strategy,
     },
     variable: null,
+  };
+}
+
+function targetForGlossaryTranslation(
+  base,
+  translationEntity,
+  translation,
+  config
+) {
+  if (isWikidataId(translationEntity?.id)) {
+    return {
+      entityId: translationEntity.id,
+      description: base.source.description,
+      url: wikidataUrlForEntity(translationEntity),
+    };
+  }
+  const lexicalTarget = buildLexicalTarget(
+    translation.text,
+    config.targetLanguage
+  );
+  return {
+    entityId: lexicalTarget.entityId,
+    description: lexicalTarget.description,
+    url: lexicalTarget.url,
   };
 }
 
@@ -390,6 +420,8 @@ function buildPhraseTranslationBase(phrase, translationEntity, config) {
       entityId: sourceEntity?.id ?? null,
       label: sourceEntity?.label ?? null,
       description: sourceEntity?.description ?? null,
+      url: sourceEntity ? sourceUrlForSemanticEntity(sourceEntity) : null,
+      source: sourceEntity?.source ?? null,
     },
   };
 }
@@ -570,6 +602,13 @@ function targetUrlFor(entity, sourceEntity, language) {
   return `${wikidataEntityBaseUrl}${sourceEntity.id}`;
 }
 
+function wikidataUrlForEntity(entity) {
+  if (entity?.kind === 'property') {
+    return `${wikidataPropertyBaseUrl}${entity.id}`;
+  }
+  return `${wikidataEntityBaseUrl}${entity.id}`;
+}
+
 function buildVariableQuestionDetails(variable, config) {
   const question = variable.entityId
     ? `What ${config.targetLanguage} label should represent ${variable.entityId} for "${variable.sourceText}"?`
@@ -642,6 +681,9 @@ function buildNaturalization(semanticMetaLanguage, phrases, sentences, config) {
         (phrase) => `semantic-link-${Number(phrase.id.split('-').pop()) || 1}`
       ),
       targetText: sentence.plainText,
+      targetMarkdown: sentence.markdown,
+      targetHtml: sentence.html,
+      targetUnits: sentence.targetUnits.map((unit) => ({ ...unit })),
       transformations: [...sentence.transformations],
     })),
   };
@@ -679,6 +721,8 @@ function buildTranslationCst({
       sourceEnd: sentence.source.end,
       targetText: sentence.plainText,
       targetMarkdown: sentence.markdown,
+      targetHtml: sentence.html,
+      targetUnits: sentence.targetUnits.map((unit) => ({ ...unit })),
       transformations: [...sentence.transformations],
       phraseIds: sentence.phrases.map((phrase) => phrase.id),
     })),
@@ -740,6 +784,9 @@ function buildTranslatedSentence(segment, index, phrases, config) {
     rendered.units.map((unit) => unit.html).join(' '),
     punctuation
   );
+  const targetUnits = rendered.units.map((unit, unitIndex) =>
+    buildTargetUnit(unit, `target-unit-${index + 1}-${unitIndex + 1}`)
+  );
   const sentence = {
     id: `sentence-${index + 1}`,
     source: {
@@ -757,6 +804,7 @@ function buildTranslatedSentence(segment, index, phrases, config) {
     phrases: sentencePhrases,
     transformations: rendered.transformations,
     resolvedVariableNames: [...rendered.resolvedVariableNames],
+    targetUnits,
     plainText,
     markdown,
     html,
@@ -794,6 +842,30 @@ function renderUnitFromPhrase(phrase) {
     markdown: renderPhraseMarkdown(phrase),
     html: renderPhraseHtml(phrase),
   };
+}
+
+function buildTargetUnit(unit, id) {
+  return {
+    id,
+    kind: unit.kind,
+    phraseId: unit.phraseId ?? null,
+    semanticLinkId: semanticLinkIdFromPhraseId(unit.phraseId),
+    sourceText: unit.sourceText ?? null,
+    targetText: unit.plainText,
+    plainText: unit.plainText,
+    markdown: unit.markdown,
+    html: unit.html,
+    targetEntityId: unit.targetEntityId ?? unit.entityId ?? null,
+    targetUrl: unit.targetUrl ?? null,
+  };
+}
+
+function semanticLinkIdFromPhraseId(phraseId) {
+  if (!phraseId) {
+    return null;
+  }
+  const numeric = Number(String(phraseId).split('-').pop());
+  return Number.isFinite(numeric) ? `semantic-link-${numeric}` : null;
 }
 
 function applySentenceTransformations(units, segment, sentenceId, config) {
@@ -868,7 +940,7 @@ function applyExactGlossaryPhraseNaturalization(
       units.splice(
         index,
         size,
-        buildGlossaryPhraseUnit(sourceText, translation)
+        buildGlossaryPhraseUnit(sourceText, translation, config)
       );
       transformations.push('exact-glossary-phrase-naturalization');
       recordStep(config, 'transformation-rule', {
@@ -883,15 +955,19 @@ function applyExactGlossaryPhraseNaturalization(
   return { transformations, resolvedVariableNames };
 }
 
-function buildGlossaryPhraseUnit(sourceText, translation) {
-  const text = translation.text;
+function buildGlossaryPhraseUnit(sourceText, translation, config) {
+  const target = buildLexicalTarget(translation.text, config.targetLanguage);
   return {
     kind: 'glossary-phrase',
     sourceText,
     variableName: null,
-    plainText: text,
-    markdown: escapeMarkdown(text),
-    html: escapeHtml(text),
+    plainText: target.text,
+    targetEntityId: target.entityId,
+    targetUrl: target.url,
+    markdown: `[${escapeMarkdown(target.text)}](${target.url} "${target.entityId}")`,
+    html: `<a href="${escapeAttribute(target.url)}" title="${escapeAttribute(
+      target.entityId
+    )}">${escapeHtml(target.text)}</a>`,
   };
 }
 
@@ -906,7 +982,11 @@ function applyEnglishToRussianRules(units, segment, sentenceId, config) {
     const [phrase] = nextUnits.splice(
       isAPhraseIndex,
       1,
-      buildRuleToken(nextUnits[isAPhraseIndex].sourceText, russianEtoCopula)
+      buildRuleToken(
+        nextUnits[isAPhraseIndex].sourceText,
+        russianEtoCopula,
+        config
+      )
     );
     if (phrase.variableName) {
       resolvedVariableNames.add(phrase.variableName);
@@ -948,7 +1028,11 @@ function applyEnglishToRussianRules(units, segment, sentenceId, config) {
     const [copula] = nextUnits.splice(
       copulaIndex,
       1,
-      buildRuleToken(nextUnits[copulaIndex].sourceText, russianEtoCopula)
+      buildRuleToken(
+        nextUnits[copulaIndex].sourceText,
+        russianEtoCopula,
+        config
+      )
     );
     if (copula.variableName) {
       resolvedVariableNames.add(copula.variableName);
@@ -999,8 +1083,8 @@ function applyEnglishWithWikidataRule(units, segment, sentenceId, config) {
     ) {
       continue;
     }
-    setUnitTargetText(units[index], { text: 'с помощью' });
-    setUnitTargetText(units[index + 1], { text: 'Викиданных' });
+    setUnitTargetText(units[index], { text: 'с помощью' }, config);
+    setUnitTargetText(units[index + 1], { text: 'Викиданных' }, config);
     recordStep(config, 'transformation-rule', {
       sentenceId,
       rule: 'english-with-wikidata-to-russian-instrumental',
@@ -1027,8 +1111,8 @@ function applyEnglishTransformationRulesRule(
     }
     const modifier = units[index];
     const noun = units[index + 1];
-    setUnitTargetText(noun, { text: 'правила' });
-    setUnitTargetText(modifier, { text: 'преобразования' });
+    setUnitTargetText(noun, { text: 'правила' }, config);
+    setUnitTargetText(modifier, { text: 'преобразования' }, config);
     units.splice(index, 2, noun, modifier);
     recordStep(config, 'transformation-rule', {
       sentenceId,
@@ -1071,7 +1155,7 @@ function applyRussianUsStatePredicateRule(units, segment, sentenceId, config) {
     if (!isStatePredicate(predicate) || !isUsStateSubject(subject)) {
       continue;
     }
-    setUnitTargetText(predicate, russianUsStatePredicate);
+    setUnitTargetText(predicate, russianUsStatePredicate, config);
     recordStep(config, 'transformation-rule', {
       sentenceId,
       rule: 'english-us-state-predicate-to-russian-shtat',
@@ -1108,11 +1192,17 @@ function normalizePhrase(value) {
     .replace(/\s+/g, ' ');
 }
 
-function setUnitTargetText(unit, target) {
+function setUnitTargetText(unit, target, config = null) {
+  const resolvedTarget = resolveUnitTarget(unit, target, config);
   unit.plainText = target.text;
-  unit.targetEntityId = target.entityId ?? unit.targetEntityId ?? unit.entityId;
-  unit.targetUrl = target.url ?? unit.targetUrl;
-  applyUnitTargetToPhrase(unit, target);
+  unit.targetEntityId = resolvedTarget.entityId;
+  unit.targetUrl = resolvedTarget.url;
+  applyUnitTargetToPhrase(unit, {
+    ...target,
+    entityId: resolvedTarget.entityId,
+    url: resolvedTarget.url,
+    description: target.description ?? resolvedTarget.description,
+  });
   if (unit.targetEntityId && unit.targetUrl) {
     unit.markdown = `[${escapeMarkdown(unit.plainText)}](${unit.targetUrl} "${unit.targetEntityId}")`;
     unit.html = `<a href="${escapeAttribute(unit.targetUrl)}" title="${escapeAttribute(
@@ -1124,6 +1214,22 @@ function setUnitTargetText(unit, target) {
   unit.html = escapeHtml(unit.plainText);
 }
 
+function resolveUnitTarget(unit, target, config) {
+  const lexicalTarget =
+    target.entityId || !target.text || !config
+      ? null
+      : buildLexicalTarget(target.text, config.targetLanguage);
+  return {
+    entityId:
+      target.entityId ??
+      lexicalTarget?.entityId ??
+      unit.targetEntityId ??
+      unit.entityId,
+    url: target.url ?? lexicalTarget?.url ?? unit.targetUrl,
+    description: lexicalTarget?.description,
+  };
+}
+
 function appendUnitSuffix(unit, suffix) {
   if (!unit || unit.plainText.endsWith(suffix)) {
     return;
@@ -1133,14 +1239,18 @@ function appendUnitSuffix(unit, suffix) {
   unit.html = `${unit.html}${suffix}`;
 }
 
-function buildRuleToken(sourceText, target) {
+function buildRuleToken(sourceText, target, config = null) {
+  const lexicalTarget =
+    !target.entityId && target.text && config
+      ? buildLexicalTarget(target.text, config.targetLanguage)
+      : null;
   const unit = {
     kind: 'rule-token',
     sourceText,
     variableName: null,
     plainText: target.text,
-    targetEntityId: target.entityId ?? null,
-    targetUrl: target.url ?? null,
+    targetEntityId: target.entityId ?? lexicalTarget?.entityId ?? null,
+    targetUrl: target.url ?? lexicalTarget?.url ?? null,
     markdown: target.text,
     html: escapeHtml(target.text),
   };
@@ -1198,14 +1308,11 @@ function applyRussianToEnglishRules(units, segment, sentenceId, config) {
     const predicate = nextUnits[copulaIndex + 1];
     if (shouldInsertEnglishPredicateArticle(predicate)) {
       const article = englishIndefiniteArticleFor(predicate.plainText);
-      nextUnits.splice(copulaIndex + 1, 0, {
-        kind: 'rule-token',
-        sourceText: '',
-        variableName: null,
-        plainText: article,
-        markdown: article,
-        html: article,
-      });
+      nextUnits.splice(
+        copulaIndex + 1,
+        0,
+        buildRuleToken('', { text: article }, config)
+      );
       transformations.push('english-indefinite-article-insertion');
       recordStep(config, 'transformation-rule', {
         sentenceId,
@@ -1237,7 +1344,7 @@ function applyRussianExamplesOfRule(units, segment, sentenceId, config) {
     if (!nextText || isEnglishPreposition(nextText)) {
       continue;
     }
-    units.splice(index + 1, 0, buildRuleToken('', { text: 'of' }));
+    units.splice(index + 1, 0, buildRuleToken('', { text: 'of' }, config));
     recordStep(config, 'transformation-rule', {
       sentenceId,
       rule: 'russian-examples-genitive-to-english-of-phrase',
@@ -1408,7 +1515,21 @@ function renderNaturalizationLinksNotation(naturalization) {
     (sentence) =>
       `(${sentence.id}: semanticLinks ${toLino(sentence.semanticLinkIds.join(' '))} target ${toLino(sentence.targetText)} transformations ${toLino(sentence.transformations.join(', ') || 'none')})`
   );
-  return [head, ...sentences].join('\n');
+  const targetUnits = naturalization.sentences.flatMap((sentence) =>
+    sentence.targetUnits.map((unit) => {
+      const semantic = unit.semanticLinkId
+        ? ` semanticLink ${unit.semanticLinkId}`
+        : '';
+      const entity = unit.targetEntityId
+        ? ` targetId ${unit.targetEntityId}`
+        : '';
+      const url = unit.targetUrl
+        ? ` markdownUrl ${toLino(unit.targetUrl)}`
+        : '';
+      return `(${unit.id}: target ${toLino(unit.targetText)}${semantic}${entity}${url})`;
+    })
+  );
+  return [head, ...sentences, ...targetUnits].join('\n');
 }
 
 function recordPhraseStep(phrase, config) {

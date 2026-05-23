@@ -29,6 +29,7 @@ export const SOURCE_KIND = Object.freeze({
   WORDNET: 'wordnet',
   WIKTIONARY: 'wiktionary',
   FANDOM: 'fandom',
+  LEXICAL: 'lexical',
 });
 
 /**

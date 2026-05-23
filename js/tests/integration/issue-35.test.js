@@ -179,18 +179,18 @@ describe('issue 35 — Hawaii translation through semantic phrases', () => {
       now: () => 0,
     });
 
-    const linkedPhrases = result.formalization.cst.phrases.filter(
-      (phrase) => phrase.entity
+    const wikidataLinkedPhrases = result.formalization.cst.phrases.filter(
+      (phrase) => /^[QP]\d+$/.test(phrase.entity?.id ?? '')
     );
     expect(calls.every((call) => call.identified)).toBe(true);
     expect(calls.map((call) => call.search)).not.toContain('Hawaii is a');
     expect(calls.map((call) => call.search)).not.toContain('a state');
     expect(calls.map((call) => call.search)).not.toContain('is a state');
-    expect(linkedPhrases.map((phrase) => phrase.text)).toEqual([
+    expect(wikidataLinkedPhrases.map((phrase) => phrase.text)).toEqual([
       'Hawaii',
       'state',
     ]);
-    expect(linkedPhrases.map((phrase) => phrase.entity.id)).toEqual([
+    expect(wikidataLinkedPhrases.map((phrase) => phrase.entity.id)).toEqual([
       'Q782',
       'Q7275',
     ]);

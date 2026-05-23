@@ -233,7 +233,11 @@ export async function formalizeTextWith(input, options = {}) {
       candidates: ngramCandidates[index] ?? [],
     }))
     .filter((ngram) => ngram.candidates.length > 0);
-  const phrases = coverTokensWithLongestMatch(tokens, ngramsWithCandidates);
+  const phrases = coverTokensWithLongestMatch(
+    tokens,
+    ngramsWithCandidates,
+    config
+  );
   await Promise.all(
     phrases.map((phrase) => attachEntityDetails(phrase, config))
   );
@@ -433,10 +437,11 @@ export function resolveLinkTarget(phrase, options = {}) {
 }
 
 function localViewerUrl(entity) {
+  const encodedId = encodeURIComponent(entity.id);
   if (entity.kind === 'property') {
-    return `${localPropertyViewerBaseUrl}#${entity.id}`;
+    return `${localPropertyViewerBaseUrl}#${encodedId}`;
   }
-  return `${localEntityViewerBaseUrl}#${entity.id}`;
+  return `${localEntityViewerBaseUrl}#${encodedId}`;
 }
 
 function wikidataPageUrl(entity) {
@@ -812,7 +817,7 @@ function normalizeLabel(value) {
     .replace(/\s+/g, ' ');
 }
 
-function coverTokensWithLongestMatch(tokens, ngramsWithCandidates) {
+function coverTokensWithLongestMatch(tokens, ngramsWithCandidates, config) {
   const sorted = [...ngramsWithCandidates].sort(
     (left, right) => right.size - left.size || left.start - right.start
   );
@@ -849,7 +854,7 @@ function coverTokensWithLongestMatch(tokens, ngramsWithCandidates) {
       cursor = ngram.end + 1;
       continue;
     }
-    phrases.push(buildRawPhrase(tokens[cursor], cursor));
+    phrases.push(buildRawPhrase(tokens[cursor], cursor, config));
     cursor += 1;
   }
   return phrases;
@@ -882,7 +887,7 @@ function buildPhraseFromNgram(ngram) {
   };
 }
 
-function buildRawPhrase(token, position) {
+function buildRawPhrase(token, position, config) {
   return {
     text: token,
     tokens: [token],
@@ -890,8 +895,33 @@ function buildRawPhrase(token, position) {
     end: position,
     size: 1,
     candidates: [],
-    entity: null,
+    entity: buildLexicalFallbackEntity(token, config),
   };
+}
+
+function buildLexicalFallbackEntity(token, config) {
+  const id = lexicalEntityId(token, config.language);
+  return {
+    id,
+    label: token,
+    description: `Lexical ${config.language} token`,
+    kind: 'entity',
+    source: SOURCE_KIND.LEXICAL,
+    sourceUrl: lexicalEntityUrl(id),
+    score: 0,
+    wikipediaUrl: null,
+    wikipediaTitle: null,
+    contextLabels: [],
+  };
+}
+
+function lexicalEntityId(text, language) {
+  const normalized = normalizeLabel(text).replace(/\s+/g, '_') || 'token';
+  return `lex:${language}:${normalized}`;
+}
+
+function lexicalEntityUrl(id) {
+  return `${localEntityViewerBaseUrl}#${encodeURIComponent(id)}`;
 }
 
 async function attachEntityDetails(phrase, config) {
@@ -1365,7 +1395,13 @@ function buildLinksNetwork(text, phrases, contexts) {
       id: 'formalize-default',
       name: 'Formalize prototype',
       probabilityStrategy: 'frequency-weighted-context',
-      sourceWeights: { wikidata: 1, wordnet: 0.7, fandom: 0.6, algorithm: 0.5 },
+      sourceWeights: {
+        wikidata: 1,
+        wordnet: 0.7,
+        fandom: 0.6,
+        lexical: 0.5,
+        algorithm: 0.5,
+      },
     },
     links,
   };

@@ -1,0 +1,79 @@
+TAP version 13
+# Subtest: issue 41 - Russian translate fallback
+    # Subtest: translates the reported Russian phrase through lexical glossary entries
+    ok 1 - translates the reported Russian phrase through lexical glossary entries
+      ---
+      duration_ms: 12.098995
+      ...
+    # Subtest: does not translate unrelated full-text search hits as phrase meanings
+    ok 2 - does not translate unrelated full-text search hits as phrase meanings
+      ---
+      duration_ms: 9.432802
+      ...
+    # Subtest: exposes semantic meta language before naturalizing the target text
+    ok 3 - exposes semantic meta language before naturalizing the target text
+      ---
+      duration_ms: 2.682468
+      ...
+    # Subtest: supports ten more Translate examples through reusable glossary naturalization
+    ok 4 - supports ten more Translate examples through reusable glossary naturalization
+      ---
+      duration_ms: 12.212214
+      ...
+    # Subtest: exposes the reported phrase as a Translate sample
+    ok 5 - exposes the reported phrase as a Translate sample
+      ---
+      duration_ms: 6.092883
+      ...
+    1..5
+ok 1 - issue 41 - Russian translate fallback
+  ---
+  duration_ms: 43.888789
+  type: 'suite'
+  ...
+# Subtest: issue 48 - complete formalize -> semantic -> naturalize coverage
+    # Subtest: formalizes and naturalizes every word from issue 45
+    ok 1 - formalizes and naturalizes every word from issue 45
+      ---
+      duration_ms: 12.607545
+      ...
+    # Subtest: keeps issue 45 stable through a round trip
+    ok 2 - keeps issue 45 stable through a round trip
+      ---
+      duration_ms: 8.809581
+      ...
+    # Subtest: formalizes and naturalizes every word from issue 46
+    ok 3 - formalizes and naturalizes every word from issue 46
+      ---
+      duration_ms: 1.405449
+      ...
+    # Subtest: keeps issue 46 stable through a round trip
+    ok 4 - keeps issue 46 stable through a round trip
+      ---
+      duration_ms: 2.062602
+      ...
+    # Subtest: formalizes and naturalizes every word from issue 47
+    ok 5 - formalizes and naturalizes every word from issue 47
+      ---
+      duration_ms: 1.962482
+      ...
+    # Subtest: keeps issue 47 stable through a round trip
+    ok 6 - keeps issue 47 stable through a round trip
+      ---
+      duration_ms: 1.970714
+      ...
+    1..6
+ok 2 - issue 48 - complete formalize -> semantic -> naturalize coverage
+  ---
+  duration_ms: 30.193698
+  type: 'suite'
+  ...
+1..2
+# tests 11
+# suites 2
+# pass 11
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 128.826271
