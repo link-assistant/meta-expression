@@ -114,7 +114,9 @@ function detectChanges() {
   const mjsChanged = changedFiles.some((file) => file.endsWith('.mjs'));
   setOutput('mjs-changed', mjsChanged ? 'true' : 'false');
 
-  const jsChanged = changedFiles.some((file) => file.endsWith('.js'));
+  const jsChanged = changedFiles.some(
+    (file) => file.endsWith('.js') || file.endsWith('.cjs')
+  );
   setOutput('js-changed', jsChanged ? 'true' : 'false');
 
   const rustChanged = changedFiles.some(

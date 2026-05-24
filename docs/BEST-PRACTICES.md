@@ -19,13 +19,15 @@ This template implements the following best practices from the [hive-mind](https
 
 ### 1. File Size Limits
 
-**Maximum of 1500 lines per code file** (enforced via ESLint `max-lines` rule).
+**Maximum of 1500 lines per checked file** (enforced via ESLint and `scripts/check-file-line-limits.sh`).
 
 This constraint benefits both AI and human developers:
 
 - AI models can read and understand entire files within context windows
 - Humans can navigate and comprehend files without cognitive overload
 - Forces modular, well-organized code architecture
+
+The CI gate checks tracked Rust (`.rs`), JavaScript (`.js`, `.mjs`, `.cjs`), and Markdown (`.md`) files. `docs/case-studies/` is exempt because it stores preserved research artifacts and external log data.
 
 ### 2. Automated Code Formatting
 
@@ -124,12 +126,13 @@ Slow test matrix only runs after all fast checks pass. This dramatically reduces
 
 ### 10. File Line Limits in CI
 
-In addition to the ESLint `max-lines` rule (which only covers source files), a separate CI check enforces the 1500-line limit on:
+In addition to the ESLint `max-lines` rule, a separate CI check enforces the 1500-line limit on tracked:
 
-- All `.mjs` files (including scripts)
-- `.github/workflows/release.yml` (to prevent workflow bloat)
+- Rust files (`.rs`)
+- JavaScript files (`.js`, `.mjs`, `.cjs`)
+- Markdown files (`.md`)
 
-This is enforced by `scripts/check-file-line-limits.sh`.
+The checker warns at 1350 lines, fails above 1500 lines, and exempts `docs/case-studies/`.
 
 ### 11. Secrets Detection
 
@@ -143,7 +146,7 @@ Automated scanning for accidental credential leaks using [secretlint](https://gi
 
 Documentation files are validated in CI just like code:
 
-- File size limits (2500 lines for docs)
+- File size limits (1500 lines outside `docs/case-studies/`)
 - Required files check (README.md, CHANGELOG.md, CONTRIBUTING.md, BEST-PRACTICES.md)
 - Only runs when documentation files change
 

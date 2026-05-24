@@ -51,6 +51,7 @@ jobs:
     outputs:
       mjs-changed: ${{ steps.changes.outputs.mjs-changed }}
       js-changed: ${{ steps.changes.outputs.js-changed }}
+      rust-changed: ${{ steps.changes.outputs.rust-changed }}
       package-changed: ${{ steps.changes.outputs.package-changed }}
       docs-changed: ${{ steps.changes.outputs.docs-changed }}
       workflow-changed: ${{ steps.changes.outputs.workflow-changed }}
@@ -83,7 +84,8 @@ jobs:
       - name: Check .mjs syntax
         run: bash scripts/check-mjs-syntax.sh
 
-  # Enforce 1500-line limit on .mjs files and js.yml
+  # Enforce 1500-line limit on tracked Rust, JavaScript, and Markdown files.
+  # docs/case-studies/ is exempt because it contains preserved research data.
   check-file-line-limits:
     name: Check File Line Limits
     runs-on: ubuntu-latest
@@ -93,6 +95,8 @@ jobs:
       github.event_name == 'push' ||
       needs.detect-changes.outputs.mjs-changed == 'true' ||
       needs.detect-changes.outputs.js-changed == 'true' ||
+      needs.detect-changes.outputs.rust-changed == 'true' ||
+      needs.detect-changes.outputs.docs-changed == 'true' ||
       needs.detect-changes.outputs.workflow-changed == 'true'
     steps:
       - uses: actions/checkout@v6
@@ -284,10 +288,11 @@ jobs:
 
       - name: Check documentation file sizes
         run: |
-          LIMIT=2500
+          LIMIT=1500
           FAILURES=()
 
           echo "Checking that documentation files are under ${LIMIT} lines..."
+          echo "Exempt path: docs/case-studies/"
 
           while IFS= read -r -d '' file; do
             line_count=$(wc -l < "$file")
@@ -296,7 +301,7 @@ jobs:
               echo "::error file=$file::Documentation file has $line_count lines (limit: ${LIMIT})"
               FAILURES+=("$file")
             fi
-          done < <(find docs -name "*.md" -type f -print0 2>/dev/null)
+          done < <(find docs -name "*.md" -type f -not -path "docs/case-studies/*" -print0 2>/dev/null)
 
           if [ "${#FAILURES[@]}" -gt 0 ]; then
             echo "The following docs exceed the ${LIMIT} line limit:"

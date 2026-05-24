@@ -12,7 +12,8 @@
 //   render: HTML <a title="Q…">, Markdown [phrase](url "Q…"), Lino payload.
 //
 // Network I/O is cache-injectable. The implementation is split across:
-//   - formalize.js          (this file: pipeline orchestration + rendering)
+//   - formalize.js          (this file: pipeline orchestration)
+//   - formalize-renderers.js (CST rendering helpers)
 //   - formalize-sources.js  (pluggable knowledge-graph sources)
 //   - formalize-contexts.js (big-context aggregation)
 //   - formalize-overrides.js (lazy override layer)
@@ -42,6 +43,14 @@ import {
   extractLinguisticMetadata,
 } from './linguistic-metadata.js';
 import { buildLinksNetwork } from './formalize-links-network.js';
+import {
+  escapeAttribute,
+  escapeHtml,
+  escapeMarkdown,
+  htmlFromFormalizationCst,
+  markdownFromFormalizationCst as renderMarkdownFromFormalizationCst,
+  renderLinksNotation,
+} from './formalize-renderers.js';
 
 const wikidataEntityBaseUrl = 'https://www.wikidata.org/wiki/';
 const wikidataPropertyBaseUrl = 'https://www.wikidata.org/wiki/Property:';
@@ -284,7 +293,7 @@ export async function formalizeTextWith(input, options = {}) {
     flatContexts,
     cst.linguisticMetadata
   );
-  const markdown = markdownFromFormalizationCst(cst);
+  const markdown = renderMarkdownFromFormalizationCst(cst);
   const html = htmlFromFormalizationCst(cst);
   const linksNotation = renderLinksNotation(cst);
 
@@ -331,13 +340,7 @@ export async function formalizeTextWith(input, options = {}) {
  * @returns {string}
  */
 export function markdownFromFormalizationCst(cst) {
-  if (!cst || !Array.isArray(cst.phrases)) {
-    throw new TypeError('Formalization CST must contain a phrases array.');
-  }
-  if (canRenderCstWithSourceText(cst)) {
-    return markdownFromCstSourceText(cst);
-  }
-  return cst.phrases.map((phrase) => markdownFromCstPhrase(phrase)).join(' ');
+  return renderMarkdownFromFormalizationCst(cst);
 }
 
 /**
@@ -1421,137 +1424,6 @@ function buildCstEntity(entity, config) {
       { linkTargetMode: config.linkTargetMode }
     ),
   };
-}
-
-function htmlFromFormalizationCst(cst) {
-  if (canRenderCstWithSourceText(cst)) {
-    return htmlFromCstSourceText(cst);
-  }
-  return cst.phrases.map((phrase) => htmlFromCstPhrase(phrase)).join(' ');
-}
-
-function renderLinksNotation(cst) {
-  const safeText = toLino(cst.text);
-  const head = `(formalization: ${safeText})`;
-  const phraseLines = cst.phrases.map((phrase) => {
-    if (!phrase.entity) {
-      return `(${phrase.id}: source ${toLino(phrase.text)} start ${phrase.start} end ${phrase.end} unresolved)`;
-    }
-    const label = phrase.entity.label ?? phrase.text;
-    return `(${phrase.id}: source ${toLino(phrase.text)} start ${phrase.start} end ${phrase.end} id ${phrase.entity.id} label ${toLino(label)} kind ${phrase.entity.kind ?? 'entity'} markdownUrl ${toLino(phrase.entity.url)})`;
-  });
-  const contextLines = cst.contexts.map((context) => {
-    const probability = (context.probability * 100).toFixed(1);
-    return `(${context.id}: ${context.wikidataId} weight ${context.weight} probability ${probability})`;
-  });
-  const fragmentLines = (cst.linguisticMetadata?.fragments ?? [])
-    .filter(
-      (fragment) => fragment.role !== 'word' && fragment.role !== 'symbol'
-    )
-    .map(
-      (fragment) =>
-        `(${fragment.id}: ${fragment.type} role ${fragment.role} source ${toLino(fragment.text)} start ${fragment.tokenStart} end ${fragment.tokenEnd} phrases ${toLino((fragment.phraseIds ?? []).join(' ') || 'none')})`
-    );
-  const dependencyLines = (cst.linguisticMetadata?.dependencies ?? []).map(
-    (dependency) =>
-      `(${dependency.id}: ${dependency.relation} head ${dependency.headFragmentId} dependent ${dependency.dependentFragmentId})`
-  );
-  const relationLines = (cst.linguisticMetadata?.relations ?? []).map(
-    (relation) =>
-      `(${relation.id}: ${relation.type} subject ${relation.subjectFragmentId} predicate ${relation.predicateFragmentId} object ${relation.objectFragmentId ?? 'none'})`
-  );
-  return [
-    head,
-    ...phraseLines,
-    ...fragmentLines,
-    ...dependencyLines,
-    ...relationLines,
-    ...contextLines,
-  ].join('\n');
-}
-
-function markdownFromCstPhrase(phrase) {
-  if (!phrase.entity) {
-    return phrase.text;
-  }
-  return `[${escapeMarkdown(phrase.text)}](${phrase.entity.url} "${phrase.entity.id}")`;
-}
-
-function canRenderCstWithSourceText(cst) {
-  return (
-    typeof cst.text === 'string' &&
-    cst.phrases.every(
-      (phrase) =>
-        Number.isInteger(phrase.sourceStart) &&
-        Number.isInteger(phrase.sourceEnd) &&
-        phrase.sourceEnd >= phrase.sourceStart
-    )
-  );
-}
-
-function markdownFromCstSourceText(cst) {
-  const phrases = [...cst.phrases].sort(
-    (left, right) => left.sourceStart - right.sourceStart
-  );
-  let cursor = 0;
-  let markdown = '';
-  for (const phrase of phrases) {
-    if (phrase.sourceStart < cursor) {
-      continue;
-    }
-    markdown += cst.text.slice(cursor, phrase.sourceStart);
-    markdown += markdownFromCstPhrase(phrase);
-    cursor = phrase.sourceEnd;
-  }
-  markdown += cst.text.slice(cursor);
-  return markdown;
-}
-
-function htmlFromCstPhrase(phrase) {
-  if (!phrase.entity) {
-    return escapeHtml(phrase.text);
-  }
-  return `<a href="${escapeAttribute(phrase.entity.url)}" title="${escapeAttribute(
-    phrase.entity.id
-  )}">${escapeHtml(phrase.text)}</a>`;
-}
-
-function htmlFromCstSourceText(cst) {
-  const phrases = [...cst.phrases].sort(
-    (left, right) => left.sourceStart - right.sourceStart
-  );
-  let cursor = 0;
-  let html = '';
-  for (const phrase of phrases) {
-    if (phrase.sourceStart < cursor) {
-      continue;
-    }
-    html += escapeHtml(cst.text.slice(cursor, phrase.sourceStart));
-    html += htmlFromCstPhrase(phrase);
-    cursor = phrase.sourceEnd;
-  }
-  html += escapeHtml(cst.text.slice(cursor));
-  return html;
-}
-
-function toLino(value) {
-  return `(${String(value).replace(/[()]/g, ' ').replace(/\s+/g, ' ').trim()})`;
-}
-
-function escapeHtml(value) {
-  return String(value)
-    .replace(/&/g, '&amp;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;')
-    .replace(/"/g, '&quot;');
-}
-
-function escapeAttribute(value) {
-  return escapeHtml(value);
-}
-
-function escapeMarkdown(value) {
-  return String(value).replace(/([\\[\]()`*_])/g, '\\$1');
 }
 
 function normalizeInput(input) {
