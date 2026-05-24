@@ -62,6 +62,11 @@ export {
   parseSourceSpec,
 } from './formalize-sources.js';
 export { translateText, translateTextWith } from './translate.js';
+export {
+  parseFormalAiTranslationPrompt,
+  translateFormalAiPrompt,
+  translateFormalAiPromptWith,
+} from './formal-ai-prompts.js';
 export { applyTranslationQuestionAnswers } from './translation-answers.js';
 export {
   listTranslationStrategies,

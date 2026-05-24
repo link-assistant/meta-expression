@@ -104,6 +104,7 @@ const enRuGlossary = Object.freeze({
   all: 'все',
   also: 'также',
   any: 'любых',
+  apple: 'яблоко',
   as: 'как',
   associative: 'ассоциативное',
   'associative memory storage': 'хранилище ассоциативной памяти',
@@ -112,10 +113,13 @@ const enRuGlossary = Object.freeze({
   automation: 'автоматизация',
   be: 'быть',
   'bot-programmer': 'бот-программист',
+  bread: 'хлеб',
   can: 'могут',
+  carrot: 'морковь',
   change: 'изменять',
   combines: 'объединяет',
   create: 'создавать',
+  cucumber: 'огурец',
   data: 'данные',
   'data and knowledge': 'данные и знания',
   descriptions: 'описания',
@@ -133,6 +137,7 @@ const enRuGlossary = Object.freeze({
   from: 'из',
   goals: 'цели',
   help: 'помочь',
+  hello: 'привет',
   'high-level': 'высокоуровневые',
   human: 'человеческий',
   'human language': 'человеческий язык',
@@ -164,6 +169,7 @@ const enRuGlossary = Object.freeze({
   our: 'нашу',
   platform: 'платформа',
   planned: 'запланирована',
+  potato: 'картофель',
   program: 'программировать',
   programs: 'программы',
   project: 'проект',
@@ -179,10 +185,13 @@ const enRuGlossary = Object.freeze({
   their: 'их',
   themselves: 'себя',
   there: 'там',
+  'thank you': 'спасибо',
   this: 'этот',
   to: 'к',
+  tomato: 'помидор',
   treated: 'рассматриваться',
   universal: 'универсальная',
+  water: 'вода',
   we: 'мы',
   which: 'который',
   will: 'будет',
@@ -217,6 +226,22 @@ const ruEnGlossary = Object.freeze({
   страницу: 'page',
   сохранить: 'save',
   результат: 'result',
+  'как у тебя дела': 'how are you',
+  'как дела': 'how are you',
+  'кто ты такой': 'who are you',
+  'что это такое': 'what is this',
+  'доброе яблоко': 'good apple',
+  спасибо: 'thank you',
+  да: 'yes',
+  нет: 'no',
+  привет: 'hello',
+  яблоко: 'apple',
+  помидор: 'tomato',
+  огурец: 'cucumber',
+  картофель: 'potato',
+  морковь: 'carrot',
+  хлеб: 'bread',
+  вода: 'water',
   'примеры согласования': 'examples of agreement',
   'примеры перевода': 'examples of translation',
   links: 'Links',
@@ -317,8 +342,20 @@ const ruEnGlossary = Object.freeze({
   помочь: 'help',
 });
 
+const enHiGlossary = Object.freeze({
+  apple: 'सेब',
+  hello: 'नमस्ते',
+});
+
+const enZhGlossary = Object.freeze({
+  apple: '苹果',
+  hello: '你好',
+});
+
 const glossaries = Object.freeze({
   'en:ru': enRuGlossary,
+  'en:hi': enHiGlossary,
+  'en:zh': enZhGlossary,
   'ru:en': ruEnGlossary,
 });
 
@@ -353,6 +390,13 @@ export function lookupExactGlossaryTranslation(sourceText, config) {
 function lookupGlossaryTranslationWithMode(sourceText, config, options) {
   if (!translationStrategyUsesGlossary(config.translationStrategy)) {
     return null;
+  }
+  if (config.sourceLanguage === config.targetLanguage) {
+    return {
+      text: String(sourceText ?? ''),
+      target: null,
+      strategy: 'identity',
+    };
   }
   const key = `${config.sourceLanguage}:${config.targetLanguage}`;
   const glossary = glossaries[key];

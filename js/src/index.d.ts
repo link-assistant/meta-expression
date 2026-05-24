@@ -1049,6 +1049,35 @@ export interface TranslateResult {
   steps: TranslationStep[];
 }
 
+export interface FormalAiTranslationPrompt {
+  type: 'translation';
+  sourceText: string;
+  sourceLanguage: string;
+  targetLanguage: string;
+  promptLanguage: string;
+}
+
+export interface FormalAiTranslationPromptResult extends TranslateResult {
+  formalAiPrompt: FormalAiTranslationPrompt;
+  intent: string;
+  answer: string;
+  evidenceLinks: string[];
+}
+
+export declare function parseFormalAiTranslationPrompt(
+  input: string
+): FormalAiTranslationPrompt | null;
+
+export declare function translateFormalAiPrompt(
+  input: string,
+  options?: TranslateOptions
+): Promise<FormalAiTranslationPromptResult>;
+
+export declare function translateFormalAiPromptWith(
+  input: string,
+  options?: TranslateOptions
+): Promise<FormalAiTranslationPromptResult>;
+
 export interface CheckStatementColor {
   hue: number;
   foreground: string;

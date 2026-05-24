@@ -820,6 +820,15 @@ pub fn translate_known_semantic_sentence(
     let target_language = normalize_language_key(target_language);
     let sentence_key = normalize_sentence_key(input);
 
+    if let Some(translation) = translate_formal_ai_phrase_sentence(
+        input,
+        &source_language,
+        &target_language,
+        &sentence_key,
+    ) {
+        return Some(translation);
+    }
+
     if let Some(translation) =
         translate_glossary_semantic_sentence(input, &source_language, &target_language)
     {
@@ -833,6 +842,61 @@ pub fn translate_known_semantic_sentence(
     ) {
         ("en", "ru", "hawaii is a state") => Some(issue35_english_to_russian(input)),
         ("ru", "en", "гавайи это штат") => Some(issue35_russian_to_english(input)),
+        _ => None,
+    }
+}
+
+fn translate_formal_ai_phrase_sentence(
+    input: &str,
+    source_language: &str,
+    target_language: &str,
+    sentence_key: &str,
+) -> Option<SemanticTranslation> {
+    let target =
+        lookup_formal_ai_phrase_translation(source_language, target_language, sentence_key)?;
+    let source_text = input.trim();
+    let source_phrase_text = source_text.trim_end_matches(['.', '!', '?']);
+    let mut target_base = target.to_string();
+    if starts_with_uppercase(source_text) {
+        target_base = uppercase_first(&target_base);
+    }
+    let target_text = append_terminal_punctuation(&target_base, source_text);
+    let target_phrase_text = target_text.trim_end_matches(['.', '!', '?']);
+    let meaning_id = lexical_meaning_id(source_language, sentence_key);
+
+    Some(SemanticTranslation {
+        source_text: source_text.to_string(),
+        source_language: source_language.to_string(),
+        target_language: target_language.to_string(),
+        target_text: target_text.clone(),
+        source_phrases: vec![semantic_phrase_in_text_with_id(
+            source_phrase_text,
+            meaning_id.clone(),
+            source_text,
+            0,
+        )],
+        target_phrases: vec![semantic_phrase_in_text_with_id(
+            target_phrase_text,
+            meaning_id,
+            &target_text,
+            0,
+        )],
+        transformation_steps: vec!["formal-ai-phrase-glossary".to_string()],
+    })
+}
+
+fn lookup_formal_ai_phrase_translation(
+    source_language: &str,
+    target_language: &str,
+    sentence_key: &str,
+) -> Option<&'static str> {
+    match (source_language, target_language, sentence_key) {
+        ("ru", "en", "как у тебя дела") => Some("how are you"),
+        ("ru", "en", "как дела") => Some("how are you"),
+        ("ru", "en", "кто ты такой") => Some("who are you"),
+        ("ru", "en", "что это такое") => Some("what is this"),
+        ("ru", "en", "доброе яблоко") => Some("good apple"),
+        ("en", "ru", "thank you") => Some("спасибо"),
         _ => None,
     }
 }
@@ -869,7 +933,7 @@ pub fn translate_glossary_semantic_sentence(
         });
     }
 
-    let mut transformation_steps = Vec::new();
+    let mut transformation_steps = vec!["lexical-glossary".to_string()];
     if source_language == "ru"
         && target_language == "en"
         && insert_russian_examples_of(&tokens, &mut target_tokens)
@@ -1480,9 +1544,32 @@ fn lookup_lexical_translation(
         ("ru", "en", "страницу") => Some("page"),
         ("ru", "en", "сохранить") => Some("save"),
         ("ru", "en", "результат") => Some("result"),
+        ("ru", "en", "спасибо") => Some("thank you"),
+        ("ru", "en", "да") => Some("yes"),
+        ("ru", "en", "нет") => Some("no"),
+        ("ru", "en", "привет") => Some("hello"),
+        ("ru", "en", "яблоко") => Some("apple"),
+        ("ru", "en", "помидор") => Some("tomato"),
+        ("ru", "en", "огурец") => Some("cucumber"),
+        ("ru", "en", "картофель") => Some("potato"),
+        ("ru", "en", "морковь") => Some("carrot"),
+        ("ru", "en", "хлеб") => Some("bread"),
+        ("ru", "en", "вода") => Some("water"),
         ("en", "ru", "add") => Some("добавьте"),
         ("en", "ru", "example") => Some("пример"),
         ("en", "ru", "examples") => Some("примеры"),
+        ("en", "ru", "hello") => Some("привет"),
+        ("en", "ru", "apple") => Some("яблоко"),
+        ("en", "ru", "tomato") => Some("помидор"),
+        ("en", "ru", "cucumber") => Some("огурец"),
+        ("en", "ru", "potato") => Some("картофель"),
+        ("en", "ru", "carrot") => Some("морковь"),
+        ("en", "ru", "bread") => Some("хлеб"),
+        ("en", "ru", "water") => Some("вода"),
+        ("en", "hi", "hello") => Some("नमस्ते"),
+        ("en", "hi", "apple") => Some("सेब"),
+        ("en", "zh", "hello") => Some("你好"),
+        ("en", "zh", "apple") => Some("苹果"),
         _ => None,
     }
 }

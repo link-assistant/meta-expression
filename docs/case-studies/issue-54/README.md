@@ -11,10 +11,15 @@ translation, naturalization/deformalization, customization hooks, and trace
 metadata.
 
 The issue is intentionally broad. This PR now covers the shared compatibility
-contract with focused tests and code:
+contract with exact upstream corpus tracking plus focused executable tests and
+code:
 
+- A generated fixture records all 706 upstream Formal AI test case identities
+  from 61 test files at the pinned `formal-ai` commit.
 - JavaScript formalization supports configurable rules before and after the
   core formalizer.
+- JavaScript parses and answers Formal AI translation prompts in English,
+  Russian, Hindi, and Chinese using the same translation pipeline.
 - JavaScript formalization publishes deterministic AST/CST linguistic metadata:
   words, symbols, noun phrases, verb phrases, subject, predicate, object, SVO
   relations, dependency-like links, and source span mappings.
@@ -35,13 +40,16 @@ contract with focused tests and code:
   `deformalize_semantic_translation()` alias.
 - Rust also exposes `extract_linguistic_metadata()` with the same deterministic
   baseline categories for Formal AI's Rust-side tests.
+- Rust covers the deterministic Formal AI translation-via-links phrase corpus
+  and common noun translations used by upstream tests.
 
 ## Captured Data
 
 The tracked markdown files in this directory summarize the issue, PR comments,
-formal-ai audit, implementation plan, and verification evidence. If raw GitHub
-captures are regenerated locally, `docs/case-studies/issue-54/data/` remains
-available as an ignored scratch location for large generated artifacts.
+formal-ai audit, implementation plan, exact upstream test corpus, and
+verification evidence. If raw GitHub captures are regenerated locally,
+`docs/case-studies/issue-54/data/` remains available as an ignored scratch
+location for large generated artifacts.
 
 The `formal-ai` repository was studied at:
 
@@ -53,12 +61,14 @@ chore: release v0.107.0
 
 Relevant upstream tests and specifications:
 
-| Area                                       | `formal-ai` reference                                               | Local coverage added                                                            |
-| ------------------------------------------ | ------------------------------------------------------------------- | ------------------------------------------------------------------------------- |
-| Translation via links                      | `tests/unit/specification/translation_via_links.rs`                 | `js/tests/integration/issue-54.test.js`, `rust/tests/unit/issue54_formal_ai.rs` |
-| Natural translation surface                | `issue_230_russian_compositional_translation_handles_search_phrase` | Translation naturalization/deformalization alias assertions                     |
-| Formalize, summarize, deformalize pipeline | `tests/unit/specification/summarization_pipeline.rs`                | Rust naturalize/deformalize alias, JS hook surface, source linguistic metadata  |
-| Traceable symbolic answers                 | `tests/unit/formal_ai.rs`                                           | Hook steps plus linguistic CST/AST relations are recorded with source spans     |
+| Area                                       | `formal-ai` reference                                               | Local coverage added                                                                |
+| ------------------------------------------ | ------------------------------------------------------------------- | ----------------------------------------------------------------------------------- |
+| Exact upstream corpus                      | All `.rs`, `.js`, and `.mjs` files under `tests/`                   | `js/tests/fixtures/formal-ai-test-corpus.json`, `issue-54-formal-ai-corpus.test.js` |
+| Translation via links                      | `tests/unit/specification/translation_via_links.rs`                 | `js/tests/integration/issue-54.test.js`, `rust/tests/unit/issue54_formal_ai.rs`     |
+| Prompt translation regressions             | `issue-210`, `issue-218`, `issue-221`, `issue-230`                  | Formal AI prompt parser plus JS/Rust glossary phrase tests                          |
+| Natural translation surface                | `issue_230_russian_compositional_translation_handles_search_phrase` | Translation naturalization/deformalization alias assertions                         |
+| Formalize, summarize, deformalize pipeline | `tests/unit/specification/summarization_pipeline.rs`                | Rust naturalize/deformalize alias, JS hook surface, source linguistic metadata      |
+| Traceable symbolic answers                 | `tests/unit/formal_ai.rs`                                           | Hook steps plus linguistic CST/AST relations are recorded with source spans         |
 
 ## Implemented Solution
 
@@ -89,7 +99,7 @@ structural categories used by the JS CST.
 Focused checks used during development:
 
 ```bash
-node --test js/tests/integration/issue-54.test.js
+node --test js/tests/integration/issue-54.test.js js/tests/integration/issue-54-linguistic-metadata.test.js js/tests/integration/issue-54-formal-ai-corpus.test.js
 cargo test --manifest-path rust/Cargo.toml --test unit issue54 --verbose
 ```
 
@@ -98,5 +108,6 @@ Full local verification is listed in the PR body after final test runs.
 See also:
 
 - [Requirements](./REQUIREMENTS.md)
+- [Formal AI Test Cases](./FORMAL-AI-TEST-CASES.md)
 - [Solution Plan](./SOLUTION-PLAN.md)
 - [Online Research](./ONLINE-RESEARCH.md)

@@ -30,6 +30,76 @@ fn deformalization_is_alias_for_semantic_translation_naturalization() {
 }
 
 #[test]
+fn formal_ai_translation_via_links_cases_are_supported() {
+    let cases = [
+        ("как у тебя дела?", "ru", "en", "how are you?"),
+        ("Как у тебя дела?", "ru", "en", "How are you?"),
+        ("как дела", "ru", "en", "how are you"),
+        ("кто ты такой", "ru", "en", "who are you"),
+        ("что это такое?", "ru", "en", "what is this?"),
+        ("доброе яблоко", "ru", "en", "good apple"),
+        ("спасибо", "ru", "en", "thank you"),
+        ("привет", "ru", "en", "hello"),
+        ("hello", "en", "ru", "привет"),
+        ("thank you", "en", "ru", "спасибо"),
+        ("hello", "en", "hi", "नमस्ते"),
+        ("hello", "en", "zh", "你好"),
+        ("яблоко", "ru", "en", "apple"),
+        ("apple", "en", "ru", "яблоко"),
+        ("Apple", "en", "ru", "Яблоко"),
+        ("apple", "en", "hi", "सेब"),
+        ("apple", "en", "zh", "苹果"),
+    ];
+
+    for (source, from, to, expected) in cases {
+        let translation = translate_known_semantic_sentence(source, from, to)
+            .unwrap_or_else(|| panic!("expected {source:?} to translate from {from} to {to}"));
+
+        assert_eq!(translation.target_text, expected);
+        assert_eq!(translation.source_language, from);
+        assert_eq!(translation.target_language, to);
+        assert!(
+            translation
+                .transformation_steps
+                .iter()
+                .any(|step| step.contains("glossary")),
+            "translation should record a glossary transformation step: {:?}",
+            translation.transformation_steps
+        );
+    }
+}
+
+#[test]
+fn formal_ai_common_noun_cases_translate_in_both_directions() {
+    let cases = [
+        ("помидор", "tomato"),
+        ("огурец", "cucumber"),
+        ("картофель", "potato"),
+        ("морковь", "carrot"),
+        ("хлеб", "bread"),
+        ("вода", "water"),
+    ];
+
+    for (russian, english) in cases {
+        let ru_to_en = translate_known_semantic_sentence(russian, "ru", "en")
+            .unwrap_or_else(|| panic!("expected {russian:?} to translate to English"));
+        assert_eq!(ru_to_en.target_text, english);
+
+        let en_to_ru = translate_known_semantic_sentence(english, "en", "ru")
+            .unwrap_or_else(|| panic!("expected {english:?} to translate to Russian"));
+        assert_eq!(en_to_ru.target_text, russian);
+    }
+}
+
+#[test]
+fn formal_ai_unknown_translation_gaps_stay_explicitly_unresolved() {
+    assert!(translate_known_semantic_sentence("неведомослово", "ru", "en").is_none());
+    assert!(translate_known_semantic_sentence("zzqxqv", "en", "ru").is_none());
+    assert!(translate_known_semantic_sentence("zzqxqv", "en", "hi").is_none());
+    assert!(translate_known_semantic_sentence("zzqxqv", "en", "zh").is_none());
+}
+
+#[test]
 fn linguistic_metadata_extracts_formal_ai_structural_fragments() {
     let metadata = extract_linguistic_metadata("Moon orbits the Sun.");
 
