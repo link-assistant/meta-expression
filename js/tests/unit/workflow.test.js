@@ -47,6 +47,30 @@ describe('js workflow publishing boundaries', () => {
     expect(release.includes("vars.NPM_PUBLISH_ENABLED == 'true'")).toBe(true);
   });
 
+  it('checks line limits for Rust, JavaScript, and Markdown changes', () => {
+    const detectChanges = getJobBlock(jsWorkflow, 'detect-changes');
+    const lineLimits = getJobBlock(jsWorkflow, 'check-file-line-limits');
+    const validateDocs = getJobBlock(jsWorkflow, 'validate-docs');
+
+    expect(detectChanges.includes('rust-changed:')).toBe(true);
+    expect(lineLimits.includes('needs.detect-changes.outputs.js-changed')).toBe(
+      true
+    );
+    expect(
+      lineLimits.includes('needs.detect-changes.outputs.rust-changed')
+    ).toBe(true);
+    expect(
+      lineLimits.includes('needs.detect-changes.outputs.docs-changed')
+    ).toBe(true);
+    expect(lineLimits.includes('bash scripts/check-file-line-limits.sh')).toBe(
+      true
+    );
+    expect(validateDocs.includes('LIMIT=1500')).toBe(true);
+    expect(validateDocs.includes('-not -path "docs/case-studies/*"')).toBe(
+      true
+    );
+  });
+
   it('runs JavaScript tests only on Bun and Linux', () => {
     const test = getJobBlock(jsWorkflow, 'test');
 

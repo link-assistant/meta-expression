@@ -11,10 +11,9 @@
 //   phrases -> bounded cartesian product -> top-N interpretations
 //   render: HTML <a title="Q…">, Markdown [phrase](url "Q…"), Lino payload.
 //
-// Every link target must carry the Q/P id in the title attribute (issue F6).
-// All network I/O is cache-injectable and fetch-injectable so unit tests
-// don't hit the network. The implementation is split across:
-//   - formalize.js          (this file: pipeline orchestration + rendering)
+// Network I/O is cache-injectable. The implementation is split across:
+//   - formalize.js          (this file: pipeline orchestration)
+//   - formalize-renderers.js (CST rendering helpers)
 //   - formalize-sources.js  (pluggable knowledge-graph sources)
 //   - formalize-contexts.js (big-context aggregation)
 //   - formalize-overrides.js (lazy override layer)
@@ -34,6 +33,24 @@ import {
   overrideToEntity,
 } from './formalize-overrides.js';
 import { lexicalSemanticId, lexicalSemanticUrl } from './lexical-entities.js';
+import {
+  applyObjectTransformationRules,
+  applyTextTransformationRules,
+  collectFormalizationTransformationRules,
+} from './transformation-rules.js';
+import {
+  annotateLinguisticMetadataPhraseRefs,
+  extractLinguisticMetadata,
+} from './linguistic-metadata.js';
+import { buildLinksNetwork } from './formalize-links-network.js';
+import {
+  escapeAttribute,
+  escapeHtml,
+  escapeMarkdown,
+  htmlFromFormalizationCst,
+  markdownFromFormalizationCst as renderMarkdownFromFormalizationCst,
+  renderLinksNotation,
+} from './formalize-renderers.js';
 
 const wikidataEntityBaseUrl = 'https://www.wikidata.org/wiki/';
 const wikidataPropertyBaseUrl = 'https://www.wikidata.org/wiki/Property:';
@@ -220,8 +237,12 @@ export function formalizeText(input, options = {}) {
  * @returns {Promise<object>}
  */
 export async function formalizeTextWith(input, options = {}) {
-  const text = normalizeInput(input);
   const config = createConfig(options);
+  const text = await applyTextTransformationRules(
+    normalizeInput(input),
+    config.beforeFormalizationRules,
+    transformationContext(config, 'before-formalization')
+  );
   const tokenSpans = tokenizeWithSpans(text);
   const tokens = tokenSpans.map((span) => span.token);
   const ngrams = generateNgrams(tokens, config.maxNgramSize, tokenSpans);
@@ -259,7 +280,6 @@ export async function formalizeTextWith(input, options = {}) {
     flatContexts,
     config
   );
-  const linksNetwork = buildLinksNetwork(text, reranked, flatContexts);
   const cst = buildFormalizationCst(
     text,
     tokens,
@@ -267,13 +287,21 @@ export async function formalizeTextWith(input, options = {}) {
     flatContexts,
     config
   );
-  const markdown = markdownFromFormalizationCst(cst);
+  const linksNetwork = buildLinksNetwork(
+    text,
+    reranked,
+    flatContexts,
+    cst.linguisticMetadata
+  );
+  const markdown = renderMarkdownFromFormalizationCst(cst);
   const html = htmlFromFormalizationCst(cst);
   const linksNotation = renderLinksNotation(cst);
 
-  return {
+  let result = {
     text,
     tokens,
+    ast: cst.ast,
+    linguisticMetadata: cst.linguisticMetadata,
     phrases: reranked,
     contexts: flatContexts.all,
     mainContext: flatContexts.main,
@@ -289,7 +317,14 @@ export async function formalizeTextWith(input, options = {}) {
     cst,
     linkTargetMode: config.linkTargetMode,
     sources: config.sources.all.map((source) => source.name),
+    steps: [...config.steps],
   };
+  result = await applyObjectTransformationRules(
+    result,
+    config.afterFormalizationRules,
+    transformationContext(config, 'after-formalization')
+  );
+  return { ...result, steps: [...config.steps] };
 }
 
 /**
@@ -305,13 +340,7 @@ export async function formalizeTextWith(input, options = {}) {
  * @returns {string}
  */
 export function markdownFromFormalizationCst(cst) {
-  if (!cst || !Array.isArray(cst.phrases)) {
-    throw new TypeError('Formalization CST must contain a phrases array.');
-  }
-  if (canRenderCstWithSourceText(cst)) {
-    return markdownFromCstSourceText(cst);
-  }
-  return cst.phrases.map((phrase) => markdownFromCstPhrase(phrase)).join(' ');
+  return renderMarkdownFromFormalizationCst(cst);
 }
 
 /**
@@ -468,8 +497,15 @@ function createConfig(options) {
     sources,
     cache: options.cache ?? new Map(),
     overrides: buildOverrideMap(options.overrides ?? []),
+    trace: options.trace !== false,
+    steps: [],
+    ...collectFormalizationTransformationRules(options),
     ...resolveScalarConfigDefaults(options),
   };
+}
+
+function transformationContext(config, phase) {
+  return { phase, steps: config.steps, trace: config.trace };
 }
 
 function resolveScalarConfigDefaults(options) {
@@ -1288,15 +1324,25 @@ function generateFormalizeInterpretations(phrases, contexts, config) {
 
 function buildFormalizationCst(text, tokens, phrases, contexts, config) {
   const tokenSpans = sourceTokenSpans(text, tokens);
+  const cstPhrases = phrases.map((phrase, index) =>
+    buildCstPhrase(phrase, index, config, tokenSpans)
+  );
+  const linguisticMetadata = annotateLinguisticMetadataPhraseRefs(
+    extractLinguisticMetadata(text, {
+      language: config.language,
+      tokenSpans,
+    }),
+    cstPhrases
+  );
   return {
     type: 'formalization',
     version: 1,
     text,
     tokens: [...tokens],
     linkTargetMode: config.linkTargetMode,
-    phrases: phrases.map((phrase, index) =>
-      buildCstPhrase(phrase, index, config, tokenSpans)
-    ),
+    ast: linguisticMetadata.ast,
+    linguisticMetadata,
+    phrases: cstPhrases,
     contexts: contexts.all.map((context, index) => ({
       id: `context-${index + 1}`,
       wikidataId: context.id,
@@ -1321,6 +1367,8 @@ function buildCstPhrase(phrase, index, config, tokenSpans) {
     sourceStart: firstToken?.start ?? null,
     sourceEnd: lastToken?.end ?? null,
     size: phrase.size,
+    linguisticRole: null,
+    linguisticFragmentIds: [],
     entity: phrase.entity ? buildCstEntity(phrase.entity, config) : null,
     candidates: (phrase.candidates ?? []).map((candidate) =>
       buildCstEntity(candidate, config)
@@ -1334,12 +1382,25 @@ function sourceTokenSpans(text, tokens) {
   for (const token of tokens) {
     const start = text.indexOf(token, cursor);
     if (start === -1) {
-      spans.push({ start: null, end: null });
+      spans.push({
+        token,
+        start: null,
+        end: null,
+        sentenceBoundaryAfter: false,
+      });
       continue;
     }
     const end = start + token.length;
-    spans.push({ start, end });
+    spans.push({ token, start, end, sentenceBoundaryAfter: false });
     cursor = end;
+  }
+  for (let index = 0; index < spans.length - 1; index += 1) {
+    const delimiter = text.slice(spans[index].end, spans[index + 1].start);
+    spans[index].sentenceBoundaryAfter = /[.!?]/.test(delimiter);
+  }
+  if (spans.length > 0) {
+    const tail = text.slice(spans[spans.length - 1].end);
+    spans[spans.length - 1].sentenceBoundaryAfter = /[.!?]/.test(tail);
   }
   return spans;
 }
@@ -1363,204 +1424,6 @@ function buildCstEntity(entity, config) {
       { linkTargetMode: config.linkTargetMode }
     ),
   };
-}
-
-function buildLinksNetwork(text, phrases, contexts) {
-  const inputId = 'formalize-input-1';
-  const links = [
-    {
-      id: inputId,
-      role: 'input',
-      references: [],
-      value: { text },
-      provenance: { sourceType: 'algorithm', method: 'formalize' },
-    },
-  ];
-  phrases.forEach((phrase, index) => {
-    links.push(buildPhraseLink(phrase, index, inputId));
-  });
-  contexts.all.forEach((context, index) => {
-    links.push(buildContextLink(context, index, inputId));
-  });
-  return {
-    id: 'formalize-links-network',
-    kind: 'links-network',
-    version: 1,
-    beliefSystem: {
-      id: 'formalize-default',
-      name: 'Formalize prototype',
-      probabilityStrategy: 'frequency-weighted-context',
-      sourceWeights: {
-        wikidata: 1,
-        wordnet: 0.7,
-        fandom: 0.6,
-        lexical: 0.5,
-        algorithm: 0.5,
-      },
-    },
-    links,
-  };
-}
-
-function buildPhraseLink(phrase, index, inputId) {
-  const entity = phrase.entity ?? null;
-  return {
-    id: `formalize-phrase-${index + 1}`,
-    role: 'phrase',
-    references: [inputId],
-    value: phraseLinkValue(phrase, entity),
-    provenance: phraseLinkProvenance(entity),
-  };
-}
-
-function phraseLinkValue(phrase, entity) {
-  return {
-    text: phrase.text,
-    position: phrase.start,
-    size: phrase.size,
-    wikidataId: entity?.id ?? null,
-    wikidataLabel: entity?.label ?? null,
-    wikidataKind: entity?.kind ?? null,
-    wikipediaUrl: entity?.wikipediaUrl ?? null,
-    source: entity?.source ?? null,
-  };
-}
-
-function phraseLinkProvenance(entity) {
-  if (!entity) {
-    return { sourceType: 'algorithm', sourceUrl: null };
-  }
-  return {
-    sourceType: entity.source ?? 'algorithm',
-    sourceUrl: entity.sourceUrl ?? wikidataPageUrl(entity),
-  };
-}
-
-function buildContextLink(context, index, inputId) {
-  return {
-    id: `formalize-context-${index + 1}`,
-    role: 'context',
-    references: [inputId],
-    value: {
-      wikidataId: context.id,
-      property: context.property,
-      propertyLabel: context.propertyLabel,
-      weight: context.weight,
-      probability: context.probability,
-    },
-    provenance: {
-      sourceType: 'wikidata',
-      sourceUrl: `${wikidataEntityBaseUrl}${context.id}`,
-    },
-  };
-}
-
-function htmlFromFormalizationCst(cst) {
-  if (canRenderCstWithSourceText(cst)) {
-    return htmlFromCstSourceText(cst);
-  }
-  return cst.phrases.map((phrase) => htmlFromCstPhrase(phrase)).join(' ');
-}
-
-function renderLinksNotation(cst) {
-  const safeText = toLino(cst.text);
-  const head = `(formalization: ${safeText})`;
-  const phraseLines = cst.phrases.map((phrase) => {
-    if (!phrase.entity) {
-      return `(${phrase.id}: source ${toLino(phrase.text)} start ${phrase.start} end ${phrase.end} unresolved)`;
-    }
-    const label = phrase.entity.label ?? phrase.text;
-    return `(${phrase.id}: source ${toLino(phrase.text)} start ${phrase.start} end ${phrase.end} id ${phrase.entity.id} label ${toLino(label)} kind ${phrase.entity.kind ?? 'entity'} markdownUrl ${toLino(phrase.entity.url)})`;
-  });
-  const contextLines = cst.contexts.map((context) => {
-    const probability = (context.probability * 100).toFixed(1);
-    return `(${context.id}: ${context.wikidataId} weight ${context.weight} probability ${probability})`;
-  });
-  return [head, ...phraseLines, ...contextLines].join('\n');
-}
-
-function markdownFromCstPhrase(phrase) {
-  if (!phrase.entity) {
-    return phrase.text;
-  }
-  return `[${escapeMarkdown(phrase.text)}](${phrase.entity.url} "${phrase.entity.id}")`;
-}
-
-function canRenderCstWithSourceText(cst) {
-  return (
-    typeof cst.text === 'string' &&
-    cst.phrases.every(
-      (phrase) =>
-        Number.isInteger(phrase.sourceStart) &&
-        Number.isInteger(phrase.sourceEnd) &&
-        phrase.sourceEnd >= phrase.sourceStart
-    )
-  );
-}
-
-function markdownFromCstSourceText(cst) {
-  const phrases = [...cst.phrases].sort(
-    (left, right) => left.sourceStart - right.sourceStart
-  );
-  let cursor = 0;
-  let markdown = '';
-  for (const phrase of phrases) {
-    if (phrase.sourceStart < cursor) {
-      continue;
-    }
-    markdown += cst.text.slice(cursor, phrase.sourceStart);
-    markdown += markdownFromCstPhrase(phrase);
-    cursor = phrase.sourceEnd;
-  }
-  markdown += cst.text.slice(cursor);
-  return markdown;
-}
-
-function htmlFromCstPhrase(phrase) {
-  if (!phrase.entity) {
-    return escapeHtml(phrase.text);
-  }
-  return `<a href="${escapeAttribute(phrase.entity.url)}" title="${escapeAttribute(
-    phrase.entity.id
-  )}">${escapeHtml(phrase.text)}</a>`;
-}
-
-function htmlFromCstSourceText(cst) {
-  const phrases = [...cst.phrases].sort(
-    (left, right) => left.sourceStart - right.sourceStart
-  );
-  let cursor = 0;
-  let html = '';
-  for (const phrase of phrases) {
-    if (phrase.sourceStart < cursor) {
-      continue;
-    }
-    html += escapeHtml(cst.text.slice(cursor, phrase.sourceStart));
-    html += htmlFromCstPhrase(phrase);
-    cursor = phrase.sourceEnd;
-  }
-  html += escapeHtml(cst.text.slice(cursor));
-  return html;
-}
-
-function toLino(value) {
-  return `(${String(value).replace(/[()]/g, ' ').replace(/\s+/g, ' ').trim()})`;
-}
-
-function escapeHtml(value) {
-  return String(value)
-    .replace(/&/g, '&amp;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;')
-    .replace(/"/g, '&quot;');
-}
-
-function escapeAttribute(value) {
-  return escapeHtml(value);
-}
-
-function escapeMarkdown(value) {
-  return String(value).replace(/([\\[\]()`*_])/g, '\\$1');
 }
 
 function normalizeInput(input) {

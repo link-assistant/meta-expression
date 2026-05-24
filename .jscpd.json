@@ -10,6 +10,7 @@
     "**/*.min.js",
     "**/coverage/**",
     "**/docs/case-studies/*/data/**",
+    "**/js/tests/fixtures/formal-ai-test-corpus.json",
     "**/.changeset/**",
     "**/package-lock.json",
     "**/pnpm-lock.yaml",

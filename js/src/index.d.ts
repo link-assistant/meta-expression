@@ -536,6 +536,73 @@ export interface FormalizePhraseEntity {
   }>;
 }
 
+export interface LinguisticFragment {
+  id: string;
+  type:
+    | 'word'
+    | 'symbol'
+    | 'noun-phrase'
+    | 'verb-phrase'
+    | 'subject'
+    | 'predicate'
+    | 'object'
+    | string;
+  role: string;
+  text: string;
+  tokens: string[];
+  tokenStart: number | null;
+  tokenEnd: number | null;
+  sourceStart: number | null;
+  sourceEnd: number | null;
+  phraseIds: string[];
+}
+
+export interface LinguisticDependency {
+  id: string;
+  relation: 'nsubj' | 'root' | 'obj' | string;
+  headFragmentId: string;
+  dependentFragmentId: string;
+  source: string;
+}
+
+export interface LinguisticRelation {
+  id: string;
+  type: 'subject-predicate-object' | 'subject-predicate' | string;
+  subjectFragmentId: string;
+  predicateFragmentId: string;
+  objectFragmentId: string | null;
+  text: string;
+  sourceStart: number;
+  sourceEnd: number;
+}
+
+export interface LinguisticAstNode {
+  type: string;
+  id?: string;
+  version?: number;
+  text: string;
+  body?: LinguisticAstNode[];
+  tokenStart?: number;
+  tokenEnd?: number;
+  sourceStart?: number;
+  sourceEnd?: number;
+  subject?: Record<string, unknown> | null;
+  predicate?: Record<string, unknown> | null;
+  object?: Record<string, unknown> | null;
+  relationId?: string | null;
+  dependencyIds?: string[];
+}
+
+export interface LinguisticMetadata {
+  version: number;
+  language: string;
+  text: string;
+  fragments: LinguisticFragment[];
+  dependencies: LinguisticDependency[];
+  relations: LinguisticRelation[];
+  ast: LinguisticAstNode;
+}
+
 export interface FormalizePhrase {
   text: string;
   tokens: string[];
@@ -553,6 +620,35 @@ export interface FormalizeContext {
   weight: number;
   probability: number;
   phrases: Array<{ text: string; entityId: string }>;
+}
+
+export type TransformationRule =
+  | {
+      id?: string;
+      pattern: string | RegExp;
+      replacement?: string;
+      flags?: string;
+    }
+  | {
+      id?: string;
+      assign: Record<string, unknown>;
+    }
+  | {
+      id?: string;
+      apply(
+        value: unknown,
+        context: TransformationContext
+      ): unknown | Promise<unknown>;
+    }
+  | ((
+      value: unknown,
+      context: TransformationContext
+    ) => unknown | Promise<unknown>);
+
+export interface TransformationContext {
+  phase: string;
+  steps: TranslationStep[];
+  trace?: boolean;
 }
 
 export interface FormalizeInterpretation {
@@ -601,6 +697,8 @@ export interface FormalizationCstPhrase {
   sourceStart: number | null;
   sourceEnd: number | null;
   size: number;
+  linguisticRole: string | null;
+  linguisticFragmentIds: string[];
   entity: FormalizationCstEntity | null;
   candidates: FormalizationCstCandidate[];
 }
@@ -611,6 +709,8 @@ export interface FormalizationCst {
   text: string;
   tokens: string[];
   linkTargetMode: FormalizeLinkTargetMode;
+  ast: LinguisticAstNode;
+  linguisticMetadata: LinguisticMetadata;
   phrases: FormalizationCstPhrase[];
   contexts: FormalizeContext[];
 }
@@ -628,11 +728,17 @@ export interface FormalizeOptions {
   linkTargetMode?: FormalizeLinkTargetMode;
   contextLens?: string | { id: string } | null;
   language?: string;
+  beforeFormalizationRules?: TransformationRule | TransformationRule[];
+  preFormalizationRules?: TransformationRule | TransformationRule[];
+  afterFormalizationRules?: TransformationRule | TransformationRule[];
+  postFormalizationRules?: TransformationRule | TransformationRule[];
 }
 
 export interface FormalizeResult {
   text: string;
   tokens: string[];
+  ast: LinguisticAstNode;
+  linguisticMetadata: LinguisticMetadata;
   phrases: FormalizePhrase[];
   contexts: FormalizeContext[];
   mainContext: FormalizeContext | null;
@@ -644,6 +750,7 @@ export interface FormalizeResult {
   cst: FormalizationCst;
   linksNetwork: LinksNetwork;
   linkTargetMode: FormalizeLinkTargetMode;
+  steps: TranslationStep[];
 }
 
 export declare function formalizeText(
@@ -660,6 +767,18 @@ export declare function markdownFromFormalizationCst(
   cst: FormalizationCst
 ): string;
 
+export declare function extractLinguisticMetadata(
+  input: string,
+  options?: {
+    language?: string;
+    tokenSpans?: Array<Record<string, unknown>>;
+  }
+): LinguisticMetadata;
+
+export declare function annotateLinguisticMetadataPhraseRefs<
+  T extends { start: number; end: number; id: string },
+>(metadata: LinguisticMetadata, phrases: T[]): LinguisticMetadata;
+
 export interface TranslateOptions extends FormalizeOptions {
   sourceLanguage?: string;
   targetLanguage?: string;
@@ -667,6 +786,20 @@ export interface TranslateOptions extends FormalizeOptions {
   to?: string;
   translationStrategy?: TranslationStrategyId;
   strategy?: TranslationStrategyId;
+  beforeTranslationRules?: TransformationRule | TransformationRule[];
+  preTranslationRules?: TransformationRule | TransformationRule[];
+  afterTranslationRules?: TransformationRule | TransformationRule[];
+  postTranslationRules?: TransformationRule | TransformationRule[];
+  beforeNaturalizationRules?: TransformationRule | TransformationRule[];
+  preNaturalizationRules?: TransformationRule | TransformationRule[];
+  naturalizationRules?: TransformationRule | TransformationRule[];
+  afterNaturalizationRules?: TransformationRule | TransformationRule[];
+  postNaturalizationRules?: TransformationRule | TransformationRule[];
+  beforeDeformalizationRules?: TransformationRule | TransformationRule[];
+  preDeformalizationRules?: TransformationRule | TransformationRule[];
+  deformalizationRules?: TransformationRule | TransformationRule[];
+  afterDeformalizationRules?: TransformationRule | TransformationRule[];
+  postDeformalizationRules?: TransformationRule | TransformationRule[];
 }
 
 export type TranslationStrategyId =
@@ -807,6 +940,11 @@ export interface SemanticMetaLanguageLink {
   tokenStart: number;
   tokenEnd: number;
   sourceLanguage: string;
+  sourceFragment: {
+    phraseId: string;
+    role: string | null;
+    fragmentIds: string[];
+  } | null;
   meaning: {
     id: string | null;
     label: string | null;
@@ -883,6 +1021,7 @@ export interface TranslationCst {
   formalization: FormalizationCst;
   semanticMetaLanguage: SemanticMetaLanguage;
   naturalization: TranslationNaturalization;
+  deformalization: TranslationNaturalization;
   phrases: TranslationPhrase[];
   variables: TranslationVariable[];
   sentences: TranslationCstSentence[];
@@ -896,6 +1035,7 @@ export interface TranslateResult {
   formalization: FormalizeResult;
   semanticMetaLanguage: SemanticMetaLanguage;
   naturalization: TranslationNaturalization;
+  deformalization: TranslationNaturalization;
   cst: TranslationCst;
   phrases: TranslationPhrase[];
   sentences: TranslationSentence[];
@@ -908,6 +1048,35 @@ export interface TranslateResult {
   questionDetails: TranslationQuestion[];
   steps: TranslationStep[];
 }
+
+export interface FormalAiTranslationPrompt {
+  type: 'translation';
+  sourceText: string;
+  sourceLanguage: string;
+  targetLanguage: string;
+  promptLanguage: string;
+}
+
+export interface FormalAiTranslationPromptResult extends TranslateResult {
+  formalAiPrompt: FormalAiTranslationPrompt;
+  intent: string;
+  answer: string;
+  evidenceLinks: string[];
+}
+
+export declare function parseFormalAiTranslationPrompt(
+  input: string
+): FormalAiTranslationPrompt | null;
+
+export declare function translateFormalAiPrompt(
+  input: string,
+  options?: TranslateOptions
+): Promise<FormalAiTranslationPromptResult>;
+
+export declare function translateFormalAiPromptWith(
+  input: string,
+  options?: TranslateOptions
+): Promise<FormalAiTranslationPromptResult>;
 
 export interface CheckStatementColor {
   hue: number;

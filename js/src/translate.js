@@ -7,6 +7,24 @@ import {
 } from './translation-strategies.js';
 import { buildLexicalTarget, lexicalSemanticId } from './lexical-entities.js';
 import { createTargetEntityBatchLoader } from './target-entity-loader.js';
+import {
+  applyObjectTransformationRules,
+  applySentenceTextTransformationRules,
+  applyTextTransformationRules,
+  collectTranslationTransformationRules,
+} from './transformation-rules.js';
+import { buildSemanticSourceFragment } from './translation-source-fragment.js';
+import {
+  escapeAttribute,
+  escapeHtml,
+  escapeMarkdown,
+  renderNaturalizationLinksNotation,
+  renderPhraseHtml,
+  renderPhraseMarkdown,
+  renderSemanticMetaLanguageLinksNotation,
+  renderSentenceOutput,
+  renderTranslationLinksNotation,
+} from './translation-renderers.js';
 
 const wikidataEntityBaseUrl = 'https://www.wikidata.org/wiki/';
 const wikidataPropertyBaseUrl = 'https://www.wikidata.org/wiki/Property:';
@@ -24,13 +42,6 @@ const russianEtoCopula = Object.freeze({
   description: 'Russian demonstrative/copula-like predicate marker',
 });
 
-/**
- * Deterministic convenience wrapper for `translateTextWith()`.
- *
- * @param {string} input
- * @param {object} [options]
- * @returns {Promise<object>}
- */
 export function translateText(input, options = {}) {
   return translateTextWith(input, {
     fetch: null,
@@ -40,33 +51,19 @@ export function translateText(input, options = {}) {
   });
 }
 
-/**
- * Translate text by first formalizing source phrases, then replacing every
- * resolved Wikidata Q/P phrase with its target-language label.
- *
- * Unresolved source phrases, non-Wikidata sources, and entities that lack a
- * target-language label are preserved as variables with explicit questions.
- * This keeps the output traceable instead of pretending every token was
- * understood.
- *
- * @param {string} input
- * @param {object} [options]
- * @param {string} [options.sourceLanguage]
- * @param {string} [options.targetLanguage]
- * @param {Function|null} [options.fetch]
- * @param {Map<string,unknown>|null} [options.cache]
- * @param {number} [options.cacheTtlMs]
- * @param {Function} [options.now]
- * @returns {Promise<object>}
- */
 export async function translateTextWith(input, options = {}) {
   const config = createTranslateConfig(options);
+  const sourceText = await applyTextTransformationRules(
+    input,
+    config.beforeTranslationRules,
+    transformationContext(config, 'before-translation')
+  );
   recordStep(config, 'input', {
     sourceLanguage: config.sourceLanguage,
     targetLanguage: config.targetLanguage,
-    text: input,
+    text: sourceText,
   });
-  const formalization = await formalizeTextWith(input, {
+  const formalization = await formalizeTextWith(sourceText, {
     ...options,
     fetch: config.fetchImpl,
     cache: config.cache,
@@ -93,7 +90,11 @@ export async function translateTextWith(input, options = {}) {
       variables.push(translated.variable);
     }
   }
-  const sentences = buildTranslatedSentences(formalization, phrases, config);
+  const sentences = await applySentenceTextTransformationRules(
+    buildTranslatedSentences(formalization, phrases, config),
+    config.beforeNaturalizationRules,
+    transformationContext(config, 'before-naturalization')
+  );
   const resolvedVariableNames = new Set(
     sentences.flatMap((sentence) => sentence.resolvedVariableNames)
   );
@@ -110,15 +111,21 @@ export async function translateTextWith(input, options = {}) {
   );
   const questionDetails = questions;
   const questionTexts = questionDetails.map((question) => question.question);
-  const plainText = renderSentenceOutput(sentences, 'plainText', phrases);
-  const markdown = renderSentenceOutput(sentences, 'markdown', phrases);
-  const html = renderSentenceOutput(sentences, 'html', phrases);
-  const naturalization = buildNaturalization(
+  let naturalization = buildNaturalization(
     semanticMetaLanguage,
     phrases,
     sentences,
     config
   );
+  naturalization = await applyObjectTransformationRules(
+    naturalization,
+    config.afterNaturalizationRules,
+    transformationContext(config, 'after-naturalization')
+  );
+  naturalization = refreshNaturalizationLinksNotation(naturalization);
+  const plainText = naturalization.targetText;
+  const markdown = naturalization.targetMarkdown;
+  const html = naturalization.targetHtml;
   recordStep(config, 'text', {
     sentenceCount: sentences.length,
     text: plainText,
@@ -132,13 +139,14 @@ export async function translateTextWith(input, options = {}) {
     sentences,
     config,
   });
-  return {
+  let result = {
     text: formalization.text,
     sourceLanguage: config.sourceLanguage,
     targetLanguage: config.targetLanguage,
     formalization,
     semanticMetaLanguage,
     naturalization,
+    deformalization: naturalization,
     cst,
     phrases,
     sentences,
@@ -151,6 +159,12 @@ export async function translateTextWith(input, options = {}) {
     questionDetails,
     steps: [...config.steps],
   };
+  result = await applyObjectTransformationRules(
+    result,
+    config.afterTranslationRules,
+    transformationContext(config, 'after-translation')
+  );
+  return { ...result, steps: [...config.steps] };
 }
 
 function createTranslateConfig(options) {
@@ -175,6 +189,7 @@ function createTranslateConfig(options) {
     translationStrategy: normalizeTranslationStrategy(
       options.translationStrategy ?? options.strategy
     ),
+    ...collectTranslationTransformationRules(options),
     targetEntityLoader: createTargetEntityBatchLoader({
       onCacheHit: (config, cachedUrl) =>
         recordStep(config, 'api-cache-hit', { url: cachedUrl }),
@@ -184,6 +199,10 @@ function createTranslateConfig(options) {
     ? (url, init) => traceFetch(url, init, config)
     : null;
   return config;
+}
+
+function transformationContext(config, phase) {
+  return { phase, steps: config.steps, trace: config.trace };
 }
 
 function defaultTargetLanguage(sourceLanguage) {
@@ -228,6 +247,7 @@ function buildSemanticLink(phrase, index, config) {
     tokenStart: phrase.start,
     tokenEnd: phrase.end,
     sourceLanguage: config.sourceLanguage,
+    sourceFragment: buildSemanticSourceFragment(phrase),
     meaning: buildSemanticMeaning(phrase, entity, glossaryTranslation, config),
     targetHint: glossaryTranslation?.text ?? null,
     status: semanticLinkStatus(entity, glossaryTranslation),
@@ -631,6 +651,13 @@ function buildNaturalization(semanticMetaLanguage, phrases, sentences, config) {
   };
 }
 
+function refreshNaturalizationLinksNotation(naturalization) {
+  return {
+    ...naturalization,
+    linksNotation: renderNaturalizationLinksNotation(naturalization),
+  };
+}
+
 function buildTranslationCst({
   formalization,
   semanticMetaLanguage,
@@ -649,6 +676,7 @@ function buildTranslationCst({
     formalization: formalization.cst,
     semanticMetaLanguage,
     naturalization,
+    deformalization: naturalization,
     phrases,
     variables,
     sentences: sentences.map((sentence) => ({
@@ -1408,120 +1436,6 @@ function appendTerminalPunctuation(value, punctuation) {
   return `${text}${punctuation}`;
 }
 
-function renderSentenceOutput(sentences, key, fallbackPhrases) {
-  if (!sentences.length) {
-    return fallbackPhrases.map((phrase) => phrase.target.text).join(' ');
-  }
-  return sentences.map((sentence) => sentence[key]).join(' ');
-}
-
-function renderPhraseMarkdown(phrase) {
-  const targetEntityId = phrase.target.entityId ?? phrase.entityId;
-  if (!targetEntityId || !phrase.target.url) {
-    return phrase.target.text;
-  }
-  return `[${escapeMarkdown(phrase.target.text)}](${phrase.target.url} "${targetEntityId}")`;
-}
-
-function renderPhraseHtml(phrase) {
-  const targetEntityId = phrase.target.entityId ?? phrase.entityId;
-  if (!targetEntityId || !phrase.target.url) {
-    return escapeHtml(phrase.target.text);
-  }
-  return `<a href="${escapeAttribute(phrase.target.url)}" title="${escapeAttribute(
-    targetEntityId
-  )}">${escapeHtml(phrase.target.text)}</a>`;
-}
-
-function renderTranslationLinksNotation(cst, questions) {
-  const head = `(translation: ${toLino(cst.text)} from ${cst.sourceLanguage} to ${cst.targetLanguage})`;
-  const semantic = cst.semanticMetaLanguage?.linksNotation
-    ? [cst.semanticMetaLanguage.linksNotation]
-    : [];
-  const naturalization = cst.naturalization?.linksNotation
-    ? [cst.naturalization.linksNotation]
-    : [];
-  const sentences = cst.sentences.map(
-    (sentence) =>
-      `(${sentence.id}: source ${toLino(sentence.sourceText)} target ${toLino(sentence.targetText)} transformations ${toLino(sentence.transformations.join(', ') || 'none')})`
-  );
-  const phrases = cst.phrases.map((phrase, index) => {
-    const id = phrase.entityId ? ` id ${phrase.entityId}` : '';
-    const targetId =
-      phrase.target.entityId && phrase.target.entityId !== phrase.entityId
-        ? ` targetId ${phrase.target.entityId}`
-        : '';
-    const variable = phrase.variable?.name
-      ? ` variable ${phrase.variable.name}`
-      : '';
-    const url = phrase.target.url
-      ? ` markdownUrl ${toLino(phrase.target.url)}`
-      : '';
-    return `(phrase-${index + 1}: source ${toLino(phrase.source.text)} target ${toLino(phrase.target.text)} status ${phrase.target.status}${id}${targetId}${variable}${url})`;
-  });
-  const variables = cst.variables.map(
-    (variable) =>
-      `(${variable.name}: source ${toLino(variable.sourceText)} reason ${variable.reason})`
-  );
-  const questionLines = questions.map(
-    (question, index) => `(question-${index + 1}: ${toLino(question)})`
-  );
-  const steps = cst.steps.map(
-    (step) => `(${step.id}: type ${step.type} ${toLino(stepSummary(step))})`
-  );
-  return [
-    head,
-    ...semantic,
-    ...naturalization,
-    ...sentences,
-    ...phrases,
-    ...variables,
-    ...questionLines,
-    ...steps,
-  ].join('\n');
-}
-
-function renderSemanticMetaLanguageLinksNotation(semantic) {
-  const head = `(semantic-meta-language: ${toLino(semantic.text)} from ${semantic.sourceLanguage} to ${semantic.targetLanguage})`;
-  const links = semantic.links.map((link) => {
-    const meaning = link.meaning.id
-      ? ` meaning ${toLino(link.meaning.id)}`
-      : '';
-    const label = link.meaning.label
-      ? ` label ${toLino(link.meaning.label)}`
-      : '';
-    const target = link.targetHint
-      ? ` targetHint ${toLino(link.targetHint)}`
-      : '';
-    const url = link.meaning.url ? ` url ${toLino(link.meaning.url)}` : '';
-    return `(${link.id}: source ${toLino(link.sourceText)} status ${link.status}${meaning}${label}${target}${url})`;
-  });
-  return [head, ...links].join('\n');
-}
-
-function renderNaturalizationLinksNotation(naturalization) {
-  const head = `(naturalization: target ${toLino(naturalization.targetText)} language ${naturalization.targetLanguage})`;
-  const sentences = naturalization.sentences.map(
-    (sentence) =>
-      `(${sentence.id}: semanticLinks ${toLino(sentence.semanticLinkIds.join(' '))} target ${toLino(sentence.targetText)} transformations ${toLino(sentence.transformations.join(', ') || 'none')})`
-  );
-  const targetUnits = naturalization.sentences.flatMap((sentence) =>
-    sentence.targetUnits.map((unit) => {
-      const semantic = unit.semanticLinkId
-        ? ` semanticLink ${unit.semanticLinkId}`
-        : '';
-      const entity = unit.targetEntityId
-        ? ` targetId ${unit.targetEntityId}`
-        : '';
-      const url = unit.targetUrl
-        ? ` markdownUrl ${toLino(unit.targetUrl)}`
-        : '';
-      return `(${unit.id}: target ${toLino(unit.targetText)}${semantic}${entity}${url})`;
-    })
-  );
-  return [head, ...sentences, ...targetUnits].join('\n');
-}
-
 function recordPhraseStep(phrase, config) {
   recordStep(config, 'translation-phrase', {
     phraseId: phrase.id,
@@ -1542,46 +1456,4 @@ function recordStep(config, type, details) {
     type,
     ...details,
   });
-}
-
-function stepSummary(step) {
-  if (step.rule) {
-    return step.rule;
-  }
-  if (step.url) {
-    return step.url;
-  }
-  if (step.sentenceId) {
-    return step.sentenceId;
-  }
-  if (step.phraseId) {
-    return step.phraseId;
-  }
-  if (step.text) {
-    return step.text;
-  }
-  return step.type;
-}
-
-function toLino(value) {
-  return `(${String(value ?? '')
-    .replace(/[()]/g, ' ')
-    .replace(/\s+/g, ' ')
-    .trim()})`;
-}
-
-function escapeHtml(value) {
-  return String(value)
-    .replace(/&/g, '&amp;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;')
-    .replace(/"/g, '&quot;');
-}
-
-function escapeAttribute(value) {
-  return escapeHtml(value);
-}
-
-function escapeMarkdown(value) {
-  return String(value).replace(/([\\[\]()`*_])/g, '\\$1');
 }

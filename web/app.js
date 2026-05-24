@@ -56,6 +56,7 @@ import { setupComparePage } from './compare-ui.js';
 import { setupCheckPage } from './check-ui.js';
 import { setupUniquenessPage } from './uniqueness-ui.js';
 import { setupTranslatePage } from './translate-ui.js';
+import { setupNavigation } from './navigation.js';
 
 const beliefStorageKey = 'meta-expression.user-beliefs.v1';
 const wikimediaCacheStorageKey = 'meta-expression.wikimedia-cache.v1';
@@ -756,37 +757,16 @@ const pageElements = {
   preferences: pagePreferences,
 };
 const pageAliases = { 'fact-check': 'check', uniquness: 'uniqueness' };
-
-function showPage(pageId) {
-  const normalized = pageAliases[pageId] ?? pageId;
-  const known = pageElements[normalized] ? normalized : 'analyse';
-  for (const [id, element] of Object.entries(pageElements)) {
-    element.hidden = id !== known;
-  }
-  for (const [id, button] of Object.entries(navButtons)) {
-    const active = id === known;
-    button.setAttribute('aria-current', active ? 'page' : 'false');
-    button.classList.toggle('active', active);
-  }
-  if (known === 'compare') {
-    comparePage.seedCompareRows();
-  }
-  globalThis.location.hash = `#/${known}`;
-}
-
-function pageFromHash() {
-  const fragment = globalThis.location.hash.replace('#/', '');
-  return pageElements[fragment] || pageAliases[fragment] ? fragment : 'analyse';
-}
-
-navAnalyse.addEventListener('click', () => showPage('analyse'));
-navCompare.addEventListener('click', () => showPage('compare'));
-navCheck.addEventListener('click', () => showPage('check'));
-navUniqueness.addEventListener('click', () => showPage('uniqueness'));
-navFormalize.addEventListener('click', () => showPage('formalize'));
-navTranslate.addEventListener('click', () => showPage('translate'));
-navPreferences.addEventListener('click', () => showPage('preferences'));
-globalThis.addEventListener('hashchange', () => showPage(pageFromHash()));
+const { showPage, pageFromHash } = setupNavigation({
+  navButtons,
+  pageElements,
+  pageAliases,
+  onShow(pageId) {
+    if (pageId === 'compare') {
+      comparePage.seedCompareRows();
+    }
+  },
+});
 setupPageIssueReporting({
   getPageId: pageFromHash,
   getAnalysis: () => currentAnalysis,

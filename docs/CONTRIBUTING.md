@@ -15,9 +15,11 @@
 
 ### File Size Limits
 
-**Maximum 1500 lines per file** (enforced via ESLint `max-lines` rule and CI `check-file-line-limits` job).
+**Maximum 1500 lines per checked file** (enforced via ESLint `max-lines` and the CI `check-file-line-limits` job).
 
 This benefits both AI and human developers by ensuring files remain readable and maintainable.
+
+The line-limit gate checks tracked Rust (`.rs`), JavaScript (`.js`, `.mjs`, `.cjs`), and Markdown (`.md`) files. It warns at 1350 lines, fails above 1500 lines, and exempts `docs/case-studies/` because that folder stores preserved research artifacts.
 
 ### Formatting and Linting
 
