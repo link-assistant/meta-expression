@@ -27,31 +27,38 @@ Legend: **done** · **partial** · **not started**.
 
 ## Vision pillars
 
-| Pillar                         | Req                   | Status      | Where it stands today                                                                                                  | Plan / tracking issue                                   |
-| ------------------------------ | --------------------- | ----------- | ---------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------- |
-| Formalize **any** text         | R10, R45, R51, R58.10 | partial     | Fixture/keyword-driven (`knownRealWorldClaims`); arbitrary text falls back to partial/unknown; AST/CST baseline exists | Generalize the formalizer → epic #58 (foundation issue) |
-| Transform formal expressions   | R52, R58.11           | partial     | Function/object/declarative hooks with trace steps; no general rewrite engine                                          | Links Notation rewrite engine → epic #58                |
-| Naturalize (deformalize)       | R50, R53, R58.12      | partial     | `naturalization` + `deformalization` alias + CST over a rule-table slice                                               | Generalize to arbitrary expressions → epic #58          |
-| Reason about any statement     | R23, R25, R58.13      | partial     | Arithmetic + template inference + self-reference; no entailment/contradiction engine                                   | Reasoning engine via RML → epic #58                     |
-| Calculate probability          | R17, R18, R58.14      | partial     | Weighted evidence → bounded `correctness`/`signedConfidence`                                                           | Reproducible probability via RML → epic #58             |
-| Full computability             | R8, R14, R58.15       | not started | Arithmetic-only evaluator (`evaluateArithmeticExpression`)                                                             | Integrate `relative-meta-logic` → epic #58 (umbrella)   |
-| Extract all reasoning metadata | R51, R58.16           | partial     | Parser-free AST/CST + dependency baseline; roles/provenance/versions incomplete                                        | Complete metadata → epic #58                            |
+| Pillar                         | Req                   | Status      | Where it stands today                                                                                                  | Plan / tracking issue                            |
+| ------------------------------ | --------------------- | ----------- | ---------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------ |
+| Formalize **any** text         | R10, R45, R51, R58.10 | partial     | Fixture/keyword-driven (`knownRealWorldClaims`); arbitrary text falls back to partial/unknown; AST/CST baseline exists | Generalize the formalizer → #64                  |
+| Transform formal expressions   | R52, R58.11           | partial     | Function/object/declarative hooks with trace steps; no general rewrite engine                                          | Links Notation rewrite engine → #65              |
+| Naturalize (deformalize)       | R50, R53, R58.12      | partial     | `naturalization` + `deformalization` alias + CST over a rule-table slice                                               | Generalize to arbitrary expressions → #66        |
+| Reason about any statement     | R23, R25, R58.13      | partial     | Arithmetic + template inference + self-reference; no entailment/contradiction engine                                   | Reasoning engine via RML → #67                   |
+| Calculate probability          | R17, R18, R58.14      | partial     | Weighted evidence → bounded `correctness`/`signedConfidence`                                                           | Reproducible probability via RML → #68           |
+| Full computability             | R8, R14, R58.15       | not started | Arithmetic-only evaluator (`evaluateArithmeticExpression`)                                                             | Integrate `relative-meta-logic` → #69 (umbrella) |
+| Extract all reasoning metadata | R51, R58.16           | partial     | Parser-free AST/CST + dependency baseline; roles/provenance/versions incomplete                                        | Complete metadata → #70                          |
 
 ## Foundation blockers (fix first)
 
-| Blocker                                                     | Req              | Audit | Status      |
-| ----------------------------------------------------------- | ---------------- | ----- | ----------- |
-| Package identity is the template placeholder (`my-package`) | R57, R58.17      | F1    | not fixed   |
-| No `wasm-bindgen` / WASM build                              | R5, R58.18       | F2    | not started |
-| Official `links-notation` / `lino-arguments` not adopted    | R6, R7, R58.19   | F4    | not started |
-| Durable `doublets` storage + Unicode sequences              | R29, R30, R58.20 | —     | not started |
+| Blocker                                                     | Req              | Audit | Status      | Issue |
+| ----------------------------------------------------------- | ---------------- | ----- | ----------- | ----- |
+| Package identity is the template placeholder (`my-package`) | R57, R58.17      | F1    | not fixed   | #60   |
+| No `wasm-bindgen` / WASM build                              | R5, R58.18       | F2    | not started | #61   |
+| Official `links-notation` / `lino-arguments` not adopted    | R6, R7, R58.19   | F4    | not started | #62   |
+| Durable `doublets` storage + Unicode sequences              | R29, R30, R58.20 | —     | not started | #63   |
 
 ## Competitor parity
 
-| Item                                                              | Req              | Audit | Status                                   |
-| ----------------------------------------------------------------- | ---------------- | ----- | ---------------------------------------- |
-| Comparison matrices (`COMPARISON-*.md`)                           | R37, R58.21      | —     | done, dated 2026-05-12 (refresh planned) |
-| Execute competitor + formal-ai (706-case) corpora as parity tests | R47, R56, R58.22 | F6    | tracked, not executed                    |
+| Item                                                              | Req              | Audit | Status                                   | Issue |
+| ----------------------------------------------------------------- | ---------------- | ----- | ---------------------------------------- | ----- |
+| Comparison matrices (`COMPARISON-*.md`)                           | R37, R58.21      | —     | done, dated 2026-05-12 (refresh planned) | #71   |
+| Execute competitor + formal-ai (706-case) corpora as parity tests | R47, R56, R58.22 | F6    | tracked, not executed                    | #72   |
+
+## Foundation for formal-ai
+
+| Item                                                   | Req    | Status      | Issue |
+| ------------------------------------------------------ | ------ | ----------- | ----- |
+| OpenAI-shaped, Lino-native compatibility contract      | R58.23 | not started | #73   |
+| No-regression acceptance gate as algorithms generalize | R58.24 | not started | #74   |
 
 ## How to keep this page in sync
 

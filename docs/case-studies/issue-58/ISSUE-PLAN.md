@@ -7,9 +7,12 @@ Ordering follows the issue's guidance: **foundation fixes first** (they block
 the vision), then the algorithmic pillars, then parity and the formal-ai
 foundation contract.
 
-> The "Issue" column is filled in once the issues are created on GitHub.
-> Labels are drawn from the repository's available set (`enhancement`,
-> `bug`, `documentation`, `help wanted`). No milestones exist in the repo.
+> Status: all child issues below were created on GitHub as #60–#74 and are
+> cross-linked from the [epic checklist on #58][epic]. Labels are drawn from
+> the repository's available set (`enhancement`, `bug`, `documentation`,
+> `help wanted`). No milestones exist in the repo.
+>
+> [epic]: https://github.com/link-assistant/meta-expression/issues/58
 
 ## Epic
 
