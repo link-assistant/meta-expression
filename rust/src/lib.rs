@@ -1,9 +1,18 @@
 use doublets::Doublet;
 
+mod analysis;
 mod formal_ai_support;
 mod issue52;
+#[cfg(target_arch = "wasm32")]
+mod wasm;
 mod wikimedia_plan;
 
+pub use analysis::{
+    analyze_statement, create_statement_draft, evaluate_statement, formalize_statement,
+    select_interpretation, serialize_links_notation, serialize_statement_links_notation,
+    statement_confidence, BeliefSystem, EvaluationResult, EvidenceItem, Formalization,
+    Interpretation, LinkProvenance, LinkRecord, LinksNetwork, StatementAnalysis, StatementDraft,
+};
 pub use issue52::{
     issue52_english_text, issue52_russian_text, issue52_translation_relations,
     translate_issue52_semantic_text,
@@ -22,7 +31,8 @@ const ISSUE35_HAWAII_MEANING_ID: u64 = 782;
 const ISSUE35_STATE_MEANING_ID: u64 = 7275;
 const ISSUE35_US_STATE_MEANING_ID: u64 = 35657;
 
-#[derive(Debug, Clone, PartialEq, Eq)]
+#[derive(Debug, Clone, PartialEq, Eq, serde::Serialize)]
+#[serde(rename_all = "camelCase")]
 pub struct SemanticPhrase {
     pub text: String,
     pub meaning_id: String,
@@ -30,7 +40,8 @@ pub struct SemanticPhrase {
     pub end: usize,
 }
 
-#[derive(Debug, Clone, PartialEq, Eq)]
+#[derive(Debug, Clone, PartialEq, Eq, serde::Serialize)]
+#[serde(rename_all = "camelCase")]
 pub struct SemanticTranslation {
     pub source_text: String,
     pub source_language: String,
@@ -149,6 +160,7 @@ pub fn translate_known_semantic_sentence(
         target_language.as_str(),
         sentence_key.as_str(),
     ) {
+        ("en", "ru", "hawaii") => Some(issue61_hawaii_english_to_russian(input)),
         ("en", "ru", "hawaii is a state") => Some(issue35_english_to_russian(input)),
         ("ru", "en", "гавайи это штат") => Some(issue35_russian_to_english(input)),
         _ => None,
@@ -714,6 +726,30 @@ fn issue35_english_to_russian(input: &str) -> SemanticTranslation {
             "english-copula-to-russian-eto".to_string(),
             "english-us-state-predicate-to-russian-shtat".to_string(),
         ],
+    }
+}
+
+fn issue61_hawaii_english_to_russian(input: &str) -> SemanticTranslation {
+    let source_text = input.trim();
+    let target_text = "Гавайи";
+    SemanticTranslation {
+        source_text: source_text.to_string(),
+        source_language: "en".to_string(),
+        target_language: "ru".to_string(),
+        target_text: target_text.to_string(),
+        source_phrases: vec![semantic_phrase_in_text(
+            "Hawaii",
+            ISSUE35_HAWAII_MEANING_ID,
+            source_text,
+            0,
+        )],
+        target_phrases: vec![semantic_phrase_in_text(
+            "Гавайи",
+            ISSUE35_HAWAII_MEANING_ID,
+            target_text,
+            0,
+        )],
+        transformation_steps: vec!["wikidata-target-label".to_string()],
     }
 }
 

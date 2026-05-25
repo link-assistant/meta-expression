@@ -134,6 +134,17 @@ export interface StatementAnalysis {
   opposite: string | null;
 }
 
+export interface WasmStatementAnalysis {
+  status: 'completed';
+  statement: LinkRecord;
+  interpretations: Interpretation[];
+  selectedInterpretation: Interpretation;
+  formalization: Formalization;
+  result: EvaluationResult;
+  resultLink: LinkRecord;
+  linksNetwork: LinksNetwork;
+}
+
 export interface AnalysisOptions {
   topK?: number;
   interpretationId?: string;
@@ -877,6 +888,23 @@ export interface TranslationPhrase {
   variable: TranslationVariable | null;
 }
 
+export interface SemanticPhrase {
+  text: string;
+  meaningId: string;
+  start: number;
+  end: number;
+}
+
+export interface SemanticTranslation {
+  sourceText: string;
+  sourceLanguage: string;
+  targetLanguage: string;
+  targetText: string;
+  sourcePhrases: SemanticPhrase[];
+  targetPhrases: SemanticPhrase[];
+  transformationSteps: string[];
+}
+
 export interface TranslationTargetUnit {
   id: string;
   kind: string;
@@ -1398,3 +1426,44 @@ export declare function tokenCoverage(
 export declare function tokenizeForMatch(text: string): string[];
 
 export declare function normalizeStatementKey(text: string): string;
+
+export interface WasmCore {
+  createStatementDraft(input: string): StatementDraft;
+  selectInterpretation(
+    input: string,
+    interpretationIndex?: number
+  ): Interpretation;
+  formalizeStatement(
+    input: string,
+    interpretationIndex?: number
+  ): Formalization;
+  evaluateStatement(
+    input: string,
+    interpretationIndex?: number
+  ): EvaluationResult;
+  analyzeStatement(
+    input: string,
+    interpretationIndex?: number
+  ): WasmStatementAnalysis;
+  statementConfidence(input: string, interpretationIndex?: number): number;
+  serializeLinksNotation(input: string, interpretationIndex?: number): string;
+  translateKnownSemanticText(
+    input: string,
+    sourceLanguage: string,
+    targetLanguage: string
+  ): SemanticTranslation;
+}
+
+export interface LoadWasmCoreOptions {
+  module?: unknown;
+  moduleUrl?: string | URL;
+  wasmUrl?: string | URL;
+  wasmBytes?: BufferSource;
+  initialize?: boolean;
+}
+
+export declare function createWasmCore(wasmModule: unknown): WasmCore;
+
+export declare function loadWasmCore(
+  options?: LoadWasmCoreOptions
+): Promise<WasmCore>;

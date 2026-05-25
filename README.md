@@ -58,6 +58,10 @@ Core exports:
   public web and scholarly APIs, returning existing-likelihood scores,
   citation/rewording suggestions, source matches, HTML, Markdown, and Links
   Notation.
+- `loadWasmCore(options)` loads the Rust `wasm-bindgen` package and exposes
+  draft creation, interpretation selection, formalization, evaluation,
+  confidence, Links Notation serialization, and known semantic translation
+  helpers to JavaScript callers.
 
 Current deterministic examples:
 
@@ -176,10 +180,24 @@ It also includes a deterministic issue #35 semantic translation fixture for
 `Hawaii is a state.` plus issue #52 full-text Translate coverage with
 source/target semantic phrase ids, round-trip checks, Wikimedia entity-batch
 planning, stable seven-day cache TTL plus one-to-three-day jitter, and
-ABI-safe helper exports:
+ABI-safe helper exports. The issue #61 `wasm-bindgen` package exposes the
+analysis pipeline and Links Notation helpers through
+[`js/src/wasm-core.js`](js/src/wasm-core.js):
 
 ```bash
 cargo test --workspace
+npm run build:wasm
+npm run test:wasm
+```
+
+```js
+import { loadWasmCore } from './js/src/wasm-core.js';
+
+const wasm = await loadWasmCore();
+const analysis = wasm.analyzeStatement('1 + 1 = 2');
+
+console.log(analysis.result.value); // true
+console.log(wasm.serializeLinksNotation('1 + 1 = 2'));
 ```
 
 ## Development

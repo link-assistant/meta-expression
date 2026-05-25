@@ -27,6 +27,8 @@ jobs:
     timeout-minutes: 5
     if: github.event_name != 'workflow_dispatch'
     outputs:
+      js-changed: ${{ steps.changes.outputs.js-changed }}
+      package-changed: ${{ steps.changes.outputs.package-changed }}
       rust-changed: ${{ steps.changes.outputs.rust-changed }}
       workflow-changed: ${{ steps.changes.outputs.workflow-changed }}
     steps:
@@ -147,3 +149,56 @@ jobs:
 
       - name: Build release
         run: cargo build --workspace --release --verbose
+
+  wasm:
+    name: Build and Test WASM
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    needs: [detect-changes]
+    if: |
+      always() && !cancelled() && (
+        github.event_name == 'push' ||
+        github.event_name == 'workflow_dispatch' ||
+        needs.detect-changes.outputs.js-changed == 'true' ||
+        needs.detect-changes.outputs.package-changed == 'true' ||
+        needs.detect-changes.outputs.rust-changed == 'true' ||
+        needs.detect-changes.outputs.workflow-changed == 'true'
+      )
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Setup Rust
+        uses: dtolnay/rust-toolchain@stable
+        with:
+          targets: wasm32-unknown-unknown
+
+      - name: Cache cargo registry
+        uses: actions/cache@v5
+        with:
+          path: |
+            ~/.cargo/registry
+            ~/.cargo/git
+            target
+          key: ${{ runner.os }}-cargo-wasm-${{ hashFiles('**/Cargo.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-cargo-wasm-
+            ${{ runner.os }}-cargo-
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version: '24.x'
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Build and test WASM wrapper
+        run: npm run test:wasm
+
+      - name: Verify generated WASM package is current
+        run: |
+          if [ -n "$(git status --porcelain -- rust/pkg)" ]; then
+            git status --short -- rust/pkg
+            echo "::error::rust/pkg is out of date. Run npm run build:wasm and commit the generated package."
+            exit 1
+          fi

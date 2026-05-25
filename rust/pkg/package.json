@@ -1,0 +1,17 @@
+{
+  "name": "meta-expression-core",
+  "type": "module",
+  "description": "Rust core primitives for the meta-expression prototype",
+  "version": "0.1.0",
+  "license": "Unlicense",
+  "files": [
+    "meta_expression_core_bg.wasm",
+    "meta_expression_core.js",
+    "meta_expression_core.d.ts"
+  ],
+  "main": "meta_expression_core.js",
+  "types": "meta_expression_core.d.ts",
+  "sideEffects": [
+    "./snippets/*"
+  ]
+}
