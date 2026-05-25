@@ -116,6 +116,67 @@ export interface EvaluationResult {
   explanation: string;
 }
 
+export interface RelativeMetaLogicEngine {
+  evaluate?: (program: string, options?: Record<string, unknown>) => unknown;
+  runTactics?: (state: unknown, tactics: unknown[]) => unknown;
+}
+
+export interface FormalReasoningDependency {
+  source: string;
+  target: string;
+  relation: string;
+}
+
+export interface FormalReasoningFact {
+  statement: string;
+  probability: number;
+}
+
+export interface FormalReasoningTraceEvent {
+  method: string;
+  text: string;
+  sourceType: 'relative-meta-logic';
+  sourceUrl: string;
+}
+
+export interface FormalReasoningSummary {
+  query: string | null;
+  dependencies: FormalReasoningDependency[];
+  facts: FormalReasoningFact[];
+}
+
+export interface FormalReasoningResult {
+  kind: 'formal-reasoning';
+  engine: {
+    name: 'relative-meta-logic';
+    mode: string;
+    sourceUrl: string;
+  };
+  program: string;
+  query: string;
+  value: boolean | 'unknown' | 'undetermined';
+  confidence: number;
+  correctness: number;
+  signedConfidence: number | null;
+  rawBalance: number | null;
+  dependencies: FormalReasoningDependency[];
+  relations: {
+    contradictions: FormalReasoningDependency[];
+  };
+  facts: FormalReasoningFact[];
+  diagnostics: Array<{ code: string; message: string }>;
+  trace: FormalReasoningTraceEvent[];
+  proof: {
+    closed: boolean;
+    diagnostics: Array<{ code: string; message: string }>;
+    trace: FormalReasoningTraceEvent[];
+  };
+  evaluation: {
+    results: unknown[];
+    diagnostics: Array<{ code: string; message: string }>;
+  };
+}
+
 export interface StatementAnalysis {
   status: 'completed';
   statement: LinkRecord;
@@ -164,6 +225,9 @@ export interface AnalysisOptions {
   now?: () => number;
   reasoningStrategyId?: string;
   preferenceProfile?: PreferenceProfile;
+  relativeMetaLogic?: RelativeMetaLogicEngine;
+  rmlEngine?: RelativeMetaLogicEngine;
+  relativeMetaLogicOptions?: Record<string, unknown>;
 }
 
 export interface PreferenceBeliefDefinition {
@@ -473,6 +537,31 @@ export declare function computeEvidenceConfidence(
   supportWeight: number;
   refuteWeight: number;
 };
+
+export declare function isFormalReasoningInput(input: unknown): boolean;
+
+export declare function summarizeFormalReasoningProgram(
+  input: string
+): FormalReasoningSummary;
+
+export declare function createFormalReasoningInterpretations(
+  text: string,
+  formalizationLevels: typeof FORMALIZATION_LEVELS
+): Interpretation[];
+
+export declare function createFormalReasoningFormalization(
+  text: string,
+  level: number
+): Formalization;
+
+export declare function reasonFormalStatements(
+  input: string,
+  options?: AnalysisOptions
+): FormalReasoningResult;
+
+export declare function formalReasoningToEvaluationResult(
+  reasoning: FormalReasoningResult
+): EvaluationResult;
 
 export type FormalizeLinkTargetMode = 'wikipedia' | 'wikidata' | 'local-viewer';
 
