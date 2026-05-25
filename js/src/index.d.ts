@@ -138,6 +138,43 @@ export interface EvaluationResult {
 export interface RelativeMetaLogicEngine {
   evaluate?: (program: string, options?: Record<string, unknown>) => unknown;
   runTactics?: (state: unknown, tactics: unknown[]) => unknown;
+  Env?: new (options?: Record<string, unknown>) => unknown;
+  createEnv?: (options?: Record<string, unknown>) => unknown;
+  evalNode?: (ast: unknown, env: unknown) => unknown;
+  parseOne?: (tokens: unknown) => unknown;
+  tokenizeOne?: (source: string) => unknown;
+  evaluateFormalization?: (
+    formalization: unknown,
+    options?: Record<string, unknown>
+  ) => unknown;
+}
+
+export interface RelativeMetaLogicUpstream {
+  name: 'relative-meta-logic';
+  version: string;
+  repository: string;
+  commit: string;
+  packagePath: string;
+  npmPublished: boolean;
+  packageSpec: string;
+}
+
+export interface RelativeMetaLogicInputMapping {
+  supported: boolean;
+  inputKind:
+    | 'arithmetic'
+    | 'formal-reasoning-program'
+    | 'partial-formalization';
+  formalizationLevel: number | null;
+  program?: string;
+  ast?: unknown;
+  valueKind?: 'truth-value' | 'number';
+  query?: string | null;
+  dependencies?: FormalReasoningDependency[];
+  facts?: FormalReasoningFact[];
+  unknowns?: string[];
+  refinementSuggestions?: string[];
+  engine: RelativeMetaLogicUpstream;
 }
 
 export interface FormalReasoningDependency {
@@ -588,6 +625,12 @@ export declare function createProbabilityCalculation(options?: {
   inputs?: ProbabilityCalculationInput[];
   extra?: Record<string, unknown>;
 }): EvidenceCalculation;
+
+export declare const RELATIVE_META_LOGIC_UPSTREAM: RelativeMetaLogicUpstream;
+
+export declare function mapFormalizationToRelativeMetaLogicInput(
+  formalization: Formalization
+): RelativeMetaLogicInputMapping;
 
 export declare function isFormalReasoningInput(input: unknown): boolean;
 

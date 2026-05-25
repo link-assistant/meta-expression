@@ -15,6 +15,7 @@ import { createProbabilityCalculation } from './probability.js';
 import { knownEvidence, knownRealWorldClaims } from './known-evidence.js';
 import { buildStatementMeaningMetadata } from './statement-formalization.js';
 import * as formalReasoning from './formal-reasoning.js';
+import { evaluateArithmeticWithRelativeMetaLogic } from './relative-meta-logic-adapter.js';
 
 export {
   createWikimediaEvidenceClient,
@@ -141,6 +142,10 @@ export {
   simplifyLinksNotation,
 } from './transformation-rules.js';
 export * from './formal-reasoning.js';
+export {
+  RELATIVE_META_LOGIC_UPSTREAM,
+  mapFormalizationToRelativeMetaLogicInput,
+} from './relative-meta-logic-adapter.js';
 export {
   createDefaultPreferenceProfile,
   createPreferenceEvidence,
@@ -846,22 +851,27 @@ function evaluateComputableFormalization(formalization, options = {}) {
       formalReasoning.reasonFormalStatements(expression.program, options)
     );
   }
-  const actual = evaluateArithmeticExpression(expression);
+  const rmlEvaluation = evaluateArithmeticWithRelativeMetaLogic(
+    expression,
+    options
+  );
+  const actual =
+    rmlEvaluation?.actual ?? evaluateArithmeticExpression(expression);
   if (expression.type === 'arithmetic-question') {
-    return evaluateArithmeticQuestion(expression, actual);
+    return evaluateArithmeticQuestion(expression, actual, rmlEvaluation);
   }
 
-  return evaluateArithmeticEquality(expression, actual);
+  return evaluateArithmeticEquality(expression, actual, rmlEvaluation);
 }
 
-function evaluateArithmeticQuestion(expression, actual) {
+function evaluateArithmeticQuestion(expression, actual, rmlEvaluation = null) {
   const evidence = {
     id: 'computed-evidence-1',
     polarity: 'support',
     weight: 1,
-    sourceType: 'computed',
-    sourceUrl: null,
-    retrievedAt: 'local',
+    sourceType: arithmeticEvidenceSourceType(rmlEvaluation),
+    sourceUrl: arithmeticEvidenceSourceUrl(rmlEvaluation),
+    retrievedAt: arithmeticEvidenceRetrievedAt(rmlEvaluation),
     claim: `${expression.leftOperand} ${expression.operator} ${expression.rightOperand} evaluates to ${actual}.`,
   };
 
@@ -876,7 +886,7 @@ function evaluateArithmeticQuestion(expression, actual) {
     signedConfidence: 1,
     rawBalance: 1,
     calculation: createProbabilityCalculation({
-      strategy: 'deterministic-arithmetic-question',
+      strategy: arithmeticCalculationStrategy('question', rmlEvaluation),
       truthValue: 1,
       deterministic: true,
       inputs: arithmeticCalculationInputs(expression, actual),
@@ -889,50 +899,115 @@ function evaluateArithmeticQuestion(expression, actual) {
     }),
     supportingEvidence: [evidence],
     refutingEvidence: [],
-    explanation: 'The expression was computed locally.',
+    explanation: arithmeticEvaluationExplanation(rmlEvaluation),
   };
 }
 
-function evaluateArithmeticEquality(expression, actual) {
+function evaluateArithmeticEquality(expression, actual, rmlEvaluation = null) {
   const value = Object.is(actual, expression.expected);
   const evidence = {
     id: 'computed-evidence-1',
     polarity: value ? 'support' : 'refute',
     weight: 1,
-    sourceType: 'computed',
-    sourceUrl: null,
-    retrievedAt: 'local',
+    sourceType: arithmeticEvidenceSourceType(rmlEvaluation),
+    sourceUrl: arithmeticEvidenceSourceUrl(rmlEvaluation),
+    retrievedAt: arithmeticEvidenceRetrievedAt(rmlEvaluation),
     claim: `${expression.leftOperand} ${expression.operator} ${expression.rightOperand} evaluates to ${actual}.`,
   };
+  const metrics = arithmeticEqualityMetrics(value, evidence);
 
   return {
     kind: 'computed',
     value,
     actual,
     expected: expression.expected,
-    confidence: value ? 1 : 0,
-    probability: value ? 1 : 0,
-    correctness: value ? 1 : 0,
-    signedConfidence: value ? 1 : -1,
-    rawBalance: value ? 1 : -1,
+    confidence: metrics.confidence,
+    probability: metrics.probability,
+    correctness: metrics.correctness,
+    signedConfidence: metrics.signedConfidence,
+    rawBalance: metrics.rawBalance,
     calculation: createProbabilityCalculation({
-      strategy: 'deterministic-arithmetic-equality',
-      truthValue: value ? 1 : 0,
+      strategy: arithmeticCalculationStrategy('equality', rmlEvaluation),
+      truthValue: metrics.truthValue,
       deterministic: true,
       inputs: arithmeticCalculationInputs(expression, actual),
       extra: {
-        supportWeight: value ? 1 : 0,
-        refuteWeight: value ? 0 : 1,
-        rawConfidence: value ? 1 : 0,
-        boundedConfidence: value ? 1 : 0,
+        supportWeight: metrics.supportWeight,
+        refuteWeight: metrics.refuteWeight,
+        rawConfidence: metrics.confidence,
+        boundedConfidence: metrics.confidence,
       },
     }),
-    supportingEvidence: value ? [evidence] : [],
-    refutingEvidence: value ? [] : [evidence],
+    supportingEvidence: metrics.supportingEvidence,
+    refutingEvidence: metrics.refutingEvidence,
     explanation: value
       ? 'The computed value matches the expected value.'
       : 'The computed value does not match the expected value.',
   };
+}
+
+function arithmeticEqualityMetrics(value, evidence) {
+  if (value) {
+    return {
+      confidence: 1,
+      probability: 1,
+      correctness: 1,
+      signedConfidence: 1,
+      rawBalance: 1,
+      truthValue: 1,
+      supportWeight: 1,
+      refuteWeight: 0,
+      supportingEvidence: [evidence],
+      refutingEvidence: [],
+    };
+  }
+  return {
+    confidence: 0,
+    probability: 0,
+    correctness: 0,
+    signedConfidence: -1,
+    rawBalance: -1,
+    truthValue: 0,
+    supportWeight: 0,
+    refuteWeight: 1,
+    supportingEvidence: [],
+    refutingEvidence: [evidence],
+  };
+}
+
+function arithmeticCalculationStrategy(kind, rmlEvaluation) {
+  if (hasRelativeMetaLogicArithmeticValue(rmlEvaluation)) {
+    return `relative-meta-logic-arithmetic-${kind}`;
+  }
+  return `deterministic-arithmetic-${kind}`;
+}
+
+function arithmeticEvidenceSourceType(rmlEvaluation) {
+  return hasRelativeMetaLogicArithmeticValue(rmlEvaluation)
+    ? 'relative-meta-logic'
+    : 'computed';
+}
+
+function arithmeticEvidenceSourceUrl(rmlEvaluation) {
+  return hasRelativeMetaLogicArithmeticValue(rmlEvaluation)
+    ? rmlEvaluation.engine.sourceUrl
+    : null;
+}
+
+function arithmeticEvidenceRetrievedAt(rmlEvaluation) {
+  return hasRelativeMetaLogicArithmeticValue(rmlEvaluation)
+    ? rmlEvaluation.engine.mode
+    : 'local';
+}
+
+function hasRelativeMetaLogicArithmeticValue(rmlEvaluation) {
+  return rmlEvaluation?.actual !== null && rmlEvaluation?.actual !== undefined;
+}
+
+function arithmeticEvaluationExplanation(rmlEvaluation) {
+  return hasRelativeMetaLogicArithmeticValue(rmlEvaluation)
+    ? 'The expression was computed through the relative-meta-logic adapter.'
+    : 'The expression was computed locally.';
 }
 
 function estimateFromEvidence(formalization, evidenceFixtures, options = {}) {

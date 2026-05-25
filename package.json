@@ -89,5 +89,13 @@
   "dependencies": {
     "links-notation": "^0.13.0",
     "lino-arguments": "^0.3.0"
+  },
+  "peerDependencies": {
+    "relative-meta-logic": "git+https://github.com/link-foundation/relative-meta-logic.git#155276abb6093dcfa5c6c0fe58a7dd05ee3e2c44"
+  },
+  "peerDependenciesMeta": {
+    "relative-meta-logic": {
+      "optional": true
+    }
   }
 }
