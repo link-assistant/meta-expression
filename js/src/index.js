@@ -142,6 +142,12 @@ export {
   decodeFromDoublets,
   DOUBLET_TAGS,
 } from './doublets.js';
+export {
+  exportPortableCaseData,
+  importPortableCaseData,
+  loadPortableCaseFromDoublets,
+  savePortableCaseToDoublets,
+} from './durable-storage.js';
 export { createWasmCore, loadWasmCore } from './wasm-core.js';
 const arithmeticEqualityPattern =
   /^\s*(-?\d+(?:\.\d+)?)\s*([+*/-])\s*(-?\d+(?:\.\d+)?)\s*=\s*(-?\d+(?:\.\d+)?)\s*$/;
