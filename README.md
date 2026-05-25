@@ -39,6 +39,8 @@ Core exports:
   prototype.
 - `describeFormalizationLevel(level)` returns the level name, summary, and
   executability flag.
+- `mapFormalizationToRelativeMetaLogicInput(formalization)` shows whether a
+  selected formalization can be sent to the relative-meta-logic adapter.
 - `createIssueReportUrl(analysis, options)` creates a prefilled GitHub issue
   URL with statement, result, evidence, and Links Notation.
 - `createWikimediaEvidenceClient()` and `analyzeStatementWithLiveEvidence()`
