@@ -46,10 +46,10 @@ is_limited_file() {
 is_exempt_file() {
   case "$1" in
     docs/case-studies/*) return 0 ;;
-    .git/* | node_modules/* | target/* | dist/* | coverage/* | build/*)
+    .git/* | node_modules/* | target/* | dist/* | coverage/* | build/* | rust/pkg/*)
       return 0
       ;;
-    */node_modules/* | */target/* | */dist/* | */coverage/* | */build/*)
+    */node_modules/* | */target/* | */dist/* | */coverage/* | */build/* | */rust/pkg/*)
       return 0
       ;;
     *) return 1 ;;

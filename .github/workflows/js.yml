@@ -365,8 +365,10 @@ jobs:
         run: |
           mkdir -p _site
           mkdir -p _site/js
+          mkdir -p _site/rust
           cp -R web _site/
           cp -R js/src _site/js/
+          cp -R rust/pkg _site/rust/
           node --input-type=module <<'NODE'
           import { readFileSync, writeFileSync } from 'node:fs';
           const packageJson = JSON.parse(readFileSync('package.json', 'utf8'));

@@ -142,6 +142,7 @@ export {
   decodeFromDoublets,
   DOUBLET_TAGS,
 } from './doublets.js';
+export { createWasmCore, loadWasmCore } from './wasm-core.js';
 const arithmeticEqualityPattern =
   /^\s*(-?\d+(?:\.\d+)?)\s*([+*/-])\s*(-?\d+(?:\.\d+)?)\s*=\s*(-?\d+(?:\.\d+)?)\s*$/;
 const arithmeticQuestionPattern =
