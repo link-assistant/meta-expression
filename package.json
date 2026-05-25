@@ -28,7 +28,7 @@
     "test:integration": "node --test js/tests/integration/*.test.js",
     "test:e2e": "node --test js/tests/e2e/*.test.js",
     "start": "node js/src/server.js",
-    "build:wasm": "wasm-pack build rust --target web --out-dir pkg --release && node -e \"require('node:fs').rmSync('rust/pkg/.gitignore', { force: true })\"",
+    "build:wasm": "wasm-pack build rust --target web --out-dir pkg --release --no-opt && node -e \"require('node:fs').rmSync('rust/pkg/.gitignore', { force: true })\"",
     "test:wasm": "npm run build:wasm && node --test js/tests/integration/issue-61-wasm.test.js",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
