@@ -3,6 +3,10 @@ import {
   Parser as LinksNotationParser,
   formatLinks,
 } from 'links-notation';
+import {
+  createProbabilityCalculation,
+  normalizeTruthValue,
+} from './probability.js';
 
 const parser = new LinksNotationParser();
 const rmlSourceUrl = 'https://github.com/link-foundation/relative-meta-logic';
@@ -85,6 +89,9 @@ export function reasonFormalStatements(input, options = {}) {
     : evaluateFormalProgramLocally(program);
   const proof = proveWithEngine(engine, local.formalReasoning);
   const trace = [...(local.trace ?? []), ...proof.trace];
+  const calculation =
+    local.formalReasoning.calculation ??
+    createFormalProbabilityCalculation(local.formalReasoning);
 
   return {
     kind: 'formal-reasoning',
@@ -100,6 +107,8 @@ export function reasonFormalStatements(input, options = {}) {
     correctness: local.formalReasoning.confidence,
     signedConfidence: confidenceToSigned(local.formalReasoning.confidence),
     rawBalance: confidenceToSigned(local.formalReasoning.confidence),
+    probability: local.formalReasoning.confidence,
+    calculation,
     dependencies: local.formalReasoning.dependencies,
     relations: local.formalReasoning.relations,
     facts: local.formalReasoning.facts,
@@ -128,6 +137,8 @@ export function formalReasoningToEvaluationResult(reasoning) {
     correctness: reasoning.correctness,
     signedConfidence: reasoning.signedConfidence,
     rawBalance: reasoning.rawBalance,
+    probability: reasoning.probability,
+    calculation: reasoning.calculation,
     supportingEvidence: supports,
     refutingEvidence: refutes,
     explanation: formalReasoningExplanation(reasoning),
@@ -181,6 +192,12 @@ function evaluateFormalProgramLocally(input) {
     const state = createReasoningState(parsed);
     const query = parsed.query ?? parsed.forms.at(-1) ?? new Link('unknown');
     const evaluated = evaluateTerm(query, state);
+    const confidence =
+      evaluated.confidence ?? truthValueConfidence(evaluated.value);
+    const truthValue =
+      evaluated.truthValue ??
+      parsed.logic.truthRange[0] +
+        confidence * (parsed.logic.truthRange[1] - parsed.logic.truthRange[0]);
     const contradictions = findContradictions(state);
     const relations = {
       contradictions: [
@@ -191,15 +208,23 @@ function evaluateFormalProgramLocally(input) {
     const formalReasoning = {
       query: formatTerm(query),
       value: evaluated.value,
-      confidence: truthValueConfidence(evaluated.value),
+      confidence,
+      truthValue,
+      truthRange: parsed.logic.truthRange,
+      valence: parsed.logic.valence,
       dependencies: uniqueDependencies(evaluated.dependencies),
       relations,
       facts: parsed.facts.map((fact) => ({
         statement: formatTerm(fact.term),
         probability: fact.probability,
+        truthValue: fact.truthValue,
+        truthRange: fact.truthRange,
+        valence: fact.valence,
       })),
       queryTerm: query,
     };
+    formalReasoning.calculation =
+      createFormalProbabilityCalculation(formalReasoning);
     return {
       results: [confidenceToRmlResult(formalReasoning.confidence)],
       diagnostics: [],
@@ -224,10 +249,17 @@ function parseFormalProgram(input) {
   const forms = parser.parse(program);
   const facts = [];
   const rules = [];
+  const logic = { truthRange: [0, 1], valence: 0 };
   let query = null;
 
   for (const [index, form] of forms.entries()) {
-    const assignment = probabilityAssignment(form);
+    const config = logicConfiguration(form);
+    if (config) {
+      Object.assign(logic, config);
+      continue;
+    }
+
+    const assignment = probabilityAssignment(form, logic);
     if (assignment) {
       const relation = relationTerm(assignment.term);
       if (relation && formalRelationIds.has(relation.id)) {
@@ -237,6 +269,9 @@ function parseFormalProgram(input) {
           target: relation.args[1],
           relation: 'entails',
           probability: assignment.probability,
+          truthValue: assignment.truthValue,
+          truthRange: assignment.truthRange,
+          valence: assignment.valence,
           form,
         });
       } else {
@@ -244,6 +279,9 @@ function parseFormalProgram(input) {
           id: `formal-fact-${facts.length + 1}`,
           term: assignment.term,
           probability: assignment.probability,
+          truthValue: assignment.truthValue,
+          truthRange: assignment.truthRange,
+          valence: assignment.valence,
           form,
         });
       }
@@ -258,7 +296,7 @@ function parseFormalProgram(input) {
     }
   }
 
-  return { forms, facts, rules, query };
+  return { forms, facts, rules, query, logic };
 }
 
 function createReasoningState(parsed) {
@@ -382,9 +420,9 @@ function evaluateFact(key, state, assumptions) {
   }
 
   const entries = state.factsByKey.get(key) ?? [];
-  const hasTrue = entries.some((entry) => entry.truth === true);
-  const hasFalse = entries.some((entry) => entry.truth === false);
-  if (hasTrue && hasFalse) {
+  const trueEntry = entries.find((entry) => entry.truth === true);
+  const falseEntry = entries.find((entry) => entry.truth === false);
+  if (trueEntry && falseEntry) {
     return knownTerm(
       'undetermined',
       [],
@@ -396,18 +434,41 @@ function evaluateFact(key, state, assumptions) {
       ]
     );
   }
-  if (hasTrue) {
+  if (trueEntry) {
     return knownTerm(
       true,
       [{ source: key, target: key, relation: 'asserted' }],
-      [traceEvent('evaluate', `${key} is asserted with probability 1.`)]
+      [traceEvent('evaluate', `${key} is asserted with probability 1.`)],
+      {},
+      trueEntry.probability,
+      trueEntry.truthValue
     );
   }
-  if (hasFalse) {
+  if (falseEntry) {
     return knownTerm(
       false,
       [{ source: key, target: key, relation: 'refuted' }],
-      [traceEvent('evaluate', `${key} is asserted with probability 0.`)]
+      [traceEvent('evaluate', `${key} is asserted with probability 0.`)],
+      {},
+      falseEntry.probability,
+      falseEntry.truthValue
+    );
+  }
+  if (entries.length > 0) {
+    const probability = average(entries.map((entry) => entry.probability));
+    const truthValue = average(entries.map((entry) => entry.truthValue));
+    return knownTerm(
+      'unknown',
+      [{ source: key, target: key, relation: 'asserted-probability' }],
+      [
+        traceEvent(
+          'evaluate',
+          `${key} is asserted with reproducible probability ${probability}.`
+        ),
+      ],
+      {},
+      probability,
+      truthValue
     );
   }
   return unknownTerm(key);
@@ -520,7 +581,25 @@ function runLocalTactics() {
   return { state: { goals: [], proof: [] }, diagnostics: [] };
 }
 
-function probabilityAssignment(form) {
+function logicConfiguration(form) {
+  if (!isLink(form)) {
+    return null;
+  }
+  if (form.id === 'range' && form.values.length === 2) {
+    return {
+      truthRange: [
+        numericLinkValue(form.values[0]),
+        numericLinkValue(form.values[1]),
+      ],
+    };
+  }
+  if (form.id === 'valence' && form.values.length === 1) {
+    return { valence: numericLinkValue(form.values[0]) };
+  }
+  return null;
+}
+
+function probabilityAssignment(form, logic) {
   if (
     !isLink(form) ||
     form.id !== null ||
@@ -530,10 +609,19 @@ function probabilityAssignment(form) {
   ) {
     return null;
   }
+  const truthValue = numericLinkValue(form.values[3]);
+  const normalized = normalizeTruthValue(truthValue, logic);
   return {
     term: form.values[0],
-    probability: Number(form.values[3].id ?? formatTerm(form.values[3])),
+    probability: normalized.probability,
+    truthValue: normalized.truthValue,
+    truthRange: normalized.truthRange,
+    valence: normalized.valence,
   };
+}
+
+function numericLinkValue(link) {
+  return Number(link.id ?? formatTerm(link));
 }
 
 function queryTermFromForm(form) {
@@ -596,11 +684,20 @@ function sameTerm(left, right) {
   return formatTerm(left) === formatTerm(right);
 }
 
-function knownTerm(value, dependencies, trace, relations = {}) {
+function knownTerm(
+  value,
+  dependencies,
+  trace,
+  relations = {},
+  confidence,
+  truthValue
+) {
   return {
     value,
     dependencies,
     trace,
+    confidence,
+    truthValue,
     relations: { contradictions: relations.contradictions ?? [] },
   };
 }
@@ -620,9 +717,13 @@ function invertEvaluation(evaluation) {
       : evaluation.value === false
         ? true
         : evaluation.value;
+  const confidence =
+    evaluation.confidence === undefined ? undefined : 1 - evaluation.confidence;
   return {
     ...evaluation,
     value,
+    confidence,
+    truthValue: undefined,
     trace: [
       ...evaluation.trace,
       traceEvent('evaluate', `Applied formal negation to ${String(value)}.`),
@@ -639,6 +740,49 @@ function uniqueDependencies(dependencies) {
     }
     seen.add(key);
     return true;
+  });
+}
+
+function average(values) {
+  const finite = values.filter((value) => Number.isFinite(value));
+  if (finite.length === 0) {
+    return null;
+  }
+  return finite.reduce((sum, value) => sum + value, 0) / finite.length;
+}
+
+function createFormalProbabilityCalculation(reasoning) {
+  return createProbabilityCalculation({
+    strategy: 'relative-meta-logic-truth-value',
+    truthValue: reasoning.truthValue,
+    truthRange: reasoning.truthRange,
+    valence: reasoning.valence,
+    probability: reasoning.confidence,
+    deterministic: reasoning.value === true || reasoning.value === false,
+    inputs: [
+      {
+        kind: 'truth-range',
+        value: reasoning.truthRange ?? [0, 1],
+      },
+      {
+        kind: 'valence',
+        value: reasoning.valence ?? 0,
+      },
+      {
+        kind: 'query',
+        value: reasoning.query,
+      },
+      ...(reasoning.facts ?? []).map((fact) => ({
+        kind: 'formal-fact',
+        statement: fact.statement,
+        truthValue: fact.truthValue,
+        probability: fact.probability,
+      })),
+      ...(reasoning.dependencies ?? []).map((dependency) => ({
+        kind: 'formal-dependency',
+        ...dependency,
+      })),
+    ],
   });
 }
 
