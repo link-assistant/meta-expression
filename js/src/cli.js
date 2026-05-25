@@ -2,9 +2,11 @@
 
 import { fileURLToPath } from 'node:url';
 import { readFile } from 'node:fs/promises';
+import { makeConfig } from 'lino-arguments';
 import {
   analyzeStatement,
   analyzeStatementWithLiveEvidence,
+  parsePreferenceProfile,
   serializeLinksNotation,
 } from './index.js';
 import { formalizeTextWith, FORMALIZE_LINK_TARGETS } from './formalize.js';
@@ -15,80 +17,84 @@ import { parseSourceSpec } from './formalize-sources.js';
 import { loadRepoOverrides, loadUserOverrides } from './formalize-overrides.js';
 import { assessArticleSet } from './translation-quality.js';
 
+const cliArgvPrefix = ['node', 'meta-expression'];
+
 export function parseCliArguments(args) {
-  const options = {
-    command: 'analyze',
-    format: 'json',
-    inputParts: [],
-    evidenceScoring: {},
-  };
+  const options = createCliOptions(loadCliConfiguration(args));
   let index = 0;
+  let commandSlotOpen = true;
+  const nextValue = (fallback = '') => args[++index] ?? fallback;
   const optionHandlers = {
-    '--input': () => options.inputParts.push(args[++index] ?? ''),
-    '-i': () => options.inputParts.push(args[++index] ?? ''),
+    '--input': () => appendInputPart(options, nextValue()),
+    '-i': () => appendInputPart(options, nextValue()),
     '--format': () => {
-      options.format = args[++index] ?? 'json';
+      options.format = nextValue('json');
     },
     '-f': () => {
-      options.format = args[++index] ?? 'json';
+      options.format = nextValue('json');
     },
     '--select': () => {
-      options.interpretationIndex = Number(args[++index] ?? 0);
+      options.interpretationIndex = Number(nextValue(0));
     },
     '-s': () => {
-      options.interpretationIndex = Number(args[++index] ?? 0);
+      options.interpretationIndex = Number(nextValue(0));
     },
     '--live': () => {
       options.live = true;
     },
     '--target': () => {
-      options.target = args[++index] ?? 'wikipedia';
+      options.target = nextValue('wikipedia');
     },
     '--to': () => {
-      options.targetLanguage = args[++index] ?? 'ru';
+      options.targetLanguage = nextValue('ru');
     },
     '--translation-strategy': () => {
-      options.translationStrategy = args[++index] ?? '';
+      options.translationStrategy = nextValue();
     },
     '--target-language': () => {
-      options.targetLanguage = args[++index] ?? 'ru';
+      options.targetLanguage = nextValue('ru');
     },
     '--from': () => {
-      options.sourceLanguage = args[++index] ?? 'en';
+      options.sourceLanguage = nextValue('en');
     },
     '--source-language': () => {
-      options.sourceLanguage = args[++index] ?? 'en';
+      options.sourceLanguage = nextValue('en');
     },
     '--sources': () => {
-      options.sourcesSpec = args[++index] ?? '';
+      options.sourcesSpec = nextValue();
     },
     '--override': () => {
-      options.overrideFile = args[++index] ?? '';
+      options.overrideFile = nextValue();
     },
     '--no-repo-overrides': () => {
       options.noRepoOverrides = true;
     },
     '--articles': () => {
-      options.articlesPath = args[++index] ?? '';
+      options.articlesPath = nextValue();
     },
     '--skip-list': () => {
-      options.skipListPath = args[++index] ?? '';
+      options.skipListPath = nextValue();
     },
     '--fixes': () => {
-      options.translationFixesPath = args[++index] ?? '';
+      options.translationFixesPath = nextValue();
     },
     '--match-threshold': () => {
-      options.matchThreshold = Number(args[++index] ?? '');
+      options.matchThreshold = Number(nextValue());
     },
     '--max-ngram': () => {
-      options.maxNgramSize = Number(args[++index] ?? 3);
+      options.maxNgramSize = Number(nextValue(3));
     },
     '--score': () => {
-      const [id, value] = String(args[++index] ?? '').split('=');
-      const parsed = Number(value);
-      if (id && Number.isFinite(parsed)) {
-        options.evidenceScoring[id] = parsed;
-      }
+      applyEvidenceScore(options.evidenceScoring, nextValue());
+    },
+    '--profile': () => {
+      options.profileFile = nextValue();
+    },
+    '--belief-profile': () => {
+      options.profileFile = nextValue();
+    },
+    '--preference-profile': () => {
+      options.profileFile = nextValue();
     },
     '--help': () => {
       options.command = 'help';
@@ -100,21 +106,298 @@ export function parseCliArguments(args) {
 
   for (index = 0; index < args.length; index += 1) {
     const arg = args[index];
-    if (index === 0 && !arg.startsWith('-')) {
+    if (isConfigurationOption(arg)) {
+      index += 1;
+      continue;
+    }
+    if (commandSlotOpen && !arg.startsWith('-')) {
       options.command = arg;
+      commandSlotOpen = false;
       continue;
     }
     if (optionHandlers[arg]) {
       optionHandlers[arg]();
+      commandSlotOpen = false;
       continue;
     }
-    options.inputParts.push(arg);
+    appendInputPart(options, arg);
+    commandSlotOpen = false;
   }
 
+  const { inputParts, inputFromConfiguration, ...parsedOptions } = options;
+  void inputFromConfiguration;
   return {
-    ...options,
-    input: options.inputParts.join(' ').trim(),
+    ...parsedOptions,
+    input: inputParts.join(' ').trim(),
   };
+}
+
+function loadCliConfiguration(args) {
+  const originalConsole = {
+    error: console.error,
+    log: console.log,
+    warn: console.warn,
+  };
+  const originalEnv = { ...process.env };
+  console.error = () => {};
+  console.log = () => {};
+  console.warn = () => {};
+  try {
+    return makeConfig({
+      argv: [...cliArgvPrefix, ...args],
+      env: { enabled: false },
+      lenv: { enabled: true, override: true },
+      yargs: configureCliYargs,
+    });
+  } catch {
+    return {};
+  } finally {
+    console.error = originalConsole.error;
+    console.log = originalConsole.log;
+    console.warn = originalConsole.warn;
+    restoreProcessEnv(originalEnv);
+  }
+}
+
+function configureCliYargs({ yargs, getenv }) {
+  return yargs
+    .help(false)
+    .version(false)
+    .exitProcess(false)
+    .parserConfiguration({
+      'camel-case-expansion': true,
+    })
+    .option('command', { type: 'string', default: getenv('COMMAND', '') })
+    .option('input', {
+      alias: 'i',
+      type: 'string',
+      default: getenv('INPUT', ''),
+    })
+    .option('format', {
+      alias: 'f',
+      type: 'string',
+      default: getenv('FORMAT', 'json'),
+    })
+    .option('select', {
+      alias: 's',
+      type: 'number',
+      default: getenv('SELECT', 0),
+    })
+    .option('live', {
+      type: 'boolean',
+      default: getenv('LIVE', false),
+    })
+    .option('target', {
+      type: 'string',
+      default: getenv('TARGET', ''),
+    })
+    .option('target-language', {
+      alias: 'to',
+      type: 'string',
+      default: getenv('TARGET_LANGUAGE', ''),
+    })
+    .option('translation-strategy', {
+      type: 'string',
+      default: getenv('TRANSLATION_STRATEGY', ''),
+    })
+    .option('source-language', {
+      alias: 'from',
+      type: 'string',
+      default: getenv('SOURCE_LANGUAGE', ''),
+    })
+    .option('sources', {
+      type: 'string',
+      default: getenv('SOURCES', ''),
+    })
+    .option('override', {
+      type: 'string',
+      default: getenv('OVERRIDE', ''),
+    })
+    .option('no-repo-overrides', {
+      type: 'boolean',
+      default: getenv('NO_REPO_OVERRIDES', false),
+    })
+    .option('articles', {
+      type: 'string',
+      default: getenv('ARTICLES', ''),
+    })
+    .option('skip-list', {
+      type: 'string',
+      default: getenv('SKIP_LIST', ''),
+    })
+    .option('fixes', {
+      type: 'string',
+      default: getenv('FIXES', ''),
+    })
+    .option('match-threshold', {
+      type: 'number',
+      default: getenv('MATCH_THRESHOLD', Number.NaN),
+    })
+    .option('max-ngram', {
+      type: 'number',
+      default: getenv('MAX_NGRAM', Number.NaN),
+    })
+    .option('score', {
+      type: 'string',
+      default: getenv('SCORE', ''),
+    })
+    .option('profile', {
+      type: 'string',
+      default: getenv('PROFILE', ''),
+    })
+    .option('belief-profile', {
+      type: 'string',
+      default: getenv('BELIEF_PROFILE', ''),
+    })
+    .option('preference-profile', {
+      type: 'string',
+      default: getenv('PREFERENCE_PROFILE', ''),
+    })
+    .option('help', {
+      alias: 'h',
+      type: 'boolean',
+      default: getenv('HELP', false),
+    });
+}
+
+function restoreProcessEnv(originalEnv) {
+  for (const key of Object.keys(process.env)) {
+    if (!(key in originalEnv)) {
+      delete process.env[key];
+    }
+  }
+  for (const [key, value] of Object.entries(originalEnv)) {
+    process.env[key] = value;
+  }
+}
+
+function createCliOptions(config) {
+  const input = stringOption(config.input);
+  const options = {
+    command: stringOption(config.command) || 'analyze',
+    format: stringOption(config.format) || 'json',
+    inputParts: input ? [input] : [],
+    inputFromConfiguration: Boolean(input),
+    evidenceScoring: parseEvidenceScoring(config.score),
+  };
+  assignNumberOption(options, 'interpretationIndex', config.select);
+  assignBooleanOption(options, 'live', config.live);
+  assignStringOption(options, 'target', config.target);
+  assignStringOption(
+    options,
+    'targetLanguage',
+    firstPresent(config.targetLanguage, config.to)
+  );
+  assignStringOption(
+    options,
+    'translationStrategy',
+    config.translationStrategy
+  );
+  assignStringOption(
+    options,
+    'sourceLanguage',
+    firstPresent(config.sourceLanguage, config.from)
+  );
+  assignStringOption(options, 'sourcesSpec', config.sources);
+  assignStringOption(options, 'overrideFile', config.override);
+  assignBooleanOption(options, 'noRepoOverrides', config.noRepoOverrides);
+  assignStringOption(options, 'articlesPath', config.articles);
+  assignStringOption(options, 'skipListPath', config.skipList);
+  assignStringOption(options, 'translationFixesPath', config.fixes);
+  assignNumberOption(options, 'matchThreshold', config.matchThreshold);
+  assignNumberOption(options, 'maxNgramSize', config.maxNgram);
+  assignStringOption(
+    options,
+    'profileFile',
+    firstPresent(config.profile, config.beliefProfile, config.preferenceProfile)
+  );
+  if (config.help === true) {
+    options.command = 'help';
+  }
+  return options;
+}
+
+function isConfigurationOption(arg) {
+  return arg === '--configuration' || arg === '-c';
+}
+
+function appendInputPart(options, value) {
+  if (options.inputFromConfiguration) {
+    options.inputParts.length = 0;
+    options.inputFromConfiguration = false;
+  }
+  options.inputParts.push(value ?? '');
+}
+
+function parseEvidenceScoring(value) {
+  const scoring = {};
+  applyEvidenceScore(scoring, value);
+  return scoring;
+}
+
+function applyEvidenceScore(scoring, value) {
+  if (value === undefined || value === null || value === '') {
+    return;
+  }
+  const entries = Array.isArray(value) ? value : String(value).split(',');
+  for (const entry of entries) {
+    const [id, score] = String(entry).split('=');
+    const parsed = Number(score);
+    if (id && Number.isFinite(parsed)) {
+      scoring[id] = parsed;
+    }
+  }
+}
+
+function firstPresent(...values) {
+  return values.find(
+    (value) => value !== undefined && value !== null && value !== ''
+  );
+}
+
+function assignStringOption(options, key, value) {
+  const parsed = stringOption(value);
+  if (parsed) {
+    options[key] = parsed;
+  }
+}
+
+function assignNumberOption(options, key, value) {
+  const parsed = Number(value);
+  if (Number.isFinite(parsed)) {
+    options[key] = parsed;
+  }
+}
+
+function assignBooleanOption(options, key, value) {
+  const parsed = booleanOption(value);
+  if (parsed !== undefined) {
+    options[key] = parsed;
+  }
+}
+
+function stringOption(value) {
+  if (value === undefined || value === null) {
+    return '';
+  }
+  return String(value);
+}
+
+function booleanOption(value) {
+  if (value === undefined || value === null || value === '') {
+    return undefined;
+  }
+  if (typeof value === 'boolean') {
+    return value;
+  }
+  const normalized = String(value).trim().toLowerCase();
+  if (['1', 'true', 'yes', 'on'].includes(normalized)) {
+    return true;
+  }
+  if (['0', 'false', 'no', 'off'].includes(normalized)) {
+    return false;
+  }
+  return Boolean(value);
 }
 
 export function runCli(args = process.argv.slice(2), output = console) {
@@ -122,6 +405,9 @@ export function runCli(args = process.argv.slice(2), output = console) {
 
   if (options.live) {
     throw new Error('Use runCliAsync for live evidence mode.');
+  }
+  if (options.profileFile) {
+    throw new Error('Use runCliAsync for preference profile files.');
   }
   if (options.command === 'formalize') {
     throw new Error('Use runCliAsync for the formalize command.');
@@ -147,6 +433,7 @@ export function runCli(args = process.argv.slice(2), output = console) {
       output,
       checkText(options.input, {
         evidenceScoring: options.evidenceScoring,
+        preferenceProfile: options.preferenceProfile,
       })
     );
   }
@@ -162,11 +449,12 @@ export async function runCliAsync(
   args = process.argv.slice(2),
   output = console
 ) {
-  const options = parseCliArguments(args);
+  let options = parseCliArguments(args);
   const checked = validateCliOptions(options, output);
   if (checked !== null) {
     return checked;
   }
+  options = await hydrateCliOptions(options);
   if (options.command === 'formalize') {
     return runFormalizeCommand(options, output);
   }
@@ -272,11 +560,36 @@ async function runCheckCommand(options, output) {
     ? await checkTextWithLiveEvidence(options.input, {
         fetch: globalThis.fetch?.bind(globalThis),
         evidenceScoring: options.evidenceScoring,
+        preferenceProfile: options.preferenceProfile,
       })
     : checkText(options.input, {
         evidenceScoring: options.evidenceScoring,
+        preferenceProfile: options.preferenceProfile,
       });
   return emitCheckResult(options, output, result);
+}
+
+async function hydrateCliOptions(options) {
+  if (!options.profileFile) {
+    return options;
+  }
+  const raw = await readFile(options.profileFile, 'utf8');
+  const preferenceProfile = parseCliPreferenceProfile(raw);
+  return {
+    ...options,
+    preferenceProfile,
+  };
+}
+
+function parseCliPreferenceProfile(raw) {
+  const trimmed = String(raw ?? '').trim();
+  if (!trimmed) {
+    return parsePreferenceProfile('');
+  }
+  if (trimmed.startsWith('{') || trimmed.startsWith('[')) {
+    return JSON.parse(trimmed);
+  }
+  return parsePreferenceProfile(raw);
 }
 
 async function runTranslationQualityCommand(options, output) {
@@ -413,6 +726,7 @@ function cliAnalysisOptions(options) {
     interpretationIndex: options.interpretationIndex ?? 0,
     selectedBy: 'cli',
     evidenceScoring: options.evidenceScoring,
+    preferenceProfile: options.preferenceProfile,
   };
 }
 
@@ -510,6 +824,9 @@ Options:
   --sources <spec>               formalize: comma-separated sources
                                    (wikidata,wordnet,fandom:<slug>,fandom-host:<host>)
   --override <file.lino|.json>   formalize: extra user override file (.lino preferred)
+  --configuration, -c <file.lenv>
+                                 Load CLI defaults from a Links Notation env file
+  --profile <file.lino|.json>    analyze/check: preference or belief profile
   --no-repo-overrides            formalize: ignore docs/formalize/overrides.lino
   --max-ngram <n>                formalize: maximum n-gram size (default 3)
   --articles <file.json>         translation-quality: fixture with article extracts
