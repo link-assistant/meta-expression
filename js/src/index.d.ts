@@ -911,6 +911,24 @@ export interface TranslateOptions extends FormalizeOptions {
   postDeformalizationRules?: TransformationRule | TransformationRule[];
 }
 
+export interface NaturalizeOptions {
+  sourceLanguage?: string;
+  targetLanguage?: string;
+  from?: string;
+  to?: string;
+  trace?: boolean;
+  beforeNaturalizationRules?: TransformationRule | TransformationRule[];
+  preNaturalizationRules?: TransformationRule | TransformationRule[];
+  naturalizationRules?: TransformationRule | TransformationRule[];
+  afterNaturalizationRules?: TransformationRule | TransformationRule[];
+  postNaturalizationRules?: TransformationRule | TransformationRule[];
+  beforeDeformalizationRules?: TransformationRule | TransformationRule[];
+  preDeformalizationRules?: TransformationRule | TransformationRule[];
+  deformalizationRules?: TransformationRule | TransformationRule[];
+  afterDeformalizationRules?: TransformationRule | TransformationRule[];
+  postDeformalizationRules?: TransformationRule | TransformationRule[];
+}
+
 export type TranslationStrategyId =
   | 'contextual-glossary'
   | 'semantic-label'
@@ -1156,6 +1174,31 @@ export interface TranslationCst {
   steps: TranslationStep[];
 }
 
+export interface NaturalizationCstUnit {
+  type: 'naturalization-unit';
+  id: string;
+  role: string | null;
+  sourceText: string;
+  targetText: string;
+  semanticLinkId: string | null;
+  targetEntityId: string | null;
+  targetUrl: string | null;
+}
+
+export interface NaturalizationCst {
+  type: 'naturalization';
+  version: number;
+  inputFormat: string;
+  sourceLanguage: string;
+  targetLanguage: string;
+  sourceExpression: unknown;
+  sourceLinksNotation: string | null;
+  naturalization: TranslationNaturalization;
+  deformalization: TranslationNaturalization;
+  units: NaturalizationCstUnit[];
+  steps: TranslationStep[];
+}
+
 export interface TranslateResult {
   text: string;
   sourceLanguage: string;
@@ -1174,6 +1217,21 @@ export interface TranslateResult {
   variables: TranslationVariable[];
   questions: string[];
   questionDetails: TranslationQuestion[];
+  steps: TranslationStep[];
+}
+
+export interface NaturalizeResult {
+  text: string;
+  sourceLanguage: string;
+  targetLanguage: string;
+  naturalization: TranslationNaturalization;
+  deformalization: TranslationNaturalization;
+  cst: NaturalizationCst;
+  units: NaturalizationCstUnit[];
+  plainText: string;
+  markdown: string;
+  html: string;
+  linksNotation: string;
   steps: TranslationStep[];
 }
 
@@ -1355,6 +1413,26 @@ export declare function translateTextWith(
   input: string,
   options?: TranslateOptions
 ): Promise<TranslateResult>;
+
+export declare function naturalizeExpression(
+  input: unknown,
+  options?: NaturalizeOptions
+): Promise<NaturalizeResult>;
+
+export declare function naturalizeExpressionWith(
+  input: unknown,
+  options?: NaturalizeOptions
+): Promise<NaturalizeResult>;
+
+export declare function deformalizeExpression(
+  input: unknown,
+  options?: NaturalizeOptions
+): Promise<NaturalizeResult>;
+
+export declare function deformalizeExpressionWith(
+  input: unknown,
+  options?: NaturalizeOptions
+): Promise<NaturalizeResult>;
 
 export declare function checkText(
   input: string,
@@ -1550,6 +1628,8 @@ export interface WasmCore {
     sourceLanguage: string,
     targetLanguage: string
   ): SemanticTranslation;
+  naturalizeFormalExpression(input: string): string;
+  deformalizeFormalExpression(input: string): string;
 }
 
 export interface LoadWasmCoreOptions {

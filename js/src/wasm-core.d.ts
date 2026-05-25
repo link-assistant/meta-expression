@@ -32,6 +32,8 @@ export interface WasmCore {
     sourceLanguage: string,
     targetLanguage: string
   ): SemanticTranslation;
+  naturalizeFormalExpression(input: string): string;
+  deformalizeFormalExpression(input: string): string;
 }
 
 export interface LoadWasmCoreOptions {

@@ -43,6 +43,8 @@ describe('issue 61 - wasm-bindgen core wrapper parity', () => {
     const evaluation = wasm.evaluateStatement('1 + 1 = 2', 0);
     const confidence = wasm.statementConfidence('1 + 1 = 2', 0);
     const linksNotation = wasm.serializeLinksNotation('1 + 1 = 2', 0);
+    const formalClaim =
+      '(claim: subject (OpenAI) predicate (creates) object (useful tools))';
 
     expect(draft.status).toBe('selection-required');
     expect(draft.interpretations.length).toBe(3);
@@ -52,6 +54,12 @@ describe('issue 61 - wasm-bindgen core wrapper parity', () => {
     expect(confidence).toBe(1);
     expect(linksNotation).toContain('links-network');
     expect(linksNotation).toContain('supports');
+    expect(wasm.naturalizeFormalExpression(formalClaim)).toBe(
+      'OpenAI creates useful tools'
+    );
+    expect(wasm.deformalizeFormalExpression(formalClaim)).toBe(
+      wasm.naturalizeFormalExpression(formalClaim)
+    );
   });
 
   it('matches JavaScript analysis results for every non-translation acceptance example', async () => {

@@ -56,6 +56,12 @@ export function createWasmCore(wasmModule) {
         )
       );
     },
+    naturalizeFormalExpression(input) {
+      return module.naturalizeFormalExpression(input);
+    },
+    deformalizeFormalExpression(input) {
+      return module.deformalizeFormalExpression(input);
+    },
   };
 
   for (const key of Object.keys(api)) {
@@ -98,7 +104,12 @@ function parseJson(value) {
 }
 
 function returnsJson(key) {
-  return !['statementConfidence', 'serializeLinksNotation'].includes(key);
+  return ![
+    'statementConfidence',
+    'serializeLinksNotation',
+    'naturalizeFormalExpression',
+    'deformalizeFormalExpression',
+  ].includes(key);
 }
 
 function isNodeRuntime() {

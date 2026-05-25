@@ -5,9 +5,13 @@ export function analyzeStatementJson(input: string, interpretation_index: number
 
 export function createStatementDraftJson(input: string): string;
 
+export function deformalizeFormalExpression(input: string): string;
+
 export function evaluateStatementJson(input: string, interpretation_index: number): string;
 
 export function formalizeStatementJson(input: string, interpretation_index: number): string;
+
+export function naturalizeFormalExpression(input: string): string;
 
 export function selectInterpretationJson(input: string, interpretation_index: number): string;
 
@@ -41,12 +45,14 @@ export interface InitOutput {
     readonly meta_expression_wikimedia_cache_max_jitter_days: () => number;
     readonly analyzeStatementJson: (a: number, b: number, c: number) => [number, number, number, number];
     readonly createStatementDraftJson: (a: number, b: number) => [number, number, number, number];
+    readonly deformalizeFormalExpression: (a: number, b: number) => [number, number];
     readonly evaluateStatementJson: (a: number, b: number, c: number) => [number, number, number, number];
     readonly formalizeStatementJson: (a: number, b: number, c: number) => [number, number, number, number];
     readonly selectInterpretationJson: (a: number, b: number, c: number) => [number, number, number, number];
     readonly serializeLinksNotation: (a: number, b: number, c: number) => [number, number, number, number];
     readonly statementConfidence: (a: number, b: number, c: number) => [number, number, number];
     readonly translateKnownSemanticTextJson: (a: number, b: number, c: number, d: number, e: number, f: number) => [number, number, number, number];
+    readonly naturalizeFormalExpression: (a: number, b: number) => [number, number];
     readonly __wbindgen_externrefs: WebAssembly.Table;
     readonly __wbindgen_malloc: (a: number, b: number) => number;
     readonly __wbindgen_realloc: (a: number, b: number, c: number, d: number) => number;

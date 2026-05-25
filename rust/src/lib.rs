@@ -54,7 +54,8 @@ pub struct SemanticTranslation {
 }
 
 pub use formal_ai_support::{
-    apply_text_transformation_rules, deformalize_semantic_translation, extract_linguistic_metadata,
+    apply_text_transformation_rules, deformalize_formal_expression,
+    deformalize_semantic_translation, extract_linguistic_metadata, naturalize_formal_expression,
     naturalize_semantic_translation, LinguisticAstSentence, LinguisticDependency,
     LinguisticFragment, LinguisticMetadata, LinguisticRelation, TextTransformationRule,
 };

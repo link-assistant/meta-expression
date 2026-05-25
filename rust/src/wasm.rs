@@ -73,3 +73,13 @@ pub fn translate_known_semantic_text_json(
         .ok_or_else(|| JsValue::from_str("No known semantic translation for input."))?;
     to_json(translation)
 }
+
+#[wasm_bindgen(js_name = naturalizeFormalExpression)]
+pub fn naturalize_formal_expression(input: &str) -> String {
+    crate::naturalize_formal_expression(input)
+}
+
+#[wasm_bindgen(js_name = deformalizeFormalExpression)]
+pub fn deformalize_formal_expression(input: &str) -> String {
+    crate::deformalize_formal_expression(input)
+}
