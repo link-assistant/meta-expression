@@ -212,6 +212,60 @@ pub fn deformalize_semantic_translation(translation: &SemanticTranslation) -> &s
     naturalize_semantic_translation(translation)
 }
 
+pub fn naturalize_formal_expression(input: &str) -> String {
+    let tokens = tokenize_formal_expression(input);
+    let units: Vec<String> = ["subject", "predicate", "object"]
+        .iter()
+        .filter_map(|field| extract_formal_expression_field(&tokens, field))
+        .collect();
+
+    if units.is_empty() {
+        return tokens.join(" ");
+    }
+
+    units.join(" ")
+}
+
+pub fn deformalize_formal_expression(input: &str) -> String {
+    naturalize_formal_expression(input)
+}
+
+fn extract_formal_expression_field(tokens: &[String], field: &str) -> Option<String> {
+    let start = tokens.iter().position(|token| token == field)? + 1;
+    let end = tokens[start..]
+        .iter()
+        .position(|token| is_formal_expression_field_marker(token))
+        .map(|offset| start + offset)
+        .unwrap_or(tokens.len());
+    let value = tokens[start..end].join(" ");
+    (!value.is_empty()).then_some(value)
+}
+
+fn is_formal_expression_field_marker(token: &str) -> bool {
+    matches!(token, "subject" | "predicate" | "object")
+}
+
+fn tokenize_formal_expression(input: &str) -> Vec<String> {
+    let mut tokens = Vec::new();
+    let mut current = String::new();
+
+    for character in input.chars() {
+        if character.is_whitespace() || matches!(character, '(' | ')' | ':' | ',') {
+            if !current.is_empty() {
+                tokens.push(std::mem::take(&mut current));
+            }
+            continue;
+        }
+        current.push(character);
+    }
+
+    if !current.is_empty() {
+        tokens.push(current);
+    }
+
+    tokens
+}
+
 fn extract_linguistic_sentence(
     input: &str,
     tokens: &[LinguisticToken],

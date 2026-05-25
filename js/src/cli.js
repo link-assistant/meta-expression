@@ -6,6 +6,7 @@ import { makeConfig } from 'lino-arguments';
 import {
   analyzeStatement,
   analyzeStatementWithLiveEvidence,
+  naturalizeExpressionWith,
   parsePreferenceProfile,
   serializeLinksNotation,
 } from './index.js';
@@ -415,6 +416,9 @@ export function runCli(args = process.argv.slice(2), output = console) {
   if (options.command === 'translate') {
     throw new Error('Use runCliAsync for the translate command.');
   }
+  if (isNaturalizeCommand(options.command)) {
+    throw new Error('Use runCliAsync for the naturalize command.');
+  }
   if (options.command === 'translation-quality') {
     throw new Error('Use runCliAsync for the translation-quality command.');
   }
@@ -460,6 +464,9 @@ export async function runCliAsync(
   }
   if (options.command === 'translate') {
     return runTranslateCommand(options, output);
+  }
+  if (isNaturalizeCommand(options.command)) {
+    return runNaturalizeCommand(options, output);
   }
   if (options.command === 'translation-quality') {
     return runTranslationQualityCommand(options, output);
@@ -538,6 +545,27 @@ async function runTranslateCommand(options, output) {
     overrides: [...repoOverrides, ...userOverrides],
     maxNgramSize: options.maxNgramSize,
     translationStrategy: options.translationStrategy,
+  });
+  if (options.format === 'links' || options.format === 'lino') {
+    output.log(result.linksNotation);
+    return 0;
+  }
+  if (options.format === 'markdown' || options.format === 'md') {
+    output.log(result.markdown);
+    return 0;
+  }
+  if (options.format === 'html') {
+    output.log(result.html);
+    return 0;
+  }
+  output.log(JSON.stringify(result, null, 2));
+  return 0;
+}
+
+async function runNaturalizeCommand(options, output) {
+  const result = await naturalizeExpressionWith(options.input, {
+    sourceLanguage: options.sourceLanguage,
+    targetLanguage: options.targetLanguage,
   });
   if (options.format === 'links' || options.format === 'lino') {
     output.log(result.linksNotation);
@@ -696,6 +724,8 @@ function validateCliOptions(options, output) {
     'analyze',
     'formalize',
     'translate',
+    'naturalize',
+    'deformalize',
     'translation-quality',
     'check',
     'fact-check',
@@ -782,6 +812,10 @@ function isUniquenessCommand(command) {
   return command === 'uniqueness' || command === 'uniquness';
 }
 
+function isNaturalizeCommand(command) {
+  return command === 'naturalize' || command === 'deformalize';
+}
+
 function helpText() {
   return `Usage:
   meta-expression analyze "1 + 1 = 2"
@@ -792,6 +826,7 @@ function helpText() {
   meta-expression formalize --input "Genshin Impact" --sources wikidata,fandom:genshin-impact
   meta-expression formalize --input "Hawaii" --format markdown --target wikipedia
   meta-expression translate --input "Hawaii is a state." --to ru --format markdown
+  meta-expression naturalize --input "(claim: subject (OpenAI) predicate (creates) object (tools))"
   meta-expression translation-quality --articles tests/fixtures/issue-43/articles.json \\
     --skip-list tests/fixtures/issue-43/skip-list.json \\
     --fixes tests/fixtures/issue-43/translation-fixes.json --format summary
@@ -804,6 +839,8 @@ Commands:
   analyze     Run the disambiguation/evaluation prototype.
   formalize   Tokenise text and link each phrase to a knowledge graph entity.
   translate   Formalize text, then translate resolved Wikidata phrases.
+  naturalize  Render a formal expression back to natural language.
+  deformalize Alias for naturalize.
   translation-quality
               Assess a recorded set of Wikipedia articles end-to-end.
   check       Color detected statements by correctness.

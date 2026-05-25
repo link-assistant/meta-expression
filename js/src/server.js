@@ -3,6 +3,7 @@ import { URL, fileURLToPath } from 'node:url';
 import {
   analyzeStatement,
   analyzeStatementWithLiveEvidence,
+  naturalizeExpressionWith,
   serializeLinksNotation,
 } from './index.js';
 import { formalizeTextWith, FORMALIZE_LINK_TARGETS } from './formalize.js';
@@ -80,6 +81,10 @@ async function routeGetRequest(url, response, ctx) {
     case '/translate':
       await sendTranslate(response, translateParamsFromSearch(url), ctx);
       return;
+    case '/naturalize':
+    case '/deformalize':
+      await sendNaturalize(response, naturalizeParamsFromSearch(url));
+      return;
     case '/check':
     case '/fact-check':
       await sendCheck(response, checkParamsFromSearch(url), ctx);
@@ -106,6 +111,10 @@ async function routePostRequest(url, request, response, ctx) {
       return;
     case '/translate':
       await sendTranslate(response, translateParamsFromPayload(payload), ctx);
+      return;
+    case '/naturalize':
+    case '/deformalize':
+      await sendNaturalize(response, naturalizeParamsFromPayload(payload, url));
       return;
     case '/check':
     case '/fact-check':
@@ -185,6 +194,34 @@ function translateParamsFromPayload(payload) {
   };
 }
 
+function naturalizeParamsFromSearch(url) {
+  return {
+    input: url.searchParams.get('input') ?? '',
+    format: url.searchParams.get('format') ?? 'json',
+    sourceLanguage:
+      url.searchParams.get('from') ??
+      url.searchParams.get('sourceLanguage') ??
+      '',
+    targetLanguage:
+      url.searchParams.get('to') ??
+      url.searchParams.get('targetLanguage') ??
+      '',
+  };
+}
+
+function naturalizeParamsFromPayload(payload, url) {
+  return {
+    input: payload.input ?? '',
+    format:
+      payload.format ??
+      url.searchParams.get('format') ??
+      url.searchParams.get('f') ??
+      'json',
+    sourceLanguage: payload.from ?? payload.sourceLanguage,
+    targetLanguage: payload.to ?? payload.targetLanguage,
+  };
+}
+
 function checkParamsFromSearch(url) {
   return {
     input: url.searchParams.get('input') ?? '',
@@ -245,6 +282,10 @@ function sendNotFound(response) {
       'POST /formalize',
       'GET /translate?input=...',
       'POST /translate',
+      'GET /naturalize?input=...',
+      'POST /naturalize',
+      'GET /deformalize?input=...',
+      'POST /deformalize',
       'GET /check?input=...',
       'POST /check',
       'GET /fact-check?input=...',
@@ -359,6 +400,18 @@ async function sendTranslate(response, params, ctx) {
   emitTranslateResponse(response, params.format, result);
 }
 
+async function sendNaturalize(response, params) {
+  if (!params.input) {
+    sendJson(response, 400, { error: 'Missing input parameter.' });
+    return;
+  }
+  const result = await naturalizeExpressionWith(params.input, {
+    sourceLanguage: params.sourceLanguage,
+    targetLanguage: params.targetLanguage,
+  });
+  emitNaturalizeResponse(response, params.format, result);
+}
+
 async function sendCheck(response, params, ctx) {
   if (!params.input) {
     sendJson(response, 400, { error: 'Missing input parameter.' });
@@ -451,6 +504,32 @@ function emitFormalizeResponse(response, format, payload, meta) {
 }
 
 function emitTranslateResponse(response, format, payload) {
+  if (format === 'links' || format === 'lino') {
+    response.writeHead(200, {
+      'content-type': 'text/plain; charset=utf-8',
+    });
+    response.end(payload.linksNotation);
+    return 0;
+  }
+  if (format === 'markdown' || format === 'md') {
+    response.writeHead(200, {
+      'content-type': 'text/markdown; charset=utf-8',
+    });
+    response.end(payload.markdown);
+    return 0;
+  }
+  if (format === 'html') {
+    response.writeHead(200, {
+      'content-type': 'text/html; charset=utf-8',
+    });
+    response.end(payload.html);
+    return 0;
+  }
+  sendJson(response, 200, payload);
+  return 0;
+}
+
+function emitNaturalizeResponse(response, format, payload) {
   if (format === 'links' || format === 'lino') {
     response.writeHead(200, {
       'content-type': 'text/plain; charset=utf-8',

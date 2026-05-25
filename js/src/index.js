@@ -65,6 +65,12 @@ export {
 } from './formalize-sources.js';
 export { translateText, translateTextWith } from './translate.js';
 export {
+  deformalizeExpression,
+  deformalizeExpressionWith,
+  naturalizeExpression,
+  naturalizeExpressionWith,
+} from './naturalize.js';
+export {
   parseFormalAiTranslationPrompt,
   SUPPORTED_FORMAL_AI_TRANSLATION_LANGUAGES,
   translateFormalAiPrompt,
