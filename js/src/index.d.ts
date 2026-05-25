@@ -18,6 +18,7 @@ export interface LinkRecord<T = unknown> {
   id: string;
   role: string;
   references: string[];
+  version?: number;
   value: T;
   provenance: LinkProvenance;
 }
@@ -1461,6 +1462,8 @@ export interface LoadWasmCoreOptions {
   wasmBytes?: BufferSource;
   initialize?: boolean;
 }
+
+export * from './durable-storage.js';
 
 export declare function createWasmCore(wasmModule: unknown): WasmCore;
 

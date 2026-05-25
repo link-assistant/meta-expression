@@ -58,6 +58,10 @@ Core exports:
   public web and scholarly APIs, returning existing-likelihood scores,
   citation/rewording suggestions, source matches, HTML, Markdown, and Links
   Notation.
+- `exportPortableCaseData(input)`, `importPortableCaseData(input)`,
+  `savePortableCaseToDoublets(input)`, and `loadPortableCaseFromDoublets(input)`
+  preserve analysis/link-network cases as portable Doublets-backed data with
+  Unicode text, link ids, references, roles, provenance, and versions.
 - `loadWasmCore(options)` loads the Rust `wasm-bindgen` package and exposes
   draft creation, interpretation selection, formalization, evaluation,
   confidence, Links Notation serialization, and known semantic translation
@@ -198,6 +202,26 @@ const analysis = wasm.analyzeStatement('1 + 1 = 2');
 
 console.log(analysis.result.value); // true
 console.log(wasm.serializeLinksNotation('1 + 1 = 2'));
+```
+
+## Durable Cases
+
+Analysis outputs can be exported as portable case data or saved as a binary
+Doublets blob:
+
+```js
+import {
+  analyzeStatement,
+  loadPortableCaseFromDoublets,
+  savePortableCaseToDoublets,
+} from './js/src/index.js';
+
+const saved = savePortableCaseToDoublets(
+  analyzeStatement('Earth orbits the Sun')
+);
+const loaded = loadPortableCaseFromDoublets(saved);
+
+console.log(loaded.linksNetwork.links.length);
 ```
 
 ## Development
