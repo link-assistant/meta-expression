@@ -79,7 +79,7 @@ console.log('Test 1: With changesets present');
 }
 
 console.log(
-  '\nTest 2: No changesets, package "my-package" not on npm (self-healing)'
+  '\nTest 2: No changesets, package "meta-expression" not on npm (self-healing)'
 );
 {
   const result = runScript({ HAS_CHANGESETS: 'false' });

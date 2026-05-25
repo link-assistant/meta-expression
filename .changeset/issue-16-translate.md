@@ -1,5 +1,5 @@
 ---
-'my-package': minor
+'meta-expression': minor
 ---
 
 Add a Wikidata-backed translation surface that formalizes source text first,

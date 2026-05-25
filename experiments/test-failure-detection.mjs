@@ -78,7 +78,7 @@ const testCases = [
   },
   {
     name: 'Error occurred while publishing',
-    output: `🦋  error an error occurred while publishing my-package: Something went wrong`,
+    output: `🦋  error an error occurred while publishing meta-expression: Something went wrong`,
     shouldFail: true,
   },
   {
