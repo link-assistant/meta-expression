@@ -13,6 +13,7 @@ import { createPreferenceEvidence } from './preferences.js';
 import { scoreEvidenceItems } from './evidence-scoring.js';
 import { knownEvidence, knownRealWorldClaims } from './known-evidence.js';
 import { buildStatementMeaningMetadata } from './statement-formalization.js';
+import * as formalReasoning from './formal-reasoning.js';
 
 export {
   createWikimediaEvidenceClient,
@@ -133,6 +134,7 @@ export {
   rewriteLinksNotation,
   simplifyLinksNotation,
 } from './transformation-rules.js';
+export * from './formal-reasoning.js';
 export {
   createDefaultPreferenceProfile,
   createPreferenceEvidence,
@@ -336,7 +338,7 @@ export function analyzeStatement(input, options = {}) {
     ...createPreferenceEvidence(options.preferenceProfile),
   ];
   const result = formalization.computable
-    ? evaluateComputableFormalization(formalization)
+    ? evaluateComputableFormalization(formalization, options)
     : estimateFromEvidence(formalization, evidence, options);
 
   const resultLink = addResultLinks(
@@ -441,6 +443,11 @@ function buildAlternatives(text, interpretation, formalization) {
 function buildDependencies(text, interpretation, formalization) {
   const dependencies = [];
   const normalized = normalizeKey(text);
+  if (formalization.expression?.type === 'formal-reasoning-program') {
+    return formalization.expression.dependencies.map(
+      (dependency) => `${dependency.target} depends on ${dependency.source}`
+    );
+  }
   if (formalization.expression?.type === 'arithmetic-equality') {
     const expression = formalization.expression;
     dependencies.push(
@@ -546,13 +553,18 @@ export async function analyzeStatementWithLiveEvidence(input, options = {}) {
 export function generateInterpretations(input, options = {}) {
   const text = normalizeInput(input);
   const topK = Math.max(1, Math.min(options.topK ?? 3, 10));
-  const interpretations = arithmeticEqualityPattern.test(text)
-    ? arithmeticInterpretations(text)
-    : arithmeticQuestionPattern.test(text)
-      ? arithmeticQuestionInterpretations(text)
-      : isSelfReferentialFalseStatement(text)
-        ? selfReferenceInterpretations(text)
-        : realWorldInterpretations(text);
+  const interpretations = formalReasoning.isFormalReasoningInput(text)
+    ? formalReasoning.createFormalReasoningInterpretations(
+        text,
+        FORMALIZATION_LEVELS
+      )
+    : arithmeticEqualityPattern.test(text)
+      ? arithmeticInterpretations(text)
+      : arithmeticQuestionPattern.test(text)
+        ? arithmeticQuestionInterpretations(text)
+        : isSelfReferentialFalseStatement(text)
+          ? selfReferenceInterpretations(text)
+          : realWorldInterpretations(text);
 
   return interpretations.slice(0, topK);
 }
@@ -948,6 +960,12 @@ function realWorldInterpretations(text) {
 }
 
 function formalizeInterpretation(text, interpretation) {
+  if (interpretation.kind === 'formal-reasoning-program') {
+    return formalReasoning.createFormalReasoningFormalization(
+      text,
+      FORMALIZATION_LEVELS.FULLY_COMPUTABLE_EXPRESSION
+    );
+  }
   if (interpretation.kind === 'arithmetic-equality') {
     const match = text.match(arithmeticEqualityPattern);
     const leftOperand = Number(match[1]);
@@ -1032,8 +1050,13 @@ function formalizeInterpretation(text, interpretation) {
   };
 }
 
-function evaluateComputableFormalization(formalization) {
+function evaluateComputableFormalization(formalization, options = {}) {
   const expression = formalization.expression;
+  if (expression.type === 'formal-reasoning-program') {
+    return formalReasoning.formalReasoningToEvaluationResult(
+      formalReasoning.reasonFormalStatements(expression.program, options)
+    );
+  }
   const actual = evaluateArithmeticExpression(expression);
   if (expression.type === 'arithmetic-question') {
     const evidence = {
@@ -1149,6 +1172,17 @@ function addFormalizationDependencies(
   formalization
 ) {
   addStructuredMeaningLinks(context, formalizationLink, formalization);
+  if (formalization.expression.type === 'formal-reasoning-program') {
+    for (const dependency of formalization.expression.dependencies) {
+      addLink(context, {
+        role: 'depends-on',
+        references: [formalizationLink.id],
+        value: { relation: dependency.relation, ...dependency },
+        provenance: algorithmProvenance('relative-meta-logic-adapter'),
+      });
+    }
+    return;
+  }
   if (
     !['arithmetic-equality', 'arithmetic-question'].includes(
       formalization.expression.type
@@ -1419,7 +1453,10 @@ function normalizeInput(input) {
   if (typeof input !== 'string') {
     throw new TypeError('Statement input must be a string.');
   }
-  const text = input.trim().replace(/\s+/g, ' ');
+  const trimmed = input.trim();
+  const text = formalReasoning.isFormalReasoningInput(trimmed)
+    ? trimmed
+    : trimmed.replace(/\s+/g, ' ');
   if (!text) {
     throw new Error('Statement input cannot be empty.');
   }
