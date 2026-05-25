@@ -115,7 +115,7 @@ describe('issue 39 - technical sentence translation', () => {
     expect(result.questionDetails[0].selectedOptionId).toBe('preserve-source');
     expect(
       result.questionDetails[0].options.map((option) => option.id)
-    ).toEqual(['preserve-source', 'map-entity', 'manual-entry']);
+    ).toEqual(['preserve-source', 'normalized-expression', 'manual-entry']);
     assertFormalizedSourceCoverage(result, 'xyzzy');
     assertSemanticMetaLanguageCoverage(result);
   });

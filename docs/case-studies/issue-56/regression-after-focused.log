@@ -1,0 +1,37 @@
+TAP version 13
+# Subtest: issue 56 - Translate slash terms and diagnostics
+    # Subtest: splits slash-separated fallback terms before knowledge-source lookup
+    ok 1 - splits slash-separated fallback terms before knowledge-source lookup
+      ---
+      duration_ms: 10.279411
+      ...
+    # Subtest: translates the reported technical prose without slash-variable questions
+    ok 2 - translates the reported technical prose without slash-variable questions
+      ---
+      duration_ms: 30.791806
+      ...
+    # Subtest: keeps every generated question with selected actionable options
+    ok 3 - keeps every generated question with selected actionable options
+      ---
+      duration_ms: 1.231678
+      ...
+    # Subtest: exposes source-priority controls and a copyable Translate debug log
+    ok 4 - exposes source-priority controls and a copyable Translate debug log
+      ---
+      duration_ms: 9.268413
+      ...
+    1..4
+ok 1 - issue 56 - Translate slash terms and diagnostics
+  ---
+  duration_ms: 52.917247
+  type: 'suite'
+  ...
+1..1
+# tests 4
+# suites 1
+# pass 4
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 131.709912

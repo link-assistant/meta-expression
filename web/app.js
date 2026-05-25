@@ -57,6 +57,10 @@ import { setupCheckPage } from './check-ui.js';
 import { setupUniquenessPage } from './uniqueness-ui.js';
 import { setupTranslatePage } from './translate-ui.js';
 import { setupNavigation } from './navigation.js';
+import {
+  collectCheckedSourceSpec,
+  setupSourcePriorityList,
+} from './source-priority-ui.js';
 
 const beliefStorageKey = 'meta-expression.user-beliefs.v1';
 const wikimediaCacheStorageKey = 'meta-expression.wikimedia-cache.v1';
@@ -802,9 +806,7 @@ const formalizeInterpretations = document.querySelector(
 const formalizeMarkdownPre = document.querySelector('#formalize-markdown');
 const formalizeLinoPre = document.querySelector('#formalize-lino');
 const formalizeBigContexts = document.querySelector('#formalize-big-contexts');
-const formalizeSourceCheckboxes = document.querySelectorAll(
-  'input[name="formalize-source"]'
-);
+const formalizeSourceList = document.querySelector('#formalize-source-list');
 const formalizeFandomCheckbox = document.querySelector(
   '#formalize-source-fandom'
 );
@@ -829,6 +831,7 @@ if (formalizeFandomCheckbox && formalizeFandomSlug) {
     formalizeFandomSlug.disabled = !formalizeFandomCheckbox.checked;
   });
 }
+setupSourcePriorityList(formalizeSourceList);
 
 let formalizeRequestId = 0;
 let currentFormalizeResult = null;
@@ -915,21 +918,9 @@ function runFormalize({ contextLensId = null } = {}) {
 }
 
 function collectFormalizeSourcesSpec() {
-  const tokens = [];
-  for (const checkbox of formalizeSourceCheckboxes) {
-    if (!checkbox.checked) {
-      continue;
-    }
-    if (checkbox.value === 'fandom') {
-      const slug = formalizeFandomSlug?.value.trim();
-      if (slug) {
-        tokens.push(`fandom:${slug}`);
-      }
-      continue;
-    }
-    tokens.push(checkbox.value);
-  }
-  return tokens.join(',');
+  return collectCheckedSourceSpec(formalizeSourceList, {
+    fandomSlugInput: formalizeFandomSlug,
+  });
 }
 
 function readFormalizeOverrides() {

@@ -533,7 +533,7 @@ function isStopOnly(tokens) {
 
 function tokenizeWithSpans(text) {
   const source = String(text);
-  const tokenPattern = /[^\s.,!?;:"“”]+/g;
+  const tokenPattern = /[^\s.,!?;:"“”/]+/g;
   const spans = [];
   let match;
   while ((match = tokenPattern.exec(source)) !== null) {

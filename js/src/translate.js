@@ -480,6 +480,8 @@ function unresolvedPhrase(base, reason, entityId = null) {
     variable: {
       name: '',
       sourceText: base.source.text,
+      sourceLabel: base.source.label,
+      sourceUrl: base.source.url,
       entityId,
       reason,
     },
@@ -529,11 +531,15 @@ async function traceFetch(url, init, config) {
   recordStep(config, 'api-request', { method, url: requestUrl });
   try {
     const response = await config.rawFetch(requestUrl, init);
+    const bodyPreview = config.trace
+      ? await responseBodyPreview(response)
+      : null;
     recordStep(config, 'api-response', {
       method,
       url: requestUrl,
       status: response?.status ?? null,
       ok: response?.ok ?? null,
+      bodyPreview,
     });
     return response;
   } catch (error) {
@@ -543,6 +549,18 @@ async function traceFetch(url, init, config) {
       error: error instanceof Error ? error.message : String(error),
     });
     throw error;
+  }
+}
+
+async function responseBodyPreview(response) {
+  if (typeof response?.clone !== 'function') {
+    return null;
+  }
+  try {
+    const body = await response.clone().text();
+    return body.length > 500 ? `${body.slice(0, 500)}...` : body || null;
+  } catch {
+    return null;
   }
 }
 
@@ -578,11 +596,11 @@ function buildVariableQuestionDetails(variable, config) {
     reason: variable.reason,
     question,
     selectedOptionId: 'preserve-source',
-    options: buildVariableAnswerOptions(variable, config),
+    options: buildVariableAnswerOptions(variable),
   };
 }
 
-function buildVariableAnswerOptions(variable, config) {
+function buildVariableAnswerOptions(variable) {
   const options = [
     {
       id: 'preserve-source',
@@ -593,21 +611,24 @@ function buildVariableAnswerOptions(variable, config) {
     },
   ];
   if (variable.entityId) {
+    const sourceLabel = variable.sourceLabel ?? variable.sourceText;
     options.push({
-      id: 'target-label',
-      label: `Use ${config.targetLanguage} label`,
-      targetText: null,
+      id: 'source-label',
+      label: 'Use linked source label',
+      targetText: sourceLabel,
       entityId: variable.entityId,
-      description: `Resolve the ${config.targetLanguage} label for ${variable.entityId}.`,
+      targetUrl: variable.sourceUrl ?? null,
+      description: `Use the available source label for ${variable.entityId}.`,
       confidence: 0.35,
     });
   } else {
+    const normalized = variable.sourceText.replace(/[_-]+/g, ' ').trim();
     options.push({
-      id: 'map-entity',
-      label: 'Map to entity',
-      targetText: null,
+      id: 'normalized-expression',
+      label: 'Use normalized expression',
+      targetText: normalized || variable.sourceText,
       entityId: null,
-      description: 'Choose a linked entity or expression before translating.',
+      description: 'Use the source expression with word separators normalized.',
       confidence: 0.35,
     });
   }
@@ -745,15 +766,24 @@ function buildTranslatedSentence(segment, index, phrases, config) {
   );
   const terminal = terminalPunctuation(segment.text);
   const plainText = appendTerminalPunctuation(
-    punctuated.units.map((unit) => unit.plainText).join(' '),
+    punctuated.units
+      .map((unit) => unit.plainText)
+      .join(' ')
+      .replace(/\/\s+/g, '/'),
     terminal
   );
   const markdown = appendTerminalPunctuation(
-    punctuated.units.map((unit) => unit.markdown).join(' '),
+    punctuated.units
+      .map((unit) => unit.markdown)
+      .join(' ')
+      .replace(/\/\s+/g, '/'),
     terminal
   );
   const html = appendTerminalPunctuation(
-    punctuated.units.map((unit) => unit.html).join(' '),
+    punctuated.units
+      .map((unit) => unit.html)
+      .join(' ')
+      .replace(/\/\s+/g, '/'),
     terminal
   );
   const targetUnits = punctuated.units.map((unit, unitIndex) =>
@@ -853,7 +883,7 @@ function applySourceInteriorPunctuation(units, segment, sentenceId, config) {
       continue;
     }
     const trailing = segment.text.slice(offset);
-    const match = trailing.match(/^\s*([,;:])/);
+    const match = trailing.match(/^\s*([,;:/])/);
     if (!match) {
       continue;
     }
