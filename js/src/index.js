@@ -121,6 +121,13 @@ export {
   tokenizeLino,
 } from './lino.js';
 export {
+  applyObjectTransformationRules,
+  applySentenceTextTransformationRules,
+  applyTextTransformationRules,
+  rewriteLinksNotation,
+  simplifyLinksNotation,
+} from './transformation-rules.js';
+export {
   createDefaultPreferenceProfile,
   createPreferenceEvidence,
   getPreferenceEvidenceSituationProbability,

@@ -645,6 +645,8 @@ export type TransformationRule =
       id?: string;
       assign: Record<string, unknown>;
     }
+  | LinksNotationRewriteTransformationRule
+  | LinksNotationSimplifyTransformationRule
   | {
       id?: string;
       apply(
@@ -662,6 +664,101 @@ export interface TransformationContext {
   steps: TranslationStep[];
   trace?: boolean;
 }
+
+export type LinksNotationRewriteDirection =
+  | 'forward'
+  | 'left-to-right'
+  | '->'
+  | 'backward'
+  | 'right-to-left'
+  | '<-'
+  | 'reverse';
+
+export type LinksNotationRewriteOccurrence = 'all' | 'first' | number | string;
+
+export type LinksNotationRewriteEquality =
+  | string
+  | {
+      from: string;
+      to: string;
+    }
+  | {
+      left: string;
+      right: string;
+    };
+
+export interface LinksNotationRewriteOptions {
+  direction?: LinksNotationRewriteDirection;
+  occurrence?: LinksNotationRewriteOccurrence;
+  at?: LinksNotationRewriteOccurrence;
+}
+
+export interface LinksNotationSimplifyOptions {
+  direction?: LinksNotationRewriteDirection;
+  maxSteps?: number;
+  simplifyMaxSteps?: number;
+}
+
+export interface LinksNotationRewriteTransformationRule extends LinksNotationRewriteOptions {
+  id?: string;
+  rewrite:
+    | LinksNotationRewriteEquality
+    | ({
+        equality?: LinksNotationRewriteEquality;
+      } & LinksNotationRewriteOptions)
+    | ({ rule?: LinksNotationRewriteEquality } & LinksNotationRewriteOptions)
+    | ({ eq?: LinksNotationRewriteEquality } & LinksNotationRewriteOptions);
+  target?: string | string[];
+  path?: string | string[];
+}
+
+export interface LinksNotationSimplifyTransformationRule extends LinksNotationSimplifyOptions {
+  id?: string;
+  simplify:
+    | true
+    | LinksNotationRewriteEquality
+    | LinksNotationRewriteEquality[]
+    | ({
+        rules?: LinksNotationRewriteEquality | LinksNotationRewriteEquality[];
+        rewriteRules?:
+          | LinksNotationRewriteEquality
+          | LinksNotationRewriteEquality[];
+      } & LinksNotationSimplifyOptions);
+  rules?: LinksNotationRewriteEquality | LinksNotationRewriteEquality[];
+  rewriteRules?: LinksNotationRewriteEquality | LinksNotationRewriteEquality[];
+  target?: string | string[];
+  path?: string | string[];
+}
+
+export declare function rewriteLinksNotation(
+  value: string,
+  equality: LinksNotationRewriteEquality,
+  options?: LinksNotationRewriteOptions
+): string;
+
+export declare function simplifyLinksNotation(
+  value: string,
+  rules: LinksNotationRewriteEquality | LinksNotationRewriteEquality[],
+  options?: LinksNotationSimplifyOptions
+): string;
+
+export declare function applyTextTransformationRules(
+  value: unknown,
+  rules?: TransformationRule | TransformationRule[],
+  context?: Partial<TransformationContext>
+): Promise<string>;
+
+export declare function applyObjectTransformationRules<T>(
+  value: T,
+  rules?: TransformationRule | TransformationRule[],
+  context?: Partial<TransformationContext>
+): Promise<T>;
+
+export declare function applySentenceTextTransformationRules(
+  sentences: TranslationSentence[],
+  rules?: TransformationRule | TransformationRule[],
+  context?: Partial<TransformationContext>
+): Promise<TranslationSentence[]>;
 
 export interface FormalizeInterpretation {
   rank: number;
