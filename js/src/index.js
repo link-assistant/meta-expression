@@ -11,6 +11,7 @@ import {
 import { findExampleOpposite } from './examples.js';
 import { createPreferenceEvidence } from './preferences.js';
 import { scoreEvidenceItems } from './evidence-scoring.js';
+import { createProbabilityCalculation } from './probability.js';
 import { knownEvidence, knownRealWorldClaims } from './known-evidence.js';
 import { buildStatementMeaningMetadata } from './statement-formalization.js';
 import * as formalReasoning from './formal-reasoning.js';
@@ -20,6 +21,11 @@ export {
   resolveLiveEvidence,
 } from './wikimedia-evidence.js';
 export { computeEvidenceConfidence } from './evidence-scoring.js';
+export {
+  createProbabilityCalculation,
+  normalizeTruthValue,
+} from './probability.js';
+export { createIssueReportUrl, serializeLinksNotation } from './reporting.js';
 export {
   disambiguatePhrases,
   describeDisambiguation,
@@ -170,7 +176,6 @@ const arithmeticEqualityPattern =
 const arithmeticQuestionPattern =
   /^\s*(?:what\s+is\s+)?(-?\d+(?:\.\d+)?)\s*([+*/-])\s*(-?\d+(?:\.\d+)?)\??\s*$/i;
 const realWorldConfidenceEpsilon = 0.01;
-const issueReportRepoUrl = 'https://github.com/link-assistant/meta-expression';
 const selfReferentialFalseStatements = new Set([
   'this statement is false',
   'this sentence is false',
@@ -229,27 +234,10 @@ export const FORMALIZATION_LEVEL_DETAILS = Object.freeze({
   }),
 });
 
-/**
- * Example function kept for backward compatibility with the template tests.
- * @param {number} a First number
- * @param {number} b Second number
- * @returns {number} Sum of a and b
- */
 export const add = (a, b) => a + b;
 
-/**
- * Example function kept for backward compatibility with the template tests.
- * @param {number} a First number
- * @param {number} b Second number
- * @returns {number} Product of a and b
- */
 export const multiply = (a, b) => a * b;
 
-/**
- * Example async helper kept for backward compatibility.
- * @param {number} ms Milliseconds to wait
- * @returns {Promise<void>} Promise that resolves after the delay
- */
 export const delay = (ms) =>
   new Promise((resolve) => globalThis.setTimeout(resolve, ms));
 
@@ -569,205 +557,6 @@ export function generateInterpretations(input, options = {}) {
   return interpretations.slice(0, topK);
 }
 
-export function serializeLinksNotation(linksNetwork) {
-  const header = [
-    `(links-network: ${safeReference(linksNetwork.id)} ${safeReference(
-      linksNetwork.beliefSystem.id
-    )})`,
-  ];
-  const lines = linksNetwork.links.map((link) => {
-    const references =
-      link.references.length > 0
-        ? link.references.map(safeReference).join(' ')
-        : 'self';
-    const value = summarizeLinkValue(link);
-    return `(${safeReference(link.id)}: ${safeReference(
-      link.role
-    )} ${references} ${value})`;
-  });
-  return [...header, ...lines].join('\n');
-}
-
-export function createIssueReportUrl(analysis, options = {}) {
-  const repoUrl = options.repoUrl ?? issueReportRepoUrl;
-  const params = new globalThis.URLSearchParams({
-    title: createIssueReportTitle(analysis.statement.value.text),
-    body: createIssueReportBody(analysis, options),
-    labels: options.labels ?? 'bug',
-  });
-
-  return `${repoUrl.replace(/\/$/, '')}/issues/new?${params.toString()}`;
-}
-
-function createIssueReportTitle(statement) {
-  const text = normalizeInput(statement);
-  const shortened = text.length > 50 ? `${text.slice(0, 50)}...` : text;
-  return `Issue with statement: ${shortened}`;
-}
-
-function createIssueReportBody(analysis, options) {
-  const lines = [];
-  const level = describeFormalizationLevel(analysis.formalization.level);
-  const confidence =
-    analysis.result.confidence === null
-      ? 'unknown'
-      : `${Math.round(analysis.result.confidence * 100)}%`;
-
-  lines.push('## Environment');
-  lines.push('');
-  if (options.pageUrl) {
-    lines.push(`- **URL**: ${options.pageUrl}`);
-  }
-  if (options.userAgent) {
-    lines.push(`- **User Agent**: ${options.userAgent}`);
-  }
-  lines.push(
-    `- **Timestamp**: ${options.timestamp ?? new Date().toISOString()}`
-  );
-  lines.push('');
-  lines.push('## Statement');
-  lines.push('');
-  lines.push('```');
-  lines.push(analysis.statement.value.text);
-  lines.push('```');
-  lines.push('');
-  lines.push('## Interpretation');
-  lines.push('');
-  lines.push(analysis.selectedInterpretation.paraphrase);
-  lines.push('');
-  appendInterpretationLines(lines, analysis.interpretations);
-  lines.push('## Result');
-  lines.push('');
-  lines.push(`- **Value**: ${analysis.result.value}`);
-  lines.push(`- **Confidence**: ${confidence}`);
-  lines.push(`- **Formalization level**: ${level.level} - ${level.name}`);
-  lines.push(`- **Explanation**: ${analysis.result.explanation}`);
-  lines.push('');
-  lines.push('## Evidence');
-  lines.push('');
-  appendEvidenceLines(
-    lines,
-    'Supporting evidence',
-    analysis.result.supportingEvidence
-  );
-  appendEvidenceLines(
-    lines,
-    'Refuting evidence',
-    analysis.result.refutingEvidence
-  );
-  appendProbabilityCalculationLines(lines, analysis.result.calculation);
-  appendReasoningTraceLines(lines, analysis.linksNetwork.links);
-  lines.push('');
-  lines.push('## Links Notation');
-  lines.push('');
-  lines.push('```');
-  lines.push(serializeLinksNotation(analysis.linksNetwork));
-  lines.push('```');
-  lines.push('');
-  lines.push('## Description');
-  lines.push('');
-  lines.push('<!-- Please describe what looked wrong or incomplete. -->');
-  lines.push('');
-
-  return lines.join('\n');
-}
-
-function appendInterpretationLines(lines, interpretations) {
-  if (!Array.isArray(interpretations) || interpretations.length <= 1) {
-    return;
-  }
-
-  lines.push('## Candidate Interpretations');
-  lines.push('');
-  for (const interpretation of interpretations) {
-    lines.push(
-      `- **${interpretation.id}** (${interpretation.kind}): ${interpretation.paraphrase}`
-    );
-  }
-  lines.push('');
-}
-
-function appendEvidenceLines(lines, heading, evidenceItems) {
-  lines.push(`### ${heading}`);
-  if (evidenceItems.length === 0) {
-    lines.push('');
-    lines.push('None.');
-    lines.push('');
-    return;
-  }
-
-  for (const evidence of evidenceItems) {
-    const source = evidence.sourceUrl
-      ? `[${evidence.sourceType}](${evidence.sourceUrl})`
-      : evidence.sourceType;
-    lines.push(`- ${source}: ${evidence.claim}`);
-  }
-  lines.push('');
-}
-
-function appendProbabilityCalculationLines(lines, calculation) {
-  if (!calculation) {
-    return;
-  }
-
-  lines.push('## Probability Calculation');
-  lines.push('');
-  lines.push(`- **Strategy**: ${calculation.strategy}`);
-  lines.push(`- **Support weight**: ${calculation.supportWeight}`);
-  lines.push(`- **Refute weight**: ${calculation.refuteWeight}`);
-  lines.push(`- **Raw confidence**: ${calculation.rawConfidence}`);
-  lines.push(`- **Bounded confidence**: ${calculation.boundedConfidence}`);
-  lines.push('');
-  for (const evidence of calculation.evidence ?? []) {
-    const situation = evidence.situationId
-      ? `, situation ${evidence.situationId}`
-      : '';
-    lines.push(
-      `- ${evidence.polarity} weight ${evidence.weight}${situation}: ${evidence.claim}`
-    );
-  }
-  lines.push('');
-}
-
-function appendReasoningTraceLines(lines, links) {
-  const traceLinks = links.filter((link) =>
-    ['meaning', 'reasoning-step'].includes(link.role)
-  );
-  if (traceLinks.length === 0) {
-    return;
-  }
-
-  lines.push('## Reasoning Trace');
-  lines.push('');
-  for (const link of traceLinks) {
-    const source = link.value?.sourceUrl
-      ? ` ([source](${link.value.sourceUrl}))`
-      : '';
-    lines.push(
-      `- **${link.role}**: ${summarizeReportValue(link.value)}${source}`
-    );
-  }
-  lines.push('');
-}
-
-function summarizeReportValue(value) {
-  if (value === null) {
-    return '';
-  }
-  if (typeof value === 'string' || typeof value === 'number') {
-    return String(value);
-  }
-  return (
-    value.text ??
-    value.paraphrase ??
-    value.claim ??
-    value.relation ??
-    value.kind ??
-    value.expression?.type ??
-    ''
-  );
-}
-
 function createUserBeliefEvidence(formalization, userBeliefs) {
   const normalized = formalization.expression.normalized;
   if (!normalized || !userBeliefs) {
@@ -1059,31 +848,52 @@ function evaluateComputableFormalization(formalization, options = {}) {
   }
   const actual = evaluateArithmeticExpression(expression);
   if (expression.type === 'arithmetic-question') {
-    const evidence = {
-      id: 'computed-evidence-1',
-      polarity: 'support',
-      weight: 1,
-      sourceType: 'computed',
-      sourceUrl: null,
-      retrievedAt: 'local',
-      claim: `${expression.leftOperand} ${expression.operator} ${expression.rightOperand} evaluates to ${actual}.`,
-    };
-
-    return {
-      kind: 'computed',
-      value: actual,
-      actual,
-      expected: undefined,
-      confidence: 1,
-      correctness: 1,
-      signedConfidence: 1,
-      rawBalance: 1,
-      supportingEvidence: [evidence],
-      refutingEvidence: [],
-      explanation: 'The expression was computed locally.',
-    };
+    return evaluateArithmeticQuestion(expression, actual);
   }
 
+  return evaluateArithmeticEquality(expression, actual);
+}
+
+function evaluateArithmeticQuestion(expression, actual) {
+  const evidence = {
+    id: 'computed-evidence-1',
+    polarity: 'support',
+    weight: 1,
+    sourceType: 'computed',
+    sourceUrl: null,
+    retrievedAt: 'local',
+    claim: `${expression.leftOperand} ${expression.operator} ${expression.rightOperand} evaluates to ${actual}.`,
+  };
+
+  return {
+    kind: 'computed',
+    value: actual,
+    actual,
+    expected: undefined,
+    confidence: 1,
+    probability: 1,
+    correctness: 1,
+    signedConfidence: 1,
+    rawBalance: 1,
+    calculation: createProbabilityCalculation({
+      strategy: 'deterministic-arithmetic-question',
+      truthValue: 1,
+      deterministic: true,
+      inputs: arithmeticCalculationInputs(expression, actual),
+      extra: {
+        supportWeight: 1,
+        refuteWeight: 0,
+        rawConfidence: 1,
+        boundedConfidence: 1,
+      },
+    }),
+    supportingEvidence: [evidence],
+    refutingEvidence: [],
+    explanation: 'The expression was computed locally.',
+  };
+}
+
+function evaluateArithmeticEquality(expression, actual) {
   const value = Object.is(actual, expression.expected);
   const evidence = {
     id: 'computed-evidence-1',
@@ -1101,9 +911,22 @@ function evaluateComputableFormalization(formalization, options = {}) {
     actual,
     expected: expression.expected,
     confidence: value ? 1 : 0,
+    probability: value ? 1 : 0,
     correctness: value ? 1 : 0,
     signedConfidence: value ? 1 : -1,
     rawBalance: value ? 1 : -1,
+    calculation: createProbabilityCalculation({
+      strategy: 'deterministic-arithmetic-equality',
+      truthValue: value ? 1 : 0,
+      deterministic: true,
+      inputs: arithmeticCalculationInputs(expression, actual),
+      extra: {
+        supportWeight: value ? 1 : 0,
+        refuteWeight: value ? 0 : 1,
+        rawConfidence: value ? 1 : 0,
+        boundedConfidence: value ? 1 : 0,
+      },
+    }),
     supportingEvidence: value ? [evidence] : [],
     refutingEvidence: value ? [] : [evidence],
     explanation: value
@@ -1118,11 +941,33 @@ function estimateFromEvidence(formalization, evidenceFixtures, options = {}) {
       kind: 'evidence-estimate',
       value: 'undetermined',
       confidence: 0.5,
+      probability: 0.5,
       correctness: 0.5,
       signedConfidence: 0,
       rawBalance: 0,
       supportWeight: 0,
       refuteWeight: 0,
+      calculation: createProbabilityCalculation({
+        strategy: 'self-reference-truth-gap',
+        truthValue: 0.5,
+        valence: 3,
+        inputs: [
+          {
+            kind: 'statement',
+            value: formalization.expression.text,
+          },
+          {
+            kind: 'resolution',
+            value: 'truth-gap',
+          },
+        ],
+        extra: {
+          supportWeight: 0,
+          refuteWeight: 0,
+          rawConfidence: 0.5,
+          boundedConfidence: 0.5,
+        },
+      }),
       supportingEvidence: [],
       refutingEvidence: [],
       explanation:
@@ -1147,6 +992,7 @@ function estimateFromEvidence(formalization, evidenceFixtures, options = {}) {
     kind: 'evidence-estimate',
     value: boundedConfidence === null ? 'unknown' : boundedConfidence,
     confidence: boundedConfidence,
+    probability: boundedConfidence,
     correctness: boundedConfidence,
     signedConfidence: boundedSignedConfidence,
     rawBalance: confidence.rawBalance,
@@ -1257,6 +1103,9 @@ function addResultLinks(context, statement, formalizationLink, result) {
       kind: result.kind,
       value: result.value,
       confidence: result.confidence,
+      probability: result.probability,
+      correctness: result.correctness,
+      signedConfidence: result.signedConfidence,
     },
     provenance: algorithmProvenance('evaluation'),
   });
@@ -1314,6 +1163,19 @@ function addEvidenceContextLinks(context, evidenceLink, evidence) {
       });
     }
   }
+}
+
+function arithmeticCalculationInputs(expression, actual) {
+  const inputs = [
+    { kind: 'operand', id: 'left', value: expression.leftOperand },
+    { kind: 'operator', value: expression.operator },
+    { kind: 'operand', id: 'right', value: expression.rightOperand },
+    { kind: 'computed-result', value: actual },
+  ];
+  if (expression.expected !== undefined) {
+    inputs.push({ kind: 'expected-result', value: expression.expected });
+  }
+  return inputs;
 }
 
 function evaluateArithmeticExpression(expression) {
@@ -1404,39 +1266,6 @@ function createIdFactory(existingLinks = []) {
     counters.set(role, next);
     return `${role}-${next}`;
   };
-}
-
-function summarizeLinkValue(link) {
-  const value = link.value;
-  if (value === null) {
-    return safeReference(link.role);
-  }
-  if (typeof value === 'string' || typeof value === 'number') {
-    return toLinoText(value);
-  }
-  if (value.relation) {
-    return safeReference(value.relation);
-  }
-  if (value.text) {
-    return toLinoText(value.text);
-  }
-  if (value.paraphrase) {
-    return toLinoText(value.paraphrase);
-  }
-  if (value.claim) {
-    return toLinoText(value.claim);
-  }
-  if (value.expression?.type) {
-    return safeReference(value.expression.type);
-  }
-  if (value.kind) {
-    return safeReference(value.kind);
-  }
-  return safeReference(link.role);
-}
-
-function toLinoText(value) {
-  return `(${String(value).replace(/[()]/g, ' ').replace(/\s+/g, ' ').trim()})`;
 }
 
 function safeReference(value) {

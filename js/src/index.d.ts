@@ -78,12 +78,30 @@ export interface EvidenceItem {
   };
 }
 
+export type TruthRange = [number, number];
+
+export interface ProbabilityCalculationInput {
+  kind: string;
+  id?: string | null;
+  value?: unknown;
+  [key: string]: unknown;
+}
+
 export interface EvidenceCalculation {
   strategy: string;
-  supportWeight: number;
-  refuteWeight: number;
-  rawConfidence: number | null;
-  boundedConfidence: number | null;
+  truthValue: number | null;
+  truthRange: TruthRange;
+  valence: number;
+  probability: number | null;
+  correctness: number | null;
+  signedConfidence: number | null;
+  deterministic: boolean;
+  bounded: boolean;
+  inputs: ProbabilityCalculationInput[];
+  supportWeight?: number;
+  refuteWeight?: number;
+  rawConfidence?: number | null;
+  boundedConfidence?: number | null;
   realWorldUncertainty?: number;
   evidence: Array<{
     id?: string;
@@ -105,12 +123,13 @@ export interface EvaluationResult {
   actual?: number;
   expected?: number;
   confidence: number | null;
+  probability: number | null;
   correctness: number | null;
   signedConfidence: number | null;
   rawBalance: number | null;
   supportWeight?: number;
   refuteWeight?: number;
-  calculation?: EvidenceCalculation;
+  calculation: EvidenceCalculation;
   supportingEvidence: EvidenceItem[];
   refutingEvidence: EvidenceItem[];
   explanation: string;
@@ -130,6 +149,9 @@ export interface FormalReasoningDependency {
 export interface FormalReasoningFact {
   statement: string;
   probability: number;
+  truthValue?: number | null;
+  truthRange?: TruthRange;
+  valence?: number;
 }
 
 export interface FormalReasoningTraceEvent {
@@ -159,6 +181,11 @@ export interface FormalReasoningResult {
   correctness: number;
   signedConfidence: number | null;
   rawBalance: number | null;
+  probability: number | null;
+  calculation: EvidenceCalculation;
+  truthValue?: number | null;
+  truthRange?: TruthRange;
+  valence?: number;
   dependencies: FormalReasoningDependency[];
   relations: {
     contradictions: FormalReasoningDependency[];
@@ -537,6 +564,30 @@ export declare function computeEvidenceConfidence(
   supportWeight: number;
   refuteWeight: number;
 };
+
+export declare function normalizeTruthValue(
+  value: unknown,
+  options?: { truthRange?: TruthRange; valence?: number }
+): {
+  truthValue: number | null;
+  truthRange: TruthRange;
+  valence: number;
+  probability: number | null;
+  correctness: number | null;
+  signedConfidence: number | null;
+};
+
+export declare function createProbabilityCalculation(options?: {
+  strategy?: string;
+  truthValue?: unknown;
+  truthRange?: TruthRange;
+  valence?: number;
+  probability?: number | null;
+  deterministic?: boolean;
+  bounded?: boolean;
+  inputs?: ProbabilityCalculationInput[];
+  extra?: Record<string, unknown>;
+}): EvidenceCalculation;
 
 export declare function isFormalReasoningInput(input: unknown): boolean;
 
