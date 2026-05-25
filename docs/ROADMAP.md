@@ -1,36 +1,58 @@
 # Roadmap
 
-This roadmap turns the requirements from issues #1, #5, and #18 into
-incremental implementation slices. The current goal is a real, inspectable
-playground that keeps every statement, interpretation, evidence item, result,
-preference, and refinement traceable as links with provenance.
+This roadmap turns the requirements from issues #1, #5, #18, and the
+formal-ai era (#43/#48/#50/#52/#54/#56) into incremental implementation
+slices. The current goal is a real, inspectable playground that keeps every
+statement, interpretation, evidence item, result, preference, and refinement
+traceable as links with provenance — and that grows into a "solid foundation
+for [formal-ai](https://github.com/link-assistant/formal-ai), but also
+available as a tool in itself" (issue #58).
+
+For a single-page view of where each vision pillar stands and which issue
+tracks the remaining work, see
+[`IMPLEMENTATION-STATUS.md`](./IMPLEMENTATION-STATUS.md). Each phase below now
+carries a **Status** marker (`done` / `partial` / `not started`).
 
 ## Current Slice
 
-Implemented or added in PR #6:
+Shipped through issue #56 (the full list of surfaces now in the codebase —
+see [`docs/case-studies/issue-58/CODE-AUDIT.md`](./case-studies/issue-58/CODE-AUDIT.md)):
 
-- Library, CLI, microservice, and static web surfaces.
+- Library, CLI, microservice, and static web surfaces (7 web pages).
 - Deterministic interpretation and selection pipeline.
-- Formalization levels with labels and executable flags.
+- Formalization levels 1–4 with labels and an executable gate.
 - Exact arithmetic equality and arithmetic question evaluation.
-- Bounded confidence for real-world evidence estimates.
-- Fixture evidence for `Earth orbits the Sun` and `Elon Musk is alive`.
-- Fixture evidence for `Moon orbits the Sun` through the parent-body chain
-  `Moon -> Earth -> Sun`.
-- Live Wikimedia evidence resolver for liveness, capital, and orbit templates,
-  including direct and parent-chain astronomical-body checks.
-- Browser worker that resolves live evidence after initial render.
-- Local user belief slider persisted in `localStorage`.
-- `/preferences` profile with worldview, religion, context, local persistence,
-  and Links Notation import/export.
+- Bounded `correctness` (0..1) and `signedConfidence` (-1..+1) metrics.
+- Live Wikimedia evidence resolver (P36/P397/P398/P570) with a browser worker,
+  plus fixture evidence and the `Moon -> Earth -> Sun` parent-body chain.
+- `/formalize` (Markdown/Lino/HTML/CST), `/translate` (formalize → semantic
+  meta-language → naturalize), `/check` (`/fact-check`, red→green), and
+  `/uniqueness` (web + scholarly APIs).
+- `/preferences` profile with worldview, religion, context presets, local
+  persistence, and Links Notation import/export.
+- Links Notation parser **and** serializer (`js/src/lino.js`), linguistic
+  AST/CST metadata, transformation hooks (before/after phases), and
+  naturalization/deformalization aliasing.
+- Formal-AI prompt translation (en/ru/hi/zh) and upstream-corpus tracking
+  (706 case IDs as a fixture).
 - Prefilled GitHub issue reporting with interpretations, Q/P reasoning traces,
   evidence, and Links Notation.
-- Rust core workspace with Doublets-based relation-link encoding and WASM-ready
-  crate type, including deterministic issue #35/#52 translation fixtures and
-  Wikimedia cache/batch planning helpers.
-- Canonical top-level requirements and roadmap docs.
+- Rust core with `doublets` relation-link encoding, issue #52 translation
+  coverage, Wikimedia cache/batch planning, and a C ABI (WASM-ready
+  crate type, but no `wasm-bindgen` packaging yet).
+
+### Known blockers (planned in issue #58)
+
+The audit found foundation problems that block the vision and are tracked as
+issues opened from #58: template `package.json` identity, no WASM build, no
+official `links-notation`/`lino-arguments` adoption, no `relative-meta-logic`
+integration (computation is arithmetic-only), fixture-driven formalization,
+and the upstream corpus being tracked but not executed.
 
 ## Phase 1: Stabilize Public Surfaces
+
+> Status: **partial** — all four surfaces ship with tests, but package
+> metadata is still the template placeholder (issue #58 foundation fix).
 
 Goal: make the current JavaScript API, CLI, service, and web prototype reliable
 while Rust parity grows.
@@ -49,6 +71,9 @@ Exit criteria:
 
 ## Phase 2: Rust Core and WebAssembly
 
+> Status: **partial** — the Rust core and parity fixtures exist, but there is
+> no `wasm-bindgen` packaging yet, so the web app cannot call the Rust core.
+
 Goal: move deterministic reasoning and links operations into Rust.
 
 - Expand `rust` structs for links, relation links, evidence, belief
@@ -66,6 +91,9 @@ Exit criteria:
   behavior.
 
 ## Phase 3: Live Wikimedia Evidence
+
+> Status: **partial** — live P36/P397/P398/P570 templates resolve in a worker;
+> cancellation/backoff, persistent cache, and scoped WDQS remain.
 
 Goal: replace fixture-only evidence with scoped live retrieval.
 
@@ -87,6 +115,10 @@ Exit criteria:
 
 ## Phase 4: Links Notation Persistence
 
+> Status: **partial** — a hand-rolled parser/serializer (`js/src/lino.js`) and
+> import/export exist; the official `links-notation` dependency and durable
+> persistence are not adopted yet.
+
 Goal: make Links Notation the human-readable storage and exchange format.
 
 - Add the real `links-notation` parser/formatter dependency.
@@ -104,6 +136,9 @@ Exit criteria:
 
 ## Phase 5: Doublets Storage
 
+> Status: **not started** — only the Rust `doublets` encoding foundation
+> exists; durable save/load and Unicode sequences remain.
+
 Goal: move durable state from JavaScript objects to associative binary links.
 
 - Map link IDs, references, roles, scalar values, provenance, and versions into
@@ -120,6 +155,9 @@ Exit criteria:
 
 ## Phase 6: Relative Meta Logic
 
+> Status: **not started** — computation is the arithmetic-only evaluator;
+> `relative-meta-logic` is not integrated (the central full-computability gap).
+
 Goal: replace local arithmetic-only evaluation with the intended formal logic
 engine where it fits.
 
@@ -135,6 +173,9 @@ Exit criteria:
 - Unsupported expressions remain partial rather than silently guessed.
 
 ## Phase 7: Belief and Formal-System Configuration
+
+> Status: **partial** — web preference/context profiles and source weights
+> exist; promotion to CLI/service and symbol/operator overrides remain.
 
 Goal: make confidence and formal semantics reproducible.
 
@@ -154,6 +195,10 @@ Exit criteria:
 
 ## Phase 8: Interpretation and Refinement
 
+> Status: **partial** — deterministic top-3 interpretations and selection
+> exist; provider interface, top-N, clustering, refinement, and standalone
+> entity-reference mode remain.
+
 Goal: improve ambiguity handling while keeping user selection explicit.
 
 - Add provider interface for deterministic rules, optional LLM candidates, and
@@ -169,6 +214,9 @@ Exit criteria:
 - LLM output is never counted as truth evidence.
 
 ## Phase 9: React GitHub Pages App
+
+> Status: **not started** — the web app is still the static prototype; it
+> depends on the Phase 2 WASM build.
 
 Goal: replace the static prototype with the requested React experience.
 
@@ -186,6 +234,9 @@ Exit criteria:
   evidence when network access succeeds.
 
 ## Phase 10: Wikipedia Text Evidence
+
+> Status: **not started** — Wikipedia text is used by the translation-quality
+> gate, but candidate-claim evidence extraction is not implemented.
 
 Goal: extract candidate confirmations/refutations from Wikipedia text without
 turning free text into unverified truth.
