@@ -3,6 +3,7 @@ use doublets::Doublet;
 mod analysis;
 mod formal_ai_support;
 mod issue52;
+mod statement_formalization;
 #[cfg(target_arch = "wasm32")]
 mod wasm;
 mod wikimedia_plan;
