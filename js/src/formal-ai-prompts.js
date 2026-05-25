@@ -5,6 +5,13 @@ import {
   TRANSLATION_STRATEGIES,
 } from './translation-strategies.js';
 
+export const SUPPORTED_FORMAL_AI_TRANSLATION_LANGUAGES = Object.freeze([
+  'en',
+  'ru',
+  'hi',
+  'zh',
+]);
+
 const languageAliases = new Map([
   ['en', 'en'],
   ['english', 'en'],

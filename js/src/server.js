@@ -335,7 +335,9 @@ async function sendTranslate(response, params, ctx) {
     return;
   }
   const sources = params.sourcesSpec
-    ? parseSourceSpec(params.sourcesSpec)
+    ? parseSourceSpec(params.sourcesSpec, {
+        language: params.sourceLanguage ?? 'en',
+      })
     : undefined;
   const repoOverrides = params.noRepoOverrides ? [] : await loadRepoOverrides();
   const userOverrides = Array.isArray(params.overrides)

@@ -823,6 +823,8 @@ Barack Obama was born in Hawaii.</textarea
               <option value="es">Español</option>
               <option value="fr">Français</option>
               <option value="de">Deutsch</option>
+              <option value="hi">हिन्दी</option>
+              <option value="zh">中文</option>
             </select>
           </label>
           <label class="translate-option">
@@ -833,10 +835,17 @@ Barack Obama was born in Hawaii.</textarea
               <option value="es">Español</option>
               <option value="fr">Français</option>
               <option value="de">Deutsch</option>
+              <option value="hi">हिन्दी</option>
+              <option value="zh">中文</option>
             </select>
           </label>
           <fieldset class="translate-strategy">
             <legend data-i18n="translate.strategy">Strategy</legend>
+            <p class="section-hint" data-i18n="translate.strategyHint">
+              Contextual glossary uses source-backed Wikidata/Wiktionary
+              translations first. Semantic labels use linked entity labels only.
+              Lexical glossary prefers readable word and phrase translations.
+            </p>
             <div id="translate-strategy" class="translate-strategy-group"></div>
           </fieldset>
           <fieldset class="translate-target">
@@ -867,6 +876,11 @@ Barack Obama was born in Hawaii.</textarea
           </fieldset>
           <fieldset class="translate-sources">
             <legend data-i18n="translate.sources">Sources</legend>
+            <p class="section-hint" data-i18n="translate.sourcesHint">
+              Drag checked sources to set lookup order: Wikipedia article
+              matches, Wikidata Q/P entities and target labels, then Wiktionary
+              lexical definitions and translation entries.
+            </p>
             <div class="source-priority-list" id="translate-source-list">
               <label
                 class="translate-source-option source-priority-option"

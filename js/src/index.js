@@ -65,6 +65,7 @@ export {
 export { translateText, translateTextWith } from './translate.js';
 export {
   parseFormalAiTranslationPrompt,
+  SUPPORTED_FORMAL_AI_TRANSLATION_LANGUAGES,
   translateFormalAiPrompt,
   translateFormalAiPromptWith,
 } from './formal-ai-prompts.js';

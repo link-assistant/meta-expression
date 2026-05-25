@@ -134,11 +134,15 @@ const dictionaries = {
     'translate.from': 'From',
     'translate.to': 'To',
     'translate.strategy': 'Strategy',
+    'translate.strategyHint':
+      'Contextual glossary uses source-backed Wikidata/Wiktionary translations first. Semantic labels use linked entity labels only. Lexical glossary prefers readable word and phrase translations.',
     'translate.linkTarget': 'Link target',
     'translate.linkWikidata': 'Wikidata',
     'translate.linkWikipedia': 'Wikipedia',
     'translate.linkLocal': 'Local viewer',
     'translate.sources': 'Sources',
+    'translate.sourcesHint':
+      'Drag checked sources to set lookup order: Wikipedia article matches, Wikidata Q/P entities and target labels, then Wiktionary lexical definitions and translation entries.',
     'translate.sourceWikidata': 'Wikidata',
     'translate.sourceWiktionary': 'Wiktionary',
     'translate.runButton': 'Translate',
@@ -303,11 +307,15 @@ const dictionaries = {
     'translate.from': 'С языка',
     'translate.to': 'На язык',
     'translate.strategy': 'Стратегия',
+    'translate.strategyHint':
+      'Контекстный глоссарий сначала использует переводы из Wikidata/Wiktionary. Семантические метки используют только метки связанных сущностей. Лексический глоссарий предпочитает читаемые переводы слов и фраз.',
     'translate.linkTarget': 'Цель ссылок',
     'translate.linkWikidata': 'Wikidata',
     'translate.linkWikipedia': 'Wikipedia',
     'translate.linkLocal': 'Локальный просмотр',
     'translate.sources': 'Источники',
+    'translate.sourcesHint':
+      'Перетащите включенные источники, чтобы задать порядок поиска: статьи Wikipedia, Q/P-сущности и целевые метки Wikidata, затем лексические определения и переводы Wiktionary.',
     'translate.sourceWikidata': 'Wikidata',
     'translate.sourceWiktionary': 'Wiktionary',
     'translate.runButton': 'Перевести',

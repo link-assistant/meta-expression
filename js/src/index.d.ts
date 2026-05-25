@@ -869,6 +869,8 @@ export interface TranslationPhrase {
     entityId: string | null;
     description: string | null;
     url: string | null;
+    source?: string | null;
+    sourceUrl?: string | null;
     status: string;
     strategy?: string | null;
   };
@@ -1063,6 +1065,13 @@ export interface FormalAiTranslationPromptResult extends TranslateResult {
   answer: string;
   evidenceLinks: string[];
 }
+
+export declare const SUPPORTED_FORMAL_AI_TRANSLATION_LANGUAGES: readonly [
+  'en',
+  'ru',
+  'hi',
+  'zh',
+];
 
 export declare function parseFormalAiTranslationPrompt(
   input: string

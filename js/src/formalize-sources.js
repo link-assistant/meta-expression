@@ -695,40 +695,51 @@ export function createSourceRegistry(sources = []) {
  *   fandom-host:<host>     e.g. `fandom-host:tolkiengateway.net`
  *
  * @param {string|string[]} spec
+ * @param {object} [options]
+ * @param {string} [options.language]
  * @returns {object[]}
  */
-export function parseSourceSpec(spec) {
+export function parseSourceSpec(spec, options = {}) {
+  const language = options.language ?? 'en';
   const tokens = (Array.isArray(spec) ? spec : String(spec ?? '').split(','))
     .map((token) => token.trim())
     .filter(Boolean);
   if (tokens.length === 0) {
-    return [createWikidataSource()];
+    return [createWikidataSource({ language })];
   }
   const sources = [];
   for (const token of tokens) {
     if (token === SOURCE_KIND.WIKIPEDIA) {
-      sources.push(createWikipediaSource());
+      sources.push(createWikipediaSource({ language }));
       continue;
     }
     if (token === SOURCE_KIND.WIKIDATA) {
-      sources.push(createWikidataSource());
+      sources.push(createWikidataSource({ language }));
       continue;
     }
     if (token === SOURCE_KIND.WIKTIONARY) {
-      sources.push(createWiktionarySource());
+      sources.push(createWiktionarySource({ language }));
       continue;
     }
     if (token === SOURCE_KIND.WORDNET) {
-      sources.push(createWordNetSource());
+      sources.push(createWordNetSource({ language }));
       continue;
     }
     if (token.startsWith('fandom:')) {
-      sources.push(createFandomSource({ wiki: token.slice('fandom:'.length) }));
+      sources.push(
+        createFandomSource({
+          wiki: token.slice('fandom:'.length),
+          language,
+        })
+      );
       continue;
     }
     if (token.startsWith('fandom-host:')) {
       sources.push(
-        createFandomSource({ host: token.slice('fandom-host:'.length) })
+        createFandomSource({
+          host: token.slice('fandom-host:'.length),
+          language,
+        })
       );
       continue;
     }

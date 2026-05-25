@@ -26,18 +26,19 @@ single fallback tokens:
 
 Those tokens were then rendered as encoded Wiktionary page lookups such as
 `naturalization%2Fdeformalization` and `CST%2FAST`. The translation layer also
-lacked glossary coverage for the issue text, so many English technical terms
-stayed unresolved and generated questions. Some generated question options were
-disabled placeholders, so the UI showed alternatives without actionable answers.
+had no source-backed lexical translation path for Wiktionary entries, so many
+English technical terms stayed unresolved unless a local fallback glossary
+covered them. Some generated question options were disabled placeholders, so
+the UI showed alternatives without actionable answers.
 
 ## Root Causes
 
 1. Slash was not a token boundary in `formalize.js`, so unsupported slash pairs
    became one lexical phrase instead of two linked terms with punctuation
    preserved between them.
-2. Translate had no focused glossary coverage for the Formal AI issue-56 prose,
-   so deterministic technical tokens fell through to non-Wikidata lexical
-   variables.
+2. Translate could use Wikidata labels for Q/P-linked entities, but non-Q
+   lexical terms from Wiktionary could not be translated from Wiktionary
+   translation entries.
 3. Question details included placeholder options with `targetText: null`, which
    made the UI show unavailable choices.
 4. Translate exposed final artifacts and a step list, but not a single
@@ -66,10 +67,20 @@ second for canonical graph entities, and Wiktionary as the lexical fallback.
 
 - Treat `/` as a token delimiter during formalization while preserving the slash
   as punctuation in rendered Translate output.
-- Extend the English-to-Russian glossary for the reported Formal AI issue text.
+- Add source-backed Wiktionary lexical translation: read source-page wikitext,
+  extract target-language `{{t...}}` translation templates, verify the target
+  Wiktionary page exists, and record source/target URLs in the debug trace.
+- Keep linked Wikidata/Wikipedia entities ahead of lexical and local fallback
+  translations, so source priority remains Wikipedia, Wikidata, then
+  Wiktionary.
+- Remove the issue-specific local glossary entries from the draft fix.
 - Keep question alternatives actionable by replacing disabled placeholder
   options with selected source-label or normalized-expression options.
 - Add draggable source-priority controls on Formalize and Translate pages.
+- Add Translate UI descriptions for source drag/drop ordering and translation
+  strategy behavior.
 - Add a copyable Translate debug log that includes UI context, formalized input,
   translated output, text-mode questions with selected options, raw translation
   steps, request/response records, and CST JSON.
+- Add all-supported-target-language fixture coverage for the current Formal AI
+  translation targets: English, Russian, Hindi, and Chinese.

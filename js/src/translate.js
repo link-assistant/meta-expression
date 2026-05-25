@@ -5,6 +5,7 @@ import {
   normalizeTranslationStrategy,
   TRANSLATION_STRATEGIES,
 } from './translation-strategies.js';
+import { lookupWikimediaTranslation } from './wikimedia-translation.js';
 import { buildLexicalTarget, lexicalSemanticId } from './lexical-entities.js';
 import { createTargetEntityBatchLoader } from './target-entity-loader.js';
 import {
@@ -195,6 +196,7 @@ function createTranslateConfig(options) {
         recordStep(config, 'api-cache-hit', { url: cachedUrl }),
     }),
   };
+  config.recordStep = (type, details) => recordStep(config, type, details);
   config.fetchImpl = rawFetch
     ? (url, init) => traceFetch(url, init, config)
     : null;
@@ -302,19 +304,26 @@ function sourceUrlForSemanticEntity(entity) {
   }
   return `${wikidataEntityBaseUrl}${entity.id}`;
 }
-
 async function translatePhrase(phrase, config) {
   const translationEntity = translatableEntityForPhrase(phrase, config);
-  const glossaryTranslation = lookupGlossaryTranslation(phrase.text, config);
+  const sourceBackedTranslation =
+    translationEntity ||
+    config.translationStrategy === TRANSLATION_STRATEGIES.SEMANTIC_LABEL
+      ? null
+      : await lookupWikimediaTranslation(phrase, config);
+  const glossaryTranslation =
+    sourceBackedTranslation || translationEntity
+      ? null
+      : lookupGlossaryTranslation(phrase.text, config);
   const base = buildPhraseTranslationBase(
     phrase,
-    glossaryTranslation ? null : translationEntity,
+    sourceBackedTranslation || glossaryTranslation ? null : translationEntity,
     config
   );
-  if (glossaryTranslation) {
+  if (sourceBackedTranslation || glossaryTranslation) {
     const translated = translatedGlossaryPhrase(
       base,
-      glossaryTranslation,
+      sourceBackedTranslation ?? glossaryTranslation,
       config
     );
     recordPhraseStep(translated, config);
@@ -377,7 +386,6 @@ async function translatePhrase(phrase, config) {
   recordPhraseStep(translated, config);
   return translated;
 }
-
 function translatedGlossaryPhrase(base, translation, config) {
   const entityId = base.source.entityId ?? null;
   const target = targetForGlossaryTranslation(translation, config);
@@ -390,19 +398,22 @@ function translatedGlossaryPhrase(base, translation, config) {
       entityId: target.entityId,
       description: target.description,
       url: target.url,
+      source: target.source,
+      sourceUrl: target.sourceUrl,
       status: 'translated',
       strategy: translation.strategy,
     },
     variable: null,
   };
 }
-
 function targetForGlossaryTranslation(translation, config) {
   if (translation.target) {
     return {
       entityId: translation.target.entityId ?? null,
       description: translation.target.description ?? null,
       url: translation.target.url ?? null,
+      source: translation.target.source ?? null,
+      sourceUrl: translation.target.sourceUrl ?? null,
     };
   }
   const lexicalTarget = buildLexicalTarget(
@@ -414,9 +425,10 @@ function targetForGlossaryTranslation(translation, config) {
     entityId: lexicalTarget.entityId,
     description: lexicalTarget.description,
     url: lexicalTarget.url,
+    source: 'lexical',
+    sourceUrl: null,
   };
 }
-
 function buildPhraseTranslationBase(phrase, translationEntity, config) {
   const sourceEntity = translationEntity ?? phrase.entity ?? null;
   return {
@@ -1454,8 +1466,7 @@ function englishIndefiniteArticleFor(value) {
 }
 
 function terminalPunctuation(value) {
-  const match = String(value).match(/[.!?]+$/);
-  return match?.[0] ?? '';
+  return String(value).match(/[.!?]+$/)?.[0] ?? '';
 }
 
 function appendTerminalPunctuation(value, punctuation) {

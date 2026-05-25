@@ -100,11 +100,11 @@ export function setupTranslatePage({
       const result = await translateTextWith(text, {
         fetch: globalThis.fetch?.bind(globalThis),
         cache,
-        sourceLanguage: sourceLanguage?.value ?? 'en',
-        targetLanguage: targetLanguage?.value ?? 'ru',
+        sourceLanguage: selectedLanguageValue(sourceLanguage, 'en'),
+        targetLanguage: selectedLanguageValue(targetLanguage, 'ru'),
         linkTargetMode: selectedTranslateLinkTargetMode(linkTargetGroup),
         translationStrategy: strategyState.selected,
-        sources: sourcesSpec ? parseSourceSpec(sourcesSpec) : undefined,
+        sources: selectedTranslateSources(sourcesSpec, sourceLanguage),
       });
       if (status.dataset.requestId !== id) {
         return;
@@ -163,6 +163,19 @@ export function setupTranslatePage({
   }
 
   return { getResult: () => currentResult };
+}
+
+function selectedLanguageValue(select, fallback) {
+  return select?.value ?? fallback;
+}
+
+function selectedTranslateSources(sourcesSpec, sourceLanguage) {
+  if (!sourcesSpec) {
+    return undefined;
+  }
+  return parseSourceSpec(sourcesSpec, {
+    language: selectedLanguageValue(sourceLanguage, 'en'),
+  });
 }
 
 function selectedTranslateLinkTargetMode(linkTargetGroup) {
@@ -381,6 +394,12 @@ function formatStep(step) {
   }
   if (step.type === 'translation-phrase') {
     return `Phrase: ${step.sourceText} -> ${step.targetText} (${step.status})`;
+  }
+  if (step.type === 'wiktionary-translation') {
+    return `Wiktionary: ${step.sourceText} -> ${step.targetText}`;
+  }
+  if (step.type === 'wiktionary-translation-miss') {
+    return `Wiktionary miss: ${step.sourceText}`;
   }
   if (step.type === 'transformation-rule') {
     return `Rule: ${step.rule} (${step.sentenceId})`;
