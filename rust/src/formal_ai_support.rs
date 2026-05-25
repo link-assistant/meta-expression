@@ -1,8 +1,10 @@
 use crate::SemanticTranslation;
 
-#[derive(Debug, Clone, PartialEq, Eq)]
+#[derive(Debug, Clone, PartialEq, Eq, serde::Serialize)]
+#[serde(rename_all = "camelCase")]
 pub struct LinguisticFragment {
     pub id: String,
+    #[serde(rename = "type")]
     pub kind: String,
     pub role: String,
     pub text: String,
@@ -13,7 +15,8 @@ pub struct LinguisticFragment {
     pub source_end: Option<usize>,
 }
 
-#[derive(Debug, Clone, PartialEq, Eq)]
+#[derive(Debug, Clone, PartialEq, Eq, serde::Serialize)]
+#[serde(rename_all = "camelCase")]
 pub struct LinguisticDependency {
     pub id: String,
     pub relation: String,
@@ -21,9 +24,11 @@ pub struct LinguisticDependency {
     pub dependent_fragment_id: String,
 }
 
-#[derive(Debug, Clone, PartialEq, Eq)]
+#[derive(Debug, Clone, PartialEq, Eq, serde::Serialize)]
+#[serde(rename_all = "camelCase")]
 pub struct LinguisticRelation {
     pub id: String,
+    #[serde(rename = "type")]
     pub kind: String,
     pub subject_fragment_id: String,
     pub predicate_fragment_id: String,
@@ -33,7 +38,8 @@ pub struct LinguisticRelation {
     pub source_end: usize,
 }
 
-#[derive(Debug, Clone, PartialEq, Eq)]
+#[derive(Debug, Clone, PartialEq, Eq, serde::Serialize)]
+#[serde(rename_all = "camelCase")]
 pub struct LinguisticAstSentence {
     pub id: String,
     pub text: String,
@@ -46,7 +52,8 @@ pub struct LinguisticAstSentence {
     pub source_end: usize,
 }
 
-#[derive(Debug, Clone, PartialEq, Eq)]
+#[derive(Debug, Clone, PartialEq, Eq, serde::Serialize)]
+#[serde(rename_all = "camelCase")]
 pub struct LinguisticMetadata {
     pub text: String,
     pub language: String,

@@ -12,6 +12,7 @@ import { findExampleOpposite } from './examples.js';
 import { createPreferenceEvidence } from './preferences.js';
 import { scoreEvidenceItems } from './evidence-scoring.js';
 import { knownEvidence, knownRealWorldClaims } from './known-evidence.js';
+import { buildStatementMeaningMetadata } from './statement-formalization.js';
 
 export {
   createWikimediaEvidenceClient,
@@ -897,18 +898,16 @@ function realWorldInterpretations(text) {
   const knownClaim = knownRealWorldClaims[normalizeKey(text)];
   const interpretations = [
     {
-      kind: knownClaim?.interpretationKind ?? 'real-world-claim',
+      kind: knownClaim?.interpretationKind ?? 'general-human-language-claim',
       paraphrase:
         knownClaim?.paraphrase ??
-        `Treat "${text}" as a factual claim that needs evidence.`,
+        `Treat "${text}" as a human-language claim with structured meaning links that still needs evidence.`,
       examples: knownClaim?.examples ?? [
-        'Evidence may support or refute the claim',
+        'Extract subject, predicate, object, and lexical meaning candidates',
       ],
       confidence: knownClaim ? 0.95 : 0.5,
-      source: 'deterministic-rule',
-      formalizationLevel: knownClaim
-        ? FORMALIZATION_LEVELS.PARTIAL_FORMAL_EXPRESSION
-        : FORMALIZATION_LEVELS.STRUCTURED_MEANING_LINKS,
+      source: knownClaim ? 'deterministic-rule' : 'general-formalizer',
+      formalizationLevel: FORMALIZATION_LEVELS.PARTIAL_FORMAL_EXPRESSION,
     },
     {
       kind: 'ambiguous-claim',
@@ -991,25 +990,32 @@ function formalizeInterpretation(text, interpretation) {
 
   const normalized = normalizeKey(text);
   const knownClaim = knownRealWorldClaims[normalized];
+  const structured = buildStatementMeaningMetadata(text);
 
   return {
-    level: knownClaim
-      ? FORMALIZATION_LEVELS.PARTIAL_FORMAL_EXPRESSION
-      : interpretation.formalizationLevel,
+    level: FORMALIZATION_LEVELS.PARTIAL_FORMAL_EXPRESSION,
     computable: false,
     expression: {
       type: knownClaim?.expressionType ?? 'partial-claim',
       text,
       normalized,
       wikidata: knownClaim?.wikidata ?? null,
+      ast: structured.ast,
+      cst: structured.cst,
+      linguisticMetadata: structured.linguisticMetadata,
+      meaningLinks: structured.meaningLinks,
+      variables: structured.variables,
+      questions: structured.questions,
     },
-    unknowns: knownClaim ? [] : ['formal predicate', 'evidence source mapping'],
-    refinementSuggestions: knownClaim
+    unknowns: knownClaim
       ? []
       : [
-          'Choose a specific subject.',
-          'Choose a relation that can be checked against evidence.',
+          ...structured.variables.map((variable) => variable.name),
+          'evidence source mapping',
         ],
+    refinementSuggestions: knownClaim
+      ? []
+      : structured.questions.map((question) => question.text),
   };
 }
 
@@ -1129,6 +1135,7 @@ function addFormalizationDependencies(
   formalizationLink,
   formalization
 ) {
+  addStructuredMeaningLinks(context, formalizationLink, formalization);
   if (
     !['arithmetic-equality', 'arithmetic-question'].includes(
       formalization.expression.type
@@ -1168,6 +1175,29 @@ function addFormalizationDependencies(
       references: [formalizationLink.id, dependency.id],
       value: { relation: 'depends-on' },
       provenance: algorithmProvenance('dependency-extraction'),
+    });
+  }
+}
+
+function addStructuredMeaningLinks(context, formalizationLink, formalization) {
+  for (const link of formalization.expression.meaningLinks ?? []) {
+    addLink(context, {
+      role: 'meaning',
+      references: [formalizationLink.id],
+      value: {
+        text: `${link.text} -> ${link.target.id}`,
+        phrase: link.text,
+        role: link.role,
+        targetId: link.target.id,
+        targetLabel: link.target.label,
+        targetSource: link.target.source,
+        sourceUrl: link.target.sourceUrl,
+        status: link.status,
+        questionIds: (formalization.expression.questions ?? [])
+          .filter((question) => question.meaningLinkId === link.id)
+          .map((question) => question.id),
+      },
+      provenance: algorithmProvenance('general-formalization'),
     });
   }
 }

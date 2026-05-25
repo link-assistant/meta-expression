@@ -1,3 +1,7 @@
+use crate::statement_formalization::{
+    questions_from_structured_metadata, statement_meaning_metadata,
+    unknowns_from_structured_metadata,
+};
 use serde::Serialize;
 use serde_json::{json, Value};
 
@@ -407,26 +411,28 @@ fn generate_interpretations(input: &str) -> Vec<Interpretation> {
 
     let known = known_claim(input);
     let known_ref = known.as_ref();
+    let mut primary_interpretation = interpretation(
+        known_ref
+            .map(|claim| claim.interpretation_kind)
+            .unwrap_or("general-human-language-claim"),
+        known_ref
+            .map(|claim| claim.paraphrase.to_string())
+            .unwrap_or_else(|| {
+                format!(
+                    "Treat \"{input}\" as a human-language claim with structured meaning links that still needs evidence."
+                )
+            }),
+        known_ref.map(|claim| claim.examples.to_vec()).unwrap_or_else(|| {
+            vec!["Extract subject, predicate, object, and lexical meaning candidates"]
+        }),
+        if known.is_some() { 0.95 } else { 0.5 },
+        PARTIAL_FORMAL_EXPRESSION,
+    );
+    if known.is_none() {
+        primary_interpretation.source = "general-formalizer".to_string();
+    }
     vec![
-        interpretation(
-            known_ref
-                .map(|claim| claim.interpretation_kind)
-                .unwrap_or("real-world-claim"),
-            known_ref
-                .map(|claim| claim.paraphrase.to_string())
-                .unwrap_or_else(|| {
-                    format!("Treat \"{input}\" as a factual claim that needs evidence.")
-                }),
-            known_ref
-                .map(|claim| claim.examples.to_vec())
-                .unwrap_or_else(|| vec!["Evidence may support or refute the claim"]),
-            if known.is_some() { 0.95 } else { 0.5 },
-            if known.is_some() {
-                PARTIAL_FORMAL_EXPRESSION
-            } else {
-                STRUCTURED_MEANING_LINKS
-            },
-        ),
+        primary_interpretation,
         interpretation(
             "ambiguous-claim",
             "The statement may need a more specific subject or relation.",
@@ -526,10 +532,9 @@ fn formalize_interpretation(text: &str, interpretation: &Interpretation) -> Form
     let normalized = normalize_key(text);
     let known = known_claim(text);
     let known_ref = known.as_ref();
+    let structured = statement_meaning_metadata(text);
     Formalization {
-        level: known_ref
-            .map(|_| PARTIAL_FORMAL_EXPRESSION)
-            .unwrap_or(interpretation.formalization_level),
+        level: PARTIAL_FORMAL_EXPRESSION,
         computable: false,
         expression: json!({
             "type": known_ref.map(|claim| claim.expression_type).unwrap_or("partial-claim"),
@@ -537,23 +542,23 @@ fn formalize_interpretation(text: &str, interpretation: &Interpretation) -> Form
             "normalized": normalized,
             "wikidata": known_ref
                 .map(|claim| claim.wikidata.clone())
-                .unwrap_or(Value::Null)
+                .unwrap_or(Value::Null),
+            "ast": structured["ast"].clone(),
+            "cst": structured["cst"].clone(),
+            "linguisticMetadata": structured["linguisticMetadata"].clone(),
+            "meaningLinks": structured["meaningLinks"].clone(),
+            "variables": structured["variables"].clone(),
+            "questions": structured["questions"].clone()
         }),
         unknowns: if known.is_some() {
             Vec::new()
         } else {
-            vec![
-                "formal predicate".to_string(),
-                "evidence source mapping".to_string(),
-            ]
+            unknowns_from_structured_metadata(&structured)
         },
         refinement_suggestions: if known.is_some() {
             Vec::new()
         } else {
-            vec![
-                "Choose a specific subject.".to_string(),
-                "Choose a relation that can be checked against evidence.".to_string(),
-            ]
+            questions_from_structured_metadata(&structured)
         },
     }
 }
@@ -719,6 +724,7 @@ fn add_formalization_dependencies(
     formalization_link: &LinkRecord,
     formalization: &Formalization,
 ) {
+    add_structured_meaning_links(context, formalization_link, formalization);
     let expression_type = formalization.expression["type"]
         .as_str()
         .unwrap_or_default();
@@ -780,6 +786,48 @@ fn add_formalization_dependencies(
             vec![formalization_link.id.clone(), dependency.id],
             json!({ "relation": "depends-on" }),
             algorithm_provenance("dependency-extraction"),
+        );
+    }
+}
+
+fn add_structured_meaning_links(
+    context: &mut Context,
+    formalization_link: &LinkRecord,
+    formalization: &Formalization,
+) {
+    let Some(links) = formalization.expression["meaningLinks"].as_array() else {
+        return;
+    };
+    for link in links {
+        let text = link["text"].as_str().unwrap_or_default();
+        let target_id = link["target"]["id"].as_str().unwrap_or_default();
+        let question_ids = formalization.expression["questions"]
+            .as_array()
+            .map(|questions| {
+                questions
+                    .iter()
+                    .filter(|question| question["meaningLinkId"] == link["id"])
+                    .filter_map(|question| question["id"].as_str().map(str::to_string))
+                    .collect::<Vec<_>>()
+            })
+            .unwrap_or_default();
+        add_link(
+            context,
+            None,
+            "meaning",
+            vec![formalization_link.id.clone()],
+            json!({
+                "text": format!("{text} -> {target_id}"),
+                "phrase": text,
+                "role": link["role"],
+                "targetId": target_id,
+                "targetLabel": link["target"]["label"],
+                "targetSource": link["target"]["source"],
+                "sourceUrl": link["target"]["sourceUrl"],
+                "status": link["status"],
+                "questionIds": question_ids
+            }),
+            algorithm_provenance("general-formalization"),
         );
     }
 }
