@@ -263,7 +263,7 @@ target and entity hydration).
 
 **Returns** `object` — Registry with `primary`, `all`, `byName`.
 
-### `parseSourceSpec(spec)`
+### `parseSourceSpec(spec, options)`
 
 Parse a comma-separated source spec (used by CLI / server / web URL
 params) into a list of source instances. Supported tokens:
@@ -272,9 +272,11 @@ wordnet
 fandom:<slug> e.g. `fandom:genshin-impact`
 fandom-host:<host> e.g. `fandom-host:tolkiengateway.net`
 
-| Parameter | Type               | Description |
-| --------- | ------------------ | ----------- |
-| `spec`    | `string\|string[]` | —           |
+| Parameter            | Type               | Description |
+| -------------------- | ------------------ | ----------- |
+| `spec`               | `string\|string[]` | —           |
+| `[options]`          | `object`           | —           |
+| `[options.language]` | `string`           | —           |
 
 **Returns** `object[]`
 

@@ -1041,6 +1041,28 @@ pre {
   padding: 6px 8px;
 }
 
+.source-priority-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  min-width: 0;
+}
+
+.source-priority-option {
+  border: 1px solid var(--border-strong);
+  border-radius: 4px;
+  cursor: grab;
+  padding: 6px 9px;
+}
+
+.source-priority-option:active {
+  cursor: grabbing;
+}
+
+.source-priority-option-dragging {
+  opacity: 0.55;
+}
+
 .formalize-overrides {
   display: grid;
   gap: 8px;
@@ -1420,7 +1442,8 @@ pre {
 }
 
 .translate-strategy,
-.translate-target {
+.translate-target,
+.translate-sources {
   display: grid;
   gap: 6px;
   border: 0;
@@ -1429,7 +1452,8 @@ pre {
 }
 
 .translate-strategy legend,
-.translate-target legend {
+.translate-target legend,
+.translate-sources legend {
   color: var(--ink-soft);
   font-size: 0.78rem;
   font-weight: 700;
@@ -1480,6 +1504,13 @@ pre {
   cursor: pointer;
   display: inline-flex;
   gap: 6px;
+}
+
+.translate-source-option {
+  align-items: center;
+  display: inline-flex;
+  gap: 6px;
+  font-size: 0.86rem;
 }
 
 .translate-strategy-option[aria-pressed='true'],

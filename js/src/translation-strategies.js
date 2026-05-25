@@ -11,18 +11,18 @@ const strategyDefinitions = Object.freeze([
     id: TRANSLATION_STRATEGIES.CONTEXTUAL_GLOSSARY,
     label: 'Contextual glossary',
     description:
-      'Prefer curated phrase translations, then fall back to Wikidata labels.',
+      'Use source-backed Wikidata/Wiktionary translations, then curated phrases.',
   },
   {
     id: TRANSLATION_STRATEGIES.SEMANTIC_LABEL,
     label: 'Semantic labels',
-    description: 'Use only linked entity labels and transformation rules.',
+    description: 'Use linked entity labels and transformation rules only.',
   },
   {
     id: TRANSLATION_STRATEGIES.LEXICAL_GLOSSARY,
     label: 'Lexical glossary',
     description:
-      'Prefer direct word and phrase translations for readable output.',
+      'Prefer source-backed and curated lexical translations for readable text.',
   },
 ]);
 

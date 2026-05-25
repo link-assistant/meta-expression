@@ -42,9 +42,11 @@ function resolveOptions(options) {
   const final = { ...options };
   if (typeof options.sourcesSpec === 'string' && options.sourcesSpec.trim()) {
     try {
-      final.sources = parseSourceSpec(options.sourcesSpec);
+      final.sources = parseSourceSpec(options.sourcesSpec, {
+        language: options.language ?? 'en',
+      });
     } catch {
-      final.sources = [createWikidataSource()];
+      final.sources = [createWikidataSource({ language: options.language })];
     }
   }
   delete final.sourcesSpec;

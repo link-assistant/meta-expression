@@ -2,10 +2,15 @@ import {
   applyTranslationQuestionAnswers,
   FORMALIZE_LINK_TARGETS,
   listTranslationStrategies,
+  parseSourceSpec,
   translateTextWith,
 } from '../js/src/index.js';
 import { escapeHtml } from './format-helpers.js';
 import { createPersistentWikimediaCache } from './persistent-cache.js';
+import {
+  collectCheckedSourceSpec,
+  setupSourcePriorityList,
+} from './source-priority-ui.js';
 import { translateSamples } from './translate-samples.js';
 
 const translateCacheStorageKey = 'meta-expression.translate-cache.v1';
@@ -19,6 +24,7 @@ export function setupTranslatePage({
   const targetLanguage = document.querySelector('#translate-target-language');
   const strategyGroup = document.querySelector('#translate-strategy');
   const linkTargetGroup = document.querySelector('#translate-link-target');
+  const sourceList = document.querySelector('#translate-source-list');
   const run = document.querySelector('#translate-run');
   const copyMarkdown = document.querySelector('#translate-copy-markdown');
   const copyLino = document.querySelector('#translate-copy-lino');
@@ -30,6 +36,7 @@ export function setupTranslatePage({
   const linoPre = document.querySelector('#translate-lino');
   const cstPre = document.querySelector('#translate-cst');
   const stepsList = document.querySelector('#translate-steps');
+  const debugPre = document.querySelector('#translate-debug-log');
   let currentResult = null;
   const strategyState = {
     selected: listTranslationStrategies()[0]?.id ?? 'contextual-glossary',
@@ -48,6 +55,7 @@ export function setupTranslatePage({
     targetLanguage,
   });
   setupTranslationStrategies(strategyGroup, strategyState);
+  setupSourcePriorityList(sourceList);
 
   run.addEventListener('click', () => {
     runTranslate();
@@ -88,13 +96,15 @@ export function setupTranslatePage({
     run.disabled = true;
     run.textContent = 'Translating...';
     try {
+      const sourcesSpec = collectCheckedSourceSpec(sourceList);
       const result = await translateTextWith(text, {
         fetch: globalThis.fetch?.bind(globalThis),
         cache,
-        sourceLanguage: sourceLanguage?.value ?? 'en',
-        targetLanguage: targetLanguage?.value ?? 'ru',
+        sourceLanguage: selectedLanguageValue(sourceLanguage, 'en'),
+        targetLanguage: selectedLanguageValue(targetLanguage, 'ru'),
         linkTargetMode: selectedTranslateLinkTargetMode(linkTargetGroup),
         translationStrategy: strategyState.selected,
+        sources: selectedTranslateSources(sourcesSpec, sourceLanguage),
       });
       if (status.dataset.requestId !== id) {
         return;
@@ -146,10 +156,26 @@ export function setupTranslatePage({
     if (cstPre) {
       cstPre.textContent = JSON.stringify(result.cst, null, 2);
     }
+    if (debugPre) {
+      debugPre.textContent = formatDebugLog(result);
+    }
     status.textContent = translateStatusText(result);
   }
 
   return { getResult: () => currentResult };
+}
+
+function selectedLanguageValue(select, fallback) {
+  return select?.value ?? fallback;
+}
+
+function selectedTranslateSources(sourcesSpec, sourceLanguage) {
+  if (!sourcesSpec) {
+    return undefined;
+  }
+  return parseSourceSpec(sourcesSpec, {
+    language: selectedLanguageValue(sourceLanguage, 'en'),
+  });
 }
 
 function selectedTranslateLinkTargetMode(linkTargetGroup) {
@@ -279,7 +305,7 @@ function renderQuestionOptions(question, onAnswer) {
   const manualInput = document.createElement('input');
   manualInput.type = 'text';
   manualInput.className = 'translate-question-manual';
-  manualInput.placeholder = 'Manual answer';
+  manualInput.placeholder = 'Type answer';
   for (const option of question.options) {
     const button = document.createElement('button');
     button.type = 'button';
@@ -369,6 +395,12 @@ function formatStep(step) {
   if (step.type === 'translation-phrase') {
     return `Phrase: ${step.sourceText} -> ${step.targetText} (${step.status})`;
   }
+  if (step.type === 'wiktionary-translation') {
+    return `Wiktionary: ${step.sourceText} -> ${step.targetText}`;
+  }
+  if (step.type === 'wiktionary-translation-miss') {
+    return `Wiktionary miss: ${step.sourceText}`;
+  }
   if (step.type === 'transformation-rule') {
     return `Rule: ${step.rule} (${step.sentenceId})`;
   }
@@ -379,6 +411,53 @@ function formatStep(step) {
     return `Text: ${step.text}`;
   }
   return `${step.type}: ${step.id}`;
+}
+
+function formatDebugLog(result) {
+  const questions = result.questionDetails ?? [];
+  const steps = result.steps ?? [];
+  return [
+    'Translate debug log',
+    'UI: web/#/translate',
+    `Source language: ${result.sourceLanguage}`,
+    `Target language: ${result.targetLanguage}`,
+    `Status: ${translateStatusText(result)}`,
+    '',
+    'Formalized input',
+    result.formalization?.markdown ?? '',
+    '',
+    'Translated result',
+    result.markdown ?? result.plainText ?? '',
+    '',
+    'Questions',
+    questions.length
+      ? questions.map(formatQuestionDebug).join('\n\n')
+      : 'No unresolved variables.',
+    '',
+    'Translation steps',
+    steps.length
+      ? steps.map(formatStepDebug).join('\n\n')
+      : 'No recorded steps.',
+    '',
+    'Translation CST JSON',
+    JSON.stringify(result.cst, null, 2),
+  ].join('\n');
+}
+
+function formatQuestionDebug(question) {
+  const options = question.options ?? [];
+  return [
+    question.question,
+    ...options.map((option) => {
+      const mark = option.id === question.selectedOptionId ? '[x]' : '[ ]';
+      const target = option.targetText ? ` -> ${option.targetText}` : '';
+      return `${mark} ${option.label}${target}`;
+    }),
+  ].join('\n');
+}
+
+function formatStepDebug(step, index) {
+  return `${index + 1}. ${formatStep(step)}\n${JSON.stringify(step, null, 2)}`;
 }
 
 async function writeClipboard(text) {

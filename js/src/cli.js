@@ -194,7 +194,9 @@ export async function runCliAsync(
 
 async function runFormalizeCommand(options, output) {
   const sources = options.sourcesSpec
-    ? parseSourceSpec(options.sourcesSpec)
+    ? parseSourceSpec(options.sourcesSpec, {
+        language: options.sourceLanguage ?? 'en',
+      })
     : undefined;
   const repoOverrides = options.noRepoOverrides
     ? []
@@ -228,7 +230,9 @@ async function runFormalizeCommand(options, output) {
 
 async function runTranslateCommand(options, output) {
   const sources = options.sourcesSpec
-    ? parseSourceSpec(options.sourcesSpec)
+    ? parseSourceSpec(options.sourcesSpec, {
+        language: options.sourceLanguage ?? 'en',
+      })
     : undefined;
   const repoOverrides = options.noRepoOverrides
     ? []

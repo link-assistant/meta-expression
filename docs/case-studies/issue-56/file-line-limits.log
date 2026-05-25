@@ -1,0 +1,21 @@
+Checking tracked Rust, JavaScript, and Markdown files under 1500 lines...
+Warning threshold: 1350 lines.
+Exempt path: docs/case-studies/
+
+WARNING: js/src/formalize.js has 1438 lines (warning threshold: 1350; limit: 1500)
+::warning file=js/src/formalize.js::File has 1438 lines (warning threshold: 1350; limit: 1500)
+WARNING: js/src/index.js has 1411 lines (warning threshold: 1350; limit: 1500)
+::warning file=js/src/index.js::File has 1411 lines (warning threshold: 1350; limit: 1500)
+WARNING: js/src/translate.js has 1489 lines (warning threshold: 1350; limit: 1500)
+::warning file=js/src/translate.js::File has 1489 lines (warning threshold: 1350; limit: 1500)
+WARNING: web/app.js has 1480 lines (warning threshold: 1350; limit: 1500)
+::warning file=web/app.js::File has 1480 lines (warning threshold: 1350; limit: 1500)
+
+Checked 176 tracked Rust, JavaScript, and Markdown files.
+Files above the 1350-line warning threshold:
+  js/src/formalize.js
+  js/src/index.js
+  js/src/translate.js
+  web/app.js
+
+All checked files are within the 1500 line limit.

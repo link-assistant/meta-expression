@@ -519,56 +519,82 @@ Barack Obama was born in Hawaii.</textarea
           </fieldset>
           <fieldset class="formalize-sources">
             <legend data-i18n="formalize.sources">Sources</legend>
-            <label class="formalize-source-option">
-              <input
-                type="checkbox"
-                name="formalize-source"
-                value="wikipedia"
-                checked
-              />
-              Wikipedia
-            </label>
-            <label>
-              <input
-                type="checkbox"
-                name="formalize-source"
-                value="wikidata"
-                checked
-              />
-              <span data-i18n="formalize.sourceWikidata">Wikidata</span>
-            </label>
-            <label class="formalize-source-option">
-              <input
-                type="checkbox"
-                name="formalize-source"
-                value="wiktionary"
-                checked
-              />
-              <span data-i18n="formalize.sourceWiktionary"
-                >Wiktionary (definitions)</span
+            <div class="source-priority-list" id="formalize-source-list">
+              <label
+                class="formalize-source-option source-priority-option"
+                data-source-option
+                draggable="true"
               >
-            </label>
-            <label class="formalize-source-option">
-              <input type="checkbox" name="formalize-source" value="wordnet" />
-              <span data-i18n="formalize.sourceWordnet"
-                >WordNet (Wiktionary)</span
+                <input
+                  type="checkbox"
+                  name="formalize-source"
+                  value="wikipedia"
+                  checked
+                />
+                Wikipedia
+              </label>
+              <label
+                class="formalize-source-option source-priority-option"
+                data-source-option
+                draggable="true"
               >
-            </label>
-            <label class="formalize-source-option formalize-source-fandom">
-              <input
-                type="checkbox"
-                name="formalize-source"
-                value="fandom"
-                id="formalize-source-fandom"
-              />
-              <span data-i18n="formalize.sourceFandom">Fandom wiki:</span>
-              <input
-                type="text"
-                id="formalize-fandom-slug"
-                placeholder="e.g. genshin-impact"
-                disabled
-              />
-            </label>
+                <input
+                  type="checkbox"
+                  name="formalize-source"
+                  value="wikidata"
+                  checked
+                />
+                <span data-i18n="formalize.sourceWikidata">Wikidata</span>
+              </label>
+              <label
+                class="formalize-source-option source-priority-option"
+                data-source-option
+                draggable="true"
+              >
+                <input
+                  type="checkbox"
+                  name="formalize-source"
+                  value="wiktionary"
+                  checked
+                />
+                <span data-i18n="formalize.sourceWiktionary"
+                  >Wiktionary (definitions)</span
+                >
+              </label>
+              <label
+                class="formalize-source-option source-priority-option"
+                data-source-option
+                draggable="true"
+              >
+                <input
+                  type="checkbox"
+                  name="formalize-source"
+                  value="wordnet"
+                />
+                <span data-i18n="formalize.sourceWordnet"
+                  >WordNet (Wiktionary)</span
+                >
+              </label>
+              <label
+                class="formalize-source-option formalize-source-fandom source-priority-option"
+                data-source-option
+                draggable="true"
+              >
+                <input
+                  type="checkbox"
+                  name="formalize-source"
+                  value="fandom"
+                  id="formalize-source-fandom"
+                />
+                <span data-i18n="formalize.sourceFandom">Fandom wiki:</span>
+                <input
+                  type="text"
+                  id="formalize-fandom-slug"
+                  placeholder="e.g. genshin-impact"
+                  disabled
+                />
+              </label>
+            </div>
           </fieldset>
           <fieldset class="formalize-display-mode">
             <legend data-i18n="formalize.displayMode">
@@ -797,6 +823,8 @@ Barack Obama was born in Hawaii.</textarea
               <option value="es">Español</option>
               <option value="fr">Français</option>
               <option value="de">Deutsch</option>
+              <option value="hi">हिन्दी</option>
+              <option value="zh">中文</option>
             </select>
           </label>
           <label class="translate-option">
@@ -807,10 +835,17 @@ Barack Obama was born in Hawaii.</textarea
               <option value="es">Español</option>
               <option value="fr">Français</option>
               <option value="de">Deutsch</option>
+              <option value="hi">हिन्दी</option>
+              <option value="zh">中文</option>
             </select>
           </label>
           <fieldset class="translate-strategy">
             <legend data-i18n="translate.strategy">Strategy</legend>
+            <p class="section-hint" data-i18n="translate.strategyHint">
+              Contextual glossary uses source-backed Wikidata/Wiktionary
+              translations first. Semantic labels use linked entity labels only.
+              Lexical glossary prefers readable word and phrase translations.
+            </p>
             <div id="translate-strategy" class="translate-strategy-group"></div>
           </fieldset>
           <fieldset class="translate-target">
@@ -836,6 +871,55 @@ Barack Obama was born in Hawaii.</textarea
                   value="local-viewer"
                 />
                 <span data-i18n="translate.linkLocal">Local viewer</span>
+              </label>
+            </div>
+          </fieldset>
+          <fieldset class="translate-sources">
+            <legend data-i18n="translate.sources">Sources</legend>
+            <p class="section-hint" data-i18n="translate.sourcesHint">
+              Drag checked sources to set lookup order: Wikipedia article
+              matches, Wikidata Q/P entities and target labels, then Wiktionary
+              lexical definitions and translation entries.
+            </p>
+            <div class="source-priority-list" id="translate-source-list">
+              <label
+                class="translate-source-option source-priority-option"
+                data-source-option
+                draggable="true"
+              >
+                <input
+                  type="checkbox"
+                  name="translate-source"
+                  value="wikipedia"
+                  checked
+                />
+                Wikipedia
+              </label>
+              <label
+                class="translate-source-option source-priority-option"
+                data-source-option
+                draggable="true"
+              >
+                <input
+                  type="checkbox"
+                  name="translate-source"
+                  value="wikidata"
+                  checked
+                />
+                <span data-i18n="translate.sourceWikidata">Wikidata</span>
+              </label>
+              <label
+                class="translate-source-option source-priority-option"
+                data-source-option
+                draggable="true"
+              >
+                <input
+                  type="checkbox"
+                  name="translate-source"
+                  value="wiktionary"
+                  checked
+                />
+                <span data-i18n="translate.sourceWiktionary">Wiktionary</span>
               </label>
             </div>
           </fieldset>
@@ -916,6 +1000,10 @@ Barack Obama was born in Hawaii.</textarea
             Translation steps
           </summary>
           <ol id="translate-steps" class="translate-steps"></ol>
+        </details>
+        <details class="translate-payload" open>
+          <summary data-i18n="translate.debugPayload">Debug log</summary>
+          <pre id="translate-debug-log"></pre>
         </details>
       </section>
     </main>

@@ -5,6 +5,7 @@ import {
   normalizeTranslationStrategy,
   TRANSLATION_STRATEGIES,
 } from './translation-strategies.js';
+import { lookupWikimediaTranslation } from './wikimedia-translation.js';
 import { buildLexicalTarget, lexicalSemanticId } from './lexical-entities.js';
 import { createTargetEntityBatchLoader } from './target-entity-loader.js';
 import {
@@ -195,6 +196,7 @@ function createTranslateConfig(options) {
         recordStep(config, 'api-cache-hit', { url: cachedUrl }),
     }),
   };
+  config.recordStep = (type, details) => recordStep(config, type, details);
   config.fetchImpl = rawFetch
     ? (url, init) => traceFetch(url, init, config)
     : null;
@@ -302,19 +304,26 @@ function sourceUrlForSemanticEntity(entity) {
   }
   return `${wikidataEntityBaseUrl}${entity.id}`;
 }
-
 async function translatePhrase(phrase, config) {
   const translationEntity = translatableEntityForPhrase(phrase, config);
-  const glossaryTranslation = lookupGlossaryTranslation(phrase.text, config);
+  const sourceBackedTranslation =
+    translationEntity ||
+    config.translationStrategy === TRANSLATION_STRATEGIES.SEMANTIC_LABEL
+      ? null
+      : await lookupWikimediaTranslation(phrase, config);
+  const glossaryTranslation =
+    sourceBackedTranslation || translationEntity
+      ? null
+      : lookupGlossaryTranslation(phrase.text, config);
   const base = buildPhraseTranslationBase(
     phrase,
-    glossaryTranslation ? null : translationEntity,
+    sourceBackedTranslation || glossaryTranslation ? null : translationEntity,
     config
   );
-  if (glossaryTranslation) {
+  if (sourceBackedTranslation || glossaryTranslation) {
     const translated = translatedGlossaryPhrase(
       base,
-      glossaryTranslation,
+      sourceBackedTranslation ?? glossaryTranslation,
       config
     );
     recordPhraseStep(translated, config);
@@ -377,7 +386,6 @@ async function translatePhrase(phrase, config) {
   recordPhraseStep(translated, config);
   return translated;
 }
-
 function translatedGlossaryPhrase(base, translation, config) {
   const entityId = base.source.entityId ?? null;
   const target = targetForGlossaryTranslation(translation, config);
@@ -390,19 +398,22 @@ function translatedGlossaryPhrase(base, translation, config) {
       entityId: target.entityId,
       description: target.description,
       url: target.url,
+      source: target.source,
+      sourceUrl: target.sourceUrl,
       status: 'translated',
       strategy: translation.strategy,
     },
     variable: null,
   };
 }
-
 function targetForGlossaryTranslation(translation, config) {
   if (translation.target) {
     return {
       entityId: translation.target.entityId ?? null,
       description: translation.target.description ?? null,
       url: translation.target.url ?? null,
+      source: translation.target.source ?? null,
+      sourceUrl: translation.target.sourceUrl ?? null,
     };
   }
   const lexicalTarget = buildLexicalTarget(
@@ -414,9 +425,10 @@ function targetForGlossaryTranslation(translation, config) {
     entityId: lexicalTarget.entityId,
     description: lexicalTarget.description,
     url: lexicalTarget.url,
+    source: 'lexical',
+    sourceUrl: null,
   };
 }
-
 function buildPhraseTranslationBase(phrase, translationEntity, config) {
   const sourceEntity = translationEntity ?? phrase.entity ?? null;
   return {
@@ -480,6 +492,8 @@ function unresolvedPhrase(base, reason, entityId = null) {
     variable: {
       name: '',
       sourceText: base.source.text,
+      sourceLabel: base.source.label,
+      sourceUrl: base.source.url,
       entityId,
       reason,
     },
@@ -529,11 +543,15 @@ async function traceFetch(url, init, config) {
   recordStep(config, 'api-request', { method, url: requestUrl });
   try {
     const response = await config.rawFetch(requestUrl, init);
+    const bodyPreview = config.trace
+      ? await responseBodyPreview(response)
+      : null;
     recordStep(config, 'api-response', {
       method,
       url: requestUrl,
       status: response?.status ?? null,
       ok: response?.ok ?? null,
+      bodyPreview,
     });
     return response;
   } catch (error) {
@@ -543,6 +561,18 @@ async function traceFetch(url, init, config) {
       error: error instanceof Error ? error.message : String(error),
     });
     throw error;
+  }
+}
+
+async function responseBodyPreview(response) {
+  if (typeof response?.clone !== 'function') {
+    return null;
+  }
+  try {
+    const body = await response.clone().text();
+    return body.length > 500 ? `${body.slice(0, 500)}...` : body || null;
+  } catch {
+    return null;
   }
 }
 
@@ -578,11 +608,11 @@ function buildVariableQuestionDetails(variable, config) {
     reason: variable.reason,
     question,
     selectedOptionId: 'preserve-source',
-    options: buildVariableAnswerOptions(variable, config),
+    options: buildVariableAnswerOptions(variable),
   };
 }
 
-function buildVariableAnswerOptions(variable, config) {
+function buildVariableAnswerOptions(variable) {
   const options = [
     {
       id: 'preserve-source',
@@ -593,21 +623,24 @@ function buildVariableAnswerOptions(variable, config) {
     },
   ];
   if (variable.entityId) {
+    const sourceLabel = variable.sourceLabel ?? variable.sourceText;
     options.push({
-      id: 'target-label',
-      label: `Use ${config.targetLanguage} label`,
-      targetText: null,
+      id: 'source-label',
+      label: 'Use linked source label',
+      targetText: sourceLabel,
       entityId: variable.entityId,
-      description: `Resolve the ${config.targetLanguage} label for ${variable.entityId}.`,
+      targetUrl: variable.sourceUrl ?? null,
+      description: `Use the available source label for ${variable.entityId}.`,
       confidence: 0.35,
     });
   } else {
+    const normalized = variable.sourceText.replace(/[_-]+/g, ' ').trim();
     options.push({
-      id: 'map-entity',
-      label: 'Map to entity',
-      targetText: null,
+      id: 'normalized-expression',
+      label: 'Use normalized expression',
+      targetText: normalized || variable.sourceText,
       entityId: null,
-      description: 'Choose a linked entity or expression before translating.',
+      description: 'Use the source expression with word separators normalized.',
       confidence: 0.35,
     });
   }
@@ -745,15 +778,24 @@ function buildTranslatedSentence(segment, index, phrases, config) {
   );
   const terminal = terminalPunctuation(segment.text);
   const plainText = appendTerminalPunctuation(
-    punctuated.units.map((unit) => unit.plainText).join(' '),
+    punctuated.units
+      .map((unit) => unit.plainText)
+      .join(' ')
+      .replace(/\/\s+/g, '/'),
     terminal
   );
   const markdown = appendTerminalPunctuation(
-    punctuated.units.map((unit) => unit.markdown).join(' '),
+    punctuated.units
+      .map((unit) => unit.markdown)
+      .join(' ')
+      .replace(/\/\s+/g, '/'),
     terminal
   );
   const html = appendTerminalPunctuation(
-    punctuated.units.map((unit) => unit.html).join(' '),
+    punctuated.units
+      .map((unit) => unit.html)
+      .join(' ')
+      .replace(/\/\s+/g, '/'),
     terminal
   );
   const targetUnits = punctuated.units.map((unit, unitIndex) =>
@@ -853,7 +895,7 @@ function applySourceInteriorPunctuation(units, segment, sentenceId, config) {
       continue;
     }
     const trailing = segment.text.slice(offset);
-    const match = trailing.match(/^\s*([,;:])/);
+    const match = trailing.match(/^\s*([,;:/])/);
     if (!match) {
       continue;
     }
@@ -1424,8 +1466,7 @@ function englishIndefiniteArticleFor(value) {
 }
 
 function terminalPunctuation(value) {
-  const match = String(value).match(/[.!?]+$/);
-  return match?.[0] ?? '';
+  return String(value).match(/[.!?]+$/)?.[0] ?? '';
 }
 
 function appendTerminalPunctuation(value, punctuation) {

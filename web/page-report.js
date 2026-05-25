@@ -38,6 +38,7 @@ const translateEssentialSectionHeadings = new Set([
   'formalized input markdown',
   'translated result',
   'questions',
+  'debug log',
   'markdown',
 ]);
 const pageLabels = {
@@ -385,6 +386,9 @@ function collectTranslateSections(options) {
       lines: [
         `- **From**: ${valueOf('#translate-source-language')}`,
         `- **To**: ${valueOf('#translate-target-language')}`,
+        `- **Sources**: ${sourceSpecFromPriorityList(
+          '#translate-source-list'
+        )}`,
       ],
     },
     { heading: 'Status', lines: [`- ${textOf('#translate-status')}`] },
@@ -413,7 +417,8 @@ function collectTranslateSections(options) {
         ? JSON.stringify(result.cst, null, 2)
         : textOf('#translate-cst'),
     },
-    { heading: 'Translation Steps', lines: linesFrom('#translate-steps > *') }
+    { heading: 'Translation Steps', lines: linesFrom('#translate-steps > *') },
+    { heading: 'Debug Log', code: valueOf('#translate-debug-log') }
   );
   return sections;
 }
@@ -592,6 +597,17 @@ function checkedLabels(selector) {
   return [...document.querySelectorAll(selector)]
     .filter((input) => input.checked)
     .map((input) => normalizeText(input.parentElement?.textContent));
+}
+
+function sourceSpecFromPriorityList(selector) {
+  return [...document.querySelectorAll(`${selector} [data-source-option]`)]
+    .map((label) => {
+      const input = label.querySelector('input');
+      const source = input?.value ?? normalizeText(label.textContent);
+      const checked = input?.checked ? 'x' : ' ';
+      return `[${checked}] ${source}`;
+    })
+    .join(', ');
 }
 
 function valueOf(selector) {
