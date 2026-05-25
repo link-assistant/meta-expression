@@ -25,7 +25,10 @@
  * strings — mirroring the unicode-sequence handling in link-cli.
  */
 
+import { Parser as LinksNotationParser } from 'links-notation';
+
 const QUOTE = '"';
+const officialLinksParser = new LinksNotationParser();
 
 /**
  * Parse an indented .lino document into a JS value.
@@ -38,7 +41,102 @@ const QUOTE = '"';
  * @returns {unknown}
  */
 export function parseLino(text) {
-  const lines = stripComments(String(text ?? '')).split('\n');
+  const source = stripComments(String(text ?? ''));
+  if (!source.trim()) {
+    return null;
+  }
+  if (looksLikeOfficialLinksNotation(source)) {
+    const parsed = parseOfficialLinksNotation(source);
+    if (parsed.ok) {
+      return parsed.value;
+    }
+  }
+  return parseLegacyLino(source);
+}
+
+function parseOfficialLinksNotation(text) {
+  try {
+    const links = officialLinksParser.parse(text);
+    return { ok: true, value: materializeOfficialLinks(links) };
+  } catch {
+    return { ok: false, value: null };
+  }
+}
+
+function materializeOfficialLinks(links) {
+  if (!Array.isArray(links) || links.length === 0) {
+    return null;
+  }
+  const values = links.map(materializeOfficialLink);
+  return values.length === 1 ? values[0] : values;
+}
+
+function materializeOfficialLink(link) {
+  const values = Array.isArray(link?.values)
+    ? link.values.map(materializeOfficialLink)
+    : [];
+  if (link?.id !== null && link?.id !== undefined) {
+    const key = String(decodeToken(link.id));
+    if (values.length === 0) {
+      return decodeToken(link.id);
+    }
+    return {
+      [key]: values.length === 1 ? values[0] : values,
+    };
+  }
+  if (values.length === 0) {
+    return null;
+  }
+  return values.length === 1 ? values[0] : values;
+}
+
+function looksLikeOfficialLinksNotation(text) {
+  return text
+    .split('\n')
+    .some((line) => looksLikeOfficialLinksLine(line.trim()));
+}
+
+function looksLikeOfficialLinksLine(line) {
+  if (!line) {
+    return false;
+  }
+  if (line.startsWith('(') && line.endsWith(')')) {
+    return true;
+  }
+  return hasUnquotedColon(line);
+}
+
+function hasUnquotedColon(line) {
+  let quote = null;
+  let escaped = false;
+  for (const char of line) {
+    if (escaped) {
+      escaped = false;
+      continue;
+    }
+    if (char === '\\') {
+      escaped = true;
+      continue;
+    }
+    if (quote) {
+      if (char === quote) {
+        quote = null;
+      }
+      continue;
+    }
+    if (char === QUOTE || char === "'" || char === '`') {
+      quote = char;
+      continue;
+    }
+    if (char === ':') {
+      return true;
+    }
+  }
+  return false;
+}
+
+function parseLegacyLino(text) {
+  const lines = text.split('\n');
   const stack = [];
   const root = { indent: -1, children: [], identifier: null, parent: null };
   stack.push(root);
