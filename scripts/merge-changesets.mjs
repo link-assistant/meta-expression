@@ -13,7 +13,7 @@
  * This script is run before `changeset version` to ensure a clean release
  * even when multiple PRs have merged before a release cycle.
  *
- * IMPORTANT: Update the package name below to match your package.json
+ * Keep the package name below aligned with package.json.
  */
 
 import {
@@ -25,8 +25,7 @@ import {
 } from 'fs';
 import { join } from 'path';
 
-// TODO: Update this to match your package name in package.json
-const PACKAGE_NAME = 'my-package';
+const PACKAGE_NAME = 'meta-expression';
 const CHANGESET_DIR = '.changeset';
 
 // Version bump type priority (higher number = higher priority)

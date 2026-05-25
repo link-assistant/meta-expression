@@ -5,7 +5,7 @@
  * Usage: node scripts/publish-to-npm.mjs [--should-pull] [--js-root <path>]
  *   should_pull: Optional flag to pull latest changes before publishing (for release job)
  *
- * IMPORTANT: Update the PACKAGE_NAME constant below to match your package.json
+ * Keep the PACKAGE_NAME constant below aligned with package.json.
  *
  * Configuration:
  * - CLI: --js-root <path> to explicitly set JavaScript root
@@ -31,8 +31,7 @@ import {
   parseJsRootConfig,
 } from './js-paths.mjs';
 
-// TODO: Update this to match your package name in package.json
-const PACKAGE_NAME = 'my-package';
+const PACKAGE_NAME = 'meta-expression';
 
 // Load use-m dynamically
 const { use } = eval(

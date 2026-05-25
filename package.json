@@ -1,7 +1,7 @@
 {
-  "name": "my-package",
+  "name": "meta-expression",
   "version": "0.9.0",
-  "description": "A JavaScript/TypeScript package template for AI-driven development",
+  "description": "meta-expression tooling for formalizing text into linked expressions",
   "type": "module",
   "main": "js/src/index.js",
   "types": "js/src/index.d.ts",
@@ -39,17 +39,21 @@
     "changeset:status": "changeset status --since=origin/main"
   },
   "keywords": [
-    "template",
-    "javascript",
-    "typescript",
-    "ai-driven"
+    "meta-expression",
+    "formalization",
+    "links-notation",
+    "translation"
   ],
   "author": "",
   "license": "Unlicense",
   "repository": {
     "type": "git",
-    "url": "https://github.com/link-foundation/js-ai-driven-development-pipeline-template"
+    "url": "git+https://github.com/link-assistant/meta-expression.git"
   },
+  "bugs": {
+    "url": "https://github.com/link-assistant/meta-expression/issues"
+  },
+  "homepage": "https://github.com/link-assistant/meta-expression#readme",
   "engines": {
     "node": ">=20.0.0"
   },

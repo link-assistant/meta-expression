@@ -7,7 +7,7 @@
  * - Add shields.io NPM version badge
  * - Format nicely with proper markdown
  *
- * IMPORTANT: Update the PACKAGE_NAME constant below to match your package.json
+ * Keep the PACKAGE_NAME constant below aligned with package.json.
  *
  * PR Detection Logic:
  * 1. Extract commit hash from changelog entry (if present)
@@ -23,8 +23,7 @@
  * Note: Uses --release-version instead of --version to avoid conflict with yargs' built-in --version flag.
  */
 
-// TODO: Update this to match your package name in package.json
-const PACKAGE_NAME = 'my-package';
+const PACKAGE_NAME = 'meta-expression';
 
 // Load use-m dynamically
 const { use } = eval(
