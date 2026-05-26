@@ -152,6 +152,12 @@ export const preferenceEvidenceSituationDefinitions = Object.freeze([
     group: 'knowledge-source',
     defaultProbability: 1,
   }),
+  Object.freeze({
+    id: 'external-proof-solver-artifact',
+    label: 'External proof or solver artifact',
+    group: 'knowledge-source',
+    defaultProbability: 1,
+  }),
 ]);
 
 const defaultPreferenceProfile = Object.freeze({
