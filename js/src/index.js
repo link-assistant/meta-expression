@@ -176,6 +176,14 @@ export {
   mapFormalizationToRelativeMetaLogicInput,
 } from './relative-meta-logic-adapter.js';
 export {
+  PROOF_SOLVER_ARTIFACT_FORMATS,
+  PROOF_SOLVER_ARTIFACT_STATUS,
+  collectProofSolverArtifactEvidence,
+  createFixtureProofSolverArtifactAdapter,
+  createLeanProofArtifactAdapter,
+  createSmtLibSolverArtifactAdapter,
+} from './proof-solver-artifacts.js';
+export {
   createDefaultPreferenceProfile,
   createPreferenceEvidence,
   getPreferenceEvidenceSituationProbability,

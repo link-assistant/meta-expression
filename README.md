@@ -70,6 +70,9 @@ Core exports:
   and `exportEvidencePropertyGraph(result)` project existing Q/P evidence links
   into scoped SPARQL, RDF-triple, and property-graph interchange shapes without
   changing the bounded real-world confidence calculation.
+- `collectProofSolverArtifactEvidence(input, { artifacts })` normalizes Lean 4
+  proof snippets and SMT-LIB solver outputs into provenance-bearing, bounded
+  evidence items that can be passed to `analyzeStatement(..., { evidence })`.
 - `reviewClaimAgainstLiterature(fixture)` checks a claim against screened paper
   metadata/excerpts as normal evidence links, reports literature agreement and
   uncertainty, and `exportLiteratureBibliography(result, { format })` emits

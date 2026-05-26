@@ -177,6 +177,121 @@ export interface RelativeMetaLogicInputMapping {
   engine: RelativeMetaLogicUpstream;
 }
 
+export type ProofSolverArtifactFormat = 'lean4' | 'smt-lib';
+
+export type ProofSolverArtifactStatus =
+  | 'candidate'
+  | 'validated'
+  | 'unsupported';
+
+export interface ProofSolverArtifactAdapter {
+  id: string;
+  name: string;
+  kind: string;
+  formats: string[];
+  sourceType: string;
+  version?: string | null;
+  adapt(raw: unknown, context?: Record<string, unknown>): ProofSolverArtifact;
+}
+
+export interface ProofSolverSourceAdapter {
+  id?: string;
+  name?: string;
+  kind?: string;
+  sourceType?: string;
+  version?: string | null;
+  extract(
+    claimText: string,
+    context: Record<string, unknown>
+  ): unknown | Promise<unknown>;
+}
+
+export interface ProofSolverArtifact {
+  id: string;
+  family: 'proof-assistant' | 'solver-query' | string;
+  format: ProofSolverArtifactFormat | string;
+  system: string;
+  adapterId: string;
+  claim: {
+    text: string;
+    key: string;
+  };
+  artifact: {
+    language: string;
+    entrypoint: string | null;
+    intent: string | null;
+    text: string;
+  };
+  result: {
+    kind: 'proof' | 'solver-result' | string;
+    outcome: string | null;
+    polarity: EvidenceItem['polarity'] | null;
+    checker: string | null;
+    mode: string;
+    checkedAt: string;
+    absolute: false;
+  };
+  provenance: LinkProvenance & {
+    adapterId: string;
+    adapterVersion: string | null;
+  };
+  verification: {
+    executed: false;
+    executionGate: {
+      issue: 72;
+      label: string;
+      url: string;
+    };
+    checks: Array<{ id: string; passed: boolean; message: string }>;
+    diagnostics: Array<{ level: string; message: string }>;
+  };
+  status: ProofSolverArtifactStatus;
+  truthScoring: {
+    included: boolean;
+    eligible: boolean;
+    absolute: false;
+    maxEvidenceWeight: number;
+    executionGate: {
+      issue: 72;
+      label: string;
+      url: string;
+    };
+    reason: string;
+  };
+  evidence: EvidenceItem | null;
+}
+
+export interface ProofSolverArtifactEvidenceBundle {
+  type: 'proof-solver-artifact-evidence';
+  version: 1;
+  status: 'evidence-only' | 'empty';
+  claim: {
+    text: string;
+    key: string;
+  };
+  guardrails: {
+    executionGate: {
+      issue: 72;
+      label: string;
+      url: string;
+    };
+    absoluteClaims: false;
+    defaultMaxEvidenceWeight: number;
+    reason: string;
+  };
+  adapters: Array<{
+    id: string;
+    name: string;
+    kind: string;
+    formats: string[];
+    sourceType: string;
+    version: string | null;
+  }>;
+  artifacts: ProofSolverArtifact[];
+  evidence: EvidenceItem[];
+  diagnostics: Array<{ id: string; level: string; message: string }>;
+}
+
 export interface FormalReasoningDependency {
   source: string;
   target: string;
@@ -631,6 +746,40 @@ export declare const RELATIVE_META_LOGIC_UPSTREAM: RelativeMetaLogicUpstream;
 export declare function mapFormalizationToRelativeMetaLogicInput(
   formalization: Formalization
 ): RelativeMetaLogicInputMapping;
+
+export declare const PROOF_SOLVER_ARTIFACT_FORMATS: {
+  readonly LEAN4: 'lean4';
+  readonly SMT_LIB: 'smt-lib';
+};
+
+export declare const PROOF_SOLVER_ARTIFACT_STATUS: {
+  readonly CANDIDATE: 'candidate';
+  readonly VALIDATED: 'validated';
+  readonly UNSUPPORTED: 'unsupported';
+};
+
+export declare function createLeanProofArtifactAdapter(
+  options?: Partial<ProofSolverArtifactAdapter>
+): ProofSolverArtifactAdapter;
+
+export declare function createSmtLibSolverArtifactAdapter(
+  options?: Partial<ProofSolverArtifactAdapter>
+): ProofSolverArtifactAdapter;
+
+export declare function createFixtureProofSolverArtifactAdapter(
+  fixture: unknown
+): ProofSolverSourceAdapter;
+
+export declare function collectProofSolverArtifactEvidence(
+  claimText: string,
+  options?: {
+    artifacts?: unknown | unknown[];
+    adapters?: Array<ProofSolverArtifactAdapter | ProofSolverSourceAdapter>;
+    sourceAdapters?: ProofSolverSourceAdapter | ProofSolverSourceAdapter[];
+    maxEvidenceWeight?: number;
+    now?: () => number | string | Date;
+  }
+): Promise<ProofSolverArtifactEvidenceBundle>;
 
 export declare function isFormalReasoningInput(input: unknown): boolean;
 
