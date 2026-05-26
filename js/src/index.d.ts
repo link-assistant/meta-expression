@@ -1585,6 +1585,59 @@ export interface CheckResult {
   linksNotation: string;
 }
 
+export interface ClaimReviewVerdict {
+  label: string;
+  ratingValue: number | null;
+  bestRating: number;
+  worstRating: number;
+  correctness: number | null;
+  polarity: EvidenceItem['polarity'];
+}
+
+export interface ClaimReviewImportResult {
+  status: 'imported';
+  format: 'schema.org/ClaimReview';
+  claim: {
+    text: string;
+    itemReviewed: unknown;
+  };
+  verdict: ClaimReviewVerdict;
+  source: {
+    url: string | null;
+    author: {
+      type: string | null;
+      name: string | null;
+      url: string | null;
+    } | null;
+    publishedAt: string | null;
+    modifiedAt: string | null;
+    claimSource: Record<string, unknown>;
+  };
+  provenance: {
+    sourceType: 'claim-review';
+    sourceUrl: string | null;
+    retrievedAt: string;
+    schemaContext: string;
+    schemaType: 'ClaimReview';
+    sourceExampleUrl: string | null;
+  };
+  evidence: EvidenceItem;
+  evidenceItems: EvidenceItem[];
+  jsonLd: Record<string, unknown>;
+}
+
+export interface ClaimReviewOptions {
+  retrievedAt?: string | number | Date;
+  now?: () => string | number | Date;
+  sourceExampleUrl?: string;
+  sourceUrl?: string;
+  factCheckUrl?: string;
+  url?: string;
+  author?: Record<string, unknown>;
+  authorName?: string;
+  statementIndex?: number;
+}
+
 export type UniquenessSuggestedAction =
   | 'cite-or-quote'
   | 'review-matches'
@@ -1712,6 +1765,21 @@ export declare function checkTextWithLiveEvidence(
   input: string,
   options?: AnalysisOptions & { locale?: string }
 ): Promise<CheckResult>;
+
+export declare function parseClaimReviewJsonLd(
+  input: string | Record<string, unknown> | unknown[],
+  options?: ClaimReviewOptions
+): ClaimReviewImportResult;
+
+export declare function importClaimReviewJsonLd(
+  input: string | Record<string, unknown> | unknown[],
+  options?: ClaimReviewOptions
+): ClaimReviewImportResult;
+
+export declare function exportClaimReviewJsonLd(
+  input: CheckResult | CheckStatement | StatementAnalysis,
+  options?: ClaimReviewOptions
+): Record<string, unknown>;
 
 export declare function searchTextUniqueness(
   input: string,

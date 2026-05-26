@@ -9,6 +9,7 @@ import {
 import { formalizeTextWith, FORMALIZE_LINK_TARGETS } from './formalize.js';
 import { translateTextWith } from './translate.js';
 import { checkText, checkTextWithLiveEvidence } from './check.js';
+import { exportClaimReviewJsonLd } from './claim-review.js';
 import { searchTextUniqueness } from './uniqueness.js';
 import { parseSourceSpec } from './formalize-sources.js';
 import { loadRepoOverrides, loadUserOverrides } from './formalize-overrides.js';
@@ -228,6 +229,8 @@ function checkParamsFromSearch(url) {
     format: url.searchParams.get('format') ?? 'json',
     live: url.searchParams.get('live') === 'true',
     evidenceScoring: evidenceScoringFromSearch(url),
+    sourceUrl:
+      url.searchParams.get('sourceUrl') ?? url.searchParams.get('source') ?? '',
   };
 }
 
@@ -238,6 +241,7 @@ function checkParamsFromPayload(payload) {
     live: payload.live === true,
     evidenceScoring: payload.evidenceScoring,
     preferenceProfile: payload.preferenceProfile,
+    sourceUrl: payload.sourceUrl ?? payload.source ?? '',
   };
 }
 
@@ -426,7 +430,9 @@ async function sendCheck(response, params, ctx) {
   const result = params.live
     ? await checkTextWithLiveEvidence(params.input, options)
     : checkText(params.input, options);
-  emitCheckResponse(response, params.format, result);
+  emitCheckResponse(response, params.format, result, {
+    sourceUrl: params.sourceUrl,
+  });
 }
 
 async function sendUniqueness(response, params) {
@@ -555,7 +561,17 @@ function emitNaturalizeResponse(response, format, payload) {
   return 0;
 }
 
-function emitCheckResponse(response, format, payload) {
+function emitCheckResponse(response, format, payload, options = {}) {
+  if (isClaimReviewFormat(format)) {
+    sendJson(
+      response,
+      200,
+      exportClaimReviewJsonLd(payload, {
+        sourceUrl: options.sourceUrl,
+      })
+    );
+    return 0;
+  }
   if (format === 'links' || format === 'lino') {
     response.writeHead(200, {
       'content-type': 'text/plain; charset=utf-8',
@@ -579,6 +595,10 @@ function emitCheckResponse(response, format, payload) {
   }
   sendJson(response, 200, payload);
   return 0;
+}
+
+function isClaimReviewFormat(format) {
+  return format === 'claim-review' || format === 'claimreview';
 }
 
 function emitUniquenessResponse(response, format, payload) {

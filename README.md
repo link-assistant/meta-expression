@@ -61,6 +61,8 @@ Core exports:
 - `checkText(input, options)` detects statements in longer text, analyzes each
   statement, and returns red-to-green correctness coloring as JSON, HTML,
   Markdown, and Links Notation.
+- `importClaimReviewJsonLd(input)` and `exportClaimReviewJsonLd(result)` import
+  and export Schema.org ClaimReview JSON-LD for fact-check interchange.
 - `searchTextUniqueness(input, options)` searches detected statements across
   public web and scholarly APIs, returning existing-likelihood scores,
   citation/rewording suggestions, source matches, HTML, Markdown, and Links
@@ -102,6 +104,7 @@ node js/src/cli.js analyze --input "Paris is the capital of France" --live
 node js/src/cli.js formalize --input "Hawaii is a state." --format markdown
 node js/src/cli.js translate --input "Hawaii is a state." --to ru --format markdown
 node js/src/cli.js check --input "Earth orbits the Sun. 1 + 1 = 1." --format html
+node js/src/cli.js check --input "Earth orbits the Sun." --format claim-review
 node js/src/cli.js fact-check --input "Paris is the capital of France." --live
 node js/src/cli.js uniqueness --input "Earth orbits the Sun." --format markdown
 ```
@@ -114,6 +117,7 @@ curl "http://127.0.0.1:3000/analyze?input=1%20%2B%201%20%3D%202"
 curl "http://127.0.0.1:3000/analyze?input=Earth%20orbits%20the%20Sun&format=links"
 curl "http://127.0.0.1:3000/translate?input=Hawaii%20is%20a%20state.&to=ru&format=markdown"
 curl "http://127.0.0.1:3000/check?input=Earth%20orbits%20the%20Sun.%201%20%2B%201%20%3D%201.&format=html"
+curl "http://127.0.0.1:3000/check?input=Earth%20orbits%20the%20Sun.&format=claim-review"
 curl "http://127.0.0.1:3000/uniqueness?input=Earth%20orbits%20the%20Sun.&format=markdown"
 ```
 
@@ -127,7 +131,7 @@ Routes:
 - `POST /formalize` with `{ "input": "...", "format": "json" }`
 - `GET /translate?input=...&from=en&to=ru&format=json|links|markdown|html`
 - `POST /translate` with `{ "input": "...", "targetLanguage": "ru" }`
-- `GET /check?input=...&format=json|links|markdown|html`
+- `GET /check?input=...&format=json|links|markdown|html|claim-review`
 - `POST /check` with `{ "input": "...", "live": true }`
 - `GET /fact-check?input=...` and `POST /fact-check` as aliases for
   `/check`
