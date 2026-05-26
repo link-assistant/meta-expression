@@ -48,25 +48,26 @@ const OBJECT_TAG = 0x50000000;
  *   reset: () => void,
  * }}
  */
-// eslint-disable-next-line max-lines-per-function
+// Public wrapper around the default in-memory link store.
 export function createDoubletStore() {
-  /** @type {Doublet[]} */
-  let links = [{ index: NULL_LINK, source: NULL_LINK, target: NULL_LINK }];
+  return createDoubletValueStore(createMemoryDoubletLinkStore());
+}
+
+// eslint-disable-next-line max-lines-per-function
+export function createDoubletValueStore(linkStore) {
   /** @type {Map<string, number>} */
   let stringIndex = new Map();
 
   function create(source, target) {
-    const index = links.length;
-    links.push({ index, source, target });
-    return index;
+    return linkStore.create(source, target);
   }
 
   function each() {
-    return links.slice(1);
+    return linkStore.each();
   }
 
   function size() {
-    return links.length - 1;
+    return linkStore.size();
   }
 
   function storeCodePoint(codePoint) {
@@ -95,18 +96,18 @@ export function createDoubletStore() {
   }
 
   function readString(rootIndex) {
-    const root = links[rootIndex];
+    const root = linkStore.get(rootIndex);
     if (!root || root.source !== STRING_TAG) {
       return '';
     }
     const codes = [];
     let cursor = root.target;
     while (cursor !== NULL_LINK) {
-      const link = links[cursor];
+      const link = linkStore.get(cursor);
       if (!link) {
         break;
       }
-      const point = links[link.target];
+      const point = linkStore.get(link.target);
       if (!point || point.source !== STRING_TAG) {
         break;
       }
@@ -161,7 +162,7 @@ export function createDoubletStore() {
 
   // eslint-disable-next-line complexity
   function readValue(rootIndex) {
-    const root = links[rootIndex];
+    const root = linkStore.get(rootIndex);
     if (!root) {
       return null;
     }
@@ -178,7 +179,7 @@ export function createDoubletStore() {
       const items = [];
       let cursor = root.target;
       while (cursor !== NULL_LINK) {
-        const link = links[cursor];
+        const link = linkStore.get(cursor);
         if (!link) {
           break;
         }
@@ -192,11 +193,11 @@ export function createDoubletStore() {
       const entries = [];
       let cursor = root.target;
       while (cursor !== NULL_LINK) {
-        const link = links[cursor];
+        const link = linkStore.get(cursor);
         if (!link) {
           break;
         }
-        const pair = links[link.target];
+        const pair = linkStore.get(link.target);
         if (!pair) {
           break;
         }
@@ -211,11 +212,11 @@ export function createDoubletStore() {
       return out;
     }
     if (root.source === NUMBER_TAG) {
-      const loLink = links[root.target];
+      const loLink = linkStore.get(root.target);
       if (!loLink) {
         return 0;
       }
-      const hiLink = links[loLink.source];
+      const hiLink = linkStore.get(loLink.source);
       const lo = loLink.target >>> 0;
       const hi = hiLink ? hiLink.target >>> 0 : 0;
       const view = new DataView(new ArrayBuffer(8));
@@ -227,49 +228,20 @@ export function createDoubletStore() {
   }
 
   function serialize() {
-    const buffer = new ArrayBuffer(links.length * 12);
-    const view = new DataView(buffer);
-    for (let i = 0; i < links.length; i += 1) {
-      const link = links[i];
-      view.setUint32(i * 12, link.index >>> 0, true);
-      view.setUint32(i * 12 + 4, link.source >>> 0, true);
-      view.setUint32(i * 12 + 8, link.target >>> 0, true);
-    }
-    return new Uint8Array(buffer);
+    return serializeDoubletLinks(linkStore.each());
   }
 
   function restore(binary) {
-    const buffer =
-      binary.buffer.byteLength === binary.byteLength
-        ? binary.buffer
-        : binary.slice().buffer;
-    const view = new DataView(buffer);
-    const total = Math.floor(view.byteLength / 12);
-    links = [];
+    linkStore.restore(binary);
     stringIndex = new Map();
-    for (let i = 0; i < total; i += 1) {
-      links.push({
-        index: view.getUint32(i * 12, true),
-        source: view.getUint32(i * 12 + 4, true),
-        target: view.getUint32(i * 12 + 8, true),
-      });
-    }
-    if (links.length === 0) {
-      links.push({ index: NULL_LINK, source: NULL_LINK, target: NULL_LINK });
-    }
   }
 
   function toLinksNotation() {
-    const lines = [`(doublets: ${links.length - 1})`];
-    for (let i = 1; i < links.length; i += 1) {
-      const link = links[i];
-      lines.push(`(${link.index}: ${link.source} ${link.target})`);
-    }
-    return lines.join('\n');
+    return doubletLinksToLinksNotation(linkStore.each());
   }
 
   function reset() {
-    links = [{ index: NULL_LINK, source: NULL_LINK, target: NULL_LINK }];
+    linkStore.reset();
     stringIndex = new Map();
   }
 
@@ -286,6 +258,92 @@ export function createDoubletStore() {
     toLinksNotation,
     reset,
   };
+}
+
+function createMemoryDoubletLinkStore() {
+  /** @type {Doublet[]} */
+  let links = [{ index: NULL_LINK, source: NULL_LINK, target: NULL_LINK }];
+
+  function create(source, target) {
+    const index = links.length;
+    links.push({ index, source: source >>> 0, target: target >>> 0 });
+    return index;
+  }
+
+  function each() {
+    return links.slice(1);
+  }
+
+  function get(index) {
+    return links[index];
+  }
+
+  function size() {
+    return links.length - 1;
+  }
+
+  function restore(binary) {
+    links = deserializeDoubletLinks(binary);
+  }
+
+  function reset() {
+    links = [{ index: NULL_LINK, source: NULL_LINK, target: NULL_LINK }];
+  }
+
+  return {
+    create,
+    each,
+    get,
+    size,
+    restore,
+    reset,
+  };
+}
+
+export function deserializeDoubletLinks(binary) {
+  const bytes = binary instanceof Uint8Array ? binary : new Uint8Array(binary);
+  const view = new DataView(bytes.buffer, bytes.byteOffset, bytes.byteLength);
+  const total = Math.floor(view.byteLength / 12);
+  const links = [];
+  for (let i = 0; i < total; i += 1) {
+    links.push({
+      index: view.getUint32(i * 12, true),
+      source: view.getUint32(i * 12 + 4, true),
+      target: view.getUint32(i * 12 + 8, true),
+    });
+  }
+  if (links.length === 0) {
+    links.push({ index: NULL_LINK, source: NULL_LINK, target: NULL_LINK });
+  }
+  return links;
+}
+
+function serializeDoubletLinks(links) {
+  const maxIndex = links.reduce(
+    (max, link) => Math.max(max, Number(link.index) || 0),
+    NULL_LINK
+  );
+  const buffer = new ArrayBuffer((maxIndex + 1) * 12);
+  const view = new DataView(buffer);
+  view.setUint32(0, NULL_LINK, true);
+  view.setUint32(4, NULL_LINK, true);
+  view.setUint32(8, NULL_LINK, true);
+  for (const link of links) {
+    const offset = link.index * 12;
+    view.setUint32(offset, link.index >>> 0, true);
+    view.setUint32(offset + 4, link.source >>> 0, true);
+    view.setUint32(offset + 8, link.target >>> 0, true);
+  }
+  return new Uint8Array(buffer);
+}
+
+function doubletLinksToLinksNotation(links) {
+  const sorted = [...links].sort((left, right) => left.index - right.index);
+  const lines = [`(doublets: ${sorted.length})`];
+  for (const link of sorted) {
+    lines.push(`(${link.index}: ${link.source} ${link.target})`);
+  }
+  return lines.join('\n');
 }
 
 /**

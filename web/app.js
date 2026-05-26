@@ -47,6 +47,7 @@ import {
   summary,
 } from './format-helpers.js';
 import { createPersistentWikimediaCache } from './persistent-cache.js';
+import { createBrowserMetaLanguageStore } from './meta-language-store.js';
 import {
   getActivePreferenceProfile,
   setupPreferencesPage,
@@ -63,7 +64,8 @@ import {
 } from './source-priority-ui.js';
 
 const beliefStorageKey = 'meta-expression.user-beliefs.v1';
-const wikimediaCacheStorageKey = 'meta-expression.wikimedia-cache.v1';
+const wikimediaCacheStorageKey = 'meta-expression.wikimedia-cache.v2';
+const metaLanguageStorageKey = 'meta-expression.meta-language-store.v1';
 const defaultRandomExampleCount = 4;
 const topInterpretationCount = 10;
 
@@ -130,6 +132,11 @@ let randomSeed = Date.now();
 let strategyId = defaultReasoningStrategyId;
 const userBeliefs = loadUserBeliefs();
 const wikimediaCache = createPersistentWikimediaCache(wikimediaCacheStorageKey);
+const metaLanguageStore = createBrowserMetaLanguageStore(
+  metaLanguageStorageKey
+);
+void wikimediaCache.ready;
+void metaLanguageStore.load();
 const liveEvidenceWorker = createLiveEvidenceWorker();
 const liveEvidenceClientFallback = liveEvidenceWorker
   ? null
@@ -219,6 +226,7 @@ function render(statement, interpretationIndex = 0) {
     preferenceProfile: getActivePreferenceProfile(),
     reasoningStrategyId: strategyId,
   });
+  persistMetaLanguageCase(currentAnalysis, 'analysis-current');
 
   renderInterpretations(draft);
   renderAlternatives(currentAnalysis.alternatives);
@@ -232,6 +240,15 @@ function render(statement, interpretationIndex = 0) {
   syncSelectedExample(statement);
   requestLiveEvidence(statement);
   linoOutput.hidden = true;
+}
+
+function persistMetaLanguageCase(input, caseId) {
+  void metaLanguageStore
+    .save(input, {
+      caseId,
+      exportedAt: new Date().toISOString(),
+    })
+    .catch(() => {});
 }
 
 function renderInterpretations(draft) {
@@ -519,6 +536,7 @@ function applyLiveEvidenceResult(data) {
     evidence: data.evidence,
     reasoningStrategyId: strategyId,
   });
+  persistMetaLanguageCase(currentAnalysis, 'analysis-live-evidence');
   renderConfirmations(currentAnalysis.confirmations);
   renderRefutations(currentAnalysis.refutations);
   renderResult(currentAnalysis);
@@ -1159,6 +1177,7 @@ function applyFormalizeResult(data) {
     return;
   }
   currentFormalizeResult = result;
+  persistMetaLanguageCase(result.linksNetwork, 'formalize-current');
   activeInterpretationKey = null;
   renderFormalizeOutput(result);
   renderFormalizeContexts(result);

@@ -40,17 +40,16 @@ export async function verifyWebModuleGraph(options = {}) {
     if (loaded.contentTypeProblem) {
       contentTypeProblems.push(loaded.contentTypeProblem);
     }
-    if (moduleUrl.pathname.endsWith('.json')) {
+    if (
+      moduleUrl.pathname.endsWith('.json') ||
+      moduleUrl.pathname.endsWith('.wasm')
+    ) {
       continue;
     }
     const imports = parseStaticImports(loaded.text);
     const workerEntries = parseModuleWorkerEntries(loaded.text);
     const resourceEntries = parseImportMetaResourceEntries(loaded.text);
-    for (const specifier of [
-      ...imports,
-      ...workerEntries,
-      ...resourceEntries,
-    ]) {
+    for (const specifier of [...imports, ...workerEntries]) {
       const resolvedImport = resolveBrowserImport(
         specifier,
         moduleUrl,
@@ -65,6 +64,9 @@ export async function verifyWebModuleGraph(options = {}) {
           reason: resolvedImport.reason,
         });
       }
+    }
+    for (const resource of resourceEntries) {
+      pending.push(new URL(resource, moduleUrl).href);
     }
   }
 
@@ -153,7 +155,7 @@ function parseModuleWorkerEntries(source) {
 function parseImportMetaResourceEntries(source) {
   const entries = [];
   const pattern =
-    /\bnew\s+URL\s*\(\s*["']([^"']+\.(?:json|js))["']\s*,\s*import\.meta\.url\s*\)/gu;
+    /\bnew\s+URL\s*\(\s*["']([^"']+\.(?:json|js|wasm))["']\s*,\s*import\.meta\.url\s*\)/gu;
   for (const match of source.matchAll(pattern)) {
     entries.push(match[1]);
   }
@@ -249,6 +251,13 @@ function contentTypeProblem(url, contentType) {
       url: url.href,
       contentType,
       expected: 'application/json',
+    };
+  }
+  if (url.pathname.endsWith('.wasm') && normalized !== 'application/wasm') {
+    return {
+      url: url.href,
+      contentType,
+      expected: 'application/wasm',
     };
   }
   return null;
