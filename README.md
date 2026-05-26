@@ -15,6 +15,11 @@ formalization reference at
 [`docs/FORMALIZE.md`](docs/FORMALIZE.md) (regenerated from JSDoc with
 `npm run docs:formalize`).
 
+The downstream formal-ai foundation surface is tracked in
+[`docs/FORMAL_AI_COMPATIBILITY.md`](docs/FORMAL_AI_COMPATIBILITY.md): the
+OpenAI-shaped, Lino-native, WASM-buildable contract across library, CLI,
+microservice, web, and Rust surfaces.
+
 ## Library
 
 ```js

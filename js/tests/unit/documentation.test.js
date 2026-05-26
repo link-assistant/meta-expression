@@ -58,4 +58,36 @@ describe('vision documentation', () => {
       expect(missingFeatures.includes(expectedGap)).toBe(true);
     }
   });
+
+  it('tracks the formal-ai compatibility contract as a first-class doc', () => {
+    const contractPath = 'docs/FORMAL_AI_COMPATIBILITY.md';
+
+    expect(existsSync(contractPath)).toBe(true);
+
+    const contract = readFileSync(contractPath, 'utf8');
+    const readme = readFileSync('README.md', 'utf8');
+    const requirements = readFileSync('docs/REQUIREMENTS.md', 'utf8');
+
+    for (const expected of [
+      'formal-ai v0.123.0',
+      '39530ef2e71f787561f9252b72032eb81e329c3e',
+      'OpenAI-shaped',
+      'Lino-native',
+      'WASM-buildable',
+      'formalize',
+      'transform',
+      'naturalize',
+      'reason',
+      'Library',
+      'CLI',
+      'Microservice',
+      'Static web',
+      'Rust',
+    ]) {
+      expect(contract.includes(expected)).toBe(true);
+    }
+
+    expect(readme.includes(contractPath)).toBe(true);
+    expect(requirements.includes(contractPath)).toBe(true);
+  });
 });

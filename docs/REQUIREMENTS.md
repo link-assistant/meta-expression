@@ -7,6 +7,9 @@ prototype. It consolidates:
 - [Issue #5](https://github.com/link-assistant/meta-expression/issues/5)
 - [Issue #16](https://github.com/link-assistant/meta-expression/issues/16)
 - [Issue #18](https://github.com/link-assistant/meta-expression/issues/18)
+- [Issue #54](https://github.com/link-assistant/meta-expression/issues/54)
+- [Issue #58](https://github.com/link-assistant/meta-expression/issues/58)
+- [Issue #73](https://github.com/link-assistant/meta-expression/issues/73)
 - [PR #6 feedback](https://github.com/link-assistant/meta-expression/pull/6#issuecomment-4322346610)
 
 ## Terminology
@@ -70,6 +73,15 @@ boundary.
 | R47 | Keep translation tests fact-based and reproducible.           | MVP   | Issue #16 tests mock Wikidata search/entity responses and issue #52 tests cover the full reported seven-sentence EN→RU→EN flow in JS and Rust.                                                             | Add snapshot-backed integration tests for more multilingual examples.                                           |
 | R48 | Translate each sentence and whole text, not only words.       | MVP   | `/translate` returns sentence records and builds final text from sentence-level renderings with tested transformation rules; issue #52 covers exact full-text translation and back translation.            | Replace the narrow rule table with parser-backed Links Notation transformations.                                |
 | R49 | Show formalization and translation steps.                     | MVP   | Translate results include `formalization` and `steps`; the web page shows formalized input and collapsed step details.                                                                                     | Add user-editable rule inspection and replay once persistence is available.                                     |
+| R57 | Be a dependable foundation for formal-ai and a tool itself.   | Next  | [`FORMAL_AI_COMPATIBILITY.md`](./FORMAL_AI_COMPATIBILITY.md) tracks the OpenAI-shaped, Lino-native, WASM-buildable contract across library, CLI, microservice, static web, and Rust surfaces.              | Keep formalize/transform/naturalize/reason behavior stable as formal-ai releases change.                        |
+
+## Formal-AI Foundation Contract
+
+The formal-ai compatibility contract is maintained in
+[`docs/FORMAL_AI_COMPATIBILITY.md`](./FORMAL_AI_COMPATIBILITY.md). It records
+the latest checked formal-ai release, the shared inputs and outputs for each
+public surface, and the operation contract for `formalize`, `transform`,
+`naturalize`, `reason`, translation, probability, and evidence.
 
 ## Concrete Acceptance Examples
 
