@@ -14,8 +14,8 @@ The issue is intentionally broad. This PR now covers the shared compatibility
 contract with exact upstream corpus tracking plus focused executable tests and
 code:
 
-- A generated fixture records all 706 upstream Formal AI test case identities
-  from 61 test files at the pinned `formal-ai` commit.
+- A generated fixture records all 750 upstream Formal AI test case identities
+  from 69 test files at the pinned `formal-ai` commit.
 - JavaScript formalization supports configurable rules before and after the
   core formalizer.
 - JavaScript parses and answers Formal AI translation prompts in English,
@@ -54,9 +54,9 @@ location for large generated artifacts.
 The `formal-ai` repository was studied at:
 
 ```text
-e1467d531534af582a2f457e69695ac6861131b8
-2026-05-23T23:02:47+00:00
-chore: release v0.107.0
+39530ef2e71f787561f9252b72032eb81e329c3e
+2026-05-26T00:48:52+00:00
+chore: release v0.123.0
 ```
 
 Relevant upstream tests and specifications:

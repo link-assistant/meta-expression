@@ -1,18 +1,18 @@
 {
   "source": {
     "repository": "link-assistant/formal-ai",
-    "commit": "e1467d531534af582a2f457e69695ac6861131b8",
-    "committedAt": "2026-05-23T23:02:47+00:00",
-    "subject": "chore: release v0.107.0"
+    "commit": "39530ef2e71f787561f9252b72032eb81e329c3e",
+    "committedAt": "2026-05-26T00:48:52+00:00",
+    "subject": "chore: release v0.123.0"
   },
   "summary": {
-    "testFileCount": 61,
-    "rustTestCount": 534,
-    "jsTestCount": 172,
-    "totalTestCount": 706,
-    "ignoredRustTestCount": 69,
+    "testFileCount": 69,
+    "rustTestCount": 569,
+    "jsTestCount": 181,
+    "totalTestCount": 750,
+    "ignoredRustTestCount": 6,
     "ignoredJsTestCount": 0,
-    "ignoredTotalTestCount": 69
+    "ignoredTotalTestCount": 6
   },
   "files": [
     {
@@ -26,7 +26,7 @@
     {
       "path": "tests/e2e/playwright.local.config.js",
       "language": "javascript",
-      "sha256": "c63c32a40891baaaffbf551bdf1cb76d3ddcdf9b5a985ed03f3aca9e14d6b3b2",
+      "sha256": "f8a4846822c6a6d1b0c4275e40cad03ccfd74849770dfba3f35b99f975d674ad",
       "testCount": 0,
       "ignoredTestCount": 0,
       "tests": []
@@ -34,7 +34,7 @@
     {
       "path": "tests/e2e/playwright.pages.config.js",
       "language": "javascript",
-      "sha256": "58d03cb35b7172c0d0c6f561021d14d337ce9181dc3a370e90db229748767bee",
+      "sha256": "48c7a68d7e96d3a1b8556851757fc381fdba629c000f459c14a7362f7aab2b9e",
       "testCount": 0,
       "ignoredTestCount": 0,
       "tests": []
@@ -42,7 +42,7 @@
     {
       "path": "tests/e2e/scripts/check-i18n-catalog.mjs",
       "language": "javascript",
-      "sha256": "3c33dd11f85f9234e950755f7d44142789d01aa6c0f0a2c0a6056d8f683476a9",
+      "sha256": "57886b0ff54499207e8f8d2bbc1144817c730480eda09f5a956b866b88d84a76",
       "testCount": 0,
       "ignoredTestCount": 0,
       "tests": []
@@ -66,7 +66,7 @@
     {
       "path": "tests/e2e/scripts/check-multilingual-intent-coverage.mjs",
       "language": "javascript",
-      "sha256": "cb775435cdc4427c2b1e62cd61d99d4e9ff3a98912cd3b411cbd1bb5d9610ab1",
+      "sha256": "71bfcce08d88a0714d73ae3845df779ddfcb3f559a928c0b2492d4106010eeb2",
       "testCount": 0,
       "ignoredTestCount": 0,
       "tests": []
@@ -74,8 +74,8 @@
     {
       "path": "tests/e2e/tests/connectivity.spec.js",
       "language": "javascript",
-      "sha256": "22ab945990041cdcc9af22f2d6b88b78e51b7806ba8dbad7c1848759f4c15583",
-      "testCount": 5,
+      "sha256": "1ce46a8aff8bb01155d8ddd2ae700c9b089b0b958cd8fc9e86c8d4e57ac1c4c4",
+      "testCount": 6,
       "ignoredTestCount": 0,
       "tests": [
         {
@@ -86,30 +86,37 @@
           "ignored": false
         },
         {
+          "id": "tests/e2e/tests/connectivity.spec.js::lists dictionary page sources for proxy-based connectivity checks",
+          "name": "lists dictionary page sources for proxy-based connectivity checks",
+          "line": 39,
+          "framework": "test",
+          "ignored": false
+        },
+        {
           "id": "tests/e2e/tests/connectivity.spec.js::fetches a CORS-readable public knowledge API directly",
           "name": "fetches a CORS-readable public knowledge API directly",
-          "line": 36,
+          "line": 54,
           "framework": "test",
           "ignored": false
         },
         {
           "id": "tests/e2e/tests/connectivity.spec.js::records blocked direct page fetches without hiding iframe diagnostics",
           "name": "records blocked direct page fetches without hiding iframe diagnostics",
-          "line": 65,
+          "line": 83,
           "framework": "test",
           "ignored": false
         },
         {
           "id": "tests/e2e/tests/connectivity.spec.js::routes fetches through the configured web-capture proxy",
           "name": "routes fetches through the configured web-capture proxy",
-          "line": 82,
+          "line": 100,
           "framework": "test",
           "ignored": false
         },
         {
           "id": "tests/e2e/tests/connectivity.spec.js::opens and expands iframe diagnostics for a page endpoint",
           "name": "opens and expands iframe diagnostics for a page endpoint",
-          "line": 108,
+          "line": 126,
           "framework": "test",
           "ignored": false
         }
@@ -118,7 +125,7 @@
     {
       "path": "tests/e2e/tests/demo.spec.js",
       "language": "javascript",
-      "sha256": "57fec410011d684ac71ef643ca63ed3d618d58cb424db014cc96fc7742d1efbe",
+      "sha256": "830a237bbb1ddad360cefc53dffa4de1b3bae8fb41a00b541f112f68641d5a73",
       "testCount": 44,
       "ignoredTestCount": 0,
       "tests": [
@@ -258,175 +265,191 @@
         {
           "id": "tests/e2e/tests/demo.spec.js::sending a hello world request produces a code block",
           "name": "sending a hello world request produces a code block",
-          "line": 500,
+          "line": 504,
           "framework": "test",
           "ignored": false
         },
         {
           "id": "tests/e2e/tests/demo.spec.js::pressing Enter submits the message",
           "name": "pressing Enter submits the message",
-          "line": 521,
+          "line": 525,
           "framework": "test",
           "ignored": false
         },
         {
           "id": "tests/e2e/tests/demo.spec.js::demo mode toggle button is present",
           "name": "demo mode toggle button is present",
-          "line": 535,
+          "line": 539,
           "framework": "test",
           "ignored": false
         },
         {
           "id": "tests/e2e/tests/demo.spec.js::toggling demo mode disables the input",
           "name": "toggling demo mode disables the input",
-          "line": 544,
+          "line": 548,
           "framework": "test",
           "ignored": false
         },
         {
           "id": "tests/e2e/tests/demo.spec.js::diagnostics are hidden by default",
           "name": "diagnostics are hidden by default",
-          "line": 554,
+          "line": 558,
           "framework": "test",
           "ignored": false
         },
         {
           "id": "tests/e2e/tests/demo.spec.js::diagnostics toggle shows trace, intent, evidence, and thinking steps",
           "name": "diagnostics toggle shows trace, intent, evidence, and thinking steps",
-          "line": 561,
+          "line": 565,
           "framework": "test",
           "ignored": false
         },
         {
           "id": "tests/e2e/tests/demo.spec.js::message commands configure UI controls",
           "name": "message commands configure UI controls",
-          "line": 582,
+          "line": 586,
           "framework": "test",
           "ignored": false
         },
         {
           "id": "tests/e2e/tests/demo.spec.js::Issue #226: quoted language prose is not a UI language command across supported languages",
           "name": "Issue #226: quoted language prose is not a UI language command across supported languages",
-          "line": 595,
+          "line": 599,
           "framework": "test",
           "ignored": false
         },
         {
           "id": "tests/e2e/tests/demo.spec.js::composer does not expose an unused preview control",
           "name": "composer does not expose an unused preview control",
-          "line": 634,
+          "line": 638,
           "framework": "test",
           "ignored": false
         },
         {
           "id": "tests/e2e/tests/demo.spec.js::demo hint is shown in demo mode and hidden in manual mode",
           "name": "demo hint is shown in demo mode and hidden in manual mode",
-          "line": 641,
+          "line": 645,
           "framework": "test",
           "ignored": false
         },
         {
           "id": "tests/e2e/tests/demo.spec.js::honors dark color-scheme preference automatically",
           "name": "honors dark color-scheme preference automatically",
-          "line": 652,
+          "line": 656,
           "framework": "test",
           "ignored": false
         },
         {
           "id": "tests/e2e/tests/demo.spec.js::auto-detects Russian UI language from browser preferences",
           "name": "auto-detects Russian UI language from browser preferences",
-          "line": 670,
+          "line": 674,
           "framework": "test",
           "ignored": false
         },
         {
           "id": "tests/e2e/tests/demo.spec.js::ships UI dictionaries for all required languages",
           "name": "ships UI dictionaries for all required languages",
-          "line": 706,
+          "line": 710,
           "framework": "test",
           "ignored": false
         },
         {
           "id": "tests/e2e/tests/demo.spec.js::loads the published lino-i18n runtime for UI translations",
           "name": "loads the published lino-i18n runtime for UI translations",
-          "line": 729,
+          "line": 733,
           "framework": "test",
           "ignored": false
         },
         {
           "id": "tests/e2e/tests/demo.spec.js::loads the nested Links Notation catalog with generated parent labels",
           "name": "loads the nested Links Notation catalog with generated parent labels",
-          "line": 750,
+          "line": 754,
           "framework": "test",
           "ignored": false
         },
         {
           "id": "tests/e2e/tests/demo.spec.js::issue reports include UI, browser, and coarse location context",
           "name": "issue reports include UI, browser, and coarse location context",
-          "line": 778,
+          "line": 782,
           "framework": "test",
           "ignored": false
         },
         {
           "id": "tests/e2e/tests/demo.spec.js::prefilled issue URL stays below GitHub 8KB cap with a long dialog",
           "name": "prefilled issue URL stays below GitHub 8KB cap with a long dialog",
-          "line": 817,
+          "line": 821,
           "framework": "test",
           "ignored": false
         },
         {
           "id": "tests/e2e/tests/demo.spec.js::toolbar labels switch to icon-only before controls wrap",
           "name": "toolbar labels switch to icon-only before controls wrap",
-          "line": 853,
+          "line": 857,
           "framework": "test",
           "ignored": false
         },
         {
           "id": "tests/e2e/tests/demo.spec.js::mobile uses a left menu, hides the wordmark, and exposes brand details inside the drawer",
           "name": "mobile uses a left menu, hides the wordmark, and exposes brand details inside the drawer",
-          "line": 877,
+          "line": 881,
           "framework": "test",
           "ignored": false
         },
         {
           "id": "tests/e2e/tests/demo.spec.js::focused mobile composer stays in one row and keeps the top menu reachable",
           "name": "focused mobile composer stays in one row and keeps the top menu reachable",
-          "line": 898,
+          "line": 902,
           "framework": "test",
           "ignored": false
         },
         {
           "id": "tests/e2e/tests/demo.spec.js::UI skin, chat style, composer style, and action button are configurable and persisted",
           "name": "UI skin, chat style, composer style, and action button are configurable and persisted",
-          "line": 933,
+          "line": 937,
           "framework": "test",
           "ignored": false
         },
         {
           "id": "tests/e2e/tests/demo.spec.js::composer menu exposes attachment and memory actions at the input",
           "name": "composer menu exposes attachment and memory actions at the input",
-          "line": 957,
+          "line": 961,
           "framework": "test",
           "ignored": false
         },
         {
           "id": "tests/e2e/tests/demo.spec.js::tool cards fit inside the sidebar without horizontal overflow",
           "name": "tool cards fit inside the sidebar without horizontal overflow",
-          "line": 980,
+          "line": 984,
           "framework": "test",
           "ignored": false
         },
         {
           "id": "tests/e2e/tests/demo.spec.js::desktop sidebar can be resized with the separator",
           "name": "desktop sidebar can be resized with the separator",
-          "line": 1022,
+          "line": 1026,
           "framework": "test",
           "ignored": false
         },
         {
           "id": "tests/e2e/tests/demo.spec.js::focused mobile input pins the app shell to the visual viewport offset",
           "name": "focused mobile input pins the app shell to the visual viewport offset",
-          "line": 1049,
+          "line": 1053,
+          "framework": "test",
+          "ignored": false
+        }
+      ]
+    },
+    {
+      "path": "tests/e2e/tests/issue-135.spec.js",
+      "language": "javascript",
+      "sha256": "b1f409b5f8c44382eef376bff2ffe2f548755978ba1ae700e782e6c3258f7aac",
+      "testCount": 1,
+      "ignoredTestCount": 0,
+      "tests": [
+        {
+          "id": "tests/e2e/tests/issue-135.spec.js::reported Russian prompt returns a Playwright starter script",
+          "name": "reported Russian prompt returns a Playwright starter script",
+          "line": 44,
           "framework": "test",
           "ignored": false
         }
@@ -618,6 +641,22 @@
       ]
     },
     {
+      "path": "tests/e2e/tests/issue-209.spec.js",
+      "language": "javascript",
+      "sha256": "c89003c6ed9265d0864d42aa69a2813bec9f56d66f375f90862cb988cc946c0f",
+      "testCount": 1,
+      "ignoredTestCount": 0,
+      "tests": [
+        {
+          "id": "tests/e2e/tests/issue-209.spec.js::answers compact multilingual proof requests with Euclid proof",
+          "name": "answers compact multilingual proof requests with Euclid proof",
+          "line": 39,
+          "framework": "test",
+          "ignored": false
+        }
+      ]
+    },
+    {
       "path": "tests/e2e/tests/issue-210.spec.js",
       "language": "javascript",
       "sha256": "8a66a68289b355f9527553db04b4b61d0e6e8dd01b69c7873ec944f92ae0489a",
@@ -736,6 +775,22 @@
       ]
     },
     {
+      "path": "tests/e2e/tests/issue-223.spec.js",
+      "language": "javascript",
+      "sha256": "99bb0e8098e1f53ffafa5a75ee2461c59ded64256ff2607f43d4631704d7520a",
+      "testCount": 1,
+      "ignoredTestCount": 0,
+      "tests": [
+        {
+          "id": "tests/e2e/tests/issue-223.spec.js::pandas join-method prompt returns an official-docs answer",
+          "name": "pandas join-method prompt returns an official-docs answer",
+          "line": 51,
+          "framework": "test",
+          "ignored": false
+        }
+      ]
+    },
+    {
       "path": "tests/e2e/tests/issue-224.spec.js",
       "language": "javascript",
       "sha256": "97386f70f577bab243d7154389535f373eb74de2a90baa45441cb1a9d88734e0",
@@ -791,10 +846,33 @@
       ]
     },
     {
+      "path": "tests/e2e/tests/issue-242.spec.js",
+      "language": "javascript",
+      "sha256": "1e3ac1fa6a1511e0334081f68ae60bfbe7ff3d8f6729d6a8223150fb1588e69b",
+      "testCount": 2,
+      "ignoredTestCount": 0,
+      "tests": [
+        {
+          "id": "tests/e2e/tests/issue-242.spec.js::malformed meaning question extracts the term and falls back to Wiktionary",
+          "name": "malformed meaning question extracts the term and falls back to Wiktionary",
+          "line": 104,
+          "framework": "test",
+          "ignored": false
+        },
+        {
+          "id": "tests/e2e/tests/issue-242.spec.js::supported-language meaning prompts still reach dictionary fallback",
+          "name": "supported-language meaning prompts still reach dictionary fallback",
+          "line": 119,
+          "framework": "test",
+          "ignored": false
+        }
+      ]
+    },
+    {
       "path": "tests/e2e/tests/multilingual.spec.js",
       "language": "javascript",
-      "sha256": "f62caa73be2423f6574e9e9602d6dd6284e43659e05e42cac0fba7da0979ae11",
-      "testCount": 86,
+      "sha256": "6b8153fcf04bd1b79ed4b1a1c94fa7ea8499b7f263f2cbb716378c5e31ddfb47",
+      "testCount": 89,
       "ignoredTestCount": 0,
       "tests": [
         {
@@ -1141,8 +1219,8 @@
           "ignored": false
         },
         {
-          "id": "tests/e2e/tests/multilingual.spec.js::Memory module exposes no delete/forget operation",
-          "name": "Memory module exposes no delete/forget operation",
+          "id": "tests/e2e/tests/multilingual.spec.js::Memory module exposes explicit destructive operations only",
+          "name": "Memory module exposes explicit destructive operations only",
           "line": 1860,
           "framework": "test",
           "ignored": false
@@ -1150,252 +1228,273 @@
         {
           "id": "tests/e2e/tests/multilingual.spec.js::Issue #27: Download bundle button is removed (duplicate of Export memory)",
           "name": "Issue #27: Download bundle button is removed (duplicate of Export memory)",
-          "line": 1879,
+          "line": 1882,
           "framework": "test",
           "ignored": false
         },
         {
           "id": "tests/e2e/tests/multilingual.spec.js::Issue #27: Export memory does not surface a \"Bundled N events + seed\" label",
           "name": "Issue #27: Export memory does not surface a \"Bundled N events + seed\" label",
-          "line": 1887,
+          "line": 1890,
           "framework": "test",
           "ignored": false
         },
         {
           "id": "tests/e2e/tests/multilingual.spec.js::Issue #27: typing \"Export memory\" triggers the export button",
           "name": "Issue #27: typing \"Export memory\" triggers the export button",
-          "line": 1898,
+          "line": 1901,
           "framework": "test",
           "ignored": false
         },
         {
           "id": "tests/e2e/tests/multilingual.spec.js::Issue #27: typing \"Export your memory\" also triggers the export button",
           "name": "Issue #27: typing \"Export your memory\" also triggers the export button",
-          "line": 1911,
+          "line": 1914,
           "framework": "test",
           "ignored": false
         },
         {
           "id": "tests/e2e/tests/multilingual.spec.js::Issue #27: typing \"Import memory\" opens the file picker",
           "name": "Issue #27: typing \"Import memory\" opens the file picker",
-          "line": 1922,
+          "line": 1925,
+          "framework": "test",
+          "ignored": false
+        },
+        {
+          "id": "tests/e2e/tests/multilingual.spec.js::Issue #196: reset memory phrases are recognised in every supported language",
+          "name": "Issue #196: reset memory phrases are recognised in every supported language",
+          "line": 1938,
           "framework": "test",
           "ignored": false
         },
         {
           "id": "tests/e2e/tests/multilingual.spec.js::Report issue link is present in the topbar and links to the upload-memory guide (R112 + issue #78)",
           "name": "Report issue link is present in the topbar and links to the upload-memory guide (R112 + issue #78)",
-          "line": 1935,
+          "line": 1972,
           "framework": "test",
           "ignored": false
         },
         {
           "id": "tests/e2e/tests/multilingual.spec.js::Tool registry surfaces seed-loaded tools with mode badges",
           "name": "Tool registry surfaces seed-loaded tools with mode badges",
-          "line": 1959,
+          "line": 1996,
           "framework": "test",
           "ignored": false
         },
         {
           "id": "tests/e2e/tests/multilingual.spec.js::Issue #112: tool registry includes all supported tools and localizes descriptions",
           "name": "Issue #112: tool registry includes all supported tools and localizes descriptions",
-          "line": 1973,
+          "line": 2010,
           "framework": "test",
           "ignored": false
         },
         {
           "id": "tests/e2e/tests/multilingual.spec.js::Reasoning steps and tool calls land in the append-only log",
           "name": "Reasoning steps and tool calls land in the append-only log",
-          "line": 2004,
+          "line": 2041,
           "framework": "test",
           "ignored": false
         },
         {
           "id": "tests/e2e/tests/multilingual.spec.js::English greeting falls within the seeded variant list",
           "name": "English greeting falls within the seeded variant list",
-          "line": 2025,
+          "line": 2062,
           "framework": "test",
           "ignored": false
         },
         {
           "id": "tests/e2e/tests/multilingual.spec.js::disabling variations pins the canonical English greeting",
           "name": "disabling variations pins the canonical English greeting",
-          "line": 2038,
+          "line": 2075,
           "framework": "test",
           "ignored": false
         },
         {
           "id": "tests/e2e/tests/multilingual.spec.js::\"summarize this conversation\" returns a structured report",
           "name": "\"summarize this conversation\" returns a structured report",
-          "line": 2065,
+          "line": 2102,
           "framework": "test",
           "ignored": false
         },
         {
           "id": "tests/e2e/tests/multilingual.spec.js::single-word \"summarize\" triggers the skill",
           "name": "single-word \"summarize\" triggers the skill",
-          "line": 2078,
+          "line": 2115,
           "framework": "test",
           "ignored": false
         },
         {
           "id": "tests/e2e/tests/multilingual.spec.js::Russian \"резюме беседы\" triggers the skill",
           "name": "Russian \"резюме беседы\" triggers the skill",
-          "line": 2084,
+          "line": 2121,
           "framework": "test",
           "ignored": false
         },
         {
           "id": "tests/e2e/tests/multilingual.spec.js::Chinese \"总结\" triggers the skill",
           "name": "Chinese \"总结\" triggers the skill",
-          "line": 2090,
+          "line": 2127,
           "framework": "test",
           "ignored": false
         },
         {
           "id": "tests/e2e/tests/multilingual.spec.js::Chat/Agent toggle is present and starts in Chat",
           "name": "Chat/Agent toggle is present and starts in Chat",
-          "line": 2105,
+          "line": 2142,
           "framework": "test",
           "ignored": false
         },
         {
           "id": "tests/e2e/tests/multilingual.spec.js::Agent mode decomposes a multi-step task and runs each step",
           "name": "Agent mode decomposes a multi-step task and runs each step",
-          "line": 2115,
+          "line": 2152,
           "framework": "test",
           "ignored": false
         },
         {
           "id": "tests/e2e/tests/multilingual.spec.js::Agent mode preserves single-step prompts as plain Q&A",
           "name": "Agent mode preserves single-step prompts as plain Q&A",
-          "line": 2132,
+          "line": 2169,
           "framework": "test",
           "ignored": false
         },
         {
           "id": "tests/e2e/tests/multilingual.spec.js::topbar buttons collapse to emoji icons on mobile",
           "name": "topbar buttons collapse to emoji icons on mobile",
-          "line": 2153,
+          "line": 2190,
           "framework": "test",
           "ignored": false
         },
         {
           "id": "tests/e2e/tests/multilingual.spec.js::hamburger toggle opens the full-width sidebar drawer and the close button dismisses it",
           "name": "hamburger toggle opens the full-width sidebar drawer and the close button dismisses it",
-          "line": 2164,
+          "line": 2201,
           "framework": "test",
           "ignored": false
         },
         {
           "id": "tests/e2e/tests/multilingual.spec.js::Issue #112: mobile drawer lists topbar actions before conversations",
           "name": "Issue #112: mobile drawer lists topbar actions before conversations",
-          "line": 2188,
+          "line": 2225,
           "framework": "test",
           "ignored": false
         },
         {
           "id": "tests/e2e/tests/multilingual.spec.js::Issue #112: focused composer grows to content with equal padding and a half-panel cap",
           "name": "Issue #112: focused composer grows to content with equal padding and a half-panel cap",
-          "line": 2207,
+          "line": 2244,
           "framework": "test",
           "ignored": false
         },
         {
           "id": "tests/e2e/tests/multilingual.spec.js::chat surface keeps the full viewport when the menu is closed",
           "name": "chat surface keeps the full viewport when the menu is closed",
-          "line": 2238,
+          "line": 2275,
           "framework": "test",
           "ignored": false
         },
         {
           "id": "tests/e2e/tests/multilingual.spec.js::sending a prompt adds an entry to the conversation list",
           "name": "sending a prompt adds an entry to the conversation list",
-          "line": 2286,
+          "line": 2323,
           "framework": "test",
           "ignored": false
         },
         {
           "id": "tests/e2e/tests/multilingual.spec.js::\"+ New conversation\" clears the transcript and starts a fresh thread",
           "name": "\"+ New conversation\" clears the transcript and starts a fresh thread",
-          "line": 2295,
+          "line": 2332,
           "framework": "test",
           "ignored": false
         },
         {
           "id": "tests/e2e/tests/multilingual.spec.js::the last conversation is restored after reloading the page",
           "name": "the last conversation is restored after reloading the page",
-          "line": 2310,
+          "line": 2347,
           "framework": "test",
           "ignored": false
         },
         {
           "id": "tests/e2e/tests/multilingual.spec.js::Issue #112: deleting a conversation soft-hides it behind the deleted view",
           "name": "Issue #112: deleting a conversation soft-hides it behind the deleted view",
-          "line": 2324,
+          "line": 2361,
+          "framework": "test",
+          "ignored": false
+        },
+        {
+          "id": "tests/e2e/tests/multilingual.spec.js::Issue #196: deleted conversations can be permanently removed after export warning and confirmation",
+          "name": "Issue #196: deleted conversations can be permanently removed after export warning and confirmation",
+          "line": 2387,
+          "framework": "test",
+          "ignored": false
+        },
+        {
+          "id": "tests/e2e/tests/multilingual.spec.js::Issue #196: reset memory clears all browser events after export warning and confirmation",
+          "name": "Issue #196: reset memory clears all browser events after export warning and confirmation",
+          "line": 2440,
           "framework": "test",
           "ignored": false
         },
         {
           "id": "tests/e2e/tests/multilingual.spec.js::demo messages carry a label that matches an Example prompts entry",
           "name": "demo messages carry a label that matches an Example prompts entry",
-          "line": 2360,
+          "line": 2480,
           "framework": "test",
           "ignored": false
         },
         {
           "id": "tests/e2e/tests/multilingual.spec.js::Issue #112: Example prompts cover every supported prompt family",
           "name": "Issue #112: Example prompts cover every supported prompt family",
-          "line": 2384,
+          "line": 2504,
           "framework": "test",
           "ignored": false
         },
         {
           "id": "tests/e2e/tests/multilingual.spec.js::expanded sidebar sections share the available height equally",
           "name": "expanded sidebar sections share the available height equally",
-          "line": 2424,
+          "line": 2544,
           "framework": "test",
           "ignored": false
         },
         {
           "id": "tests/e2e/tests/multilingual.spec.js::each section body scrolls independently when content overflows",
           "name": "each section body scrolls independently when content overflows",
-          "line": 2443,
+          "line": 2563,
           "framework": "test",
           "ignored": false
         },
         {
           "id": "tests/e2e/tests/multilingual.spec.js::collapsing a section gives its space to the remaining expanded sections",
           "name": "collapsing a section gives its space to the remaining expanded sections",
-          "line": 2459,
+          "line": 2579,
           "framework": "test",
           "ignored": false
         },
         {
           "id": "tests/e2e/tests/multilingual.spec.js::\"When did I ask about X\" lists matches grouped by conversation",
           "name": "\"When did I ask about X\" lists matches grouped by conversation",
-          "line": 2508,
+          "line": 2628,
           "framework": "test",
           "ignored": false
         },
         {
           "id": "tests/e2e/tests/multilingual.spec.js::\"find X in another conversation\" excludes the current conversation",
           "name": "\"find X in another conversation\" excludes the current conversation",
-          "line": 2525,
+          "line": 2645,
           "framework": "test",
           "ignored": false
         },
         {
           "id": "tests/e2e/tests/multilingual.spec.js::recall with no matches reports a clear \"no mentions\" message",
           "name": "recall with no matches reports a clear \"no mentions\" message",
-          "line": 2542,
+          "line": 2662,
           "framework": "test",
           "ignored": false
         },
         {
           "id": "tests/e2e/tests/multilingual.spec.js::Russian phrasing \"Когда я спрашивал про X\" triggers the recall skill",
           "name": "Russian phrasing \"Когда я спрашивал про X\" triggers the recall skill",
-          "line": 2549,
+          "line": 2669,
           "framework": "test",
           "ignored": false
         }
@@ -1404,8 +1503,8 @@
     {
       "path": "tests/integration/formal_ai_cli.rs",
       "language": "rust",
-      "sha256": "e62dd07becc37a1dec4265d169013557c8908bf2149353c499cbdc177a7ef5cb",
-      "testCount": 11,
+      "sha256": "5348c3dac3bf3732e982a1c5c2c5a7b442bd036dec1a499003a456ac39edca6b",
+      "testCount": 13,
       "ignoredTestCount": 0,
       "tests": [
         {
@@ -1465,23 +1564,37 @@
           "ignored": false
         },
         {
+          "id": "tests/integration/formal_ai_cli.rs::cli_memory_purge_deleted_requires_confirmation_and_can_backup",
+          "name": "cli_memory_purge_deleted_requires_confirmation_and_can_backup",
+          "line": 296,
+          "framework": "test",
+          "ignored": false
+        },
+        {
+          "id": "tests/integration/formal_ai_cli.rs::cli_memory_reset_requires_confirmation_and_can_backup",
+          "name": "cli_memory_reset_requires_confirmation_and_can_backup",
+          "line": 365,
+          "framework": "test",
+          "ignored": false
+        },
+        {
           "id": "tests/integration/formal_ai_cli.rs::cli_bundle_export_includes_seed_and_memory",
           "name": "cli_bundle_export_includes_seed_and_memory",
-          "line": 296,
+          "line": 415,
           "framework": "test",
           "ignored": false
         },
         {
           "id": "tests/integration/formal_ai_cli.rs::cli_bundle_import_recovers_memory_into_local_log",
           "name": "cli_bundle_import_recovers_memory_into_local_log",
-          "line": 336,
+          "line": 455,
           "framework": "test",
           "ignored": false
         },
         {
           "id": "tests/integration/formal_ai_cli.rs::cli_memory_export_to_stdout_returns_links_notation",
           "name": "cli_memory_export_to_stdout_returns_links_notation",
-          "line": 387,
+          "line": 506,
           "framework": "test",
           "ignored": false
         }
@@ -2147,9 +2260,32 @@
       ]
     },
     {
+      "path": "tests/unit/memory_maintenance.rs",
+      "language": "rust",
+      "sha256": "820368d70938750bebb830c4fb8b329761eb6164a8176c8e2422a38281a568b6",
+      "testCount": 2,
+      "ignoredTestCount": 0,
+      "tests": [
+        {
+          "id": "tests/unit/memory_maintenance.rs::library_memory_can_purge_soft_deleted_conversations",
+          "name": "library_memory_can_purge_soft_deleted_conversations",
+          "line": 3,
+          "framework": "test",
+          "ignored": false
+        },
+        {
+          "id": "tests/unit/memory_maintenance.rs::library_memory_reset_clears_all_events",
+          "name": "library_memory_reset_clears_all_events",
+          "line": 43,
+          "framework": "test",
+          "ignored": false
+        }
+      ]
+    },
+    {
       "path": "tests/unit/mod.rs",
       "language": "rust",
-      "sha256": "93b8067314f23e09ae923c7d8b34fa4a71f7fe6f1513ace3f8edf781eb07bd18",
+      "sha256": "cc5bbf3fecd556c9ed30cd1ba090e724b0d8098216946c519590525f10c34cd3",
       "testCount": 0,
       "ignoredTestCount": 0,
       "tests": []
@@ -2270,6 +2406,43 @@
           "id": "tests/unit/multilingual_variations.rs::arithmetic_symbolic_variations_match",
           "name": "arithmetic_symbolic_variations_match",
           "line": 301,
+          "framework": "test",
+          "ignored": false
+        }
+      ]
+    },
+    {
+      "path": "tests/unit/playwright_script.rs",
+      "language": "rust",
+      "sha256": "fd5d83c4f731804d660867688379fc43f384c60cf95b2dc1322ad1652fe775d0",
+      "testCount": 4,
+      "ignoredTestCount": 0,
+      "tests": [
+        {
+          "id": "tests/unit/playwright_script.rs::russian_playwright_script_prompt_returns_starter_example",
+          "name": "russian_playwright_script_prompt_returns_starter_example",
+          "line": 3,
+          "framework": "test",
+          "ignored": false
+        },
+        {
+          "id": "tests/unit/playwright_script.rs::correctly_spelled_playwright_prompt_does_not_claim_typo_correction",
+          "name": "correctly_spelled_playwright_prompt_does_not_claim_typo_correction",
+          "line": 23,
+          "framework": "test",
+          "ignored": false
+        },
+        {
+          "id": "tests/unit/playwright_script.rs::playwright_script_prompts_route_across_supported_languages",
+          "name": "playwright_script_prompts_route_across_supported_languages",
+          "line": 36,
+          "framework": "test",
+          "ignored": false
+        },
+        {
+          "id": "tests/unit/playwright_script.rs::low_guess_playwright_script_prompt_asks_for_scope",
+          "name": "low_guess_playwright_script_prompt_asks_for_scope",
+          "line": 75,
           "framework": "test",
           "ignored": false
         }
@@ -2399,8 +2572,8 @@
     {
       "path": "tests/unit/proof_request.rs",
       "language": "rust",
-      "sha256": "3fc946e3b01d3457d07727b4024b979784ec8b4feade0761983b69db3a9034de",
-      "testCount": 13,
+      "sha256": "0c149d1b4a1208ca3d44e2d324465712cc695d670fafb704ca5ebc85a2f28127",
+      "testCount": 19,
       "ignoredTestCount": 0,
       "tests": [
         {
@@ -2425,72 +2598,114 @@
           "ignored": false
         },
         {
+          "id": "tests/unit/proof_request.rs::decision_procedure_proves_tautology_outside_theorem_registry",
+          "name": "decision_procedure_proves_tautology_outside_theorem_registry",
+          "line": 101,
+          "framework": "test",
+          "ignored": false
+        },
+        {
+          "id": "tests/unit/proof_request.rs::decision_procedure_proves_symbolic_linear_identity",
+          "name": "decision_procedure_proves_symbolic_linear_identity",
+          "line": 118,
+          "framework": "test",
+          "ignored": false
+        },
+        {
+          "id": "tests/unit/proof_request.rs::decision_procedure_proves_linear_constraint_entailment",
+          "name": "decision_procedure_proves_linear_constraint_entailment",
+          "line": 132,
+          "framework": "test",
+          "ignored": false
+        },
+        {
+          "id": "tests/unit/proof_request.rs::decision_procedure_disproves_linear_constraint_entailment",
+          "name": "decision_procedure_disproves_linear_constraint_entailment",
+          "line": 151,
+          "framework": "test",
+          "ignored": false
+        },
+        {
           "id": "tests/unit/proof_request.rs::pythagorean_request_contains_textbook_proof",
           "name": "pythagorean_request_contains_textbook_proof",
-          "line": 101,
+          "line": 168,
           "framework": "test",
           "ignored": false
         },
         {
           "id": "tests/unit/proof_request.rs::sqrt_two_proof_uses_contradiction",
           "name": "sqrt_two_proof_uses_contradiction",
-          "line": 114,
+          "line": 181,
           "framework": "test",
           "ignored": false
         },
         {
           "id": "tests/unit/proof_request.rs::euclid_primes_proof_is_returned",
           "name": "euclid_primes_proof_is_returned",
-          "line": 126,
+          "line": 193,
+          "framework": "test",
+          "ignored": false
+        },
+        {
+          "id": "tests/unit/proof_request.rs::russian_greeting_primes_prompt_returns_euclid_proof",
+          "name": "russian_greeting_primes_prompt_returns_euclid_proof",
+          "line": 206,
+          "framework": "test",
+          "ignored": false
+        },
+        {
+          "id": "tests/unit/proof_request.rs::prime_infinitude_proofs_are_supported_for_every_language",
+          "name": "prime_infinitude_proofs_are_supported_for_every_language",
+          "line": 226,
           "framework": "test",
           "ignored": false
         },
         {
           "id": "tests/unit/proof_request.rs::fermat_little_proof_uses_induction",
           "name": "fermat_little_proof_uses_induction",
-          "line": 139,
+          "line": 286,
           "framework": "test",
           "ignored": false
         },
         {
           "id": "tests/unit/proof_request.rs::russian_pythagoras_returns_russian_proof",
           "name": "russian_pythagoras_returns_russian_proof",
-          "line": 150,
+          "line": 297,
           "framework": "test",
           "ignored": false
         },
         {
           "id": "tests/unit/proof_request.rs::chinese_fermat_little_returns_chinese_proof",
           "name": "chinese_fermat_little_returns_chinese_proof",
-          "line": 161,
+          "line": 308,
           "framework": "test",
           "ignored": false
         },
         {
           "id": "tests/unit/proof_request.rs::godel_determinism_proof_request_mentions_axiom_set",
           "name": "godel_determinism_proof_request_mentions_axiom_set",
-          "line": 174,
+          "line": 321,
           "framework": "test",
           "ignored": false
         },
         {
           "id": "tests/unit/proof_request.rs::unknown_theorem_returns_partial_plan_not_refusal",
           "name": "unknown_theorem_returns_partial_plan_not_refusal",
-          "line": 209,
+          "line": 356,
           "framework": "test",
           "ignored": false
         },
         {
           "id": "tests/unit/proof_request.rs::proof_request_handler_does_not_swallow_opinion_questions",
           "name": "proof_request_handler_does_not_swallow_opinion_questions",
-          "line": 230,
+          "line": 377,
           "framework": "test",
           "ignored": false
         },
         {
           "id": "tests/unit/proof_request.rs::proof_request_handler_does_not_swallow_concept_lookups",
           "name": "proof_request_handler_does_not_swallow_concept_lookups",
-          "line": 241,
+          "line": 388,
           "framework": "test",
           "ignored": false
         }
@@ -2536,9 +2751,9 @@
     {
       "path": "tests/unit/specification/agent_isolation.rs",
       "language": "rust",
-      "sha256": "edbd2480d7dda221b550b21b0ea64267dcb36aeb07456471ca2873b4b4c6b5b7",
+      "sha256": "7dd15a42201163defcf5de65b5d08206e9f5518e9be38163262d8001e71b3823",
       "testCount": 11,
-      "ignoredTestCount": 9,
+      "ignoredTestCount": 0,
       "tests": [
         {
           "id": "tests/unit/specification/agent_isolation.rs::chat_mode_never_runs_user_supplied_shell_commands",
@@ -2559,63 +2774,63 @@
           "name": "agent_mode_is_off_by_default",
           "line": 37,
           "framework": "test",
-          "ignored": true
+          "ignored": false
         },
         {
           "id": "tests/unit/specification/agent_isolation.rs::agent_mode_opt_in_is_explicit_and_logged",
           "name": "agent_mode_opt_in_is_explicit_and_logged",
-          "line": 50,
+          "line": 49,
           "framework": "test",
-          "ignored": true
+          "ignored": false
         },
         {
           "id": "tests/unit/specification/agent_isolation.rs::agent_execution_runs_in_isolated_environment",
           "name": "agent_execution_runs_in_isolated_environment",
-          "line": 63,
+          "line": 61,
           "framework": "test",
-          "ignored": true
+          "ignored": false
         },
         {
           "id": "tests/unit/specification/agent_isolation.rs::agent_actions_are_appended_to_visible_log",
           "name": "agent_actions_are_appended_to_visible_log",
-          "line": 78,
+          "line": 75,
           "framework": "test",
-          "ignored": true
+          "ignored": false
         },
         {
           "id": "tests/unit/specification/agent_isolation.rs::agent_failures_are_visible",
           "name": "agent_failures_are_visible",
-          "line": 93,
+          "line": 89,
           "framework": "test",
-          "ignored": true
+          "ignored": false
         },
         {
           "id": "tests/unit/specification/agent_isolation.rs::destructive_agent_actions_require_confirmation",
           "name": "destructive_agent_actions_require_confirmation",
-          "line": 107,
+          "line": 102,
           "framework": "test",
-          "ignored": true
+          "ignored": false
         },
         {
           "id": "tests/unit/specification/agent_isolation.rs::agent_mode_enforces_time_budget",
           "name": "agent_mode_enforces_time_budget",
-          "line": 120,
+          "line": 114,
           "framework": "test",
-          "ignored": true
+          "ignored": false
         },
         {
           "id": "tests/unit/specification/agent_isolation.rs::agent_mode_does_not_leak_host_env_vars",
           "name": "agent_mode_does_not_leak_host_env_vars",
-          "line": 133,
+          "line": 126,
           "framework": "test",
-          "ignored": true
+          "ignored": false
         },
         {
           "id": "tests/unit/specification/agent_isolation.rs::switching_to_chat_revokes_agent_privileges",
           "name": "switching_to_chat_revokes_agent_privileges",
-          "line": 145,
+          "line": 137,
           "framework": "test",
-          "ignored": true
+          "ignored": false
         }
       ]
     },
@@ -2766,9 +2981,9 @@
     {
       "path": "tests/unit/specification/chat_surface.rs",
       "language": "rust",
-      "sha256": "ee634828a5e0baddf0aada2009dc1921f68bb53c44c0a8565e86ed4321ea1a82",
-      "testCount": 67,
-      "ignoredTestCount": 6,
+      "sha256": "d28feda585086acbd9244374fc28bcafc7fce66da903ea68ed2191a7a19f3d76",
+      "testCount": 68,
+      "ignoredTestCount": 2,
       "tests": [
         {
           "id": "tests/unit/specification/chat_surface.rs::greeting_prompt_returns_a_greeting_intent",
@@ -3006,42 +3221,42 @@
           "name": "chat_mode_refuses_unbounded_multi_step_actions_without_agent_opt_in",
           "line": 427,
           "framework": "test",
-          "ignored": true
+          "ignored": false
         },
         {
           "id": "tests/unit/specification/chat_surface.rs::every_code_answer_declares_execution_status_or_unavailability",
           "name": "every_code_answer_declares_execution_status_or_unavailability",
-          "line": 441,
+          "line": 444,
           "framework": "test",
           "ignored": true
         },
         {
           "id": "tests/unit/specification/chat_surface.rs::diagnostics_are_excluded_from_default_user_facing_answers",
           "name": "diagnostics_are_excluded_from_default_user_facing_answers",
-          "line": 453,
+          "line": 456,
           "framework": "test",
           "ignored": true
         },
         {
           "id": "tests/unit/specification/chat_surface.rs::user_messages_are_recorded_as_impulse_events",
           "name": "user_messages_are_recorded_as_impulse_events",
-          "line": 464,
+          "line": 467,
           "framework": "test",
-          "ignored": true
+          "ignored": false
         },
         {
           "id": "tests/unit/specification/chat_surface.rs::every_answer_exposes_a_trace_link_for_inspection",
           "name": "every_answer_exposes_a_trace_link_for_inspection",
-          "line": 477,
+          "line": 479,
           "framework": "test",
-          "ignored": true
+          "ignored": false
         },
         {
           "id": "tests/unit/specification/chat_surface.rs::unknown_intent_offers_a_path_to_extend_the_network",
           "name": "unknown_intent_offers_a_path_to_extend_the_network",
-          "line": 490,
+          "line": 491,
           "framework": "test",
-          "ignored": true
+          "ignored": false
         },
         {
           "id": "tests/unit/specification/chat_surface.rs::physical_action_question_is_answered_factually",
@@ -3093,149 +3308,156 @@
           "ignored": false
         },
         {
+          "id": "tests/unit/specification/chat_surface.rs::unknown_answer_explains_seed_extension_for_supported_languages",
+          "name": "unknown_answer_explains_seed_extension_for_supported_languages",
+          "line": 628,
+          "framework": "test",
+          "ignored": false
+        },
+        {
           "id": "tests/unit/specification/chat_surface.rs::unknown_answer_is_strict_superset_of_seed_opener",
           "name": "unknown_answer_is_strict_superset_of_seed_opener",
-          "line": 628,
+          "line": 662,
           "framework": "test",
           "ignored": false
         },
         {
           "id": "tests/unit/specification/chat_surface.rs::behavior_rule_teach_supports_english_if_i_ask_grammar",
           "name": "behavior_rule_teach_supports_english_if_i_ask_grammar",
-          "line": 640,
+          "line": 674,
           "framework": "test",
           "ignored": false
         },
         {
           "id": "tests/unit/specification/chat_surface.rs::behavior_rule_teach_supports_russian_esli_grammar",
           "name": "behavior_rule_teach_supports_russian_esli_grammar",
-          "line": 654,
+          "line": 688,
           "framework": "test",
           "ignored": false
         },
         {
           "id": "tests/unit/specification/chat_surface.rs::opener_pools_have_distinct_first_entries_per_language",
           "name": "opener_pools_have_distinct_first_entries_per_language",
-          "line": 669,
+          "line": 703,
           "framework": "test",
           "ignored": false
         },
         {
           "id": "tests/unit/specification/chat_surface.rs::behavior_rules_listing_includes_runtime_rule_when_history_has_one",
           "name": "behavior_rules_listing_includes_runtime_rule_when_history_has_one",
-          "line": 679,
+          "line": 713,
           "framework": "test",
           "ignored": false
         },
         {
           "id": "tests/unit/specification/chat_surface.rs::self_facts_answer_includes_model_id_and_strategy",
           "name": "self_facts_answer_includes_model_id_and_strategy",
-          "line": 694,
+          "line": 728,
           "framework": "test",
           "ignored": false
         },
         {
           "id": "tests/unit/specification/chat_surface.rs::behavior_rule_detail_uses_describe_prefix",
           "name": "behavior_rule_detail_uses_describe_prefix",
-          "line": 706,
+          "line": 740,
           "framework": "test",
           "ignored": false
         },
         {
           "id": "tests/unit/specification/chat_surface.rs::behavior_rule_detail_uses_read_rule_prefix",
           "name": "behavior_rule_detail_uses_read_rule_prefix",
-          "line": 717,
+          "line": 751,
           "framework": "test",
           "ignored": false
         },
         {
           "id": "tests/unit/specification/chat_surface.rs::behavior_rule_listing_renders_when_then_statements_grouped_by_topic",
           "name": "behavior_rule_listing_renders_when_then_statements_grouped_by_topic",
-          "line": 733,
+          "line": 767,
           "framework": "test",
           "ignored": false
         },
         {
           "id": "tests/unit/specification/chat_surface.rs::behavior_rule_listing_invites_when_x_then_y_teaching_form",
           "name": "behavior_rule_listing_invites_when_x_then_y_teaching_form",
-          "line": 767,
+          "line": 801,
           "framework": "test",
           "ignored": false
         },
         {
           "id": "tests/unit/specification/chat_surface.rs::behavior_rule_detail_includes_topic_and_when_then_in_links",
           "name": "behavior_rule_detail_includes_topic_and_when_then_in_links",
-          "line": 780,
+          "line": 814,
           "framework": "test",
           "ignored": false
         },
         {
           "id": "tests/unit/specification/chat_surface.rs::behavior_rule_teach_supports_english_when_x_then_y_grammar",
           "name": "behavior_rule_teach_supports_english_when_x_then_y_grammar",
-          "line": 803,
+          "line": 837,
           "framework": "test",
           "ignored": false
         },
         {
           "id": "tests/unit/specification/chat_surface.rs::behavior_rule_teach_supports_english_when_x_do_y_grammar",
           "name": "behavior_rule_teach_supports_english_when_x_do_y_grammar",
-          "line": 830,
+          "line": 864,
           "framework": "test",
           "ignored": false
         },
         {
           "id": "tests/unit/specification/chat_surface.rs::behavior_rule_teach_supports_russian_kogda_togda_grammar",
           "name": "behavior_rule_teach_supports_russian_kogda_togda_grammar",
-          "line": 844,
+          "line": 878,
           "framework": "test",
           "ignored": false
         },
         {
           "id": "tests/unit/specification/chat_surface.rs::behavior_rule_teach_supports_russian_kogda_delai_grammar",
           "name": "behavior_rule_teach_supports_russian_kogda_delai_grammar",
-          "line": 859,
+          "line": 893,
           "framework": "test",
           "ignored": false
         },
         {
           "id": "tests/unit/specification/chat_surface.rs::behavior_rule_teach_supports_hindi_jab_tab_grammar",
           "name": "behavior_rule_teach_supports_hindi_jab_tab_grammar",
-          "line": 871,
+          "line": 905,
           "framework": "test",
           "ignored": false
         },
         {
           "id": "tests/unit/specification/chat_surface.rs::behavior_rule_teach_supports_chinese_dang_shi_grammar",
           "name": "behavior_rule_teach_supports_chinese_dang_shi_grammar",
-          "line": 885,
+          "line": 919,
           "framework": "test",
           "ignored": false
         },
         {
           "id": "tests/unit/specification/chat_surface.rs::behavior_rule_teach_supports_chinese_dang_ze_grammar",
           "name": "behavior_rule_teach_supports_chinese_dang_ze_grammar",
-          "line": 899,
+          "line": 933,
           "framework": "test",
           "ignored": false
         },
         {
           "id": "tests/unit/specification/chat_surface.rs::behavior_rule_teach_recognized_for_capabilities_questions",
           "name": "behavior_rule_teach_recognized_for_capabilities_questions",
-          "line": 911,
+          "line": 945,
           "framework": "test",
           "ignored": false
         },
         {
           "id": "tests/unit/specification/chat_surface.rs::behavior_rule_listing_shows_dialog_local_runtime_rule_as_when_then",
           "name": "behavior_rule_listing_shows_dialog_local_runtime_rule_as_when_then",
-          "line": 929,
+          "line": 963,
           "framework": "test",
           "ignored": false
         },
         {
           "id": "tests/unit/specification/chat_surface.rs::behavior_rule_listing_does_not_match_when_x_then_y_in_running_text",
           "name": "behavior_rule_listing_does_not_match_when_x_then_y_in_running_text",
-          "line": 950,
+          "line": 984,
           "framework": "test",
           "ignored": false
         }
@@ -3244,9 +3466,9 @@
     {
       "path": "tests/unit/specification/code_generation.rs",
       "language": "rust",
-      "sha256": "93883b349f5aef9825deefb580f3e290c10a376665115587892c608eb1f9667b",
+      "sha256": "da1ef6ab4953e4660d32498be66305c49d307385aa305bcc22c6529f62a10712",
       "testCount": 20,
-      "ignoredTestCount": 6,
+      "ignoredTestCount": 0,
       "tests": [
         {
           "id": "tests/unit/specification/code_generation.rs::rust_hello_world_seed_compiles_and_runs",
@@ -3351,42 +3573,42 @@
           "name": "top_ten_popular_languages_each_have_a_hello_world_seed",
           "line": 172,
           "framework": "test",
-          "ignored": true
+          "ignored": false
         },
         {
           "id": "tests/unit/specification/code_generation.rs::code_answers_include_execution_links_in_notation",
           "name": "code_answers_include_execution_links_in_notation",
-          "line": 185,
+          "line": 184,
           "framework": "test",
-          "ignored": true
+          "ignored": false
         },
         {
           "id": "tests/unit/specification/code_generation.rs::code_answers_declare_isolation_level",
           "name": "code_answers_declare_isolation_level",
-          "line": 202,
+          "line": 200,
           "framework": "test",
-          "ignored": true
+          "ignored": false
         },
         {
           "id": "tests/unit/specification/code_generation.rs::sorting_algorithm_request_returns_code_and_tests",
           "name": "sorting_algorithm_request_returns_code_and_tests",
-          "line": 217,
+          "line": 214,
           "framework": "test",
-          "ignored": true
+          "ignored": false
         },
         {
           "id": "tests/unit/specification/code_generation.rs::translating_a_program_between_languages_keeps_semantics",
           "name": "translating_a_program_between_languages_keeps_semantics",
-          "line": 226,
+          "line": 222,
           "framework": "test",
-          "ignored": true
+          "ignored": false
         },
         {
           "id": "tests/unit/specification/code_generation.rs::execution_failures_are_reported_with_full_trace",
           "name": "execution_failures_are_reported_with_full_trace",
-          "line": 235,
+          "line": 230,
           "framework": "test",
-          "ignored": true
+          "ignored": false
         }
       ]
     },
@@ -3435,11 +3657,141 @@
       ]
     },
     {
+      "path": "tests/unit/specification/formalization.rs",
+      "language": "rust",
+      "sha256": "9182e769c3b69460d2306107558a2e09bc06793e5a5c79c8bc52b8adae2ad743",
+      "testCount": 11,
+      "ignoredTestCount": 0,
+      "tests": [
+        {
+          "id": "tests/unit/specification/formalization.rs::arbitrary_statement_maps_predicate_and_nouns_to_wikidata_ids",
+          "name": "arbitrary_statement_maps_predicate_and_nouns_to_wikidata_ids",
+          "line": 14,
+          "framework": "test",
+          "ignored": false
+        },
+        {
+          "id": "tests/unit/specification/formalization.rs::action_prompt_maps_translation_verb_to_wikidata_property",
+          "name": "action_prompt_maps_translation_verb_to_wikidata_property",
+          "line": 44,
+          "framework": "test",
+          "ignored": false
+        },
+        {
+          "id": "tests/unit/specification/formalization.rs::supported_language_prompts_map_local_surfaces_to_same_language_independent_ids",
+          "name": "supported_language_prompts_map_local_surfaces_to_same_language_independent_ids",
+          "line": 66,
+          "framework": "test",
+          "ignored": false
+        },
+        {
+          "id": "tests/unit/specification/formalization.rs::unmodeled_dictionary_terms_fall_back_to_wiktionary_surfaces",
+          "name": "unmodeled_dictionary_terms_fall_back_to_wiktionary_surfaces",
+          "line": 116,
+          "framework": "test",
+          "ignored": false
+        },
+        {
+          "id": "tests/unit/specification/formalization.rs::unanchored_unknown_terms_are_flagged_for_later_translation_gaps",
+          "name": "unanchored_unknown_terms_are_flagged_for_later_translation_gaps",
+          "line": 132,
+          "framework": "test",
+          "ignored": false
+        },
+        {
+          "id": "tests/unit/specification/formalization.rs::solver_evidence_exposes_formalization_ids_for_downstream_selection",
+          "name": "solver_evidence_exposes_formalization_ids_for_downstream_selection",
+          "line": 152,
+          "framework": "test",
+          "ignored": false
+        },
+        {
+          "id": "tests/unit/specification/formalization.rs::temperature_selection_is_deterministic_for_fixed_config",
+          "name": "temperature_selection_is_deterministic_for_fixed_config",
+          "line": 174,
+          "framework": "test",
+          "ignored": false
+        },
+        {
+          "id": "tests/unit/specification/formalization.rs::high_rigor_low_margin_asks_smallest_clarifying_question",
+          "name": "high_rigor_low_margin_asks_smallest_clarifying_question",
+          "line": 204,
+          "framework": "test",
+          "ignored": false
+        },
+        {
+          "id": "tests/unit/specification/formalization.rs::low_rigor_ambiguous_prompt_guesses_and_records_policy",
+          "name": "low_rigor_ambiguous_prompt_guesses_and_records_policy",
+          "line": 235,
+          "framework": "test",
+          "ignored": false
+        },
+        {
+          "id": "tests/unit/specification/formalization.rs::same_prompt_and_config_produce_same_interpretation_choice",
+          "name": "same_prompt_and_config_produce_same_interpretation_choice",
+          "line": 273,
+          "framework": "test",
+          "ignored": false
+        },
+        {
+          "id": "tests/unit/specification/formalization.rs::temperature_selection_preserves_supported_language_candidates",
+          "name": "temperature_selection_preserves_supported_language_candidates",
+          "line": 298,
+          "framework": "test",
+          "ignored": false
+        }
+      ]
+    },
+    {
+      "path": "tests/unit/specification/issue_146.rs",
+      "language": "rust",
+      "sha256": "2a66b7da1c7f1a9d83238e515767c3382239e79ee772eab08e46c9ca33a874b2",
+      "testCount": 5,
+      "ignoredTestCount": 0,
+      "tests": [
+        {
+          "id": "tests/unit/specification/issue_146.rs::reported_self_awareness_prompts_have_exact_answer_examples",
+          "name": "reported_self_awareness_prompts_have_exact_answer_examples",
+          "line": 81,
+          "framework": "test",
+          "ignored": false
+        },
+        {
+          "id": "tests/unit/specification/issue_146.rs::nearby_prompt_variations_have_documented_exact_answers",
+          "name": "nearby_prompt_variations_have_documented_exact_answers",
+          "line": 147,
+          "framework": "test",
+          "ignored": false
+        },
+        {
+          "id": "tests/unit/specification/issue_146.rs::self_awareness_answers_are_environment_specific",
+          "name": "self_awareness_answers_are_environment_specific",
+          "line": 220,
+          "framework": "test",
+          "ignored": false
+        },
+        {
+          "id": "tests/unit/specification/issue_146.rs::assistant_name_behavior_rule_has_exact_documentation",
+          "name": "assistant_name_behavior_rule_has_exact_documentation",
+          "line": 242,
+          "framework": "test",
+          "ignored": false
+        },
+        {
+          "id": "tests/unit/specification/issue_146.rs::self_awareness_specification_uses_exact_answer_examples",
+          "name": "self_awareness_specification_uses_exact_answer_examples",
+          "line": 249,
+          "framework": "test",
+          "ignored": false
+        }
+      ]
+    },
+    {
       "path": "tests/unit/specification/links_network.rs",
       "language": "rust",
-      "sha256": "25049aed5b59260f15c9cfd40ee560fb48618c426f9f69c01b5cd865ede25d39",
+      "sha256": "eea81601308cece19716e70a37a7cfc597202dba56ebb961d7faabaf4d3fce61",
       "testCount": 16,
-      "ignoredTestCount": 10,
+      "ignoredTestCount": 0,
       "tests": [
         {
           "id": "tests/unit/specification/links_network.rs::knowledge_export_is_non_empty_links_notation",
@@ -3488,77 +3840,77 @@
           "name": "knowledge_export_is_reducible_to_doublet_links",
           "line": 73,
           "framework": "test",
-          "ignored": true
+          "ignored": false
         },
         {
           "id": "tests/unit/specification/links_network.rs::dynamic_type_system_publishes_subtype_chains",
           "name": "dynamic_type_system_publishes_subtype_chains",
-          "line": 83,
+          "line": 82,
           "framework": "test",
-          "ignored": true
+          "ignored": false
         },
         {
           "id": "tests/unit/specification/links_network.rs::concepts_are_unique_and_referenced_by_id",
           "name": "concepts_are_unique_and_referenced_by_id",
-          "line": 93,
+          "line": 91,
           "framework": "test",
-          "ignored": true
+          "ignored": false
         },
         {
           "id": "tests/unit/specification/links_network.rs::history_is_append_only",
           "name": "history_is_append_only",
-          "line": 104,
+          "line": 101,
           "framework": "test",
-          "ignored": true
+          "ignored": false
         },
         {
           "id": "tests/unit/specification/links_network.rs::every_fact_carries_a_source_link",
           "name": "every_fact_carries_a_source_link",
-          "line": 116,
+          "line": 112,
           "framework": "test",
-          "ignored": true
+          "ignored": false
         },
         {
           "id": "tests/unit/specification/links_network.rs::every_answer_has_a_trace_link_pointer",
           "name": "every_answer_has_a_trace_link_pointer",
-          "line": 130,
+          "line": 125,
           "framework": "test",
-          "ignored": true
+          "ignored": false
         },
         {
           "id": "tests/unit/specification/links_network.rs::trace_record_lists_ordered_reasoning_steps",
           "name": "trace_record_lists_ordered_reasoning_steps",
-          "line": 143,
+          "line": 137,
           "framework": "test",
-          "ignored": true
+          "ignored": false
         },
         {
           "id": "tests/unit/specification/links_network.rs::knowledge_dataset_declares_schema_version",
           "name": "knowledge_dataset_declares_schema_version",
-          "line": 153,
+          "line": 146,
           "framework": "test",
-          "ignored": true
+          "ignored": false
         },
         {
           "id": "tests/unit/specification/links_network.rs::records_are_addressable_by_stable_id",
           "name": "records_are_addressable_by_stable_id",
-          "line": 163,
+          "line": 155,
           "framework": "test",
-          "ignored": true
+          "ignored": false
         },
         {
           "id": "tests/unit/specification/links_network.rs::ill_formed_links_notation_input_is_rejected",
           "name": "ill_formed_links_notation_input_is_rejected",
-          "line": 176,
+          "line": 167,
           "framework": "test",
-          "ignored": true
+          "ignored": false
         }
       ]
     },
     {
       "path": "tests/unit/specification/mod.rs",
       "language": "rust",
-      "sha256": "0a59b4ed9aa859dbe5771c27eecf4ac23e60986f249c95bd10bca0b73c4e8b43",
+      "sha256": "d62ee1e90b2053c6d70343244c1013d4badcf4a6651415a012de09a1971b2b93",
       "testCount": 0,
       "ignoredTestCount": 0,
       "tests": []
@@ -4437,9 +4789,9 @@
     {
       "path": "tests/unit/specification/reasoning_loop.rs",
       "language": "rust",
-      "sha256": "45f0c6fd9df4c15a6cbd3f10fbac7de1a56abaedada266c2d0c5eb1a59c946a9",
-      "testCount": 15,
-      "ignoredTestCount": 11,
+      "sha256": "3aea75b84689dde67fdc7619e44fb8bb2249e05d0f0017063b969b06aae43abd",
+      "testCount": 16,
+      "ignoredTestCount": 0,
       "tests": [
         {
           "id": "tests/unit/specification/reasoning_loop.rs::known_prompts_resolve_via_local_knowledge",
@@ -4470,89 +4822,96 @@
           "ignored": false
         },
         {
+          "id": "tests/unit/specification/reasoning_loop.rs::specialized_handlers_still_publish_loop_events",
+          "name": "specialized_handlers_still_publish_loop_events",
+          "line": 44,
+          "framework": "test",
+          "ignored": false
+        },
+        {
           "id": "tests/unit/specification/reasoning_loop.rs::step_1_prompt_is_recorded_as_impulse",
           "name": "step_1_prompt_is_recorded_as_impulse",
-          "line": 48,
+          "line": 76,
           "framework": "test",
-          "ignored": true
+          "ignored": false
         },
         {
           "id": "tests/unit/specification/reasoning_loop.rs::step_2_local_search_runs_before_external_calls",
           "name": "step_2_local_search_runs_before_external_calls",
-          "line": 61,
+          "line": 88,
           "framework": "test",
-          "ignored": true
+          "ignored": false
         },
         {
           "id": "tests/unit/specification/reasoning_loop.rs::step_3_external_search_kicks_in_when_local_is_insufficient",
           "name": "step_3_external_search_kicks_in_when_local_is_insufficient",
-          "line": 80,
+          "line": 106,
           "framework": "test",
-          "ignored": true
+          "ignored": false
         },
         {
           "id": "tests/unit/specification/reasoning_loop.rs::step_4_complex_requests_get_decomposed",
           "name": "step_4_complex_requests_get_decomposed",
-          "line": 93,
+          "line": 118,
           "framework": "test",
-          "ignored": true
+          "ignored": false
         },
         {
           "id": "tests/unit/specification/reasoning_loop.rs::step_5_multiple_candidates_are_generated",
           "name": "step_5_multiple_candidates_are_generated",
-          "line": 108,
+          "line": 132,
           "framework": "test",
-          "ignored": true
+          "ignored": false
         },
         {
           "id": "tests/unit/specification/reasoning_loop.rs::step_6_candidates_are_validated_against_constraints",
           "name": "step_6_candidates_are_validated_against_constraints",
-          "line": 123,
+          "line": 146,
           "framework": "test",
-          "ignored": true
+          "ignored": false
         },
         {
           "id": "tests/unit/specification/reasoning_loop.rs::step_7_smallest_sufficient_answer_is_selected",
           "name": "step_7_smallest_sufficient_answer_is_selected",
-          "line": 140,
+          "line": 162,
           "framework": "test",
-          "ignored": true
+          "ignored": false
         },
         {
           "id": "tests/unit/specification/reasoning_loop.rs::step_8_full_trace_is_stored_and_linked",
           "name": "step_8_full_trace_is_stored_and_linked",
-          "line": 151,
+          "line": 172,
           "framework": "test",
-          "ignored": true
+          "ignored": false
         },
         {
           "id": "tests/unit/specification/reasoning_loop.rs::step_9_reply_is_returned_with_trace_pointer",
           "name": "step_9_reply_is_returned_with_trace_pointer",
-          "line": 162,
+          "line": 182,
           "framework": "test",
-          "ignored": true
+          "ignored": false
         },
         {
           "id": "tests/unit/specification/reasoning_loop.rs::loop_terminates_on_unsolvable_questions",
           "name": "loop_terminates_on_unsolvable_questions",
-          "line": 173,
+          "line": 192,
           "framework": "test",
-          "ignored": true
+          "ignored": false
         },
         {
           "id": "tests/unit/specification/reasoning_loop.rs::confidence_reflects_corroborating_evidence",
           "name": "confidence_reflects_corroborating_evidence",
-          "line": 185,
+          "line": 203,
           "framework": "test",
-          "ignored": true
+          "ignored": false
         }
       ]
     },
     {
       "path": "tests/unit/specification/reasoning_paths.rs",
       "language": "rust",
-      "sha256": "5f2881615e4a06a7bc210ef58f4119e970b65ccb0cffedaa8f50d4cae7a9f76a",
-      "testCount": 47,
+      "sha256": "0981a1c52ae0df531543c9f45cbe544cfa84ccaa773bf769fde9074a7e5544b3",
+      "testCount": 49,
       "ignoredTestCount": 0,
       "tests": [
         {
@@ -4822,65 +5181,79 @@
           "ignored": false
         },
         {
+          "id": "tests/unit/specification/reasoning_paths.rs::pandas_join_method_question_uses_official_docs_summary",
+          "name": "pandas_join_method_question_uses_official_docs_summary",
+          "line": 565,
+          "framework": "test",
+          "ignored": false
+        },
+        {
+          "id": "tests/unit/specification/reasoning_paths.rs::pandas_join_method_docs_prompt_covers_supported_languages",
+          "name": "pandas_join_method_docs_prompt_covers_supported_languages",
+          "line": 597,
+          "framework": "test",
+          "ignored": false
+        },
+        {
           "id": "tests/unit/specification/reasoning_paths.rs::how_to_make_tea_uses_source_backed_procedure_plan",
           "name": "how_to_make_tea_uses_source_backed_procedure_plan",
-          "line": 565,
+          "line": 656,
           "framework": "test",
           "ignored": false
         },
         {
           "id": "tests/unit/specification/reasoning_paths.rs::how_to_prepare_fried_potatoes_falls_back_to_web_search",
           "name": "how_to_prepare_fried_potatoes_falls_back_to_web_search",
-          "line": 611,
+          "line": 702,
           "framework": "test",
           "ignored": false
         },
         {
           "id": "tests/unit/specification/reasoning_paths.rs::how_to_procedure_is_general_not_memoized_to_examples",
           "name": "how_to_procedure_is_general_not_memoized_to_examples",
-          "line": 650,
+          "line": 741,
           "framework": "test",
           "ignored": false
         },
         {
           "id": "tests/unit/specification/reasoning_paths.rs::every_specialized_handler_emits_a_trace_link",
           "name": "every_specialized_handler_emits_a_trace_link",
-          "line": 686,
+          "line": 777,
           "framework": "test",
           "ignored": false
         },
         {
           "id": "tests/unit/specification/reasoning_paths.rs::russian_meters_in_kilobyte_returns_unit_incompatibility",
           "name": "russian_meters_in_kilobyte_returns_unit_incompatibility",
-          "line": 717,
+          "line": 808,
           "framework": "test",
           "ignored": false
         },
         {
           "id": "tests/unit/specification/reasoning_paths.rs::english_meters_in_kilobyte_returns_unit_incompatibility",
           "name": "english_meters_in_kilobyte_returns_unit_incompatibility",
-          "line": 741,
+          "line": 832,
           "framework": "test",
           "ignored": false
         },
         {
           "id": "tests/unit/specification/reasoning_paths.rs::incompatible_unit_answer_records_evidence_link",
           "name": "incompatible_unit_answer_records_evidence_link",
-          "line": 749,
+          "line": 840,
           "framework": "test",
           "ignored": false
         },
         {
           "id": "tests/unit/specification/reasoning_paths.rs::compatible_unit_query_does_not_trigger_incompatibility_handler",
           "name": "compatible_unit_query_does_not_trigger_incompatibility_handler",
-          "line": 762,
+          "line": 853,
           "framework": "test",
           "ignored": false
         },
         {
           "id": "tests/unit/specification/reasoning_paths.rs::greeting_is_not_intercepted_by_incompatibility_handler",
           "name": "greeting_is_not_intercepted_by_incompatibility_handler",
-          "line": 772,
+          "line": 863,
           "framework": "test",
           "ignored": false
         }
@@ -4889,72 +5262,72 @@
     {
       "path": "tests/unit/specification/source_cache.rs",
       "language": "rust",
-      "sha256": "00d91733bcd496c6ca31f51704d767b81ec6a332b69c0b63d3154c2de4b6c247",
+      "sha256": "a3020a8620307ddcbfdaed3ef6afa18de64b562627dbf7a8d5c506cd7312c6bc",
       "testCount": 9,
-      "ignoredTestCount": 8,
+      "ignoredTestCount": 0,
       "tests": [
         {
           "id": "tests/unit/specification/source_cache.rs::implementation_does_not_advertise_external_fetches_for_local_prompts",
           "name": "implementation_does_not_advertise_external_fetches_for_local_prompts",
-          "line": 18,
+          "line": 22,
           "framework": "test",
           "ignored": false
         },
         {
           "id": "tests/unit/specification/source_cache.rs::external_lookups_record_source_url",
           "name": "external_lookups_record_source_url",
-          "line": 34,
+          "line": 38,
           "framework": "test",
-          "ignored": true
+          "ignored": false
         },
         {
           "id": "tests/unit/specification/source_cache.rs::source_links_carry_fetched_at_timestamp",
           "name": "source_links_carry_fetched_at_timestamp",
-          "line": 47,
+          "line": 50,
           "framework": "test",
-          "ignored": true
+          "ignored": false
         },
         {
           "id": "tests/unit/specification/source_cache.rs::stale_sources_are_refreshed",
           "name": "stale_sources_are_refreshed",
-          "line": 61,
+          "line": 63,
           "framework": "test",
-          "ignored": true
+          "ignored": false
         },
         {
           "id": "tests/unit/specification/source_cache.rs::repeated_lookups_hit_the_cache",
           "name": "repeated_lookups_hit_the_cache",
-          "line": 74,
+          "line": 75,
           "framework": "test",
-          "ignored": true
+          "ignored": false
         },
         {
           "id": "tests/unit/specification/source_cache.rs::cached_sources_include_content_hash",
           "name": "cached_sources_include_content_hash",
           "line": 95,
           "framework": "test",
-          "ignored": true
+          "ignored": false
         },
         {
           "id": "tests/unit/specification/source_cache.rs::conflicting_sources_are_surfaced",
           "name": "conflicting_sources_are_surfaced",
-          "line": 108,
+          "line": 107,
           "framework": "test",
-          "ignored": true
+          "ignored": false
         },
         {
           "id": "tests/unit/specification/source_cache.rs::cache_flush_is_explicit_and_auditable",
           "name": "cache_flush_is_explicit_and_auditable",
-          "line": 121,
+          "line": 119,
           "framework": "test",
-          "ignored": true
+          "ignored": false
         },
         {
           "id": "tests/unit/specification/source_cache.rs::offline_mode_disables_external_lookups",
           "name": "offline_mode_disables_external_lookups",
-          "line": 134,
+          "line": 131,
           "framework": "test",
-          "ignored": true
+          "ignored": false
         }
       ]
     },
@@ -5154,9 +5527,9 @@
     {
       "path": "tests/unit/specification/translation_via_links.rs",
       "language": "rust",
-      "sha256": "b062680cb53c9e1aa7d7509d286c5dbe076e7ec159bcddfd5b7c215f1346e5e3",
+      "sha256": "c4f75f06ccd2b38a9b236ff4320b7c8c1de5f5cf946654b6bfcc73e42267e822",
       "testCount": 23,
-      "ignoredTestCount": 7,
+      "ignoredTestCount": 0,
       "tests": [
         {
           "id": "tests/unit/specification/translation_via_links.rs::every_answer_publishes_a_links_notation_trace",
@@ -5275,58 +5648,58 @@
           "name": "translation_preserves_meaning_id_across_languages",
           "line": 672,
           "framework": "test",
-          "ignored": true
+          "ignored": false
         },
         {
           "id": "tests/unit/specification/translation_via_links.rs::translation_request_returns_target_surface_form",
           "name": "translation_request_returns_target_surface_form",
-          "line": 692,
+          "line": 691,
           "framework": "test",
-          "ignored": true
+          "ignored": false
         },
         {
           "id": "tests/unit/specification/translation_via_links.rs::synonyms_across_languages_share_meaning",
           "name": "synonyms_across_languages_share_meaning",
-          "line": 703,
+          "line": 701,
           "framework": "test",
-          "ignored": true
+          "ignored": false
         },
         {
           "id": "tests/unit/specification/translation_via_links.rs::translation_declares_source_and_target_language_tags",
           "name": "translation_declares_source_and_target_language_tags",
-          "line": 722,
+          "line": 719,
           "framework": "test",
-          "ignored": true
+          "ignored": false
         },
         {
           "id": "tests/unit/specification/translation_via_links.rs::translation_trace_includes_intermediate_meaning",
           "name": "translation_trace_includes_intermediate_meaning",
-          "line": 736,
+          "line": 732,
           "framework": "test",
-          "ignored": true
+          "ignored": false
         },
         {
           "id": "tests/unit/specification/translation_via_links.rs::cross_language_code_translation_preserves_semantics",
           "name": "cross_language_code_translation_preserves_semantics",
-          "line": 746,
+          "line": 741,
           "framework": "test",
-          "ignored": true
+          "ignored": false
         },
         {
           "id": "tests/unit/specification/translation_via_links.rs::untranslatable_concepts_are_flagged",
           "name": "untranslatable_concepts_are_flagged",
-          "line": 755,
+          "line": 749,
           "framework": "test",
-          "ignored": true
+          "ignored": false
         }
       ]
     },
     {
       "path": "tests/unit/specification/transparent_state.rs",
       "language": "rust",
-      "sha256": "474505bdd870274a84caf39d80d5aeafbb7a4596b6d916bcb342417d1f8ecc74",
-      "testCount": 11,
-      "ignoredTestCount": 8,
+      "sha256": "de34298498902f65cc0f58dcedd38e97550795981fbd72389b55985e3b7fca6a",
+      "testCount": 12,
+      "ignoredTestCount": 0,
       "tests": [
         {
           "id": "tests/unit/specification/transparent_state.rs::knowledge_export_is_inspectable_at_runtime",
@@ -5354,56 +5727,63 @@
           "name": "querying_the_network_returns_snapshot",
           "line": 40,
           "framework": "test",
-          "ignored": true
+          "ignored": false
         },
         {
           "id": "tests/unit/specification/transparent_state.rs::querying_a_concept_returns_its_links",
           "name": "querying_a_concept_returns_its_links",
-          "line": 50,
+          "line": 49,
           "framework": "test",
-          "ignored": true
+          "ignored": false
         },
         {
           "id": "tests/unit/specification/transparent_state.rs::diagnostic_ids_never_leak_into_default_chat_prose",
           "name": "diagnostic_ids_never_leak_into_default_chat_prose",
-          "line": 60,
+          "line": 58,
           "framework": "test",
-          "ignored": true
+          "ignored": false
         },
         {
           "id": "tests/unit/specification/transparent_state.rs::diagnostic_mode_can_be_enabled_per_message",
           "name": "diagnostic_mode_can_be_enabled_per_message",
-          "line": 71,
+          "line": 68,
           "framework": "test",
-          "ignored": true
+          "ignored": false
         },
         {
           "id": "tests/unit/specification/transparent_state.rs::why_meta_question_explains_previous_answer",
           "name": "why_meta_question_explains_previous_answer",
-          "line": 82,
+          "line": 78,
           "framework": "test",
-          "ignored": true
+          "ignored": false
+        },
+        {
+          "id": "tests/unit/specification/transparent_state.rs::why_meta_question_explains_previous_answer_in_supported_languages",
+          "name": "why_meta_question_explains_previous_answer_in_supported_languages",
+          "line": 89,
+          "framework": "test",
+          "ignored": false
         },
         {
           "id": "tests/unit/specification/transparent_state.rs::forget_request_requires_explicit_retraction_protocol",
           "name": "forget_request_requires_explicit_retraction_protocol",
-          "line": 94,
+          "line": 148,
           "framework": "test",
-          "ignored": true
+          "ignored": false
         },
         {
           "id": "tests/unit/specification/transparent_state.rs::export_network_returns_links_notation_snapshot",
           "name": "export_network_returns_links_notation_snapshot",
-          "line": 107,
+          "line": 160,
           "framework": "test",
-          "ignored": true
+          "ignored": false
         },
         {
           "id": "tests/unit/specification/transparent_state.rs::list_my_facts_filters_by_user",
           "name": "list_my_facts_filters_by_user",
-          "line": 115,
+          "line": 167,
           "framework": "test",
-          "ignored": true
+          "ignored": false
         }
       ]
     },

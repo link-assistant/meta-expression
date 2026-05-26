@@ -183,8 +183,11 @@ const arithmeticQuestionPattern =
 const realWorldConfidenceEpsilon = 0.01;
 const selfReferentialFalseStatements = new Set([
   'this statement is false',
+  'this statement is true',
   'this sentence is false',
+  'this sentence is true',
   'this is false statement',
+  'this is true statement',
 ]);
 
 export const defaultBeliefSystem = Object.freeze({

@@ -4,7 +4,7 @@
 
 | ID  | Requirement                                                                                                         | Status                     | Evidence                                                                                                                                                                                                                                          |
 | --- | ------------------------------------------------------------------------------------------------------------------- | -------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| R1  | Study `link-assistant/formal-ai` and copy exactly all upstream Formal AI test case identities into local coverage.  | Done                       | `js/tests/fixtures/formal-ai-test-corpus.json` indexes all 706 upstream test cases from 61 files at commit `e1467d531534af582a2f457e69695ac6861131b8`; `issue-54-formal-ai-corpus.test.js` asserts the pinned counts and key cases.               |
+| R1  | Study `link-assistant/formal-ai` and copy exactly all upstream Formal AI test case identities into local coverage.  | Done                       | `js/tests/fixtures/formal-ai-test-corpus.json` indexes all 750 upstream test cases from 69 files at commit `39530ef2e71f787561f9252b72032eb81e329c3e`; `issue-54-formal-ai-corpus.test.js` asserts the pinned counts and key cases.               |
 | R2  | Support formalization in Rust and JavaScript for Formal AI use.                                                     | Done                       | JS formalization has pre/post hooks, trace steps, CST/AST linguistic metadata, and links-network relation records. Rust exposes deterministic transformation and metadata primitives.                                                             |
 | R3  | Support naturalization, also available as deformalization.                                                          | Done                       | JS translation result and CST expose `deformalization`; Rust exposes `deformalize_semantic_translation()`.                                                                                                                                        |
 | R4  | Support translation.                                                                                                | Done                       | JS translation has before/after translation hooks, Formal AI prompt parsing, naturalization/deformalization hooks, and semantic links carrying source fragment roles. Rust covers the matching deterministic Formal AI phrase/common-noun corpus. |
@@ -27,7 +27,7 @@ The focused JS and Rust regressions demonstrate the missing compatibility
 surface:
 
 1. The local corpus fixture contains every upstream Formal AI test identity from
-   the pinned source commit: 534 Rust tests and 172 JavaScript/Playwright tests.
+   the pinned source commit: 569 Rust tests and 181 JavaScript/Playwright tests.
 2. A caller can rewrite `kitten` to `cat` before formalization.
 3. A caller can attach custom metadata after formalization.
 4. A caller can rewrite source text before translation.
