@@ -1,0 +1,342 @@
+{
+  "source": {
+    "issue": 114,
+    "measuredAt": "2026-05-26",
+    "command": "npm run test:competitor-gates",
+    "ciGate": "npm run test:acceptance and the JS workflow no-regression acceptance gate",
+    "catalogue": "docs/case-studies/issue-26/TEST-CASES.md"
+  },
+  "summary": {
+    "datasetCount": 8,
+    "totalCaseCount": 36,
+    "enabledCaseCount": 26,
+    "passingCaseCount": 26,
+    "deferredCaseCount": 10,
+    "enabledPassRate": 1,
+    "executableCoverage": 0.7222
+  },
+  "datasets": [
+    {
+      "id": "arithmetic-kernel",
+      "label": "Arithmetic kernel",
+      "competitors": ["Wolfram Alpha", "Metamath", "Z3", "Lean", "SWI-Prolog"],
+      "totalCaseCount": 10,
+      "enabledCaseCount": 10,
+      "passingCaseCount": 10,
+      "deferredCaseCount": 0,
+      "enabledPassRate": 1,
+      "executableCoverage": 1,
+      "cases": [
+        {
+          "id": "arithmetic-1-plus-1-equals-2",
+          "input": "1 + 1 = 2",
+          "assertion": "computed-true",
+          "status": "enabled"
+        },
+        {
+          "id": "arithmetic-1-plus-1-equals-1",
+          "input": "1 + 1 = 1",
+          "assertion": "computed-false",
+          "status": "enabled"
+        },
+        {
+          "id": "arithmetic-2-plus-2-equals-4",
+          "input": "2 + 2 = 4",
+          "assertion": "computed-true",
+          "status": "enabled"
+        },
+        {
+          "id": "arithmetic-2-plus-2-equals-5",
+          "input": "2 + 2 = 5",
+          "assertion": "computed-false",
+          "status": "enabled"
+        },
+        {
+          "id": "arithmetic-2-times-3-equals-6",
+          "input": "2 * 3 = 6",
+          "assertion": "computed-true",
+          "status": "enabled"
+        },
+        {
+          "id": "arithmetic-2-times-3-equals-7",
+          "input": "2 * 3 = 7",
+          "assertion": "computed-false",
+          "status": "enabled"
+        },
+        {
+          "id": "arithmetic-10-minus-4-equals-6",
+          "input": "10 - 4 = 6",
+          "assertion": "computed-true",
+          "status": "enabled"
+        },
+        {
+          "id": "arithmetic-10-minus-4-equals-5",
+          "input": "10 - 4 = 5",
+          "assertion": "computed-false",
+          "status": "enabled"
+        },
+        {
+          "id": "arithmetic-1-plus-1-question",
+          "input": "1 + 1",
+          "assertion": "computed-question",
+          "expectedValue": 2,
+          "status": "enabled"
+        },
+        {
+          "id": "arithmetic-1-minus-1-question",
+          "input": "1 - 1",
+          "assertion": "computed-question",
+          "expectedValue": 0,
+          "status": "enabled"
+        }
+      ]
+    },
+    {
+      "id": "wikidata-structured-facts",
+      "label": "Wikidata structured facts",
+      "competitors": ["Wikidata Query Service", "Wolfram Alpha", "DBpedia"],
+      "totalCaseCount": 7,
+      "enabledCaseCount": 7,
+      "passingCaseCount": 7,
+      "deferredCaseCount": 0,
+      "enabledPassRate": 1,
+      "executableCoverage": 1,
+      "cases": [
+        {
+          "id": "wikidata-earth-orbits-sun",
+          "input": "Earth orbits the Sun",
+          "assertion": "supported-claim",
+          "status": "enabled"
+        },
+        {
+          "id": "wikidata-earth-does-not-orbit-sun",
+          "input": "Earth does not orbit the Sun",
+          "assertion": "refuted-claim",
+          "status": "enabled"
+        },
+        {
+          "id": "wikidata-moon-orbits-sun",
+          "input": "Moon orbits the Sun",
+          "assertion": "supported-claim",
+          "status": "enabled"
+        },
+        {
+          "id": "wikidata-moon-orbits-earth",
+          "input": "Moon orbits Earth",
+          "assertion": "supported-claim",
+          "status": "enabled"
+        },
+        {
+          "id": "wikidata-paris-capital-france",
+          "input": "Paris is the capital of France",
+          "assertion": "supported-claim",
+          "status": "enabled"
+        },
+        {
+          "id": "wikidata-berlin-capital-france",
+          "input": "Berlin is the capital of France",
+          "assertion": "refuted-claim",
+          "status": "enabled"
+        },
+        {
+          "id": "wikidata-berlin-capital-germany",
+          "input": "Berlin is the capital of Germany",
+          "assertion": "supported-claim",
+          "status": "enabled"
+        }
+      ]
+    },
+    {
+      "id": "wikidata-liveness",
+      "label": "Wikidata P570 liveness",
+      "competitors": ["Wikidata Query Service"],
+      "totalCaseCount": 4,
+      "enabledCaseCount": 4,
+      "passingCaseCount": 4,
+      "deferredCaseCount": 0,
+      "enabledPassRate": 1,
+      "executableCoverage": 1,
+      "cases": [
+        {
+          "id": "liveness-elon-musk-alive",
+          "input": "Elon Musk is alive",
+          "assertion": "supported-claim",
+          "status": "enabled"
+        },
+        {
+          "id": "liveness-elon-musk-dead",
+          "input": "Elon Musk is dead",
+          "assertion": "refuted-claim",
+          "status": "enabled"
+        },
+        {
+          "id": "liveness-ada-lovelace-dead",
+          "input": "Ada Lovelace is dead",
+          "assertion": "supported-claim",
+          "status": "enabled"
+        },
+        {
+          "id": "liveness-ada-lovelace-alive",
+          "input": "Ada Lovelace is alive",
+          "assertion": "refuted-claim",
+          "status": "enabled"
+        }
+      ]
+    },
+    {
+      "id": "self-reference-paradoxes",
+      "label": "Self-reference and paradoxes",
+      "competitors": ["Tarski/Kripke literature", "Russell paradox"],
+      "totalCaseCount": 3,
+      "enabledCaseCount": 3,
+      "passingCaseCount": 3,
+      "deferredCaseCount": 0,
+      "enabledPassRate": 1,
+      "executableCoverage": 1,
+      "cases": [
+        {
+          "id": "paradox-liar-negative",
+          "input": "this statement is false",
+          "assertion": "neutral-paradox",
+          "status": "enabled"
+        },
+        {
+          "id": "paradox-liar-positive",
+          "input": "this statement is true",
+          "assertion": "neutral-paradox",
+          "status": "enabled"
+        },
+        {
+          "id": "paradox-russell-set",
+          "input": "The set of all sets that do not contain themselves",
+          "assertion": "unknown-claim",
+          "status": "enabled"
+        }
+      ]
+    },
+    {
+      "id": "nl-logic-extraction",
+      "label": "NL to logic and triple extraction",
+      "competitors": ["Stanford OpenIE", "AllenNLP SRL", "Boxer", "AMR"],
+      "totalCaseCount": 4,
+      "enabledCaseCount": 0,
+      "passingCaseCount": 0,
+      "deferredCaseCount": 4,
+      "enabledPassRate": null,
+      "executableCoverage": 0,
+      "cases": [
+        {
+          "id": "openie-barack-obama-born-hawaii",
+          "input": "Barack Obama was born in Hawaii",
+          "assertion": "roadmap-phase-8",
+          "status": "deferred"
+        },
+        {
+          "id": "srl-mary-gave-john-book",
+          "input": "Mary gave John a book",
+          "assertion": "roadmap-phase-8",
+          "status": "deferred"
+        },
+        {
+          "id": "fol-every-man-loves-a-woman",
+          "input": "Every man loves a woman",
+          "assertion": "roadmap-phase-8",
+          "status": "deferred"
+        },
+        {
+          "id": "amr-boy-wants-to-go",
+          "input": "The boy wants to go",
+          "assertion": "roadmap-phase-8",
+          "status": "deferred"
+        }
+      ]
+    },
+    {
+      "id": "disputed-truth-corpora",
+      "label": "Disputed-truth corpora",
+      "competitors": ["Google Fact Check Tools", "Snopes", "PolitiFact"],
+      "totalCaseCount": 4,
+      "enabledCaseCount": 0,
+      "passingCaseCount": 0,
+      "deferredCaseCount": 4,
+      "enabledPassRate": null,
+      "executableCoverage": 0,
+      "cases": [
+        {
+          "id": "claimreview-5g-coronavirus",
+          "input": "5G causes coronavirus",
+          "assertion": "roadmap-phase-10",
+          "status": "deferred"
+        },
+        {
+          "id": "snopes-einstein-failed-math",
+          "input": "Einstein failed math in school",
+          "assertion": "roadmap-phase-10",
+          "status": "deferred"
+        },
+        {
+          "id": "politifact-obama-born-kenya",
+          "input": "Barack Obama was born in Kenya",
+          "assertion": "roadmap-phase-10",
+          "status": "deferred"
+        },
+        {
+          "id": "politifact-crime-all-time-high",
+          "input": "Crime is at an all-time high",
+          "assertion": "roadmap-phase-10",
+          "status": "deferred"
+        }
+      ]
+    },
+    {
+      "id": "uniqueness-paraphrase",
+      "label": "Uniqueness and paraphrase",
+      "competitors": ["iThenticate", "SBERT"],
+      "totalCaseCount": 2,
+      "enabledCaseCount": 1,
+      "passingCaseCount": 1,
+      "deferredCaseCount": 1,
+      "enabledPassRate": 1,
+      "executableCoverage": 0.5,
+      "cases": [
+        {
+          "id": "ithenticate-hawaii-state",
+          "input": "Hawaii is a state.",
+          "assertion": "uniqueness-source-match",
+          "status": "enabled"
+        },
+        {
+          "id": "sbert-stsb-meal-paraphrase",
+          "input": "A man is eating food. / A person is having a meal.",
+          "assertion": "roadmap-phase-10",
+          "status": "deferred"
+        }
+      ]
+    },
+    {
+      "id": "knowledge-representation-round-trip",
+      "label": "Knowledge representation round-trip",
+      "competitors": ["LinksPlatform / Doublets", "ClaimReview JSON-LD"],
+      "totalCaseCount": 2,
+      "enabledCaseCount": 1,
+      "passingCaseCount": 1,
+      "deferredCaseCount": 1,
+      "enabledPassRate": 1,
+      "executableCoverage": 0.5,
+      "cases": [
+        {
+          "id": "linksplatform-doublets-self-loop",
+          "input": "Encode [1, 1, 1] triplet",
+          "assertion": "doublets-self-loop",
+          "status": "enabled"
+        },
+        {
+          "id": "claimreview-jsonld-round-trip",
+          "input": "Earth orbits the Sun analysis as ClaimReview",
+          "assertion": "roadmap-phase-10",
+          "status": "deferred"
+        }
+      ]
+    }
+  ]
+}

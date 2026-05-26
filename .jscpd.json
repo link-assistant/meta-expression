@@ -11,6 +11,7 @@
     "**/*.min.js",
     "**/coverage/**",
     "**/docs/case-studies/*/data/**",
+    "**/js/tests/fixtures/competitor-quality-gates.json",
     "**/js/tests/fixtures/formal-ai-test-corpus.json",
     "**/.changeset/**",
     "**/package-lock.json",

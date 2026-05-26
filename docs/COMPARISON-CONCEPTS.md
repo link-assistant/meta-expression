@@ -52,6 +52,28 @@ When a comparable system ships or removes a feature:
 2. If a canonical input/output changes, update
    [`docs/case-studies/issue-26/TEST-CASES.md`](./case-studies/issue-26/TEST-CASES.md).
 
+## Measured competitor quality gates
+
+Issue #114 turns the harvested competitor cases into a measured recurring gate.
+The score fixture is
+[`js/tests/fixtures/competitor-quality-gates.json`](../js/tests/fixtures/competitor-quality-gates.json),
+and the executable gate is
+[`js/tests/integration/issue-114-competitor-quality-gates.test.js`](../js/tests/integration/issue-114-competitor-quality-gates.test.js).
+As measured on 2026-05-26, the gate reports **26/26 enabled cases passing**
+and **26/36 total harvested cases executable**, for **72.2% executable
+coverage** across the competitor catalogue.
+
+| Concept cluster                         | Measured score              | Current gap tracked by |
+| --------------------------------------- | --------------------------- | ---------------------- |
+| Arithmetic and formal-verification core | 10/10 enabled cases passing | No open gap            |
+| Wikidata-structured public facts        | 7/7 enabled cases passing   | No open gap            |
+| Wikidata P570 liveness templates        | 4/4 enabled cases passing   | No open gap            |
+| Self-reference and paradoxes            | 3/3 enabled cases passing   | No open gap            |
+| NL to logic / extraction                | 0/4 executable cases        | #89                    |
+| Disputed-truth corpora                  | 0/4 executable cases        | #87                    |
+| Uniqueness and paraphrase               | 1/2 executable cases        | #90                    |
+| Knowledge representation round-trip     | 1/2 executable cases        | #88, #92               |
+
 ## 1. Automated fact checking
 
 **meta-expression role**: `/check` (and alias `/fact-check`) on every
