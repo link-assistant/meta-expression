@@ -1,6 +1,3 @@
-import { readFileSync } from 'node:fs';
-import { fileURLToPath } from 'node:url';
-
 // The semantic interlingua lexicon. Every entry is a concept with a unique id
 // (Wikidata Q, Wiktionary or Wikipedia URL) and per-language surface forms.
 // Directional translation is never stored as a direct language pair; instead it
@@ -9,16 +6,53 @@ import { fileURLToPath } from 'node:url';
 // dictionaries while still providing a deterministic, source-backed fallback
 // for offline use and CI.
 const lexiconUrl = new URL('../data/semantic-lexicon.json', import.meta.url);
+const networkLexicon = await loadNetworkLexicon(lexiconUrl);
+const fileReaders = networkLexicon === null ? await loadFileReaders() : null;
 
 let cachedLexicon = null;
 const directionalCache = new Map();
+
+async function loadNetworkLexicon(url) {
+  if (url.protocol !== 'http:' && url.protocol !== 'https:') {
+    return null;
+  }
+  const response = await fetch(url, {
+    headers: {
+      Accept: 'application/json',
+    },
+  });
+  if (!response.ok) {
+    throw new Error(
+      `Failed to load semantic lexicon ${url.href}: HTTP ${response.status}`
+    );
+  }
+  return response.json();
+}
+
+async function loadFileReaders() {
+  const [{ readFileSync }, { fileURLToPath }] = await Promise.all([
+    import('node:fs'),
+    import('node:url'),
+  ]);
+  return { readFileSync, fileURLToPath };
+}
+
+function readLexicon() {
+  if (networkLexicon !== null) {
+    return networkLexicon;
+  }
+  const raw = fileReaders.readFileSync(
+    fileReaders.fileURLToPath(lexiconUrl),
+    'utf8'
+  );
+  return JSON.parse(raw);
+}
 
 function loadLexicon() {
   if (cachedLexicon) {
     return cachedLexicon;
   }
-  const raw = readFileSync(fileURLToPath(lexiconUrl), 'utf8');
-  const parsed = JSON.parse(raw);
+  const parsed = readLexicon();
   cachedLexicon = {
     version: parsed.version ?? 1,
     languages: Array.isArray(parsed.languages) ? parsed.languages : [],
