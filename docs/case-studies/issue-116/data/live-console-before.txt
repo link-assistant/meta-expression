@@ -1,0 +1,6 @@
+Total messages: 4 (Errors: 4, Warnings: 0)
+
+[ERROR] Access to script at 'node:fs' from origin 'https://link-assistant.github.io' has been blocked by CORS policy: Cross origin requests are only supported for protocol schemes: chrome, chrome-extension, chrome-untrusted, data, http, https, isolated-app. @ https://link-assistant.github.io/meta-expression/web/?statement=Earth+orbits+the+Sun:0
+[ERROR] Failed to load resource: net::ERR_FAILED @ node:fs:0
+[ERROR] Access to script at 'node:url' from origin 'https://link-assistant.github.io' has been blocked by CORS policy: Cross origin requests are only supported for protocol schemes: chrome, chrome-extension, chrome-untrusted, data, http, https, isolated-app. @ https://link-assistant.github.io/meta-expression/web/?statement=Earth+orbits+the+Sun:0
+[ERROR] Failed to load resource: net::ERR_FAILED @ node:url:0
