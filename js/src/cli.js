@@ -13,6 +13,7 @@ import {
 import { formalizeTextWith, FORMALIZE_LINK_TARGETS } from './formalize.js';
 import { translateTextWith } from './translate.js';
 import { checkText, checkTextWithLiveEvidence } from './check.js';
+import { exportClaimReviewJsonLd } from './claim-review.js';
 import { searchTextUniqueness } from './uniqueness.js';
 import { parseSourceSpec } from './formalize-sources.js';
 import { loadRepoOverrides, loadUserOverrides } from './formalize-overrides.js';
@@ -87,6 +88,12 @@ export function parseCliArguments(args) {
     },
     '--score': () => {
       applyEvidenceScore(options.evidenceScoring, nextValue());
+    },
+    '--source': () => {
+      options.sourceUrl = nextValue();
+    },
+    '--source-url': () => {
+      options.sourceUrl = nextValue();
     },
     '--profile': () => {
       options.profileFile = nextValue();
@@ -242,6 +249,11 @@ function configureCliYargs({ yargs, getenv }) {
       type: 'string',
       default: getenv('SCORE', ''),
     })
+    .option('source-url', {
+      alias: 'source',
+      type: 'string',
+      default: getenv('SOURCE_URL', ''),
+    })
     .option('profile', {
       type: 'string',
       default: getenv('PROFILE', ''),
@@ -311,6 +323,11 @@ function createCliOptions(config) {
     options,
     'profileFile',
     firstPresent(config.profile, config.beliefProfile, config.preferenceProfile)
+  );
+  assignStringOption(
+    options,
+    'sourceUrl',
+    firstPresent(config.sourceUrl, config.source)
   );
   if (config.help === true) {
     options.command = 'help';
@@ -771,6 +788,18 @@ function emitCliAnalysis(options, output, analysis) {
 }
 
 function emitCheckResult(options, output, result) {
+  if (isClaimReviewFormat(options.format)) {
+    output.log(
+      JSON.stringify(
+        exportClaimReviewJsonLd(result, {
+          sourceUrl: options.sourceUrl,
+        }),
+        null,
+        2
+      )
+    );
+    return 0;
+  }
   if (options.format === 'links' || options.format === 'lino') {
     output.log(result.linksNotation);
     return 0;
@@ -806,6 +835,10 @@ function emitUniquenessResult(options, output, result) {
 
 function isCheckCommand(command) {
   return command === 'check' || command === 'fact-check';
+}
+
+function isClaimReviewFormat(format) {
+  return format === 'claim-review' || format === 'claimreview';
 }
 
 function isUniquenessCommand(command) {
@@ -849,7 +882,7 @@ Commands:
 
 Options:
   -i, --input <text>             Statement text
-  -f, --format <json|links|markdown|html>
+  -f, --format <json|links|markdown|html|claim-review>
   -s, --select <index>           Interpretation index (analyze), default 0
   --live                         analyze: resolve through Wikimedia APIs
   --target <wikipedia|wikidata|local>
@@ -872,6 +905,8 @@ Options:
   --match-threshold <0..1>       translation-quality: token coverage threshold
   --score <situation=probability>
                                  check/fact-check: override evidence scoring
+  --source, --source-url <url>    check/fact-check: source URL for ClaimReview
+                                 exports
   -h, --help                     Show this help`;
 }
 

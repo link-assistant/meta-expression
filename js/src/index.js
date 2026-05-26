@@ -101,6 +101,11 @@ export {
 } from './translation-quality.js';
 export { checkText, checkTextWithLiveEvidence } from './check.js';
 export {
+  exportClaimReviewJsonLd,
+  importClaimReviewJsonLd,
+  parseClaimReviewJsonLd,
+} from './claim-review.js';
+export {
   createCrossrefUniquenessSource,
   createDefaultUniquenessSources,
   createDuckDuckGoUniquenessSource,
