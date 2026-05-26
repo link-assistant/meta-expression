@@ -1,8 +1,12 @@
 # Feature comparison: meta-expression vs. similar projects
 
-> Last checked: 2026-05-12.
+> Last checked: 2026-05-26.
 > Companion document: [`COMPARISON-CONCEPTS.md`](./COMPARISON-CONCEPTS.md).
-> Source case study: [`docs/case-studies/issue-26/`](./case-studies/issue-26/).
+> Source case studies:
+> [`docs/case-studies/issue-26/`](./case-studies/issue-26/) and
+> [`docs/case-studies/issue-71/`](./case-studies/issue-71/).
+> Missing-feature ledger:
+> [`docs/case-studies/issue-71/MISSING-FEATURES.md`](./case-studies/issue-71/MISSING-FEATURES.md).
 > Issue #20 extension:
 > [`docs/case-studies/issue-20/`](./case-studies/issue-20/).
 
@@ -57,6 +61,8 @@ The matrix below collapses each cluster into the most-cited project
 representative. For a full per-project listing see
 [`COMPARISON-CONCEPTS.md`](./COMPARISON-CONCEPTS.md) and the raw research
 log [`docs/case-studies/issue-26/ONLINE-RESEARCH.md`](./case-studies/issue-26/ONLINE-RESEARCH.md).
+The 2026-05-26 refresh is archived in
+[`docs/case-studies/issue-71/ONLINE-RESEARCH.md`](./case-studies/issue-71/ONLINE-RESEARCH.md).
 
 | Feature                                | Wolfram Alpha             | Wikidata SPARQL         | Coq / Lean / Z3       | Stanford OpenIE           | DBpedia Spotlight     | Turnitin / iThenticate    | SBERT                                     | Perplexity AI           | Consensus.app                          | Wikipedia / ClaimReview | Neo4j / Datomic  | RDF / JSON-LD / PROV-O | LinksPlatform / Doublets |
 | -------------------------------------- | ------------------------- | ----------------------- | --------------------- | ------------------------- | --------------------- | ------------------------- | ----------------------------------------- | ----------------------- | -------------------------------------- | ----------------------- | ---------------- | ---------------------- | ------------------------ |
@@ -150,7 +156,34 @@ The F8 ("evidence") and F9 ("correctness + signed confidence") rows do
   prefilled issue-report state, Links Notation export, or Rust/doublets
   persistence surface.
 
-## 6. How this matrix is maintained
+## 6. Competitor-derived follow-up issues
+
+Canonical ledger: `docs/case-studies/issue-71/MISSING-FEATURES.md`.
+
+Issue #71 turns the refreshed competitor gaps into focused child issues:
+[#87](https://github.com/link-assistant/meta-expression/issues/87) for
+ClaimReview / Schema.org interchange,
+[#88](https://github.com/link-assistant/meta-expression/issues/88) for
+PROV-O / JSON-LD provenance export,
+[#89](https://github.com/link-assistant/meta-expression/issues/89) for
+OpenIE / AMR / SRL formalization inputs,
+[#90](https://github.com/link-assistant/meta-expression/issues/90) for
+document-level originality reporting,
+[#91](https://github.com/link-assistant/meta-expression/issues/91) for
+literature-review evidence workflows,
+[#92](https://github.com/link-assistant/meta-expression/issues/92) for
+SPARQL and graph exports,
+[#93](https://github.com/link-assistant/meta-expression/issues/93) for
+formal proof and solver artifacts, and
+[#94](https://github.com/link-assistant/meta-expression/issues/94) for browser
+and editor assistant surfaces.
+
+Existing sibling issues stay linked to the parity work: #72 executes harvested
+competitor and formal-ai corpora as tests, #73 tracks the formal-ai
+compatibility contract, and #74 keeps generalized algorithms from regressing
+already-supported examples.
+
+## 7. How this matrix is maintained
 
 1. When a new feature lands in meta-expression, add a row to §1 and a
    column-by-column assessment in §2.
@@ -158,8 +191,12 @@ The F8 ("evidence") and F9 ("correctness + signed confidence") rows do
    corresponding cell and bump the `Last checked` date.
 3. When pricing changes, update
    [`COMPARISON-CONCEPTS.md`](./COMPARISON-CONCEPTS.md) and the
-   raw research log
-   [`docs/case-studies/issue-26/ONLINE-RESEARCH.md`](./case-studies/issue-26/ONLINE-RESEARCH.md).
+   current issue-specific raw research log, most recently
+   [`docs/case-studies/issue-71/ONLINE-RESEARCH.md`](./case-studies/issue-71/ONLINE-RESEARCH.md).
+4. When a competitor exposes a shipped feature meta-expression lacks, file a
+   focused child issue and update
+   [`docs/case-studies/issue-71/MISSING-FEATURES.md`](./case-studies/issue-71/MISSING-FEATURES.md).
 
 The [`docs/case-studies/issue-26/`](./case-studies/issue-26/) folder
-records the audit trail per row.
+records the baseline audit trail per row; issue-specific refreshes record the
+current delta.
