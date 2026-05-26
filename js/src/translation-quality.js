@@ -106,6 +106,51 @@ export function extractFirstStatement(text) {
 }
 
 /**
+ * Normalize a single block of paragraph text so it round-trips through the
+ * formalizer. Non-breaking spaces are replaced with regular spaces and any run
+ * of whitespace (the formalizer collapses these in its CST) is reduced to one
+ * space before trimming. The result matches the `text` a formalization CST
+ * reports back, which lets the issue 96 paragraph-coverage test assert that
+ * every source token was linked.
+ *
+ * @param {string} text
+ * @returns {string}
+ */
+export function normalizeParagraphText(text) {
+  return String(text ?? '')
+    .replace(/\u00A0/g, ' ')
+    .replace(/\s+/g, ' ')
+    .trim();
+}
+
+/**
+ * Split a Wikipedia extract (or any multi-paragraph text) into normalized
+ * paragraphs. Extracts captured with `explaintext` separate paragraphs with
+ * one or more newlines, so blocks are split on newline runs, normalized with
+ * {@link normalizeParagraphText}, and empties dropped.
+ *
+ * @param {string} text
+ * @returns {string[]}
+ */
+export function extractParagraphs(text) {
+  return String(text ?? '')
+    .split(/\n+/)
+    .map((paragraph) => normalizeParagraphText(paragraph))
+    .filter((paragraph) => paragraph.length > 0);
+}
+
+/**
+ * Return the first non-empty, normalized paragraph of an extract, or an empty
+ * string when there is none.
+ *
+ * @param {string} text
+ * @returns {string}
+ */
+export function extractFirstParagraph(text) {
+  return extractParagraphs(text)[0] ?? '';
+}
+
+/**
  * Tokenize text into Unicode-aware content tokens, lowercase them, and drop
  * universal stop words and digits-only strings.
  *

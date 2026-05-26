@@ -2815,6 +2815,12 @@ export declare function summarizeAssessment(
 
 export declare function extractFirstStatement(text: string): string;
 
+export declare function normalizeParagraphText(text: string): string;
+
+export declare function extractParagraphs(text: string): string[];
+
+export declare function extractFirstParagraph(text: string): string;
+
 export declare function tokenCoverage(
   candidate: string,
   target: string
