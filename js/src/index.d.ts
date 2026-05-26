@@ -1901,6 +1901,10 @@ export interface EvidenceProvenanceExportOptions {
   linksNotation?: string;
 }
 
+export interface EvidenceGraphExportOptions extends EvidenceProvenanceExportOptions {
+  limit?: number;
+}
+
 export interface EvidenceJsonLdExport extends Record<string, unknown> {
   '@context': Record<string, unknown>;
   '@id': string;
@@ -1923,6 +1927,35 @@ export interface EvidenceProvJsonLdExport extends Record<string, unknown> {
   exportedAt: string;
   linksNotation: string;
   '@graph': Record<string, unknown>[];
+}
+
+export interface EvidenceRdfTriplesExport extends Record<string, unknown> {
+  format: 'meta-expression-rdf-triples';
+  sourceSurface: 'analyze' | 'check';
+  exportedAt: string;
+  triples: Record<string, unknown>[];
+  mappings: Record<string, string>[];
+  guardrails: Record<string, unknown> | null;
+}
+
+export interface EvidencePropertyGraphExport extends Record<string, unknown> {
+  format: 'meta-expression-property-graph';
+  sourceSurface: 'analyze' | 'check';
+  exportedAt: string;
+  nodes: Record<string, unknown>[];
+  relationships: Record<string, unknown>[];
+  mappings: Record<string, string>[];
+  guardrails: Record<string, unknown> | null;
+}
+
+export interface ScopedSparqlEvidenceExport extends Record<string, unknown> {
+  format: 'meta-expression-scoped-sparql';
+  sourceSurface: 'analyze' | 'check';
+  exportedAt: string;
+  query: string;
+  scope: Record<string, unknown>;
+  limits: Record<string, unknown>;
+  guardrails: Record<string, unknown> | null;
 }
 
 export type UniquenessSuggestedAction =
@@ -2204,6 +2237,29 @@ export declare function exportEvidenceProvJsonLd(
   input: StatementAnalysis | CheckResult,
   options?: EvidenceProvenanceExportOptions
 ): EvidenceProvJsonLdExport;
+
+export declare function exportScopedSparqlEvidence(
+  input: StatementAnalysis | CheckResult,
+  options?: EvidenceGraphExportOptions
+): ScopedSparqlEvidenceExport;
+
+export declare function exportEvidenceRdfTriples(
+  input: StatementAnalysis | CheckResult,
+  options?: EvidenceGraphExportOptions
+): EvidenceRdfTriplesExport;
+
+export declare function importEvidenceRdfTriples(
+  input: EvidenceRdfTriplesExport | Record<string, unknown>
+): Record<string, unknown>;
+
+export declare function exportEvidencePropertyGraph(
+  input: StatementAnalysis | CheckResult,
+  options?: EvidenceGraphExportOptions
+): EvidencePropertyGraphExport;
+
+export declare function importEvidencePropertyGraph(
+  input: EvidencePropertyGraphExport | Record<string, unknown>
+): Record<string, unknown>;
 
 export declare function searchTextUniqueness(
   input: string,
