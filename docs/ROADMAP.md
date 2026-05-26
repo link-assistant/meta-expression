@@ -15,14 +15,24 @@ carries a **Status** marker (`done` / `partial` / `not started`).
 
 ## Current Slice
 
-Shipped through issue #56 (the full list of surfaces now in the codebase —
-see [`docs/case-studies/issue-58/CODE-AUDIT.md`](./case-studies/issue-58/CODE-AUDIT.md)):
+Shipped through issue #96 / PR #107 (the full list of surfaces now in the
+codebase — see
+[`docs/case-studies/issue-58/CODE-AUDIT.md`](./case-studies/issue-58/CODE-AUDIT.md)
+and
+[`IMPLEMENTATION-STATUS.md`](./IMPLEMENTATION-STATUS.md)):
 
-- Library, CLI, microservice, and static web surfaces (7 web pages).
+- Library, CLI, microservice, and static web surfaces (7 web pages); the CLI
+  now parses arguments with the official `lino-arguments` dependency (#62).
 - Deterministic interpretation and selection pipeline.
-- Formalization levels 1–4 with labels and an executable gate.
-- Exact arithmetic equality and arithmetic question evaluation.
-- Bounded `correctness` (0..1) and `signedConfidence` (-1..+1) metrics.
+- Formalization levels 1–4 with labels and an executable gate, generalized so
+  arbitrary text reaches structured meaning links (#64) with OpenIE/AMR/SRL
+  providers (#89).
+- Exact arithmetic equality and arithmetic question evaluation, with computable
+  expressions routed through the `relative-meta-logic` adapter (#69).
+- Bounded `correctness` (0..1) and `signedConfidence` (-1..+1) metrics, with
+  reproducible probability from visible evidence (#68).
+- Entailment/contradiction/dependency reasoning (#67) and a Links Notation
+  rewrite engine for transformations (#65).
 - Live Wikimedia evidence resolver (P36/P397/P398/P570) with a browser worker,
   plus fixture evidence and the `Moon -> Earth -> Sun` parent-body chain.
 - `/formalize` (Markdown/Lino/HTML/CST), `/translate` (formalize → semantic
@@ -30,29 +40,53 @@ see [`docs/case-studies/issue-58/CODE-AUDIT.md`](./case-studies/issue-58/CODE-AU
   `/uniqueness` (web + scholarly APIs).
 - `/preferences` profile with worldview, religion, context presets, local
   persistence, and Links Notation import/export.
-- Links Notation parser **and** serializer (`js/src/lino.js`), linguistic
-  AST/CST metadata, transformation hooks (before/after phases), and
-  naturalization/deformalization aliasing.
-- Formal-AI prompt translation (en/ru/hi/zh) and upstream-corpus tracking
-  (706 case IDs as a fixture).
+- Official `links-notation` parser **and** serializer (#62), parser-backed
+  linguistic AST/CST metadata (#70), transformation hooks, and generalized
+  naturalization/deformalization (#66).
+- An id-keyed semantic interlingua (`js/data/semantic-lexicon.json`, 328
+  concepts across en/hi/ru/zh) so translation routes source-form → concept id →
+  target-form with no hardcoded language-pair tables in `src`, guarded by tests
+  (#96 / PR #107).
+- Formal-AI prompt translation (en/ru/hi/zh) and the upstream corpus (706 cases)
+  executed as a real parity gate (#72) plus a no-regression acceptance gate
+  (#74).
+- Competitor-parity surfaces: ClaimReview import/export (#87), JSON-LD/PROV-O
+  provenance (#88), document-level originality reports (#90), literature-review
+  workflows (#91), scoped SPARQL + graph-store interchange (#92), proof/solver
+  artifact adapters (#93), and writing-assistant surfaces (#94).
 - Prefilled GitHub issue reporting with interpretations, Q/P reasoning traces,
   evidence, and Links Notation.
-- Rust core with `doublets` relation-link encoding, issue #52 translation
-  coverage, Wikimedia cache/batch planning, and a C ABI (WASM-ready
-  crate type, but no `wasm-bindgen` packaging yet).
+- Rust core with `doublets` relation-link encoding, durable doublets-backed
+  storage with Unicode sequences (#63), issue #52 translation coverage,
+  Wikimedia cache/batch planning, a C ABI, and a `wasm-bindgen` package in
+  `rust/pkg/` (#61).
 
-### Known blockers (planned in issue #58)
+### Foundation blockers (fixed in issues #60–#63)
 
-The audit found foundation problems that block the vision and are tracked as
-issues opened from #58: template `package.json` identity, no WASM build, no
-official `links-notation`/`lino-arguments` adoption, no `relative-meta-logic`
-integration (computation is arithmetic-only), fixture-driven formalization,
-and the upstream corpus being tracked but not executed.
+The audit found foundation problems that blocked the vision; all are now
+resolved: package identity (`meta-expression`, #60), the `wasm-bindgen` build
+(#61), the official `links-notation`/`lino-arguments` adoption (#62), and
+durable `doublets`-backed storage with Unicode sequences (#63). The
+`relative-meta-logic` adapter is integrated (#69) and the upstream corpus is
+executed as a parity gate (#72).
+
+### Next batch (planned in issue #58 follow-up)
+
+The 2026-05-26 feedback on PR #59 sets the next batch: a fully reconstructed
+intermediate semantic meta language with all linguistic detail made explicit,
+a unified on-demand Wikipedia/Wikidata/Wiktionary data source, no hardcoded data
+(rule-based automatic overrides only), real
+[`doublets-rs`](https://github.com/linksplatform/doublets-rs) /
+[`doublets-web`](https://github.com/linksplatform/doublets-web) backing,
+multi-language grammar checking, and competitor datasets as quality gates. See
+the [Next Batch](#next-batch-quality-and-the-reconstructed-meta-language)
+phase below and
+[`docs/case-studies/issue-58/NEXT-BATCH.md`](./case-studies/issue-58/NEXT-BATCH.md).
 
 ## Phase 1: Stabilize Public Surfaces
 
-> Status: **partial** — all four surfaces ship with tests, but package
-> metadata is still the template placeholder (issue #58 foundation fix).
+> Status: **done** — all four surfaces ship with tests and the package metadata
+> now publishes the `meta-expression` identity (#60).
 
 Goal: make the current JavaScript API, CLI, service, and web prototype reliable
 while Rust parity grows.
@@ -71,8 +105,9 @@ Exit criteria:
 
 ## Phase 2: Rust Core and WebAssembly
 
-> Status: **partial** — the Rust core and parity fixtures exist, but there is
-> no `wasm-bindgen` packaging yet, so the web app cannot call the Rust core.
+> Status: **done** — the Rust core, parity fixtures, and a `wasm-bindgen`
+> package in `rust/pkg/` ship (#61); the static web app can call the Rust core
+> through the generated bindings.
 
 Goal: move deterministic reasoning and links operations into Rust.
 
@@ -115,9 +150,10 @@ Exit criteria:
 
 ## Phase 4: Links Notation Persistence
 
-> Status: **partial** — a hand-rolled parser/serializer (`js/src/lino.js`) and
-> import/export exist; the official `links-notation` dependency and durable
-> persistence are not adopted yet.
+> Status: **done** — the official `links-notation` parser/formatter dependency
+> is adopted (#62) and import/export round-trips through it; the remaining
+> next-batch work is unifying the semantic meta-language store on real
+> `doublets-rs`/`doublets-web` (R58.27/R58.28).
 
 Goal: make Links Notation the human-readable storage and exchange format.
 
@@ -136,8 +172,10 @@ Exit criteria:
 
 ## Phase 5: Doublets Storage
 
-> Status: **not started** — only the Rust `doublets` encoding foundation
-> exists; durable save/load and Unicode sequences remain.
+> Status: **done** — portable case data saves/loads link ids, references,
+> roles, scalar values, provenance, versions, and Unicode-sequence strings
+> through the doublets binary store (#63). The next-batch work replaces the
+> hand-rolled JS store with real `doublets-rs`/`doublets-web` (R58.27/R58.28).
 
 Goal: move durable state from JavaScript objects to associative binary links.
 
@@ -155,8 +193,9 @@ Exit criteria:
 
 ## Phase 6: Relative Meta Logic
 
-> Status: **not started** — computation is the arithmetic-only evaluator;
-> `relative-meta-logic` is not integrated (the central full-computability gap).
+> Status: **partial** — `relative-meta-logic-adapter.js` routes computable
+> expressions to the RML engine and keeps the arithmetic evaluator as a
+> documented fallback (#69); broadening the supported expression set is ongoing.
 
 Goal: replace local arithmetic-only evaluation with the intended formal logic
 engine where it fits.
@@ -215,8 +254,8 @@ Exit criteria:
 
 ## Phase 9: React GitHub Pages App
 
-> Status: **not started** — the web app is still the static prototype; it
-> depends on the Phase 2 WASM build.
+> Status: **not started** — the web app is still the static prototype. The
+> Phase 2 WASM build it depends on now ships (#61), so this phase is unblocked.
 
 Goal: replace the static prototype with the requested React experience.
 
@@ -251,6 +290,51 @@ Exit criteria:
 
 - Wikipedia text can suggest evidence candidates, but only validated claims
   affect confidence.
+
+## Next Batch: Quality and the Reconstructed Meta-Language
+
+> Status: **not started** — planned from the 2026-05-26 feedback on PR #59 as
+> the next batch of issues under epic #58. Quality first; optimizations later.
+> Full analysis in
+> [`docs/case-studies/issue-58/NEXT-BATCH.md`](./case-studies/issue-58/NEXT-BATCH.md).
+
+Goal: make the intermediate semantic meta language carry **all** of a source
+text's meaning and linguistic detail, store and operate it on real
+`doublets-rs`/`doublets-web`, and drive translation/naturalization quality from
+that reconstruction rather than from the source text or hardcoded tables.
+
+- **Unified on-demand term data source (R58.26)** — merge Wikipedia, Wikidata,
+  and Wiktionary into one virtual source resolved per term on demand (never
+  bulk-loaded). Cache both the original requests/responses and the merged
+  result as Links Notation / binary links, recording what merged from where,
+  how, and into what so the merge is inspectable and reusable.
+- **`doublets-rs` meta-language store (R58.27)** — replace the hand-rolled JS
+  doublets port with the real `doublets-rs` crate as the canonical Rust store
+  for the meta language and the unified data cache.
+- **`doublets-web` meta-language store (R58.28)** — back the browser/web app
+  with `doublets-web` over the same binary-links model through WASM.
+- **No hardcoded data; rule-based overrides (R58.29)** — derive lexicon and
+  translation data from the unified source; allow only rule-based, automatic
+  overrides, with per-concept overrides permitted solely when a concept is used
+  in more than 50% of formalizations/naturalizations/translations.
+- **Full explicit linguistic metadata (R58.30)** — at the formalization stage,
+  reconstruct the meta language completely for each source text and make every
+  implicit relation explicit (which word refers to what, which noun phrase and
+  verb phrase relate to which, and all other linguistic detail).
+- **Multi-language grammar checking (R58.31)** — Grammarly-class grammar
+  checking across all supported languages, built on the explicit meta language.
+- **Competitor dataset quality gates (R58.32)** — adopt competitor tests and
+  test datasets as CI quality gates and deepen the comparison matrices.
+- **Highest-quality translation umbrella (R58.33)** — drive translation and
+  naturalization quality from the fully reconstructed interlingua, not the
+  source text.
+
+Exit criteria:
+
+- Translation and naturalization read only from the reconstructed meta language
+  and the unified, cached term data; no hardcoded language-pair data remains.
+- The meta language records every linguistic relation needed to regenerate and
+  grammar-check the text in any supported language.
 
 ## Explicitly Deferred
 

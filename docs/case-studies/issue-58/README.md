@@ -27,6 +27,16 @@ features, take the same tests, and **fix critical foundation problems first**.
 This PR delivers the documentation sync and the case-study analysis, then
 opens the planned issues.
 
+> **Second batch (2026-05-26).** The first batch (#60–#74, #87–#96) and the
+> semantic-interlingua rewrite (#96 / PR #107) have merged. Follow-up feedback
+> on [PR #59][fb] asks us to keep raising translation quality through a fully
+> reconstructed intermediate semantic meta language, eliminate hardcoded data,
+> back the meta language with real `doublets-rs`/`doublets-web`, add grammar
+> checking, and use competitor datasets as quality gates. That analysis and the
+> second-batch issue catalogue live in [`NEXT-BATCH.md`](./NEXT-BATCH.md).
+>
+> [fb]: https://github.com/link-assistant/meta-expression/pull/59#issuecomment-4547765004
+
 ## 2. What this PR delivers
 
 | Deliverable                                        | Where                                                                                               |
@@ -37,6 +47,7 @@ opens the planned issues.
 | Per-requirement solution plan                      | [`SOLUTION-PLAN.md`](./SOLUTION-PLAN.md)                                                            |
 | Online research + library survey                   | [`ONLINE-RESEARCH.md`](./ONLINE-RESEARCH.md)                                                        |
 | The catalogue of issues to create                  | [`ISSUE-PLAN.md`](./ISSUE-PLAN.md)                                                                  |
+| The second-batch analysis + issue catalogue        | [`NEXT-BATCH.md`](./NEXT-BATCH.md)                                                                  |
 | Raw captured data                                  | [`data/`](./data/)                                                                                  |
 
 ## 3. Source material
