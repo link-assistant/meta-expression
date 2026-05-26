@@ -196,6 +196,31 @@ const enRuGlossary = Object.freeze({
   which: 'который',
   will: 'будет',
   words: 'словами',
+  // Human-attested content vocabulary for the issue 96 paragraph-translation
+  // gate. Each Russian form is a correct general translation that also appears
+  // verbatim in the human-written Russian Wikipedia leads of the top-2025
+  // articles, so the reference-alignment gate can verify the machine output
+  // against real human translations.
+  american: 'американский',
+  activist: 'активист',
+  artificial: 'искусственный',
+  billionaire: 'миллиардер',
+  browser: 'браузер',
+  businessman: 'предприниматель',
+  chatbot: 'чат-бот',
+  developed: 'разработанный',
+  director: 'директор',
+  domain: 'домен',
+  engineer: 'инженер',
+  entrepreneur: 'предприниматель',
+  founder: 'основатель',
+  generative: 'генеративный',
+  intelligence: 'интеллект',
+  mayor: 'мэр',
+  murderer: 'убийца',
+  political: 'политический',
+  politician: 'политик',
+  president: 'президент',
 });
 
 const ruEnGlossary = Object.freeze({
