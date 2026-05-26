@@ -1,0 +1,114 @@
+{
+  "supportedLanguages": ["en", "ru", "hi", "zh"],
+  "errorFixtures": [
+    {
+      "language": "en",
+      "text": "The Moon orbit the Sun",
+      "expectedIssues": [
+        {
+          "code": "subject-verb-agreement",
+          "category": "agreement",
+          "suggestion": "The Moon orbits the Sun"
+        },
+        {
+          "code": "missing-terminal-punctuation",
+          "category": "punctuation",
+          "suggestion": "The Moon orbit the Sun."
+        }
+      ]
+    },
+    {
+      "language": "en",
+      "text": "apple is fruit.",
+      "expectedIssues": [
+        {
+          "code": "missing-article",
+          "category": "article",
+          "suggestion": "An apple is fruit."
+        },
+        {
+          "code": "missing-article",
+          "category": "article",
+          "suggestion": "apple is a fruit."
+        }
+      ]
+    },
+    {
+      "language": "en",
+      "text": "The Moon the Sun orbits.",
+      "expectedIssues": [
+        {
+          "code": "predicate-after-object",
+          "category": "word-order",
+          "suggestion": "The Moon orbits the Sun."
+        }
+      ]
+    },
+    {
+      "language": "ru",
+      "text": "Луна вращаются вокруг Земли",
+      "expectedIssues": [
+        {
+          "code": "subject-verb-agreement",
+          "category": "agreement",
+          "suggestion": "Луна вращается вокруг Земли"
+        },
+        {
+          "code": "missing-terminal-punctuation",
+          "category": "punctuation",
+          "suggestion": "Луна вращаются вокруг Земли."
+        }
+      ]
+    },
+    {
+      "language": "hi",
+      "text": "लड़की जाता है",
+      "expectedIssues": [
+        {
+          "code": "subject-verb-agreement",
+          "category": "agreement",
+          "suggestion": "लड़की जाती है"
+        },
+        {
+          "code": "missing-terminal-punctuation",
+          "category": "punctuation",
+          "suggestion": "लड़की जाता है।"
+        }
+      ]
+    },
+    {
+      "language": "zh",
+      "text": "围绕太阳月亮",
+      "expectedIssues": [
+        {
+          "code": "predicate-before-subject",
+          "category": "word-order",
+          "suggestion": "月亮围绕太阳"
+        },
+        {
+          "code": "missing-terminal-punctuation",
+          "category": "punctuation",
+          "suggestion": "围绕太阳月亮。"
+        }
+      ]
+    }
+  ],
+  "cleanFixtures": [
+    {
+      "language": "en",
+      "text": "The Moon orbits the Sun. An apple is a fruit."
+    },
+    {
+      "language": "ru",
+      "text": "Луна вращается вокруг Земли."
+    },
+    {
+      "language": "hi",
+      "text": "लड़की जाती है।"
+    },
+    {
+      "language": "zh",
+      "text": "月亮围绕太阳。"
+    }
+  ]
+}

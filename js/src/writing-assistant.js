@@ -1,5 +1,6 @@
 import { analyzeStatement, analyzeStatementWithLiveEvidence } from './index.js';
 import { checkText, checkTextWithLiveEvidence } from './check.js';
+import { checkGrammar } from './grammar.js';
 import { formalizeTextWith } from './formalize.js';
 import { createIssueReportUrl, serializeLinksNotation } from './reporting.js';
 import { translateTextWith } from './translate.js';
@@ -8,6 +9,7 @@ import { searchTextUniqueness } from './uniqueness.js';
 export const WRITING_ASSISTANT_OPERATIONS = Object.freeze({
   ANALYZE: 'analyze',
   CHECK: 'check',
+  GRAMMAR: 'grammar',
   FORMALIZE: 'formalize',
   TRANSLATE: 'translate',
   UNIQUENESS: 'uniqueness',
@@ -34,6 +36,7 @@ const operationAliases = new Map([
   ['analysis', WRITING_ASSISTANT_OPERATIONS.ANALYZE],
   ['fact-check', WRITING_ASSISTANT_OPERATIONS.CHECK],
   ['factcheck', WRITING_ASSISTANT_OPERATIONS.CHECK],
+  ['grammar-check', WRITING_ASSISTANT_OPERATIONS.GRAMMAR],
   ['originality', WRITING_ASSISTANT_OPERATIONS.UNIQUENESS],
   ['originality-check', WRITING_ASSISTANT_OPERATIONS.UNIQUENESS],
   ['uniquness', WRITING_ASSISTANT_OPERATIONS.UNIQUENESS],
@@ -44,6 +47,7 @@ const defaultServices = Object.freeze({
   analyzeStatementWithLiveEvidence,
   checkText,
   checkTextWithLiveEvidence,
+  checkGrammar,
   formalizeTextWith,
   translateTextWith,
   searchTextUniqueness,
@@ -64,6 +68,12 @@ export function listWritingAssistantCapabilities() {
       api: 'checkText',
       exports: ['linksNotation', 'issueReportUrl', 'issueReportUrls'],
       suggestionKinds: ['evidence-check'],
+    },
+    {
+      operation: WRITING_ASSISTANT_OPERATIONS.GRAMMAR,
+      api: 'checkGrammar',
+      exports: ['linksNotation'],
+      suggestionKinds: ['grammar-issue'],
     },
     {
       operation: WRITING_ASSISTANT_OPERATIONS.FORMALIZE,
@@ -109,6 +119,12 @@ export function createWritingAssistantSurface(options = {}) {
       }),
     check: (text, request = {}) =>
       run({ ...request, operation: WRITING_ASSISTANT_OPERATIONS.CHECK, text }),
+    grammar: (text, request = {}) =>
+      run({
+        ...request,
+        operation: WRITING_ASSISTANT_OPERATIONS.GRAMMAR,
+        text,
+      }),
     formalize: (text, request = {}) =>
       run({
         ...request,
@@ -256,6 +272,8 @@ function callOperation(operation, text, options, services) {
       return options.live === true
         ? services.checkTextWithLiveEvidence(text, options)
         : services.checkText(text, options);
+    case WRITING_ASSISTANT_OPERATIONS.GRAMMAR:
+      return services.checkGrammar(text, options);
     case WRITING_ASSISTANT_OPERATIONS.FORMALIZE:
       return services.formalizeTextWith(text, options);
     case WRITING_ASSISTANT_OPERATIONS.TRANSLATE:
@@ -273,6 +291,8 @@ function collectSuggestions(operation, result) {
       return collectInterpretationSuggestions(result, operation);
     case WRITING_ASSISTANT_OPERATIONS.CHECK:
       return collectEvidenceCheckSuggestions(result, operation);
+    case WRITING_ASSISTANT_OPERATIONS.GRAMMAR:
+      return collectGrammarSuggestions(result, operation);
     case WRITING_ASSISTANT_OPERATIONS.FORMALIZE:
       return collectFormalizeSuggestions(result, operation);
     case WRITING_ASSISTANT_OPERATIONS.TRANSLATE:
@@ -322,6 +342,25 @@ function collectEvidenceCheckSuggestions(result, operation) {
         explanation: statement.result?.explanation ?? '',
       },
       evidence: (statement.result?.calculation?.evidence ?? []).slice(0, 3),
+    })
+  );
+}
+
+function collectGrammarSuggestions(result, operation) {
+  return (result?.issues ?? []).map((issue, index) =>
+    suggestion({
+      id: issue.id ?? `grammar-issue-${index + 1}`,
+      kind: 'grammar-issue',
+      category: issue.category ?? 'grammar',
+      operation,
+      text: issue.text ?? '',
+      source: 'checkGrammar.issues',
+      result: {
+        code: issue.code ?? null,
+        message: issue.message ?? '',
+        replacement: issue.replacement ?? '',
+        suggestion: issue.suggestions?.[0]?.text ?? '',
+      },
     })
   );
 }

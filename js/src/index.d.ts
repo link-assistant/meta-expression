@@ -512,6 +512,7 @@ export interface IssueReportOptions {
 export type WritingAssistantOperation =
   | 'analyze'
   | 'check'
+  | 'grammar'
   | 'formalize'
   | 'translate'
   | 'uniqueness';
@@ -591,6 +592,7 @@ export interface WritingAssistantExports {
 export type WritingAssistantOperationPayload =
   | StatementAnalysis
   | CheckResult
+  | GrammarResult
   | FormalizeResult
   | TranslateResult
   | UniquenessResult
@@ -630,6 +632,7 @@ export interface WritingAssistantServices {
     input: string,
     options?: Record<string, unknown>
   ) => Promise<CheckResult>;
+  checkGrammar?: (input: string, options?: GrammarOptions) => GrammarResult;
   formalizeTextWith?: (
     input: string,
     options?: FormalizeOptions
@@ -679,6 +682,10 @@ export interface WritingAssistantSurface {
     request?: Omit<WritingAssistantRequest, 'operation' | 'text'>
   ): Promise<WritingAssistantOperationResult>;
   check(
+    text: string,
+    request?: Omit<WritingAssistantRequest, 'operation' | 'text'>
+  ): Promise<WritingAssistantOperationResult>;
+  grammar(
     text: string,
     request?: Omit<WritingAssistantRequest, 'operation' | 'text'>
   ): Promise<WritingAssistantOperationResult>;
@@ -1005,6 +1012,7 @@ export declare function createIssueReportUrl(
 export declare const WRITING_ASSISTANT_OPERATIONS: {
   readonly ANALYZE: 'analyze';
   readonly CHECK: 'check';
+  readonly GRAMMAR: 'grammar';
   readonly FORMALIZE: 'formalize';
   readonly TRANSLATE: 'translate';
   readonly UNIQUENESS: 'uniqueness';
@@ -2321,6 +2329,61 @@ export interface CheckResult {
   linksNotation: string;
 }
 
+export type GrammarIssueCategory =
+  | 'agreement'
+  | 'word-order'
+  | 'article'
+  | 'punctuation';
+
+export interface GrammarOptions {
+  language?: string;
+  sourceLanguage?: string;
+  locale?: string;
+}
+
+export interface GrammarSuggestion {
+  text: string;
+  start: number;
+  end: number;
+  replacement: string;
+}
+
+export interface GrammarIssue {
+  id: string;
+  language: string;
+  severity: string;
+  code: string;
+  category: GrammarIssueCategory;
+  message: string;
+  text: string;
+  start: number;
+  end: number;
+  replacement: string;
+  suggestions: GrammarSuggestion[];
+  metadata: Record<string, unknown>;
+}
+
+export interface GrammarSummary {
+  language: string;
+  total: number;
+  issueCount: number;
+  clean: boolean;
+  byCategory: Record<GrammarIssueCategory, number>;
+}
+
+export interface GrammarResult {
+  status: 'checked';
+  surface: 'grammar';
+  text: string;
+  language: string;
+  summary: GrammarSummary;
+  issues: GrammarIssue[];
+  linguisticMetadata: Record<string, unknown>;
+  html: string;
+  markdown: string;
+  linksNotation: string;
+}
+
 export interface ClaimReviewVerdict {
   label: string;
   ratingValue: number | null;
@@ -2760,6 +2823,30 @@ export declare function checkTextWithLiveEvidence(
   input: string,
   options?: AnalysisOptions & { locale?: string }
 ): Promise<CheckResult>;
+
+export declare const SUPPORTED_GRAMMAR_LANGUAGES: readonly [
+  'en',
+  'ru',
+  'hi',
+  'zh',
+];
+
+export declare const GRAMMAR_ISSUE_CATEGORIES: {
+  readonly AGREEMENT: 'agreement';
+  readonly WORD_ORDER: 'word-order';
+  readonly ARTICLE: 'article';
+  readonly PUNCTUATION: 'punctuation';
+};
+
+export declare function checkGrammar(
+  input: string,
+  options?: GrammarOptions
+): GrammarResult;
+
+export declare function grammarCheckText(
+  input: string,
+  options?: GrammarOptions
+): GrammarResult;
 
 export declare function parseClaimReviewJsonLd(
   input: string | Record<string, unknown> | unknown[],
