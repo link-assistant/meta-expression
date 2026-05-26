@@ -3,6 +3,7 @@ use doublets::Doublet;
 mod analysis;
 mod formal_ai_support;
 mod issue52;
+mod reference_data;
 mod semantic_lexicon;
 mod statement_formalization;
 #[cfg(target_arch = "wasm32")]
@@ -171,7 +172,15 @@ pub fn translate_known_semantic_sentence(
     ) {
         ("en", "ru", "hawaii") => Some(issue61_hawaii_english_to_russian(input)),
         ("en", "ru", "hawaii is a state") => Some(issue35_english_to_russian(input)),
-        ("ru", "en", "гавайи это штат") => Some(issue35_russian_to_english(input)),
+        ("ru", "en", key)
+            if key
+                == reference_data::reference_data()
+                    .issue35
+                    .ru_source_key
+                    .as_str() =>
+        {
+            Some(issue35_russian_to_english(input))
+        }
         _ => None,
     }
 }
@@ -490,53 +499,7 @@ fn strip_parenthetical_glosses(text: &str) -> String {
 }
 
 pub fn tokenize_for_match(text: &str) -> Vec<String> {
-    let stopwords: &[&str] = &[
-        "a",
-        "an",
-        "the",
-        "is",
-        "are",
-        "was",
-        "were",
-        "be",
-        "been",
-        "being",
-        "as",
-        "of",
-        "in",
-        "on",
-        "at",
-        "to",
-        "and",
-        "or",
-        "for",
-        "by",
-        "with",
-        "from",
-        "this",
-        "that",
-        "it",
-        "its",
-        "also",
-        "но",
-        "не",
-        "и",
-        "или",
-        "для",
-        "по",
-        "в",
-        "на",
-        "из",
-        "с",
-        "о",
-        "об",
-        "это",
-        "как",
-        "что",
-        "который",
-        "которая",
-        "которое",
-    ];
+    let stopwords = &reference_data::reference_data().match_stopwords;
     let mut tokens = Vec::new();
     let mut current = String::new();
     for ch in text.chars() {
@@ -558,7 +521,7 @@ pub fn tokenize_for_match(text: &str) -> Vec<String> {
             if token.chars().all(|c| c.is_ascii_digit()) {
                 return false;
             }
-            !stopwords.contains(&token.as_str())
+            !stopwords.iter().any(|stopword| stopword == token)
         })
         .collect()
 }
@@ -710,23 +673,32 @@ fn normalize_sentence_key(input: &str) -> String {
 
 fn issue35_english_to_russian(input: &str) -> SemanticTranslation {
     let source_text = input.trim();
-    let target_text = "Гавайи это штат.";
+    let reference = &reference_data::reference_data().issue35;
+    let target_text = format!(
+        "{} {} {}.",
+        reference.hawaii, reference.copula, reference.state
+    );
     SemanticTranslation {
         source_text: source_text.to_string(),
         source_language: "en".to_string(),
         target_language: "ru".to_string(),
-        target_text: target_text.to_string(),
+        target_text: target_text.clone(),
         source_phrases: vec![
             semantic_phrase_in_text("Hawaii", ISSUE35_HAWAII_MEANING_ID, source_text, 0),
             semantic_phrase_in_text("state", ISSUE35_STATE_MEANING_ID, source_text, 12),
         ],
         target_phrases: vec![
-            semantic_phrase_in_text("Гавайи", ISSUE35_HAWAII_MEANING_ID, target_text, 0),
             semantic_phrase_in_text(
-                "штат",
+                &reference.hawaii,
+                ISSUE35_HAWAII_MEANING_ID,
+                &target_text,
+                0,
+            ),
+            semantic_phrase_in_text(
+                &reference.state,
                 ISSUE35_US_STATE_MEANING_ID,
-                target_text,
-                "Гавайи это ".len(),
+                &target_text,
+                0,
             ),
         ],
         transformation_steps: vec![
@@ -739,12 +711,12 @@ fn issue35_english_to_russian(input: &str) -> SemanticTranslation {
 
 fn issue61_hawaii_english_to_russian(input: &str) -> SemanticTranslation {
     let source_text = input.trim();
-    let target_text = "Гавайи";
+    let target_text = reference_data::reference_data().issue35.hawaii.clone();
     SemanticTranslation {
         source_text: source_text.to_string(),
         source_language: "en".to_string(),
         target_language: "ru".to_string(),
-        target_text: target_text.to_string(),
+        target_text: target_text.clone(),
         source_phrases: vec![semantic_phrase_in_text(
             "Hawaii",
             ISSUE35_HAWAII_MEANING_ID,
@@ -752,9 +724,9 @@ fn issue61_hawaii_english_to_russian(input: &str) -> SemanticTranslation {
             0,
         )],
         target_phrases: vec![semantic_phrase_in_text(
-            "Гавайи",
+            &target_text,
             ISSUE35_HAWAII_MEANING_ID,
-            target_text,
+            &target_text,
             0,
         )],
         transformation_steps: vec!["wikidata-target-label".to_string()],
@@ -763,6 +735,7 @@ fn issue61_hawaii_english_to_russian(input: &str) -> SemanticTranslation {
 
 fn issue35_russian_to_english(input: &str) -> SemanticTranslation {
     let source_text = input.trim();
+    let reference = &reference_data::reference_data().issue35;
     let target_text = "Hawaii is a state.";
     SemanticTranslation {
         source_text: source_text.to_string(),
@@ -770,12 +743,12 @@ fn issue35_russian_to_english(input: &str) -> SemanticTranslation {
         target_language: "en".to_string(),
         target_text: target_text.to_string(),
         source_phrases: vec![
-            semantic_phrase_in_text("Гавайи", ISSUE35_HAWAII_MEANING_ID, source_text, 0),
+            semantic_phrase_in_text(&reference.hawaii, ISSUE35_HAWAII_MEANING_ID, source_text, 0),
             semantic_phrase_in_text(
-                "штат",
+                &reference.state,
                 ISSUE35_US_STATE_MEANING_ID,
                 source_text,
-                "Гавайи это ".len(),
+                0,
             ),
         ],
         target_phrases: vec![
@@ -879,9 +852,10 @@ fn insert_russian_examples_of(
     source_tokens: &[TranslationToken],
     target_tokens: &mut Vec<TargetToken>,
 ) -> bool {
+    let trigger = &reference_data::reference_data().examples_genitive_trigger_ru;
     let last_index = source_tokens.len().saturating_sub(1);
     for (index, source_token) in source_tokens.iter().enumerate().take(last_index) {
-        if source_token.normalized != "примеры" {
+        if &source_token.normalized != trigger {
             continue;
         }
         let target_index = target_tokens
