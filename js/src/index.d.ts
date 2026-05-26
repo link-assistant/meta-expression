@@ -1799,6 +1799,101 @@ export interface ClaimReviewOptions {
   statementIndex?: number;
 }
 
+export type LiteratureDecisionPolarity = 'support' | 'refute' | 'uncertain';
+
+export interface LiteratureAuthor {
+  given: string | null;
+  family: string | null;
+  literal?: string | null;
+}
+
+export interface LiteratureExcerpt {
+  id: string;
+  section: string | null;
+  page: string | null;
+  text: string;
+}
+
+export interface LiteratureDecision {
+  polarity: LiteratureDecisionPolarity;
+  weight: number;
+  label: string;
+  rationale: string | null;
+}
+
+export interface LiteraturePaper {
+  id: string;
+  citationKey: string;
+  type: string;
+  title: string;
+  authors: LiteratureAuthor[];
+  journal: string | null;
+  publisher: string | null;
+  year: string;
+  date: string | null;
+  volume: string | null;
+  issue: string | null;
+  pages: string | null;
+  doi: string | null;
+  pmid: string | null;
+  url: string | null;
+  abstract?: string | null;
+  decision: LiteratureDecision;
+  excerpts: LiteratureExcerpt[];
+}
+
+export interface LiteratureReviewInput {
+  claim: string | { text: string; domain?: string };
+  query?: Record<string, unknown>;
+  screenedAt?: string | number | Date;
+  screeningMethod?: string;
+  papers: Array<Partial<LiteraturePaper> & Record<string, unknown>>;
+}
+
+export interface LiteratureAgreementSummary {
+  label:
+    | 'supports'
+    | 'refutes'
+    | 'mixed-support'
+    | 'mixed-refute'
+    | 'uncertain';
+  supportWeight: number;
+  refuteWeight: number;
+  rawBalance: number | null;
+  uncertainty: number;
+}
+
+export interface LiteratureReviewResult {
+  status: 'reviewed';
+  kind: 'literature-review';
+  claim: { text: string; domain: string | null };
+  query: Record<string, unknown> | null;
+  screenedAt: string;
+  screeningMethod: string;
+  papers: LiteraturePaper[];
+  evidenceItems: EvidenceItem[];
+  checked: CheckResult;
+  summary: {
+    totalPapers: number;
+    screenedPapers: number;
+    supportingPapers: number;
+    refutingPapers: number;
+    uncertainPapers: number;
+    evidenceLinks: number;
+    confidence: number | null;
+    agreement: LiteratureAgreementSummary;
+  };
+  bibliography: {
+    papers: Array<Omit<LiteraturePaper, 'abstract' | 'decision' | 'excerpts'>>;
+  };
+}
+
+export interface LiteratureReviewOptions extends AnalysisOptions {
+  screenedAt?: string | number | Date;
+}
+
+export type LiteratureBibliographyFormat = 'bibtex' | 'bib' | 'ris' | 'csv';
+
 export interface EvidenceProvenanceExportOptions {
   baseId?: string;
   exportedAt?: string | number | Date;
@@ -2072,6 +2167,33 @@ export declare function exportClaimReviewJsonLd(
   input: CheckResult | CheckStatement | StatementAnalysis,
   options?: ClaimReviewOptions
 ): Record<string, unknown>;
+
+export declare function reviewClaimAgainstLiterature(
+  input: LiteratureReviewInput,
+  options?: LiteratureReviewOptions
+): LiteratureReviewResult;
+
+export declare function createLiteratureEvidenceItems(
+  input: LiteratureReviewInput,
+  options?: LiteratureReviewOptions
+): EvidenceItem[];
+
+export declare function exportLiteratureBibliography(
+  input: LiteratureReviewResult | LiteratureReviewInput | LiteraturePaper[],
+  options?: { format?: LiteratureBibliographyFormat }
+): string;
+
+export declare function exportLiteratureBibTeX(
+  input: LiteratureReviewResult | LiteratureReviewInput | LiteraturePaper[]
+): string;
+
+export declare function exportLiteratureRis(
+  input: LiteratureReviewResult | LiteratureReviewInput | LiteraturePaper[]
+): string;
+
+export declare function exportLiteratureCsv(
+  input: LiteratureReviewResult | LiteratureReviewInput | LiteraturePaper[]
+): string;
 
 export declare function exportEvidenceJsonLd(
   input: StatementAnalysis | CheckResult,

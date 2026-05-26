@@ -66,6 +66,10 @@ Core exports:
 - `exportEvidenceJsonLd(result)` and `exportEvidenceProvJsonLd(result)` export
   `/analyze` and `/check` evidence provenance as JSON-LD and a PROV-O-compatible
   JSON-LD graph while preserving Links Notation output.
+- `reviewClaimAgainstLiterature(fixture)` checks a claim against screened paper
+  metadata/excerpts as normal evidence links, reports literature agreement and
+  uncertainty, and `exportLiteratureBibliography(result, { format })` emits
+  BibTeX, RIS, or CSV bibliography data.
 - `searchTextUniqueness(input, options)` searches detected statements across
   public web and scholarly APIs, returning existing-likelihood scores,
   citation/rewording suggestions, source matches, HTML, Markdown, and Links
@@ -112,6 +116,7 @@ node js/src/cli.js check --input "Earth orbits the Sun." --format claim-review
 node js/src/cli.js check --input "Earth orbits the Sun." --format prov-o
 node js/src/cli.js fact-check --input "Paris is the capital of France." --live
 node js/src/cli.js uniqueness --input "Earth orbits the Sun." --format markdown
+node js/src/cli.js literature-review --fixture js/tests/fixtures/issue-91-literature-review.json --format bibtex
 ```
 
 ## Microservice

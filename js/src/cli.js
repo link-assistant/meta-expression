@@ -8,8 +8,10 @@ import {
   analyzeStatementWithLiveEvidence,
   exportEvidenceJsonLd,
   exportEvidenceProvJsonLd,
+  exportLiteratureBibliography,
   naturalizeExpressionWith,
   parsePreferenceProfile,
+  reviewClaimAgainstLiterature,
   serializeLinksNotation,
 } from './index.js';
 import { formalizeTextWith, FORMALIZE_LINK_TARGETS } from './formalize.js';
@@ -105,6 +107,9 @@ export function parseCliArguments(args) {
     },
     '--preference-profile': () => {
       options.profileFile = nextValue();
+    },
+    '--fixture': () => {
+      options.fixtureFile = nextValue();
     },
     '--help': () => {
       options.command = 'help';
@@ -268,6 +273,10 @@ function configureCliYargs({ yargs, getenv }) {
       type: 'string',
       default: getenv('PREFERENCE_PROFILE', ''),
     })
+    .option('fixture', {
+      type: 'string',
+      default: getenv('FIXTURE', ''),
+    })
     .option('help', {
       alias: 'h',
       type: 'boolean',
@@ -331,6 +340,7 @@ function createCliOptions(config) {
     'sourceUrl',
     firstPresent(config.sourceUrl, config.source)
   );
+  assignStringOption(options, 'fixtureFile', config.fixture);
   if (config.help === true) {
     options.command = 'help';
   }
@@ -444,6 +454,9 @@ export function runCli(args = process.argv.slice(2), output = console) {
   if (isUniquenessCommand(options.command)) {
     throw new Error('Use runCliAsync for the uniqueness command.');
   }
+  if (isLiteratureReviewCommand(options.command)) {
+    throw new Error('Use runCliAsync for the literature-review command.');
+  }
 
   const checked = validateCliOptions(options, output);
   if (checked !== null) {
@@ -495,6 +508,9 @@ export async function runCliAsync(
   }
   if (isUniquenessCommand(options.command)) {
     return runUniquenessCommand(options, output);
+  }
+  if (isLiteratureReviewCommand(options.command)) {
+    return runLiteratureReviewCommand(options, output);
   }
 
   const analysis = options.live
@@ -719,6 +735,22 @@ async function runUniquenessCommand(options, output) {
   return emitUniquenessResult(options, output, result);
 }
 
+async function runLiteratureReviewCommand(options, output) {
+  const fixture = options.fixtureFile
+    ? await readJsonFile(options.fixtureFile)
+    : parseLiteratureReviewInput(options.input);
+  const result = reviewClaimAgainstLiterature(fixture);
+  return emitLiteratureReviewResult(options, output, result);
+}
+
+function parseLiteratureReviewInput(input) {
+  const trimmed = String(input ?? '').trim();
+  if (!trimmed) {
+    throw new Error('literature-review requires JSON input or --fixture.');
+  }
+  return JSON.parse(trimmed);
+}
+
 function resolveCliLinkTargetMode(token) {
   if (!token) {
     return FORMALIZE_LINK_TARGETS.WIKIPEDIA;
@@ -750,6 +782,8 @@ function validateCliOptions(options, output) {
     'fact-check',
     'uniqueness',
     'uniquness',
+    'literature-review',
+    'lit-review',
   ];
   if (!supportedCommands.includes(options.command)) {
     output.error(`Unsupported command: ${options.command}`);
@@ -758,6 +792,14 @@ function validateCliOptions(options, output) {
   }
 
   if (options.command === 'translation-quality') {
+    return null;
+  }
+  if (isLiteratureReviewCommand(options.command)) {
+    if (!options.fixtureFile && !options.input) {
+      output.error('literature-review requires --fixture <file.json>.');
+      output.error(helpText());
+      return 1;
+    }
     return null;
   }
 
@@ -851,6 +893,39 @@ function emitUniquenessResult(options, output, result) {
   return 0;
 }
 
+function emitLiteratureReviewResult(options, output, result) {
+  if (isLiteratureBibliographyFormat(options.format)) {
+    output.log(
+      exportLiteratureBibliography(result, { format: options.format })
+    );
+    return 0;
+  }
+  if (options.format === 'markdown' || options.format === 'md') {
+    output.log(formatLiteratureReviewMarkdown(result));
+    return 0;
+  }
+  output.log(JSON.stringify(result, null, 2));
+  return 0;
+}
+
+function formatLiteratureReviewMarkdown(result) {
+  const lines = [
+    `# Literature review: ${result.claim.text}`,
+    '',
+    `Agreement: ${result.summary.agreement.label}`,
+    `Support weight: ${result.summary.agreement.supportWeight}`,
+    `Refute weight: ${result.summary.agreement.refuteWeight}`,
+    `Uncertainty: ${result.summary.agreement.uncertainty}`,
+    '',
+  ];
+  for (const paper of result.papers) {
+    lines.push(
+      `- ${paper.citationKey}: ${paper.decision.label} (${paper.decision.weight}) - ${paper.title}`
+    );
+  }
+  return `${lines.join('\n')}\n`;
+}
+
 function isCheckCommand(command) {
   return command === 'check' || command === 'fact-check';
 }
@@ -885,6 +960,14 @@ function isNaturalizeCommand(command) {
   return command === 'naturalize' || command === 'deformalize';
 }
 
+function isLiteratureReviewCommand(command) {
+  return command === 'literature-review' || command === 'lit-review';
+}
+
+function isLiteratureBibliographyFormat(format) {
+  return ['bibtex', 'bib', 'ris', 'csv'].includes(format);
+}
+
 function helpText() {
   return `Usage:
   meta-expression analyze "1 + 1 = 2"
@@ -903,6 +986,7 @@ function helpText() {
   meta-expression check --input "Earth orbits the Sun." --score wikidata-structured-claim=0.7
   meta-expression fact-check --input "Paris is the capital of France." --live
   meta-expression uniqueness --input "Earth orbits the Sun." --format markdown
+  meta-expression literature-review --fixture js/tests/fixtures/issue-91-literature-review.json --format bibtex
 
 Commands:
   analyze     Run the disambiguation/evaluation prototype.
@@ -915,6 +999,8 @@ Commands:
   check       Color detected statements by correctness.
   fact-check  Alias for check.
   uniqueness  Search public sources for prior exact or similar statements.
+  literature-review
+              Check one claim against a screened paper fixture and export bibliography data.
 
 Options:
   -i, --input <text>             Statement text
@@ -943,6 +1029,7 @@ Options:
                                  check/fact-check: override evidence scoring
   --source, --source-url <url>    check/fact-check: source URL for ClaimReview
                                  exports
+  --fixture <file.json>           literature-review: screened paper fixture
   -h, --help                     Show this help`;
 }
 

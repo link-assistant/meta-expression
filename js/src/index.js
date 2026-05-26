@@ -115,6 +115,14 @@ export {
   exportEvidenceProvJsonLd,
 } from './provenance-jsonld.js';
 export {
+  createLiteratureEvidenceItems,
+  exportLiteratureBibliography,
+  exportLiteratureBibTeX,
+  exportLiteratureCsv,
+  exportLiteratureRis,
+  reviewClaimAgainstLiterature,
+} from './literature-review.js';
+export {
   createCrossrefUniquenessSource,
   createDefaultUniquenessSources,
   createDuckDuckGoUniquenessSource,
@@ -212,6 +220,7 @@ export const defaultBeliefSystem = Object.freeze({
     computed: 1,
     wikidata: 1,
     algorithm: 0.6,
+    literature: 1,
     user: 0.25,
     preference: 1,
     'derived-preference': 0.85,
