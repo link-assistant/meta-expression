@@ -1,4 +1,8 @@
-import { checkText, checkTextWithLiveEvidence } from '../js/src/index.js';
+import {
+  checkGrammar,
+  checkText,
+  checkTextWithLiveEvidence,
+} from '../js/src/index.js';
 
 export function setupCheckPage({
   cache,
@@ -8,6 +12,7 @@ export function setupCheckPage({
 } = {}) {
   const input = document.querySelector('#check-input');
   const live = document.querySelector('#check-live');
+  const grammar = document.querySelector('#check-grammar');
   const run = document.querySelector('#check-run');
   const copyMarkdown = document.querySelector('#check-copy-markdown');
   const copyLino = document.querySelector('#check-copy-lino');
@@ -61,9 +66,11 @@ export function setupCheckPage({
     status.textContent = 'Checking...';
     try {
       const options = checkOptions();
-      const result = live?.checked
-        ? await checkTextWithLiveEvidence(text, options)
-        : checkText(text, options);
+      const result = grammar?.checked
+        ? checkGrammar(text, options)
+        : live?.checked
+          ? await checkTextWithLiveEvidence(text, options)
+          : checkText(text, options);
       if (status.dataset.requestId !== id) {
         return;
       }
@@ -82,6 +89,7 @@ export function setupCheckPage({
     return {
       fetch: globalThis.fetch?.bind(globalThis),
       cache,
+      language: document.documentElement.lang,
       userBeliefs,
       preferenceProfile: getPreferenceProfile(),
       reasoningStrategyId: getStrategyId(),
@@ -91,7 +99,11 @@ export function setupCheckPage({
   function renderCheckResult(result) {
     output.innerHTML = result.html;
     if (summary) {
-      renderSummary(summary, result.summary);
+      if (result.surface === 'grammar') {
+        renderGrammarSummary(summary, result.summary);
+      } else {
+        renderSummary(summary, result.summary);
+      }
     }
     if (markdownPre) {
       markdownPre.textContent = result.markdown;
@@ -99,11 +111,16 @@ export function setupCheckPage({
     if (linoPre) {
       linoPre.textContent = result.linksNotation;
     }
-    status.textContent = `Checked ${result.summary.total} statement${
-      result.summary.total === 1 ? '' : 's'
-    }: ${result.summary.correct} correct, ${result.summary.wrong} wrong, ${
-      result.summary.uncertain
-    } uncertain.`;
+    status.textContent =
+      result.surface === 'grammar'
+        ? `Checked grammar: ${result.summary.issueCount} issue${
+            result.summary.issueCount === 1 ? '' : 's'
+          }.`
+        : `Checked ${result.summary.total} statement${
+            result.summary.total === 1 ? '' : 's'
+          }: ${result.summary.correct} correct, ${
+            result.summary.wrong
+          } wrong, ${result.summary.uncertain} uncertain.`;
   }
 
   return { getResult: () => currentResult };
@@ -117,6 +134,27 @@ function renderSummary(container, summary) {
     ['Wrong', summary.wrong],
     ['Uncertain', summary.uncertain],
     ['Average', formatPercent(summary.averageCorrectness)],
+  ];
+  for (const [label, value] of entries) {
+    const item = document.createElement('div');
+    const caption = document.createElement('span');
+    const metric = document.createElement('strong');
+    caption.className = 'eyebrow';
+    caption.textContent = label;
+    metric.textContent = String(value);
+    item.append(caption, metric);
+    container.append(item);
+  }
+}
+
+function renderGrammarSummary(container, summary) {
+  container.replaceChildren();
+  const entries = [
+    ['Language', summary.language],
+    ['Issues', summary.issueCount],
+    ['Agreement', summary.byCategory?.agreement ?? 0],
+    ['Word order', summary.byCategory?.['word-order'] ?? 0],
+    ['Punctuation', summary.byCategory?.punctuation ?? 0],
   ];
   for (const [label, value] of entries) {
     const item = document.createElement('div');

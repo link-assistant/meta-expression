@@ -42,6 +42,8 @@
 }
 
 .check-summary > div {
+  display: grid;
+  gap: 4px;
   border: 1px solid var(--border);
   border-radius: 8px;
   padding: 12px;
@@ -58,6 +60,14 @@
   color: var(--check-foreground);
   background: var(--check-background);
   border-bottom: 3px solid var(--check-border);
+  border-radius: 5px;
+  padding: 2px 4px;
+}
+
+.grammar-issue {
+  color: var(--danger-text, #7a1f1f);
+  background: color-mix(in srgb, #f97316 18%, transparent);
+  border-bottom: 3px solid #f97316;
   border-radius: 5px;
   padding: 2px 4px;
 }

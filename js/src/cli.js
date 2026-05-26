@@ -20,6 +20,7 @@ import {
 import { formalizeTextWith, FORMALIZE_LINK_TARGETS } from './formalize.js';
 import { translateTextWith } from './translate.js';
 import { checkText, checkTextWithLiveEvidence } from './check.js';
+import { checkGrammar } from './grammar.js';
 import { exportClaimReviewJsonLd } from './claim-review.js';
 import { searchTextUniqueness } from './uniqueness.js';
 import { parseSourceSpec } from './formalize-sources.js';
@@ -484,6 +485,13 @@ export function runCli(args = process.argv.slice(2), output = console) {
       })
     );
   }
+  if (isGrammarCommand(options.command)) {
+    return emitGrammarResult(
+      options,
+      output,
+      checkGrammar(options.input, cliGrammarOptions(options))
+    );
+  }
 
   return emitCliAnalysis(
     options,
@@ -516,6 +524,9 @@ export async function runCliAsync(
   }
   if (isCheckCommand(options.command)) {
     return runCheckCommand(options, output);
+  }
+  if (isGrammarCommand(options.command)) {
+    return runGrammarCommand(options, output);
   }
   if (isUniquenessCommand(options.command)) {
     return runUniquenessCommand(options, output);
@@ -641,6 +652,11 @@ async function runCheckCommand(options, output) {
         preferenceProfile: options.preferenceProfile,
       });
   return emitCheckResult(options, output, result);
+}
+
+function runGrammarCommand(options, output) {
+  const result = checkGrammar(options.input, cliGrammarOptions(options));
+  return emitGrammarResult(options, output, result);
 }
 
 async function hydrateCliOptions(options) {
@@ -791,6 +807,8 @@ function validateCliOptions(options, output) {
     'translation-quality',
     'check',
     'fact-check',
+    'grammar',
+    'grammar-check',
     'uniqueness',
     'uniquness',
     'literature-review',
@@ -829,6 +847,13 @@ function cliAnalysisOptions(options) {
     selectedBy: 'cli',
     evidenceScoring: options.evidenceScoring,
     preferenceProfile: options.preferenceProfile,
+  };
+}
+
+function cliGrammarOptions(options) {
+  return {
+    language: options.sourceLanguage,
+    locale: options.sourceLanguage,
   };
 }
 
@@ -939,6 +964,23 @@ function emitCheckResult(options, output, result) {
   return 0;
 }
 
+function emitGrammarResult(options, output, result) {
+  if (options.format === 'links' || options.format === 'lino') {
+    output.log(result.linksNotation);
+    return 0;
+  }
+  if (options.format === 'markdown' || options.format === 'md') {
+    output.log(result.markdown);
+    return 0;
+  }
+  if (options.format === 'html') {
+    output.log(result.html);
+    return 0;
+  }
+  output.log(JSON.stringify(result, null, 2));
+  return 0;
+}
+
 function emitUniquenessResult(options, output, result) {
   if (options.format === 'links' || options.format === 'lino') {
     output.log(result.linksNotation);
@@ -991,6 +1033,10 @@ function formatLiteratureReviewMarkdown(result) {
 
 function isCheckCommand(command) {
   return command === 'check' || command === 'fact-check';
+}
+
+function isGrammarCommand(command) {
+  return command === 'grammar' || command === 'grammar-check';
 }
 
 function isClaimReviewFormat(format) {
@@ -1060,6 +1106,7 @@ function helpText() {
   meta-expression check --input "Earth orbits the Sun. 1 + 1 = 1." --format html
   meta-expression check --input "Earth orbits the Sun." --score wikidata-structured-claim=0.7
   meta-expression fact-check --input "Paris is the capital of France." --live
+  meta-expression grammar --input "The Moon orbit the Sun" --from en
   meta-expression uniqueness --input "Earth orbits the Sun." --format markdown
   meta-expression literature-review --fixture js/tests/fixtures/issue-91-literature-review.json --format bibtex
 
@@ -1073,6 +1120,7 @@ Commands:
               Assess a recorded set of Wikipedia articles end-to-end.
   check       Color detected statements by correctness.
   fact-check  Alias for check.
+  grammar    Flag agreement, word-order, article, and punctuation issues.
   uniqueness  Search public sources for prior exact or similar statements.
   literature-review
               Check one claim against a screened paper fixture and export bibliography data.
@@ -1085,7 +1133,7 @@ Options:
   --target <wikipedia|wikidata|local>
                                  formalize/translate: link target style
   --from, --source-language <bcp47>
-                                 translate: source language (default en)
+                                 translate/grammar: source language (default en)
   --to, --target-language <bcp47>
                                  translate: target language (default ru for en)
   --sources <spec>               formalize: comma-separated sources

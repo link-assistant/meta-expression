@@ -14,6 +14,7 @@ import {
 import { formalizeTextWith, FORMALIZE_LINK_TARGETS } from './formalize.js';
 import { translateTextWith } from './translate.js';
 import { checkText, checkTextWithLiveEvidence } from './check.js';
+import { checkGrammar } from './grammar.js';
 import { exportClaimReviewJsonLd } from './claim-review.js';
 import { searchTextUniqueness } from './uniqueness.js';
 import { parseSourceSpec } from './formalize-sources.js';
@@ -95,6 +96,10 @@ async function routeGetRequest(url, response, ctx) {
     case '/fact-check':
       await sendCheck(response, checkParamsFromSearch(url), ctx);
       return;
+    case '/grammar':
+    case '/grammar-check':
+      sendGrammar(response, grammarParamsFromSearch(url));
+      return;
     case '/uniqueness':
     case '/uniquness':
       await sendUniqueness(response, uniquenessParamsFromSearch(url));
@@ -125,6 +130,10 @@ async function routePostRequest(url, request, response, ctx) {
     case '/check':
     case '/fact-check':
       await sendCheck(response, checkParamsFromPayload(payload), ctx);
+      return;
+    case '/grammar':
+    case '/grammar-check':
+      sendGrammar(response, grammarParamsFromPayload(payload));
       return;
     case '/uniqueness':
     case '/uniquness':
@@ -255,6 +264,26 @@ function checkParamsFromPayload(payload) {
   };
 }
 
+function grammarParamsFromSearch(url) {
+  return {
+    input: url.searchParams.get('input') ?? '',
+    format: url.searchParams.get('format') ?? 'json',
+    language:
+      url.searchParams.get('language') ??
+      url.searchParams.get('from') ??
+      url.searchParams.get('sourceLanguage') ??
+      '',
+  };
+}
+
+function grammarParamsFromPayload(payload) {
+  return {
+    input: payload.input ?? '',
+    format: payload.format ?? 'json',
+    language: payload.language ?? payload.from ?? payload.sourceLanguage ?? '',
+  };
+}
+
 function uniquenessParamsFromSearch(url) {
   return {
     input: url.searchParams.get('input') ?? '',
@@ -304,6 +333,10 @@ function sendNotFound(response) {
       'POST /check',
       'GET /fact-check?input=...',
       'POST /fact-check',
+      'GET /grammar?input=...',
+      'POST /grammar',
+      'GET /grammar-check?input=...',
+      'POST /grammar-check',
       'GET /uniqueness?input=...',
       'POST /uniqueness',
       'GET /uniquness?input=...',
@@ -470,6 +503,18 @@ async function sendCheck(response, params, ctx) {
     limit: params.limit,
     sourceUrl: params.sourceUrl,
   });
+}
+
+function sendGrammar(response, params) {
+  if (!params.input) {
+    sendJson(response, 400, { error: 'Missing input parameter.' });
+    return;
+  }
+  const result = checkGrammar(params.input, {
+    language: params.language,
+    sourceLanguage: params.language,
+  });
+  emitGrammarResponse(response, params.format, result);
 }
 
 async function sendUniqueness(response, params) {
@@ -641,6 +686,32 @@ function emitCheckResponse(response, format, payload, options = {}) {
     sendLinkedDataJson(response, 200, exportEvidenceJsonLd(payload));
     return 0;
   }
+  if (format === 'links' || format === 'lino') {
+    response.writeHead(200, {
+      'content-type': 'text/plain; charset=utf-8',
+    });
+    response.end(payload.linksNotation);
+    return 0;
+  }
+  if (format === 'markdown' || format === 'md') {
+    response.writeHead(200, {
+      'content-type': 'text/markdown; charset=utf-8',
+    });
+    response.end(payload.markdown);
+    return 0;
+  }
+  if (format === 'html') {
+    response.writeHead(200, {
+      'content-type': 'text/html; charset=utf-8',
+    });
+    response.end(payload.html);
+    return 0;
+  }
+  sendJson(response, 200, payload);
+  return 0;
+}
+
+function emitGrammarResponse(response, format, payload) {
   if (format === 'links' || format === 'lino') {
     response.writeHead(200, {
       'content-type': 'text/plain; charset=utf-8',

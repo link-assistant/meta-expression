@@ -115,6 +115,12 @@ export {
 } from './translation-quality.js';
 export { checkText, checkTextWithLiveEvidence } from './check.js';
 export {
+  GRAMMAR_ISSUE_CATEGORIES,
+  SUPPORTED_GRAMMAR_LANGUAGES,
+  checkGrammar,
+  grammarCheckText,
+} from './grammar.js';
+export {
   exportClaimReviewJsonLd,
   importClaimReviewJsonLd,
   parseClaimReviewJsonLd,
