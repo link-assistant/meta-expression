@@ -1,0 +1,102 @@
+{
+  "claim": {
+    "text": "Daily reflective journaling improves writing self-efficacy in first-year students",
+    "domain": "writing pedagogy"
+  },
+  "query": {
+    "text": "\"reflective journaling\" \"writing self-efficacy\" first-year students",
+    "source": "mocked-literature-search",
+    "filters": {
+      "publicationYears": "2019-2025",
+      "studyTypes": ["randomized pilot", "quasi-experimental", "mixed-methods"]
+    }
+  },
+  "screenedAt": "2026-05-26T00:00:00.000Z",
+  "screeningMethod": "mocked-human-screening-fixture",
+  "papers": [
+    {
+      "id": "lee-2022-reflective-journaling",
+      "citationKey": "lee2022journaling",
+      "type": "article",
+      "title": "Structured reflection journals and writing confidence in first-year seminars",
+      "authors": [
+        { "given": "Mina", "family": "Lee" },
+        { "given": "Owen", "family": "Patel" }
+      ],
+      "journal": "Journal of Writing Pedagogy Fixtures",
+      "year": 2022,
+      "doi": "10.5555/jwpf.2022.001",
+      "url": "https://example.test/papers/lee-2022-reflective-journaling",
+      "decision": {
+        "polarity": "support",
+        "weight": 0.8,
+        "label": "supports",
+        "rationale": "The intervention group reported higher post-course self-efficacy than the comparison group."
+      },
+      "excerpts": [
+        {
+          "id": "lee-2022-results",
+          "section": "Results",
+          "page": "14",
+          "text": "Mean writing self-efficacy increased more for students assigned to weekly guided reflection journals."
+        }
+      ]
+    },
+    {
+      "id": "nguyen-2023-optional-journaling",
+      "citationKey": "nguyen2023optional",
+      "type": "article",
+      "title": "Optional journaling and writing confidence in introductory composition",
+      "authors": [
+        { "given": "Tara", "family": "Nguyen" },
+        { "given": "Luis", "family": "Romero" }
+      ],
+      "journal": "Composition Studies Fixture Review",
+      "year": 2023,
+      "doi": "10.5555/csfr.2023.017",
+      "url": "https://example.test/papers/nguyen-2023-optional-journaling",
+      "decision": {
+        "polarity": "refute",
+        "weight": 0.5,
+        "label": "does not support",
+        "rationale": "The optional journaling condition did not differ from the no-journal comparison on the self-efficacy scale."
+      },
+      "excerpts": [
+        {
+          "id": "nguyen-2023-discussion",
+          "section": "Discussion",
+          "page": "22",
+          "text": "Optional journal completion was not associated with a statistically reliable self-efficacy gain."
+        }
+      ]
+    },
+    {
+      "id": "smith-2024-guided-reflection",
+      "citationKey": "smith2024guided",
+      "type": "article",
+      "title": "Guided reflective writing as a confidence scaffold for novice academic writers",
+      "authors": [
+        { "given": "Ari", "family": "Smith" },
+        { "given": "Nadia", "family": "Khan" }
+      ],
+      "journal": "Teaching Writing Fixture Quarterly",
+      "year": 2024,
+      "doi": "10.5555/twfq.2024.004",
+      "url": "https://example.test/papers/smith-2024-guided-reflection",
+      "decision": {
+        "polarity": "support",
+        "weight": 0.7,
+        "label": "supports with caveats",
+        "rationale": "The guided reflection arm improved confidence, but only when instructors supplied weekly prompts."
+      },
+      "excerpts": [
+        {
+          "id": "smith-2024-results",
+          "section": "Results",
+          "page": "9",
+          "text": "Prompted reflection produced a moderate gain in academic writing self-efficacy by the final week."
+        }
+      ]
+    }
+  ]
+}
