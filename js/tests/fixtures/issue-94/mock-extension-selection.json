@@ -1,0 +1,13 @@
+{
+  "selection": {
+    "text": "Moon orbits Earth.",
+    "pageUrl": "https://example.test/editor/document-42",
+    "userAgent": "MockBrowserExtension/94",
+    "selectionStart": 128,
+    "selectionEnd": 146
+  },
+  "report": {
+    "labels": "bug,writing-assistant",
+    "timestamp": "2026-05-26T00:00:00.000Z"
+  }
+}

@@ -184,6 +184,16 @@ export {
   createSmtLibSolverArtifactAdapter,
 } from './proof-solver-artifacts.js';
 export {
+  WRITING_ASSISTANT_GUARDRAILS,
+  WRITING_ASSISTANT_OPERATIONS,
+  WRITING_ASSISTANT_SURFACES,
+  createMockWritingAssistantExtensionHarness,
+  createWritingAssistantSurface,
+  listWritingAssistantCapabilities,
+  runWritingAssistantOperation,
+  verifyWritingAssistantEmbeddedExports,
+} from './writing-assistant.js';
+export {
   createDefaultPreferenceProfile,
   createPreferenceEvidence,
   getPreferenceEvidenceSituationProbability,
