@@ -6,6 +6,8 @@ import { makeConfig } from 'lino-arguments';
 import {
   analyzeStatement,
   analyzeStatementWithLiveEvidence,
+  exportEvidenceJsonLd,
+  exportEvidenceProvJsonLd,
   naturalizeExpressionWith,
   parsePreferenceProfile,
   serializeLinksNotation,
@@ -778,6 +780,14 @@ function cliAnalysisOptions(options) {
 }
 
 function emitCliAnalysis(options, output, analysis) {
+  if (isProvOFormat(options.format)) {
+    output.log(JSON.stringify(exportEvidenceProvJsonLd(analysis), null, 2));
+    return 0;
+  }
+  if (isJsonLdFormat(options.format)) {
+    output.log(JSON.stringify(exportEvidenceJsonLd(analysis), null, 2));
+    return 0;
+  }
   if (options.format === 'links' || options.format === 'lino') {
     output.log(serializeLinksNotation(analysis.linksNetwork));
     return 0;
@@ -798,6 +808,14 @@ function emitCheckResult(options, output, result) {
         2
       )
     );
+    return 0;
+  }
+  if (isProvOFormat(options.format)) {
+    output.log(JSON.stringify(exportEvidenceProvJsonLd(result), null, 2));
+    return 0;
+  }
+  if (isJsonLdFormat(options.format)) {
+    output.log(JSON.stringify(exportEvidenceJsonLd(result), null, 2));
     return 0;
   }
   if (options.format === 'links' || options.format === 'lino') {
@@ -841,6 +859,24 @@ function isClaimReviewFormat(format) {
   return format === 'claim-review' || format === 'claimreview';
 }
 
+function isJsonLdFormat(format) {
+  return (
+    format === 'json-ld' ||
+    format === 'jsonld' ||
+    format === 'ld+json' ||
+    format === 'evidence-json-ld'
+  );
+}
+
+function isProvOFormat(format) {
+  return (
+    format === 'prov-o' ||
+    format === 'provo' ||
+    format === 'prov' ||
+    format === 'prov-json-ld'
+  );
+}
+
 function isUniquenessCommand(command) {
   return command === 'uniqueness' || command === 'uniquness';
 }
@@ -882,7 +918,7 @@ Commands:
 
 Options:
   -i, --input <text>             Statement text
-  -f, --format <json|links|markdown|html|claim-review>
+  -f, --format <json|links|markdown|html|claim-review|json-ld|prov-o>
   -s, --select <index>           Interpretation index (analyze), default 0
   --live                         analyze: resolve through Wikimedia APIs
   --target <wikipedia|wikidata|local>

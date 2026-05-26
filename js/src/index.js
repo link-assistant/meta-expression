@@ -106,6 +106,10 @@ export {
   parseClaimReviewJsonLd,
 } from './claim-review.js';
 export {
+  exportEvidenceJsonLd,
+  exportEvidenceProvJsonLd,
+} from './provenance-jsonld.js';
+export {
   createCrossrefUniquenessSource,
   createDefaultUniquenessSources,
   createDuckDuckGoUniquenessSource,

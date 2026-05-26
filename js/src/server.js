@@ -3,6 +3,8 @@ import { URL, fileURLToPath } from 'node:url';
 import {
   analyzeStatement,
   analyzeStatementWithLiveEvidence,
+  exportEvidenceJsonLd,
+  exportEvidenceProvJsonLd,
   naturalizeExpressionWith,
   serializeLinksNotation,
 } from './index.js';
@@ -316,6 +318,14 @@ async function sendAnalysis(
     ? await analyzeStatementWithLiveEvidence(input, options)
     : analyzeStatement(input, options);
 
+  if (isProvOFormat(format)) {
+    sendLinkedDataJson(response, 200, exportEvidenceProvJsonLd(analysis));
+    return;
+  }
+  if (isJsonLdFormat(format)) {
+    sendLinkedDataJson(response, 200, exportEvidenceJsonLd(analysis));
+    return;
+  }
   if (format === 'links' || format === 'lino') {
     response.writeHead(200, {
       'content-type': 'text/plain; charset=utf-8',
@@ -572,6 +582,14 @@ function emitCheckResponse(response, format, payload, options = {}) {
     );
     return 0;
   }
+  if (isProvOFormat(format)) {
+    sendLinkedDataJson(response, 200, exportEvidenceProvJsonLd(payload));
+    return 0;
+  }
+  if (isJsonLdFormat(format)) {
+    sendLinkedDataJson(response, 200, exportEvidenceJsonLd(payload));
+    return 0;
+  }
   if (format === 'links' || format === 'lino') {
     response.writeHead(200, {
       'content-type': 'text/plain; charset=utf-8',
@@ -599,6 +617,24 @@ function emitCheckResponse(response, format, payload, options = {}) {
 
 function isClaimReviewFormat(format) {
   return format === 'claim-review' || format === 'claimreview';
+}
+
+function isJsonLdFormat(format) {
+  return (
+    format === 'json-ld' ||
+    format === 'jsonld' ||
+    format === 'ld+json' ||
+    format === 'evidence-json-ld'
+  );
+}
+
+function isProvOFormat(format) {
+  return (
+    format === 'prov-o' ||
+    format === 'provo' ||
+    format === 'prov' ||
+    format === 'prov-json-ld'
+  );
 }
 
 function emitUniquenessResponse(response, format, payload) {
@@ -630,6 +666,13 @@ function emitUniquenessResponse(response, format, payload) {
 function sendJson(response, status, payload) {
   response.writeHead(status, {
     'content-type': 'application/json; charset=utf-8',
+  });
+  response.end(JSON.stringify(payload, null, 2));
+}
+
+function sendLinkedDataJson(response, status, payload) {
+  response.writeHead(status, {
+    'content-type': 'application/ld+json; charset=utf-8',
   });
   response.end(JSON.stringify(payload, null, 2));
 }
