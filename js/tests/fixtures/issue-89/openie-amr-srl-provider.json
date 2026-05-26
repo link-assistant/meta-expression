@@ -1,0 +1,59 @@
+{
+  "id": "fixture-openie-amr-srl",
+  "name": "Mock OpenIE AMR SRL provider",
+  "kind": "openie-amr-srl",
+  "sourceType": "nlp-provider",
+  "version": "fixture-1",
+  "status": "candidate",
+  "retrievedAt": "2026-05-26T12:00:00.000Z",
+  "triples": [
+    {
+      "id": "triple-1",
+      "subject": { "text": "Stanford OpenIE", "span": [0, 15] },
+      "predicate": { "text": "extracts", "span": [16, 24] },
+      "object": { "text": "relations", "span": [25, 34] },
+      "confidence": 0.82
+    }
+  ],
+  "roles": [
+    {
+      "id": "role-1",
+      "predicate": { "text": "extracts", "span": [16, 24] },
+      "arguments": [
+        {
+          "role": "ARG0",
+          "text": "Stanford OpenIE",
+          "span": [0, 15]
+        },
+        {
+          "role": "ARG1",
+          "text": "relations",
+          "span": [25, 34]
+        }
+      ],
+      "confidence": 0.78
+    }
+  ],
+  "entityLinks": [
+    {
+      "id": "entity-link-1",
+      "text": "Stanford OpenIE",
+      "span": [0, 15],
+      "target": {
+        "id": "external:stanford-openie",
+        "label": "Stanford OpenIE",
+        "kind": "tool",
+        "sourceUrl": "https://nlp.stanford.edu/software/openie.html"
+      },
+      "confidence": 0.74
+    }
+  ],
+  "graphs": [
+    {
+      "id": "amr-1",
+      "format": "amr",
+      "text": "(e / extract-01 :ARG0 (s / software :name (n / name :op1 \"Stanford\" :op2 \"OpenIE\")) :ARG1 (r / relation))",
+      "confidence": 0.69
+    }
+  ]
+}
