@@ -509,6 +509,225 @@ export interface IssueReportOptions {
   timestamp?: string;
 }
 
+export type WritingAssistantOperation =
+  | 'analyze'
+  | 'check'
+  | 'formalize'
+  | 'translate'
+  | 'uniqueness';
+
+export type WritingAssistantSurfaceKind =
+  | 'browser-extension'
+  | 'editor-extension'
+  | 'document-addin'
+  | 'embedded-writing-assistant';
+
+export interface WritingAssistantGuardrails {
+  naturalLanguageFirst: true;
+  candidateSuggestionsExplicit: true;
+  candidateSuggestionsRequireSelection: true;
+  candidateSuggestionsAreTruthEvidence: false;
+  evidenceChecksCarryEvidence: true;
+  evidenceChecksAreStyleRewrites: false;
+  styleRewritesProvidedByCore: false;
+}
+
+export interface WritingAssistantContext {
+  pageUrl?: string;
+  documentUrl?: string;
+  userAgent?: string;
+  selectionStart?: number;
+  selectionEnd?: number;
+  [key: string]: unknown;
+}
+
+export interface WritingAssistantRequest {
+  operation?: WritingAssistantOperation | string;
+  action?: WritingAssistantOperation | string;
+  text?: string;
+  input?: string;
+  surface?: WritingAssistantSurfaceKind | string;
+  context?: WritingAssistantContext;
+  report?: IssueReportOptions;
+  options?: Record<string, unknown>;
+  live?: boolean;
+  limit?: number;
+  from?: string;
+  to?: string;
+  sourceLanguage?: string;
+  targetLanguage?: string;
+}
+
+export interface WritingAssistantSuggestion {
+  id: string;
+  kind:
+    | 'candidate-interpretation'
+    | 'evidence-check'
+    | 'candidate-formalization-link'
+    | 'translation-question'
+    | 'originality-check'
+    | string;
+  category: 'candidate' | 'evidence-check' | string;
+  operation: WritingAssistantOperation;
+  text: string;
+  explicit: boolean;
+  evidenceBacked: boolean;
+  styleRewrite: boolean;
+  requiresUserSelection: boolean;
+  source?: string;
+  selected?: boolean;
+  candidate?: unknown;
+  evidence?: unknown[];
+  result?: unknown;
+  [key: string]: unknown;
+}
+
+export interface WritingAssistantExports {
+  linksNotation: string;
+  issueReportUrl?: string;
+  issueReportUrls?: Array<{ statementId: string; url: string }>;
+}
+
+export type WritingAssistantOperationPayload =
+  | StatementAnalysis
+  | CheckResult
+  | FormalizeResult
+  | TranslateResult
+  | UniquenessResult
+  | Record<string, unknown>;
+
+export interface WritingAssistantOperationResult {
+  kind: 'writing-assistant-operation-result';
+  operation: WritingAssistantOperation;
+  surface: WritingAssistantSurfaceKind;
+  status: string;
+  text: string;
+  context: WritingAssistantContext;
+  guardrails: WritingAssistantGuardrails;
+  suggestions: WritingAssistantSuggestion[];
+  exports: WritingAssistantExports;
+  result: WritingAssistantOperationPayload;
+}
+
+export interface WritingAssistantCapability {
+  operation: WritingAssistantOperation;
+  api: string;
+  exports: string[];
+  suggestionKinds: string[];
+}
+
+export interface WritingAssistantServices {
+  analyzeStatement?: (
+    input: string,
+    options?: AnalysisOptions
+  ) => StatementAnalysis;
+  analyzeStatementWithLiveEvidence?: (
+    input: string,
+    options?: AnalysisOptions
+  ) => Promise<StatementAnalysis>;
+  checkText?: (input: string, options?: Record<string, unknown>) => CheckResult;
+  checkTextWithLiveEvidence?: (
+    input: string,
+    options?: Record<string, unknown>
+  ) => Promise<CheckResult>;
+  formalizeTextWith?: (
+    input: string,
+    options?: FormalizeOptions
+  ) => Promise<FormalizeResult>;
+  translateTextWith?: (
+    input: string,
+    options?: TranslateOptions
+  ) => Promise<TranslateResult>;
+  searchTextUniqueness?: (
+    input: string,
+    options?: UniquenessOptions
+  ) => Promise<UniquenessResult>;
+  createIssueReportUrl?: (
+    analysis: StatementAnalysis,
+    options?: IssueReportOptions
+  ) => string;
+  serializeLinksNotation?: (linksNetwork: LinksNetwork) => string;
+}
+
+export interface WritingAssistantSurfaceOptions {
+  surface?: WritingAssistantSurfaceKind | string | WritingAssistantSurface;
+  services?: WritingAssistantServices;
+  context?: WritingAssistantContext;
+  options?: Record<string, unknown>;
+  operationOptions?: Partial<
+    Record<WritingAssistantOperation, Record<string, unknown>>
+  >;
+  fetch?: typeof fetch | null;
+  cache?: Map<string, unknown>;
+  now?: () => number | Date | string;
+  live?: boolean;
+  labels?: string;
+  repoUrl?: string;
+  userAgent?: string;
+}
+
+export interface WritingAssistantSurface {
+  kind: 'writing-assistant-surface';
+  surface: WritingAssistantSurfaceKind;
+  guardrails: WritingAssistantGuardrails;
+  capabilities: WritingAssistantCapability[];
+  run(
+    request: WritingAssistantRequest
+  ): Promise<WritingAssistantOperationResult>;
+  analyze(
+    text: string,
+    request?: Omit<WritingAssistantRequest, 'operation' | 'text'>
+  ): Promise<WritingAssistantOperationResult>;
+  check(
+    text: string,
+    request?: Omit<WritingAssistantRequest, 'operation' | 'text'>
+  ): Promise<WritingAssistantOperationResult>;
+  formalize(
+    text: string,
+    request?: Omit<WritingAssistantRequest, 'operation' | 'text'>
+  ): Promise<WritingAssistantOperationResult>;
+  translate(
+    text: string,
+    request?: Omit<WritingAssistantRequest, 'operation' | 'text'>
+  ): Promise<WritingAssistantOperationResult>;
+  uniqueness(
+    text: string,
+    request?: Omit<WritingAssistantRequest, 'operation' | 'text'>
+  ): Promise<WritingAssistantOperationResult>;
+}
+
+export interface MockWritingAssistantSelection extends WritingAssistantContext {
+  text: string;
+}
+
+export interface WritingAssistantEmbeddedExportVerification {
+  ok: boolean;
+  linksNotation: boolean;
+  issueReportUrl: boolean;
+  issueReportUrls: Array<{ statementId: string; url: string }>;
+  errors: string[];
+}
+
+export interface MockWritingAssistantExtensionHarness {
+  kind: 'mock-writing-assistant-extension-harness';
+  surface: WritingAssistantSurfaceKind;
+  guardrails: WritingAssistantGuardrails;
+  createSelection(
+    text: string,
+    context?: WritingAssistantContext
+  ): MockWritingAssistantSelection;
+  runSelection(
+    operation: WritingAssistantOperation | string,
+    selection: MockWritingAssistantSelection | string,
+    request?: Omit<WritingAssistantRequest, 'operation' | 'text'>
+  ): Promise<WritingAssistantOperationResult>;
+  verifySelectionExports(
+    operation: WritingAssistantOperation | string,
+    selection: MockWritingAssistantSelection | string,
+    request?: Omit<WritingAssistantRequest, 'operation' | 'text'>
+  ): Promise<WritingAssistantEmbeddedExportVerification>;
+}
+
 export interface WikimediaEvidenceClient {
   cache: Map<string, unknown>;
   resolveEvidence(
@@ -707,6 +926,42 @@ export declare function createIssueReportUrl(
   analysis: StatementAnalysis,
   options?: IssueReportOptions
 ): string;
+
+export declare const WRITING_ASSISTANT_OPERATIONS: {
+  readonly ANALYZE: 'analyze';
+  readonly CHECK: 'check';
+  readonly FORMALIZE: 'formalize';
+  readonly TRANSLATE: 'translate';
+  readonly UNIQUENESS: 'uniqueness';
+};
+
+export declare const WRITING_ASSISTANT_SURFACES: {
+  readonly BROWSER_EXTENSION: 'browser-extension';
+  readonly EDITOR_EXTENSION: 'editor-extension';
+  readonly DOCUMENT_ADDIN: 'document-addin';
+  readonly EMBEDDED: 'embedded-writing-assistant';
+};
+
+export declare const WRITING_ASSISTANT_GUARDRAILS: WritingAssistantGuardrails;
+
+export declare function listWritingAssistantCapabilities(): WritingAssistantCapability[];
+
+export declare function createWritingAssistantSurface(
+  options?: WritingAssistantSurfaceOptions
+): WritingAssistantSurface;
+
+export declare function runWritingAssistantOperation(
+  request: WritingAssistantRequest,
+  options?: WritingAssistantSurfaceOptions
+): Promise<WritingAssistantOperationResult>;
+
+export declare function createMockWritingAssistantExtensionHarness(
+  options?: WritingAssistantSurfaceOptions
+): MockWritingAssistantExtensionHarness;
+
+export declare function verifyWritingAssistantEmbeddedExports(
+  result: WritingAssistantOperationResult
+): WritingAssistantEmbeddedExportVerification;
 
 export declare function computeEvidenceConfidence(
   evidenceItems: EvidenceItem[]

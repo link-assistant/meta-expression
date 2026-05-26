@@ -81,6 +81,10 @@ Core exports:
   public web and scholarly APIs, returning existing-likelihood scores,
   citation/rewording suggestions, source matches, HTML, Markdown, and Links
   Notation.
+- `createWritingAssistantSurface(options)` exposes a browser/editor integration
+  wrapper over `analyze`, `check`, `formalize`, `translate`, and `uniqueness`
+  without replacing the core APIs. Candidate suggestions are explicit, and
+  evidence-backed checks are marked separately from style rewrites.
 - `exportPortableCaseData(input)`, `importPortableCaseData(input)`,
   `savePortableCaseToDoublets(input)`, and `loadPortableCaseFromDoublets(input)`
   preserve analysis/link-network cases as portable Doublets-backed data with
