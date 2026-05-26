@@ -1,6 +1,9 @@
 # Online research log for issue #26
 
-> Last checked: 2026-05-11.
+> Last checked: 2026-05-26.
+> Baseline captured: 2026-05-11.
+> Latest refresh delta:
+> [`docs/case-studies/issue-71/ONLINE-RESEARCH.md`](../issue-71/ONLINE-RESEARCH.md).
 
 This log archives the public-source data behind
 [`docs/COMPARISON-CONCEPTS.md`](../../COMPARISON-CONCEPTS.md) and
@@ -13,15 +16,15 @@ entry below is a verifiable claim with a URL.
 
 ### A.1 Automated fact checking
 
-| Project                          | License                 | Pricing (USD)           | URL                                                  | Notes                                                                                 |
-| -------------------------------- | ----------------------- | ----------------------- | ---------------------------------------------------- | ------------------------------------------------------------------------------------- |
-| Google Fact Check Tools API      | Proprietary             | Free, rate-limited      | <https://developers.google.com/fact-check/tools/api> | Returns `ClaimReview` JSON-LD; closest source of structured truth-verdict provenance. |
-| ClaimBuster (UT Arlington)       | Free academic API       | Free with key           | <https://idir.uta.edu/claimbuster/>                  | Returns a check-worthiness score 0..1; KDD'17 paper supplies canonical fixtures.      |
-| Full Fact AI                     | Proprietary partnership | Free for non-profit     | <https://fullfact.ai/>                               | UK political claims; some components open-sourced on GitHub.                          |
-| FactStream (Duke Reporters' Lab) | Proprietary, free app   | Free                    | <https://reporterslab.org/factstream/>               | Successor project is Squash; FactStream is largely paused.                            |
-| Snopes                           | Proprietary editorial   | Free; Snopes+ ~$7.95/mo | <https://www.snopes.com/>                            | Truth/False/Mixture/Unproven ratings; supplies misconception corpus.                  |
-| PolitiFact                       | Proprietary editorial   | Free                    | <https://www.politifact.com/>                        | "Pants on Fire" through "True"; ClaimReview-marked.                                   |
-| OpenFactCheck                    | Apache 2.0              | Free                    | <https://openfactcheck.com/>                         | Unified framework to evaluate LLM factuality.                                         |
+| Project                          | License                 | Pricing (USD)          | URL                                                  | Notes                                                                                 |
+| -------------------------------- | ----------------------- | ---------------------- | ---------------------------------------------------- | ------------------------------------------------------------------------------------- |
+| Google Fact Check Tools API      | Proprietary             | Free, rate-limited     | <https://developers.google.com/fact-check/tools/api> | Returns `ClaimReview` JSON-LD; closest source of structured truth-verdict provenance. |
+| ClaimBuster (UT Arlington)       | Free academic API       | Free with key          | <https://idir.uta.edu/claimbuster/>                  | Returns a check-worthiness score 0..1; KDD'17 paper supplies canonical fixtures.      |
+| Full Fact AI                     | Proprietary partnership | Free for non-profit    | <https://fullfact.ai/>                               | UK political claims; some components open-sourced on GitHub.                          |
+| FactStream (Duke Reporters' Lab) | Proprietary, free app   | Free                   | <https://reporterslab.org/factstream/>               | Successor project is Squash; FactStream is largely paused.                            |
+| Snopes                           | Proprietary editorial   | Free; memberships vary | <https://www.snopes.com/>                            | Truth/False/Mixture/Unproven ratings; supplies misconception corpus.                  |
+| PolitiFact                       | Proprietary editorial   | Free                   | <https://www.politifact.com/>                        | "Pants on Fire" through "True"; ClaimReview-marked.                                   |
+| OpenFactCheck                    | Apache 2.0              | Free                   | <https://openfactcheck.com/>                         | Unified framework to evaluate LLM factuality.                                         |
 
 ### A.2 Knowledge graphs and reasoning systems
 
@@ -63,28 +66,28 @@ entry below is a verifiable claim with a URL.
 
 ### A.5 Uniqueness / paraphrase
 
-| Project                                 | License     | Pricing (USD)                                  | URL                            | Notes                                    |
-| --------------------------------------- | ----------- | ---------------------------------------------- | ------------------------------ | ---------------------------------------- |
-| Turnitin (Similarity / Feedback Studio) | Proprietary | Institutional, ~$3–10/student/year             | <https://www.turnitin.com/>    | LMS integrations; closed-source.         |
-| iThenticate / Crossref Similarity Check | Proprietary | From $125 per 25k-word manuscript              | <https://www.ithenticate.com/> | Scholarly publishing focus.              |
-| Copyscape                               | Proprietary | Free basic; Premium ~$0.03 per 300-word search | <https://www.copyscape.com/>   | Web-content dup detection.               |
-| Grammarly Premium                       | Proprietary | $12/mo (annual) / $30/mo monthly               | <https://www.grammarly.com/>   | Grammar + plagiarism + AI.               |
-| Quetext                                 | Proprietary | Free 500 words; Pro $9.99/mo                   | <https://www.quetext.com/>     | DeepSearch plagiarism.                   |
-| PlagScan                                | Proprietary | Pay-as-you-go from ~$5.99 / 6,000 words        | <https://www.plagscan.com/>    | Education/enterprise.                    |
-| Sentence-Transformers / SBERT           | Apache 2.0  | Free                                           | <https://sbert.net/>           | Semantic similarity baseline; self-host. |
+| Project                                 | License     | Pricing (USD)                                                 | URL                            | Notes                                    |
+| --------------------------------------- | ----------- | ------------------------------------------------------------- | ------------------------------ | ---------------------------------------- |
+| Turnitin (Similarity / Feedback Studio) | Proprietary | Institutional, ~$3–10/student/year                            | <https://www.turnitin.com/>    | LMS integrations; closed-source.         |
+| iThenticate / Crossref Similarity Check | Proprietary | From $125 per 25k-word manuscript                             | <https://www.ithenticate.com/> | Scholarly publishing focus.              |
+| Copyscape                               | Proprietary | Free basic; Premium ~$0.03 per 300-word search                | <https://www.copyscape.com/>   | Web-content dup detection.               |
+| Grammarly Pro                           | Proprietary | $12/mo (annual) / $30/mo monthly                              | <https://www.grammarly.com/>   | Grammar + plagiarism + AI.               |
+| Quetext                                 | Proprietary | Free 500 words; Pro $9.99/mo                                  | <https://www.quetext.com/>     | DeepSearch plagiarism.                   |
+| PlagScan                                | Proprietary | Quote/account-based; no current public self-serve price found | <https://www.plagscan.com/>    | Education/enterprise.                    |
+| Sentence-Transformers / SBERT           | Apache 2.0  | Free                                                          | <https://sbert.net/>           | Semantic similarity baseline; self-host. |
 
 ### A.6 AI writing and fact-check assistants
 
-| Project           | License     | Pricing (USD)                                          | URL                              | Notes                                    |
-| ----------------- | ----------- | ------------------------------------------------------ | -------------------------------- | ---------------------------------------- |
-| Perplexity AI     | Proprietary | Free; Pro $20/mo ($200/yr); Enterprise $40+/seat       | <https://www.perplexity.ai/>     | Inline citations; closest provenance UX. |
-| You.com           | Proprietary | Free; Pro $15/mo; Team $20/seat                        | <https://you.com/>               | Multiple modes (Genius, Research).       |
-| ChatGPT           | Proprietary | Free; Plus $20/mo; Team $25–$30/seat; Enterprise quote | <https://chatgpt.com/>           | Browsing-with-citations mode.            |
-| Claude            | Proprietary | Free; Pro $20/mo; Team $25/seat; API per-token         | <https://claude.ai/>             | Web search + Computer Use + MCP.         |
-| Microsoft Copilot | Proprietary | Free; Pro $20/mo; M365 Copilot $30/user/mo             | <https://copilot.microsoft.com/> | Bing-backed footnoted citations.         |
-| Elicit            | Proprietary | Free; Plus $12/mo; Pro $49/mo; Enterprise quote        | <https://elicit.com/>            | Lit-review automation.                   |
-| Consensus.app     | Proprietary | Free; Premium $8.99/mo (annual) / $11.99/mo            | <https://consensus.app/>         | Consensus Meter ≈ `signedConfidence`.    |
-| Jenni AI          | Proprietary | Free 10 autocompletes/day; Plus $12/mo; Pro $29/mo     | <https://jenni.ai/>              | Mentioned explicitly in issue #20.       |
+| Project           | License     | Pricing (USD)                                                | URL                              | Notes                                    |
+| ----------------- | ----------- | ------------------------------------------------------------ | -------------------------------- | ---------------------------------------- |
+| Perplexity AI     | Proprietary | Free; Pro $20/mo ($200/yr); Enterprise Pro/Max paid          | <https://www.perplexity.ai/>     | Inline citations; closest provenance UX. |
+| You.com           | Proprietary | Free; Pro $20/mo annual; Max $200/mo annual; API usage-based | <https://you.com/>               | Multiple modes (Genius, Research).       |
+| ChatGPT           | Proprietary | Free; Plus $20/mo; Pro $100–$200/mo; Business $20–$25/seat   | <https://chatgpt.com/>           | Browsing-with-citations mode.            |
+| Claude            | Proprietary | Free; Pro $20/mo; Max $100–$200/mo; Team paid                | <https://claude.ai/>             | Web search + Computer Use + MCP.         |
+| Microsoft Copilot | Proprietary | Free; Pro $20/mo; M365 Copilot Business paid                 | <https://copilot.microsoft.com/> | Bing-backed footnoted citations.         |
+| Elicit            | Proprietary | Free; Plus $10–$12/mo; Pro $42–$49/mo; Enterprise quote      | <https://elicit.com/>            | Lit-review automation.                   |
+| Consensus.app     | Proprietary | Free; Pro $10/mo annual / $15/mo monthly                     | <https://consensus.app/>         | Consensus Meter ≈ `signedConfidence`.    |
+| Jenni AI          | Proprietary | Free 10 autocompletes/day; Plus $12/mo; Pro $29/mo           | <https://jenni.ai/>              | Mentioned explicitly in issue #20.       |
 
 ### A.7 Links Notation / knowledge representation
 
@@ -117,12 +120,12 @@ adapter to PROV-O is tracked in
 
 ## C. Pricing snapshot methodology
 
-All pricing values were captured from publicly accessible vendor pages on
-2026-05-11. Multi-tier products list only the entry consumer tier and
-the cheapest paid tier; enterprise and contact-for-quote tiers are
-noted but not priced. We deliberately avoid implying any tier as the
-"recommended" plan because the comparison docs aim to map _concepts_,
-not endorse products.
+Baseline pricing values were captured from publicly accessible vendor pages on
+2026-05-11 and refreshed for issue #71 on 2026-05-26. Multi-tier products list
+only the entry consumer tier and the cheapest paid tier unless a higher tier is
+material to the comparison; enterprise and contact-for-quote tiers are noted but
+not priced. We deliberately avoid implying any tier as the "recommended" plan
+because the comparison docs aim to map _concepts_, not endorse products.
 
 ## D. Library survey (potential dependencies)
 

@@ -1,8 +1,13 @@
 # Concept comparison: meta-expression vs. similar projects
 
-> Last checked: 2026-05-11.
-> Source case study: [`docs/case-studies/issue-26/`](./case-studies/issue-26/).
-> Raw research log: [`docs/case-studies/issue-26/ONLINE-RESEARCH.md`](./case-studies/issue-26/ONLINE-RESEARCH.md).
+> Last checked: 2026-05-26.
+> Source case studies:
+> [`docs/case-studies/issue-26/`](./case-studies/issue-26/) and
+> [`docs/case-studies/issue-71/`](./case-studies/issue-71/).
+> Raw research log:
+> [`docs/case-studies/issue-71/ONLINE-RESEARCH.md`](./case-studies/issue-71/ONLINE-RESEARCH.md).
+> Baseline research log:
+> [`docs/case-studies/issue-26/ONLINE-RESEARCH.md`](./case-studies/issue-26/ONLINE-RESEARCH.md).
 
 This document maps meta-expression's concepts (statement interpretation,
 formalization, evidence with provenance, formal evaluation, translation,
@@ -36,8 +41,9 @@ When a comparable system's pricing or license changes:
 
 1. Update the row below.
 2. Update the corresponding row in
-   [`docs/case-studies/issue-26/ONLINE-RESEARCH.md`](./case-studies/issue-26/ONLINE-RESEARCH.md)
-   §A.
+   the current issue refresh log, such as
+   [`docs/case-studies/issue-71/ONLINE-RESEARCH.md`](./case-studies/issue-71/ONLINE-RESEARCH.md)
+   §B.
 3. Bump the `Last checked` date at the top of both files.
 
 When a comparable system ships or removes a feature:
@@ -58,7 +64,7 @@ evidence.
 | ClaimBuster                      | Free academic           | Free with key             | <https://idir.uta.edu/claimbuster/>                  | Check-worthiness score 0..1; meta-expression maps to `correctness`. |
 | Full Fact AI                     | Proprietary partnership | Free for non-profit       | <https://fullfact.ai/>                               | UK political fact monitoring; some OSS components.                  |
 | FactStream (Duke Reporters' Lab) | Proprietary             | Free app (project paused) | <https://reporterslab.org/factstream/>               | Live fact-check streaming.                                          |
-| Snopes                           | Proprietary editorial   | Free; Snopes+ ~$7.95/mo   | <https://www.snopes.com/>                            | Misconception corpus; verdict labels.                               |
+| Snopes                           | Proprietary editorial   | Free; memberships vary    | <https://www.snopes.com/>                            | Misconception corpus; verdict labels.                               |
 | PolitiFact                       | Proprietary editorial   | Free                      | <https://www.politifact.com/>                        | "Truth-O-Meter" verdict + ClaimReview.                              |
 | OpenFactCheck                    | Apache 2.0              | Free                      | <https://openfactcheck.com/>                         | Unified evaluation harness for LLM factuality.                      |
 
@@ -115,31 +121,31 @@ in `js/src/formalize.js` and `js/src/disambiguation.js`.
 **meta-expression role**: `/uniqueness` and citation/rewording
 suggestions in `js/src/uniqueness.js`.
 
-| Project                                 | License     | Pricing (USD)                                  | URL                            | Concept overlap                              |
-| --------------------------------------- | ----------- | ---------------------------------------------- | ------------------------------ | -------------------------------------------- |
-| Turnitin (Similarity / Feedback Studio) | Proprietary | Institutional, ~$3–10/student/year             | <https://www.turnitin.com/>    | Education plagiarism + AI-writing detection. |
-| iThenticate / Crossref Similarity Check | Proprietary | From $125 per 25k-word manuscript              | <https://www.ithenticate.com/> | Scholarly pre-publication screening.         |
-| Copyscape                               | Proprietary | Free basic; Premium ~$0.03 per 300-word search | <https://www.copyscape.com/>   | Web duplicate detection.                     |
-| Grammarly Premium                       | Proprietary | $12/mo annual / $30/mo monthly                 | <https://www.grammarly.com/>   | Grammar + plagiarism + AI.                   |
-| Quetext                                 | Proprietary | Free ≤500 words; Pro $9.99/mo                  | <https://www.quetext.com/>     | DeepSearch plagiarism.                       |
-| PlagScan                                | Proprietary | From ~$5.99 / 6,000 words                      | <https://www.plagscan.com/>    | Education/enterprise plagiarism.             |
-| Sentence-Transformers / SBERT           | Apache 2.0  | Free                                           | <https://sbert.net/>           | Semantic similarity baseline.                |
+| Project                                 | License     | Pricing (USD)                                                 | URL                            | Concept overlap                              |
+| --------------------------------------- | ----------- | ------------------------------------------------------------- | ------------------------------ | -------------------------------------------- |
+| Turnitin (Similarity / Feedback Studio) | Proprietary | Institutional, ~$3–10/student/year                            | <https://www.turnitin.com/>    | Education plagiarism + AI-writing detection. |
+| iThenticate / Crossref Similarity Check | Proprietary | From $125 per 25k-word manuscript                             | <https://www.ithenticate.com/> | Scholarly pre-publication screening.         |
+| Copyscape                               | Proprietary | Free basic; Premium ~$0.03 per 300-word search                | <https://www.copyscape.com/>   | Web duplicate detection.                     |
+| Grammarly Pro                           | Proprietary | $12/mo annual / $30/mo monthly                                | <https://www.grammarly.com/>   | Grammar + plagiarism + AI.                   |
+| Quetext                                 | Proprietary | Free ≤500 words; Pro $9.99/mo                                 | <https://www.quetext.com/>     | DeepSearch plagiarism.                       |
+| PlagScan                                | Proprietary | Quote/account-based; no current public self-serve price found | <https://www.plagscan.com/>    | Education/enterprise plagiarism.             |
+| Sentence-Transformers / SBERT           | Apache 2.0  | Free                                                          | <https://sbert.net/>           | Semantic similarity baseline.                |
 
 ## 6. AI writing and fact-check assistants
 
 **meta-expression role**: shared territory with general AI chat
 products. Meta-expression intentionally bounds the role of LLMs (R12).
 
-| Project           | License     | Pricing (USD)                                       | URL                              | Concept overlap                                       |
-| ----------------- | ----------- | --------------------------------------------------- | -------------------------------- | ----------------------------------------------------- |
-| Perplexity AI     | Proprietary | Free; Pro $20/mo ($200/yr); Enterprise $40+/seat    | <https://www.perplexity.ai/>     | Citations + answer engine.                            |
-| You.com           | Proprietary | Free; Pro $15/mo; Team $20/seat                     | <https://you.com/>               | Multi-mode AI search.                                 |
-| ChatGPT           | Proprietary | Free; Plus $20/mo; Team $25–$30/seat                | <https://chatgpt.com/>           | Browsing-with-citations mode.                         |
-| Claude            | Proprietary | Free; Pro $20/mo; Team $25/seat                     | <https://claude.ai/>             | Web search + tool use.                                |
-| Microsoft Copilot | Proprietary | Free; Pro $20/mo; M365 Copilot $30/user/mo          | <https://copilot.microsoft.com/> | Bing-backed citations.                                |
-| Elicit            | Proprietary | Free; Plus $12/mo; Pro $49/mo                       | <https://elicit.com/>            | Literature-review automation.                         |
-| Consensus.app     | Proprietary | Free; Premium $8.99/mo (annual) / $11.99/mo monthly | <https://consensus.app/>         | Consensus Meter ≈ `signedConfidence`.                 |
-| Jenni AI          | Proprietary | Free 10/day; Plus $12/mo; Pro $29/mo                | <https://jenni.ai/>              | Academic writing assistant (called out in issue #20). |
+| Project           | License     | Pricing (USD)                                                 | URL                              | Concept overlap                                       |
+| ----------------- | ----------- | ------------------------------------------------------------- | -------------------------------- | ----------------------------------------------------- |
+| Perplexity AI     | Proprietary | Free; Pro $20/mo ($200/yr); Enterprise Pro/Max paid           | <https://www.perplexity.ai/>     | Citations + answer engine.                            |
+| You.com           | Proprietary | Free; Pro $20/mo annual; Max $200/mo annual; APIs usage-based | <https://you.com/>               | Multi-mode AI search.                                 |
+| ChatGPT           | Proprietary | Free; Plus $20/mo; Pro $100–$200/mo; Business $20–$25/seat    | <https://chatgpt.com/>           | Browsing-with-citations mode.                         |
+| Claude            | Proprietary | Free; Pro $20/mo; Max $100–$200/mo; Team paid                 | <https://claude.ai/>             | Web search + tool use.                                |
+| Microsoft Copilot | Proprietary | Free; Pro $20/mo; M365 Copilot Business paid                  | <https://copilot.microsoft.com/> | Bing-backed citations.                                |
+| Elicit            | Proprietary | Free; Plus $10–$12/mo; Pro $42–$49/mo                         | <https://elicit.com/>            | Literature-review automation.                         |
+| Consensus.app     | Proprietary | Free; Pro $10/mo annual / $15/mo monthly                      | <https://consensus.app/>         | Consensus Meter ≈ `signedConfidence`.                 |
+| Jenni AI          | Proprietary | Free 10/day; Plus $12/mo; Pro $29/mo                          | <https://jenni.ai/>              | Academic writing assistant (called out in issue #20). |
 
 ## 7. Links Notation and knowledge representation
 
