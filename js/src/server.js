@@ -172,6 +172,7 @@ function formalizeParamsFromPayload(payload) {
     overrideFile: payload.overrideFile ?? '',
     noRepoOverrides: payload.noRepoOverrides === true,
     overrides: payload.overrides,
+    providerOutputs: payload.providerOutputs ?? [],
   };
 }
 
@@ -368,6 +369,7 @@ async function sendFormalize(response, params, ctx) {
     sources,
     overrides: [...repoOverrides, ...userOverrides],
     maxNgramSize: params.maxNgramSize,
+    providerOutputs: params.providerOutputs,
   });
   const stored = await writeCacheEntry(
     ctx.cacheRoot,

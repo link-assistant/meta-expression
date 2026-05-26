@@ -43,6 +43,7 @@ import {
   extractLinguisticMetadata,
 } from './linguistic-metadata.js';
 import { buildLinksNetwork } from './formalize-links-network.js';
+import { collectFormalizationProviderCandidates } from './formalization-providers.js';
 import {
   escapeAttribute,
   escapeHtml,
@@ -233,6 +234,8 @@ export function formalizeText(input, options = {}) {
  * @param {string} [options.language]
  * @param {object[]} [options.sources]               — pluggable source list
  * @param {object[]} [options.overrides]             — repo+user overrides
+ * @param {object[]} [options.providers]             — OpenIE/AMR/SRL/etc.
+ * @param {object[]|object} [options.providerOutputs] — precomputed provider output
  * @param {object} [options.contextOptions]          — passed to aggregator
  * @returns {Promise<object>}
  */
@@ -280,18 +283,24 @@ export async function formalizeTextWith(input, options = {}) {
     flatContexts,
     config
   );
+  const providerCandidates = await collectFormalizationProviderCandidates(
+    text,
+    config
+  );
   const cst = buildFormalizationCst(
     text,
     tokens,
     reranked,
     flatContexts,
-    config
+    config,
+    providerCandidates
   );
   const linksNetwork = buildLinksNetwork(
     text,
     reranked,
     flatContexts,
-    cst.linguisticMetadata
+    cst.linguisticMetadata,
+    providerCandidates
   );
   const markdown = renderMarkdownFromFormalizationCst(cst);
   const html = htmlFromFormalizationCst(cst);
@@ -309,6 +318,7 @@ export async function formalizeTextWith(input, options = {}) {
     bigContexts: bigContexts.all,
     mainBigContext: bigContexts.main,
     additionalBigContexts: bigContexts.additional,
+    providerCandidates,
     interpretations,
     markdown,
     html,
@@ -497,6 +507,8 @@ function createConfig(options) {
     sources,
     cache: options.cache ?? new Map(),
     overrides: buildOverrideMap(options.overrides ?? []),
+    providers: normalizeOptionalArray(options.providers),
+    providerOutputs: options.providerOutputs ?? [],
     trace: options.trace !== false,
     steps: [],
     ...collectFormalizationTransformationRules(options),
@@ -1322,7 +1334,24 @@ function generateFormalizeInterpretations(phrases, contexts, config) {
     .map((interpretation, index) => ({ ...interpretation, rank: index + 1 }));
 }
 
-function buildFormalizationCst(text, tokens, phrases, contexts, config) {
+function normalizeOptionalArray(value) {
+  if (Array.isArray(value)) {
+    return value.filter((entry) => entry !== null && entry !== undefined);
+  }
+  if (value === null || value === undefined) {
+    return [];
+  }
+  return [value];
+}
+
+function buildFormalizationCst(
+  text,
+  tokens,
+  phrases,
+  contexts,
+  config,
+  providerCandidates
+) {
   const tokenSpans = sourceTokenSpans(text, tokens);
   const cstPhrases = phrases.map((phrase, index) =>
     buildCstPhrase(phrase, index, config, tokenSpans)
@@ -1342,6 +1371,7 @@ function buildFormalizationCst(text, tokens, phrases, contexts, config) {
     linkTargetMode: config.linkTargetMode,
     ast: linguisticMetadata.ast,
     linguisticMetadata,
+    providerCandidates,
     phrases: cstPhrases,
     contexts: contexts.all.map((context, index) => ({
       id: `context-${index + 1}`,

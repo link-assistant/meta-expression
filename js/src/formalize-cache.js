@@ -62,6 +62,7 @@ export function cacheKey(input) {
     noRepoOverrides: Boolean(input.noRepoOverrides),
     maxNgramSize: input.maxNgramSize ?? null,
     language: input.language ?? 'en',
+    providerOutputs: input.providerOutputs ?? null,
   });
   return createHash('sha256').update(normalized).digest('hex').slice(0, 32);
 }

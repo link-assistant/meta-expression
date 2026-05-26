@@ -61,6 +61,11 @@ export {
   resolveLinkTarget as resolveFormalizeLinkTarget,
 } from './formalize.js';
 export {
+  FORMALIZATION_PROVIDER_STATUS,
+  collectFormalizationProviderCandidates,
+  createFixtureFormalizationProvider,
+} from './formalization-providers.js';
+export {
   SOURCE_KIND as FORMALIZE_SOURCES,
   createWikidataSource,
   createWikipediaSource,

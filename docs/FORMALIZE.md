@@ -53,24 +53,26 @@ one or more knowledge graphs, picking the longest non-overlapping
 cover, and producing renderings (Markdown, HTML, Links Notation) plus
 aggregated big contexts and ranked interpretations.
 
-| Parameter                      | Type                        | Description           |
-| ------------------------------ | --------------------------- | --------------------- |
-| `input`                        | `string`                    | —                     |
-| `[options]`                    | `object`                    | —                     |
-| `[options.fetch]`              | `Function\|null`            | fetch implementation  |
-| `[options.cache]`              | `Map<string,unknown>\|null` | TTL cache             |
-| `[options.cacheTtlMs]`         | `number`                    | —                     |
-| `[options.now]`                | `Function`                  | —                     |
-| `[options.maxNgramSize]`       | `number`                    | —                     |
-| `[options.searchLimit]`        | `number`                    | —                     |
-| `[options.topKCandidates]`     | `number`                    | —                     |
-| `[options.maxInterpretations]` | `number`                    | —                     |
-| `[options.linkTargetMode]`     | `string`                    | —                     |
-| `[options.contextLens]`        | `string\|object\|null`      | —                     |
-| `[options.language]`           | `string`                    | —                     |
-| `[options.sources]`            | `object[]`                  | pluggable source list |
-| `[options.overrides]`          | `object[]`                  | repo+user overrides   |
-| `[options.contextOptions]`     | `object`                    | passed to aggregator  |
+| Parameter                      | Type                        | Description                 |
+| ------------------------------ | --------------------------- | --------------------------- |
+| `input`                        | `string`                    | —                           |
+| `[options]`                    | `object`                    | —                           |
+| `[options.fetch]`              | `Function\|null`            | fetch implementation        |
+| `[options.cache]`              | `Map<string,unknown>\|null` | TTL cache                   |
+| `[options.cacheTtlMs]`         | `number`                    | —                           |
+| `[options.now]`                | `Function`                  | —                           |
+| `[options.maxNgramSize]`       | `number`                    | —                           |
+| `[options.searchLimit]`        | `number`                    | —                           |
+| `[options.topKCandidates]`     | `number`                    | —                           |
+| `[options.maxInterpretations]` | `number`                    | —                           |
+| `[options.linkTargetMode]`     | `string`                    | —                           |
+| `[options.contextLens]`        | `string\|object\|null`      | —                           |
+| `[options.language]`           | `string`                    | —                           |
+| `[options.sources]`            | `object[]`                  | pluggable source list       |
+| `[options.overrides]`          | `object[]`                  | repo+user overrides         |
+| `[options.providers]`          | `object[]`                  | OpenIE/AMR/SRL/etc.         |
+| `[options.providerOutputs]`    | `object[]\|object`          | precomputed provider output |
+| `[options.contextOptions]`     | `object`                    | passed to aggregator        |
 
 **Returns** `Promise<object>`
 

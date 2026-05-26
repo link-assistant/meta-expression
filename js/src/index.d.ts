@@ -665,6 +665,17 @@ export declare const FORMALIZE_LINK_TARGETS: {
   readonly LOCAL: 'local-viewer';
 };
 
+export type FormalizationProviderStatus =
+  | 'candidate'
+  | 'selected'
+  | 'validated';
+
+export declare const FORMALIZATION_PROVIDER_STATUS: {
+  readonly CANDIDATE: 'candidate';
+  readonly SELECTED: 'selected';
+  readonly VALIDATED: 'validated';
+};
+
 export type InterpretationDisplayMode =
   | 'id'
   | 'name'
@@ -903,6 +914,143 @@ export interface FormalizeContext {
   phrases: Array<{ text: string; entityId: string }>;
 }
 
+export interface FormalizationProviderTruthScoring {
+  included: false;
+  eligible: boolean;
+  reason: string;
+}
+
+export interface FormalizationProviderProvenance {
+  sourceType: string;
+  method: string;
+  providerId: string;
+  providerVersion: string | null;
+  retrievedAt: string | null;
+  sourceUrl?: string | null;
+}
+
+export interface FormalizationProviderTarget {
+  id: string | null;
+  label: string | null;
+  description: string | null;
+  kind: string | null;
+  source: string | null;
+  sourceUrl: string | null;
+}
+
+export interface FormalizationProviderPart {
+  text: string;
+  sourceStart: number | null;
+  sourceEnd: number | null;
+  target: FormalizationProviderTarget | null;
+}
+
+export interface FormalizationProviderCandidateBase {
+  id: string;
+  providerId: string;
+  kind: string;
+  confidence: number | null;
+  status: FormalizationProviderStatus;
+  selected: boolean;
+  validated: boolean;
+  truthScoring: FormalizationProviderTruthScoring;
+  provenance: FormalizationProviderProvenance;
+}
+
+export interface FormalizationProviderTriple extends FormalizationProviderCandidateBase {
+  kind: 'triple';
+  subject: FormalizationProviderPart;
+  predicate: FormalizationProviderPart;
+  object: FormalizationProviderPart;
+}
+
+export interface FormalizationProviderRoleArgument extends FormalizationProviderPart {
+  id: string;
+  role: string;
+}
+
+export interface FormalizationProviderRole extends FormalizationProviderCandidateBase {
+  kind: 'semantic-role-frame';
+  predicate: FormalizationProviderPart;
+  arguments: FormalizationProviderRoleArgument[];
+}
+
+export interface FormalizationProviderEntityLink
+  extends FormalizationProviderCandidateBase, FormalizationProviderPart {
+  kind: 'entity-link';
+  target: FormalizationProviderTarget | null;
+}
+
+export interface FormalizationProviderGraph extends FormalizationProviderCandidateBase {
+  kind: 'semantic-graph';
+  format: string;
+  text: string;
+  nodes: unknown[];
+  edges: unknown[];
+}
+
+export interface FormalizationProviderDiagnostic {
+  id: string;
+  providerId: string;
+  level: string;
+  message: string;
+}
+
+export interface FormalizationProviderSummary {
+  id: string;
+  name: string;
+  kind: string;
+  sourceType: string;
+  version: string | null;
+  status: FormalizationProviderStatus;
+  retrievedAt: string | null;
+  confidence: number | null;
+  truthScoring: FormalizationProviderTruthScoring;
+  provenance: FormalizationProviderProvenance;
+  diagnostics: FormalizationProviderDiagnostic[];
+  candidateCounts: {
+    triples: number;
+    roles: number;
+    entityLinks: number;
+    graphs: number;
+  };
+}
+
+export interface FormalizationProviderCandidates {
+  type: 'formalization-provider-candidates';
+  version: number;
+  status: 'candidate-only' | 'empty';
+  truthScoring: FormalizationProviderTruthScoring;
+  providers: FormalizationProviderSummary[];
+  triples: FormalizationProviderTriple[];
+  roles: FormalizationProviderRole[];
+  entityLinks: FormalizationProviderEntityLink[];
+  graphs: FormalizationProviderGraph[];
+  diagnostics: FormalizationProviderDiagnostic[];
+}
+
+export interface FormalizationProviderContext {
+  language: string;
+  now?: () => number;
+}
+
+export type FormalizationProviderOutput =
+  | FormalizationProviderCandidates
+  | Record<string, unknown>
+  | Array<Record<string, unknown>>;
+
+export interface FormalizationProvider {
+  id?: string;
+  name?: string;
+  kind?: string;
+  sourceType?: string;
+  version?: string | null;
+  extract(
+    text: string,
+    context: FormalizationProviderContext
+  ): FormalizationProviderOutput | Promise<FormalizationProviderOutput>;
+}
+
 export type TransformationRule =
   | {
       id?: string;
@@ -1089,6 +1237,7 @@ export interface FormalizationCst {
   linkTargetMode: FormalizeLinkTargetMode;
   ast: LinguisticAstNode;
   linguisticMetadata: LinguisticMetadata;
+  providerCandidates: FormalizationProviderCandidates;
   phrases: FormalizationCstPhrase[];
   contexts: FormalizeContext[];
 }
@@ -1110,6 +1259,8 @@ export interface FormalizeOptions {
   preFormalizationRules?: TransformationRule | TransformationRule[];
   afterFormalizationRules?: TransformationRule | TransformationRule[];
   postFormalizationRules?: TransformationRule | TransformationRule[];
+  providers?: FormalizationProvider | FormalizationProvider[];
+  providerOutputs?: FormalizationProviderOutput | FormalizationProviderOutput[];
 }
 
 export interface FormalizeResult {
@@ -1121,6 +1272,7 @@ export interface FormalizeResult {
   contexts: FormalizeContext[];
   mainContext: FormalizeContext | null;
   additionalContexts: FormalizeContext[];
+  providerCandidates: FormalizationProviderCandidates;
   interpretations: FormalizeInterpretation[];
   markdown: string;
   html: string;
@@ -1144,6 +1296,15 @@ export declare function formalizeTextWith(
 export declare function markdownFromFormalizationCst(
   cst: FormalizationCst
 ): string;
+
+export declare function createFixtureFormalizationProvider(
+  fixture: FormalizationProviderOutput
+): FormalizationProvider;
+
+export declare function collectFormalizationProviderCandidates(
+  text: string,
+  options?: Partial<FormalizeOptions>
+): Promise<FormalizationProviderCandidates>;
 
 export declare function extractLinguisticMetadata(
   input: string,
