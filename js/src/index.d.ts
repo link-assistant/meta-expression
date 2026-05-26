@@ -1235,6 +1235,9 @@ export interface LinguisticFragment {
   role: string;
   text: string;
   tokens: string[];
+  lemma: string | null;
+  partOfSpeech: string | null;
+  features: Record<string, unknown>;
   tokenStart: number | null;
   tokenEnd: number | null;
   sourceStart: number | null;
@@ -1250,6 +1253,7 @@ export interface LinguisticDependency {
   headFragmentId: string;
   dependentFragmentId: string;
   source: string;
+  granularity?: 'token' | 'fragment' | string;
   version: number;
   provenance: LinguisticProvenance;
 }
@@ -1282,12 +1286,46 @@ export interface LinguisticProvenance {
   layer: string;
 }
 
+export interface LinguisticSourceUnit {
+  id: string;
+  type: 'source-unit' | string;
+  version: number;
+  kind: 'token' | 'symbol' | 'separator' | string;
+  text: string;
+  tokenIndex?: number;
+  symbolId?: string;
+  sourceStart: number;
+  sourceEnd: number;
+  provenance: LinguisticProvenance;
+}
+
+export interface LinguisticSourceSentence {
+  id: string;
+  tokenStart: number;
+  tokenEnd: number;
+  sourceStart: number;
+  sourceEnd: number;
+  unitIds: string[];
+}
+
+export interface LinguisticSourceReconstruction {
+  type: 'source-reconstruction' | string;
+  version: number;
+  language: string;
+  units: LinguisticSourceUnit[];
+  sentences: LinguisticSourceSentence[];
+  provenance: LinguisticProvenance;
+}
+
 export interface LinguisticCstToken {
   type: 'token-cst' | string;
   id: string;
   version: number;
   text: string;
   index: number;
+  lemma: string | null;
+  partOfSpeech: string | null;
+  features: Record<string, unknown>;
   sourceStart: number | null;
   sourceEnd: number | null;
   sentenceBoundaryAfter: boolean;
@@ -1327,6 +1365,8 @@ export interface LinguisticCstSentence {
   objectFragmentId?: string | null;
   relationId?: string | null;
   dependencyIds?: string[];
+  attachmentIds?: string[];
+  agreementIds?: string[];
   provenance: LinguisticProvenance;
 }
 
@@ -1336,6 +1376,7 @@ export interface LinguisticCst {
   text: string;
   language: string;
   parser: LinguisticParserDescriptor;
+  sourceReconstruction: LinguisticSourceReconstruction;
   tokens: LinguisticCstToken[];
   symbols: LinguisticCstSymbol[];
   sentences: LinguisticCstSentence[];
@@ -1359,6 +1400,48 @@ export interface LinguisticAstNode {
   object?: Record<string, unknown> | null;
   relationId?: string | null;
   dependencyIds?: string[];
+  attachmentIds?: string[];
+  agreementIds?: string[];
+}
+
+export interface LinguisticAttachment {
+  id: string;
+  type: 'noun-phrase-attachment' | 'verb-phrase-attachment' | string;
+  fragmentId: string;
+  role: string;
+  tokenStart: number | null;
+  tokenEnd: number | null;
+  version: number;
+  provenance: LinguisticProvenance;
+}
+
+export interface LinguisticAgreement {
+  id: string;
+  type: 'subject-predicate-agreement' | string;
+  leftFragmentId: string;
+  rightFragmentId: string;
+  features: Record<string, unknown>;
+  version: number;
+  provenance: LinguisticProvenance;
+}
+
+export interface LinguisticCoreferenceMention {
+  fragmentId: string;
+  text: string;
+  role: string;
+  sourceStart: number | null;
+  sourceEnd: number | null;
+  features: Record<string, unknown>;
+}
+
+export interface LinguisticCoreferenceChain {
+  id: string;
+  type: 'coreference-chain' | string;
+  version: number;
+  antecedentFragmentId: string;
+  mentionFragmentIds: string[];
+  mentions: LinguisticCoreferenceMention[];
+  provenance: LinguisticProvenance;
 }
 
 export interface LinguisticMetadata {
@@ -1367,9 +1450,13 @@ export interface LinguisticMetadata {
   parser: LinguisticParserDescriptor;
   provenance: LinguisticProvenance;
   text: string;
+  sourceReconstruction: LinguisticSourceReconstruction;
   fragments: LinguisticFragment[];
   dependencies: LinguisticDependency[];
   relations: LinguisticRelation[];
+  attachments: LinguisticAttachment[];
+  agreements: LinguisticAgreement[];
+  coreferenceChains: LinguisticCoreferenceChain[];
   ast: LinguisticAstNode;
   cst: LinguisticCst;
 }
@@ -1797,6 +1884,14 @@ export declare function annotateLinguisticMetadataPhraseRefs<
   T extends { start: number; end: number; id: string },
 >(metadata: LinguisticMetadata, phrases: T[]): LinguisticMetadata;
 
+export declare function reconstructTextFromLinguisticMetadata(
+  metadata: LinguisticMetadata
+): string;
+
+export declare function reconstructTextFromSourceReconstruction(
+  sourceReconstruction: LinguisticSourceReconstruction
+): string | null;
+
 export interface TranslateOptions extends FormalizeOptions {
   sourceLanguage?: string;
   targetLanguage?: string;
@@ -2019,6 +2114,7 @@ export interface SemanticMetaLanguage {
   targetLanguage: string;
   representation: 'links-notation';
   sourceLinksNotation: string;
+  sourceReconstruction: LinguisticSourceReconstruction | null;
   links: SemanticMetaLanguageLink[];
   linksNotation: string;
 }

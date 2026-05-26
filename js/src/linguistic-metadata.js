@@ -1,3 +1,10 @@
+import {
+  buildSourceReconstruction,
+  reconstructTextFromSourceReconstruction,
+} from './linguistic-reconstruction.js';
+
+export { reconstructTextFromSourceReconstruction } from './linguistic-reconstruction.js';
+
 const englishArticles = new Set(['a', 'an', 'the']);
 const englishConjunctions = new Set(['and', 'or', 'but']);
 const englishPrepositions = new Set([
@@ -87,6 +94,69 @@ const englishVerbLexemes = new Set([
   'writes',
   'wrote',
 ]);
+const englishPronouns = new Map([
+  ['i', { person: 1, number: 'singular' }],
+  ['me', { person: 1, number: 'singular' }],
+  ['we', { person: 1, number: 'plural' }],
+  ['us', { person: 1, number: 'plural' }],
+  ['you', { person: 2, number: 'unknown' }],
+  ['he', { person: 3, number: 'singular', gender: 'masculine' }],
+  ['him', { person: 3, number: 'singular', gender: 'masculine' }],
+  ['she', { person: 3, number: 'singular', gender: 'feminine' }],
+  ['her', { person: 3, number: 'singular', gender: 'feminine' }],
+  ['it', { person: 3, number: 'singular', gender: 'neuter' }],
+  ['they', { person: 3, number: 'plural' }],
+  ['them', { person: 3, number: 'plural' }],
+]);
+const englishPastVerbLexemes = new Set([
+  'was',
+  'were',
+  'had',
+  'created',
+  'discovered',
+  'invented',
+  'owned',
+  'related',
+  'translated',
+  'wrote',
+]);
+const englishVerbLemmas = new Map([
+  ['adds', 'add'],
+  ['applies', 'apply'],
+  ['belongs', 'belong'],
+  ['checks', 'check'],
+  ['compares', 'compare'],
+  ['contains', 'contain'],
+  ['created', 'create'],
+  ['creates', 'create'],
+  ['discovered', 'discover'],
+  ['discovers', 'discover'],
+  ['finds', 'find'],
+  ['formalizes', 'formalize'],
+  ['has', 'have'],
+  ['had', 'have'],
+  ['invented', 'invent'],
+  ['invents', 'invent'],
+  ['is', 'be'],
+  ['am', 'be'],
+  ['are', 'be'],
+  ['was', 'be'],
+  ['were', 'be'],
+  ['being', 'be'],
+  ['been', 'be'],
+  ['orbits', 'orbit'],
+  ['owned', 'own'],
+  ['owns', 'own'],
+  ['related', 'relate'],
+  ['relates', 'relate'],
+  ['runs', 'run'],
+  ['searches', 'search'],
+  ['supports', 'support'],
+  ['translated', 'translate'],
+  ['translates', 'translate'],
+  ['writes', 'write'],
+  ['wrote', 'write'],
+]);
 
 const linguisticParserId = 'meta-expression-linguistic-parser';
 const linguisticParserVersion = 1;
@@ -111,10 +181,17 @@ export function extractLinguisticMetadata(input, options = {}) {
     ...options,
     language,
   });
+  const sourceReconstruction = buildSourceReconstruction(
+    parse,
+    createLinguisticProvenance
+  );
   const fragments = [];
   const dependencies = [];
   const relations = [];
+  const attachments = [];
+  const agreements = [];
   const astSentences = [];
+  const wordFragmentIdsByToken = new Map();
 
   const addFragment = (fragment) => {
     const entry = {
@@ -123,6 +200,9 @@ export function extractLinguisticMetadata(input, options = {}) {
       role: fragment.role ?? fragment.type,
       text: fragment.text,
       tokens: fragment.tokens ?? [],
+      lemma: fragment.lemma ?? null,
+      partOfSpeech: fragment.partOfSpeech ?? null,
+      features: fragment.features ?? {},
       tokenStart: fragment.tokenStart ?? null,
       tokenEnd: fragment.tokenEnd ?? null,
       sourceStart: fragment.sourceStart ?? null,
@@ -138,16 +218,20 @@ export function extractLinguisticMetadata(input, options = {}) {
   };
 
   for (const token of parse.tokens) {
-    addFragment({
+    const fragment = addFragment({
       type: 'word',
       role: 'word',
       text: token.text,
       tokens: [token.text],
+      lemma: token.lemma,
+      partOfSpeech: token.partOfSpeech,
+      features: token.features,
       tokenStart: token.index,
       tokenEnd: token.index,
       sourceStart: token.sourceStart,
       sourceEnd: token.sourceEnd,
     });
+    wordFragmentIdsByToken.set(token.index, fragment.id);
   }
 
   for (const symbol of parse.symbols) {
@@ -155,6 +239,8 @@ export function extractLinguisticMetadata(input, options = {}) {
       type: 'symbol',
       role: 'symbol',
       text: symbol.text,
+      partOfSpeech: 'punctuation',
+      features: { punctuation: symbol.text },
       sourceStart: symbol.sourceStart,
       sourceEnd: symbol.sourceEnd,
     });
@@ -168,6 +254,9 @@ export function extractLinguisticMetadata(input, options = {}) {
       addFragment,
       dependencies,
       relations,
+      attachments,
+      agreements,
+      wordFragmentIdsByToken,
     });
     astSentences.push(sentenceMetadata);
   }
@@ -180,6 +269,7 @@ export function extractLinguisticMetadata(input, options = {}) {
     text,
     body: astSentences,
   };
+  const coreferenceChains = inferCoreferenceChains(fragments);
 
   return {
     version: 1,
@@ -187,12 +277,24 @@ export function extractLinguisticMetadata(input, options = {}) {
     parser: parse.parser,
     provenance: createLinguisticProvenance('metadata'),
     text,
+    sourceReconstruction,
     fragments,
     dependencies,
     relations,
+    attachments,
+    agreements,
+    coreferenceChains,
     ast,
-    cst: buildLinguisticCst(parse),
+    cst: buildLinguisticCst(parse, sourceReconstruction),
   };
+}
+
+export function reconstructTextFromLinguisticMetadata(metadata) {
+  return (
+    reconstructTextFromSourceReconstruction(
+      metadata?.sourceReconstruction ?? metadata?.cst?.sourceReconstruction
+    ) ?? String(metadata?.text ?? '')
+  );
 }
 
 /**
@@ -242,6 +344,10 @@ function parseLinguisticDocument(text, options) {
   const language = normalizeLanguage(options.language);
   const parser = createParserDescriptor(language);
   const tokenSpans = normalizeTokenSpans(options.tokenSpans, text);
+  const analyzedTokenSpans = tokenSpans.map((span) => ({
+    ...span,
+    analysis: analyzeToken(span.token, language),
+  }));
   const symbols = extractSymbolSpans(text).map((symbol, index) => ({
     type: 'symbol-cst',
     id: `symbol-${index + 1}`,
@@ -251,7 +357,8 @@ function parseLinguisticDocument(text, options) {
     sourceEnd: symbol.end,
     provenance: createLinguisticProvenance('cst-symbol'),
   }));
-  const tokens = tokenSpans.map((span, index) => ({
+  const tokens = analyzedTokenSpans.map((span, index) => ({
+    ...span.analysis,
     type: 'token-cst',
     id: `token-${index + 1}`,
     version: 1,
@@ -262,13 +369,14 @@ function parseLinguisticDocument(text, options) {
     sentenceBoundaryAfter: span.sentenceBoundaryAfter,
     provenance: createLinguisticProvenance('cst-token'),
   }));
-  const sentences = segmentSentences(tokenSpans, text).map((sentence, index) =>
-    parseLinguisticSentence({
-      text,
-      tokenSpans,
-      sentence,
-      sentenceIndex: index,
-    })
+  const sentences = segmentSentences(analyzedTokenSpans, text).map(
+    (sentence, index) =>
+      parseLinguisticSentence({
+        text,
+        tokenSpans: analyzedTokenSpans,
+        sentence,
+        sentenceIndex: index,
+      })
   );
 
   return {
@@ -277,7 +385,7 @@ function parseLinguisticDocument(text, options) {
     text,
     language,
     parser,
-    tokenSpans,
+    tokenSpans: analyzedTokenSpans,
     tokens,
     symbols,
     sentences,
@@ -386,13 +494,14 @@ function parseLinguisticSentence({
   };
 }
 
-function buildLinguisticCst(parse) {
+function buildLinguisticCst(parse, sourceReconstruction) {
   return {
     type: 'document-cst',
     version: 1,
     text: parse.text,
     language: parse.language,
     parser: parse.parser,
+    sourceReconstruction,
     tokens: parse.tokens,
     symbols: parse.symbols,
     sentences: parse.sentences,
@@ -426,8 +535,13 @@ function extractSentenceMetadata({
   addFragment,
   dependencies,
   relations,
+  attachments,
+  agreements,
+  wordFragmentIdsByToken,
 }) {
   const dependencyIds = [];
+  const attachmentIds = [];
+  const agreementIds = [];
   const { subject, predicate, object, relation } = extractSentenceComponents({
     text,
     tokenSpans,
@@ -435,7 +549,12 @@ function extractSentenceMetadata({
     addFragment,
     dependencies,
     relations,
+    attachments,
+    agreements,
     dependencyIds,
+    attachmentIds,
+    agreementIds,
+    wordFragmentIdsByToken,
   });
   Object.assign(parsedSentence, {
     subjectFragmentId: subject?.id ?? null,
@@ -443,6 +562,8 @@ function extractSentenceMetadata({
     objectFragmentId: object?.id ?? null,
     relationId: relation?.id ?? null,
     dependencyIds: [...dependencyIds],
+    attachmentIds: [...attachmentIds],
+    agreementIds: [...agreementIds],
   });
 
   return {
@@ -460,6 +581,8 @@ function extractSentenceMetadata({
     object: object ? fragmentReference(object) : null,
     relationId: relation?.id ?? null,
     dependencyIds,
+    attachmentIds,
+    agreementIds,
   };
 }
 
@@ -470,7 +593,12 @@ function extractSentenceComponents({
   addFragment,
   dependencies,
   relations,
+  attachments,
+  agreements,
   dependencyIds,
+  attachmentIds,
+  agreementIds,
+  wordFragmentIdsByToken,
 }) {
   if (parsedSentence.predicateToken === null) {
     addNominalSentenceFragment({
@@ -488,7 +616,12 @@ function extractSentenceComponents({
     addFragment,
     dependencies,
     relations,
+    attachments,
+    agreements,
     dependencyIds,
+    attachmentIds,
+    agreementIds,
+    wordFragmentIdsByToken,
   });
 }
 
@@ -522,7 +655,12 @@ function extractPredicateSentenceComponents({
   addFragment,
   dependencies,
   relations,
+  attachments,
+  agreements,
   dependencyIds,
+  attachmentIds,
+  agreementIds,
+  wordFragmentIdsByToken,
 }) {
   const subject = addSubjectFragment({
     text,
@@ -545,13 +683,53 @@ function extractPredicateSentenceComponents({
   });
   const relation = addPredicateDependenciesAndRelation({
     text,
+    tokenSpans,
+    parsedSentence,
     dependencies,
     relations,
     dependencyIds,
+    wordFragmentIdsByToken,
     subject,
     predicate,
     object,
   });
+  if (subject) {
+    attachmentIds.push(
+      addAttachment(attachments, 'noun-phrase-attachment', subject.id, {
+        role: 'subject',
+        tokenStart: subject.tokenStart,
+        tokenEnd: subject.tokenEnd,
+      })
+    );
+  }
+  if (predicate) {
+    attachmentIds.push(
+      addAttachment(attachments, 'verb-phrase-attachment', predicate.id, {
+        role: 'predicate',
+        tokenStart: predicate.tokenStart,
+        tokenEnd: predicate.tokenEnd,
+      })
+    );
+  }
+  if (object) {
+    attachmentIds.push(
+      addAttachment(attachments, 'noun-phrase-attachment', object.id, {
+        role: 'object',
+        tokenStart: object.tokenStart,
+        tokenEnd: object.tokenEnd,
+      })
+    );
+  }
+  if (subject && predicate) {
+    agreementIds.push(
+      addAgreement(
+        agreements,
+        'subject-predicate-agreement',
+        subject,
+        predicate
+      )
+    );
+  }
   return { subject, predicate, object, relation };
 }
 
@@ -637,9 +815,12 @@ function addObjectFragment({
 
 function addPredicateDependenciesAndRelation({
   text,
+  tokenSpans,
+  parsedSentence,
   dependencies,
   relations,
   dependencyIds,
+  wordFragmentIdsByToken,
   subject,
   predicate,
   object,
@@ -658,6 +839,14 @@ function addPredicateDependenciesAndRelation({
       addDependency(dependencies, 'obj', predicate.id, object.id)
     );
   }
+  dependencyIds.push(
+    ...addTokenDependencyCoverage({
+      tokenSpans,
+      parsedSentence,
+      dependencies,
+      wordFragmentIdsByToken,
+    })
+  );
   return addRelation({
     relations,
     text,
@@ -665,6 +854,92 @@ function addPredicateDependenciesAndRelation({
     predicate,
     object,
   });
+}
+
+function addTokenDependencyCoverage({
+  tokenSpans,
+  parsedSentence,
+  dependencies,
+  wordFragmentIdsByToken,
+}) {
+  const dependencyIds = [];
+  const predicateWordId = wordFragmentIdsByToken.get(
+    parsedSentence.predicateToken
+  );
+  if (!predicateWordId) {
+    return dependencyIds;
+  }
+  dependencyIds.push(
+    addDependency(dependencies, 'root', predicateWordId, predicateWordId, {
+      granularity: 'token',
+    })
+  );
+  dependencyIds.push(
+    ...addNominalTokenDependencies({
+      tokenSpans,
+      dependencies,
+      wordFragmentIdsByToken,
+      predicateWordId,
+      phraseRange: parsedSentence.subjectRange,
+      headRelation: 'nsubj',
+    })
+  );
+  dependencyIds.push(
+    ...addNominalTokenDependencies({
+      tokenSpans,
+      dependencies,
+      wordFragmentIdsByToken,
+      predicateWordId,
+      phraseRange: parsedSentence.objectPhraseRange,
+      semanticHeadRange: parsedSentence.objectRange,
+      headRelation: 'obj',
+    })
+  );
+  return dependencyIds;
+}
+
+function addNominalTokenDependencies({
+  tokenSpans,
+  dependencies,
+  wordFragmentIdsByToken,
+  predicateWordId,
+  phraseRange,
+  semanticHeadRange = phraseRange,
+  headRelation,
+}) {
+  if (!phraseRange || !semanticHeadRange) {
+    return [];
+  }
+  const dependencyIds = [];
+  const headIndex = headTokenIndexForRange(tokenSpans, semanticHeadRange);
+  const headWordId = wordFragmentIdsByToken.get(headIndex);
+  if (!headWordId) {
+    return dependencyIds;
+  }
+  dependencyIds.push(
+    addDependency(dependencies, headRelation, predicateWordId, headWordId, {
+      granularity: 'token',
+    })
+  );
+  for (let index = phraseRange.start; index <= phraseRange.end; index += 1) {
+    if (index === headIndex) {
+      continue;
+    }
+    const dependentWordId = wordFragmentIdsByToken.get(index);
+    if (!dependentWordId) {
+      continue;
+    }
+    dependencyIds.push(
+      addDependency(
+        dependencies,
+        tokenDependentRelation(tokenSpans[index]?.token),
+        headWordId,
+        dependentWordId,
+        { granularity: 'token' }
+      )
+    );
+  }
+  return dependencyIds;
 }
 
 function addTokenRangeFragment(
@@ -677,6 +952,8 @@ function addTokenRangeFragment(
 ) {
   const first = tokenSpans[range.start];
   const last = tokenSpans[range.end];
+  const head = tokenSpans[headTokenIndexForRange(tokenSpans, range)];
+  const analysis = head?.analysis ?? analyzeToken(head?.token, 'en');
   return addFragment({
     type,
     role,
@@ -684,6 +961,13 @@ function addTokenRangeFragment(
     tokens: tokenSpans
       .slice(range.start, range.end + 1)
       .map((span) => span.token),
+    lemma: analysis.lemma,
+    partOfSpeech: phrasePartOfSpeech(type, analysis.partOfSpeech),
+    features: {
+      ...analysis.features,
+      headToken: head?.token ?? null,
+      headTokenIndex: headTokenIndexForRange(tokenSpans, range),
+    },
     tokenStart: range.start,
     tokenEnd: range.end,
     sourceStart: first.start,
@@ -695,7 +979,8 @@ function addDependency(
   dependencies,
   relation,
   headFragmentId,
-  dependentFragmentId
+  dependentFragmentId,
+  details = {}
 ) {
   const entry = {
     id: `dependency-${dependencies.length + 1}`,
@@ -704,9 +989,43 @@ function addDependency(
     dependentFragmentId,
     source: linguisticParserId,
     version: 1,
+    ...details,
     provenance: createLinguisticProvenance(`dependency:${relation}`),
   };
   dependencies.push(entry);
+  return entry.id;
+}
+
+function addAttachment(attachments, type, fragmentId, details) {
+  const entry = {
+    id: `attachment-${attachments.length + 1}`,
+    type,
+    fragmentId,
+    version: 1,
+    ...details,
+    provenance: createLinguisticProvenance(`attachment:${type}`),
+  };
+  attachments.push(entry);
+  return entry.id;
+}
+
+function addAgreement(agreements, type, left, right) {
+  const entry = {
+    id: `agreement-${agreements.length + 1}`,
+    type,
+    leftFragmentId: left.id,
+    rightFragmentId: right.id,
+    features: {
+      number: agreementValue(left.features?.number, right.features?.number),
+      person: agreementValue(left.features?.person, right.features?.person),
+      tense: right.features?.tense ?? null,
+      aspect: right.features?.aspect ?? null,
+      mood: right.features?.mood ?? null,
+    },
+    version: 1,
+    provenance: createLinguisticProvenance(`agreement:${type}`),
+  };
+  agreements.push(entry);
   return entry.id;
 }
 
@@ -852,6 +1171,222 @@ function trimNominalRange(tokenSpans, start, end, options) {
     right -= 1;
   }
   return left <= right ? { start: left, end: right } : null;
+}
+
+function analyzeToken(token, language) {
+  const text = String(token ?? '');
+  const lowered = normalizeToken(text);
+  if (!text) {
+    return emptyTokenAnalysis();
+  }
+  if (/^\d+(?:[.,]\d+)?$/.test(text)) {
+    return numeralTokenAnalysis(lowered, language);
+  }
+  if (language !== 'en') {
+    return lexicalTokenAnalysis(lowered, language);
+  }
+  return analyzeEnglishToken(text, lowered, language);
+}
+
+function analyzeEnglishToken(text, lowered, language) {
+  if (englishPronouns.has(lowered)) {
+    return pronounTokenAnalysis(lowered, language);
+  }
+  if (englishArticles.has(lowered)) {
+    return determinerTokenAnalysis(lowered, language);
+  }
+  if (englishPrepositions.has(lowered)) {
+    return adpositionTokenAnalysis(lowered, language);
+  }
+  if (englishConjunctions.has(lowered)) {
+    return conjunctionTokenAnalysis(lowered, language);
+  }
+  if (isVerbCandidate(text)) {
+    return verbTokenAnalysis(lowered, language);
+  }
+  return nounTokenAnalysis(text, lowered, language);
+}
+
+function numeralTokenAnalysis(lemma, language) {
+  return {
+    lemma,
+    partOfSpeech: 'numeral',
+    features: { language, numberType: 'cardinal' },
+  };
+}
+
+function lexicalTokenAnalysis(lemma, language) {
+  return {
+    lemma,
+    partOfSpeech: 'lexical-token',
+    features: { language },
+  };
+}
+
+function pronounTokenAnalysis(lemma, language) {
+  return {
+    lemma,
+    partOfSpeech: 'pronoun',
+    features: {
+      language,
+      ...englishPronouns.get(lemma),
+      pronominal: true,
+    },
+  };
+}
+
+function determinerTokenAnalysis(lemma, language) {
+  return {
+    lemma,
+    partOfSpeech: 'determiner',
+    features: {
+      language,
+      definiteness: lemma === 'the' ? 'definite' : 'indefinite',
+    },
+  };
+}
+
+function adpositionTokenAnalysis(lemma, language) {
+  return {
+    lemma,
+    partOfSpeech: 'adposition',
+    features: { language, adpositionType: 'preposition' },
+  };
+}
+
+function conjunctionTokenAnalysis(lemma, language) {
+  return {
+    lemma,
+    partOfSpeech: 'conjunction',
+    features: { language, conjunctionType: 'coordinating' },
+  };
+}
+
+function verbTokenAnalysis(lemma, language) {
+  return {
+    lemma: englishVerbLemmas.get(lemma) ?? lemma.replace(/s$/, ''),
+    partOfSpeech: 'verb',
+    features: {
+      language,
+      tense: englishPastVerbLexemes.has(lemma) ? 'past' : 'present',
+      aspect: lemma.endsWith('ing') ? 'progressive' : 'simple',
+      mood: 'indicative',
+      person: lemma.endsWith('s') || lemma === 'is' ? 3 : null,
+      number:
+        lemma.endsWith('s') || lemma === 'is' || lemma === 'was'
+          ? 'singular'
+          : null,
+    },
+  };
+}
+
+function nounTokenAnalysis(text, lemma, language) {
+  return {
+    lemma,
+    partOfSpeech: /^[A-Z]/.test(text) ? 'proper-noun' : 'noun',
+    features: {
+      language,
+      number: lemma.endsWith('s') && lemma.length > 3 ? 'plural' : 'singular',
+    },
+  };
+}
+
+function emptyTokenAnalysis() {
+  return { lemma: null, partOfSpeech: null, features: {} };
+}
+
+function phrasePartOfSpeech(type, headPartOfSpeech) {
+  if (type === 'noun-phrase' || type === 'subject' || type === 'object') {
+    return 'noun-phrase';
+  }
+  if (type === 'verb-phrase' || type === 'predicate') {
+    return 'verb-phrase';
+  }
+  return headPartOfSpeech;
+}
+
+function headTokenIndexForRange(tokenSpans, range) {
+  for (let index = range.end; index >= range.start; index -= 1) {
+    if (!shouldTrimRight(tokenSpans[index]?.token)) {
+      return index;
+    }
+  }
+  return range.end;
+}
+
+function tokenDependentRelation(token) {
+  const lowered = normalizeToken(token);
+  if (englishArticles.has(lowered)) {
+    return 'det';
+  }
+  if (englishPrepositions.has(lowered)) {
+    return 'case';
+  }
+  if (englishConjunctions.has(lowered)) {
+    return 'cc';
+  }
+  return 'compound';
+}
+
+function agreementValue(left, right) {
+  if (left && right && left === right) {
+    return left;
+  }
+  return left ?? right ?? null;
+}
+
+function inferCoreferenceChains(fragments) {
+  const mentions = fragments
+    .filter(
+      (fragment) => fragment.role === 'subject' || fragment.role === 'object'
+    )
+    .sort((left, right) => left.sourceStart - right.sourceStart);
+  const chains = [];
+  const antecedents = [];
+  for (const mention of mentions) {
+    if (!mention.features?.pronominal) {
+      antecedents.push(mention);
+      continue;
+    }
+    const antecedent = [...antecedents]
+      .reverse()
+      .find((entry) => coreferenceCompatible(entry, mention));
+    if (!antecedent) {
+      continue;
+    }
+    chains.push({
+      id: `coreference-chain-${chains.length + 1}`,
+      type: 'coreference-chain',
+      version: 1,
+      antecedentFragmentId: antecedent.id,
+      mentionFragmentIds: [antecedent.id, mention.id],
+      mentions: [antecedent, mention].map(coreferenceMention),
+      provenance: createLinguisticProvenance('coreference'),
+    });
+  }
+  return chains;
+}
+
+function coreferenceCompatible(antecedent, mention) {
+  const mentionNumber = mention.features?.number;
+  const antecedentNumber = antecedent.features?.number;
+  return (
+    !mentionNumber ||
+    !antecedentNumber ||
+    mentionNumber === 'unknown' ||
+    antecedentNumber === mentionNumber
+  );
+}
+
+function coreferenceMention(fragment) {
+  return {
+    fragmentId: fragment.id,
+    text: fragment.text,
+    role: fragment.role,
+    sourceStart: fragment.sourceStart,
+    sourceEnd: fragment.sourceEnd,
+    features: fragment.features,
+  };
 }
 
 function shouldTrimLeft(token, options) {

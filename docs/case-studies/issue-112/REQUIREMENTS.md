@@ -1,0 +1,9 @@
+# Requirements
+
+| Requirement                                                                        | Status | Evidence                                                                                                                                                                  |
+| ---------------------------------------------------------------------------------- | ------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Reconstruct source text from formalization metadata without the raw source string. | Done   | `sourceReconstruction.units` and `sourceReconstruction.sentences` are emitted by `linguistic-metadata.js`; the issue-112 test rebuilds `Moon orbits the Sun.` from units. |
+| Make implicit linguistic relations explicit.                                       | Done   | Metadata now includes attachments, agreements, token features, determiner dependency coverage, and coreference chains.                                                    |
+| Ensure translation reads the semantic meta language after formalization.           | Done   | `translate.js` builds sentence segments from `semanticMetaLanguage.sourceReconstruction` instead of `formalization.text`.                                                 |
+| Ensure naturalization can read reconstructed semantic metadata.                    | Done   | `naturalize.js` derives semantic input text from `sourceReconstruction` before falling back to raw text.                                                                  |
+| Add a guard test that fails when translation reads raw source text.                | Done   | `issue-112-explicit-interlingua.test.js` poisons raw source fields and expects translation/naturalization to remain correct.                                              |

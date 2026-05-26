@@ -9,6 +9,7 @@ import {
   escapeMarkdown,
   renderNaturalizationLinksNotation,
 } from './translation-renderers.js';
+import { reconstructSourceText } from './translation-source-fragment.js';
 
 const linksNotationParser = new LinksNotationParser();
 const roleOrder = ['subject', 'predicate', 'object'];
@@ -236,10 +237,13 @@ function expressionFromNaturalization(naturalization) {
 
 function expressionFromSemanticMetaLanguage(semantic) {
   const sortedLinks = [...semantic.links].sort(compareBySourcePosition);
+  const sourceText =
+    reconstructSourceText(semantic.sourceReconstruction) ??
+    semantic.text ??
+    sortedLinks.map((link) => link.sourceText).join(' ');
   return {
     inputFormat: 'semantic-meta-language',
-    sourceText:
-      semantic.text ?? sortedLinks.map((link) => link.sourceText).join(' '),
+    sourceText,
     sourceLanguage: semantic.sourceLanguage,
     targetLanguage: semantic.targetLanguage,
     sourceExpression: semantic,

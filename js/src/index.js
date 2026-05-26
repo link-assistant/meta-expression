@@ -153,6 +153,8 @@ export {
 export {
   annotateLinguisticMetadataPhraseRefs,
   extractLinguisticMetadata,
+  reconstructTextFromLinguisticMetadata,
+  reconstructTextFromSourceReconstruction,
 } from './linguistic-metadata.js';
 export {
   buildOverrideMap,
