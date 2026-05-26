@@ -88,8 +88,12 @@ const englishVerbLexemes = new Set([
   'wrote',
 ]);
 
+const linguisticParserId = 'meta-expression-linguistic-parser';
+const linguisticParserVersion = 1;
+const linguisticParserStrategy = 'deterministic-english-dependency-parser';
+
 /**
- * Extract a deterministic, parser-free linguistic metadata baseline.
+ * Extract deterministic parser-backed linguistic metadata.
  *
  * The schema intentionally mirrors the Formal AI issue requirements: source
  * words/symbols, noun and verb phrases, subject/predicate/object fragments,
@@ -102,7 +106,11 @@ const englishVerbLexemes = new Set([
  */
 export function extractLinguisticMetadata(input, options = {}) {
   const text = String(input ?? '');
-  const tokenSpans = normalizeTokenSpans(options.tokenSpans, text);
+  const language = normalizeLanguage(options.language);
+  const parse = parseLinguisticDocument(text, {
+    ...options,
+    language,
+  });
   const fragments = [];
   const dependencies = [];
   const relations = [];
@@ -120,43 +128,43 @@ export function extractLinguisticMetadata(input, options = {}) {
       sourceStart: fragment.sourceStart ?? null,
       sourceEnd: fragment.sourceEnd ?? null,
       phraseIds: [],
+      version: 1,
+      provenance: createLinguisticProvenance(
+        `fragment:${fragment.role ?? fragment.type}`
+      ),
     };
     fragments.push(entry);
     return entry;
   };
 
-  for (const [index, span] of tokenSpans.entries()) {
+  for (const token of parse.tokens) {
     addFragment({
       type: 'word',
       role: 'word',
-      text: span.token,
-      tokens: [span.token],
-      tokenStart: index,
-      tokenEnd: index,
-      sourceStart: span.start,
-      sourceEnd: span.end,
+      text: token.text,
+      tokens: [token.text],
+      tokenStart: token.index,
+      tokenEnd: token.index,
+      sourceStart: token.sourceStart,
+      sourceEnd: token.sourceEnd,
     });
   }
 
-  for (const symbol of extractSymbolSpans(text)) {
+  for (const symbol of parse.symbols) {
     addFragment({
       type: 'symbol',
       role: 'symbol',
       text: symbol.text,
-      sourceStart: symbol.start,
-      sourceEnd: symbol.end,
+      sourceStart: symbol.sourceStart,
+      sourceEnd: symbol.sourceEnd,
     });
   }
 
-  for (const [sentenceIndex, sentence] of segmentSentences(
-    tokenSpans,
-    text
-  ).entries()) {
+  for (const parsedSentence of parse.sentences) {
     const sentenceMetadata = extractSentenceMetadata({
       text,
-      tokenSpans,
-      sentence,
-      sentenceIndex,
+      tokenSpans: parse.tokenSpans,
+      parsedSentence,
       addFragment,
       dependencies,
       relations,
@@ -167,18 +175,23 @@ export function extractLinguisticMetadata(input, options = {}) {
   const ast = {
     type: 'document',
     version: 1,
+    parser: parse.parser,
+    provenance: createLinguisticProvenance('ast'),
     text,
     body: astSentences,
   };
 
   return {
     version: 1,
-    language: normalizeLanguage(options.language),
+    language,
+    parser: parse.parser,
+    provenance: createLinguisticProvenance('metadata'),
     text,
     fragments,
     dependencies,
     relations,
     ast,
+    cst: buildLinguisticCst(parse),
   };
 }
 
@@ -225,38 +238,223 @@ export function annotateLinguisticMetadataPhraseRefs(metadata, phrases) {
   return metadata;
 }
 
-function extractSentenceMetadata({
+function parseLinguisticDocument(text, options) {
+  const language = normalizeLanguage(options.language);
+  const parser = createParserDescriptor(language);
+  const tokenSpans = normalizeTokenSpans(options.tokenSpans, text);
+  const symbols = extractSymbolSpans(text).map((symbol, index) => ({
+    type: 'symbol-cst',
+    id: `symbol-${index + 1}`,
+    version: 1,
+    text: symbol.text,
+    sourceStart: symbol.start,
+    sourceEnd: symbol.end,
+    provenance: createLinguisticProvenance('cst-symbol'),
+  }));
+  const tokens = tokenSpans.map((span, index) => ({
+    type: 'token-cst',
+    id: `token-${index + 1}`,
+    version: 1,
+    text: span.token,
+    index,
+    sourceStart: span.start,
+    sourceEnd: span.end,
+    sentenceBoundaryAfter: span.sentenceBoundaryAfter,
+    provenance: createLinguisticProvenance('cst-token'),
+  }));
+  const sentences = segmentSentences(tokenSpans, text).map((sentence, index) =>
+    parseLinguisticSentence({
+      text,
+      tokenSpans,
+      sentence,
+      sentenceIndex: index,
+    })
+  );
+
+  return {
+    type: 'document-parse',
+    version: 1,
+    text,
+    language,
+    parser,
+    tokenSpans,
+    tokens,
+    symbols,
+    sentences,
+    provenance: createLinguisticProvenance('parse'),
+  };
+}
+
+function parseLinguisticSentence({
   text,
   tokenSpans,
   sentence,
   sentenceIndex,
+}) {
+  const { startToken, endToken } = sentence;
+  const sourceStart = tokenSpans[startToken]?.start ?? 0;
+  const sourceEnd = sentenceEndOffset(text, tokenSpans[endToken]?.end ?? 0);
+  const predicateToken = findPredicateIndex(tokenSpans, startToken, endToken);
+  const base = {
+    type: 'sentence-cst',
+    id: `sentence-${sentenceIndex + 1}`,
+    version: 1,
+    text: text.slice(sourceStart, sourceEnd),
+    tokenStart: startToken,
+    tokenEnd: endToken,
+    sourceStart,
+    sourceEnd,
+    predicateToken,
+    provenance: createLinguisticProvenance('cst-sentence'),
+  };
+
+  if (predicateToken === null) {
+    const nominalRange = trimNominalRange(tokenSpans, startToken, endToken, {
+      stripArticles: false,
+    });
+    return {
+      ...base,
+      subjectRange: null,
+      predicateRange: null,
+      objectPhraseRange: null,
+      objectRange: null,
+      nounPhraseRanges: [nominalRange].filter(Boolean),
+      verbPhraseRange: null,
+      dependencies: [],
+      relationType: null,
+    };
+  }
+
+  const subjectRange =
+    predicateToken > startToken
+      ? trimNominalRange(tokenSpans, startToken, predicateToken - 1, {
+          stripArticles: true,
+        })
+      : null;
+  const predicateRange = { start: predicateToken, end: predicateToken };
+  const objectPhraseRange =
+    predicateToken < endToken
+      ? trimNominalRange(tokenSpans, predicateToken + 1, endToken, {
+          stripArticles: false,
+        })
+      : null;
+  const objectRange = objectPhraseRange
+    ? trimNominalRange(
+        tokenSpans,
+        objectPhraseRange.start,
+        objectPhraseRange.end,
+        {
+          stripArticles: true,
+        }
+      )
+    : null;
+  const dependencies = [];
+  if (subjectRange) {
+    dependencies.push({
+      relation: 'nsubj',
+      head: 'predicate',
+      dependent: 'subject',
+    });
+    dependencies.push({
+      relation: 'root',
+      head: 'predicate',
+      dependent: 'predicate',
+    });
+    if (objectRange) {
+      dependencies.push({
+        relation: 'obj',
+        head: 'predicate',
+        dependent: 'object',
+      });
+    }
+  }
+
+  return {
+    ...base,
+    subjectRange,
+    predicateRange,
+    objectPhraseRange,
+    objectRange,
+    nounPhraseRanges: [subjectRange, objectPhraseRange].filter(Boolean),
+    verbPhraseRange: predicateRange,
+    dependencies,
+    relationType: subjectRange
+      ? objectRange
+        ? 'subject-predicate-object'
+        : 'subject-predicate'
+      : null,
+  };
+}
+
+function buildLinguisticCst(parse) {
+  return {
+    type: 'document-cst',
+    version: 1,
+    text: parse.text,
+    language: parse.language,
+    parser: parse.parser,
+    tokens: parse.tokens,
+    symbols: parse.symbols,
+    sentences: parse.sentences,
+    provenance: createLinguisticProvenance('cst'),
+  };
+}
+
+function createParserDescriptor(language) {
+  return {
+    id: linguisticParserId,
+    version: linguisticParserVersion,
+    language,
+    strategy: linguisticParserStrategy,
+  };
+}
+
+function createLinguisticProvenance(layer) {
+  return {
+    sourceType: 'algorithm',
+    method: linguisticParserId,
+    parserId: linguisticParserId,
+    parserVersion: linguisticParserVersion,
+    layer,
+  };
+}
+
+function extractSentenceMetadata({
+  text,
+  tokenSpans,
+  parsedSentence,
   addFragment,
   dependencies,
   relations,
 }) {
-  const { startToken, endToken } = sentence;
-  const sentenceStart = tokenSpans[startToken]?.start ?? 0;
-  const sentenceEnd = sentenceEndOffset(text, tokenSpans[endToken]?.end ?? 0);
   const dependencyIds = [];
   const { subject, predicate, object, relation } = extractSentenceComponents({
     text,
     tokenSpans,
-    startToken,
-    endToken,
+    parsedSentence,
     addFragment,
     dependencies,
     relations,
     dependencyIds,
   });
+  Object.assign(parsedSentence, {
+    subjectFragmentId: subject?.id ?? null,
+    predicateFragmentId: predicate?.id ?? null,
+    objectFragmentId: object?.id ?? null,
+    relationId: relation?.id ?? null,
+    dependencyIds: [...dependencyIds],
+  });
 
   return {
     type: 'sentence',
-    id: `sentence-${sentenceIndex + 1}`,
-    text: text.slice(sentenceStart, sentenceEnd),
-    tokenStart: startToken,
-    tokenEnd: endToken,
-    sourceStart: sentenceStart,
-    sourceEnd: sentenceEnd,
+    id: parsedSentence.id,
+    version: 1,
+    provenance: createLinguisticProvenance('ast-sentence'),
+    text: parsedSentence.text,
+    tokenStart: parsedSentence.tokenStart,
+    tokenEnd: parsedSentence.tokenEnd,
+    sourceStart: parsedSentence.sourceStart,
+    sourceEnd: parsedSentence.sourceEnd,
     subject: subject ? fragmentReference(subject) : null,
     predicate: predicate ? fragmentReference(predicate) : null,
     object: object ? fragmentReference(object) : null,
@@ -268,20 +466,17 @@ function extractSentenceMetadata({
 function extractSentenceComponents({
   text,
   tokenSpans,
-  startToken,
-  endToken,
+  parsedSentence,
   addFragment,
   dependencies,
   relations,
   dependencyIds,
 }) {
-  const predicateIndex = findPredicateIndex(tokenSpans, startToken, endToken);
-  if (predicateIndex === null) {
+  if (parsedSentence.predicateToken === null) {
     addNominalSentenceFragment({
       text,
       tokenSpans,
-      startToken,
-      endToken,
+      range: parsedSentence.nounPhraseRanges[0] ?? null,
       addFragment,
     });
     return emptySentenceComponents();
@@ -289,9 +484,7 @@ function extractSentenceComponents({
   return extractPredicateSentenceComponents({
     text,
     tokenSpans,
-    startToken,
-    endToken,
-    predicateIndex,
+    parsedSentence,
     addFragment,
     dependencies,
     relations,
@@ -308,17 +501,8 @@ function emptySentenceComponents() {
   };
 }
 
-function addNominalSentenceFragment({
-  text,
-  tokenSpans,
-  startToken,
-  endToken,
-  addFragment,
-}) {
-  const nominalRange = trimNominalRange(tokenSpans, startToken, endToken, {
-    stripArticles: false,
-  });
-  if (!nominalRange) {
+function addNominalSentenceFragment({ text, tokenSpans, range, addFragment }) {
+  if (!range) {
     return;
   }
   addTokenRangeFragment(
@@ -327,16 +511,14 @@ function addNominalSentenceFragment({
     tokenSpans,
     'noun-phrase',
     'noun-phrase',
-    nominalRange
+    range
   );
 }
 
 function extractPredicateSentenceComponents({
   text,
   tokenSpans,
-  startToken,
-  endToken,
-  predicateIndex,
+  parsedSentence,
   addFragment,
   dependencies,
   relations,
@@ -345,21 +527,20 @@ function extractPredicateSentenceComponents({
   const subject = addSubjectFragment({
     text,
     tokenSpans,
-    startToken,
-    predicateIndex,
+    subjectRange: parsedSentence.subjectRange,
     addFragment,
   });
   const predicate = addPredicateFragment({
     text,
     tokenSpans,
-    predicateIndex,
+    predicateRange: parsedSentence.predicateRange,
     addFragment,
   });
   const object = addObjectFragment({
     text,
     tokenSpans,
-    predicateIndex,
-    endToken,
+    rawObjectRange: parsedSentence.objectPhraseRange,
+    objectRange: parsedSentence.objectRange,
     addFragment,
   });
   const relation = addPredicateDependenciesAndRelation({
@@ -374,19 +555,7 @@ function extractPredicateSentenceComponents({
   return { subject, predicate, object, relation };
 }
 
-function addSubjectFragment({
-  text,
-  tokenSpans,
-  startToken,
-  predicateIndex,
-  addFragment,
-}) {
-  const subjectRange = trimNominalRange(
-    tokenSpans,
-    startToken,
-    predicateIndex - 1,
-    { stripArticles: true }
-  );
+function addSubjectFragment({ text, tokenSpans, subjectRange, addFragment }) {
   if (!subjectRange) {
     return null;
   }
@@ -411,10 +580,12 @@ function addSubjectFragment({
 function addPredicateFragment({
   text,
   tokenSpans,
-  predicateIndex,
+  predicateRange,
   addFragment,
 }) {
-  const predicateRange = { start: predicateIndex, end: predicateIndex };
+  if (!predicateRange) {
+    return null;
+  }
   addTokenRangeFragment(
     addFragment,
     text,
@@ -436,16 +607,10 @@ function addPredicateFragment({
 function addObjectFragment({
   text,
   tokenSpans,
-  predicateIndex,
-  endToken,
+  rawObjectRange,
+  objectRange,
   addFragment,
 }) {
-  const rawObjectRange = trimNominalRange(
-    tokenSpans,
-    predicateIndex + 1,
-    endToken,
-    { stripArticles: false }
-  );
   if (!rawObjectRange) {
     return null;
   }
@@ -456,12 +621,6 @@ function addObjectFragment({
     'noun-phrase',
     'noun-phrase',
     rawObjectRange
-  );
-  const objectRange = trimNominalRange(
-    tokenSpans,
-    rawObjectRange.start,
-    rawObjectRange.end,
-    { stripArticles: true }
   );
   if (!objectRange) {
     return null;
@@ -543,7 +702,9 @@ function addDependency(
     relation,
     headFragmentId,
     dependentFragmentId,
-    source: 'deterministic-english-baseline',
+    source: linguisticParserId,
+    version: 1,
+    provenance: createLinguisticProvenance(`dependency:${relation}`),
   };
   dependencies.push(entry);
   return entry.id;
@@ -569,6 +730,12 @@ function addRelation({ relations, text, subject, predicate, object }) {
     text: text.slice(sourceStart, sourceEnd),
     sourceStart,
     sourceEnd,
+    version: 1,
+    provenance: createLinguisticProvenance(
+      object
+        ? 'relation:subject-predicate-object'
+        : 'relation:subject-predicate'
+    ),
   };
   relations.push(entry);
   return entry;
@@ -581,6 +748,8 @@ function fragmentReference(fragment) {
     role: fragment.role,
     sourceStart: fragment.sourceStart,
     sourceEnd: fragment.sourceEnd,
+    version: fragment.version,
+    provenance: fragment.provenance,
   };
 }
 

@@ -47,11 +47,12 @@
 
 ## Extension Work
 
-The PR now lands the stable baseline metadata schema. Future work should extend
-the same fields rather than replace them:
+The PR lands the stable baseline metadata schema, and issue 70 extends the same
+fields with parser CST, provenance, and version metadata. Future work should
+continue enriching the same additive fields rather than replacing them:
 
-- Evaluate Universal Dependencies and parser-backed extraction for more
-  languages, coreference, and richer clause boundaries.
+- Evaluate Universal Dependencies-compatible extraction for more languages,
+  coreference, and richer clause boundaries.
 - Add a formalization strategy API for contextual term selection and candidate
   reranking.
 - Import more `formal-ai` tests as public APIs converge, especially translation

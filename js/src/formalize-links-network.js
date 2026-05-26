@@ -130,10 +130,12 @@ function buildLinguisticFragmentLink(fragment, index, inputId) {
       sourceStart: fragment.sourceStart,
       sourceEnd: fragment.sourceEnd,
       phraseIds: fragment.phraseIds ?? [],
+      version: fragment.version ?? 1,
+      provenance: fragment.provenance ?? null,
     },
     provenance: {
-      sourceType: 'algorithm',
-      method: 'linguistic-metadata',
+      sourceType: fragment.provenance?.sourceType ?? 'algorithm',
+      method: fragment.provenance?.method ?? 'linguistic-metadata',
     },
   };
 }
@@ -179,8 +181,8 @@ function buildLinguisticRelationLink(
     ].filter(Boolean),
     value: { ...relation },
     provenance: {
-      sourceType: 'algorithm',
-      method: 'linguistic-metadata',
+      sourceType: relation.provenance?.sourceType ?? 'algorithm',
+      method: relation.provenance?.method ?? 'linguistic-metadata',
     },
   };
 }

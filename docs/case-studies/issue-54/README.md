@@ -84,15 +84,15 @@ hook changes a value and tracing is enabled, the pipeline records a
 `custom-transformation-rule` step with the phase, rule id, and before/after
 summary.
 
-Formalization now also adds a zero-configuration deterministic linguistic layer.
-It is intentionally parser-free for this baseline: every output records exact
-source spans and stable ids, and a later parser can enrich the same AST/CST
-fields without breaking consumers.
+Formalization also includes a zero-configuration deterministic linguistic layer.
+Issue 70 promotes that layer to an explicit parser-backed metadata flow:
+outputs keep exact source spans and stable ids while adding parser CST,
+provenance, and version fields without breaking consumers.
 
 Rust support mirrors the deterministic contract: text replacement rules apply
 in order, semantic translation naturalization can be addressed through the
 `deformalize_` alias, and `extract_linguistic_metadata()` exposes the same
-structural categories used by the JS CST.
+parser-aware structural categories used by the JS CST.
 
 ## Verification
 
