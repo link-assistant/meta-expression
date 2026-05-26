@@ -3,7 +3,7 @@
   "description": "Semantic interlingua lexicon. Each concept has a unique id and per-language surface forms; directional translation is derived through ids, never stored as a direct language pair.",
   "generatedBy": "scripts/build-lexicon-seed.mjs",
   "languages": ["en", "hi", "ru", "zh"],
-  "conceptCount": 334,
+  "conceptCount": 328,
   "concepts": [
     {
       "id": "lex:en:ability->ru",
@@ -171,42 +171,6 @@
       },
       "primary": {
         "ru": "любых"
-      }
-    },
-    {
-      "id": "lex:en:apple->hi",
-      "url": "https://en.wiktionary.org/wiki/apple",
-      "source": "wiktionary",
-      "labels": {
-        "en": ["apple"],
-        "hi": ["सेब"]
-      },
-      "primary": {
-        "hi": "सेब"
-      }
-    },
-    {
-      "id": "lex:en:apple->ru",
-      "url": "https://en.wiktionary.org/wiki/apple",
-      "source": "wiktionary",
-      "labels": {
-        "en": ["apple"],
-        "ru": ["яблоко"]
-      },
-      "primary": {
-        "ru": "яблоко"
-      }
-    },
-    {
-      "id": "lex:en:apple->zh",
-      "url": "https://en.wiktionary.org/wiki/apple",
-      "source": "curated-seed",
-      "labels": {
-        "en": ["apple"],
-        "zh": ["苹果"]
-      },
-      "primary": {
-        "zh": "苹果"
       }
     },
     {
@@ -951,42 +915,6 @@
       },
       "primary": {
         "ru": "цели"
-      }
-    },
-    {
-      "id": "lex:en:hello->hi",
-      "url": "https://en.wiktionary.org/wiki/hello",
-      "source": "wiktionary",
-      "labels": {
-        "en": ["hello"],
-        "hi": ["नमस्ते"]
-      },
-      "primary": {
-        "hi": "नमस्ते"
-      }
-    },
-    {
-      "id": "lex:en:hello->ru",
-      "url": "https://en.wiktionary.org/wiki/hello",
-      "source": "wiktionary",
-      "labels": {
-        "en": ["hello"],
-        "ru": ["привет"]
-      },
-      "primary": {
-        "ru": "привет"
-      }
-    },
-    {
-      "id": "lex:en:hello->zh",
-      "url": "https://en.wiktionary.org/wiki/hello",
-      "source": "wiktionary",
-      "labels": {
-        "en": ["hello"],
-        "zh": ["你好"]
-      },
-      "primary": {
-        "zh": "你好"
       }
     },
     {
@@ -3261,18 +3189,6 @@
       }
     },
     {
-      "id": "lex:ru:привет->en",
-      "url": "https://ru.wiktionary.org/wiki/%D0%BF%D1%80%D0%B8%D0%B2%D0%B5%D1%82",
-      "source": "curated-seed",
-      "labels": {
-        "ru": ["привет"],
-        "en": ["hello"]
-      },
-      "primary": {
-        "en": "hello"
-      }
-    },
-    {
       "id": "lex:ru:пример->en",
       "url": "https://ru.wiktionary.org/wiki/%D0%BF%D1%80%D0%B8%D0%BC%D0%B5%D1%80",
       "source": "wiktionary",
@@ -3993,18 +3909,6 @@
       }
     },
     {
-      "id": "lex:ru:яблоко->en",
-      "url": "https://ru.wiktionary.org/wiki/%D1%8F%D0%B1%D0%BB%D0%BE%D0%BA%D0%BE",
-      "source": "wiktionary",
-      "labels": {
-        "ru": ["яблоко"],
-        "en": ["apple"]
-      },
-      "primary": {
-        "en": "apple"
-      }
-    },
-    {
       "id": "Q35657",
       "url": "https://ru.wikipedia.org/wiki/%D0%A8%D1%82%D0%B0%D1%82_%D0%A1%D0%A8%D0%90",
       "source": "override",
@@ -4015,6 +3919,43 @@
       },
       "primary": {
         "ru": "штат"
+      }
+    },
+    {
+      "id": "Q89",
+      "url": "https://www.wikidata.org/wiki/Q89",
+      "entityId": "Q89",
+      "source": "wikidata",
+      "description": "apple — fruit of the apple tree",
+      "labels": {
+        "en": ["apple"],
+        "ru": ["яблоко"],
+        "hi": ["सेब"],
+        "zh": ["苹果"]
+      },
+      "primary": {
+        "en": "apple",
+        "ru": "яблоко",
+        "hi": "सेब",
+        "zh": "苹果"
+      }
+    },
+    {
+      "id": "wikt:en:hello",
+      "url": "https://en.wiktionary.org/wiki/hello",
+      "source": "wiktionary",
+      "description": "hello — a greeting",
+      "labels": {
+        "en": ["hello"],
+        "ru": ["привет"],
+        "hi": ["नमस्ते"],
+        "zh": ["你好"]
+      },
+      "primary": {
+        "en": "hello",
+        "ru": "привет",
+        "hi": "नमस्ते",
+        "zh": "你好"
       }
     }
   ]
