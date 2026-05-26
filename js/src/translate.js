@@ -46,8 +46,9 @@ function requireConceptForm(conceptId, language) {
   if (!form) {
     throw new Error(
       `Interlingua lexicon is missing concept "${conceptId}" for language ` +
-        `"${language}". Add it to js/data/lexicon-overrides.json and rebuild ` +
-        'with scripts/build-lexicon-seed.mjs.'
+        `"${language}". Record source-backed or rule-derived data in ` +
+        'the semantic lexicon source pipeline and rebuild with ' +
+        'scripts/build-lexicon-seed.mjs.'
     );
   }
   return form;

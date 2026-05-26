@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "description": "Semantic interlingua lexicon. Each concept has a unique id and per-language surface forms; directional translation is derived through ids, never stored as a direct language pair.",
+  "description": "Semantic interlingua lexicon. Each concept has a unique id, per-language surface forms, and source-backed or rule-derived provenance; directional translation is derived through ids, never stored as a direct language pair. Per-concept overrides must include >50% usage proof before this builder will merge them.",
   "generatedBy": "scripts/build-lexicon-seed.mjs",
   "languages": ["en", "hi", "ru", "zh"],
   "conceptCount": 328,
@@ -20,7 +20,7 @@
     {
       "id": "lex:en:able->ru",
       "url": "https://en.wiktionary.org/wiki/able",
-      "source": "curated-seed",
+      "source": "rule-derived",
       "labels": {
         "en": ["able"],
         "ru": ["способен"]
@@ -44,7 +44,7 @@
     {
       "id": "lex:en:accepts->ru",
       "url": "https://en.wiktionary.org/wiki/accepts",
-      "source": "curated-seed",
+      "source": "rule-derived",
       "labels": {
         "en": ["accepts"],
         "ru": ["принимает"]
@@ -56,7 +56,7 @@
     {
       "id": "lex:en:accurate->ru",
       "url": "https://en.wiktionary.org/wiki/accurate",
-      "source": "curated-seed",
+      "source": "rule-derived",
       "labels": {
         "en": ["accurate"],
         "ru": ["точная"]
@@ -80,7 +80,7 @@
     {
       "id": "lex:en:add->ru",
       "url": "https://en.wiktionary.org/wiki/add",
-      "source": "curated-seed",
+      "source": "rule-derived",
       "labels": {
         "en": ["add"],
         "ru": ["добавьте"]
@@ -92,7 +92,7 @@
     {
       "id": "lex:en:agreement->ru",
       "url": "https://en.wiktionary.org/wiki/agreement",
-      "source": "curated-seed",
+      "source": "rule-derived",
       "labels": {
         "en": ["agreement"],
         "ru": ["согласования"]
@@ -104,7 +104,7 @@
     {
       "id": "lex:en:algorithms->ru",
       "url": "https://en.wiktionary.org/wiki/algorithms",
-      "source": "curated-seed",
+      "source": "rule-derived",
       "labels": {
         "en": ["algorithms"],
         "ru": ["алгоритмы"]
@@ -116,7 +116,7 @@
     {
       "id": "lex:en:all->ru",
       "url": "https://en.wiktionary.org/wiki/all",
-      "source": "curated-seed",
+      "source": "rule-derived",
       "labels": {
         "en": ["all"],
         "ru": ["все"]
@@ -140,7 +140,7 @@
     {
       "id": "lex:en:american->ru",
       "url": "https://en.wiktionary.org/wiki/american",
-      "source": "curated-seed",
+      "source": "rule-derived",
       "labels": {
         "en": ["american"],
         "ru": ["американский"]
@@ -152,7 +152,7 @@
     {
       "id": "lex:en:and->ru",
       "url": "https://en.wiktionary.org/wiki/and",
-      "source": "curated-seed",
+      "source": "rule-derived",
       "labels": {
         "en": ["and"],
         "ru": ["и"]
@@ -164,7 +164,7 @@
     {
       "id": "lex:en:any->ru",
       "url": "https://en.wiktionary.org/wiki/any",
-      "source": "curated-seed",
+      "source": "rule-derived",
       "labels": {
         "en": ["any"],
         "ru": ["любых"]
@@ -188,7 +188,7 @@
     {
       "id": "lex:en:as->ru",
       "url": "https://en.wiktionary.org/wiki/as",
-      "source": "curated-seed",
+      "source": "rule-derived",
       "labels": {
         "en": ["as"],
         "ru": ["как"]
@@ -200,7 +200,7 @@
     {
       "id": "lex:en:associative_memory_storage->ru",
       "url": "https://en.wiktionary.org/wiki/Special:Search?search=associative%20memory%20storage",
-      "source": "curated-seed",
+      "source": "rule-derived",
       "labels": {
         "en": ["associative memory storage"],
         "ru": ["хранилище ассоциативной памяти"]
@@ -212,7 +212,7 @@
     {
       "id": "lex:en:associative_storage->ru",
       "url": "https://en.wiktionary.org/wiki/Special:Search?search=associative%20storage",
-      "source": "curated-seed",
+      "source": "rule-derived",
       "labels": {
         "en": ["associative storage"],
         "ru": ["ассоциативное хранилище"]
@@ -224,7 +224,7 @@
     {
       "id": "lex:en:associative->ru",
       "url": "https://en.wiktionary.org/wiki/associative",
-      "source": "curated-seed",
+      "source": "rule-derived",
       "labels": {
         "en": ["associative"],
         "ru": ["ассоциативное"]
@@ -236,7 +236,7 @@
     {
       "id": "lex:en:attaches->ru",
       "url": "https://en.wiktionary.org/wiki/attaches",
-      "source": "curated-seed",
+      "source": "rule-derived",
       "labels": {
         "en": ["attaches"],
         "ru": ["прикрепляет"]
@@ -248,7 +248,7 @@
     {
       "id": "lex:en:automated->ru",
       "url": "https://en.wiktionary.org/wiki/automated",
-      "source": "curated-seed",
+      "source": "rule-derived",
       "labels": {
         "en": ["automated"],
         "ru": ["автоматизирована"]
@@ -272,7 +272,7 @@
     {
       "id": "lex:en:based->ru",
       "url": "https://en.wiktionary.org/wiki/based",
-      "source": "curated-seed",
+      "source": "rule-derived",
       "labels": {
         "en": ["based"],
         "ru": ["основанный"]
@@ -284,7 +284,7 @@
     {
       "id": "lex:en:be->ru",
       "url": "https://en.wiktionary.org/wiki/be",
-      "source": "curated-seed",
+      "source": "rule-derived",
       "labels": {
         "en": ["be"],
         "ru": ["быть"]
@@ -308,7 +308,7 @@
     {
       "id": "lex:en:bot-programmer->ru",
       "url": "https://en.wiktionary.org/wiki/bot-programmer",
-      "source": "curated-seed",
+      "source": "rule-derived",
       "labels": {
         "en": ["bot-programmer"],
         "ru": ["бот-программист"]
@@ -332,7 +332,7 @@
     {
       "id": "lex:en:browser->ru",
       "url": "https://en.wiktionary.org/wiki/browser",
-      "source": "curated-seed",
+      "source": "rule-derived",
       "labels": {
         "en": ["browser"],
         "ru": ["браузер"]
@@ -356,7 +356,7 @@
     {
       "id": "lex:en:can->ru",
       "url": "https://en.wiktionary.org/wiki/can",
-      "source": "curated-seed",
+      "source": "rule-derived",
       "labels": {
         "en": ["can"],
         "ru": ["могут"]
@@ -404,7 +404,7 @@
     {
       "id": "lex:en:check->ru",
       "url": "https://en.wiktionary.org/wiki/check",
-      "source": "curated-seed",
+      "source": "rule-derived",
       "labels": {
         "en": ["check"],
         "ru": ["проверьте"]
@@ -416,7 +416,7 @@
     {
       "id": "lex:en:claims->ru",
       "url": "https://en.wiktionary.org/wiki/claims",
-      "source": "curated-seed",
+      "source": "rule-derived",
       "labels": {
         "en": ["claims"],
         "ru": ["утверждений"]
@@ -428,7 +428,7 @@
     {
       "id": "lex:en:combines->ru",
       "url": "https://en.wiktionary.org/wiki/combines",
-      "source": "curated-seed",
+      "source": "rule-derived",
       "labels": {
         "en": ["combines"],
         "ru": ["объединяет"]
@@ -440,7 +440,7 @@
     {
       "id": "lex:en:compare->ru",
       "url": "https://en.wiktionary.org/wiki/compare",
-      "source": "curated-seed",
+      "source": "rule-derived",
       "labels": {
         "en": ["compare"],
         "ru": ["сравните"]
@@ -452,7 +452,7 @@
     {
       "id": "lex:en:computable->ru",
       "url": "https://en.wiktionary.org/wiki/computable",
-      "source": "curated-seed",
+      "source": "rule-derived",
       "labels": {
         "en": ["computable"],
         "ru": ["вычислимые"]
@@ -488,7 +488,7 @@
     {
       "id": "lex:en:data_and_knowledge->ru",
       "url": "https://en.wiktionary.org/wiki/Special:Search?search=data%20and%20knowledge",
-      "source": "curated-seed",
+      "source": "rule-derived",
       "labels": {
         "en": ["data and knowledge"],
         "ru": ["данные и знания"]
@@ -512,7 +512,7 @@
     {
       "id": "lex:en:descriptions->ru",
       "url": "https://en.wiktionary.org/wiki/descriptions",
-      "source": "curated-seed",
+      "source": "rule-derived",
       "labels": {
         "en": ["descriptions"],
         "ru": ["описания"]
@@ -524,7 +524,7 @@
     {
       "id": "lex:en:developed->ru",
       "url": "https://en.wiktionary.org/wiki/developed",
-      "source": "curated-seed",
+      "source": "rule-derived",
       "labels": {
         "en": ["developed"],
         "ru": ["разработанный"]
@@ -572,7 +572,7 @@
     {
       "id": "lex:en:due->ru",
       "url": "https://en.wiktionary.org/wiki/due",
-      "source": "curated-seed",
+      "source": "rule-derived",
       "labels": {
         "en": ["due"],
         "ru": ["благодаря"]
@@ -584,7 +584,7 @@
     {
       "id": "lex:en:dynamically->ru",
       "url": "https://en.wiktionary.org/wiki/dynamically",
-      "source": "curated-seed",
+      "source": "rule-derived",
       "labels": {
         "en": ["dynamically"],
         "ru": ["динамически"]
@@ -596,7 +596,7 @@
     {
       "id": "lex:en:each->ru",
       "url": "https://en.wiktionary.org/wiki/each",
-      "source": "curated-seed",
+      "source": "rule-derived",
       "labels": {
         "en": ["each"],
         "ru": ["каждое"]
@@ -620,7 +620,7 @@
     {
       "id": "lex:en:effects->ru",
       "url": "https://en.wiktionary.org/wiki/effects",
-      "source": "curated-seed",
+      "source": "rule-derived",
       "labels": {
         "en": ["effects"],
         "ru": ["эффекты"]
@@ -680,7 +680,7 @@
     {
       "id": "lex:en:evaluates->ru",
       "url": "https://en.wiktionary.org/wiki/evaluates",
-      "source": "curated-seed",
+      "source": "rule-derived",
       "labels": {
         "en": ["evaluates"],
         "ru": ["вычисляет"]
@@ -692,7 +692,7 @@
     {
       "id": "lex:en:evidence->ru",
       "url": "https://en.wiktionary.org/wiki/evidence",
-      "source": "curated-seed",
+      "source": "rule-derived",
       "labels": {
         "en": ["evidence"],
         "ru": ["доказательства"]
@@ -716,7 +716,7 @@
     {
       "id": "lex:en:examples_of_agreement->ru",
       "url": "https://en.wiktionary.org/wiki/Special:Search?search=examples%20of%20agreement",
-      "source": "curated-seed",
+      "source": "rule-derived",
       "labels": {
         "en": ["examples of agreement"],
         "ru": ["примеры согласования"]
@@ -728,7 +728,7 @@
     {
       "id": "lex:en:examples->ru",
       "url": "https://en.wiktionary.org/wiki/examples",
-      "source": "curated-seed",
+      "source": "rule-derived",
       "labels": {
         "en": ["examples"],
         "ru": ["примеры"]
@@ -764,7 +764,7 @@
     {
       "id": "lex:en:fast->ru",
       "url": "https://en.wiktionary.org/wiki/fast",
-      "source": "curated-seed",
+      "source": "rule-derived",
       "labels": {
         "en": ["fast"],
         "ru": ["быстрая"]
@@ -800,7 +800,7 @@
     {
       "id": "lex:en:flexible->ru",
       "url": "https://en.wiktionary.org/wiki/flexible",
-      "source": "curated-seed",
+      "source": "rule-derived",
       "labels": {
         "en": ["flexible"],
         "ru": ["гибкая"]
@@ -812,7 +812,7 @@
     {
       "id": "lex:en:for->ru",
       "url": "https://en.wiktionary.org/wiki/for",
-      "source": "curated-seed",
+      "source": "rule-derived",
       "labels": {
         "en": ["for"],
         "ru": ["для"]
@@ -824,7 +824,7 @@
     {
       "id": "lex:en:formalize->ru",
       "url": "https://en.wiktionary.org/wiki/formalize",
-      "source": "curated-seed",
+      "source": "rule-derived",
       "labels": {
         "en": ["formalize"],
         "ru": ["формализуйте"]
@@ -836,7 +836,7 @@
     {
       "id": "lex:en:formalizes->ru",
       "url": "https://en.wiktionary.org/wiki/formalizes",
-      "source": "curated-seed",
+      "source": "rule-derived",
       "labels": {
         "en": ["formalizes"],
         "ru": ["формализует"]
@@ -860,7 +860,7 @@
     {
       "id": "lex:en:fragments->ru",
       "url": "https://en.wiktionary.org/wiki/fragments",
-      "source": "curated-seed",
+      "source": "rule-derived",
       "labels": {
         "en": ["fragments"],
         "ru": ["фрагменты"]
@@ -884,7 +884,7 @@
     {
       "id": "lex:en:generates->ru",
       "url": "https://en.wiktionary.org/wiki/generates",
-      "source": "curated-seed",
+      "source": "rule-derived",
       "labels": {
         "en": ["generates"],
         "ru": ["создает"]
@@ -896,7 +896,7 @@
     {
       "id": "lex:en:generative->ru",
       "url": "https://en.wiktionary.org/wiki/generative",
-      "source": "curated-seed",
+      "source": "rule-derived",
       "labels": {
         "en": ["generative"],
         "ru": ["генеративный"]
@@ -908,7 +908,7 @@
     {
       "id": "lex:en:goals->ru",
       "url": "https://en.wiktionary.org/wiki/goals",
-      "source": "curated-seed",
+      "source": "rule-derived",
       "labels": {
         "en": ["goals"],
         "ru": ["цели"]
@@ -932,7 +932,7 @@
     {
       "id": "lex:en:high-level->ru",
       "url": "https://en.wiktionary.org/wiki/high-level",
-      "source": "curated-seed",
+      "source": "rule-derived",
       "labels": {
         "en": ["high-level"],
         "ru": ["высокоуровневые"]
@@ -944,7 +944,7 @@
     {
       "id": "lex:en:human_language->ru",
       "url": "https://en.wiktionary.org/wiki/Special:Search?search=human%20language",
-      "source": "curated-seed",
+      "source": "rule-derived",
       "labels": {
         "en": ["human language"],
         "ru": ["человеческий язык"]
@@ -956,7 +956,7 @@
     {
       "id": "lex:en:human_mind->ru",
       "url": "https://en.wiktionary.org/wiki/Special:Search?search=human%20mind",
-      "source": "curated-seed",
+      "source": "rule-derived",
       "labels": {
         "en": ["human mind"],
         "ru": ["человеческий разум"]
@@ -980,7 +980,7 @@
     {
       "id": "lex:en:human-language->ru",
       "url": "https://en.wiktionary.org/wiki/human-language",
-      "source": "curated-seed",
+      "source": "rule-derived",
       "labels": {
         "en": ["human-language"],
         "ru": ["человеко-языковое"]
@@ -992,7 +992,7 @@
     {
       "id": "lex:en:implement->ru",
       "url": "https://en.wiktionary.org/wiki/implement",
-      "source": "curated-seed",
+      "source": "rule-derived",
       "labels": {
         "en": ["implement"],
         "ru": ["реализовать"]
@@ -1016,7 +1016,7 @@
     {
       "id": "lex:en:important->ru",
       "url": "https://en.wiktionary.org/wiki/important",
-      "source": "curated-seed",
+      "source": "rule-derived",
       "labels": {
         "en": ["important"],
         "ru": ["важные"]
@@ -1028,7 +1028,7 @@
     {
       "id": "lex:en:in->ru",
       "url": "https://en.wiktionary.org/wiki/in",
-      "source": "curated-seed",
+      "source": "rule-derived",
       "labels": {
         "en": ["in"],
         "ru": ["в"]
@@ -1076,7 +1076,7 @@
     {
       "id": "lex:en:interpretations->ru",
       "url": "https://en.wiktionary.org/wiki/interpretations",
-      "source": "curated-seed",
+      "source": "rule-derived",
       "labels": {
         "en": ["interpretations"],
         "ru": ["интерпретации"]
@@ -1088,7 +1088,7 @@
     {
       "id": "lex:en:is->ru",
       "url": "https://en.wiktionary.org/wiki/%D1%8D%D1%82%D0%BE",
-      "source": "override",
+      "source": "rule-derived",
       "labels": {
         "en": ["is"],
         "ru": ["это"]
@@ -1097,7 +1097,11 @@
         "ru": "это"
       },
       "entityId": "wikt:ru:это#Determiner:0",
-      "description": "Russian demonstrative/copula-like predicate marker"
+      "description": "Russian demonstrative/copula-like predicate marker",
+      "derivation": {
+        "strategy": "russian-copula-predicate-marker",
+        "source": "translation-naturalization-rule"
+      }
     },
     {
       "id": "lex:en:it->ru",
@@ -1114,7 +1118,7 @@
     {
       "id": "lex:en:itself->ru",
       "url": "https://en.wiktionary.org/wiki/itself",
-      "source": "curated-seed",
+      "source": "rule-derived",
       "labels": {
         "en": ["itself"],
         "ru": ["сама"]
@@ -1138,7 +1142,7 @@
     {
       "id": "lex:en:labels->ru",
       "url": "https://en.wiktionary.org/wiki/labels",
-      "source": "curated-seed",
+      "source": "rule-derived",
       "labels": {
         "en": ["labels"],
         "ru": ["метки"]
@@ -1150,7 +1154,7 @@
     {
       "id": "lex:en:language->ru",
       "url": "https://en.wiktionary.org/wiki/language",
-      "source": "curated-seed",
+      "source": "rule-derived",
       "labels": {
         "en": ["language"],
         "ru": ["язык"]
@@ -1174,7 +1178,7 @@
     {
       "id": "lex:en:links->ru",
       "url": "https://en.wiktionary.org/wiki/(links)",
-      "source": "curated-seed",
+      "source": "rule-derived",
       "labels": {
         "en": ["(links)", "links"],
         "ru": ["Links"]
@@ -1186,7 +1190,7 @@
     {
       "id": "lex:en:links-network_based_reasoning_playground->ru",
       "url": "https://en.wiktionary.org/wiki/Special:Search?search=links-network%20based%20reasoning%20playground",
-      "source": "curated-seed",
+      "source": "rule-derived",
       "labels": {
         "en": ["links-network based reasoning playground"],
         "ru": ["основанной на сети ссылок площадки для рассуждений"]
@@ -1198,7 +1202,7 @@
     {
       "id": "lex:en:links-network->ru",
       "url": "https://en.wiktionary.org/wiki/links-network",
-      "source": "curated-seed",
+      "source": "rule-derived",
       "labels": {
         "en": ["links-network"],
         "ru": ["сеть ссылок"]
@@ -1282,7 +1286,7 @@
     {
       "id": "lex:en:modeling->ru",
       "url": "https://en.wiktionary.org/wiki/modeling",
-      "source": "curated-seed",
+      "source": "rule-derived",
       "labels": {
         "en": ["modeling"],
         "ru": ["моделирование"]
@@ -1294,7 +1298,7 @@
     {
       "id": "lex:en:most_important->ru",
       "url": "https://en.wiktionary.org/wiki/Special:Search?search=most%20important",
-      "source": "curated-seed",
+      "source": "rule-derived",
       "labels": {
         "en": ["most important"],
         "ru": ["самые важные"]
@@ -1306,7 +1310,7 @@
     {
       "id": "lex:en:most->ru",
       "url": "https://en.wiktionary.org/wiki/most",
-      "source": "curated-seed",
+      "source": "rule-derived",
       "labels": {
         "en": ["most"],
         "ru": ["самая"]
@@ -1330,7 +1334,7 @@
     {
       "id": "lex:en:non-computable->ru",
       "url": "https://en.wiktionary.org/wiki/non-computable",
-      "source": "curated-seed",
+      "source": "rule-derived",
       "labels": {
         "en": ["non-computable"],
         "ru": ["невычислимых"]
@@ -1366,7 +1370,7 @@
     {
       "id": "lex:en:one->ru",
       "url": "https://en.wiktionary.org/wiki/one",
-      "source": "curated-seed",
+      "source": "rule-derived",
       "labels": {
         "en": ["one"],
         "ru": ["одна"]
@@ -1378,7 +1382,7 @@
     {
       "id": "lex:en:open->ru",
       "url": "https://en.wiktionary.org/wiki/open",
-      "source": "curated-seed",
+      "source": "rule-derived",
       "labels": {
         "en": ["open"],
         "ru": ["откройте"]
@@ -1402,7 +1406,7 @@
     {
       "id": "lex:en:other_words->ru",
       "url": "https://en.wiktionary.org/wiki/Special:Search?search=other%20words",
-      "source": "curated-seed",
+      "source": "rule-derived",
       "labels": {
         "en": ["other words"],
         "ru": ["другими словами"]
@@ -1414,7 +1418,7 @@
     {
       "id": "lex:en:other->ru",
       "url": "https://en.wiktionary.org/wiki/other",
-      "source": "curated-seed",
+      "source": "rule-derived",
       "labels": {
         "en": ["other"],
         "ru": ["другими"]
@@ -1426,7 +1430,7 @@
     {
       "id": "lex:en:our->ru",
       "url": "https://en.wiktionary.org/wiki/our",
-      "source": "curated-seed",
+      "source": "rule-derived",
       "labels": {
         "en": ["our"],
         "ru": ["нашу"]
@@ -1438,7 +1442,7 @@
     {
       "id": "lex:en:page->ru",
       "url": "https://en.wiktionary.org/wiki/page",
-      "source": "curated-seed",
+      "source": "rule-derived",
       "labels": {
         "en": ["page"],
         "ru": ["страницу"]
@@ -1450,7 +1454,7 @@
     {
       "id": "lex:en:parts->ru",
       "url": "https://en.wiktionary.org/wiki/parts",
-      "source": "curated-seed",
+      "source": "rule-derived",
       "labels": {
         "en": ["parts"],
         "ru": ["части"]
@@ -1462,7 +1466,7 @@
     {
       "id": "lex:en:planned->ru",
       "url": "https://en.wiktionary.org/wiki/planned",
-      "source": "curated-seed",
+      "source": "rule-derived",
       "labels": {
         "en": ["planned"],
         "ru": ["запланирована"]
@@ -1486,7 +1490,7 @@
     {
       "id": "lex:en:playground->ru",
       "url": "https://en.wiktionary.org/wiki/playground",
-      "source": "curated-seed",
+      "source": "rule-derived",
       "labels": {
         "en": ["playground"],
         "ru": ["площадка"]
@@ -1522,7 +1526,7 @@
     {
       "id": "lex:en:possible->ru",
       "url": "https://en.wiktionary.org/wiki/possible",
-      "source": "curated-seed",
+      "source": "rule-derived",
       "labels": {
         "en": ["possible"],
         "ru": ["возможно"]
@@ -1570,7 +1574,7 @@
     {
       "id": "lex:en:programs->ru",
       "url": "https://en.wiktionary.org/wiki/programs",
-      "source": "curated-seed",
+      "source": "rule-derived",
       "labels": {
         "en": ["programs"],
         "ru": ["программы"]
@@ -1606,7 +1610,7 @@
     {
       "id": "lex:en:provenance->ru",
       "url": "https://en.wiktionary.org/wiki/provenance",
-      "source": "curated-seed",
+      "source": "rule-derived",
       "labels": {
         "en": ["provenance"],
         "ru": ["происхождением"]
@@ -1618,7 +1622,7 @@
     {
       "id": "lex:en:questions->ru",
       "url": "https://en.wiktionary.org/wiki/questions",
-      "source": "curated-seed",
+      "source": "rule-derived",
       "labels": {
         "en": ["questions"],
         "ru": ["вопросами"]
@@ -1630,7 +1634,7 @@
     {
       "id": "lex:en:real-time->ru",
       "url": "https://en.wiktionary.org/wiki/real-time",
-      "source": "curated-seed",
+      "source": "rule-derived",
       "labels": {
         "en": ["real-time"],
         "ru": ["реальном времени"]
@@ -1642,7 +1646,7 @@
     {
       "id": "lex:en:reasoning->ru",
       "url": "https://en.wiktionary.org/wiki/reasoning",
-      "source": "curated-seed",
+      "source": "rule-derived",
       "labels": {
         "en": ["reasoning"],
         "ru": ["рассуждения"]
@@ -1654,7 +1658,7 @@
     {
       "id": "lex:en:reliable->ru",
       "url": "https://en.wiktionary.org/wiki/reliable",
-      "source": "curated-seed",
+      "source": "rule-derived",
       "labels": {
         "en": ["reliable"],
         "ru": ["надежная"]
@@ -1666,7 +1670,7 @@
     {
       "id": "lex:en:remain->ru",
       "url": "https://en.wiktionary.org/wiki/remain",
-      "source": "curated-seed",
+      "source": "rule-derived",
       "labels": {
         "en": ["remain"],
         "ru": ["остаются"]
@@ -1690,7 +1694,7 @@
     {
       "id": "lex:en:rules->ru",
       "url": "https://en.wiktionary.org/wiki/rules",
-      "source": "curated-seed",
+      "source": "rule-derived",
       "labels": {
         "en": ["rules"],
         "ru": ["правила"]
@@ -1702,7 +1706,7 @@
     {
       "id": "lex:en:save->ru",
       "url": "https://en.wiktionary.org/wiki/save",
-      "source": "curated-seed",
+      "source": "rule-derived",
       "labels": {
         "en": ["save"],
         "ru": ["сохраните"]
@@ -1714,7 +1718,7 @@
     {
       "id": "lex:en:selectable->ru",
       "url": "https://en.wiktionary.org/wiki/selectable",
-      "source": "curated-seed",
+      "source": "rule-derived",
       "labels": {
         "en": ["selectable"],
         "ru": ["выбираемые"]
@@ -1726,7 +1730,7 @@
     {
       "id": "lex:en:selected->ru",
       "url": "https://en.wiktionary.org/wiki/selected",
-      "source": "curated-seed",
+      "source": "rule-derived",
       "labels": {
         "en": ["selected"],
         "ru": ["выбранный"]
@@ -1762,7 +1766,7 @@
     {
       "id": "lex:en:show->ru",
       "url": "https://en.wiktionary.org/wiki/show",
-      "source": "curated-seed",
+      "source": "rule-derived",
       "labels": {
         "en": ["show"],
         "ru": ["покажите"]
@@ -1774,7 +1778,7 @@
     {
       "id": "lex:en:simple->ru",
       "url": "https://en.wiktionary.org/wiki/simple",
-      "source": "curated-seed",
+      "source": "rule-derived",
       "labels": {
         "en": ["simple"],
         "ru": ["простое"]
@@ -1786,7 +1790,7 @@
     {
       "id": "lex:en:source->ru",
       "url": "https://en.wiktionary.org/wiki/source",
-      "source": "curated-seed",
+      "source": "rule-derived",
       "labels": {
         "en": ["source"],
         "ru": ["исходный"]
@@ -1822,7 +1826,7 @@
     {
       "id": "lex:en:strive->ru",
       "url": "https://en.wiktionary.org/wiki/strive",
-      "source": "curated-seed",
+      "source": "rule-derived",
       "labels": {
         "en": ["strive"],
         "ru": ["стремимся"]
@@ -1834,7 +1838,7 @@
     {
       "id": "lex:en:such->ru",
       "url": "https://en.wiktionary.org/wiki/such",
-      "source": "curated-seed",
+      "source": "rule-derived",
       "labels": {
         "en": ["such"],
         "ru": ["такие"]
@@ -1858,7 +1862,7 @@
     {
       "id": "lex:en:synonyms->ru",
       "url": "https://en.wiktionary.org/wiki/synonyms",
-      "source": "curated-seed",
+      "source": "rule-derived",
       "labels": {
         "en": ["synonyms"],
         "ru": ["синонимы"]
@@ -2014,7 +2018,7 @@
     {
       "id": "lex:en:transformation_rules->ru",
       "url": "https://en.wiktionary.org/wiki/Special:Search?search=transformation%20rules",
-      "source": "curated-seed",
+      "source": "rule-derived",
       "labels": {
         "en": ["transformation rules"],
         "ru": ["правила преобразования"]
@@ -2026,7 +2030,7 @@
     {
       "id": "lex:en:transformation->ru",
       "url": "https://en.wiktionary.org/wiki/transformation",
-      "source": "curated-seed",
+      "source": "rule-derived",
       "labels": {
         "en": ["transformation"],
         "ru": ["преобразования"]
@@ -2038,7 +2042,7 @@
     {
       "id": "lex:en:translate->ru",
       "url": "https://en.wiktionary.org/wiki/translate",
-      "source": "curated-seed",
+      "source": "rule-derived",
       "labels": {
         "en": ["translate"],
         "ru": ["переведите"]
@@ -2050,7 +2054,7 @@
     {
       "id": "lex:en:treated->ru",
       "url": "https://en.wiktionary.org/wiki/treated",
-      "source": "curated-seed",
+      "source": "rule-derived",
       "labels": {
         "en": ["treated"],
         "ru": ["рассматриваться"]
@@ -2062,7 +2066,7 @@
     {
       "id": "lex:en:triggers->ru",
       "url": "https://en.wiktionary.org/wiki/(triggers)",
-      "source": "curated-seed",
+      "source": "rule-derived",
       "labels": {
         "en": ["(triggers)"],
         "ru": ["Triggers"]
@@ -2074,7 +2078,7 @@
     {
       "id": "lex:en:universal->ru",
       "url": "https://en.wiktionary.org/wiki/universal",
-      "source": "curated-seed",
+      "source": "rule-derived",
       "labels": {
         "en": ["universal"],
         "ru": ["универсальная"]
@@ -2086,7 +2090,7 @@
     {
       "id": "lex:en:unresolved->ru",
       "url": "https://en.wiktionary.org/wiki/unresolved",
-      "source": "curated-seed",
+      "source": "rule-derived",
       "labels": {
         "en": ["unresolved"],
         "ru": ["неразрешенные"]
@@ -2110,7 +2114,7 @@
     {
       "id": "lex:en:values->ru",
       "url": "https://en.wiktionary.org/wiki/values",
-      "source": "curated-seed",
+      "source": "rule-derived",
       "labels": {
         "en": ["values"],
         "ru": ["значения"]
@@ -2122,7 +2126,7 @@
     {
       "id": "lex:en:variables->ru",
       "url": "https://en.wiktionary.org/wiki/variables",
-      "source": "curated-seed",
+      "source": "rule-derived",
       "labels": {
         "en": ["variables"],
         "ru": ["переменными"]
@@ -2134,7 +2138,7 @@
     {
       "id": "lex:en:water->ru",
       "url": "https://en.wiktionary.org/wiki/water",
-      "source": "curated-seed",
+      "source": "rule-derived",
       "labels": {
         "en": ["water"],
         "ru": ["вода"]
@@ -2182,7 +2186,7 @@
     {
       "id": "lex:en:wikidata->ru",
       "url": "https://en.wiktionary.org/wiki/wikidata",
-      "source": "curated-seed",
+      "source": "rule-derived",
       "labels": {
         "en": ["wikidata"],
         "ru": ["Викиданные"]
@@ -2194,7 +2198,7 @@
     {
       "id": "lex:en:will->ru",
       "url": "https://en.wiktionary.org/wiki/will",
-      "source": "curated-seed",
+      "source": "rule-derived",
       "labels": {
         "en": ["will"],
         "ru": ["будет"]
@@ -2206,7 +2210,7 @@
     {
       "id": "lex:en:with_wikidata->ru",
       "url": "https://www.wikidata.org/wiki/Q2013",
-      "source": "override",
+      "source": "rule-derived",
       "description": "instrumental construction 'with Wikidata' -> 'с помощью Викиданных'",
       "labels": {
         "en": ["with wikidata"],
@@ -2214,6 +2218,10 @@
       },
       "primary": {
         "ru": "с помощью Викиданных"
+      },
+      "derivation": {
+        "strategy": "instrumental-with-entity-label",
+        "source": "translation-naturalization-rule"
       }
     },
     {
@@ -2231,7 +2239,7 @@
     {
       "id": "lex:en:words->ru",
       "url": "https://en.wiktionary.org/wiki/words",
-      "source": "curated-seed",
+      "source": "rule-derived",
       "labels": {
         "en": ["words"],
         "ru": ["словами"]
@@ -2243,7 +2251,7 @@
     {
       "id": "lex:ru:links->en",
       "url": "https://ru.wiktionary.org/wiki/links",
-      "source": "curated-seed",
+      "source": "rule-derived",
       "labels": {
         "ru": ["links"],
         "en": ["Links"]
@@ -2255,7 +2263,7 @@
     {
       "id": "lex:ru:triggers->en",
       "url": "https://ru.wiktionary.org/wiki/triggers",
-      "source": "curated-seed",
+      "source": "rule-derived",
       "labels": {
         "ru": ["triggers"],
         "en": ["Triggers"]
@@ -2279,7 +2287,7 @@
     {
       "id": "lex:ru:автоматизирована->en",
       "url": "https://ru.wiktionary.org/wiki/%D0%B0%D0%B2%D1%82%D0%BE%D0%BC%D0%B0%D1%82%D0%B8%D0%B7%D0%B8%D1%80%D0%BE%D0%B2%D0%B0%D0%BD%D0%B0",
-      "source": "curated-seed",
+      "source": "rule-derived",
       "labels": {
         "ru": ["автоматизирована"],
         "en": ["automated"]
@@ -2291,7 +2299,7 @@
     {
       "id": "lex:ru:алгоритмы->en",
       "url": "https://ru.wiktionary.org/wiki/%D0%B0%D0%BB%D0%B3%D0%BE%D1%80%D0%B8%D1%82%D0%BC%D1%8B",
-      "source": "curated-seed",
+      "source": "rule-derived",
       "labels": {
         "ru": ["алгоритмы"],
         "en": ["algorithms"]
@@ -2303,7 +2311,7 @@
     {
       "id": "lex:ru:ассоциативное->en",
       "url": "https://ru.wiktionary.org/wiki/%D0%B0%D1%81%D1%81%D0%BE%D1%86%D0%B8%D0%B0%D1%82%D0%B8%D0%B2%D0%BD%D0%BE%D0%B5",
-      "source": "curated-seed",
+      "source": "rule-derived",
       "labels": {
         "ru": ["ассоциативное"],
         "en": ["associative"]
@@ -2315,7 +2323,7 @@
     {
       "id": "lex:ru:благодаря->en",
       "url": "https://ru.wiktionary.org/wiki/%D0%B1%D0%BB%D0%B0%D0%B3%D0%BE%D0%B4%D0%B0%D1%80%D1%8F",
-      "source": "curated-seed",
+      "source": "rule-derived",
       "labels": {
         "ru": ["благодаря"],
         "en": ["due"]
@@ -2327,7 +2335,7 @@
     {
       "id": "lex:ru:бот-программист->en",
       "url": "https://ru.wiktionary.org/wiki/%D0%B1%D0%BE%D1%82-%D0%BF%D1%80%D0%BE%D0%B3%D1%80%D0%B0%D0%BC%D0%BC%D0%B8%D1%81%D1%82",
-      "source": "curated-seed",
+      "source": "rule-derived",
       "labels": {
         "ru": ["бот-программист"],
         "en": ["bot-programmer"]
@@ -2339,7 +2347,7 @@
     {
       "id": "lex:ru:будет->en",
       "url": "https://ru.wiktionary.org/wiki/%D0%B1%D1%83%D0%B4%D0%B5%D1%82",
-      "source": "curated-seed",
+      "source": "rule-derived",
       "labels": {
         "ru": ["будет"],
         "en": ["will"]
@@ -2351,7 +2359,7 @@
     {
       "id": "lex:ru:быстрая->en",
       "url": "https://ru.wiktionary.org/wiki/%D0%B1%D1%8B%D1%81%D1%82%D1%80%D0%B0%D1%8F",
-      "source": "curated-seed",
+      "source": "rule-derived",
       "labels": {
         "ru": ["быстрая"],
         "en": ["fast"]
@@ -2387,7 +2395,7 @@
     {
       "id": "lex:ru:важные->en",
       "url": "https://ru.wiktionary.org/wiki/%D0%B2%D0%B0%D0%B6%D0%BD%D1%8B%D0%B5",
-      "source": "curated-seed",
+      "source": "rule-derived",
       "labels": {
         "ru": ["важные"],
         "en": ["important"]
@@ -2435,7 +2443,7 @@
     {
       "id": "lex:ru:возможность->en",
       "url": "https://ru.wiktionary.org/wiki/%D0%B2%D0%BE%D0%B7%D0%BC%D0%BE%D0%B6%D0%BD%D0%BE%D1%81%D1%82%D1%8C",
-      "source": "curated-seed",
+      "source": "rule-derived",
       "labels": {
         "ru": ["возможность"],
         "en": ["ability"]
@@ -2459,7 +2467,7 @@
     {
       "id": "lex:ru:вопросы->en",
       "url": "https://ru.wiktionary.org/wiki/%D0%B2%D0%BE%D0%BF%D1%80%D0%BE%D1%81%D1%8B",
-      "source": "curated-seed",
+      "source": "rule-derived",
       "labels": {
         "ru": ["вопросы"],
         "en": ["questions"]
@@ -2471,7 +2479,7 @@
     {
       "id": "lex:ru:времени->en",
       "url": "https://ru.wiktionary.org/wiki/%D0%B2%D1%80%D0%B5%D0%BC%D0%B5%D0%BD%D0%B8",
-      "source": "curated-seed",
+      "source": "rule-derived",
       "labels": {
         "ru": ["времени"],
         "en": ["time"]
@@ -2483,7 +2491,7 @@
     {
       "id": "lex:ru:все->en",
       "url": "https://ru.wiktionary.org/wiki/%D0%B2%D1%81%D0%B5",
-      "source": "curated-seed",
+      "source": "rule-derived",
       "labels": {
         "ru": ["все"],
         "en": ["all"]
@@ -2495,7 +2503,7 @@
     {
       "id": "lex:ru:выполнение->en",
       "url": "https://ru.wiktionary.org/wiki/%D0%B2%D1%8B%D0%BF%D0%BE%D0%BB%D0%BD%D0%B5%D0%BD%D0%B8%D0%B5",
-      "source": "curated-seed",
+      "source": "rule-derived",
       "labels": {
         "ru": ["выполнение"],
         "en": ["execution"]
@@ -2507,7 +2515,7 @@
     {
       "id": "lex:ru:высокоуровневые->en",
       "url": "https://ru.wiktionary.org/wiki/%D0%B2%D1%8B%D1%81%D0%BE%D0%BA%D0%BE%D1%83%D1%80%D0%BE%D0%B2%D0%BD%D0%B5%D0%B2%D1%8B%D0%B5",
-      "source": "curated-seed",
+      "source": "rule-derived",
       "labels": {
         "ru": ["высокоуровневые"],
         "en": ["high-level"]
@@ -2519,7 +2527,7 @@
     {
       "id": "lex:ru:гибкая->en",
       "url": "https://ru.wiktionary.org/wiki/%D0%B3%D0%B8%D0%B1%D0%BA%D0%B0%D1%8F",
-      "source": "curated-seed",
+      "source": "rule-derived",
       "labels": {
         "ru": ["гибкая"],
         "en": ["flexible"]
@@ -2543,7 +2551,7 @@
     {
       "id": "lex:ru:данные_и_знания->en",
       "url": "https://ru.wiktionary.org/wiki/Special:Search?search=%D0%B4%D0%B0%D0%BD%D0%BD%D1%8B%D0%B5%20%D0%B8%20%D0%B7%D0%BD%D0%B0%D0%BD%D0%B8%D1%8F",
-      "source": "curated-seed",
+      "source": "rule-derived",
       "labels": {
         "ru": ["данные и знания"],
         "en": ["data and knowledge"]
@@ -2567,7 +2575,7 @@
     {
       "id": "lex:ru:двигател->en",
       "url": "https://ru.wiktionary.org/wiki/%D0%B4%D0%B2%D0%B8%D0%B3%D0%B0%D1%82%D0%B5%D0%BB",
-      "source": "curated-seed",
+      "source": "rule-derived",
       "labels": {
         "ru": ["двигател"],
         "en": ["engine"]
@@ -2627,7 +2635,7 @@
     {
       "id": "lex:ru:доброе_яблоко->en",
       "url": "https://ru.wiktionary.org/wiki/Special:Search?search=%D0%B4%D0%BE%D0%B1%D1%80%D0%BE%D0%B5%20%D1%8F%D0%B1%D0%BB%D0%BE%D0%BA%D0%BE",
-      "source": "curated-seed",
+      "source": "rule-derived",
       "labels": {
         "ru": ["доброе яблоко"],
         "en": ["good apple"]
@@ -2639,7 +2647,7 @@
     {
       "id": "lex:ru:должен->en",
       "url": "https://ru.wiktionary.org/wiki/%D0%B4%D0%BE%D0%BB%D0%B6%D0%B5%D0%BD",
-      "source": "curated-seed",
+      "source": "rule-derived",
       "labels": {
         "ru": ["должен"],
         "en": ["should"]
@@ -2651,7 +2659,7 @@
     {
       "id": "lex:ru:другими_словами->en",
       "url": "https://ru.wiktionary.org/wiki/Special:Search?search=%D0%B4%D1%80%D1%83%D0%B3%D0%B8%D0%BC%D0%B8%20%D1%81%D0%BB%D0%BE%D0%B2%D0%B0%D0%BC%D0%B8",
-      "source": "curated-seed",
+      "source": "rule-derived",
       "labels": {
         "ru": ["другими словами"],
         "en": ["in other words"]
@@ -2663,7 +2671,7 @@
     {
       "id": "lex:ru:другими->en",
       "url": "https://ru.wiktionary.org/wiki/%D0%B4%D1%80%D1%83%D0%B3%D0%B8%D0%BC%D0%B8",
-      "source": "curated-seed",
+      "source": "rule-derived",
       "labels": {
         "ru": ["другими"],
         "en": ["other"]
@@ -2675,7 +2683,7 @@
     {
       "id": "lex:ru:запланирована->en",
       "url": "https://ru.wiktionary.org/wiki/%D0%B7%D0%B0%D0%BF%D0%BB%D0%B0%D0%BD%D0%B8%D1%80%D0%BE%D0%B2%D0%B0%D0%BD%D0%B0",
-      "source": "curated-seed",
+      "source": "rule-derived",
       "labels": {
         "ru": ["запланирована"],
         "en": ["planned"]
@@ -2687,7 +2695,7 @@
     {
       "id": "lex:ru:знание->en",
       "url": "https://ru.wiktionary.org/wiki/%D0%B7%D0%BD%D0%B0%D0%BD%D0%B8%D0%B5",
-      "source": "curated-seed",
+      "source": "rule-derived",
       "labels": {
         "ru": ["знание"],
         "en": ["knowledge"]
@@ -2699,7 +2707,7 @@
     {
       "id": "lex:ru:знания->en",
       "url": "https://ru.wiktionary.org/wiki/%D0%B7%D0%BD%D0%B0%D0%BD%D0%B8%D1%8F",
-      "source": "curated-seed",
+      "source": "rule-derived",
       "labels": {
         "ru": ["знания"],
         "en": ["knowledge"]
@@ -2723,7 +2731,7 @@
     {
       "id": "lex:ru:значения->en",
       "url": "https://ru.wiktionary.org/wiki/%D0%B7%D0%BD%D0%B0%D1%87%D0%B5%D0%BD%D0%B8%D1%8F",
-      "source": "curated-seed",
+      "source": "rule-derived",
       "labels": {
         "ru": ["значения"],
         "en": ["values"]
@@ -2759,7 +2767,7 @@
     {
       "id": "lex:ru:изменять->en",
       "url": "https://ru.wiktionary.org/wiki/%D0%B8%D0%B7%D0%BC%D0%B5%D0%BD%D1%8F%D1%82%D1%8C",
-      "source": "curated-seed",
+      "source": "rule-derived",
       "labels": {
         "ru": ["изменять"],
         "en": ["change"]
@@ -2795,7 +2803,7 @@
     {
       "id": "lex:ru:как_дела->en",
       "url": "https://ru.wiktionary.org/wiki/Special:Search?search=%D0%BA%D0%B0%D0%BA%20%D0%B4%D0%B5%D0%BB%D0%B0",
-      "source": "curated-seed",
+      "source": "rule-derived",
       "labels": {
         "ru": ["как дела"],
         "en": ["how are you"]
@@ -2807,7 +2815,7 @@
     {
       "id": "lex:ru:как_у_тебя_дела->en",
       "url": "https://ru.wiktionary.org/wiki/Special:Search?search=%D0%BA%D0%B0%D0%BA%20%D1%83%20%D1%82%D0%B5%D0%B1%D1%8F%20%D0%B4%D0%B5%D0%BB%D0%B0",
-      "source": "curated-seed",
+      "source": "rule-derived",
       "labels": {
         "ru": ["как у тебя дела"],
         "en": ["how are you"]
@@ -2855,7 +2863,7 @@
     {
       "id": "lex:ru:который->en",
       "url": "https://ru.wiktionary.org/wiki/%D0%BA%D0%BE%D1%82%D0%BE%D1%80%D1%8B%D0%B9",
-      "source": "curated-seed",
+      "source": "rule-derived",
       "labels": {
         "ru": ["который"],
         "en": ["which"]
@@ -2867,7 +2875,7 @@
     {
       "id": "lex:ru:кто_ты_такой->en",
       "url": "https://ru.wiktionary.org/wiki/Special:Search?search=%D0%BA%D1%82%D0%BE%20%D1%82%D1%8B%20%D1%82%D0%B0%D0%BA%D0%BE%D0%B9",
-      "source": "curated-seed",
+      "source": "rule-derived",
       "labels": {
         "ru": ["кто ты такой"],
         "en": ["who are you"]
@@ -2879,7 +2887,7 @@
     {
       "id": "lex:ru:любых->en",
       "url": "https://ru.wiktionary.org/wiki/%D0%BB%D1%8E%D0%B1%D1%8B%D1%85",
-      "source": "curated-seed",
+      "source": "rule-derived",
       "labels": {
         "ru": ["любых"],
         "en": ["any"]
@@ -2891,7 +2899,7 @@
     {
       "id": "lex:ru:метод->en",
       "url": "https://ru.wiktionary.org/wiki/%D0%BC%D0%B5%D1%82%D0%BE%D0%B4",
-      "source": "curated-seed",
+      "source": "rule-derived",
       "labels": {
         "ru": ["метод"],
         "en": ["method"]
@@ -2903,7 +2911,7 @@
     {
       "id": "lex:ru:могут->en",
       "url": "https://ru.wiktionary.org/wiki/%D0%BC%D0%BE%D0%B3%D1%83%D1%82",
-      "source": "curated-seed",
+      "source": "rule-derived",
       "labels": {
         "ru": ["могут"],
         "en": ["can"]
@@ -2915,7 +2923,7 @@
     {
       "id": "lex:ru:моделирование->en",
       "url": "https://ru.wiktionary.org/wiki/%D0%BC%D0%BE%D0%B4%D0%B5%D0%BB%D0%B8%D1%80%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5",
-      "source": "curated-seed",
+      "source": "rule-derived",
       "labels": {
         "ru": ["моделирование"],
         "en": ["modeling"]
@@ -2963,7 +2971,7 @@
     {
       "id": "lex:ru:надежная->en",
       "url": "https://ru.wiktionary.org/wiki/%D0%BD%D0%B0%D0%B4%D0%B5%D0%B6%D0%BD%D0%B0%D1%8F",
-      "source": "curated-seed",
+      "source": "rule-derived",
       "labels": {
         "ru": ["надежная"],
         "en": ["reliable"]
@@ -2987,7 +2995,7 @@
     {
       "id": "lex:ru:нашу->en",
       "url": "https://ru.wiktionary.org/wiki/%D0%BD%D0%B0%D1%88%D1%83",
-      "source": "curated-seed",
+      "source": "rule-derived",
       "labels": {
         "ru": ["нашу"],
         "en": ["our"]
@@ -3011,7 +3019,7 @@
     {
       "id": "lex:ru:объединяет->en",
       "url": "https://ru.wiktionary.org/wiki/%D0%BE%D0%B1%D1%8A%D0%B5%D0%B4%D0%B8%D0%BD%D1%8F%D0%B5%D1%82",
-      "source": "curated-seed",
+      "source": "rule-derived",
       "labels": {
         "ru": ["объединяет"],
         "en": ["combines"]
@@ -3035,7 +3043,7 @@
     {
       "id": "lex:ru:одна->en",
       "url": "https://ru.wiktionary.org/wiki/%D0%BE%D0%B4%D0%BD%D0%B0",
-      "source": "curated-seed",
+      "source": "rule-derived",
       "labels": {
         "ru": ["одна"],
         "en": ["one"]
@@ -3047,7 +3055,7 @@
     {
       "id": "lex:ru:описания->en",
       "url": "https://ru.wiktionary.org/wiki/%D0%BE%D0%BF%D0%B8%D1%81%D0%B0%D0%BD%D0%B8%D1%8F",
-      "source": "curated-seed",
+      "source": "rule-derived",
       "labels": {
         "ru": ["описания"],
         "en": ["descriptions"]
@@ -3059,7 +3067,7 @@
     {
       "id": "lex:ru:основанный->en",
       "url": "https://ru.wiktionary.org/wiki/%D0%BE%D1%81%D0%BD%D0%BE%D0%B2%D0%B0%D0%BD%D0%BD%D1%8B%D0%B9",
-      "source": "curated-seed",
+      "source": "rule-derived",
       "labels": {
         "ru": ["основанный"],
         "en": ["based"]
@@ -3119,7 +3127,7 @@
     {
       "id": "lex:ru:перевода->en",
       "url": "https://ru.wiktionary.org/wiki/%D0%BF%D0%B5%D1%80%D0%B5%D0%B2%D0%BE%D0%B4%D0%B0",
-      "source": "curated-seed",
+      "source": "rule-derived",
       "labels": {
         "ru": ["перевода"],
         "en": ["translation"]
@@ -3179,7 +3187,7 @@
     {
       "id": "lex:ru:преобразования->en",
       "url": "https://ru.wiktionary.org/wiki/%D0%BF%D1%80%D0%B5%D0%BE%D0%B1%D1%80%D0%B0%D0%B7%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D1%8F",
-      "source": "curated-seed",
+      "source": "rule-derived",
       "labels": {
         "ru": ["преобразования"],
         "en": ["transformation"]
@@ -3203,7 +3211,7 @@
     {
       "id": "lex:ru:примеры_перевода->en",
       "url": "https://ru.wiktionary.org/wiki/Special:Search?search=%D0%BF%D1%80%D0%B8%D0%BC%D0%B5%D1%80%D1%8B%20%D0%BF%D0%B5%D1%80%D0%B5%D0%B2%D0%BE%D0%B4%D0%B0",
-      "source": "curated-seed",
+      "source": "rule-derived",
       "labels": {
         "ru": ["примеры перевода"],
         "en": ["examples of translation"]
@@ -3215,7 +3223,7 @@
     {
       "id": "lex:ru:примеры_согласования->en",
       "url": "https://ru.wiktionary.org/wiki/Special:Search?search=%D0%BF%D1%80%D0%B8%D0%BC%D0%B5%D1%80%D1%8B%20%D1%81%D0%BE%D0%B3%D0%BB%D0%B0%D1%81%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D1%8F",
-      "source": "curated-seed",
+      "source": "rule-derived",
       "labels": {
         "ru": ["примеры согласования"],
         "en": ["examples of agreement"]
@@ -3227,7 +3235,7 @@
     {
       "id": "lex:ru:примеры->en",
       "url": "https://ru.wiktionary.org/wiki/%D0%BF%D1%80%D0%B8%D0%BC%D0%B5%D1%80%D1%8B",
-      "source": "curated-seed",
+      "source": "rule-derived",
       "labels": {
         "ru": ["примеры"],
         "en": ["examples"]
@@ -3251,7 +3259,7 @@
     {
       "id": "lex:ru:программировать->en",
       "url": "https://ru.wiktionary.org/wiki/%D0%BF%D1%80%D0%BE%D0%B3%D1%80%D0%B0%D0%BC%D0%BC%D0%B8%D1%80%D0%BE%D0%B2%D0%B0%D1%82%D1%8C",
-      "source": "curated-seed",
+      "source": "rule-derived",
       "labels": {
         "ru": ["программировать"],
         "en": ["program"]
@@ -3263,7 +3271,7 @@
     {
       "id": "lex:ru:программы->en",
       "url": "https://ru.wiktionary.org/wiki/%D0%BF%D1%80%D0%BE%D0%B3%D1%80%D0%B0%D0%BC%D0%BC%D1%8B",
-      "source": "curated-seed",
+      "source": "rule-derived",
       "labels": {
         "ru": ["программы"],
         "en": ["programs"]
@@ -3287,7 +3295,7 @@
     {
       "id": "lex:ru:простое->en",
       "url": "https://ru.wiktionary.org/wiki/%D0%BF%D1%80%D0%BE%D1%81%D1%82%D0%BE%D0%B5",
-      "source": "curated-seed",
+      "source": "rule-derived",
       "labels": {
         "ru": ["простое"],
         "en": ["simple"]
@@ -3299,7 +3307,7 @@
     {
       "id": "lex:ru:развитие->en",
       "url": "https://ru.wiktionary.org/wiki/%D1%80%D0%B0%D0%B7%D0%B2%D0%B8%D1%82%D0%B8%D0%B5",
-      "source": "curated-seed",
+      "source": "rule-derived",
       "labels": {
         "ru": ["развитие"],
         "en": ["development"]
@@ -3323,7 +3331,7 @@
     {
       "id": "lex:ru:рассматриваться->en",
       "url": "https://ru.wiktionary.org/wiki/%D1%80%D0%B0%D1%81%D1%81%D0%BC%D0%B0%D1%82%D1%80%D0%B8%D0%B2%D0%B0%D1%82%D1%8C%D1%81%D1%8F",
-      "source": "curated-seed",
+      "source": "rule-derived",
       "labels": {
         "ru": ["рассматриваться"],
         "en": ["treated"]
@@ -3359,7 +3367,7 @@
     {
       "id": "lex:ru:реальном->en",
       "url": "https://ru.wiktionary.org/wiki/%D1%80%D0%B5%D0%B0%D0%BB%D1%8C%D0%BD%D0%BE%D0%BC",
-      "source": "curated-seed",
+      "source": "rule-derived",
       "labels": {
         "ru": ["реальном"],
         "en": ["real"]
@@ -3395,7 +3403,7 @@
     {
       "id": "lex:ru:сама->en",
       "url": "https://ru.wiktionary.org/wiki/%D1%81%D0%B0%D0%BC%D0%B0",
-      "source": "curated-seed",
+      "source": "rule-derived",
       "labels": {
         "ru": ["сама"],
         "en": ["itself"]
@@ -3407,7 +3415,7 @@
     {
       "id": "lex:ru:самая->en",
       "url": "https://ru.wiktionary.org/wiki/%D1%81%D0%B0%D0%BC%D0%B0%D1%8F",
-      "source": "curated-seed",
+      "source": "rule-derived",
       "labels": {
         "ru": ["самая"],
         "en": ["most"]
@@ -3419,7 +3427,7 @@
     {
       "id": "lex:ru:самые_важные->en",
       "url": "https://ru.wiktionary.org/wiki/Special:Search?search=%D1%81%D0%B0%D0%BC%D1%8B%D0%B5%20%D0%B2%D0%B0%D0%B6%D0%BD%D1%8B%D0%B5",
-      "source": "curated-seed",
+      "source": "rule-derived",
       "labels": {
         "ru": ["самые важные"],
         "en": ["most important"]
@@ -3467,7 +3475,7 @@
     {
       "id": "lex:ru:синонимы->en",
       "url": "https://ru.wiktionary.org/wiki/%D1%81%D0%B8%D0%BD%D0%BE%D0%BD%D0%B8%D0%BC%D1%8B",
-      "source": "curated-seed",
+      "source": "rule-derived",
       "labels": {
         "ru": ["синонимы"],
         "en": ["synonyms"]
@@ -3491,7 +3499,7 @@
     {
       "id": "lex:ru:словами->en",
       "url": "https://ru.wiktionary.org/wiki/%D1%81%D0%BB%D0%BE%D0%B2%D0%B0%D0%BC%D0%B8",
-      "source": "curated-seed",
+      "source": "rule-derived",
       "labels": {
         "ru": ["словами"],
         "en": ["words"]
@@ -3503,7 +3511,7 @@
     {
       "id": "lex:ru:согласование->en",
       "url": "https://ru.wiktionary.org/wiki/%D1%81%D0%BE%D0%B3%D0%BB%D0%B0%D1%81%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5",
-      "source": "curated-seed",
+      "source": "rule-derived",
       "labels": {
         "ru": ["согласование"],
         "en": ["agreement"]
@@ -3515,7 +3523,7 @@
     {
       "id": "lex:ru:согласования->en",
       "url": "https://ru.wiktionary.org/wiki/%D1%81%D0%BE%D0%B3%D0%BB%D0%B0%D1%81%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D1%8F",
-      "source": "curated-seed",
+      "source": "rule-derived",
       "labels": {
         "ru": ["согласования"],
         "en": ["agreement"]
@@ -3527,7 +3535,7 @@
     {
       "id": "lex:ru:создавать->en",
       "url": "https://ru.wiktionary.org/wiki/%D1%81%D0%BE%D0%B7%D0%B4%D0%B0%D0%B2%D0%B0%D1%82%D1%8C",
-      "source": "curated-seed",
+      "source": "rule-derived",
       "labels": {
         "ru": ["создавать"],
         "en": ["create"]
@@ -3563,7 +3571,7 @@
     {
       "id": "lex:ru:способен->en",
       "url": "https://ru.wiktionary.org/wiki/%D1%81%D0%BF%D0%BE%D1%81%D0%BE%D0%B1%D0%B5%D0%BD",
-      "source": "curated-seed",
+      "source": "rule-derived",
       "labels": {
         "ru": ["способен"],
         "en": ["able"]
@@ -3611,7 +3619,7 @@
     {
       "id": "lex:ru:страницу->en",
       "url": "https://ru.wiktionary.org/wiki/%D1%81%D1%82%D1%80%D0%B0%D0%BD%D0%B8%D1%86%D1%83",
-      "source": "curated-seed",
+      "source": "rule-derived",
       "labels": {
         "ru": ["страницу"],
         "en": ["page"]
@@ -3623,7 +3631,7 @@
     {
       "id": "lex:ru:стремимся->en",
       "url": "https://ru.wiktionary.org/wiki/%D1%81%D1%82%D1%80%D0%B5%D0%BC%D0%B8%D0%BC%D1%81%D1%8F",
-      "source": "curated-seed",
+      "source": "rule-derived",
       "labels": {
         "ru": ["стремимся"],
         "en": ["strive"]
@@ -3635,7 +3643,7 @@
     {
       "id": "lex:ru:также->en",
       "url": "https://ru.wiktionary.org/wiki/%D1%82%D0%B0%D0%BA%D0%B6%D0%B5",
-      "source": "curated-seed",
+      "source": "rule-derived",
       "labels": {
         "ru": ["также"],
         "en": ["also"]
@@ -3647,7 +3655,7 @@
     {
       "id": "lex:ru:такие->en",
       "url": "https://ru.wiktionary.org/wiki/%D1%82%D0%B0%D0%BA%D0%B8%D0%B5",
-      "source": "curated-seed",
+      "source": "rule-derived",
       "labels": {
         "ru": ["такие"],
         "en": ["such"]
@@ -3683,7 +3691,7 @@
     {
       "id": "lex:ru:точная->en",
       "url": "https://ru.wiktionary.org/wiki/%D1%82%D0%BE%D1%87%D0%BD%D0%B0%D1%8F",
-      "source": "curated-seed",
+      "source": "rule-derived",
       "labels": {
         "ru": ["точная"],
         "en": ["accurate"]
@@ -3695,7 +3703,7 @@
     {
       "id": "lex:ru:универсальная->en",
       "url": "https://ru.wiktionary.org/wiki/%D1%83%D0%BD%D0%B8%D0%B2%D0%B5%D1%80%D1%81%D0%B0%D0%BB%D1%8C%D0%BD%D0%B0%D1%8F",
-      "source": "curated-seed",
+      "source": "rule-derived",
       "labels": {
         "ru": ["универсальная"],
         "en": ["universal"]
@@ -3719,7 +3727,7 @@
     {
       "id": "lex:ru:ускорить->en",
       "url": "https://ru.wiktionary.org/wiki/%D1%83%D1%81%D0%BA%D0%BE%D1%80%D0%B8%D1%82%D1%8C",
-      "source": "curated-seed",
+      "source": "rule-derived",
       "labels": {
         "ru": ["ускорить"],
         "en": ["accelerate"]
@@ -3779,7 +3787,7 @@
     {
       "id": "lex:ru:хранилище_ассоциативной_памяти->en",
       "url": "https://ru.wiktionary.org/wiki/Special:Search?search=%D1%85%D1%80%D0%B0%D0%BD%D0%B8%D0%BB%D0%B8%D1%89%D0%B5%20%D0%B0%D1%81%D1%81%D0%BE%D1%86%D0%B8%D0%B0%D1%82%D0%B8%D0%B2%D0%BD%D0%BE%D0%B9%20%D0%BF%D0%B0%D0%BC%D1%8F%D1%82%D0%B8",
-      "source": "curated-seed",
+      "source": "rule-derived",
       "labels": {
         "ru": ["хранилище ассоциативной памяти"],
         "en": ["associative memory storage"]
@@ -3803,7 +3811,7 @@
     {
       "id": "lex:ru:цели->en",
       "url": "https://ru.wiktionary.org/wiki/%D1%86%D0%B5%D0%BB%D0%B8",
-      "source": "curated-seed",
+      "source": "rule-derived",
       "labels": {
         "ru": ["цели"],
         "en": ["goals"]
@@ -3815,7 +3823,7 @@
     {
       "id": "lex:ru:человеческий_разум->en",
       "url": "https://ru.wiktionary.org/wiki/Special:Search?search=%D1%87%D0%B5%D0%BB%D0%BE%D0%B2%D0%B5%D1%87%D0%B5%D1%81%D0%BA%D0%B8%D0%B9%20%D1%80%D0%B0%D0%B7%D1%83%D0%BC",
-      "source": "curated-seed",
+      "source": "rule-derived",
       "labels": {
         "ru": ["человеческий разум"],
         "en": ["human mind"]
@@ -3827,7 +3835,7 @@
     {
       "id": "lex:ru:человеческий_язык->en",
       "url": "https://ru.wiktionary.org/wiki/Special:Search?search=%D1%87%D0%B5%D0%BB%D0%BE%D0%B2%D0%B5%D1%87%D0%B5%D1%81%D0%BA%D0%B8%D0%B9%20%D1%8F%D0%B7%D1%8B%D0%BA",
-      "source": "curated-seed",
+      "source": "rule-derived",
       "labels": {
         "ru": ["человеческий язык"],
         "en": ["human language"]
@@ -3851,7 +3859,7 @@
     {
       "id": "lex:ru:что_это_такое->en",
       "url": "https://ru.wiktionary.org/wiki/Special:Search?search=%D1%87%D1%82%D0%BE%20%D1%8D%D1%82%D0%BE%20%D1%82%D0%B0%D0%BA%D0%BE%D0%B5",
-      "source": "curated-seed",
+      "source": "rule-derived",
       "labels": {
         "ru": ["что это такое"],
         "en": ["what is this"]
@@ -3875,7 +3883,7 @@
     {
       "id": "lex:ru:это->en",
       "url": "https://ru.wiktionary.org/wiki/%D1%8D%D1%82%D0%BE",
-      "source": "curated-seed",
+      "source": "rule-derived",
       "labels": {
         "ru": ["это"],
         "en": ["is"]
@@ -3887,7 +3895,7 @@
     {
       "id": "lex:ru:этот->en",
       "url": "https://ru.wiktionary.org/wiki/%D1%8D%D1%82%D0%BE%D1%82",
-      "source": "curated-seed",
+      "source": "rule-derived",
       "labels": {
         "ru": ["этот"],
         "en": ["this"]
@@ -3899,7 +3907,7 @@
     {
       "id": "lex:ru:эффекты->en",
       "url": "https://ru.wiktionary.org/wiki/%D1%8D%D1%84%D1%84%D0%B5%D0%BA%D1%82%D1%8B",
-      "source": "curated-seed",
+      "source": "rule-derived",
       "labels": {
         "ru": ["эффекты"],
         "en": ["effects"]
@@ -3911,7 +3919,7 @@
     {
       "id": "Q35657",
       "url": "https://ru.wikipedia.org/wiki/%D0%A8%D1%82%D0%B0%D1%82_%D0%A1%D0%A8%D0%90",
-      "source": "override",
+      "source": "wikidata",
       "entityId": "Q35657",
       "description": "state of the United States",
       "labels": {
