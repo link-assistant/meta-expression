@@ -9,4 +9,5 @@ mod issue41_glossary;
 mod issue52_translation;
 mod issue61_wasm_surface;
 mod issue96_four_language_parity;
+mod issue96_no_hardcoded_translations;
 mod semantic_relations;
