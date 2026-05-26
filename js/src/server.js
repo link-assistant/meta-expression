@@ -3,8 +3,11 @@ import { URL, fileURLToPath } from 'node:url';
 import {
   analyzeStatement,
   analyzeStatementWithLiveEvidence,
+  exportEvidencePropertyGraph,
   exportEvidenceJsonLd,
   exportEvidenceProvJsonLd,
+  exportEvidenceRdfTriples,
+  exportScopedSparqlEvidence,
   naturalizeExpressionWith,
   serializeLinksNotation,
 } from './index.js';
@@ -138,6 +141,7 @@ function analyzeParamsFromSearch(url) {
     url.searchParams.get('format') ?? 'json',
     Number(url.searchParams.get('select') ?? 0),
     url.searchParams.get('live') === 'true',
+    numberParam(url.searchParams.get('limit')),
   ];
 }
 
@@ -147,6 +151,7 @@ function analyzeParamsFromPayload(payload) {
     payload.format ?? 'json',
     payload.interpretationIndex ?? 0,
     payload.live === true,
+    payload.limit,
   ];
 }
 
@@ -231,6 +236,7 @@ function checkParamsFromSearch(url) {
     input: url.searchParams.get('input') ?? '',
     format: url.searchParams.get('format') ?? 'json',
     live: url.searchParams.get('live') === 'true',
+    limit: numberParam(url.searchParams.get('limit')),
     evidenceScoring: evidenceScoringFromSearch(url),
     sourceUrl:
       url.searchParams.get('sourceUrl') ?? url.searchParams.get('source') ?? '',
@@ -242,6 +248,7 @@ function checkParamsFromPayload(payload) {
     input: payload.input ?? '',
     format: payload.format ?? 'json',
     live: payload.live === true,
+    limit: payload.limit,
     evidenceScoring: payload.evidenceScoring,
     preferenceProfile: payload.preferenceProfile,
     sourceUrl: payload.sourceUrl ?? payload.source ?? '',
@@ -309,7 +316,8 @@ async function sendAnalysis(
   input,
   format,
   interpretationIndex,
-  live
+  live,
+  limit
 ) {
   const options = {
     interpretationIndex,
@@ -319,6 +327,22 @@ async function sendAnalysis(
     ? await analyzeStatementWithLiveEvidence(input, options)
     : analyzeStatement(input, options);
 
+  if (isSparqlFormat(format)) {
+    sendSparqlQuery(
+      response,
+      200,
+      exportScopedSparqlEvidence(analysis, { limit }).query
+    );
+    return;
+  }
+  if (isPropertyGraphFormat(format)) {
+    sendJson(response, 200, exportEvidencePropertyGraph(analysis, { limit }));
+    return;
+  }
+  if (isRdfFormat(format)) {
+    sendJson(response, 200, exportEvidenceRdfTriples(analysis, { limit }));
+    return;
+  }
   if (isProvOFormat(format)) {
     sendLinkedDataJson(response, 200, exportEvidenceProvJsonLd(analysis));
     return;
@@ -443,6 +467,7 @@ async function sendCheck(response, params, ctx) {
     ? await checkTextWithLiveEvidence(params.input, options)
     : checkText(params.input, options);
   emitCheckResponse(response, params.format, result, {
+    limit: params.limit,
     sourceUrl: params.sourceUrl,
   });
 }
@@ -584,6 +609,30 @@ function emitCheckResponse(response, format, payload, options = {}) {
     );
     return 0;
   }
+  if (isSparqlFormat(format)) {
+    sendSparqlQuery(
+      response,
+      200,
+      exportScopedSparqlEvidence(payload, { limit: options.limit }).query
+    );
+    return 0;
+  }
+  if (isPropertyGraphFormat(format)) {
+    sendJson(
+      response,
+      200,
+      exportEvidencePropertyGraph(payload, { limit: options.limit })
+    );
+    return 0;
+  }
+  if (isRdfFormat(format)) {
+    sendJson(
+      response,
+      200,
+      exportEvidenceRdfTriples(payload, { limit: options.limit })
+    );
+    return 0;
+  }
   if (isProvOFormat(format)) {
     sendLinkedDataJson(response, 200, exportEvidenceProvJsonLd(payload));
     return 0;
@@ -619,6 +668,18 @@ function emitCheckResponse(response, format, payload, options = {}) {
 
 function isClaimReviewFormat(format) {
   return format === 'claim-review' || format === 'claimreview';
+}
+
+function isSparqlFormat(format) {
+  return format === 'sparql' || format === 'sparql-query';
+}
+
+function isPropertyGraphFormat(format) {
+  return format === 'property-graph' || format === 'graph';
+}
+
+function isRdfFormat(format) {
+  return format === 'rdf' || format === 'rdf-triples';
 }
 
 function isJsonLdFormat(format) {
@@ -677,6 +738,13 @@ function sendLinkedDataJson(response, status, payload) {
     'content-type': 'application/ld+json; charset=utf-8',
   });
   response.end(JSON.stringify(payload, null, 2));
+}
+
+function sendSparqlQuery(response, status, query) {
+  response.writeHead(status, {
+    'content-type': 'application/sparql-query; charset=utf-8',
+  });
+  response.end(query);
 }
 
 function readRequestBody(request) {

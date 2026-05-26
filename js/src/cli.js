@@ -6,9 +6,12 @@ import { makeConfig } from 'lino-arguments';
 import {
   analyzeStatement,
   analyzeStatementWithLiveEvidence,
+  exportEvidencePropertyGraph,
   exportEvidenceJsonLd,
   exportEvidenceProvJsonLd,
+  exportEvidenceRdfTriples,
   exportLiteratureBibliography,
+  exportScopedSparqlEvidence,
   naturalizeExpressionWith,
   parsePreferenceProfile,
   reviewClaimAgainstLiterature,
@@ -86,6 +89,9 @@ export function parseCliArguments(args) {
     },
     '--match-threshold': () => {
       options.matchThreshold = Number(nextValue());
+    },
+    '--limit': () => {
+      options.limit = Number(nextValue());
     },
     '--max-ngram': () => {
       options.maxNgramSize = Number(nextValue(3));
@@ -248,6 +254,10 @@ function configureCliYargs({ yargs, getenv }) {
       type: 'number',
       default: getenv('MATCH_THRESHOLD', Number.NaN),
     })
+    .option('limit', {
+      type: 'number',
+      default: getenv('LIMIT', Number.NaN),
+    })
     .option('max-ngram', {
       type: 'number',
       default: getenv('MAX_NGRAM', Number.NaN),
@@ -329,6 +339,7 @@ function createCliOptions(config) {
   assignStringOption(options, 'skipListPath', config.skipList);
   assignStringOption(options, 'translationFixesPath', config.fixes);
   assignNumberOption(options, 'matchThreshold', config.matchThreshold);
+  assignNumberOption(options, 'limit', config.limit);
   assignNumberOption(options, 'maxNgramSize', config.maxNgram);
   assignStringOption(
     options,
@@ -822,6 +833,32 @@ function cliAnalysisOptions(options) {
 }
 
 function emitCliAnalysis(options, output, analysis) {
+  if (isSparqlFormat(options.format)) {
+    output.log(
+      exportScopedSparqlEvidence(analysis, { limit: options.limit }).query
+    );
+    return 0;
+  }
+  if (isPropertyGraphFormat(options.format)) {
+    output.log(
+      JSON.stringify(
+        exportEvidencePropertyGraph(analysis, { limit: options.limit }),
+        null,
+        2
+      )
+    );
+    return 0;
+  }
+  if (isRdfFormat(options.format)) {
+    output.log(
+      JSON.stringify(
+        exportEvidenceRdfTriples(analysis, { limit: options.limit }),
+        null,
+        2
+      )
+    );
+    return 0;
+  }
   if (isProvOFormat(options.format)) {
     output.log(JSON.stringify(exportEvidenceProvJsonLd(analysis), null, 2));
     return 0;
@@ -840,6 +877,32 @@ function emitCliAnalysis(options, output, analysis) {
 }
 
 function emitCheckResult(options, output, result) {
+  if (isSparqlFormat(options.format)) {
+    output.log(
+      exportScopedSparqlEvidence(result, { limit: options.limit }).query
+    );
+    return 0;
+  }
+  if (isPropertyGraphFormat(options.format)) {
+    output.log(
+      JSON.stringify(
+        exportEvidencePropertyGraph(result, { limit: options.limit }),
+        null,
+        2
+      )
+    );
+    return 0;
+  }
+  if (isRdfFormat(options.format)) {
+    output.log(
+      JSON.stringify(
+        exportEvidenceRdfTriples(result, { limit: options.limit }),
+        null,
+        2
+      )
+    );
+    return 0;
+  }
   if (isClaimReviewFormat(options.format)) {
     output.log(
       JSON.stringify(
@@ -934,6 +997,18 @@ function isClaimReviewFormat(format) {
   return format === 'claim-review' || format === 'claimreview';
 }
 
+function isSparqlFormat(format) {
+  return format === 'sparql' || format === 'sparql-query';
+}
+
+function isPropertyGraphFormat(format) {
+  return format === 'property-graph' || format === 'graph';
+}
+
+function isRdfFormat(format) {
+  return format === 'rdf' || format === 'rdf-triples';
+}
+
 function isJsonLdFormat(format) {
   return (
     format === 'json-ld' ||
@@ -1004,7 +1079,7 @@ Commands:
 
 Options:
   -i, --input <text>             Statement text
-  -f, --format <json|links|markdown|html|claim-review|json-ld|prov-o>
+  -f, --format <json|links|markdown|html|claim-review|json-ld|prov-o|sparql|rdf|property-graph>
   -s, --select <index>           Interpretation index (analyze), default 0
   --live                         analyze: resolve through Wikimedia APIs
   --target <wikipedia|wikidata|local>
@@ -1025,6 +1100,7 @@ Options:
   --skip-list <file.json>        translation-quality: known Wikipedia translation deltas
   --fixes <file.json>            translation-quality: curated translation fixes
   --match-threshold <0..1>       translation-quality: token coverage threshold
+  --limit <n>                    graph/SPARQL export record limit (default 50)
   --score <situation=probability>
                                  check/fact-check: override evidence scoring
   --source, --source-url <url>    check/fact-check: source URL for ClaimReview

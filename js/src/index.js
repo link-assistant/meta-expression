@@ -115,6 +115,13 @@ export {
   exportEvidenceProvJsonLd,
 } from './provenance-jsonld.js';
 export {
+  exportEvidencePropertyGraph,
+  exportEvidenceRdfTriples,
+  exportScopedSparqlEvidence,
+  importEvidencePropertyGraph,
+  importEvidenceRdfTriples,
+} from './graph-interchange.js';
+export {
   createLiteratureEvidenceItems,
   exportLiteratureBibliography,
   exportLiteratureBibTeX,

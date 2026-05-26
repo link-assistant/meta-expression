@@ -66,6 +66,10 @@ Core exports:
 - `exportEvidenceJsonLd(result)` and `exportEvidenceProvJsonLd(result)` export
   `/analyze` and `/check` evidence provenance as JSON-LD and a PROV-O-compatible
   JSON-LD graph while preserving Links Notation output.
+- `exportScopedSparqlEvidence(result)`, `exportEvidenceRdfTriples(result)`,
+  and `exportEvidencePropertyGraph(result)` project existing Q/P evidence links
+  into scoped SPARQL, RDF-triple, and property-graph interchange shapes without
+  changing the bounded real-world confidence calculation.
 - `reviewClaimAgainstLiterature(fixture)` checks a claim against screened paper
   metadata/excerpts as normal evidence links, reports literature agreement and
   uncertainty, and `exportLiteratureBibliography(result, { format })` emits
@@ -108,6 +112,7 @@ Real-world confidence is intentionally bounded away from absolute `0%` and
 node js/src/cli.js analyze "1 + 1 = 2"
 node js/src/cli.js analyze --input "Earth orbits the Sun" --format links
 node js/src/cli.js analyze --input "Earth orbits the Sun" --format json-ld
+node js/src/cli.js analyze --input "Earth orbits the Sun" --format sparql --limit 5
 node js/src/cli.js analyze --input "Paris is the capital of France" --live
 node js/src/cli.js formalize --input "Hawaii is a state." --format markdown
 node js/src/cli.js translate --input "Hawaii is a state." --to ru --format markdown
@@ -137,6 +142,7 @@ Routes:
 
 - `GET /health`
 - `GET /analyze?input=...&format=json|links|json-ld|prov-o&select=0`
+- `GET /analyze?input=...&format=sparql|rdf|property-graph&limit=50`
 - `GET /analyze?input=...&live=true`
 - `POST /analyze` with `{ "input": "...", "format": "json" }`
 - `GET /formalize?input=...&format=json|links|markdown|html`
