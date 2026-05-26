@@ -3,6 +3,7 @@ use doublets::Doublet;
 mod analysis;
 mod formal_ai_support;
 mod issue52;
+mod semantic_lexicon;
 mod statement_formalization;
 #[cfg(target_arch = "wasm32")]
 mod wasm;
@@ -17,6 +18,10 @@ pub use analysis::{
 pub use issue52::{
     issue52_english_text, issue52_russian_text, issue52_translation_relations,
     translate_issue52_semantic_text,
+};
+pub use semantic_lexicon::{
+    build_directional_glossary, list_directional_pairs, list_lexicon_languages,
+    resolve_concept_form,
 };
 pub use wikimedia_plan::{
     plan_wikidata_entity_batches, stable_wikimedia_cache_ttl_days, stable_wikimedia_cache_ttl_ms,
@@ -181,7 +186,7 @@ fn translate_formal_ai_phrase_sentence(
         lookup_formal_ai_phrase_translation(source_language, target_language, sentence_key)?;
     let source_text = input.trim();
     let source_phrase_text = source_text.trim_end_matches(['.', '!', '?']);
-    let mut target_base = target.to_string();
+    let mut target_base = target;
     if starts_with_uppercase(source_text) {
         target_base = uppercase_first(&target_base);
     }
@@ -210,20 +215,19 @@ fn translate_formal_ai_phrase_sentence(
     })
 }
 
+/// Translate a whole multi-word phrase through the interlingua. Only multi-word
+/// keys are handled here so single words still flow through the lexical glossary
+/// path below; idiomatic phrases (e.g. "как у тебя дела" -> "how are you") are
+/// derived from `js/data/semantic-lexicon.json`, never hardcoded in this source.
 fn lookup_formal_ai_phrase_translation(
     source_language: &str,
     target_language: &str,
     sentence_key: &str,
-) -> Option<&'static str> {
-    match (source_language, target_language, sentence_key) {
-        ("ru", "en", "как у тебя дела") => Some("how are you"),
-        ("ru", "en", "как дела") => Some("how are you"),
-        ("ru", "en", "кто ты такой") => Some("who are you"),
-        ("ru", "en", "что это такое") => Some("what is this"),
-        ("ru", "en", "доброе яблоко") => Some("good apple"),
-        ("en", "ru", "thank you") => Some("спасибо"),
-        _ => None,
+) -> Option<String> {
+    if !sentence_key.contains(' ') {
+        return None;
     }
+    semantic_lexicon::lookup_glossary(source_language, target_language, sentence_key)
 }
 
 pub fn translate_known_semantic_text(
@@ -253,7 +257,7 @@ pub fn translate_glossary_semantic_sentence(
         let translated =
             lookup_lexical_translation(&source_language, &target_language, &token.normalized)?;
         target_tokens.push(TargetToken {
-            text: translated.to_string(),
+            text: translated,
             source_index: Some(index),
         });
     }
@@ -860,67 +864,15 @@ fn tokenize_translation_words(source: &str) -> Vec<TranslationToken> {
     tokens
 }
 
+/// Translate a single source word through the interlingua. The source/target
+/// forms are derived from `js/data/semantic-lexicon.json` at runtime, so no
+/// direct language-pair dictionary lives in this source file.
 fn lookup_lexical_translation(
     source_language: &str,
     target_language: &str,
     word: &str,
-) -> Option<&'static str> {
-    match (source_language, target_language, word) {
-        ("ru", "en", "добавить") => Some("add"),
-        ("ru", "en", "найти") => Some("find"),
-        ("ru", "en", "синоним") => Some("synonym"),
-        ("ru", "en", "синонимы") => Some("synonyms"),
-        ("ru", "en", "или") => Some("or"),
-        ("ru", "en", "пример") => Some("example"),
-        ("ru", "en", "примеры") => Some("examples"),
-        ("ru", "en", "согласование") => Some("agreement"),
-        ("ru", "en", "согласования") => Some("agreement"),
-        ("ru", "en", "перевод") => Some("translation"),
-        ("ru", "en", "перевода") => Some("translation"),
-        ("ru", "en", "перевести") => Some("translate"),
-        ("ru", "en", "формализовать") => Some("formalize"),
-        ("ru", "en", "текст") => Some("text"),
-        ("ru", "en", "проверить") => Some("check"),
-        ("ru", "en", "утверждение") => Some("statement"),
-        ("ru", "en", "сравнить") => Some("compare"),
-        ("ru", "en", "значение") => Some("value"),
-        ("ru", "en", "значения") => Some("values"),
-        ("ru", "en", "показать") => Some("show"),
-        ("ru", "en", "вопрос") => Some("question"),
-        ("ru", "en", "вопросы") => Some("questions"),
-        ("ru", "en", "открыть") => Some("open"),
-        ("ru", "en", "страница") => Some("page"),
-        ("ru", "en", "страницу") => Some("page"),
-        ("ru", "en", "сохранить") => Some("save"),
-        ("ru", "en", "результат") => Some("result"),
-        ("ru", "en", "спасибо") => Some("thank you"),
-        ("ru", "en", "да") => Some("yes"),
-        ("ru", "en", "нет") => Some("no"),
-        ("ru", "en", "привет") => Some("hello"),
-        ("ru", "en", "яблоко") => Some("apple"),
-        ("ru", "en", "помидор") => Some("tomato"),
-        ("ru", "en", "огурец") => Some("cucumber"),
-        ("ru", "en", "картофель") => Some("potato"),
-        ("ru", "en", "морковь") => Some("carrot"),
-        ("ru", "en", "хлеб") => Some("bread"),
-        ("ru", "en", "вода") => Some("water"),
-        ("en", "ru", "add") => Some("добавьте"),
-        ("en", "ru", "example") => Some("пример"),
-        ("en", "ru", "examples") => Some("примеры"),
-        ("en", "ru", "hello") => Some("привет"),
-        ("en", "ru", "apple") => Some("яблоко"),
-        ("en", "ru", "tomato") => Some("помидор"),
-        ("en", "ru", "cucumber") => Some("огурец"),
-        ("en", "ru", "potato") => Some("картофель"),
-        ("en", "ru", "carrot") => Some("морковь"),
-        ("en", "ru", "bread") => Some("хлеб"),
-        ("en", "ru", "water") => Some("вода"),
-        ("en", "hi", "hello") => Some("नमस्ते"),
-        ("en", "hi", "apple") => Some("सेब"),
-        ("en", "zh", "hello") => Some("你好"),
-        ("en", "zh", "apple") => Some("苹果"),
-        _ => None,
-    }
+) -> Option<String> {
+    semantic_lexicon::lookup_glossary(source_language, target_language, word)
 }
 
 fn insert_russian_examples_of(
