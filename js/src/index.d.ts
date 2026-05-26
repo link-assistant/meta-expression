@@ -18,6 +18,7 @@ export interface LinkRecord<T = unknown> {
   id: string;
   role: string;
   references: string[];
+  version?: number;
   value: T;
   provenance: LinkProvenance;
 }
@@ -77,12 +78,30 @@ export interface EvidenceItem {
   };
 }
 
+export type TruthRange = [number, number];
+
+export interface ProbabilityCalculationInput {
+  kind: string;
+  id?: string | null;
+  value?: unknown;
+  [key: string]: unknown;
+}
+
 export interface EvidenceCalculation {
   strategy: string;
-  supportWeight: number;
-  refuteWeight: number;
-  rawConfidence: number | null;
-  boundedConfidence: number | null;
+  truthValue: number | null;
+  truthRange: TruthRange;
+  valence: number;
+  probability: number | null;
+  correctness: number | null;
+  signedConfidence: number | null;
+  deterministic: boolean;
+  bounded: boolean;
+  inputs: ProbabilityCalculationInput[];
+  supportWeight?: number;
+  refuteWeight?: number;
+  rawConfidence?: number | null;
+  boundedConfidence?: number | null;
   realWorldUncertainty?: number;
   evidence: Array<{
     id?: string;
@@ -104,15 +123,237 @@ export interface EvaluationResult {
   actual?: number;
   expected?: number;
   confidence: number | null;
+  probability: number | null;
   correctness: number | null;
   signedConfidence: number | null;
   rawBalance: number | null;
   supportWeight?: number;
   refuteWeight?: number;
-  calculation?: EvidenceCalculation;
+  calculation: EvidenceCalculation;
   supportingEvidence: EvidenceItem[];
   refutingEvidence: EvidenceItem[];
   explanation: string;
+}
+
+export interface RelativeMetaLogicEngine {
+  evaluate?: (program: string, options?: Record<string, unknown>) => unknown;
+  runTactics?: (state: unknown, tactics: unknown[]) => unknown;
+  Env?: new (options?: Record<string, unknown>) => unknown;
+  createEnv?: (options?: Record<string, unknown>) => unknown;
+  evalNode?: (ast: unknown, env: unknown) => unknown;
+  parseOne?: (tokens: unknown) => unknown;
+  tokenizeOne?: (source: string) => unknown;
+  evaluateFormalization?: (
+    formalization: unknown,
+    options?: Record<string, unknown>
+  ) => unknown;
+}
+
+export interface RelativeMetaLogicUpstream {
+  name: 'relative-meta-logic';
+  version: string;
+  repository: string;
+  commit: string;
+  packagePath: string;
+  npmPublished: boolean;
+  packageSpec: string;
+}
+
+export interface RelativeMetaLogicInputMapping {
+  supported: boolean;
+  inputKind:
+    | 'arithmetic'
+    | 'formal-reasoning-program'
+    | 'partial-formalization';
+  formalizationLevel: number | null;
+  program?: string;
+  ast?: unknown;
+  valueKind?: 'truth-value' | 'number';
+  query?: string | null;
+  dependencies?: FormalReasoningDependency[];
+  facts?: FormalReasoningFact[];
+  unknowns?: string[];
+  refinementSuggestions?: string[];
+  engine: RelativeMetaLogicUpstream;
+}
+
+export type ProofSolverArtifactFormat = 'lean4' | 'smt-lib';
+
+export type ProofSolverArtifactStatus =
+  | 'candidate'
+  | 'validated'
+  | 'unsupported';
+
+export interface ProofSolverArtifactAdapter {
+  id: string;
+  name: string;
+  kind: string;
+  formats: string[];
+  sourceType: string;
+  version?: string | null;
+  adapt(raw: unknown, context?: Record<string, unknown>): ProofSolverArtifact;
+}
+
+export interface ProofSolverSourceAdapter {
+  id?: string;
+  name?: string;
+  kind?: string;
+  sourceType?: string;
+  version?: string | null;
+  extract(
+    claimText: string,
+    context: Record<string, unknown>
+  ): unknown | Promise<unknown>;
+}
+
+export interface ProofSolverArtifact {
+  id: string;
+  family: 'proof-assistant' | 'solver-query' | string;
+  format: ProofSolverArtifactFormat | string;
+  system: string;
+  adapterId: string;
+  claim: {
+    text: string;
+    key: string;
+  };
+  artifact: {
+    language: string;
+    entrypoint: string | null;
+    intent: string | null;
+    text: string;
+  };
+  result: {
+    kind: 'proof' | 'solver-result' | string;
+    outcome: string | null;
+    polarity: EvidenceItem['polarity'] | null;
+    checker: string | null;
+    mode: string;
+    checkedAt: string;
+    absolute: false;
+  };
+  provenance: LinkProvenance & {
+    adapterId: string;
+    adapterVersion: string | null;
+  };
+  verification: {
+    executed: false;
+    executionGate: {
+      issue: 72;
+      label: string;
+      url: string;
+    };
+    checks: Array<{ id: string; passed: boolean; message: string }>;
+    diagnostics: Array<{ level: string; message: string }>;
+  };
+  status: ProofSolverArtifactStatus;
+  truthScoring: {
+    included: boolean;
+    eligible: boolean;
+    absolute: false;
+    maxEvidenceWeight: number;
+    executionGate: {
+      issue: 72;
+      label: string;
+      url: string;
+    };
+    reason: string;
+  };
+  evidence: EvidenceItem | null;
+}
+
+export interface ProofSolverArtifactEvidenceBundle {
+  type: 'proof-solver-artifact-evidence';
+  version: 1;
+  status: 'evidence-only' | 'empty';
+  claim: {
+    text: string;
+    key: string;
+  };
+  guardrails: {
+    executionGate: {
+      issue: 72;
+      label: string;
+      url: string;
+    };
+    absoluteClaims: false;
+    defaultMaxEvidenceWeight: number;
+    reason: string;
+  };
+  adapters: Array<{
+    id: string;
+    name: string;
+    kind: string;
+    formats: string[];
+    sourceType: string;
+    version: string | null;
+  }>;
+  artifacts: ProofSolverArtifact[];
+  evidence: EvidenceItem[];
+  diagnostics: Array<{ id: string; level: string; message: string }>;
+}
+
+export interface FormalReasoningDependency {
+  source: string;
+  target: string;
+  relation: string;
+}
+
+export interface FormalReasoningFact {
+  statement: string;
+  probability: number;
+  truthValue?: number | null;
+  truthRange?: TruthRange;
+  valence?: number;
+}
+
+export interface FormalReasoningTraceEvent {
+  method: string;
+  text: string;
+  sourceType: 'relative-meta-logic';
+  sourceUrl: string;
+}
+
+export interface FormalReasoningSummary {
+  query: string | null;
+  dependencies: FormalReasoningDependency[];
+  facts: FormalReasoningFact[];
+}
+
+export interface FormalReasoningResult {
+  kind: 'formal-reasoning';
+  engine: {
+    name: 'relative-meta-logic';
+    mode: string;
+    sourceUrl: string;
+  };
+  program: string;
+  query: string;
+  value: boolean | 'unknown' | 'undetermined';
+  confidence: number;
+  correctness: number;
+  signedConfidence: number | null;
+  rawBalance: number | null;
+  probability: number | null;
+  calculation: EvidenceCalculation;
+  truthValue?: number | null;
+  truthRange?: TruthRange;
+  valence?: number;
+  dependencies: FormalReasoningDependency[];
+  relations: {
+    contradictions: FormalReasoningDependency[];
+  };
+  facts: FormalReasoningFact[];
+  diagnostics: Array<{ code: string; message: string }>;
+  trace: FormalReasoningTraceEvent[];
+  proof: {
+    closed: boolean;
+    diagnostics: Array<{ code: string; message: string }>;
+    trace: FormalReasoningTraceEvent[];
+  };
+  evaluation: {
+    results: unknown[];
+    diagnostics: Array<{ code: string; message: string }>;
+  };
 }
 
 export interface StatementAnalysis {
@@ -134,6 +375,17 @@ export interface StatementAnalysis {
   opposite: string | null;
 }
 
+export interface WasmStatementAnalysis {
+  status: 'completed';
+  statement: LinkRecord;
+  interpretations: Interpretation[];
+  selectedInterpretation: Interpretation;
+  formalization: Formalization;
+  result: EvaluationResult;
+  resultLink: LinkRecord;
+  linksNetwork: LinksNetwork;
+}
+
 export interface AnalysisOptions {
   topK?: number;
   interpretationId?: string;
@@ -152,6 +404,9 @@ export interface AnalysisOptions {
   now?: () => number;
   reasoningStrategyId?: string;
   preferenceProfile?: PreferenceProfile;
+  relativeMetaLogic?: RelativeMetaLogicEngine;
+  rmlEngine?: RelativeMetaLogicEngine;
+  relativeMetaLogicOptions?: Record<string, unknown>;
 }
 
 export interface PreferenceBeliefDefinition {
@@ -252,6 +507,225 @@ export interface IssueReportOptions {
   pageUrl?: string;
   userAgent?: string;
   timestamp?: string;
+}
+
+export type WritingAssistantOperation =
+  | 'analyze'
+  | 'check'
+  | 'formalize'
+  | 'translate'
+  | 'uniqueness';
+
+export type WritingAssistantSurfaceKind =
+  | 'browser-extension'
+  | 'editor-extension'
+  | 'document-addin'
+  | 'embedded-writing-assistant';
+
+export interface WritingAssistantGuardrails {
+  naturalLanguageFirst: true;
+  candidateSuggestionsExplicit: true;
+  candidateSuggestionsRequireSelection: true;
+  candidateSuggestionsAreTruthEvidence: false;
+  evidenceChecksCarryEvidence: true;
+  evidenceChecksAreStyleRewrites: false;
+  styleRewritesProvidedByCore: false;
+}
+
+export interface WritingAssistantContext {
+  pageUrl?: string;
+  documentUrl?: string;
+  userAgent?: string;
+  selectionStart?: number;
+  selectionEnd?: number;
+  [key: string]: unknown;
+}
+
+export interface WritingAssistantRequest {
+  operation?: WritingAssistantOperation | string;
+  action?: WritingAssistantOperation | string;
+  text?: string;
+  input?: string;
+  surface?: WritingAssistantSurfaceKind | string;
+  context?: WritingAssistantContext;
+  report?: IssueReportOptions;
+  options?: Record<string, unknown>;
+  live?: boolean;
+  limit?: number;
+  from?: string;
+  to?: string;
+  sourceLanguage?: string;
+  targetLanguage?: string;
+}
+
+export interface WritingAssistantSuggestion {
+  id: string;
+  kind:
+    | 'candidate-interpretation'
+    | 'evidence-check'
+    | 'candidate-formalization-link'
+    | 'translation-question'
+    | 'originality-check'
+    | string;
+  category: 'candidate' | 'evidence-check' | string;
+  operation: WritingAssistantOperation;
+  text: string;
+  explicit: boolean;
+  evidenceBacked: boolean;
+  styleRewrite: boolean;
+  requiresUserSelection: boolean;
+  source?: string;
+  selected?: boolean;
+  candidate?: unknown;
+  evidence?: unknown[];
+  result?: unknown;
+  [key: string]: unknown;
+}
+
+export interface WritingAssistantExports {
+  linksNotation: string;
+  issueReportUrl?: string;
+  issueReportUrls?: Array<{ statementId: string; url: string }>;
+}
+
+export type WritingAssistantOperationPayload =
+  | StatementAnalysis
+  | CheckResult
+  | FormalizeResult
+  | TranslateResult
+  | UniquenessResult
+  | Record<string, unknown>;
+
+export interface WritingAssistantOperationResult {
+  kind: 'writing-assistant-operation-result';
+  operation: WritingAssistantOperation;
+  surface: WritingAssistantSurfaceKind;
+  status: string;
+  text: string;
+  context: WritingAssistantContext;
+  guardrails: WritingAssistantGuardrails;
+  suggestions: WritingAssistantSuggestion[];
+  exports: WritingAssistantExports;
+  result: WritingAssistantOperationPayload;
+}
+
+export interface WritingAssistantCapability {
+  operation: WritingAssistantOperation;
+  api: string;
+  exports: string[];
+  suggestionKinds: string[];
+}
+
+export interface WritingAssistantServices {
+  analyzeStatement?: (
+    input: string,
+    options?: AnalysisOptions
+  ) => StatementAnalysis;
+  analyzeStatementWithLiveEvidence?: (
+    input: string,
+    options?: AnalysisOptions
+  ) => Promise<StatementAnalysis>;
+  checkText?: (input: string, options?: Record<string, unknown>) => CheckResult;
+  checkTextWithLiveEvidence?: (
+    input: string,
+    options?: Record<string, unknown>
+  ) => Promise<CheckResult>;
+  formalizeTextWith?: (
+    input: string,
+    options?: FormalizeOptions
+  ) => Promise<FormalizeResult>;
+  translateTextWith?: (
+    input: string,
+    options?: TranslateOptions
+  ) => Promise<TranslateResult>;
+  searchTextUniqueness?: (
+    input: string,
+    options?: UniquenessOptions
+  ) => Promise<UniquenessResult>;
+  createIssueReportUrl?: (
+    analysis: StatementAnalysis,
+    options?: IssueReportOptions
+  ) => string;
+  serializeLinksNotation?: (linksNetwork: LinksNetwork) => string;
+}
+
+export interface WritingAssistantSurfaceOptions {
+  surface?: WritingAssistantSurfaceKind | string | WritingAssistantSurface;
+  services?: WritingAssistantServices;
+  context?: WritingAssistantContext;
+  options?: Record<string, unknown>;
+  operationOptions?: Partial<
+    Record<WritingAssistantOperation, Record<string, unknown>>
+  >;
+  fetch?: typeof fetch | null;
+  cache?: Map<string, unknown>;
+  now?: () => number | Date | string;
+  live?: boolean;
+  labels?: string;
+  repoUrl?: string;
+  userAgent?: string;
+}
+
+export interface WritingAssistantSurface {
+  kind: 'writing-assistant-surface';
+  surface: WritingAssistantSurfaceKind;
+  guardrails: WritingAssistantGuardrails;
+  capabilities: WritingAssistantCapability[];
+  run(
+    request: WritingAssistantRequest
+  ): Promise<WritingAssistantOperationResult>;
+  analyze(
+    text: string,
+    request?: Omit<WritingAssistantRequest, 'operation' | 'text'>
+  ): Promise<WritingAssistantOperationResult>;
+  check(
+    text: string,
+    request?: Omit<WritingAssistantRequest, 'operation' | 'text'>
+  ): Promise<WritingAssistantOperationResult>;
+  formalize(
+    text: string,
+    request?: Omit<WritingAssistantRequest, 'operation' | 'text'>
+  ): Promise<WritingAssistantOperationResult>;
+  translate(
+    text: string,
+    request?: Omit<WritingAssistantRequest, 'operation' | 'text'>
+  ): Promise<WritingAssistantOperationResult>;
+  uniqueness(
+    text: string,
+    request?: Omit<WritingAssistantRequest, 'operation' | 'text'>
+  ): Promise<WritingAssistantOperationResult>;
+}
+
+export interface MockWritingAssistantSelection extends WritingAssistantContext {
+  text: string;
+}
+
+export interface WritingAssistantEmbeddedExportVerification {
+  ok: boolean;
+  linksNotation: boolean;
+  issueReportUrl: boolean;
+  issueReportUrls: Array<{ statementId: string; url: string }>;
+  errors: string[];
+}
+
+export interface MockWritingAssistantExtensionHarness {
+  kind: 'mock-writing-assistant-extension-harness';
+  surface: WritingAssistantSurfaceKind;
+  guardrails: WritingAssistantGuardrails;
+  createSelection(
+    text: string,
+    context?: WritingAssistantContext
+  ): MockWritingAssistantSelection;
+  runSelection(
+    operation: WritingAssistantOperation | string,
+    selection: MockWritingAssistantSelection | string,
+    request?: Omit<WritingAssistantRequest, 'operation' | 'text'>
+  ): Promise<WritingAssistantOperationResult>;
+  verifySelectionExports(
+    operation: WritingAssistantOperation | string,
+    selection: MockWritingAssistantSelection | string,
+    request?: Omit<WritingAssistantRequest, 'operation' | 'text'>
+  ): Promise<WritingAssistantEmbeddedExportVerification>;
 }
 
 export interface WikimediaEvidenceClient {
@@ -453,6 +927,42 @@ export declare function createIssueReportUrl(
   options?: IssueReportOptions
 ): string;
 
+export declare const WRITING_ASSISTANT_OPERATIONS: {
+  readonly ANALYZE: 'analyze';
+  readonly CHECK: 'check';
+  readonly FORMALIZE: 'formalize';
+  readonly TRANSLATE: 'translate';
+  readonly UNIQUENESS: 'uniqueness';
+};
+
+export declare const WRITING_ASSISTANT_SURFACES: {
+  readonly BROWSER_EXTENSION: 'browser-extension';
+  readonly EDITOR_EXTENSION: 'editor-extension';
+  readonly DOCUMENT_ADDIN: 'document-addin';
+  readonly EMBEDDED: 'embedded-writing-assistant';
+};
+
+export declare const WRITING_ASSISTANT_GUARDRAILS: WritingAssistantGuardrails;
+
+export declare function listWritingAssistantCapabilities(): WritingAssistantCapability[];
+
+export declare function createWritingAssistantSurface(
+  options?: WritingAssistantSurfaceOptions
+): WritingAssistantSurface;
+
+export declare function runWritingAssistantOperation(
+  request: WritingAssistantRequest,
+  options?: WritingAssistantSurfaceOptions
+): Promise<WritingAssistantOperationResult>;
+
+export declare function createMockWritingAssistantExtensionHarness(
+  options?: WritingAssistantSurfaceOptions
+): MockWritingAssistantExtensionHarness;
+
+export declare function verifyWritingAssistantEmbeddedExports(
+  result: WritingAssistantOperationResult
+): WritingAssistantEmbeddedExportVerification;
+
 export declare function computeEvidenceConfidence(
   evidenceItems: EvidenceItem[]
 ): {
@@ -462,12 +972,112 @@ export declare function computeEvidenceConfidence(
   refuteWeight: number;
 };
 
+export declare function normalizeTruthValue(
+  value: unknown,
+  options?: { truthRange?: TruthRange; valence?: number }
+): {
+  truthValue: number | null;
+  truthRange: TruthRange;
+  valence: number;
+  probability: number | null;
+  correctness: number | null;
+  signedConfidence: number | null;
+};
+
+export declare function createProbabilityCalculation(options?: {
+  strategy?: string;
+  truthValue?: unknown;
+  truthRange?: TruthRange;
+  valence?: number;
+  probability?: number | null;
+  deterministic?: boolean;
+  bounded?: boolean;
+  inputs?: ProbabilityCalculationInput[];
+  extra?: Record<string, unknown>;
+}): EvidenceCalculation;
+
+export declare const RELATIVE_META_LOGIC_UPSTREAM: RelativeMetaLogicUpstream;
+
+export declare function mapFormalizationToRelativeMetaLogicInput(
+  formalization: Formalization
+): RelativeMetaLogicInputMapping;
+
+export declare const PROOF_SOLVER_ARTIFACT_FORMATS: {
+  readonly LEAN4: 'lean4';
+  readonly SMT_LIB: 'smt-lib';
+};
+
+export declare const PROOF_SOLVER_ARTIFACT_STATUS: {
+  readonly CANDIDATE: 'candidate';
+  readonly VALIDATED: 'validated';
+  readonly UNSUPPORTED: 'unsupported';
+};
+
+export declare function createLeanProofArtifactAdapter(
+  options?: Partial<ProofSolverArtifactAdapter>
+): ProofSolverArtifactAdapter;
+
+export declare function createSmtLibSolverArtifactAdapter(
+  options?: Partial<ProofSolverArtifactAdapter>
+): ProofSolverArtifactAdapter;
+
+export declare function createFixtureProofSolverArtifactAdapter(
+  fixture: unknown
+): ProofSolverSourceAdapter;
+
+export declare function collectProofSolverArtifactEvidence(
+  claimText: string,
+  options?: {
+    artifacts?: unknown | unknown[];
+    adapters?: Array<ProofSolverArtifactAdapter | ProofSolverSourceAdapter>;
+    sourceAdapters?: ProofSolverSourceAdapter | ProofSolverSourceAdapter[];
+    maxEvidenceWeight?: number;
+    now?: () => number | string | Date;
+  }
+): Promise<ProofSolverArtifactEvidenceBundle>;
+
+export declare function isFormalReasoningInput(input: unknown): boolean;
+
+export declare function summarizeFormalReasoningProgram(
+  input: string
+): FormalReasoningSummary;
+
+export declare function createFormalReasoningInterpretations(
+  text: string,
+  formalizationLevels: typeof FORMALIZATION_LEVELS
+): Interpretation[];
+
+export declare function createFormalReasoningFormalization(
+  text: string,
+  level: number
+): Formalization;
+
+export declare function reasonFormalStatements(
+  input: string,
+  options?: AnalysisOptions
+): FormalReasoningResult;
+
+export declare function formalReasoningToEvaluationResult(
+  reasoning: FormalReasoningResult
+): EvaluationResult;
+
 export type FormalizeLinkTargetMode = 'wikipedia' | 'wikidata' | 'local-viewer';
 
 export declare const FORMALIZE_LINK_TARGETS: {
   readonly WIKIPEDIA: 'wikipedia';
   readonly WIKIDATA: 'wikidata';
   readonly LOCAL: 'local-viewer';
+};
+
+export type FormalizationProviderStatus =
+  | 'candidate'
+  | 'selected'
+  | 'validated';
+
+export declare const FORMALIZATION_PROVIDER_STATUS: {
+  readonly CANDIDATE: 'candidate';
+  readonly SELECTED: 'selected';
+  readonly VALIDATED: 'validated';
 };
 
 export type InterpretationDisplayMode =
@@ -555,6 +1165,8 @@ export interface LinguisticFragment {
   sourceStart: number | null;
   sourceEnd: number | null;
   phraseIds: string[];
+  version: number;
+  provenance: LinguisticProvenance;
 }
 
 export interface LinguisticDependency {
@@ -563,6 +1175,8 @@ export interface LinguisticDependency {
   headFragmentId: string;
   dependentFragmentId: string;
   source: string;
+  version: number;
+  provenance: LinguisticProvenance;
 }
 
 export interface LinguisticRelation {
@@ -574,12 +1188,91 @@ export interface LinguisticRelation {
   text: string;
   sourceStart: number;
   sourceEnd: number;
+  version: number;
+  provenance: LinguisticProvenance;
+}
+
+export interface LinguisticParserDescriptor {
+  id: string;
+  version: number;
+  language: string;
+  strategy: string;
+}
+
+export interface LinguisticProvenance {
+  sourceType: 'algorithm' | string;
+  method: string;
+  parserId: string;
+  parserVersion: number;
+  layer: string;
+}
+
+export interface LinguisticCstToken {
+  type: 'token-cst' | string;
+  id: string;
+  version: number;
+  text: string;
+  index: number;
+  sourceStart: number | null;
+  sourceEnd: number | null;
+  sentenceBoundaryAfter: boolean;
+  provenance: LinguisticProvenance;
+}
+
+export interface LinguisticCstSymbol {
+  type: 'symbol-cst' | string;
+  id: string;
+  version: number;
+  text: string;
+  sourceStart: number;
+  sourceEnd: number;
+  provenance: LinguisticProvenance;
+}
+
+export interface LinguisticCstSentence {
+  type: 'sentence-cst' | string;
+  id: string;
+  version: number;
+  text: string;
+  tokenStart: number;
+  tokenEnd: number;
+  sourceStart: number;
+  sourceEnd: number;
+  predicateToken: number | null;
+  subjectRange: Record<string, number> | null;
+  predicateRange: Record<string, number> | null;
+  objectPhraseRange: Record<string, number> | null;
+  objectRange: Record<string, number> | null;
+  nounPhraseRanges: Array<Record<string, number>>;
+  verbPhraseRange: Record<string, number> | null;
+  dependencies: Array<Record<string, string>>;
+  relationType: string | null;
+  subjectFragmentId?: string | null;
+  predicateFragmentId?: string | null;
+  objectFragmentId?: string | null;
+  relationId?: string | null;
+  dependencyIds?: string[];
+  provenance: LinguisticProvenance;
+}
+
+export interface LinguisticCst {
+  type: 'document-cst' | string;
+  version: number;
+  text: string;
+  language: string;
+  parser: LinguisticParserDescriptor;
+  tokens: LinguisticCstToken[];
+  symbols: LinguisticCstSymbol[];
+  sentences: LinguisticCstSentence[];
+  provenance: LinguisticProvenance;
 }
 
 export interface LinguisticAstNode {
   type: string;
   id?: string;
   version?: number;
+  parser?: LinguisticParserDescriptor;
+  provenance?: LinguisticProvenance;
   text: string;
   body?: LinguisticAstNode[];
   tokenStart?: number;
@@ -596,11 +1289,14 @@ export interface LinguisticAstNode {
 export interface LinguisticMetadata {
   version: number;
   language: string;
+  parser: LinguisticParserDescriptor;
+  provenance: LinguisticProvenance;
   text: string;
   fragments: LinguisticFragment[];
   dependencies: LinguisticDependency[];
   relations: LinguisticRelation[];
   ast: LinguisticAstNode;
+  cst: LinguisticCst;
 }
 
 export interface FormalizePhrase {
@@ -622,6 +1318,143 @@ export interface FormalizeContext {
   phrases: Array<{ text: string; entityId: string }>;
 }
 
+export interface FormalizationProviderTruthScoring {
+  included: false;
+  eligible: boolean;
+  reason: string;
+}
+
+export interface FormalizationProviderProvenance {
+  sourceType: string;
+  method: string;
+  providerId: string;
+  providerVersion: string | null;
+  retrievedAt: string | null;
+  sourceUrl?: string | null;
+}
+
+export interface FormalizationProviderTarget {
+  id: string | null;
+  label: string | null;
+  description: string | null;
+  kind: string | null;
+  source: string | null;
+  sourceUrl: string | null;
+}
+
+export interface FormalizationProviderPart {
+  text: string;
+  sourceStart: number | null;
+  sourceEnd: number | null;
+  target: FormalizationProviderTarget | null;
+}
+
+export interface FormalizationProviderCandidateBase {
+  id: string;
+  providerId: string;
+  kind: string;
+  confidence: number | null;
+  status: FormalizationProviderStatus;
+  selected: boolean;
+  validated: boolean;
+  truthScoring: FormalizationProviderTruthScoring;
+  provenance: FormalizationProviderProvenance;
+}
+
+export interface FormalizationProviderTriple extends FormalizationProviderCandidateBase {
+  kind: 'triple';
+  subject: FormalizationProviderPart;
+  predicate: FormalizationProviderPart;
+  object: FormalizationProviderPart;
+}
+
+export interface FormalizationProviderRoleArgument extends FormalizationProviderPart {
+  id: string;
+  role: string;
+}
+
+export interface FormalizationProviderRole extends FormalizationProviderCandidateBase {
+  kind: 'semantic-role-frame';
+  predicate: FormalizationProviderPart;
+  arguments: FormalizationProviderRoleArgument[];
+}
+
+export interface FormalizationProviderEntityLink
+  extends FormalizationProviderCandidateBase, FormalizationProviderPart {
+  kind: 'entity-link';
+  target: FormalizationProviderTarget | null;
+}
+
+export interface FormalizationProviderGraph extends FormalizationProviderCandidateBase {
+  kind: 'semantic-graph';
+  format: string;
+  text: string;
+  nodes: unknown[];
+  edges: unknown[];
+}
+
+export interface FormalizationProviderDiagnostic {
+  id: string;
+  providerId: string;
+  level: string;
+  message: string;
+}
+
+export interface FormalizationProviderSummary {
+  id: string;
+  name: string;
+  kind: string;
+  sourceType: string;
+  version: string | null;
+  status: FormalizationProviderStatus;
+  retrievedAt: string | null;
+  confidence: number | null;
+  truthScoring: FormalizationProviderTruthScoring;
+  provenance: FormalizationProviderProvenance;
+  diagnostics: FormalizationProviderDiagnostic[];
+  candidateCounts: {
+    triples: number;
+    roles: number;
+    entityLinks: number;
+    graphs: number;
+  };
+}
+
+export interface FormalizationProviderCandidates {
+  type: 'formalization-provider-candidates';
+  version: number;
+  status: 'candidate-only' | 'empty';
+  truthScoring: FormalizationProviderTruthScoring;
+  providers: FormalizationProviderSummary[];
+  triples: FormalizationProviderTriple[];
+  roles: FormalizationProviderRole[];
+  entityLinks: FormalizationProviderEntityLink[];
+  graphs: FormalizationProviderGraph[];
+  diagnostics: FormalizationProviderDiagnostic[];
+}
+
+export interface FormalizationProviderContext {
+  language: string;
+  now?: () => number;
+}
+
+export type FormalizationProviderOutput =
+  | FormalizationProviderCandidates
+  | Record<string, unknown>
+  | Array<Record<string, unknown>>;
+
+export interface FormalizationProvider {
+  id?: string;
+  name?: string;
+  kind?: string;
+  sourceType?: string;
+  version?: string | null;
+  extract(
+    text: string,
+    context: FormalizationProviderContext
+  ): FormalizationProviderOutput | Promise<FormalizationProviderOutput>;
+}
+
 export type TransformationRule =
   | {
       id?: string;
@@ -633,6 +1466,8 @@ export type TransformationRule =
       id?: string;
       assign: Record<string, unknown>;
     }
+  | LinksNotationRewriteTransformationRule
+  | LinksNotationSimplifyTransformationRule
   | {
       id?: string;
       apply(
@@ -650,6 +1485,101 @@ export interface TransformationContext {
   steps: TranslationStep[];
   trace?: boolean;
 }
+
+export type LinksNotationRewriteDirection =
+  | 'forward'
+  | 'left-to-right'
+  | '->'
+  | 'backward'
+  | 'right-to-left'
+  | '<-'
+  | 'reverse';
+
+export type LinksNotationRewriteOccurrence = 'all' | 'first' | number | string;
+
+export type LinksNotationRewriteEquality =
+  | string
+  | {
+      from: string;
+      to: string;
+    }
+  | {
+      left: string;
+      right: string;
+    };
+
+export interface LinksNotationRewriteOptions {
+  direction?: LinksNotationRewriteDirection;
+  occurrence?: LinksNotationRewriteOccurrence;
+  at?: LinksNotationRewriteOccurrence;
+}
+
+export interface LinksNotationSimplifyOptions {
+  direction?: LinksNotationRewriteDirection;
+  maxSteps?: number;
+  simplifyMaxSteps?: number;
+}
+
+export interface LinksNotationRewriteTransformationRule extends LinksNotationRewriteOptions {
+  id?: string;
+  rewrite:
+    | LinksNotationRewriteEquality
+    | ({
+        equality?: LinksNotationRewriteEquality;
+      } & LinksNotationRewriteOptions)
+    | ({ rule?: LinksNotationRewriteEquality } & LinksNotationRewriteOptions)
+    | ({ eq?: LinksNotationRewriteEquality } & LinksNotationRewriteOptions);
+  target?: string | string[];
+  path?: string | string[];
+}
+
+export interface LinksNotationSimplifyTransformationRule extends LinksNotationSimplifyOptions {
+  id?: string;
+  simplify:
+    | true
+    | LinksNotationRewriteEquality
+    | LinksNotationRewriteEquality[]
+    | ({
+        rules?: LinksNotationRewriteEquality | LinksNotationRewriteEquality[];
+        rewriteRules?:
+          | LinksNotationRewriteEquality
+          | LinksNotationRewriteEquality[];
+      } & LinksNotationSimplifyOptions);
+  rules?: LinksNotationRewriteEquality | LinksNotationRewriteEquality[];
+  rewriteRules?: LinksNotationRewriteEquality | LinksNotationRewriteEquality[];
+  target?: string | string[];
+  path?: string | string[];
+}
+
+export declare function rewriteLinksNotation(
+  value: string,
+  equality: LinksNotationRewriteEquality,
+  options?: LinksNotationRewriteOptions
+): string;
+
+export declare function simplifyLinksNotation(
+  value: string,
+  rules: LinksNotationRewriteEquality | LinksNotationRewriteEquality[],
+  options?: LinksNotationSimplifyOptions
+): string;
+
+export declare function applyTextTransformationRules(
+  value: unknown,
+  rules?: TransformationRule | TransformationRule[],
+  context?: Partial<TransformationContext>
+): Promise<string>;
+
+export declare function applyObjectTransformationRules<T>(
+  value: T,
+  rules?: TransformationRule | TransformationRule[],
+  context?: Partial<TransformationContext>
+): Promise<T>;
+
+export declare function applySentenceTextTransformationRules(
+  sentences: TranslationSentence[],
+  rules?: TransformationRule | TransformationRule[],
+  context?: Partial<TransformationContext>
+): Promise<TranslationSentence[]>;
 
 export interface FormalizeInterpretation {
   rank: number;
@@ -711,6 +1641,7 @@ export interface FormalizationCst {
   linkTargetMode: FormalizeLinkTargetMode;
   ast: LinguisticAstNode;
   linguisticMetadata: LinguisticMetadata;
+  providerCandidates: FormalizationProviderCandidates;
   phrases: FormalizationCstPhrase[];
   contexts: FormalizeContext[];
 }
@@ -732,6 +1663,8 @@ export interface FormalizeOptions {
   preFormalizationRules?: TransformationRule | TransformationRule[];
   afterFormalizationRules?: TransformationRule | TransformationRule[];
   postFormalizationRules?: TransformationRule | TransformationRule[];
+  providers?: FormalizationProvider | FormalizationProvider[];
+  providerOutputs?: FormalizationProviderOutput | FormalizationProviderOutput[];
 }
 
 export interface FormalizeResult {
@@ -743,6 +1676,7 @@ export interface FormalizeResult {
   contexts: FormalizeContext[];
   mainContext: FormalizeContext | null;
   additionalContexts: FormalizeContext[];
+  providerCandidates: FormalizationProviderCandidates;
   interpretations: FormalizeInterpretation[];
   markdown: string;
   html: string;
@@ -767,6 +1701,15 @@ export declare function markdownFromFormalizationCst(
   cst: FormalizationCst
 ): string;
 
+export declare function createFixtureFormalizationProvider(
+  fixture: FormalizationProviderOutput
+): FormalizationProvider;
+
+export declare function collectFormalizationProviderCandidates(
+  text: string,
+  options?: Partial<FormalizeOptions>
+): Promise<FormalizationProviderCandidates>;
+
 export declare function extractLinguisticMetadata(
   input: string,
   options?: {
@@ -790,6 +1733,24 @@ export interface TranslateOptions extends FormalizeOptions {
   preTranslationRules?: TransformationRule | TransformationRule[];
   afterTranslationRules?: TransformationRule | TransformationRule[];
   postTranslationRules?: TransformationRule | TransformationRule[];
+  beforeNaturalizationRules?: TransformationRule | TransformationRule[];
+  preNaturalizationRules?: TransformationRule | TransformationRule[];
+  naturalizationRules?: TransformationRule | TransformationRule[];
+  afterNaturalizationRules?: TransformationRule | TransformationRule[];
+  postNaturalizationRules?: TransformationRule | TransformationRule[];
+  beforeDeformalizationRules?: TransformationRule | TransformationRule[];
+  preDeformalizationRules?: TransformationRule | TransformationRule[];
+  deformalizationRules?: TransformationRule | TransformationRule[];
+  afterDeformalizationRules?: TransformationRule | TransformationRule[];
+  postDeformalizationRules?: TransformationRule | TransformationRule[];
+}
+
+export interface NaturalizeOptions {
+  sourceLanguage?: string;
+  targetLanguage?: string;
+  from?: string;
+  to?: string;
+  trace?: boolean;
   beforeNaturalizationRules?: TransformationRule | TransformationRule[];
   preNaturalizationRules?: TransformationRule | TransformationRule[];
   naturalizationRules?: TransformationRule | TransformationRule[];
@@ -875,6 +1836,23 @@ export interface TranslationPhrase {
     strategy?: string | null;
   };
   variable: TranslationVariable | null;
+}
+
+export interface SemanticPhrase {
+  text: string;
+  meaningId: string;
+  start: number;
+  end: number;
+}
+
+export interface SemanticTranslation {
+  sourceText: string;
+  sourceLanguage: string;
+  targetLanguage: string;
+  targetText: string;
+  sourcePhrases: SemanticPhrase[];
+  targetPhrases: SemanticPhrase[];
+  transformationSteps: string[];
 }
 
 export interface TranslationTargetUnit {
@@ -1030,6 +2008,31 @@ export interface TranslationCst {
   steps: TranslationStep[];
 }
 
+export interface NaturalizationCstUnit {
+  type: 'naturalization-unit';
+  id: string;
+  role: string | null;
+  sourceText: string;
+  targetText: string;
+  semanticLinkId: string | null;
+  targetEntityId: string | null;
+  targetUrl: string | null;
+}
+
+export interface NaturalizationCst {
+  type: 'naturalization';
+  version: number;
+  inputFormat: string;
+  sourceLanguage: string;
+  targetLanguage: string;
+  sourceExpression: unknown;
+  sourceLinksNotation: string | null;
+  naturalization: TranslationNaturalization;
+  deformalization: TranslationNaturalization;
+  units: NaturalizationCstUnit[];
+  steps: TranslationStep[];
+}
+
 export interface TranslateResult {
   text: string;
   sourceLanguage: string;
@@ -1048,6 +2051,21 @@ export interface TranslateResult {
   variables: TranslationVariable[];
   questions: string[];
   questionDetails: TranslationQuestion[];
+  steps: TranslationStep[];
+}
+
+export interface NaturalizeResult {
+  text: string;
+  sourceLanguage: string;
+  targetLanguage: string;
+  naturalization: TranslationNaturalization;
+  deformalization: TranslationNaturalization;
+  cst: NaturalizationCst;
+  units: NaturalizationCstUnit[];
+  plainText: string;
+  markdown: string;
+  html: string;
+  linksNotation: string;
   steps: TranslationStep[];
 }
 
@@ -1132,6 +2150,218 @@ export interface CheckResult {
   linksNotation: string;
 }
 
+export interface ClaimReviewVerdict {
+  label: string;
+  ratingValue: number | null;
+  bestRating: number;
+  worstRating: number;
+  correctness: number | null;
+  polarity: EvidenceItem['polarity'];
+}
+
+export interface ClaimReviewImportResult {
+  status: 'imported';
+  format: 'schema.org/ClaimReview';
+  claim: {
+    text: string;
+    itemReviewed: unknown;
+  };
+  verdict: ClaimReviewVerdict;
+  source: {
+    url: string | null;
+    author: {
+      type: string | null;
+      name: string | null;
+      url: string | null;
+    } | null;
+    publishedAt: string | null;
+    modifiedAt: string | null;
+    claimSource: Record<string, unknown>;
+  };
+  provenance: {
+    sourceType: 'claim-review';
+    sourceUrl: string | null;
+    retrievedAt: string;
+    schemaContext: string;
+    schemaType: 'ClaimReview';
+    sourceExampleUrl: string | null;
+  };
+  evidence: EvidenceItem;
+  evidenceItems: EvidenceItem[];
+  jsonLd: Record<string, unknown>;
+}
+
+export interface ClaimReviewOptions {
+  retrievedAt?: string | number | Date;
+  now?: () => string | number | Date;
+  sourceExampleUrl?: string;
+  sourceUrl?: string;
+  factCheckUrl?: string;
+  url?: string;
+  author?: Record<string, unknown>;
+  authorName?: string;
+  statementIndex?: number;
+}
+
+export type LiteratureDecisionPolarity = 'support' | 'refute' | 'uncertain';
+
+export interface LiteratureAuthor {
+  given: string | null;
+  family: string | null;
+  literal?: string | null;
+}
+
+export interface LiteratureExcerpt {
+  id: string;
+  section: string | null;
+  page: string | null;
+  text: string;
+}
+
+export interface LiteratureDecision {
+  polarity: LiteratureDecisionPolarity;
+  weight: number;
+  label: string;
+  rationale: string | null;
+}
+
+export interface LiteraturePaper {
+  id: string;
+  citationKey: string;
+  type: string;
+  title: string;
+  authors: LiteratureAuthor[];
+  journal: string | null;
+  publisher: string | null;
+  year: string;
+  date: string | null;
+  volume: string | null;
+  issue: string | null;
+  pages: string | null;
+  doi: string | null;
+  pmid: string | null;
+  url: string | null;
+  abstract?: string | null;
+  decision: LiteratureDecision;
+  excerpts: LiteratureExcerpt[];
+}
+
+export interface LiteratureReviewInput {
+  claim: string | { text: string; domain?: string };
+  query?: Record<string, unknown>;
+  screenedAt?: string | number | Date;
+  screeningMethod?: string;
+  papers: Array<Partial<LiteraturePaper> & Record<string, unknown>>;
+}
+
+export interface LiteratureAgreementSummary {
+  label:
+    | 'supports'
+    | 'refutes'
+    | 'mixed-support'
+    | 'mixed-refute'
+    | 'uncertain';
+  supportWeight: number;
+  refuteWeight: number;
+  rawBalance: number | null;
+  uncertainty: number;
+}
+
+export interface LiteratureReviewResult {
+  status: 'reviewed';
+  kind: 'literature-review';
+  claim: { text: string; domain: string | null };
+  query: Record<string, unknown> | null;
+  screenedAt: string;
+  screeningMethod: string;
+  papers: LiteraturePaper[];
+  evidenceItems: EvidenceItem[];
+  checked: CheckResult;
+  summary: {
+    totalPapers: number;
+    screenedPapers: number;
+    supportingPapers: number;
+    refutingPapers: number;
+    uncertainPapers: number;
+    evidenceLinks: number;
+    confidence: number | null;
+    agreement: LiteratureAgreementSummary;
+  };
+  bibliography: {
+    papers: Array<Omit<LiteraturePaper, 'abstract' | 'decision' | 'excerpts'>>;
+  };
+}
+
+export interface LiteratureReviewOptions extends AnalysisOptions {
+  screenedAt?: string | number | Date;
+}
+
+export type LiteratureBibliographyFormat = 'bibtex' | 'bib' | 'ris' | 'csv';
+
+export interface EvidenceProvenanceExportOptions {
+  baseId?: string;
+  exportedAt?: string | number | Date;
+  now?: () => string | number | Date;
+  linksNotation?: string;
+}
+
+export interface EvidenceGraphExportOptions extends EvidenceProvenanceExportOptions {
+  limit?: number;
+}
+
+export interface EvidenceJsonLdExport extends Record<string, unknown> {
+  '@context': Record<string, unknown>;
+  '@id': string;
+  '@type': string[];
+  format: 'meta-expression-evidence-json-ld';
+  sourceSurface: 'analyze' | 'check';
+  exportedAt: string;
+  analyses: Record<string, unknown>[];
+  evidenceRecords: Record<string, unknown>[];
+  sources: Record<string, unknown>[];
+  linksNotation: string;
+}
+
+export interface EvidenceProvJsonLdExport extends Record<string, unknown> {
+  '@context': Record<string, string>;
+  '@id': string;
+  '@type': string[];
+  format: 'meta-expression-prov-o-json-ld';
+  sourceSurface: 'analyze' | 'check';
+  exportedAt: string;
+  linksNotation: string;
+  '@graph': Record<string, unknown>[];
+}
+
+export interface EvidenceRdfTriplesExport extends Record<string, unknown> {
+  format: 'meta-expression-rdf-triples';
+  sourceSurface: 'analyze' | 'check';
+  exportedAt: string;
+  triples: Record<string, unknown>[];
+  mappings: Record<string, string>[];
+  guardrails: Record<string, unknown> | null;
+}
+
+export interface EvidencePropertyGraphExport extends Record<string, unknown> {
+  format: 'meta-expression-property-graph';
+  sourceSurface: 'analyze' | 'check';
+  exportedAt: string;
+  nodes: Record<string, unknown>[];
+  relationships: Record<string, unknown>[];
+  mappings: Record<string, string>[];
+  guardrails: Record<string, unknown> | null;
+}
+
+export interface ScopedSparqlEvidenceExport extends Record<string, unknown> {
+  format: 'meta-expression-scoped-sparql';
+  sourceSurface: 'analyze' | 'check';
+  exportedAt: string;
+  query: string;
+  scope: Record<string, unknown>;
+  limits: Record<string, unknown>;
+  guardrails: Record<string, unknown> | null;
+}
+
 export type UniquenessSuggestedAction =
   | 'cite-or-quote'
   | 'review-matches'
@@ -1158,7 +2388,36 @@ export interface UniquenessSource {
   search(
     statement: UniquenessSearchStatement,
     ctx: UniquenessSearchContext
-  ): Promise<UniquenessMatch[]>;
+  ): Promise<UniquenessSourceMatch[]>;
+}
+
+export interface UniquenessSpan {
+  start: number;
+  end: number;
+  text: string;
+}
+
+export interface UniquenessExclusion {
+  id: string;
+  ruleId: string;
+  reason: string;
+  span: UniquenessSpan;
+}
+
+export interface UniquenessSourceMatch {
+  sourceId?: string;
+  sourceLabel?: string;
+  title?: string;
+  url?: string | null;
+  sourceUrl?: string | null;
+  snippet?: string;
+  sourceText?: string;
+  sourceSpan?: UniquenessSpan | null;
+  score?: number;
+  matchStrength?: number;
+  strength?: number;
+  matchKind?: string;
+  inputSpan?: UniquenessSpan;
 }
 
 export interface UniquenessMatch {
@@ -1166,9 +2425,16 @@ export interface UniquenessMatch {
   sourceLabel: string;
   title: string;
   url: string | null;
+  sourceUrl: string | null;
   snippet: string;
+  sourceText: string;
+  sourceSpan: UniquenessSpan | null;
   score: number;
+  matchStrength: number;
   matchKind: string;
+  inputSpan: UniquenessSpan;
+  excluded: boolean;
+  exclusion: UniquenessExclusion | null;
 }
 
 export interface UniquenessStatement {
@@ -1181,6 +2447,7 @@ export interface UniquenessStatement {
   uniqueness: number;
   suggestedAction: UniquenessSuggestedAction;
   matches: UniquenessMatch[];
+  exclusions: UniquenessExclusion[];
   sourceErrors: Array<{
     sourceId: string;
     sourceLabel: string;
@@ -1199,14 +2466,74 @@ export interface UniquenessSummary {
   averageUniqueness: number | null;
 }
 
+export interface OriginalityReportMatch {
+  id: string;
+  statementId: string;
+  statementText: string;
+  sourceId: string;
+  sourceLabel: string;
+  sourceTitle: string;
+  sourceUrl: string | null;
+  matchKind: string;
+  score: number;
+  strength: number;
+  matchStrength: number;
+  inputSpan: UniquenessSpan;
+  sourceSpan: UniquenessSpan | null;
+  excluded: boolean;
+  exclusion: UniquenessExclusion | null;
+}
+
+export interface OriginalityReportSource {
+  sourceId: string;
+  sourceLabel: string;
+  sourceTitle: string;
+  sourceUrl: string | null;
+  matchCount: number;
+  excludedMatchCount: number;
+  strongestMatch: number;
+  averageStrength: number;
+}
+
+export interface OriginalityReport {
+  kind: 'document-originality-report';
+  checkedAt: string;
+  document: {
+    textLength: number;
+    statementCount: number;
+  };
+  overallExistingLikelihood: number;
+  overallUniqueness: number;
+  averageExistingLikelihood: number | null;
+  averageUniqueness: number | null;
+  scoredMatchCount: number;
+  excludedMatchCount: number;
+  matchedSources: OriginalityReportSource[];
+  matches: OriginalityReportMatch[];
+  exclusions: UniquenessExclusion[];
+}
+
 export interface UniquenessResult {
   status: 'checked';
   text: string;
+  existingLikelihood: number | null;
+  uniqueness: number | null;
   summary: UniquenessSummary;
   statements: UniquenessStatement[];
+  originalityReport: OriginalityReport;
   html: string;
   markdown: string;
   linksNotation: string;
+}
+
+export interface UniquenessConfiguredExclusion {
+  id?: string;
+  ruleId?: string;
+  reason?: string;
+  start?: number;
+  end?: number;
+  text?: string;
+  span?: Partial<UniquenessSpan>;
 }
 
 export interface UniquenessOptions {
@@ -1214,6 +2541,9 @@ export interface UniquenessOptions {
   language?: string;
   limit?: number;
   sources?: UniquenessSource[];
+  exclusions?: UniquenessConfiguredExclusion[];
+  excludeQuotedText?: boolean;
+  excludeReferences?: boolean;
   crossref?: {
     mailto?: string;
   };
@@ -1230,6 +2560,26 @@ export declare function translateTextWith(
   options?: TranslateOptions
 ): Promise<TranslateResult>;
 
+export declare function naturalizeExpression(
+  input: unknown,
+  options?: NaturalizeOptions
+): Promise<NaturalizeResult>;
+
+export declare function naturalizeExpressionWith(
+  input: unknown,
+  options?: NaturalizeOptions
+): Promise<NaturalizeResult>;
+
+export declare function deformalizeExpression(
+  input: unknown,
+  options?: NaturalizeOptions
+): Promise<NaturalizeResult>;
+
+export declare function deformalizeExpressionWith(
+  input: unknown,
+  options?: NaturalizeOptions
+): Promise<NaturalizeResult>;
+
 export declare function checkText(
   input: string,
   options?: AnalysisOptions & { locale?: string }
@@ -1239,6 +2589,81 @@ export declare function checkTextWithLiveEvidence(
   input: string,
   options?: AnalysisOptions & { locale?: string }
 ): Promise<CheckResult>;
+
+export declare function parseClaimReviewJsonLd(
+  input: string | Record<string, unknown> | unknown[],
+  options?: ClaimReviewOptions
+): ClaimReviewImportResult;
+
+export declare function importClaimReviewJsonLd(
+  input: string | Record<string, unknown> | unknown[],
+  options?: ClaimReviewOptions
+): ClaimReviewImportResult;
+
+export declare function exportClaimReviewJsonLd(
+  input: CheckResult | CheckStatement | StatementAnalysis,
+  options?: ClaimReviewOptions
+): Record<string, unknown>;
+
+export declare function reviewClaimAgainstLiterature(
+  input: LiteratureReviewInput,
+  options?: LiteratureReviewOptions
+): LiteratureReviewResult;
+
+export declare function createLiteratureEvidenceItems(
+  input: LiteratureReviewInput,
+  options?: LiteratureReviewOptions
+): EvidenceItem[];
+
+export declare function exportLiteratureBibliography(
+  input: LiteratureReviewResult | LiteratureReviewInput | LiteraturePaper[],
+  options?: { format?: LiteratureBibliographyFormat }
+): string;
+
+export declare function exportLiteratureBibTeX(
+  input: LiteratureReviewResult | LiteratureReviewInput | LiteraturePaper[]
+): string;
+
+export declare function exportLiteratureRis(
+  input: LiteratureReviewResult | LiteratureReviewInput | LiteraturePaper[]
+): string;
+
+export declare function exportLiteratureCsv(
+  input: LiteratureReviewResult | LiteratureReviewInput | LiteraturePaper[]
+): string;
+
+export declare function exportEvidenceJsonLd(
+  input: StatementAnalysis | CheckResult,
+  options?: EvidenceProvenanceExportOptions
+): EvidenceJsonLdExport;
+
+export declare function exportEvidenceProvJsonLd(
+  input: StatementAnalysis | CheckResult,
+  options?: EvidenceProvenanceExportOptions
+): EvidenceProvJsonLdExport;
+
+export declare function exportScopedSparqlEvidence(
+  input: StatementAnalysis | CheckResult,
+  options?: EvidenceGraphExportOptions
+): ScopedSparqlEvidenceExport;
+
+export declare function exportEvidenceRdfTriples(
+  input: StatementAnalysis | CheckResult,
+  options?: EvidenceGraphExportOptions
+): EvidenceRdfTriplesExport;
+
+export declare function importEvidenceRdfTriples(
+  input: EvidenceRdfTriplesExport | Record<string, unknown>
+): Record<string, unknown>;
+
+export declare function exportEvidencePropertyGraph(
+  input: StatementAnalysis | CheckResult,
+  options?: EvidenceGraphExportOptions
+): EvidencePropertyGraphExport;
+
+export declare function importEvidencePropertyGraph(
+  input: EvidencePropertyGraphExport | Record<string, unknown>
+): Record<string, unknown>;
 
 export declare function searchTextUniqueness(
   input: string,
@@ -1390,6 +2815,12 @@ export declare function summarizeAssessment(
 
 export declare function extractFirstStatement(text: string): string;
 
+export declare function normalizeParagraphText(text: string): string;
+
+export declare function extractParagraphs(text: string): string[];
+
+export declare function extractFirstParagraph(text: string): string;
+
 export declare function tokenCoverage(
   candidate: string,
   target: string
@@ -1397,4 +2828,66 @@ export declare function tokenCoverage(
 
 export declare function tokenizeForMatch(text: string): string[];
 
+export interface ReferenceAlignment {
+  precision: number;
+  recall: number;
+  f1: number;
+  overlap: number;
+  machineTokenCount: number;
+  referenceTokenCount: number;
+  matched: string[];
+  missing: string[];
+}
+
+export declare function assessReferenceAlignment(
+  machineText: string,
+  referenceText: string,
+  options?: { script?: RegExp }
+): ReferenceAlignment;
+
 export declare function normalizeStatementKey(text: string): string;
+
+export interface WasmCore {
+  createStatementDraft(input: string): StatementDraft;
+  selectInterpretation(
+    input: string,
+    interpretationIndex?: number
+  ): Interpretation;
+  formalizeStatement(
+    input: string,
+    interpretationIndex?: number
+  ): Formalization;
+  evaluateStatement(
+    input: string,
+    interpretationIndex?: number
+  ): EvaluationResult;
+  analyzeStatement(
+    input: string,
+    interpretationIndex?: number
+  ): WasmStatementAnalysis;
+  statementConfidence(input: string, interpretationIndex?: number): number;
+  serializeLinksNotation(input: string, interpretationIndex?: number): string;
+  translateKnownSemanticText(
+    input: string,
+    sourceLanguage: string,
+    targetLanguage: string
+  ): SemanticTranslation;
+  naturalizeFormalExpression(input: string): string;
+  deformalizeFormalExpression(input: string): string;
+}
+
+export interface LoadWasmCoreOptions {
+  module?: unknown;
+  moduleUrl?: string | URL;
+  wasmUrl?: string | URL;
+  wasmBytes?: BufferSource;
+  initialize?: boolean;
+}
+
+export * from './durable-storage.js';
+
+export declare function createWasmCore(wasmModule: unknown): WasmCore;
+
+export declare function loadWasmCore(
+  options?: LoadWasmCoreOptions
+): Promise<WasmCore>;

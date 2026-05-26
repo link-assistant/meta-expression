@@ -30,4 +30,64 @@ describe('vision documentation', () => {
       expect(docs.toLowerCase().includes(phrase)).toBe(false);
     }
   });
+
+  it('keeps competitor parity research current and linked to follow-up issues', () => {
+    const concepts = readFileSync('docs/COMPARISON-CONCEPTS.md', 'utf8');
+    const features = readFileSync('docs/COMPARISON-FEATURES.md', 'utf8');
+    const researchPath = 'docs/case-studies/issue-71/ONLINE-RESEARCH.md';
+    const missingFeaturesPath =
+      'docs/case-studies/issue-71/MISSING-FEATURES.md';
+
+    expect(existsSync(researchPath)).toBe(true);
+    expect(existsSync(missingFeaturesPath)).toBe(true);
+    expect(concepts.includes('> Last checked: 2026-05-26.')).toBe(true);
+    expect(features.includes('> Last checked: 2026-05-26.')).toBe(true);
+    expect(features.includes('Competitor-derived follow-up issues')).toBe(true);
+    expect(concepts.includes(researchPath)).toBe(true);
+    expect(features.includes(missingFeaturesPath)).toBe(true);
+
+    const missingFeatures = readFileSync(missingFeaturesPath, 'utf8');
+    for (const expectedGap of [
+      'ClaimReview / Schema.org',
+      'PROV-O / JSON-LD',
+      'OpenIE / AMR',
+      'document-level originality',
+      'literature-review evidence',
+      'SPARQL and graph exports',
+    ]) {
+      expect(missingFeatures.includes(expectedGap)).toBe(true);
+    }
+  });
+
+  it('tracks the formal-ai compatibility contract as a first-class doc', () => {
+    const contractPath = 'docs/FORMAL_AI_COMPATIBILITY.md';
+
+    expect(existsSync(contractPath)).toBe(true);
+
+    const contract = readFileSync(contractPath, 'utf8');
+    const readme = readFileSync('README.md', 'utf8');
+    const requirements = readFileSync('docs/REQUIREMENTS.md', 'utf8');
+
+    for (const expected of [
+      'formal-ai v0.123.0',
+      '39530ef2e71f787561f9252b72032eb81e329c3e',
+      'OpenAI-shaped',
+      'Lino-native',
+      'WASM-buildable',
+      'formalize',
+      'transform',
+      'naturalize',
+      'reason',
+      'Library',
+      'CLI',
+      'Microservice',
+      'Static web',
+      'Rust',
+    ]) {
+      expect(contract.includes(expected)).toBe(true);
+    }
+
+    expect(readme.includes(contractPath)).toBe(true);
+    expect(requirements.includes(contractPath)).toBe(true);
+  });
 });

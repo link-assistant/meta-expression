@@ -1,5 +1,5 @@
 ---
-'my-package': patch
+'meta-expression': patch
 ---
 
 Fix Translate page issue reports so oversized generated diagnostics are omitted

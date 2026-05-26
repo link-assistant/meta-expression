@@ -5,7 +5,8 @@ export function buildLinksNetwork(
   text,
   phrases,
   contexts,
-  linguisticMetadata = null
+  linguisticMetadata = null,
+  providerCandidates = null
 ) {
   const inputId = 'formalize-input-1';
   const links = [
@@ -39,6 +40,7 @@ export function buildLinksNetwork(
       buildLinguisticRelationLink(relation, index, inputId, fragmentLinkIds)
     );
   });
+  appendProviderCandidateLinks(links, providerCandidates, inputId);
   return {
     id: 'formalize-links-network',
     kind: 'links-network',
@@ -53,6 +55,8 @@ export function buildLinksNetwork(
         fandom: 0.6,
         lexical: 0.5,
         algorithm: 0.5,
+        'formalization-provider': 0.4,
+        'nlp-provider': 0.4,
       },
     },
     links,
@@ -130,10 +134,12 @@ function buildLinguisticFragmentLink(fragment, index, inputId) {
       sourceStart: fragment.sourceStart,
       sourceEnd: fragment.sourceEnd,
       phraseIds: fragment.phraseIds ?? [],
+      version: fragment.version ?? 1,
+      provenance: fragment.provenance ?? null,
     },
     provenance: {
-      sourceType: 'algorithm',
-      method: 'linguistic-metadata',
+      sourceType: fragment.provenance?.sourceType ?? 'algorithm',
+      method: fragment.provenance?.method ?? 'linguistic-metadata',
     },
   };
 }
@@ -179,9 +185,108 @@ function buildLinguisticRelationLink(
     ].filter(Boolean),
     value: { ...relation },
     provenance: {
-      sourceType: 'algorithm',
-      method: 'linguistic-metadata',
+      sourceType: relation.provenance?.sourceType ?? 'algorithm',
+      method: relation.provenance?.method ?? 'linguistic-metadata',
     },
+  };
+}
+
+function appendProviderCandidateLinks(links, providerCandidates, inputId) {
+  if (!providerCandidates?.providers?.length) {
+    return;
+  }
+  const providerLinkIds = new Map();
+  providerCandidates.providers.forEach((provider, index) => {
+    const link = buildProviderCandidateBundleLink(provider, index, inputId);
+    providerLinkIds.set(provider.id, link.id);
+    links.push(link);
+  });
+  appendProviderRecords(
+    links,
+    providerCandidates.triples,
+    'provider-candidate-triple',
+    'triple',
+    inputId,
+    providerLinkIds
+  );
+  appendProviderRecords(
+    links,
+    providerCandidates.roles,
+    'provider-candidate-role',
+    'semantic-role-frame',
+    inputId,
+    providerLinkIds
+  );
+  appendProviderRecords(
+    links,
+    providerCandidates.entityLinks,
+    'provider-candidate-entity-link',
+    'entity-link',
+    inputId,
+    providerLinkIds
+  );
+  appendProviderRecords(
+    links,
+    providerCandidates.graphs,
+    'provider-candidate-graph',
+    'semantic-graph',
+    inputId,
+    providerLinkIds
+  );
+}
+
+function buildProviderCandidateBundleLink(provider, index, inputId) {
+  return {
+    id: `formalize-provider-candidate-bundle-${index + 1}`,
+    role: 'provider-candidate-bundle',
+    references: [inputId],
+    value: {
+      providerId: provider.id,
+      name: provider.name,
+      kind: provider.kind,
+      status: provider.status,
+      confidence: provider.confidence,
+      candidateCounts: provider.candidateCounts,
+      truthScoring: provider.truthScoring,
+    },
+    provenance: providerLinkProvenance(provider),
+  };
+}
+
+function appendProviderRecords(
+  links,
+  records,
+  role,
+  kind,
+  inputId,
+  providerLinkIds
+) {
+  (records ?? []).forEach((record, index) => {
+    links.push({
+      id: `formalize-${role}-${index + 1}`,
+      role,
+      references: [
+        inputId,
+        providerLinkIds.get(record.providerId) ?? null,
+      ].filter(Boolean),
+      value: {
+        kind,
+        ...record,
+      },
+      provenance: providerLinkProvenance(record),
+    });
+  });
+}
+
+function providerLinkProvenance(record) {
+  const provenance = record.provenance ?? {};
+  return {
+    sourceType: provenance.sourceType ?? 'formalization-provider',
+    method: provenance.method ?? record.kind ?? 'provider',
+    sourceUrl: provenance.sourceUrl ?? record.sourceUrl ?? null,
+    retrievedAt: provenance.retrievedAt ?? record.retrievedAt ?? null,
+    providerId: provenance.providerId ?? record.providerId ?? record.id ?? null,
+    providerVersion: provenance.providerVersion ?? record.version ?? null,
   };
 }
 

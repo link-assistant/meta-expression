@@ -2,6 +2,7 @@ import {
   getPreferenceEvidenceSituationProbability,
   preferenceEvidenceSituationDefinitions,
 } from './preferences.js';
+import { createProbabilityCalculation } from './probability.js';
 
 const fallbackRealWorldUncertainty = 0.01;
 
@@ -193,25 +194,49 @@ function createEvidenceCalculation(
   beliefSystem,
   realWorldUncertainty
 ) {
-  return {
+  const evidence = weightedEvidence.map((item) =>
+    evidenceCalculationInput(item)
+  );
+  return createProbabilityCalculation({
     strategy: beliefSystem?.probabilityStrategy ?? 'weighted-support-ratio',
-    supportWeight: confidence.supportWeight,
-    refuteWeight: confidence.refuteWeight,
-    rawConfidence: confidence.confidence,
-    boundedConfidence,
-    realWorldUncertainty,
-    evidence: weightedEvidence.map((evidence) => ({
-      id: evidence.id,
-      polarity: evidence.polarity,
-      sourceType: evidence.sourceType,
-      sourceUrl: evidence.sourceUrl,
-      weight: evidence.weight,
-      situationId: evidence.score?.situationId ?? evidence.situation ?? null,
-      situationLabel: evidence.score?.label ?? null,
-      situationProbability: evidence.score?.probability ?? null,
-      residual: evidence.score?.residual === true,
-      claim: evidence.claim,
-    })),
+    probability: boundedConfidence,
+    truthValue: boundedConfidence,
+    bounded: boundedConfidence !== confidence.confidence,
+    inputs: [
+      {
+        kind: 'belief-system',
+        id: beliefSystem?.id ?? null,
+        sourceWeights: beliefSystem?.sourceWeights ?? {},
+      },
+      {
+        kind: 'real-world-uncertainty',
+        value: realWorldUncertainty,
+      },
+      ...evidence.map((item) => ({ kind: 'evidence', ...item })),
+    ],
+    extra: {
+      supportWeight: confidence.supportWeight,
+      refuteWeight: confidence.refuteWeight,
+      rawConfidence: confidence.confidence,
+      boundedConfidence,
+      realWorldUncertainty,
+      evidence,
+    },
+  });
+}
+
+function evidenceCalculationInput(evidence) {
+  return {
+    id: evidence.id,
+    polarity: evidence.polarity,
+    sourceType: evidence.sourceType,
+    sourceUrl: evidence.sourceUrl,
+    weight: evidence.weight,
+    situationId: evidence.score?.situationId ?? evidence.situation ?? null,
+    situationLabel: evidence.score?.label ?? null,
+    situationProbability: evidence.score?.probability ?? null,
+    residual: evidence.score?.residual === true,
+    claim: evidence.claim,
   };
 }
 

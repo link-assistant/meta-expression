@@ -1,0 +1,42 @@
+[
+  {
+    "id": "lean4-one-plus-one-proof",
+    "format": "lean4",
+    "system": "Lean 4",
+    "claim": "1 + 1 = 2",
+    "polarity": "support",
+    "sourceUrl": "https://lean-lang.org/",
+    "retrievedAt": "2026-05-26",
+    "artifact": {
+      "language": "lean4",
+      "entrypoint": "example",
+      "text": "example : 1 + 1 = 2 := rfl\n"
+    },
+    "result": {
+      "outcome": "proved",
+      "checker": "Lean 4",
+      "mode": "fixture",
+      "checkedAt": "2026-05-26"
+    }
+  },
+  {
+    "id": "smt-lib-one-plus-one-unsat",
+    "format": "smt-lib",
+    "system": "Z3",
+    "claim": "1 + 1 = 2",
+    "polarity": "support",
+    "sourceUrl": "https://github.com/Z3Prover/z3",
+    "retrievedAt": "2026-05-26",
+    "artifact": {
+      "language": "smt-lib",
+      "intent": "refute-negation",
+      "text": "(set-logic QF_LIA)\n(assert (not (= (+ 1 1) 2)))\n(check-sat)\n"
+    },
+    "result": {
+      "outcome": "unsat",
+      "solver": "Z3",
+      "mode": "fixture",
+      "checkedAt": "2026-05-26"
+    }
+  }
+]

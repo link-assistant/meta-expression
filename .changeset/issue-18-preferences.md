@@ -1,5 +1,5 @@
 ---
-'my-package': minor
+'meta-expression': minor
 ---
 
 Add a `/preferences` section with local worldview sliders, conditional religion

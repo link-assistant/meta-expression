@@ -20,6 +20,11 @@ formalization reference at
 [`docs/FORMALIZE.md`](docs/FORMALIZE.md) (regenerated from JSDoc with
 `npm run docs:formalize`).
 
+The downstream formal-ai foundation surface is tracked in
+[`docs/FORMAL_AI_COMPATIBILITY.md`](docs/FORMAL_AI_COMPATIBILITY.md): the
+OpenAI-shaped, Lino-native, WASM-buildable contract across library, CLI,
+microservice, web, and Rust surfaces.
+
 ## Library
 
 ```js
@@ -44,6 +49,8 @@ Core exports:
   prototype.
 - `describeFormalizationLevel(level)` returns the level name, summary, and
   executability flag.
+- `mapFormalizationToRelativeMetaLogicInput(formalization)` shows whether a
+  selected formalization can be sent to the relative-meta-logic adapter.
 - `createIssueReportUrl(analysis, options)` creates a prefilled GitHub issue
   URL with statement, result, evidence, and Links Notation.
 - `createWikimediaEvidenceClient()` and `analyzeStatementWithLiveEvidence()`
@@ -59,10 +66,38 @@ Core exports:
 - `checkText(input, options)` detects statements in longer text, analyzes each
   statement, and returns red-to-green correctness coloring as JSON, HTML,
   Markdown, and Links Notation.
+- `importClaimReviewJsonLd(input)` and `exportClaimReviewJsonLd(result)` import
+  and export Schema.org ClaimReview JSON-LD for fact-check interchange.
+- `exportEvidenceJsonLd(result)` and `exportEvidenceProvJsonLd(result)` export
+  `/analyze` and `/check` evidence provenance as JSON-LD and a PROV-O-compatible
+  JSON-LD graph while preserving Links Notation output.
+- `exportScopedSparqlEvidence(result)`, `exportEvidenceRdfTriples(result)`,
+  and `exportEvidencePropertyGraph(result)` project existing Q/P evidence links
+  into scoped SPARQL, RDF-triple, and property-graph interchange shapes without
+  changing the bounded real-world confidence calculation.
+- `collectProofSolverArtifactEvidence(input, { artifacts })` normalizes Lean 4
+  proof snippets and SMT-LIB solver outputs into provenance-bearing, bounded
+  evidence items that can be passed to `analyzeStatement(..., { evidence })`.
+- `reviewClaimAgainstLiterature(fixture)` checks a claim against screened paper
+  metadata/excerpts as normal evidence links, reports literature agreement and
+  uncertainty, and `exportLiteratureBibliography(result, { format })` emits
+  BibTeX, RIS, or CSV bibliography data.
 - `searchTextUniqueness(input, options)` searches detected statements across
   public web and scholarly APIs, returning existing-likelihood scores,
   citation/rewording suggestions, source matches, HTML, Markdown, and Links
   Notation.
+- `createWritingAssistantSurface(options)` exposes a browser/editor integration
+  wrapper over `analyze`, `check`, `formalize`, `translate`, and `uniqueness`
+  without replacing the core APIs. Candidate suggestions are explicit, and
+  evidence-backed checks are marked separately from style rewrites.
+- `exportPortableCaseData(input)`, `importPortableCaseData(input)`,
+  `savePortableCaseToDoublets(input)`, and `loadPortableCaseFromDoublets(input)`
+  preserve analysis/link-network cases as portable Doublets-backed data with
+  Unicode text, link ids, references, roles, provenance, and versions.
+- `loadWasmCore(options)` loads the Rust `wasm-bindgen` package and exposes
+  draft creation, interpretation selection, formalization, evaluation,
+  confidence, Links Notation serialization, and known semantic translation
+  helpers to JavaScript callers.
 
 Current deterministic examples:
 
@@ -88,12 +123,17 @@ Real-world confidence is intentionally bounded away from absolute `0%` and
 ```bash
 node js/src/cli.js analyze "1 + 1 = 2"
 node js/src/cli.js analyze --input "Earth orbits the Sun" --format links
+node js/src/cli.js analyze --input "Earth orbits the Sun" --format json-ld
+node js/src/cli.js analyze --input "Earth orbits the Sun" --format sparql --limit 5
 node js/src/cli.js analyze --input "Paris is the capital of France" --live
 node js/src/cli.js formalize --input "Hawaii is a state." --format markdown
 node js/src/cli.js translate --input "Hawaii is a state." --to ru --format markdown
 node js/src/cli.js check --input "Earth orbits the Sun. 1 + 1 = 1." --format html
+node js/src/cli.js check --input "Earth orbits the Sun." --format claim-review
+node js/src/cli.js check --input "Earth orbits the Sun." --format prov-o
 node js/src/cli.js fact-check --input "Paris is the capital of France." --live
 node js/src/cli.js uniqueness --input "Earth orbits the Sun." --format markdown
+node js/src/cli.js literature-review --fixture js/tests/fixtures/issue-91-literature-review.json --format bibtex
 ```
 
 ## Microservice
@@ -102,22 +142,26 @@ node js/src/cli.js uniqueness --input "Earth orbits the Sun." --format markdown
 npm start
 curl "http://127.0.0.1:3000/analyze?input=1%20%2B%201%20%3D%202"
 curl "http://127.0.0.1:3000/analyze?input=Earth%20orbits%20the%20Sun&format=links"
+curl "http://127.0.0.1:3000/analyze?input=Earth%20orbits%20the%20Sun&format=json-ld"
 curl "http://127.0.0.1:3000/translate?input=Hawaii%20is%20a%20state.&to=ru&format=markdown"
 curl "http://127.0.0.1:3000/check?input=Earth%20orbits%20the%20Sun.%201%20%2B%201%20%3D%201.&format=html"
+curl "http://127.0.0.1:3000/check?input=Earth%20orbits%20the%20Sun.&format=claim-review"
+curl "http://127.0.0.1:3000/check?input=Earth%20orbits%20the%20Sun.&format=prov-o"
 curl "http://127.0.0.1:3000/uniqueness?input=Earth%20orbits%20the%20Sun.&format=markdown"
 ```
 
 Routes:
 
 - `GET /health`
-- `GET /analyze?input=...&format=json|links&select=0`
+- `GET /analyze?input=...&format=json|links|json-ld|prov-o&select=0`
+- `GET /analyze?input=...&format=sparql|rdf|property-graph&limit=50`
 - `GET /analyze?input=...&live=true`
 - `POST /analyze` with `{ "input": "...", "format": "json" }`
 - `GET /formalize?input=...&format=json|links|markdown|html`
 - `POST /formalize` with `{ "input": "...", "format": "json" }`
 - `GET /translate?input=...&from=en&to=ru&format=json|links|markdown|html`
 - `POST /translate` with `{ "input": "...", "targetLanguage": "ru" }`
-- `GET /check?input=...&format=json|links|markdown|html`
+- `GET /check?input=...&format=json|links|markdown|html|claim-review|json-ld|prov-o`
 - `POST /check` with `{ "input": "...", "live": true }`
 - `GET /fact-check?input=...` and `POST /fact-check` as aliases for
   `/check`
@@ -125,6 +169,11 @@ Routes:
 - `POST /uniqueness` with `{ "input": "...", "limit": 3 }`
 - `GET /uniquness?input=...` and `POST /uniquness` as compatibility aliases
   for the issue title typo.
+
+The JSON `/uniqueness` response keeps the existing `summary` and `statements`
+score fields, and also includes an `originalityReport` with document-level
+source groups, input/source spans, match strengths, source URLs, and exclusion
+metadata for quoted or reference-list text.
 
 ## Static Web Prototype
 
@@ -181,10 +230,44 @@ It also includes a deterministic issue #35 semantic translation fixture for
 `Hawaii is a state.` plus issue #52 full-text Translate coverage with
 source/target semantic phrase ids, round-trip checks, Wikimedia entity-batch
 planning, stable seven-day cache TTL plus one-to-three-day jitter, and
-ABI-safe helper exports:
+ABI-safe helper exports. The issue #61 `wasm-bindgen` package exposes the
+analysis pipeline and Links Notation helpers through
+[`js/src/wasm-core.js`](js/src/wasm-core.js):
 
 ```bash
 cargo test --workspace
+npm run build:wasm
+npm run test:wasm
+```
+
+```js
+import { loadWasmCore } from './js/src/wasm-core.js';
+
+const wasm = await loadWasmCore();
+const analysis = wasm.analyzeStatement('1 + 1 = 2');
+
+console.log(analysis.result.value); // true
+console.log(wasm.serializeLinksNotation('1 + 1 = 2'));
+```
+
+## Durable Cases
+
+Analysis outputs can be exported as portable case data or saved as a binary
+Doublets blob:
+
+```js
+import {
+  analyzeStatement,
+  loadPortableCaseFromDoublets,
+  savePortableCaseToDoublets,
+} from './js/src/index.js';
+
+const saved = savePortableCaseToDoublets(
+  analyzeStatement('Earth orbits the Sun')
+);
+const loaded = loadPortableCaseFromDoublets(saved);
+
+console.log(loaded.linksNetwork.links.length);
 ```
 
 ## Development

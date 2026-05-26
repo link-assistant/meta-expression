@@ -11,13 +11,22 @@ import {
 import { findExampleOpposite } from './examples.js';
 import { createPreferenceEvidence } from './preferences.js';
 import { scoreEvidenceItems } from './evidence-scoring.js';
+import { createProbabilityCalculation } from './probability.js';
 import { knownEvidence, knownRealWorldClaims } from './known-evidence.js';
+import { buildStatementMeaningMetadata } from './statement-formalization.js';
+import * as formalReasoning from './formal-reasoning.js';
+import { evaluateArithmeticWithRelativeMetaLogic } from './relative-meta-logic-adapter.js';
 
 export {
   createWikimediaEvidenceClient,
   resolveLiveEvidence,
 } from './wikimedia-evidence.js';
 export { computeEvidenceConfidence } from './evidence-scoring.js';
+export {
+  createProbabilityCalculation,
+  normalizeTruthValue,
+} from './probability.js';
+export { createIssueReportUrl, serializeLinksNotation } from './reporting.js';
 export {
   disambiguatePhrases,
   describeDisambiguation,
@@ -52,6 +61,11 @@ export {
   resolveLinkTarget as resolveFormalizeLinkTarget,
 } from './formalize.js';
 export {
+  FORMALIZATION_PROVIDER_STATUS,
+  collectFormalizationProviderCandidates,
+  createFixtureFormalizationProvider,
+} from './formalization-providers.js';
+export {
   SOURCE_KIND as FORMALIZE_SOURCES,
   createWikidataSource,
   createWikipediaSource,
@@ -63,6 +77,12 @@ export {
   parseSourceSpec,
 } from './formalize-sources.js';
 export { translateText, translateTextWith } from './translate.js';
+export {
+  deformalizeExpression,
+  deformalizeExpressionWith,
+  naturalizeExpression,
+  naturalizeExpressionWith,
+} from './naturalize.js';
 export {
   parseFormalAiTranslationPrompt,
   SUPPORTED_FORMAL_AI_TRANSLATION_LANGUAGES,
@@ -80,11 +100,39 @@ export {
   selectLanguagePair,
   summarizeAssessment,
   extractFirstStatement,
+  extractFirstParagraph,
+  extractParagraphs,
+  normalizeParagraphText,
   tokenCoverage,
   tokenizeForMatch,
+  assessReferenceAlignment,
   normalizeStatementKey,
 } from './translation-quality.js';
 export { checkText, checkTextWithLiveEvidence } from './check.js';
+export {
+  exportClaimReviewJsonLd,
+  importClaimReviewJsonLd,
+  parseClaimReviewJsonLd,
+} from './claim-review.js';
+export {
+  exportEvidenceJsonLd,
+  exportEvidenceProvJsonLd,
+} from './provenance-jsonld.js';
+export {
+  exportEvidencePropertyGraph,
+  exportEvidenceRdfTriples,
+  exportScopedSparqlEvidence,
+  importEvidencePropertyGraph,
+  importEvidenceRdfTriples,
+} from './graph-interchange.js';
+export {
+  createLiteratureEvidenceItems,
+  exportLiteratureBibliography,
+  exportLiteratureBibTeX,
+  exportLiteratureCsv,
+  exportLiteratureRis,
+  reviewClaimAgainstLiterature,
+} from './literature-review.js';
 export {
   createCrossrefUniquenessSource,
   createDefaultUniquenessSources,
@@ -120,6 +168,36 @@ export {
   tokenizeLino,
 } from './lino.js';
 export {
+  applyObjectTransformationRules,
+  applySentenceTextTransformationRules,
+  applyTextTransformationRules,
+  rewriteLinksNotation,
+  simplifyLinksNotation,
+} from './transformation-rules.js';
+export * from './formal-reasoning.js';
+export {
+  RELATIVE_META_LOGIC_UPSTREAM,
+  mapFormalizationToRelativeMetaLogicInput,
+} from './relative-meta-logic-adapter.js';
+export {
+  PROOF_SOLVER_ARTIFACT_FORMATS,
+  PROOF_SOLVER_ARTIFACT_STATUS,
+  collectProofSolverArtifactEvidence,
+  createFixtureProofSolverArtifactAdapter,
+  createLeanProofArtifactAdapter,
+  createSmtLibSolverArtifactAdapter,
+} from './proof-solver-artifacts.js';
+export {
+  WRITING_ASSISTANT_GUARDRAILS,
+  WRITING_ASSISTANT_OPERATIONS,
+  WRITING_ASSISTANT_SURFACES,
+  createMockWritingAssistantExtensionHarness,
+  createWritingAssistantSurface,
+  listWritingAssistantCapabilities,
+  runWritingAssistantOperation,
+  verifyWritingAssistantEmbeddedExports,
+} from './writing-assistant.js';
+export {
   createDefaultPreferenceProfile,
   createPreferenceEvidence,
   getPreferenceEvidenceSituationProbability,
@@ -142,16 +220,25 @@ export {
   decodeFromDoublets,
   DOUBLET_TAGS,
 } from './doublets.js';
+export {
+  exportPortableCaseData,
+  importPortableCaseData,
+  loadPortableCaseFromDoublets,
+  savePortableCaseToDoublets,
+} from './durable-storage.js';
+export { createWasmCore, loadWasmCore } from './wasm-core.js';
 const arithmeticEqualityPattern =
   /^\s*(-?\d+(?:\.\d+)?)\s*([+*/-])\s*(-?\d+(?:\.\d+)?)\s*=\s*(-?\d+(?:\.\d+)?)\s*$/;
 const arithmeticQuestionPattern =
   /^\s*(?:what\s+is\s+)?(-?\d+(?:\.\d+)?)\s*([+*/-])\s*(-?\d+(?:\.\d+)?)\??\s*$/i;
 const realWorldConfidenceEpsilon = 0.01;
-const issueReportRepoUrl = 'https://github.com/link-assistant/meta-expression';
 const selfReferentialFalseStatements = new Set([
   'this statement is false',
+  'this statement is true',
   'this sentence is false',
+  'this sentence is true',
   'this is false statement',
+  'this is true statement',
 ]);
 
 export const defaultBeliefSystem = Object.freeze({
@@ -162,6 +249,7 @@ export const defaultBeliefSystem = Object.freeze({
     computed: 1,
     wikidata: 1,
     algorithm: 0.6,
+    literature: 1,
     user: 0.25,
     preference: 1,
     'derived-preference': 0.85,
@@ -206,27 +294,10 @@ export const FORMALIZATION_LEVEL_DETAILS = Object.freeze({
   }),
 });
 
-/**
- * Example function kept for backward compatibility with the template tests.
- * @param {number} a First number
- * @param {number} b Second number
- * @returns {number} Sum of a and b
- */
 export const add = (a, b) => a + b;
 
-/**
- * Example function kept for backward compatibility with the template tests.
- * @param {number} a First number
- * @param {number} b Second number
- * @returns {number} Product of a and b
- */
 export const multiply = (a, b) => a * b;
 
-/**
- * Example async helper kept for backward compatibility.
- * @param {number} ms Milliseconds to wait
- * @returns {Promise<void>} Promise that resolves after the delay
- */
 export const delay = (ms) =>
   new Promise((resolve) => globalThis.setTimeout(resolve, ms));
 
@@ -315,7 +386,7 @@ export function analyzeStatement(input, options = {}) {
     ...createPreferenceEvidence(options.preferenceProfile),
   ];
   const result = formalization.computable
-    ? evaluateComputableFormalization(formalization)
+    ? evaluateComputableFormalization(formalization, options)
     : estimateFromEvidence(formalization, evidence, options);
 
   const resultLink = addResultLinks(
@@ -420,6 +491,11 @@ function buildAlternatives(text, interpretation, formalization) {
 function buildDependencies(text, interpretation, formalization) {
   const dependencies = [];
   const normalized = normalizeKey(text);
+  if (formalization.expression?.type === 'formal-reasoning-program') {
+    return formalization.expression.dependencies.map(
+      (dependency) => `${dependency.target} depends on ${dependency.source}`
+    );
+  }
   if (formalization.expression?.type === 'arithmetic-equality') {
     const expression = formalization.expression;
     dependencies.push(
@@ -525,214 +601,20 @@ export async function analyzeStatementWithLiveEvidence(input, options = {}) {
 export function generateInterpretations(input, options = {}) {
   const text = normalizeInput(input);
   const topK = Math.max(1, Math.min(options.topK ?? 3, 10));
-  const interpretations = arithmeticEqualityPattern.test(text)
-    ? arithmeticInterpretations(text)
-    : arithmeticQuestionPattern.test(text)
-      ? arithmeticQuestionInterpretations(text)
-      : isSelfReferentialFalseStatement(text)
-        ? selfReferenceInterpretations(text)
-        : realWorldInterpretations(text);
+  const interpretations = formalReasoning.isFormalReasoningInput(text)
+    ? formalReasoning.createFormalReasoningInterpretations(
+        text,
+        FORMALIZATION_LEVELS
+      )
+    : arithmeticEqualityPattern.test(text)
+      ? arithmeticInterpretations(text)
+      : arithmeticQuestionPattern.test(text)
+        ? arithmeticQuestionInterpretations(text)
+        : isSelfReferentialFalseStatement(text)
+          ? selfReferenceInterpretations(text)
+          : realWorldInterpretations(text);
 
   return interpretations.slice(0, topK);
-}
-
-export function serializeLinksNotation(linksNetwork) {
-  const header = [
-    `(links-network: ${safeReference(linksNetwork.id)} ${safeReference(
-      linksNetwork.beliefSystem.id
-    )})`,
-  ];
-  const lines = linksNetwork.links.map((link) => {
-    const references =
-      link.references.length > 0
-        ? link.references.map(safeReference).join(' ')
-        : 'self';
-    const value = summarizeLinkValue(link);
-    return `(${safeReference(link.id)}: ${safeReference(
-      link.role
-    )} ${references} ${value})`;
-  });
-  return [...header, ...lines].join('\n');
-}
-
-export function createIssueReportUrl(analysis, options = {}) {
-  const repoUrl = options.repoUrl ?? issueReportRepoUrl;
-  const params = new globalThis.URLSearchParams({
-    title: createIssueReportTitle(analysis.statement.value.text),
-    body: createIssueReportBody(analysis, options),
-    labels: options.labels ?? 'bug',
-  });
-
-  return `${repoUrl.replace(/\/$/, '')}/issues/new?${params.toString()}`;
-}
-
-function createIssueReportTitle(statement) {
-  const text = normalizeInput(statement);
-  const shortened = text.length > 50 ? `${text.slice(0, 50)}...` : text;
-  return `Issue with statement: ${shortened}`;
-}
-
-function createIssueReportBody(analysis, options) {
-  const lines = [];
-  const level = describeFormalizationLevel(analysis.formalization.level);
-  const confidence =
-    analysis.result.confidence === null
-      ? 'unknown'
-      : `${Math.round(analysis.result.confidence * 100)}%`;
-
-  lines.push('## Environment');
-  lines.push('');
-  if (options.pageUrl) {
-    lines.push(`- **URL**: ${options.pageUrl}`);
-  }
-  if (options.userAgent) {
-    lines.push(`- **User Agent**: ${options.userAgent}`);
-  }
-  lines.push(
-    `- **Timestamp**: ${options.timestamp ?? new Date().toISOString()}`
-  );
-  lines.push('');
-  lines.push('## Statement');
-  lines.push('');
-  lines.push('```');
-  lines.push(analysis.statement.value.text);
-  lines.push('```');
-  lines.push('');
-  lines.push('## Interpretation');
-  lines.push('');
-  lines.push(analysis.selectedInterpretation.paraphrase);
-  lines.push('');
-  appendInterpretationLines(lines, analysis.interpretations);
-  lines.push('## Result');
-  lines.push('');
-  lines.push(`- **Value**: ${analysis.result.value}`);
-  lines.push(`- **Confidence**: ${confidence}`);
-  lines.push(`- **Formalization level**: ${level.level} - ${level.name}`);
-  lines.push(`- **Explanation**: ${analysis.result.explanation}`);
-  lines.push('');
-  lines.push('## Evidence');
-  lines.push('');
-  appendEvidenceLines(
-    lines,
-    'Supporting evidence',
-    analysis.result.supportingEvidence
-  );
-  appendEvidenceLines(
-    lines,
-    'Refuting evidence',
-    analysis.result.refutingEvidence
-  );
-  appendProbabilityCalculationLines(lines, analysis.result.calculation);
-  appendReasoningTraceLines(lines, analysis.linksNetwork.links);
-  lines.push('');
-  lines.push('## Links Notation');
-  lines.push('');
-  lines.push('```');
-  lines.push(serializeLinksNotation(analysis.linksNetwork));
-  lines.push('```');
-  lines.push('');
-  lines.push('## Description');
-  lines.push('');
-  lines.push('<!-- Please describe what looked wrong or incomplete. -->');
-  lines.push('');
-
-  return lines.join('\n');
-}
-
-function appendInterpretationLines(lines, interpretations) {
-  if (!Array.isArray(interpretations) || interpretations.length <= 1) {
-    return;
-  }
-
-  lines.push('## Candidate Interpretations');
-  lines.push('');
-  for (const interpretation of interpretations) {
-    lines.push(
-      `- **${interpretation.id}** (${interpretation.kind}): ${interpretation.paraphrase}`
-    );
-  }
-  lines.push('');
-}
-
-function appendEvidenceLines(lines, heading, evidenceItems) {
-  lines.push(`### ${heading}`);
-  if (evidenceItems.length === 0) {
-    lines.push('');
-    lines.push('None.');
-    lines.push('');
-    return;
-  }
-
-  for (const evidence of evidenceItems) {
-    const source = evidence.sourceUrl
-      ? `[${evidence.sourceType}](${evidence.sourceUrl})`
-      : evidence.sourceType;
-    lines.push(`- ${source}: ${evidence.claim}`);
-  }
-  lines.push('');
-}
-
-function appendProbabilityCalculationLines(lines, calculation) {
-  if (!calculation) {
-    return;
-  }
-
-  lines.push('## Probability Calculation');
-  lines.push('');
-  lines.push(`- **Strategy**: ${calculation.strategy}`);
-  lines.push(`- **Support weight**: ${calculation.supportWeight}`);
-  lines.push(`- **Refute weight**: ${calculation.refuteWeight}`);
-  lines.push(`- **Raw confidence**: ${calculation.rawConfidence}`);
-  lines.push(`- **Bounded confidence**: ${calculation.boundedConfidence}`);
-  lines.push('');
-  for (const evidence of calculation.evidence ?? []) {
-    const situation = evidence.situationId
-      ? `, situation ${evidence.situationId}`
-      : '';
-    lines.push(
-      `- ${evidence.polarity} weight ${evidence.weight}${situation}: ${evidence.claim}`
-    );
-  }
-  lines.push('');
-}
-
-function appendReasoningTraceLines(lines, links) {
-  const traceLinks = links.filter((link) =>
-    ['meaning', 'reasoning-step'].includes(link.role)
-  );
-  if (traceLinks.length === 0) {
-    return;
-  }
-
-  lines.push('## Reasoning Trace');
-  lines.push('');
-  for (const link of traceLinks) {
-    const source = link.value?.sourceUrl
-      ? ` ([source](${link.value.sourceUrl}))`
-      : '';
-    lines.push(
-      `- **${link.role}**: ${summarizeReportValue(link.value)}${source}`
-    );
-  }
-  lines.push('');
-}
-
-function summarizeReportValue(value) {
-  if (value === null) {
-    return '';
-  }
-  if (typeof value === 'string' || typeof value === 'number') {
-    return String(value);
-  }
-  return (
-    value.text ??
-    value.paraphrase ??
-    value.claim ??
-    value.relation ??
-    value.kind ??
-    value.expression?.type ??
-    ''
-  );
 }
 
 function createUserBeliefEvidence(formalization, userBeliefs) {
@@ -890,18 +772,16 @@ function realWorldInterpretations(text) {
   const knownClaim = knownRealWorldClaims[normalizeKey(text)];
   const interpretations = [
     {
-      kind: knownClaim?.interpretationKind ?? 'real-world-claim',
+      kind: knownClaim?.interpretationKind ?? 'general-human-language-claim',
       paraphrase:
         knownClaim?.paraphrase ??
-        `Treat "${text}" as a factual claim that needs evidence.`,
+        `Treat "${text}" as a human-language claim with structured meaning links that still needs evidence.`,
       examples: knownClaim?.examples ?? [
-        'Evidence may support or refute the claim',
+        'Extract subject, predicate, object, and lexical meaning candidates',
       ],
       confidence: knownClaim ? 0.95 : 0.5,
-      source: 'deterministic-rule',
-      formalizationLevel: knownClaim
-        ? FORMALIZATION_LEVELS.PARTIAL_FORMAL_EXPRESSION
-        : FORMALIZATION_LEVELS.STRUCTURED_MEANING_LINKS,
+      source: knownClaim ? 'deterministic-rule' : 'general-formalizer',
+      formalizationLevel: FORMALIZATION_LEVELS.PARTIAL_FORMAL_EXPRESSION,
     },
     {
       kind: 'ambiguous-claim',
@@ -929,6 +809,12 @@ function realWorldInterpretations(text) {
 }
 
 function formalizeInterpretation(text, interpretation) {
+  if (interpretation.kind === 'formal-reasoning-program') {
+    return formalReasoning.createFormalReasoningFormalization(
+      text,
+      FORMALIZATION_LEVELS.FULLY_COMPUTABLE_EXPRESSION
+    );
+  }
   if (interpretation.kind === 'arithmetic-equality') {
     const match = text.match(arithmeticEqualityPattern);
     const leftOperand = Number(match[1]);
@@ -984,83 +870,199 @@ function formalizeInterpretation(text, interpretation) {
 
   const normalized = normalizeKey(text);
   const knownClaim = knownRealWorldClaims[normalized];
+  const structured = buildStatementMeaningMetadata(text);
 
   return {
-    level: knownClaim
-      ? FORMALIZATION_LEVELS.PARTIAL_FORMAL_EXPRESSION
-      : interpretation.formalizationLevel,
+    level: FORMALIZATION_LEVELS.PARTIAL_FORMAL_EXPRESSION,
     computable: false,
     expression: {
       type: knownClaim?.expressionType ?? 'partial-claim',
       text,
       normalized,
       wikidata: knownClaim?.wikidata ?? null,
+      ast: structured.ast,
+      cst: structured.cst,
+      linguisticMetadata: structured.linguisticMetadata,
+      meaningLinks: structured.meaningLinks,
+      variables: structured.variables,
+      questions: structured.questions,
     },
-    unknowns: knownClaim ? [] : ['formal predicate', 'evidence source mapping'],
-    refinementSuggestions: knownClaim
+    unknowns: knownClaim
       ? []
       : [
-          'Choose a specific subject.',
-          'Choose a relation that can be checked against evidence.',
+          ...structured.variables.map((variable) => variable.name),
+          'evidence source mapping',
         ],
+    refinementSuggestions: knownClaim
+      ? []
+      : structured.questions.map((question) => question.text),
   };
 }
 
-function evaluateComputableFormalization(formalization) {
+function evaluateComputableFormalization(formalization, options = {}) {
   const expression = formalization.expression;
-  const actual = evaluateArithmeticExpression(expression);
+  if (expression.type === 'formal-reasoning-program') {
+    return formalReasoning.formalReasoningToEvaluationResult(
+      formalReasoning.reasonFormalStatements(expression.program, options)
+    );
+  }
+  const rmlEvaluation = evaluateArithmeticWithRelativeMetaLogic(
+    expression,
+    options
+  );
+  const actual =
+    rmlEvaluation?.actual ?? evaluateArithmeticExpression(expression);
   if (expression.type === 'arithmetic-question') {
-    const evidence = {
-      id: 'computed-evidence-1',
-      polarity: 'support',
-      weight: 1,
-      sourceType: 'computed',
-      sourceUrl: null,
-      retrievedAt: 'local',
-      claim: `${expression.leftOperand} ${expression.operator} ${expression.rightOperand} evaluates to ${actual}.`,
-    };
-
-    return {
-      kind: 'computed',
-      value: actual,
-      actual,
-      expected: undefined,
-      confidence: 1,
-      correctness: 1,
-      signedConfidence: 1,
-      rawBalance: 1,
-      supportingEvidence: [evidence],
-      refutingEvidence: [],
-      explanation: 'The expression was computed locally.',
-    };
+    return evaluateArithmeticQuestion(expression, actual, rmlEvaluation);
   }
 
+  return evaluateArithmeticEquality(expression, actual, rmlEvaluation);
+}
+
+function evaluateArithmeticQuestion(expression, actual, rmlEvaluation = null) {
+  const evidence = {
+    id: 'computed-evidence-1',
+    polarity: 'support',
+    weight: 1,
+    sourceType: arithmeticEvidenceSourceType(rmlEvaluation),
+    sourceUrl: arithmeticEvidenceSourceUrl(rmlEvaluation),
+    retrievedAt: arithmeticEvidenceRetrievedAt(rmlEvaluation),
+    claim: `${expression.leftOperand} ${expression.operator} ${expression.rightOperand} evaluates to ${actual}.`,
+  };
+
+  return {
+    kind: 'computed',
+    value: actual,
+    actual,
+    expected: undefined,
+    confidence: 1,
+    probability: 1,
+    correctness: 1,
+    signedConfidence: 1,
+    rawBalance: 1,
+    calculation: createProbabilityCalculation({
+      strategy: arithmeticCalculationStrategy('question', rmlEvaluation),
+      truthValue: 1,
+      deterministic: true,
+      inputs: arithmeticCalculationInputs(expression, actual),
+      extra: {
+        supportWeight: 1,
+        refuteWeight: 0,
+        rawConfidence: 1,
+        boundedConfidence: 1,
+      },
+    }),
+    supportingEvidence: [evidence],
+    refutingEvidence: [],
+    explanation: arithmeticEvaluationExplanation(rmlEvaluation),
+  };
+}
+
+function evaluateArithmeticEquality(expression, actual, rmlEvaluation = null) {
   const value = Object.is(actual, expression.expected);
   const evidence = {
     id: 'computed-evidence-1',
     polarity: value ? 'support' : 'refute',
     weight: 1,
-    sourceType: 'computed',
-    sourceUrl: null,
-    retrievedAt: 'local',
+    sourceType: arithmeticEvidenceSourceType(rmlEvaluation),
+    sourceUrl: arithmeticEvidenceSourceUrl(rmlEvaluation),
+    retrievedAt: arithmeticEvidenceRetrievedAt(rmlEvaluation),
     claim: `${expression.leftOperand} ${expression.operator} ${expression.rightOperand} evaluates to ${actual}.`,
   };
+  const metrics = arithmeticEqualityMetrics(value, evidence);
 
   return {
     kind: 'computed',
     value,
     actual,
     expected: expression.expected,
-    confidence: value ? 1 : 0,
-    correctness: value ? 1 : 0,
-    signedConfidence: value ? 1 : -1,
-    rawBalance: value ? 1 : -1,
-    supportingEvidence: value ? [evidence] : [],
-    refutingEvidence: value ? [] : [evidence],
+    confidence: metrics.confidence,
+    probability: metrics.probability,
+    correctness: metrics.correctness,
+    signedConfidence: metrics.signedConfidence,
+    rawBalance: metrics.rawBalance,
+    calculation: createProbabilityCalculation({
+      strategy: arithmeticCalculationStrategy('equality', rmlEvaluation),
+      truthValue: metrics.truthValue,
+      deterministic: true,
+      inputs: arithmeticCalculationInputs(expression, actual),
+      extra: {
+        supportWeight: metrics.supportWeight,
+        refuteWeight: metrics.refuteWeight,
+        rawConfidence: metrics.confidence,
+        boundedConfidence: metrics.confidence,
+      },
+    }),
+    supportingEvidence: metrics.supportingEvidence,
+    refutingEvidence: metrics.refutingEvidence,
     explanation: value
       ? 'The computed value matches the expected value.'
       : 'The computed value does not match the expected value.',
   };
+}
+
+function arithmeticEqualityMetrics(value, evidence) {
+  if (value) {
+    return {
+      confidence: 1,
+      probability: 1,
+      correctness: 1,
+      signedConfidence: 1,
+      rawBalance: 1,
+      truthValue: 1,
+      supportWeight: 1,
+      refuteWeight: 0,
+      supportingEvidence: [evidence],
+      refutingEvidence: [],
+    };
+  }
+  return {
+    confidence: 0,
+    probability: 0,
+    correctness: 0,
+    signedConfidence: -1,
+    rawBalance: -1,
+    truthValue: 0,
+    supportWeight: 0,
+    refuteWeight: 1,
+    supportingEvidence: [],
+    refutingEvidence: [evidence],
+  };
+}
+
+function arithmeticCalculationStrategy(kind, rmlEvaluation) {
+  if (hasRelativeMetaLogicArithmeticValue(rmlEvaluation)) {
+    return `relative-meta-logic-arithmetic-${kind}`;
+  }
+  return `deterministic-arithmetic-${kind}`;
+}
+
+function arithmeticEvidenceSourceType(rmlEvaluation) {
+  return hasRelativeMetaLogicArithmeticValue(rmlEvaluation)
+    ? 'relative-meta-logic'
+    : 'computed';
+}
+
+function arithmeticEvidenceSourceUrl(rmlEvaluation) {
+  return hasRelativeMetaLogicArithmeticValue(rmlEvaluation)
+    ? rmlEvaluation.engine.sourceUrl
+    : null;
+}
+
+function arithmeticEvidenceRetrievedAt(rmlEvaluation) {
+  return hasRelativeMetaLogicArithmeticValue(rmlEvaluation)
+    ? rmlEvaluation.engine.mode
+    : 'local';
+}
+
+function hasRelativeMetaLogicArithmeticValue(rmlEvaluation) {
+  return rmlEvaluation?.actual !== null && rmlEvaluation?.actual !== undefined;
+}
+
+function arithmeticEvaluationExplanation(rmlEvaluation) {
+  return hasRelativeMetaLogicArithmeticValue(rmlEvaluation)
+    ? 'The expression was computed through the relative-meta-logic adapter.'
+    : 'The expression was computed locally.';
 }
 
 function estimateFromEvidence(formalization, evidenceFixtures, options = {}) {
@@ -1069,11 +1071,33 @@ function estimateFromEvidence(formalization, evidenceFixtures, options = {}) {
       kind: 'evidence-estimate',
       value: 'undetermined',
       confidence: 0.5,
+      probability: 0.5,
       correctness: 0.5,
       signedConfidence: 0,
       rawBalance: 0,
       supportWeight: 0,
       refuteWeight: 0,
+      calculation: createProbabilityCalculation({
+        strategy: 'self-reference-truth-gap',
+        truthValue: 0.5,
+        valence: 3,
+        inputs: [
+          {
+            kind: 'statement',
+            value: formalization.expression.text,
+          },
+          {
+            kind: 'resolution',
+            value: 'truth-gap',
+          },
+        ],
+        extra: {
+          supportWeight: 0,
+          refuteWeight: 0,
+          rawConfidence: 0.5,
+          boundedConfidence: 0.5,
+        },
+      }),
       supportingEvidence: [],
       refutingEvidence: [],
       explanation:
@@ -1098,6 +1122,7 @@ function estimateFromEvidence(formalization, evidenceFixtures, options = {}) {
     kind: 'evidence-estimate',
     value: boundedConfidence === null ? 'unknown' : boundedConfidence,
     confidence: boundedConfidence,
+    probability: boundedConfidence,
     correctness: boundedConfidence,
     signedConfidence: boundedSignedConfidence,
     rawBalance: confidence.rawBalance,
@@ -1122,6 +1147,18 @@ function addFormalizationDependencies(
   formalizationLink,
   formalization
 ) {
+  addStructuredMeaningLinks(context, formalizationLink, formalization);
+  if (formalization.expression.type === 'formal-reasoning-program') {
+    for (const dependency of formalization.expression.dependencies) {
+      addLink(context, {
+        role: 'depends-on',
+        references: [formalizationLink.id],
+        value: { relation: dependency.relation, ...dependency },
+        provenance: algorithmProvenance('relative-meta-logic-adapter'),
+      });
+    }
+    return;
+  }
   if (
     !['arithmetic-equality', 'arithmetic-question'].includes(
       formalization.expression.type
@@ -1165,6 +1202,29 @@ function addFormalizationDependencies(
   }
 }
 
+function addStructuredMeaningLinks(context, formalizationLink, formalization) {
+  for (const link of formalization.expression.meaningLinks ?? []) {
+    addLink(context, {
+      role: 'meaning',
+      references: [formalizationLink.id],
+      value: {
+        text: `${link.text} -> ${link.target.id}`,
+        phrase: link.text,
+        role: link.role,
+        targetId: link.target.id,
+        targetLabel: link.target.label,
+        targetSource: link.target.source,
+        sourceUrl: link.target.sourceUrl,
+        status: link.status,
+        questionIds: (formalization.expression.questions ?? [])
+          .filter((question) => question.meaningLinkId === link.id)
+          .map((question) => question.id),
+      },
+      provenance: algorithmProvenance('general-formalization'),
+    });
+  }
+}
+
 function addResultLinks(context, statement, formalizationLink, result) {
   const resultLink = addLink(context, {
     role: 'result',
@@ -1173,6 +1233,9 @@ function addResultLinks(context, statement, formalizationLink, result) {
       kind: result.kind,
       value: result.value,
       confidence: result.confidence,
+      probability: result.probability,
+      correctness: result.correctness,
+      signedConfidence: result.signedConfidence,
     },
     provenance: algorithmProvenance('evaluation'),
   });
@@ -1230,6 +1293,19 @@ function addEvidenceContextLinks(context, evidenceLink, evidence) {
       });
     }
   }
+}
+
+function arithmeticCalculationInputs(expression, actual) {
+  const inputs = [
+    { kind: 'operand', id: 'left', value: expression.leftOperand },
+    { kind: 'operator', value: expression.operator },
+    { kind: 'operand', id: 'right', value: expression.rightOperand },
+    { kind: 'computed-result', value: actual },
+  ];
+  if (expression.expected !== undefined) {
+    inputs.push({ kind: 'expected-result', value: expression.expected });
+  }
+  return inputs;
 }
 
 function evaluateArithmeticExpression(expression) {
@@ -1322,39 +1398,6 @@ function createIdFactory(existingLinks = []) {
   };
 }
 
-function summarizeLinkValue(link) {
-  const value = link.value;
-  if (value === null) {
-    return safeReference(link.role);
-  }
-  if (typeof value === 'string' || typeof value === 'number') {
-    return toLinoText(value);
-  }
-  if (value.relation) {
-    return safeReference(value.relation);
-  }
-  if (value.text) {
-    return toLinoText(value.text);
-  }
-  if (value.paraphrase) {
-    return toLinoText(value.paraphrase);
-  }
-  if (value.claim) {
-    return toLinoText(value.claim);
-  }
-  if (value.expression?.type) {
-    return safeReference(value.expression.type);
-  }
-  if (value.kind) {
-    return safeReference(value.kind);
-  }
-  return safeReference(link.role);
-}
-
-function toLinoText(value) {
-  return `(${String(value).replace(/[()]/g, ' ').replace(/\s+/g, ' ').trim()})`;
-}
-
 function safeReference(value) {
   return (
     String(value)
@@ -1369,7 +1412,10 @@ function normalizeInput(input) {
   if (typeof input !== 'string') {
     throw new TypeError('Statement input must be a string.');
   }
-  const text = input.trim().replace(/\s+/g, ' ');
+  const trimmed = input.trim();
+  const text = formalReasoning.isFormalReasoningInput(trimmed)
+    ? trimmed
+    : trimmed.replace(/\s+/g, ' ');
   if (!text) {
     throw new Error('Statement input cannot be empty.');
   }

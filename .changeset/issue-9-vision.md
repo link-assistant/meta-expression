@@ -1,5 +1,5 @@
 ---
-'my-package': minor
+'meta-expression': minor
 ---
 
 Add opposite/negation examples, alternatives, dependencies, definitions,

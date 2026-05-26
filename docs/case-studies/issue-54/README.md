@@ -14,8 +14,8 @@ The issue is intentionally broad. This PR now covers the shared compatibility
 contract with exact upstream corpus tracking plus focused executable tests and
 code:
 
-- A generated fixture records all 706 upstream Formal AI test case identities
-  from 61 test files at the pinned `formal-ai` commit.
+- A generated fixture records all 750 upstream Formal AI test case identities
+  from 69 test files at the pinned `formal-ai` commit.
 - JavaScript formalization supports configurable rules before and after the
   core formalizer.
 - JavaScript parses and answers Formal AI translation prompts in English,
@@ -54,9 +54,9 @@ location for large generated artifacts.
 The `formal-ai` repository was studied at:
 
 ```text
-e1467d531534af582a2f457e69695ac6861131b8
-2026-05-23T23:02:47+00:00
-chore: release v0.107.0
+39530ef2e71f787561f9252b72032eb81e329c3e
+2026-05-26T00:48:52+00:00
+chore: release v0.123.0
 ```
 
 Relevant upstream tests and specifications:
@@ -84,15 +84,15 @@ hook changes a value and tracing is enabled, the pipeline records a
 `custom-transformation-rule` step with the phase, rule id, and before/after
 summary.
 
-Formalization now also adds a zero-configuration deterministic linguistic layer.
-It is intentionally parser-free for this baseline: every output records exact
-source spans and stable ids, and a later parser can enrich the same AST/CST
-fields without breaking consumers.
+Formalization also includes a zero-configuration deterministic linguistic layer.
+Issue 70 promotes that layer to an explicit parser-backed metadata flow:
+outputs keep exact source spans and stable ids while adding parser CST,
+provenance, and version fields without breaking consumers.
 
 Rust support mirrors the deterministic contract: text replacement rules apply
 in order, semantic translation naturalization can be addressed through the
 `deformalize_` alias, and `extract_linguistic_metadata()` exposes the same
-structural categories used by the JS CST.
+parser-aware structural categories used by the JS CST.
 
 ## Verification
 

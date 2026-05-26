@@ -1,0 +1,37 @@
+/* tslint:disable */
+/* eslint-disable */
+export const memory: WebAssembly.Memory;
+export const meta_expression_default_translation_match_threshold: () => number;
+export const meta_expression_issue35_hawaii_meaning_id: () => bigint;
+export const meta_expression_issue35_phrase_count: () => number;
+export const meta_expression_issue35_rule_count: () => number;
+export const meta_expression_issue35_state_meaning_id: () => bigint;
+export const meta_expression_issue35_us_state_meaning_id: () => bigint;
+export const meta_expression_issue52_sentence_count: () => number;
+export const meta_expression_issue52_source_phrase_count: () => number;
+export const meta_expression_relation_source: (a: bigint, b: bigint) => bigint;
+export const meta_expression_relation_target: (a: bigint, b: bigint) => bigint;
+export const meta_expression_translation_quality_status_code: (a: number) => number;
+export const meta_expression_weighted_support_ratio: (a: number, b: number, c: number) => number;
+export const meta_expression_wikidata_default_entity_batch_limit: () => number;
+export const meta_expression_wikimedia_cache_min_jitter_days: () => number;
+export const meta_expression_wikimedia_cache_ttl_days_from_hash: (a: bigint) => number;
+export const meta_expression_issue52_target_phrase_count: () => number;
+export const meta_expression_wikimedia_cache_base_ttl_days: () => number;
+export const meta_expression_wikimedia_cache_max_jitter_days: () => number;
+export const analyzeStatementJson: (a: number, b: number, c: number) => [number, number, number, number];
+export const createStatementDraftJson: (a: number, b: number) => [number, number, number, number];
+export const deformalizeFormalExpression: (a: number, b: number) => [number, number];
+export const evaluateStatementJson: (a: number, b: number, c: number) => [number, number, number, number];
+export const formalizeStatementJson: (a: number, b: number, c: number) => [number, number, number, number];
+export const selectInterpretationJson: (a: number, b: number, c: number) => [number, number, number, number];
+export const serializeLinksNotation: (a: number, b: number, c: number) => [number, number, number, number];
+export const statementConfidence: (a: number, b: number, c: number) => [number, number, number];
+export const translateKnownSemanticTextJson: (a: number, b: number, c: number, d: number, e: number, f: number) => [number, number, number, number];
+export const naturalizeFormalExpression: (a: number, b: number) => [number, number];
+export const __wbindgen_externrefs: WebAssembly.Table;
+export const __wbindgen_malloc: (a: number, b: number) => number;
+export const __wbindgen_realloc: (a: number, b: number, c: number, d: number) => number;
+export const __externref_table_dealloc: (a: number) => void;
+export const __wbindgen_free: (a: number, b: number, c: number) => void;
+export const __wbindgen_start: () => void;

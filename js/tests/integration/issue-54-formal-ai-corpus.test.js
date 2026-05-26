@@ -43,18 +43,18 @@ describe('issue 54 - exact formal-ai upstream test corpus index', () => {
   it('indexes every formal-ai test case from the pinned upstream commit', () => {
     expect(corpus.source).toEqual({
       repository: 'link-assistant/formal-ai',
-      commit: 'e1467d531534af582a2f457e69695ac6861131b8',
-      committedAt: '2026-05-23T23:02:47+00:00',
-      subject: 'chore: release v0.107.0',
+      commit: '39530ef2e71f787561f9252b72032eb81e329c3e',
+      committedAt: '2026-05-26T00:48:52+00:00',
+      subject: 'chore: release v0.123.0',
     });
     expect(corpus.summary).toEqual({
-      testFileCount: 61,
-      rustTestCount: 534,
-      jsTestCount: 172,
-      totalTestCount: 706,
-      ignoredRustTestCount: 69,
+      testFileCount: 69,
+      rustTestCount: 569,
+      jsTestCount: 181,
+      totalTestCount: 750,
+      ignoredRustTestCount: 6,
       ignoredJsTestCount: 0,
-      ignoredTotalTestCount: 69,
+      ignoredTotalTestCount: 6,
     });
 
     const cases = corpusCases();
@@ -92,6 +92,14 @@ describe('issue 54 - exact formal-ai upstream test corpus index', () => {
       [
         'tests/e2e/tests/issue-230.spec.js',
         'unknown translation gaps are explicit for every supported target language',
+      ],
+      [
+        'tests/unit/specification/formalization.rs',
+        'arbitrary_statement_maps_predicate_and_nouns_to_wikidata_ids',
+      ],
+      [
+        'tests/unit/playwright_script.rs',
+        'russian_playwright_script_prompt_returns_starter_example',
       ],
     ]) {
       expect(

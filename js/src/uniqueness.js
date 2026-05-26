@@ -45,6 +45,7 @@ export function createWikipediaUniquenessSource(options = {}) {
           snippet,
           score: exact ? 0.92 : similarity * 0.65,
           matchKind: exact ? 'exact' : 'related',
+          query: statement.query,
         });
       });
     },
@@ -82,6 +83,7 @@ export function createOpenAlexUniquenessSource() {
           snippet: [authors, work.publication_year].filter(Boolean).join(' - '),
           score,
           matchKind: exact ? 'exact-title' : 'similar-work',
+          query: statement.query,
         });
       });
     },
@@ -112,6 +114,7 @@ export function createCrossrefUniquenessSource(options = {}) {
           snippet: item['container-title']?.[0] ?? item.DOI ?? '',
           score: exact ? 0.86 : similarity * 0.68,
           matchKind: exact ? 'exact-title' : 'bibliographic-match',
+          query: statement.query,
         });
       });
     },
@@ -150,6 +153,7 @@ export function createDuckDuckGoUniquenessSource() {
           snippet: entry.snippet ?? '',
           score: exact ? 0.78 : similarity * 0.62,
           matchKind: exact ? 'instant-answer-exact' : 'instant-answer',
+          query: statement.query,
         });
       });
     },
@@ -163,11 +167,13 @@ export async function searchTextUniqueness(input, options = {}) {
   const fetchImpl = options.fetch ?? globalThis.fetch?.bind(globalThis);
   const limit = clampInteger(options.limit ?? defaultLimit, 1, 10);
   const now = normalizeNow(options.now);
+  const exclusions = collectExclusions(text, options);
 
   const statements = [];
   for (const [index, statement] of detected.entries()) {
     statements.push(
       await searchStatementUniqueness(statement, index, {
+        exclusions,
         fetch: fetchImpl,
         limit,
         now,
@@ -176,7 +182,7 @@ export async function searchTextUniqueness(input, options = {}) {
     );
   }
 
-  return buildUniquenessResult(text, statements);
+  return buildUniquenessResult(text, statements, exclusions, now);
 }
 
 async function searchStatementUniqueness(statement, index, ctx) {
@@ -188,7 +194,16 @@ async function searchStatementUniqueness(statement, index, ctx) {
   );
   const matches = sourceResults
     .flatMap((result) => result.matches)
+    .map((match) => applyMatchExclusion(match, statement, ctx.exclusions))
     .sort((a, b) => b.score - a.score);
+  const exclusions = ctx.exclusions.filter((exclusion) =>
+    rangesOverlap(
+      statement.start,
+      statement.end,
+      exclusion.span.start,
+      exclusion.span.end
+    )
+  );
   const sourceErrors = sourceResults
     .filter((result) => result.error)
     .map(({ sourceId, sourceLabel, error }) => ({
@@ -210,6 +225,7 @@ async function searchStatementUniqueness(statement, index, ctx) {
     uniqueness,
     suggestedAction: suggestedAction(existingLikelihood),
     matches,
+    exclusions,
     sourceErrors,
     checkedAt: ctx.now,
     color: colorForUniqueness(uniqueness),
@@ -225,7 +241,10 @@ async function searchSource(source, statement, ctx) {
     return {
       sourceId: source.id,
       sourceLabel: source.label,
-      matches: matches.filter((match) => match?.score > 0),
+      matches: (matches ?? [])
+        .filter(Boolean)
+        .map((match) => normalizeSearchMatch(match, statement, source))
+        .filter((match) => match.score > 0),
     };
   } catch (error) {
     return {
@@ -237,13 +256,23 @@ async function searchSource(source, statement, ctx) {
   }
 }
 
-function buildUniquenessResult(text, statements) {
+function buildUniquenessResult(text, statements, exclusions, checkedAt) {
   const summary = summarizeStatements(statements);
+  const originalityReport = buildOriginalityReport(
+    text,
+    statements,
+    summary,
+    exclusions,
+    checkedAt
+  );
   return {
     status: 'checked',
     text,
+    existingLikelihood: summary.averageExistingLikelihood,
+    uniqueness: summary.averageUniqueness,
     summary,
     statements,
+    originalityReport,
     html: renderUniquenessHtml(text, statements),
     markdown: renderUniquenessMarkdown(statements, summary),
     linksNotation: renderUniquenessLino(text, statements, summary),
@@ -314,10 +343,15 @@ function renderUniquenessMarkdown(statements, summary) {
       )} unique [${statement.suggestedAction}]: ${statement.text}`
     );
     for (const match of statement.matches.slice(0, 3)) {
+      const excluded = match.excluded
+        ? `, excluded: ${match.exclusion.reason}`
+        : '';
       lines.push(
         `  - ${match.sourceLabel} (${match.matchKind}, ${formatPercent(
           match.score
-        )}): ${match.title}${match.url ? ` - ${match.url}` : ''}`
+        )}${excluded}): ${match.title}${
+          match.sourceUrl ? ` - ${match.sourceUrl}` : ''
+        }`
       );
     }
   }
@@ -340,10 +374,17 @@ function renderUniquenessLino(text, statements, summary) {
         suggestedAction: statement.suggestedAction,
         matches: statement.matches.map((match) => ({
           sourceId: match.sourceId,
+          sourceLabel: match.sourceLabel,
           title: match.title,
           url: match.url,
+          sourceUrl: match.sourceUrl,
           score: match.score,
+          matchStrength: match.matchStrength,
           matchKind: match.matchKind,
+          inputSpan: match.inputSpan,
+          sourceSpan: match.sourceSpan,
+          excluded: match.excluded,
+          exclusion: match.exclusion,
         })),
       })),
     },
@@ -359,15 +400,331 @@ function buildMatch({
   snippet,
   score,
   matchKind,
+  sourceText,
+  sourceSpan,
+  query,
 }) {
+  const normalizedScore = clamp(Number(score), 0, 1);
+  const normalizedTitle = normalizeWhitespace(title);
+  const normalizedSnippet = normalizeWhitespace(snippet);
+  const normalizedSourceText = normalizeWhitespace(
+    sourceText ?? (normalizedSnippet || normalizedTitle)
+  );
   return {
     sourceId,
     sourceLabel,
-    title: normalizeWhitespace(title),
+    title: normalizedTitle,
     url: url || null,
-    snippet: normalizeWhitespace(snippet),
-    score: clamp(score, 0, 1),
+    sourceUrl: url || null,
+    snippet: normalizedSnippet,
+    sourceText: normalizedSourceText,
+    sourceSpan: normalizeSourceSpan(sourceSpan, normalizedSourceText, query),
+    score: normalizedScore,
+    matchStrength: normalizedScore,
     matchKind,
+  };
+}
+
+function normalizeSearchMatch(match, statement, source) {
+  const url = match.url ?? match.sourceUrl ?? null;
+  const title = normalizeWhitespace(match.title);
+  const snippet = normalizeWhitespace(match.snippet);
+  const sourceText = normalizeWhitespace(
+    match.sourceText ?? (snippet || title)
+  );
+  const score = clamp(
+    Number(match.score ?? match.matchStrength ?? match.strength ?? 0),
+    0,
+    1
+  );
+  return {
+    ...match,
+    sourceId: String(match.sourceId ?? source.id),
+    sourceLabel: String(match.sourceLabel ?? source.label),
+    title,
+    url,
+    sourceUrl: url,
+    snippet,
+    sourceText,
+    sourceSpan: normalizeSourceSpan(
+      match.sourceSpan,
+      sourceText,
+      statement.query
+    ),
+    score,
+    matchStrength: score,
+    matchKind: String(match.matchKind ?? 'source-match'),
+    inputSpan: normalizeInputSpan(match.inputSpan, statement),
+    excluded: false,
+    exclusion: null,
+  };
+}
+
+function normalizeInputSpan(span, statement) {
+  if (
+    span &&
+    Number.isFinite(Number(span.start)) &&
+    Number.isFinite(Number(span.end))
+  ) {
+    const start = Number(span.start);
+    const end = Number(span.end);
+    return {
+      start,
+      end,
+      text: String(span.text ?? statement.text),
+    };
+  }
+  return {
+    start: statement.start,
+    end: statement.end,
+    text: statement.text,
+  };
+}
+
+function normalizeSourceSpan(span, sourceText, query) {
+  if (
+    span &&
+    Number.isFinite(Number(span.start)) &&
+    Number.isFinite(Number(span.end))
+  ) {
+    const start = Number(span.start);
+    const end = Number(span.end);
+    return {
+      start,
+      end,
+      text: String(span.text ?? sourceText.slice(start, end)),
+    };
+  }
+  return inferSourceSpan(sourceText, query);
+}
+
+function inferSourceSpan(sourceText, query) {
+  const text = String(sourceText ?? '');
+  if (!text) {
+    return null;
+  }
+  const needle = normalizeWhitespace(query);
+  if (needle) {
+    const index = text.toLowerCase().indexOf(needle.toLowerCase());
+    if (index >= 0) {
+      return {
+        start: index,
+        end: index + needle.length,
+        text: text.slice(index, index + needle.length),
+      };
+    }
+  }
+  const end = Math.min(text.length, 240);
+  return {
+    start: 0,
+    end,
+    text: text.slice(0, end),
+  };
+}
+
+function applyMatchExclusion(match, statement, exclusions) {
+  const exclusion = exclusions.find((candidate) =>
+    rangesOverlap(
+      statement.start,
+      statement.end,
+      candidate.span.start,
+      candidate.span.end
+    )
+  );
+  return {
+    ...match,
+    excluded: Boolean(exclusion),
+    exclusion: exclusion ? summarizeExclusion(exclusion) : null,
+  };
+}
+
+function buildOriginalityReport(
+  text,
+  statements,
+  summary,
+  exclusions,
+  checkedAt
+) {
+  const matches = [];
+  for (const statement of statements) {
+    for (const match of statement.matches) {
+      matches.push({
+        id: `match-${matches.length + 1}`,
+        statementId: statement.id,
+        statementText: statement.text,
+        sourceId: match.sourceId,
+        sourceLabel: match.sourceLabel,
+        sourceTitle: match.title,
+        sourceUrl: match.sourceUrl,
+        matchKind: match.matchKind,
+        score: match.score,
+        strength: match.matchStrength,
+        matchStrength: match.matchStrength,
+        inputSpan: match.inputSpan,
+        sourceSpan: match.sourceSpan,
+        excluded: match.excluded,
+        exclusion: match.exclusion,
+      });
+    }
+  }
+  const scoredMatches = matches.filter((match) => !match.excluded);
+  const overallExistingLikelihood = combineLikelihoods(
+    scoredMatches.map((match) => match.strength)
+  );
+  return {
+    kind: 'document-originality-report',
+    checkedAt,
+    document: {
+      textLength: text.length,
+      statementCount: statements.length,
+    },
+    overallExistingLikelihood,
+    overallUniqueness: clamp(1 - overallExistingLikelihood, 0, 1),
+    averageExistingLikelihood: summary.averageExistingLikelihood,
+    averageUniqueness: summary.averageUniqueness,
+    scoredMatchCount: scoredMatches.length,
+    excludedMatchCount: matches.length - scoredMatches.length,
+    matchedSources: summarizeMatchedSources(matches),
+    matches,
+    exclusions: exclusions.map(summarizeExclusion),
+  };
+}
+
+function summarizeMatchedSources(matches) {
+  const bySource = new Map();
+  for (const match of matches) {
+    const key = [match.sourceId, match.sourceUrl, match.sourceTitle].join('|');
+    if (!bySource.has(key)) {
+      bySource.set(key, {
+        sourceId: match.sourceId,
+        sourceLabel: match.sourceLabel,
+        sourceTitle: match.sourceTitle,
+        sourceUrl: match.sourceUrl,
+        matchCount: 0,
+        excludedMatchCount: 0,
+        strongestMatch: 0,
+        averageStrength: 0,
+      });
+    }
+    const source = bySource.get(key);
+    source.matchCount += 1;
+    if (match.excluded) {
+      source.excludedMatchCount += 1;
+    }
+    source.strongestMatch = Math.max(source.strongestMatch, match.strength);
+    source.averageStrength += match.strength;
+  }
+  return [...bySource.values()].map((source) => ({
+    ...source,
+    averageStrength:
+      source.matchCount === 0 ? 0 : source.averageStrength / source.matchCount,
+  }));
+}
+
+function collectExclusions(text, options) {
+  const configured = Array.isArray(options.exclusions)
+    ? options.exclusions.map((exclusion, index) =>
+        normalizeConfiguredExclusion(exclusion, index, text)
+      )
+    : [];
+  const quoted =
+    options.excludeQuotedText === false ? [] : detectQuotedExclusionSpans(text);
+  const references =
+    options.excludeReferences === false
+      ? []
+      : detectReferenceExclusionSpans(text);
+  return [...configured, ...quoted, ...references].filter(Boolean);
+}
+
+function normalizeConfiguredExclusion(exclusion, index, text) {
+  const span = normalizeConfiguredExclusionSpan(exclusion, text);
+  if (!span) {
+    return null;
+  }
+  return {
+    id: String(exclusion.id ?? `configured-exclusion-${index + 1}`),
+    ruleId: String(exclusion.ruleId ?? 'configured-exclusion'),
+    reason: String(exclusion.reason ?? 'Configured text exclusion.'),
+    span,
+  };
+}
+
+function normalizeConfiguredExclusionSpan(exclusion, text) {
+  const start = Number(exclusion?.start ?? exclusion?.span?.start);
+  const end = Number(exclusion?.end ?? exclusion?.span?.end);
+  if (!Number.isFinite(start) || !Number.isFinite(end) || end <= start) {
+    return null;
+  }
+  return {
+    start,
+    end,
+    text: String(
+      exclusion.text ?? exclusion.span?.text ?? text.slice(start, end)
+    ),
+  };
+}
+
+function detectQuotedExclusionSpans(text) {
+  const exclusions = [];
+  let quoteStart = -1;
+  for (let index = 0; index < text.length; index += 1) {
+    if (text[index] !== '"') {
+      continue;
+    }
+    if (quoteStart === -1) {
+      quoteStart = index + 1;
+      continue;
+    }
+    const spanText = text.slice(quoteStart, index);
+    if (spanText.trim()) {
+      exclusions.push({
+        id: `quoted-text-${exclusions.length + 1}`,
+        ruleId: 'quoted-text',
+        reason:
+          'Quoted text is reported but excluded from document originality scoring.',
+        span: {
+          start: quoteStart,
+          end: index,
+          text: spanText,
+        },
+      });
+    }
+    quoteStart = -1;
+  }
+  return exclusions;
+}
+
+function detectReferenceExclusionSpans(text) {
+  const match =
+    /(^|\n)\s*(references|bibliography|works cited)\s*:?\s*(\n|$)/iu.exec(text);
+  if (!match) {
+    return [];
+  }
+  const start = match.index + match[0].length;
+  if (start >= text.length) {
+    return [];
+  }
+  return [
+    {
+      id: 'references-section-1',
+      ruleId: 'references-section',
+      reason:
+        'Reference-list text is reported but excluded from document originality scoring.',
+      span: {
+        start,
+        end: text.length,
+        text: text.slice(start),
+      },
+    },
+  ];
+}
+
+function summarizeExclusion(exclusion) {
+  return {
+    id: exclusion.id,
+    ruleId: exclusion.ruleId,
+    reason: exclusion.reason,
+    span: exclusion.span,
   };
 }
 
@@ -523,6 +880,10 @@ function dataValue(value) {
 function clampInteger(value, min, max) {
   const parsed = Number(value);
   return Math.min(max, Math.max(min, Number.isFinite(parsed) ? parsed : min));
+}
+
+function rangesOverlap(leftStart, leftEnd, rightStart, rightEnd) {
+  return leftStart < rightEnd && rightStart < leftEnd;
 }
 
 function clamp(value, min, max) {

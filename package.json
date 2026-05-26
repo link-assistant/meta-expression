@@ -1,7 +1,7 @@
 {
-  "name": "my-package",
+  "name": "meta-expression",
   "version": "0.9.0",
-  "description": "A JavaScript/TypeScript package template for AI-driven development",
+  "description": "meta-expression tooling for formalizing text into linked expressions",
   "type": "module",
   "main": "js/src/index.js",
   "types": "js/src/index.d.ts",
@@ -13,6 +13,10 @@
       "types": "./js/src/index.d.ts",
       "import": "./js/src/index.js"
     },
+    "./wasm": {
+      "types": "./js/src/wasm-core.d.ts",
+      "import": "./js/src/wasm-core.js"
+    },
     "./server": {
       "types": "./js/src/server.d.ts",
       "import": "./js/src/server.js"
@@ -23,7 +27,10 @@
     "test:unit": "node --test js/tests/unit/*.test.js",
     "test:integration": "node --test js/tests/integration/*.test.js",
     "test:e2e": "node --test js/tests/e2e/*.test.js",
+    "test:acceptance": "node --test js/tests/integration/issue-74-acceptance-gate.test.js js/tests/integration/issue-26-comparable-fixtures.test.js js/tests/integration/issue-54-formal-ai-corpus.test.js js/tests/integration/issue-72-parity.test.js",
     "start": "node js/src/server.js",
+    "build:wasm": "wasm-pack build rust --target web --out-dir pkg --release --no-opt && node -e \"require('node:fs').rmSync('rust/pkg/.gitignore', { force: true })\"",
+    "test:wasm": "npm run build:wasm && node --test js/tests/integration/issue-61-wasm.test.js",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
     "format": "prettier --write .",
@@ -39,17 +46,21 @@
     "changeset:status": "changeset status --since=origin/main"
   },
   "keywords": [
-    "template",
-    "javascript",
-    "typescript",
-    "ai-driven"
+    "meta-expression",
+    "formalization",
+    "links-notation",
+    "translation"
   ],
   "author": "",
   "license": "Unlicense",
   "repository": {
     "type": "git",
-    "url": "https://github.com/link-foundation/js-ai-driven-development-pipeline-template"
+    "url": "git+https://github.com/link-assistant/meta-expression.git"
   },
+  "bugs": {
+    "url": "https://github.com/link-assistant/meta-expression/issues"
+  },
+  "homepage": "https://github.com/link-assistant/meta-expression#readme",
   "engines": {
     "node": ">=20.0.0"
   },
@@ -62,7 +73,8 @@
     "jscpd": "^4.0.5",
     "lint-staged": "^16.2.6",
     "prettier": "^3.6.2",
-    "test-anywhere": "^0.8.48"
+    "test-anywhere": "^0.8.48",
+    "wasm-pack": "^0.15.0"
   },
   "lint-staged": {
     "*.{js,mjs,cjs}": [
@@ -74,5 +86,17 @@
       "prettier --write",
       "prettier --check"
     ]
+  },
+  "dependencies": {
+    "links-notation": "^0.13.0",
+    "lino-arguments": "^0.3.0"
+  },
+  "peerDependencies": {
+    "relative-meta-logic": "git+https://github.com/link-foundation/relative-meta-logic.git#155276abb6093dcfa5c6c0fe58a7dd05ee3e2c44"
+  },
+  "peerDependenciesMeta": {
+    "relative-meta-logic": {
+      "optional": true
+    }
   }
 }

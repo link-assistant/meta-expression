@@ -94,6 +94,7 @@ export default [
       'node_modules/**',
       'coverage/**',
       'dist/**',
+      'rust/pkg/**',
       '*.min.js',
       '.eslintcache',
       // Case study raw data files (downloaded from external sources)

@@ -3,11 +3,18 @@ import { URL, fileURLToPath } from 'node:url';
 import {
   analyzeStatement,
   analyzeStatementWithLiveEvidence,
+  exportEvidencePropertyGraph,
+  exportEvidenceJsonLd,
+  exportEvidenceProvJsonLd,
+  exportEvidenceRdfTriples,
+  exportScopedSparqlEvidence,
+  naturalizeExpressionWith,
   serializeLinksNotation,
 } from './index.js';
 import { formalizeTextWith, FORMALIZE_LINK_TARGETS } from './formalize.js';
 import { translateTextWith } from './translate.js';
 import { checkText, checkTextWithLiveEvidence } from './check.js';
+import { exportClaimReviewJsonLd } from './claim-review.js';
 import { searchTextUniqueness } from './uniqueness.js';
 import { parseSourceSpec } from './formalize-sources.js';
 import { loadRepoOverrides, loadUserOverrides } from './formalize-overrides.js';
@@ -80,6 +87,10 @@ async function routeGetRequest(url, response, ctx) {
     case '/translate':
       await sendTranslate(response, translateParamsFromSearch(url), ctx);
       return;
+    case '/naturalize':
+    case '/deformalize':
+      await sendNaturalize(response, naturalizeParamsFromSearch(url));
+      return;
     case '/check':
     case '/fact-check':
       await sendCheck(response, checkParamsFromSearch(url), ctx);
@@ -107,6 +118,10 @@ async function routePostRequest(url, request, response, ctx) {
     case '/translate':
       await sendTranslate(response, translateParamsFromPayload(payload), ctx);
       return;
+    case '/naturalize':
+    case '/deformalize':
+      await sendNaturalize(response, naturalizeParamsFromPayload(payload, url));
+      return;
     case '/check':
     case '/fact-check':
       await sendCheck(response, checkParamsFromPayload(payload), ctx);
@@ -126,6 +141,7 @@ function analyzeParamsFromSearch(url) {
     url.searchParams.get('format') ?? 'json',
     Number(url.searchParams.get('select') ?? 0),
     url.searchParams.get('live') === 'true',
+    numberParam(url.searchParams.get('limit')),
   ];
 }
 
@@ -135,6 +151,7 @@ function analyzeParamsFromPayload(payload) {
     payload.format ?? 'json',
     payload.interpretationIndex ?? 0,
     payload.live === true,
+    payload.limit,
   ];
 }
 
@@ -160,6 +177,7 @@ function formalizeParamsFromPayload(payload) {
     overrideFile: payload.overrideFile ?? '',
     noRepoOverrides: payload.noRepoOverrides === true,
     overrides: payload.overrides,
+    providerOutputs: payload.providerOutputs ?? [],
   };
 }
 
@@ -185,12 +203,43 @@ function translateParamsFromPayload(payload) {
   };
 }
 
+function naturalizeParamsFromSearch(url) {
+  return {
+    input: url.searchParams.get('input') ?? '',
+    format: url.searchParams.get('format') ?? 'json',
+    sourceLanguage:
+      url.searchParams.get('from') ??
+      url.searchParams.get('sourceLanguage') ??
+      '',
+    targetLanguage:
+      url.searchParams.get('to') ??
+      url.searchParams.get('targetLanguage') ??
+      '',
+  };
+}
+
+function naturalizeParamsFromPayload(payload, url) {
+  return {
+    input: payload.input ?? '',
+    format:
+      payload.format ??
+      url.searchParams.get('format') ??
+      url.searchParams.get('f') ??
+      'json',
+    sourceLanguage: payload.from ?? payload.sourceLanguage,
+    targetLanguage: payload.to ?? payload.targetLanguage,
+  };
+}
+
 function checkParamsFromSearch(url) {
   return {
     input: url.searchParams.get('input') ?? '',
     format: url.searchParams.get('format') ?? 'json',
     live: url.searchParams.get('live') === 'true',
+    limit: numberParam(url.searchParams.get('limit')),
     evidenceScoring: evidenceScoringFromSearch(url),
+    sourceUrl:
+      url.searchParams.get('sourceUrl') ?? url.searchParams.get('source') ?? '',
   };
 }
 
@@ -199,8 +248,10 @@ function checkParamsFromPayload(payload) {
     input: payload.input ?? '',
     format: payload.format ?? 'json',
     live: payload.live === true,
+    limit: payload.limit,
     evidenceScoring: payload.evidenceScoring,
     preferenceProfile: payload.preferenceProfile,
+    sourceUrl: payload.sourceUrl ?? payload.source ?? '',
   };
 }
 
@@ -245,6 +296,10 @@ function sendNotFound(response) {
       'POST /formalize',
       'GET /translate?input=...',
       'POST /translate',
+      'GET /naturalize?input=...',
+      'POST /naturalize',
+      'GET /deformalize?input=...',
+      'POST /deformalize',
       'GET /check?input=...',
       'POST /check',
       'GET /fact-check?input=...',
@@ -261,7 +316,8 @@ async function sendAnalysis(
   input,
   format,
   interpretationIndex,
-  live
+  live,
+  limit
 ) {
   const options = {
     interpretationIndex,
@@ -271,6 +327,30 @@ async function sendAnalysis(
     ? await analyzeStatementWithLiveEvidence(input, options)
     : analyzeStatement(input, options);
 
+  if (isSparqlFormat(format)) {
+    sendSparqlQuery(
+      response,
+      200,
+      exportScopedSparqlEvidence(analysis, { limit }).query
+    );
+    return;
+  }
+  if (isPropertyGraphFormat(format)) {
+    sendJson(response, 200, exportEvidencePropertyGraph(analysis, { limit }));
+    return;
+  }
+  if (isRdfFormat(format)) {
+    sendJson(response, 200, exportEvidenceRdfTriples(analysis, { limit }));
+    return;
+  }
+  if (isProvOFormat(format)) {
+    sendLinkedDataJson(response, 200, exportEvidenceProvJsonLd(analysis));
+    return;
+  }
+  if (isJsonLdFormat(format)) {
+    sendLinkedDataJson(response, 200, exportEvidenceJsonLd(analysis));
+    return;
+  }
   if (format === 'links' || format === 'lino') {
     response.writeHead(200, {
       'content-type': 'text/plain; charset=utf-8',
@@ -313,6 +393,7 @@ async function sendFormalize(response, params, ctx) {
     sources,
     overrides: [...repoOverrides, ...userOverrides],
     maxNgramSize: params.maxNgramSize,
+    providerOutputs: params.providerOutputs,
   });
   const stored = await writeCacheEntry(
     ctx.cacheRoot,
@@ -359,6 +440,18 @@ async function sendTranslate(response, params, ctx) {
   emitTranslateResponse(response, params.format, result);
 }
 
+async function sendNaturalize(response, params) {
+  if (!params.input) {
+    sendJson(response, 400, { error: 'Missing input parameter.' });
+    return;
+  }
+  const result = await naturalizeExpressionWith(params.input, {
+    sourceLanguage: params.sourceLanguage,
+    targetLanguage: params.targetLanguage,
+  });
+  emitNaturalizeResponse(response, params.format, result);
+}
+
 async function sendCheck(response, params, ctx) {
   if (!params.input) {
     sendJson(response, 400, { error: 'Missing input parameter.' });
@@ -373,7 +466,10 @@ async function sendCheck(response, params, ctx) {
   const result = params.live
     ? await checkTextWithLiveEvidence(params.input, options)
     : checkText(params.input, options);
-  emitCheckResponse(response, params.format, result);
+  emitCheckResponse(response, params.format, result, {
+    limit: params.limit,
+    sourceUrl: params.sourceUrl,
+  });
 }
 
 async function sendUniqueness(response, params) {
@@ -476,7 +572,7 @@ function emitTranslateResponse(response, format, payload) {
   return 0;
 }
 
-function emitCheckResponse(response, format, payload) {
+function emitNaturalizeResponse(response, format, payload) {
   if (format === 'links' || format === 'lino') {
     response.writeHead(200, {
       'content-type': 'text/plain; charset=utf-8',
@@ -500,6 +596,108 @@ function emitCheckResponse(response, format, payload) {
   }
   sendJson(response, 200, payload);
   return 0;
+}
+
+function emitCheckResponse(response, format, payload, options = {}) {
+  if (isClaimReviewFormat(format)) {
+    sendJson(
+      response,
+      200,
+      exportClaimReviewJsonLd(payload, {
+        sourceUrl: options.sourceUrl,
+      })
+    );
+    return 0;
+  }
+  if (isSparqlFormat(format)) {
+    sendSparqlQuery(
+      response,
+      200,
+      exportScopedSparqlEvidence(payload, { limit: options.limit }).query
+    );
+    return 0;
+  }
+  if (isPropertyGraphFormat(format)) {
+    sendJson(
+      response,
+      200,
+      exportEvidencePropertyGraph(payload, { limit: options.limit })
+    );
+    return 0;
+  }
+  if (isRdfFormat(format)) {
+    sendJson(
+      response,
+      200,
+      exportEvidenceRdfTriples(payload, { limit: options.limit })
+    );
+    return 0;
+  }
+  if (isProvOFormat(format)) {
+    sendLinkedDataJson(response, 200, exportEvidenceProvJsonLd(payload));
+    return 0;
+  }
+  if (isJsonLdFormat(format)) {
+    sendLinkedDataJson(response, 200, exportEvidenceJsonLd(payload));
+    return 0;
+  }
+  if (format === 'links' || format === 'lino') {
+    response.writeHead(200, {
+      'content-type': 'text/plain; charset=utf-8',
+    });
+    response.end(payload.linksNotation);
+    return 0;
+  }
+  if (format === 'markdown' || format === 'md') {
+    response.writeHead(200, {
+      'content-type': 'text/markdown; charset=utf-8',
+    });
+    response.end(payload.markdown);
+    return 0;
+  }
+  if (format === 'html') {
+    response.writeHead(200, {
+      'content-type': 'text/html; charset=utf-8',
+    });
+    response.end(payload.html);
+    return 0;
+  }
+  sendJson(response, 200, payload);
+  return 0;
+}
+
+function isClaimReviewFormat(format) {
+  return format === 'claim-review' || format === 'claimreview';
+}
+
+function isSparqlFormat(format) {
+  return format === 'sparql' || format === 'sparql-query';
+}
+
+function isPropertyGraphFormat(format) {
+  return format === 'property-graph' || format === 'graph';
+}
+
+function isRdfFormat(format) {
+  return format === 'rdf' || format === 'rdf-triples';
+}
+
+function isJsonLdFormat(format) {
+  return (
+    format === 'json-ld' ||
+    format === 'jsonld' ||
+    format === 'ld+json' ||
+    format === 'evidence-json-ld'
+  );
+}
+
+function isProvOFormat(format) {
+  return (
+    format === 'prov-o' ||
+    format === 'provo' ||
+    format === 'prov' ||
+    format === 'prov-json-ld'
+  );
 }
 
 function emitUniquenessResponse(response, format, payload) {
@@ -533,6 +731,20 @@ function sendJson(response, status, payload) {
     'content-type': 'application/json; charset=utf-8',
   });
   response.end(JSON.stringify(payload, null, 2));
+}
+
+function sendLinkedDataJson(response, status, payload) {
+  response.writeHead(status, {
+    'content-type': 'application/ld+json; charset=utf-8',
+  });
+  response.end(JSON.stringify(payload, null, 2));
+}
+
+function sendSparqlQuery(response, status, query) {
+  response.writeHead(status, {
+    'content-type': 'application/sparql-query; charset=utf-8',
+  });
+  response.end(query);
 }
 
 function readRequestBody(request) {

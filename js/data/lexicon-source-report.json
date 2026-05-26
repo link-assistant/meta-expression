@@ -1,0 +1,4243 @@
+{
+  "description": "Live Wiktionary attestations gathered by scripts/record-semantic-lexicon.mjs. Concepts with status \"wiktionary\" have a surface form directly attested as a translation template term. Concepts with status \"curated-seed\" list the real attested lemmas; their surface form is typically an inflection of one of those lemmas and is a candidate for js/data/lexicon-overrides.json review.",
+  "capturedAt": "2026-05-26T16:47:14.823Z",
+  "proven": 148,
+  "curatedRemainder": 184,
+  "concepts": [
+    {
+      "id": "lex:en:ability->ru",
+      "source": "en",
+      "status": "wiktionary",
+      "primary": {
+        "ru": "возможность"
+      },
+      "attestedForms": {
+        "ru": ["возможность", "способность", "умение"]
+      }
+    },
+    {
+      "id": "lex:en:able->ru",
+      "source": "en",
+      "status": "curated-seed",
+      "primary": {
+        "ru": "способен"
+      },
+      "attestedForms": {
+        "ru": ["способный", "умелый", "компетентный", "полноправный"]
+      }
+    },
+    {
+      "id": "lex:en:accelerate->ru",
+      "source": "en",
+      "status": "wiktionary",
+      "primary": {
+        "ru": "ускорить"
+      },
+      "attestedForms": {
+        "ru": ["ускорять", "ускорить", "ускоряться", "ускориться"]
+      }
+    },
+    {
+      "id": "lex:en:accepts->ru",
+      "source": "en",
+      "status": "curated-seed",
+      "primary": {
+        "ru": "принимает"
+      },
+      "attestedForms": {
+        "ru": [
+          "принимать",
+          "принять",
+          "соглашаться",
+          "согласиться",
+          "смиряться",
+          "смириться"
+        ]
+      }
+    },
+    {
+      "id": "lex:en:accurate->ru",
+      "source": "en",
+      "status": "curated-seed",
+      "primary": {
+        "ru": "точная"
+      },
+      "attestedForms": {
+        "ru": ["точный", "правильный", "аккуратный"]
+      }
+    },
+    {
+      "id": "lex:en:activist->ru",
+      "source": "en",
+      "status": "wiktionary",
+      "primary": {
+        "ru": "активист"
+      },
+      "attestedForms": {
+        "ru": ["активист", "активистка"]
+      }
+    },
+    {
+      "id": "lex:en:add->ru",
+      "source": "en",
+      "status": "curated-seed",
+      "primary": {
+        "ru": "добавьте"
+      },
+      "attestedForms": {
+        "ru": ["добавлять", "добавить", "прибавлять", "прибавить"]
+      }
+    },
+    {
+      "id": "lex:en:agreement->ru",
+      "source": "en",
+      "status": "curated-seed",
+      "primary": {
+        "ru": "согласования"
+      },
+      "attestedForms": {
+        "ru": [
+          "согласие",
+          "договор",
+          "соглашение",
+          "договорённость",
+          "согласование"
+        ]
+      }
+    },
+    {
+      "id": "lex:en:algorithms->ru",
+      "source": "en",
+      "status": "curated-seed",
+      "primary": {
+        "ru": "алгоритмы"
+      },
+      "attestedForms": {
+        "ru": ["алгоритм"]
+      }
+    },
+    {
+      "id": "lex:en:all->ru",
+      "source": "en",
+      "status": "curated-seed",
+      "primary": {
+        "ru": "все"
+      },
+      "attestedForms": {
+        "ru": ["весь", "целый", "всё", "полностью"]
+      }
+    },
+    {
+      "id": "lex:en:also->ru",
+      "source": "en",
+      "status": "wiktionary",
+      "primary": {
+        "ru": "также"
+      },
+      "attestedForms": {
+        "ru": ["тоже", "также"]
+      }
+    },
+    {
+      "id": "lex:en:american->ru",
+      "source": "en",
+      "status": "curated-seed",
+      "primary": {
+        "ru": "американский"
+      },
+      "attestedForms": {}
+    },
+    {
+      "id": "lex:en:and->ru",
+      "source": "en",
+      "status": "curated-seed",
+      "primary": {
+        "ru": "и"
+      },
+      "attestedForms": {}
+    },
+    {
+      "id": "lex:en:any->ru",
+      "source": "en",
+      "status": "curated-seed",
+      "primary": {
+        "ru": "любых"
+      },
+      "attestedForms": {
+        "ru": [
+          "ещё",
+          "какой-нибудь",
+          "никакой",
+          "любой",
+          "-нибудь",
+          "всякий",
+          "каждый"
+        ]
+      }
+    },
+    {
+      "id": "lex:en:apple->hi",
+      "source": "en",
+      "status": "wiktionary",
+      "primary": {
+        "hi": "सेब"
+      },
+      "attestedForms": {
+        "hi": ["सेब"]
+      }
+    },
+    {
+      "id": "lex:en:apple->ru",
+      "source": "en",
+      "status": "wiktionary",
+      "primary": {
+        "ru": "яблоко"
+      },
+      "attestedForms": {
+        "ru": ["яблоко"]
+      }
+    },
+    {
+      "id": "lex:en:apple->zh",
+      "source": "en",
+      "status": "curated-seed",
+      "primary": {
+        "zh": "苹果"
+      },
+      "attestedForms": {
+        "zh": ["蘋果"]
+      }
+    },
+    {
+      "id": "lex:en:artificial->ru",
+      "source": "en",
+      "status": "wiktionary",
+      "primary": {
+        "ru": "искусственный"
+      },
+      "attestedForms": {
+        "ru": ["искусственный", "притворный", "ненатуральный", "неестественный"]
+      }
+    },
+    {
+      "id": "lex:en:as->ru",
+      "source": "en",
+      "status": "curated-seed",
+      "primary": {
+        "ru": "как"
+      },
+      "attestedForms": {
+        "ru": ["а", "эй", "в", "по", "г", "э-э"]
+      }
+    },
+    {
+      "id": "lex:en:associative_memory_storage->ru",
+      "source": "en",
+      "status": "curated-seed",
+      "primary": {
+        "ru": "хранилище ассоциативной памяти"
+      },
+      "attestedForms": {}
+    },
+    {
+      "id": "lex:en:associative_storage->ru",
+      "source": "en",
+      "status": "curated-seed",
+      "primary": {
+        "ru": "ассоциативное хранилище"
+      },
+      "attestedForms": {}
+    },
+    {
+      "id": "lex:en:associative->ru",
+      "source": "en",
+      "status": "curated-seed",
+      "primary": {
+        "ru": "ассоциативное"
+      },
+      "attestedForms": {
+        "ru": ["ассоциативный"]
+      }
+    },
+    {
+      "id": "lex:en:attaches->ru",
+      "source": "en",
+      "status": "curated-seed",
+      "primary": {
+        "ru": "прикрепляет"
+      },
+      "attestedForms": {
+        "ru": ["прикреплять", "прикрепить", "задерживать", "задержать"]
+      }
+    },
+    {
+      "id": "lex:en:automated->ru",
+      "source": "en",
+      "status": "curated-seed",
+      "primary": {
+        "ru": "автоматизирована"
+      },
+      "attestedForms": {
+        "ru": ["автоматизированный"]
+      }
+    },
+    {
+      "id": "lex:en:automation->ru",
+      "source": "en",
+      "status": "wiktionary",
+      "primary": {
+        "ru": "автоматизация"
+      },
+      "attestedForms": {
+        "ru": ["автоматизация"]
+      }
+    },
+    {
+      "id": "lex:en:based->ru",
+      "source": "en",
+      "status": "curated-seed",
+      "primary": {
+        "ru": "основанный"
+      },
+      "attestedForms": {
+        "ru": ["база"]
+      }
+    },
+    {
+      "id": "lex:en:be->ru",
+      "source": "en",
+      "status": "curated-seed",
+      "primary": {
+        "ru": "быть"
+      },
+      "attestedForms": {}
+    },
+    {
+      "id": "lex:en:billionaire->ru",
+      "source": "en",
+      "status": "wiktionary",
+      "primary": {
+        "ru": "миллиардер"
+      },
+      "attestedForms": {
+        "ru": ["миллиардер", "миллиардерша"]
+      }
+    },
+    {
+      "id": "lex:en:bot-programmer->ru",
+      "source": "en",
+      "status": "curated-seed",
+      "primary": {
+        "ru": "бот-программист"
+      },
+      "attestedForms": {}
+    },
+    {
+      "id": "lex:en:bread->ru",
+      "source": "en",
+      "status": "wiktionary",
+      "primary": {
+        "ru": "хлеб"
+      },
+      "attestedForms": {
+        "ru": ["хлеб", "бабки", "бабло", "панировать"]
+      }
+    },
+    {
+      "id": "lex:en:browser->ru",
+      "source": "en",
+      "status": "curated-seed",
+      "primary": {
+        "ru": "браузер"
+      },
+      "attestedForms": {}
+    },
+    {
+      "id": "lex:en:businessman->ru",
+      "source": "en",
+      "status": "wiktionary",
+      "primary": {
+        "ru": "предприниматель"
+      },
+      "attestedForms": {
+        "ru": ["предприниматель", "бизнесмен", "деловой человек"]
+      }
+    },
+    {
+      "id": "lex:en:can->ru",
+      "source": "en",
+      "status": "curated-seed",
+      "primary": {
+        "ru": "могут"
+      },
+      "attestedForms": {
+        "ru": [
+          "мочь",
+          "смочь",
+          "уметь",
+          "быть в состоянии",
+          "бидон",
+          "жбан",
+          "лейка",
+          "консервная банка",
+          "ягодицы",
+          "попа",
+          "задница",
+          "жопа",
+          "консервировать",
+          "законсервировать"
+        ]
+      }
+    },
+    {
+      "id": "lex:en:carrot->ru",
+      "source": "en",
+      "status": "wiktionary",
+      "primary": {
+        "ru": "морковь"
+      },
+      "attestedForms": {
+        "ru": ["морковь", "морковка", "морква", "пряник"]
+      }
+    },
+    {
+      "id": "lex:en:change->ru",
+      "source": "en",
+      "status": "wiktionary",
+      "primary": {
+        "ru": "изменять"
+      },
+      "attestedForms": {
+        "ru": [
+          "изменяться",
+          "меняться",
+          "измениться",
+          "изменять",
+          "менять",
+          "изменить",
+          "заменять",
+          "заменить",
+          "переодеваться",
+          "переодеться",
+          "пересаживаться",
+          "пересесть",
+          "изменение",
+          "перемена",
+          "мелкие деньги",
+          "мелочь",
+          "замена",
+          "смена",
+          "сдача",
+          "пересадка"
+        ]
+      }
+    },
+    {
+      "id": "lex:en:chatbot->ru",
+      "source": "en",
+      "status": "wiktionary",
+      "primary": {
+        "ru": "чат-бот"
+      },
+      "attestedForms": {
+        "ru": ["чат-бот"]
+      }
+    },
+    {
+      "id": "lex:en:check->ru",
+      "source": "en",
+      "status": "curated-seed",
+      "primary": {
+        "ru": "проверьте"
+      },
+      "attestedForms": {
+        "ru": [
+          "проверка",
+          "контроль",
+          "шах",
+          "галочка",
+          "птичка",
+          "счёт",
+          "проверять",
+          "проверить",
+          "ограничить",
+          "умерить",
+          "шаховать",
+          "чекать",
+          "клетка"
+        ]
+      }
+    },
+    {
+      "id": "lex:en:claims->ru",
+      "source": "en",
+      "status": "curated-seed",
+      "primary": {
+        "ru": "утверждений"
+      },
+      "attestedForms": {
+        "ru": [
+          "претензия",
+          "притязание",
+          "право",
+          "заявление",
+          "объявление",
+          "утверждение",
+          "иск",
+          "требование выплата",
+          "рекламация",
+          "претендовать",
+          "предъявлять претензия",
+          "заявлять претензия",
+          "объявлять претензия",
+          "заявлять о право",
+          "объявлять",
+          "заявлять",
+          "утверждать",
+          "твердить",
+          "претендовать (на)",
+          "требовать выплата",
+          "требовать компенсация"
+        ]
+      }
+    },
+    {
+      "id": "lex:en:combines->ru",
+      "source": "en",
+      "status": "curated-seed",
+      "primary": {
+        "ru": "объединяет"
+      },
+      "attestedForms": {}
+    },
+    {
+      "id": "lex:en:compare->ru",
+      "source": "en",
+      "status": "curated-seed",
+      "primary": {
+        "ru": "сравните"
+      },
+      "attestedForms": {
+        "ru": ["сравнивать", "сравнить", "сравниваться", "сравниться"]
+      }
+    },
+    {
+      "id": "lex:en:computable->ru",
+      "source": "en",
+      "status": "curated-seed",
+      "primary": {
+        "ru": "вычислимые"
+      },
+      "attestedForms": {}
+    },
+    {
+      "id": "lex:en:create->ru",
+      "source": "en",
+      "status": "wiktionary",
+      "primary": {
+        "ru": "создавать"
+      },
+      "attestedForms": {
+        "ru": ["создавать", "создать", "творить", "сотворить"]
+      }
+    },
+    {
+      "id": "lex:en:cucumber->ru",
+      "source": "en",
+      "status": "wiktionary",
+      "primary": {
+        "ru": "огурец"
+      },
+      "attestedForms": {
+        "ru": ["огурец"]
+      }
+    },
+    {
+      "id": "lex:en:data_and_knowledge->ru",
+      "source": "en",
+      "status": "curated-seed",
+      "primary": {
+        "ru": "данные и знания"
+      },
+      "attestedForms": {}
+    },
+    {
+      "id": "lex:en:data->ru",
+      "source": "en",
+      "status": "wiktionary",
+      "primary": {
+        "ru": "данные"
+      },
+      "attestedForms": {
+        "ru": ["данные", "информация"]
+      }
+    },
+    {
+      "id": "lex:en:descriptions->ru",
+      "source": "en",
+      "status": "curated-seed",
+      "primary": {
+        "ru": "описания"
+      },
+      "attestedForms": {
+        "ru": ["описание"]
+      }
+    },
+    {
+      "id": "lex:en:developed->ru",
+      "source": "en",
+      "status": "curated-seed",
+      "primary": {
+        "ru": "разработанный"
+      },
+      "attestedForms": {
+        "ru": ["развитый", "зрелый"]
+      }
+    },
+    {
+      "id": "lex:en:development->ru",
+      "source": "en",
+      "status": "wiktionary",
+      "primary": {
+        "ru": "развитие"
+      },
+      "attestedForms": {
+        "ru": ["развитие", "достижение", "разработка"]
+      }
+    },
+    {
+      "id": "lex:en:director->ru",
+      "source": "en",
+      "status": "wiktionary",
+      "primary": {
+        "ru": "директор"
+      },
+      "attestedForms": {
+        "ru": ["директор", "режиссёр", "дирижёр"]
+      }
+    },
+    {
+      "id": "lex:en:domain->ru",
+      "source": "en",
+      "status": "wiktionary",
+      "primary": {
+        "ru": "домен"
+      },
+      "attestedForms": {
+        "ru": [
+          "владение",
+          "вотчина",
+          "сфера",
+          "область",
+          "ветвь",
+          "область определение",
+          "домен"
+        ]
+      }
+    },
+    {
+      "id": "lex:en:due->ru",
+      "source": "en",
+      "status": "curated-seed",
+      "primary": {
+        "ru": "благодаря"
+      },
+      "attestedForms": {
+        "ru": [
+          "подлежать",
+          "причитаться",
+          "подобать",
+          "надлежать",
+          "ожидаемый",
+          "прямо",
+          "точно",
+          "должный"
+        ]
+      }
+    },
+    {
+      "id": "lex:en:dynamically->ru",
+      "source": "en",
+      "status": "curated-seed",
+      "primary": {
+        "ru": "динамически"
+      },
+      "attestedForms": {}
+    },
+    {
+      "id": "lex:en:each->ru",
+      "source": "en",
+      "status": "curated-seed",
+      "primary": {
+        "ru": "каждое"
+      },
+      "attestedForms": {
+        "ru": ["каждый"]
+      }
+    },
+    {
+      "id": "lex:en:edit->ru",
+      "source": "en",
+      "status": "wiktionary",
+      "primary": {
+        "ru": "редактировать"
+      },
+      "attestedForms": {
+        "ru": [
+          "редакция",
+          "редактирование",
+          "правка",
+          "редактировать",
+          "изменять",
+          "править"
+        ]
+      }
+    },
+    {
+      "id": "lex:en:effects->ru",
+      "source": "en",
+      "status": "curated-seed",
+      "primary": {
+        "ru": "эффекты"
+      },
+      "attestedForms": {
+        "ru": ["эффект", "результат", "воздействие", "влияние", "следствие"]
+      }
+    },
+    {
+      "id": "lex:en:engine->ru",
+      "source": "en",
+      "status": "wiktionary",
+      "primary": {
+        "ru": "движок"
+      },
+      "attestedForms": {
+        "ru": ["двигатель", "мотор", "движок"]
+      }
+    },
+    {
+      "id": "lex:en:engineer->ru",
+      "source": "en",
+      "status": "wiktionary",
+      "primary": {
+        "ru": "инженер"
+      },
+      "attestedForms": {
+        "ru": ["инженер", "инженерка", "инженерша", "машинист"]
+      }
+    },
+    {
+      "id": "lex:en:entrepreneur->ru",
+      "source": "en",
+      "status": "wiktionary",
+      "primary": {
+        "ru": "предприниматель"
+      },
+      "attestedForms": {
+        "ru": ["предприниматель", "предпринимательница", "антрепренёр"]
+      }
+    },
+    {
+      "id": "lex:en:environment->ru",
+      "source": "en",
+      "status": "wiktionary",
+      "primary": {
+        "ru": "среда"
+      },
+      "attestedForms": {
+        "ru": [
+          "среда",
+          "окружающая среда",
+          "окружение",
+          "экосистема",
+          "обстановка",
+          "конфигурация"
+        ]
+      }
+    },
+    {
+      "id": "lex:en:evaluates->ru",
+      "source": "en",
+      "status": "curated-seed",
+      "primary": {
+        "ru": "вычисляет"
+      },
+      "attestedForms": {}
+    },
+    {
+      "id": "lex:en:evidence->ru",
+      "source": "en",
+      "status": "curated-seed",
+      "primary": {
+        "ru": "доказательства"
+      },
+      "attestedForms": {
+        "ru": [
+          "доказательство",
+          "свидетельство",
+          "улика",
+          "доказать",
+          "доказывать"
+        ]
+      }
+    },
+    {
+      "id": "lex:en:example->ru",
+      "source": "en",
+      "status": "wiktionary",
+      "primary": {
+        "ru": "пример"
+      },
+      "attestedForms": {
+        "ru": ["пример", "образец"]
+      }
+    },
+    {
+      "id": "lex:en:examples_of_agreement->ru",
+      "source": "en",
+      "status": "curated-seed",
+      "primary": {
+        "ru": "примеры согласования"
+      },
+      "attestedForms": {}
+    },
+    {
+      "id": "lex:en:examples->ru",
+      "source": "en",
+      "status": "curated-seed",
+      "primary": {
+        "ru": "примеры"
+      },
+      "attestedForms": {}
+    },
+    {
+      "id": "lex:en:execution->ru",
+      "source": "en",
+      "status": "wiktionary",
+      "primary": {
+        "ru": "выполнение"
+      },
+      "attestedForms": {
+        "ru": [
+          "выполнение",
+          "исполнение",
+          "казнь",
+          "экзекуция",
+          "расстрел",
+          "техника"
+        ]
+      }
+    },
+    {
+      "id": "lex:en:fact->ru",
+      "source": "en",
+      "status": "wiktionary",
+      "primary": {
+        "ru": "факт"
+      },
+      "attestedForms": {
+        "ru": ["факт"]
+      }
+    },
+    {
+      "id": "lex:en:fast->ru",
+      "source": "en",
+      "status": "curated-seed",
+      "primary": {
+        "ru": "быстрая"
+      },
+      "attestedForms": {
+        "ru": [
+          "прочный",
+          "крепкий",
+          "быстрый",
+          "скорый",
+          "скоростной",
+          "спешащий",
+          "обгоняющий",
+          "прочно",
+          "крепко",
+          "быстро",
+          "преждевременно",
+          "поститься",
+          "попоститься",
+          "голодать"
+        ]
+      }
+    },
+    {
+      "id": "lex:en:find->ru",
+      "source": "en",
+      "status": "wiktionary",
+      "primary": {
+        "ru": "найти"
+      },
+      "attestedForms": {
+        "ru": [
+          "находить",
+          "найти",
+          "выискивать",
+          "находка",
+          "искание",
+          "нахождение"
+        ]
+      }
+    },
+    {
+      "id": "lex:en:first->ru",
+      "source": "en",
+      "status": "wiktionary",
+      "primary": {
+        "ru": "первый"
+      },
+      "attestedForms": {
+        "ru": [
+          "первый",
+          "во-первых",
+          "прежде всего",
+          "в первую очередь",
+          "сперва"
+        ]
+      }
+    },
+    {
+      "id": "lex:en:flexible->ru",
+      "source": "en",
+      "status": "curated-seed",
+      "primary": {
+        "ru": "гибкая"
+      },
+      "attestedForms": {
+        "ru": ["гибкий", "покладистый", "податливый"]
+      }
+    },
+    {
+      "id": "lex:en:for->ru",
+      "source": "en",
+      "status": "curated-seed",
+      "primary": {
+        "ru": "для"
+      },
+      "attestedForms": {}
+    },
+    {
+      "id": "lex:en:formalize->ru",
+      "source": "en",
+      "status": "curated-seed",
+      "primary": {
+        "ru": "формализуйте"
+      },
+      "attestedForms": {}
+    },
+    {
+      "id": "lex:en:formalizes->ru",
+      "source": "en",
+      "status": "curated-seed",
+      "primary": {
+        "ru": "формализует"
+      },
+      "attestedForms": {}
+    },
+    {
+      "id": "lex:en:founder->ru",
+      "source": "en",
+      "status": "wiktionary",
+      "primary": {
+        "ru": "основатель"
+      },
+      "attestedForms": {
+        "ru": [
+          "основатель",
+          "основательница",
+          "учредитель",
+          "учредительница",
+          "основоположник",
+          "основоположница",
+          "найдёныш",
+          "плавильщик",
+          "литейщик",
+          "ламинит",
+          "воспаление копыта",
+          "затонуть"
+        ]
+      }
+    },
+    {
+      "id": "lex:en:fragments->ru",
+      "source": "en",
+      "status": "curated-seed",
+      "primary": {
+        "ru": "фрагменты"
+      },
+      "attestedForms": {
+        "ru": [
+          "осколок",
+          "обломок",
+          "кусок",
+          "фрагмент",
+          "отрывок",
+          "разваливаться",
+          "развалиться",
+          "разламывать",
+          "разломать",
+          "фрагментировать"
+        ]
+      }
+    },
+    {
+      "id": "lex:en:from->ru",
+      "source": "en",
+      "status": "wiktionary",
+      "primary": {
+        "ru": "из"
+      },
+      "attestedForms": {
+        "ru": ["из", "от", "с"]
+      }
+    },
+    {
+      "id": "lex:en:generates->ru",
+      "source": "en",
+      "status": "curated-seed",
+      "primary": {
+        "ru": "создает"
+      },
+      "attestedForms": {}
+    },
+    {
+      "id": "lex:en:generative->ru",
+      "source": "en",
+      "status": "curated-seed",
+      "primary": {
+        "ru": "генеративный"
+      },
+      "attestedForms": {}
+    },
+    {
+      "id": "lex:en:goals->ru",
+      "source": "en",
+      "status": "curated-seed",
+      "primary": {
+        "ru": "цели"
+      },
+      "attestedForms": {
+        "ru": ["цель", "ворота", "гол", "забивать гол", "забить гол"]
+      }
+    },
+    {
+      "id": "lex:en:hello->hi",
+      "source": "en",
+      "status": "wiktionary",
+      "primary": {
+        "hi": "नमस्ते"
+      },
+      "attestedForms": {
+        "hi": [
+          "नमस्ते",
+          "नमस्कार",
+          "सलाम",
+          "सत श्री अकाल",
+          "हेलो",
+          "हलो",
+          "सत्य",
+          "आदाब",
+          "हैलो",
+          "tr=kya"
+        ]
+      }
+    },
+    {
+      "id": "lex:en:hello->ru",
+      "source": "en",
+      "status": "wiktionary",
+      "primary": {
+        "ru": "привет"
+      },
+      "attestedForms": {
+        "ru": [
+          "привет",
+          "здорово",
+          "здравствуйте",
+          "добрый день",
+          "здравствуй",
+          "салют",
+          "алло",
+          "алё",
+          "слушать",
+          "ау",
+          "есть кто-нибудь?",
+          "здрасте",
+          "здрасте Новый Год"
+        ]
+      }
+    },
+    {
+      "id": "lex:en:hello->zh",
+      "source": "en",
+      "status": "wiktionary",
+      "primary": {
+        "zh": "你好"
+      },
+      "attestedForms": {
+        "zh": [
+          "你好",
+          "您好",
+          "你們好",
+          "好",
+          "嗨",
+          "哈囉",
+          "ciallo",
+          "喂",
+          "有人嗎？"
+        ]
+      }
+    },
+    {
+      "id": "lex:en:help->ru",
+      "source": "en",
+      "status": "wiktionary",
+      "primary": {
+        "ru": "помочь"
+      },
+      "attestedForms": {
+        "ru": [
+          "помощь",
+          "помощник",
+          "помощница",
+          "прислуга",
+          "подсказка",
+          "справочный",
+          "помогать",
+          "помочь",
+          "помогите",
+          "на помощь!",
+          "спасите!",
+          "спасайте!"
+        ]
+      }
+    },
+    {
+      "id": "lex:en:high-level->ru",
+      "source": "en",
+      "status": "curated-seed",
+      "primary": {
+        "ru": "высокоуровневые"
+      },
+      "attestedForms": {
+        "ru": ["на высшем уровне", "высокоуровневый"]
+      }
+    },
+    {
+      "id": "lex:en:human_language->ru",
+      "source": "en",
+      "status": "curated-seed",
+      "primary": {
+        "ru": "человеческий язык"
+      },
+      "attestedForms": {}
+    },
+    {
+      "id": "lex:en:human_mind->ru",
+      "source": "en",
+      "status": "curated-seed",
+      "primary": {
+        "ru": "человеческий разум"
+      },
+      "attestedForms": {}
+    },
+    {
+      "id": "lex:en:human->ru",
+      "source": "en",
+      "status": "wiktionary",
+      "primary": {
+        "ru": "человеческий"
+      },
+      "attestedForms": {
+        "ru": ["человеческий", "людской", "человек", "люди"]
+      }
+    },
+    {
+      "id": "lex:en:human-language->ru",
+      "source": "en",
+      "status": "curated-seed",
+      "primary": {
+        "ru": "человеко-языковое"
+      },
+      "attestedForms": {}
+    },
+    {
+      "id": "lex:en:implement->ru",
+      "source": "en",
+      "status": "curated-seed",
+      "primary": {
+        "ru": "реализовать"
+      },
+      "attestedForms": {
+        "ru": [
+          "выполнять",
+          "осуществлять",
+          "реализовывать",
+          "претворять в жизнь",
+          "инструмент",
+          "прибор",
+          "орудие",
+          "средство"
+        ]
+      }
+    },
+    {
+      "id": "lex:en:implementation->ru",
+      "source": "en",
+      "status": "wiktionary",
+      "primary": {
+        "ru": "реализация"
+      },
+      "attestedForms": {
+        "ru": [
+          "воплощение в реальность",
+          "реализация",
+          "осуществление",
+          "имплементация",
+          "внедрение"
+        ]
+      }
+    },
+    {
+      "id": "lex:en:important->ru",
+      "source": "en",
+      "status": "curated-seed",
+      "primary": {
+        "ru": "важные"
+      },
+      "attestedForms": {
+        "ru": ["важный", "значимый"]
+      }
+    },
+    {
+      "id": "lex:en:in->ru",
+      "source": "en",
+      "status": "curated-seed",
+      "primary": {
+        "ru": "в"
+      },
+      "attestedForms": {}
+    },
+    {
+      "id": "lex:en:input->ru",
+      "source": "en",
+      "status": "wiktionary",
+      "primary": {
+        "ru": "ввод"
+      },
+      "attestedForms": {
+        "ru": ["ввод", "вклад", "вводить", "ввести"]
+      }
+    },
+    {
+      "id": "lex:en:inside->ru",
+      "source": "en",
+      "status": "wiktionary",
+      "primary": {
+        "ru": "внутри"
+      },
+      "attestedForms": {
+        "ru": [
+          "внутренность",
+          "внутренняя часть",
+          "нутро",
+          "внутренности",
+          "внутренний",
+          "внутри",
+          "внутрь",
+          "в"
+        ]
+      }
+    },
+    {
+      "id": "lex:en:intelligence->ru",
+      "source": "en",
+      "status": "wiktionary",
+      "primary": {
+        "ru": "интеллект"
+      },
+      "attestedForms": {
+        "ru": [
+          "интеллект",
+          "интеллигентность",
+          "разум",
+          "рассудок",
+          "ум",
+          "интеллигенция",
+          "разведданные",
+          "разведывательные данные",
+          "сведения",
+          "разведка",
+          "разведслужба"
+        ]
+      }
+    },
+    {
+      "id": "lex:en:interpretations->ru",
+      "source": "en",
+      "status": "curated-seed",
+      "primary": {
+        "ru": "интерпретации"
+      },
+      "attestedForms": {
+        "ru": [
+          "перевод",
+          "интерпретация",
+          "трактовка",
+          "толкование",
+          "объяснение",
+          "устный перевод"
+        ]
+      }
+    },
+    {
+      "id": "lex:en:is->ru",
+      "source": "en",
+      "status": "curated-seed",
+      "primary": {
+        "ru": "это"
+      },
+      "attestedForms": {
+        "ru": ["ай", "и"]
+      }
+    },
+    {
+      "id": "lex:en:it->ru",
+      "source": "en",
+      "status": "wiktionary",
+      "primary": {
+        "ru": "он"
+      },
+      "attestedForms": {
+        "ru": [
+          "он",
+          "она",
+          "оно",
+          "это",
+          "его",
+          "ему",
+          "им",
+          "нём",
+          "её",
+          "ей",
+          "ею",
+          "ней",
+          "вода"
+        ]
+      }
+    },
+    {
+      "id": "lex:en:itself->ru",
+      "source": "en",
+      "status": "curated-seed",
+      "primary": {
+        "ru": "сама"
+      },
+      "attestedForms": {
+        "ru": ["-ся", "себя", "сам себя", "оно сам"]
+      }
+    },
+    {
+      "id": "lex:en:knowledge->ru",
+      "source": "en",
+      "status": "wiktionary",
+      "primary": {
+        "ru": "знания"
+      },
+      "attestedForms": {
+        "ru": ["знание", "осведомлённость", "понимание", "знания"]
+      }
+    },
+    {
+      "id": "lex:en:labels->ru",
+      "source": "en",
+      "status": "curated-seed",
+      "primary": {
+        "ru": "метки"
+      },
+      "attestedForms": {
+        "ru": [
+          "ярлык",
+          "этикетка",
+          "наклейка",
+          "бирка",
+          "лейбл",
+          "клеймо",
+          "наклеивать ярлыки",
+          "вешать ярлыки",
+          "клеймить"
+        ]
+      }
+    },
+    {
+      "id": "lex:en:language->ru",
+      "source": "en",
+      "status": "curated-seed",
+      "primary": {
+        "ru": "язык"
+      },
+      "attestedForms": {}
+    },
+    {
+      "id": "lex:en:level->ru",
+      "source": "en",
+      "status": "wiktionary",
+      "primary": {
+        "ru": "уровень"
+      },
+      "attestedForms": {
+        "ru": [
+          "ровный",
+          "уровень",
+          "ватерпас",
+          "степень",
+          "этап",
+          "равнять",
+          "выравнивать",
+          "выровнять",
+          "сровнять с землёй",
+          "получить уровень"
+        ]
+      }
+    },
+    {
+      "id": "lex:en:links->ru",
+      "source": "en",
+      "status": "curated-seed",
+      "primary": {
+        "ru": "Links"
+      },
+      "attestedForms": {
+        "ru": [
+          "связь",
+          "соединение",
+          "звено",
+          "ссылка",
+          "гиперссылка",
+          "линк",
+          "шарнир",
+          "связывать"
+        ]
+      }
+    },
+    {
+      "id": "lex:en:links-network_based_reasoning_playground->ru",
+      "source": "en",
+      "status": "curated-seed",
+      "primary": {
+        "ru": "основанной на сети ссылок площадки для рассуждений"
+      },
+      "attestedForms": {}
+    },
+    {
+      "id": "lex:en:links-network->ru",
+      "source": "en",
+      "status": "curated-seed",
+      "primary": {
+        "ru": "сеть ссылок"
+      },
+      "attestedForms": {}
+    },
+    {
+      "id": "lex:en:make->ru",
+      "source": "en",
+      "status": "wiktionary",
+      "primary": {
+        "ru": "сделать"
+      },
+      "attestedForms": {
+        "ru": [
+          "делать",
+          "сделать",
+          "изготавливать",
+          "изготовлять",
+          "изготовить",
+          "создавать",
+          "создать",
+          "заставлять",
+          "заставить",
+          "принуждать",
+          "принудить",
+          "марка"
+        ]
+      }
+    },
+    {
+      "id": "lex:en:mayor->ru",
+      "source": "en",
+      "status": "wiktionary",
+      "primary": {
+        "ru": "мэр"
+      },
+      "attestedForms": {
+        "ru": ["мэр", "градоначальник", "градоначальница", "бургомистр"]
+      }
+    },
+    {
+      "id": "lex:en:meaning->ru",
+      "source": "en",
+      "status": "wiktionary",
+      "primary": {
+        "ru": "смысл"
+      },
+      "attestedForms": {
+        "ru": ["значение", "смысл", "толк", "толкование"]
+      }
+    },
+    {
+      "id": "lex:en:memory->ru",
+      "source": "en",
+      "status": "wiktionary",
+      "primary": {
+        "ru": "память"
+      },
+      "attestedForms": {
+        "ru": ["память", "воспоминание"]
+      }
+    },
+    {
+      "id": "lex:en:method->ru",
+      "source": "en",
+      "status": "wiktionary",
+      "primary": {
+        "ru": "метод"
+      },
+      "attestedForms": {
+        "ru": ["метод", "способ", "приём", "метода"]
+      }
+    },
+    {
+      "id": "lex:en:mind->ru",
+      "source": "en",
+      "status": "wiktionary",
+      "primary": {
+        "ru": "разум"
+      },
+      "attestedForms": {
+        "ru": [
+          "ум",
+          "разум",
+          "рассудок",
+          "интеллект",
+          "память",
+          "сосредоточенность",
+          "концентрация",
+          "мнение",
+          "взгляд",
+          "точка зрения",
+          "желание",
+          "намерение",
+          "настроение",
+          "расположение духа",
+          "обращать внимание",
+          "обратить внимание",
+          "иметь в виду",
+          "следить",
+          "возражать",
+          "возразить",
+          "присматривать",
+          "присмотреть",
+          "заботиться"
+        ]
+      }
+    },
+    {
+      "id": "lex:en:modeling->ru",
+      "source": "en",
+      "status": "curated-seed",
+      "primary": {
+        "ru": "моделирование"
+      },
+      "attestedForms": {}
+    },
+    {
+      "id": "lex:en:most_important->ru",
+      "source": "en",
+      "status": "curated-seed",
+      "primary": {
+        "ru": "самые важные"
+      },
+      "attestedForms": {}
+    },
+    {
+      "id": "lex:en:most->ru",
+      "source": "en",
+      "status": "curated-seed",
+      "primary": {
+        "ru": "самая"
+      },
+      "attestedForms": {
+        "ru": [
+          "больше всего",
+          "большинство",
+          "наи-",
+          "самый",
+          "наиболее",
+          "-ейший",
+          "-айший",
+          "пре-"
+        ]
+      }
+    },
+    {
+      "id": "lex:en:murderer->ru",
+      "source": "en",
+      "status": "wiktionary",
+      "primary": {
+        "ru": "убийца"
+      },
+      "attestedForms": {
+        "ru": ["убийца", "киллер", "душегуб"]
+      }
+    },
+    {
+      "id": "lex:en:non-computable->ru",
+      "source": "en",
+      "status": "curated-seed",
+      "primary": {
+        "ru": "невычислимых"
+      },
+      "attestedForms": {}
+    },
+    {
+      "id": "lex:en:of->ru",
+      "source": "en",
+      "status": "wiktionary",
+      "primary": {
+        "ru": "из"
+      },
+      "attestedForms": {
+        "ru": [
+          "из",
+          "-ов",
+          "-ев",
+          "-ёв",
+          "-ин",
+          "-ын",
+          "о",
+          "об",
+          "про",
+          "насчёт"
+        ]
+      }
+    },
+    {
+      "id": "lex:en:on->ru",
+      "source": "en",
+      "status": "wiktionary",
+      "primary": {
+        "ru": "на"
+      },
+      "attestedForms": {
+        "ru": ["включить", "вкл.", "на", "в", "-го", "с", "за счёт"]
+      }
+    },
+    {
+      "id": "lex:en:one->ru",
+      "source": "en",
+      "status": "curated-seed",
+      "primary": {
+        "ru": "одна"
+      },
+      "attestedForms": {
+        "ru": [
+          "человек",
+          "можно",
+          "нужно",
+          "нельзя",
+          "хотеться",
+          "ты",
+          "единица",
+          "один",
+          "единственный",
+          "тот самый"
+        ]
+      }
+    },
+    {
+      "id": "lex:en:open->ru",
+      "source": "en",
+      "status": "curated-seed",
+      "primary": {
+        "ru": "откройте"
+      },
+      "attestedForms": {
+        "ru": [
+          "открытый",
+          "открывать",
+          "открыть",
+          "отворять",
+          "отворить",
+          "открываться",
+          "открыться",
+          "разворачивать",
+          "развернуть",
+          "поднимать",
+          "поднять",
+          "отворяться",
+          "отвориться"
+        ]
+      }
+    },
+    {
+      "id": "lex:en:or->ru",
+      "source": "en",
+      "status": "wiktionary",
+      "primary": {
+        "ru": "или"
+      },
+      "attestedForms": {
+        "ru": ["или", "либо", "али", "чи", "золото", "золотой"]
+      }
+    },
+    {
+      "id": "lex:en:other_words->ru",
+      "source": "en",
+      "status": "curated-seed",
+      "primary": {
+        "ru": "другими словами"
+      },
+      "attestedForms": {}
+    },
+    {
+      "id": "lex:en:other->ru",
+      "source": "en",
+      "status": "curated-seed",
+      "primary": {
+        "ru": "другими"
+      },
+      "attestedForms": {
+        "ru": ["другой", "иной"]
+      }
+    },
+    {
+      "id": "lex:en:our->ru",
+      "source": "en",
+      "status": "curated-seed",
+      "primary": {
+        "ru": "нашу"
+      },
+      "attestedForms": {
+        "ru": ["наш"]
+      }
+    },
+    {
+      "id": "lex:en:page->ru",
+      "source": "en",
+      "status": "curated-seed",
+      "primary": {
+        "ru": "страницу"
+      },
+      "attestedForms": {
+        "ru": ["страница", "лист", "нумеровать", "пролистывать", "паж"]
+      }
+    },
+    {
+      "id": "lex:en:parts->ru",
+      "source": "en",
+      "status": "curated-seed",
+      "primary": {
+        "ru": "части"
+      },
+      "attestedForms": {
+        "ru": [
+          "часть",
+          "доля",
+          "раздел",
+          "том",
+          "местность",
+          "область",
+          "обязанность",
+          "роль",
+          "должность",
+          "партия",
+          "сторона",
+          "пробор",
+          "расставаться",
+          "расстаться",
+          "разлучаться",
+          "разлучиться",
+          "делать пробор",
+          "сделать пробор",
+          "половинить",
+          "раздвоить",
+          "раздваивать",
+          "делить",
+          "разделять",
+          "разделить"
+        ]
+      }
+    },
+    {
+      "id": "lex:en:planned->ru",
+      "source": "en",
+      "status": "curated-seed",
+      "primary": {
+        "ru": "запланирована"
+      },
+      "attestedForms": {
+        "ru": ["планомерный", "плановый", "штатный"]
+      }
+    },
+    {
+      "id": "lex:en:platform->ru",
+      "source": "en",
+      "status": "wiktionary",
+      "primary": {
+        "ru": "платформа"
+      },
+      "attestedForms": {
+        "ru": ["помост", "подиум", "платформа", "эстрада", "трибуна", "перрон"]
+      }
+    },
+    {
+      "id": "lex:en:playground->ru",
+      "source": "en",
+      "status": "curated-seed",
+      "primary": {
+        "ru": "площадка"
+      },
+      "attestedForms": {
+        "ru": [
+          "детская площадка",
+          "детплощадка",
+          "игровая площадка",
+          "школьный двор"
+        ]
+      }
+    },
+    {
+      "id": "lex:en:political->ru",
+      "source": "en",
+      "status": "wiktionary",
+      "primary": {
+        "ru": "политический"
+      },
+      "attestedForms": {
+        "ru": ["политический"]
+      }
+    },
+    {
+      "id": "lex:en:politician->ru",
+      "source": "en",
+      "status": "wiktionary",
+      "primary": {
+        "ru": "политик"
+      },
+      "attestedForms": {
+        "ru": ["политик", "политический деятель", "политикан"]
+      }
+    },
+    {
+      "id": "lex:en:possible->ru",
+      "source": "en",
+      "status": "curated-seed",
+      "primary": {
+        "ru": "возможно"
+      },
+      "attestedForms": {
+        "ru": ["возможный", "вероятный", "выполнимый", "подходящий"]
+      }
+    },
+    {
+      "id": "lex:en:potato->ru",
+      "source": "en",
+      "status": "wiktionary",
+      "primary": {
+        "ru": "картофель"
+      },
+      "attestedForms": {
+        "ru": ["картофель", "картофелина", "картошка", "картоха"]
+      }
+    },
+    {
+      "id": "lex:en:president->ru",
+      "source": "en",
+      "status": "wiktionary",
+      "primary": {
+        "ru": "президент"
+      },
+      "attestedForms": {
+        "ru": [
+          "президент",
+          "глава государства",
+          "генеральный директор",
+          "председатель",
+          "председательница"
+        ]
+      }
+    },
+    {
+      "id": "lex:en:program->ru",
+      "source": "en",
+      "status": "wiktionary",
+      "primary": {
+        "ru": "программировать"
+      },
+      "attestedForms": {
+        "ru": [
+          "программа",
+          "програмка",
+          "передача",
+          "программировать",
+          "писать программа",
+          "составлять план",
+          "составлять программа"
+        ]
+      }
+    },
+    {
+      "id": "lex:en:programs->ru",
+      "source": "en",
+      "status": "curated-seed",
+      "primary": {
+        "ru": "программы"
+      },
+      "attestedForms": {
+        "ru": [
+          "программа",
+          "програмка",
+          "передача",
+          "программировать",
+          "писать программа",
+          "составлять план",
+          "составлять программа"
+        ]
+      }
+    },
+    {
+      "id": "lex:en:project->ru",
+      "source": "en",
+      "status": "wiktionary",
+      "primary": {
+        "ru": "проект"
+      },
+      "attestedForms": {
+        "ru": ["проект", "план", "выступать"]
+      }
+    },
+    {
+      "id": "lex:en:prototype->ru",
+      "source": "en",
+      "status": "wiktionary",
+      "primary": {
+        "ru": "прототип"
+      },
+      "attestedForms": {
+        "ru": ["прототип", "модель", "прообраз"]
+      }
+    },
+    {
+      "id": "lex:en:provenance->ru",
+      "source": "en",
+      "status": "curated-seed",
+      "primary": {
+        "ru": "происхождением"
+      },
+      "attestedForms": {
+        "ru": ["происхождение", "провенанс", "род"]
+      }
+    },
+    {
+      "id": "lex:en:questions->ru",
+      "source": "en",
+      "status": "curated-seed",
+      "primary": {
+        "ru": "вопросами"
+      },
+      "attestedForms": {
+        "ru": [
+          "вопрос",
+          "предмет",
+          "сомнение",
+          "допрос",
+          "расспрашивать",
+          "расспросить",
+          "допрашивать",
+          "допросить",
+          "ставить под вопрос"
+        ]
+      }
+    },
+    {
+      "id": "lex:en:real-time->ru",
+      "source": "en",
+      "status": "curated-seed",
+      "primary": {
+        "ru": "реальном времени"
+      },
+      "attestedForms": {
+        "ru": ["реальное время", "постоянный"]
+      }
+    },
+    {
+      "id": "lex:en:reasoning->ru",
+      "source": "en",
+      "status": "curated-seed",
+      "primary": {
+        "ru": "рассуждения"
+      },
+      "attestedForms": {
+        "ru": ["рассуждение", "аргументация"]
+      }
+    },
+    {
+      "id": "lex:en:reliable->ru",
+      "source": "en",
+      "status": "curated-seed",
+      "primary": {
+        "ru": "надежная"
+      },
+      "attestedForms": {
+        "ru": ["надёжный"]
+      }
+    },
+    {
+      "id": "lex:en:remain->ru",
+      "source": "en",
+      "status": "curated-seed",
+      "primary": {
+        "ru": "остаются"
+      },
+      "attestedForms": {
+        "ru": ["оставаться", "остаться"]
+      }
+    },
+    {
+      "id": "lex:en:result->ru",
+      "source": "en",
+      "status": "wiktionary",
+      "primary": {
+        "ru": "результат"
+      },
+      "attestedForms": {
+        "ru": [
+          "проистекать",
+          "проистечь",
+          "приводить",
+          "результат",
+          "итог",
+          "исход",
+          "плод",
+          "продукт",
+          "счёт"
+        ]
+      }
+    },
+    {
+      "id": "lex:en:rules->ru",
+      "source": "en",
+      "status": "curated-seed",
+      "primary": {
+        "ru": "правила"
+      },
+      "attestedForms": {}
+    },
+    {
+      "id": "lex:en:save->ru",
+      "source": "en",
+      "status": "curated-seed",
+      "primary": {
+        "ru": "сохраните"
+      },
+      "attestedForms": {
+        "ru": [
+          "спасать",
+          "спасти",
+          "копить",
+          "скопить",
+          "накопить",
+          "сохранять",
+          "сохранить",
+          "экономить",
+          "сэкономить",
+          "записать",
+          "сейв"
+        ]
+      }
+    },
+    {
+      "id": "lex:en:selectable->ru",
+      "source": "en",
+      "status": "curated-seed",
+      "primary": {
+        "ru": "выбираемые"
+      },
+      "attestedForms": {}
+    },
+    {
+      "id": "lex:en:selected->ru",
+      "source": "en",
+      "status": "curated-seed",
+      "primary": {
+        "ru": "выбранный"
+      },
+      "attestedForms": {}
+    },
+    {
+      "id": "lex:en:sentence->ru",
+      "source": "en",
+      "status": "wiktionary",
+      "primary": {
+        "ru": "предложение"
+      },
+      "attestedForms": {
+        "ru": [
+          "приговор",
+          "осуждение",
+          "наказание",
+          "сентенция",
+          "изречение",
+          "предложение",
+          "фраза",
+          "высказывание",
+          "мнение",
+          "приговаривать",
+          "приговорить",
+          "осуждать",
+          "осудить"
+        ]
+      }
+    },
+    {
+      "id": "lex:en:should->ru",
+      "source": "en",
+      "status": "wiktionary",
+      "primary": {
+        "ru": "должен"
+      },
+      "attestedForms": {
+        "ru": [
+          "должен",
+          "обязанный",
+          "следовать",
+          "должно быть",
+          "скорее всего",
+          "будет",
+          "если",
+          "ежели"
+        ]
+      }
+    },
+    {
+      "id": "lex:en:show->ru",
+      "source": "en",
+      "status": "curated-seed",
+      "primary": {
+        "ru": "покажите"
+      },
+      "attestedForms": {
+        "ru": [
+          "показывать",
+          "показать",
+          "показываться",
+          "показаться",
+          "представление",
+          "шоу",
+          "спектакль",
+          "зрелище",
+          "выставка",
+          "демонстрация",
+          "показ",
+          "программа",
+          "телепрограмма",
+          "передача"
+        ]
+      }
+    },
+    {
+      "id": "lex:en:simple->ru",
+      "source": "en",
+      "status": "curated-seed",
+      "primary": {
+        "ru": "простое"
+      },
+      "attestedForms": {
+        "ru": ["простой", "лёгкий", "простодушный"]
+      }
+    },
+    {
+      "id": "lex:en:source->ru",
+      "source": "en",
+      "status": "curated-seed",
+      "primary": {
+        "ru": "исходный"
+      },
+      "attestedForms": {
+        "ru": ["источник", "исток", "ключ", "первоисточник", "родник"]
+      }
+    },
+    {
+      "id": "lex:en:statement->ru",
+      "source": "en",
+      "status": "wiktionary",
+      "primary": {
+        "ru": "утверждение"
+      },
+      "attestedForms": {
+        "ru": [
+          "заявление",
+          "утверждение",
+          "изложение",
+          "формулировка",
+          "отчёт",
+          "баланс",
+          "выписка",
+          "оператор",
+          "инструкция",
+          "команда"
+        ]
+      }
+    },
+    {
+      "id": "lex:en:storage->ru",
+      "source": "en",
+      "status": "wiktionary",
+      "primary": {
+        "ru": "хранилище"
+      },
+      "attestedForms": {
+        "ru": [
+          "хранение",
+          "сохранение",
+          "склад",
+          "хранилище",
+          "запоминающее устройство",
+          "ЗУ",
+          "память",
+          "накопитель",
+          "плата за хранение"
+        ]
+      }
+    },
+    {
+      "id": "lex:en:strive->ru",
+      "source": "en",
+      "status": "curated-seed",
+      "primary": {
+        "ru": "стремимся"
+      },
+      "attestedForms": {
+        "ru": [
+          "стремиться",
+          "стараться",
+          "бороться",
+          "прилагать усилия",
+          "закатать рукава"
+        ]
+      }
+    },
+    {
+      "id": "lex:en:such->ru",
+      "source": "en",
+      "status": "curated-seed",
+      "primary": {
+        "ru": "такие"
+      },
+      "attestedForms": {
+        "ru": ["такой", "таков", "этакий"]
+      }
+    },
+    {
+      "id": "lex:en:synonym->ru",
+      "source": "en",
+      "status": "wiktionary",
+      "primary": {
+        "ru": "синоним"
+      },
+      "attestedForms": {
+        "ru": ["синоним"]
+      }
+    },
+    {
+      "id": "lex:en:synonyms->ru",
+      "source": "en",
+      "status": "curated-seed",
+      "primary": {
+        "ru": "синонимы"
+      },
+      "attestedForms": {
+        "ru": ["синоним"]
+      }
+    },
+    {
+      "id": "lex:en:system->ru",
+      "source": "en",
+      "status": "wiktionary",
+      "primary": {
+        "ru": "система"
+      },
+      "attestedForms": {
+        "ru": ["система"]
+      }
+    },
+    {
+      "id": "lex:en:text->ru",
+      "source": "en",
+      "status": "wiktionary",
+      "primary": {
+        "ru": "текст"
+      },
+      "attestedForms": {
+        "ru": ["текст", "сообщение", "СМС", "эс-эм-эс", "эсэмэска", "смснуть"]
+      }
+    },
+    {
+      "id": "lex:en:thank_you->ru",
+      "source": "en",
+      "status": "wiktionary",
+      "primary": {
+        "ru": "спасибо"
+      },
+      "attestedForms": {
+        "ru": ["спасибо", "благодарить", "мерси"]
+      }
+    },
+    {
+      "id": "lex:en:that->ru",
+      "source": "en",
+      "status": "wiktionary",
+      "primary": {
+        "ru": "что"
+      },
+      "attestedForms": {
+        "ru": [
+          "что",
+          "чтобы",
+          "тот",
+          "та",
+          "то",
+          "те",
+          "это",
+          "который",
+          "настолько",
+          "так"
+        ]
+      }
+    },
+    {
+      "id": "lex:en:their->ru",
+      "source": "en",
+      "status": "wiktionary",
+      "primary": {
+        "ru": "их"
+      },
+      "attestedForms": {
+        "ru": ["их", "ихний"]
+      }
+    },
+    {
+      "id": "lex:en:themselves->ru",
+      "source": "en",
+      "status": "wiktionary",
+      "primary": {
+        "ru": "себя"
+      },
+      "attestedForms": {
+        "ru": ["себя", "они"]
+      }
+    },
+    {
+      "id": "lex:en:then->ru",
+      "source": "en",
+      "status": "wiktionary",
+      "primary": {
+        "ru": "затем"
+      },
+      "attestedForms": {
+        "ru": [
+          "тогда",
+          "затем",
+          "потом",
+          "после",
+          "то",
+          "в таком случае",
+          "тогдашний"
+        ]
+      }
+    },
+    {
+      "id": "lex:en:there->ru",
+      "source": "en",
+      "status": "wiktionary",
+      "primary": {
+        "ru": "там"
+      },
+      "attestedForms": {
+        "ru": ["там", "туда", "есть", "иметься", "вот"]
+      }
+    },
+    {
+      "id": "lex:en:this->ru",
+      "source": "en",
+      "status": "wiktionary",
+      "primary": {
+        "ru": "этот"
+      },
+      "attestedForms": {
+        "ru": ["этот", "эта", "это", "эти", "сей", "такой"]
+      }
+    },
+    {
+      "id": "lex:en:through->ru",
+      "source": "en",
+      "status": "wiktionary",
+      "primary": {
+        "ru": "через"
+      },
+      "attestedForms": {
+        "ru": [
+          "через",
+          "сквозь",
+          "по",
+          "при помощи",
+          "из-за",
+          "благодаря",
+          "за счёт"
+        ]
+      }
+    },
+    {
+      "id": "lex:en:to->ru",
+      "source": "en",
+      "status": "wiktionary",
+      "primary": {
+        "ru": "к"
+      },
+      "attestedForms": {
+        "ru": [
+          "-ать",
+          "-ять",
+          "-еть",
+          "-ить",
+          "-ти",
+          "-уть",
+          "-чь",
+          "-ть",
+          "чтобы",
+          "на",
+          "в",
+          "к",
+          "до",
+          "без"
+        ]
+      }
+    },
+    {
+      "id": "lex:en:tomato->ru",
+      "source": "en",
+      "status": "wiktionary",
+      "primary": {
+        "ru": "помидор"
+      },
+      "attestedForms": {
+        "ru": ["помидор", "томат"]
+      }
+    },
+    {
+      "id": "lex:en:transformation_rules->ru",
+      "source": "en",
+      "status": "curated-seed",
+      "primary": {
+        "ru": "правила преобразования"
+      },
+      "attestedForms": {}
+    },
+    {
+      "id": "lex:en:transformation->ru",
+      "source": "en",
+      "status": "curated-seed",
+      "primary": {
+        "ru": "преобразования"
+      },
+      "attestedForms": {
+        "ru": ["преобразование", "трансформация", "преображение", "перестройка"]
+      }
+    },
+    {
+      "id": "lex:en:translate->ru",
+      "source": "en",
+      "status": "curated-seed",
+      "primary": {
+        "ru": "переведите"
+      },
+      "attestedForms": {
+        "ru": ["переводить", "перевести"]
+      }
+    },
+    {
+      "id": "lex:en:treated->ru",
+      "source": "en",
+      "status": "curated-seed",
+      "primary": {
+        "ru": "рассматриваться"
+      },
+      "attestedForms": {}
+    },
+    {
+      "id": "lex:en:triggers->ru",
+      "source": "en",
+      "status": "curated-seed",
+      "primary": {
+        "ru": "Triggers"
+      },
+      "attestedForms": {
+        "ru": [
+          "спусковой крючок",
+          "курок",
+          "гашетка",
+          "собачка",
+          "спуск",
+          "триггер",
+          "импульс",
+          "побуждение"
+        ]
+      }
+    },
+    {
+      "id": "lex:en:universal->ru",
+      "source": "en",
+      "status": "curated-seed",
+      "primary": {
+        "ru": "универсальная"
+      },
+      "attestedForms": {
+        "ru": [
+          "вселенский",
+          "космический",
+          "всеобщий",
+          "глобальный",
+          "всесторонний",
+          "всемирный",
+          "общечеловеческий",
+          "универсальный",
+          "всеобщее"
+        ]
+      }
+    },
+    {
+      "id": "lex:en:unresolved->ru",
+      "source": "en",
+      "status": "curated-seed",
+      "primary": {
+        "ru": "неразрешенные"
+      },
+      "attestedForms": {}
+    },
+    {
+      "id": "lex:en:value->ru",
+      "source": "en",
+      "status": "wiktionary",
+      "primary": {
+        "ru": "значение"
+      },
+      "attestedForms": {
+        "ru": [
+          "ценность",
+          "стоимость",
+          "значение",
+          "важность",
+          "цена",
+          "длительность",
+          "продолжительность",
+          "яркость",
+          "значение переменная",
+          "оценивать",
+          "оценить",
+          "ценить",
+          "дорожить"
+        ]
+      }
+    },
+    {
+      "id": "lex:en:values->ru",
+      "source": "en",
+      "status": "curated-seed",
+      "primary": {
+        "ru": "значения"
+      },
+      "attestedForms": {}
+    },
+    {
+      "id": "lex:en:variables->ru",
+      "source": "en",
+      "status": "curated-seed",
+      "primary": {
+        "ru": "переменными"
+      },
+      "attestedForms": {}
+    },
+    {
+      "id": "lex:en:water->ru",
+      "source": "en",
+      "status": "curated-seed",
+      "primary": {
+        "ru": "вода"
+      },
+      "attestedForms": {
+        "ru": [
+          "поливать",
+          "полить",
+          "поить",
+          "напоить",
+          "писать",
+          "пописать",
+          "разбавлять",
+          "разбавить"
+        ]
+      }
+    },
+    {
+      "id": "lex:en:we->ru",
+      "source": "en",
+      "status": "wiktionary",
+      "primary": {
+        "ru": "мы"
+      },
+      "attestedForms": {
+        "ru": ["мы"]
+      }
+    },
+    {
+      "id": "lex:en:when->ru",
+      "source": "en",
+      "status": "wiktionary",
+      "primary": {
+        "ru": "когда"
+      },
+      "attestedForms": {
+        "ru": ["когда", "в то время как"]
+      }
+    },
+    {
+      "id": "lex:en:which->ru",
+      "source": "en",
+      "status": "wiktionary",
+      "primary": {
+        "ru": "который"
+      },
+      "attestedForms": {
+        "ru": ["который", "какой", "кой"]
+      }
+    },
+    {
+      "id": "lex:en:wikidata->ru",
+      "source": "en",
+      "status": "curated-seed",
+      "primary": {
+        "ru": "Викиданные"
+      },
+      "attestedForms": {}
+    },
+    {
+      "id": "lex:en:will->ru",
+      "source": "en",
+      "status": "curated-seed",
+      "primary": {
+        "ru": "будет"
+      },
+      "attestedForms": {
+        "ru": ["желать", "пожелать", "воля", "намерение", "завещать"]
+      }
+    },
+    {
+      "id": "lex:en:with->ru",
+      "source": "en",
+      "status": "wiktionary",
+      "primary": {
+        "ru": "с"
+      },
+      "attestedForms": {
+        "ru": ["с"]
+      }
+    },
+    {
+      "id": "lex:en:words->ru",
+      "source": "en",
+      "status": "curated-seed",
+      "primary": {
+        "ru": "словами"
+      },
+      "attestedForms": {
+        "ru": ["ссора", "слова", "текст"]
+      }
+    },
+    {
+      "id": "lex:ru:links->en",
+      "source": "ru",
+      "status": "curated-seed",
+      "primary": {
+        "en": "Links"
+      },
+      "attestedForms": {}
+    },
+    {
+      "id": "lex:ru:triggers->en",
+      "source": "ru",
+      "status": "curated-seed",
+      "primary": {
+        "en": "Triggers"
+      },
+      "attestedForms": {}
+    },
+    {
+      "id": "lex:ru:автоматизация->en",
+      "source": "ru",
+      "status": "wiktionary",
+      "primary": {
+        "en": "automation"
+      },
+      "attestedForms": {
+        "en": ["automation", "{{t|en|automation}}"]
+      }
+    },
+    {
+      "id": "lex:ru:автоматизирована->en",
+      "source": "ru",
+      "status": "curated-seed",
+      "primary": {
+        "en": "automated"
+      },
+      "attestedForms": {}
+    },
+    {
+      "id": "lex:ru:алгоритмы->en",
+      "source": "ru",
+      "status": "curated-seed",
+      "primary": {
+        "en": "algorithms"
+      },
+      "attestedForms": {}
+    },
+    {
+      "id": "lex:ru:ассоциативное->en",
+      "source": "ru",
+      "status": "curated-seed",
+      "primary": {
+        "en": "associative"
+      },
+      "attestedForms": {}
+    },
+    {
+      "id": "lex:ru:благодаря->en",
+      "source": "ru",
+      "status": "curated-seed",
+      "primary": {
+        "en": "due"
+      },
+      "attestedForms": {
+        "en": ["thanks to; due to", "through", "owing to"]
+      }
+    },
+    {
+      "id": "lex:ru:бот-программист->en",
+      "source": "ru",
+      "status": "curated-seed",
+      "primary": {
+        "en": "bot-programmer"
+      },
+      "attestedForms": {}
+    },
+    {
+      "id": "lex:ru:будет->en",
+      "source": "ru",
+      "status": "curated-seed",
+      "primary": {
+        "en": "will"
+      },
+      "attestedForms": {}
+    },
+    {
+      "id": "lex:ru:быстрая->en",
+      "source": "ru",
+      "status": "curated-seed",
+      "primary": {
+        "en": "fast"
+      },
+      "attestedForms": {}
+    },
+    {
+      "id": "lex:ru:быть->en",
+      "source": "ru",
+      "status": "wiktionary",
+      "primary": {
+        "en": "be"
+      },
+      "attestedForms": {
+        "en": ["be", "|de=", "behave"]
+      }
+    },
+    {
+      "id": "lex:ru:в->en",
+      "source": "ru",
+      "status": "wiktionary",
+      "primary": {
+        "en": "in"
+      },
+      "attestedForms": {
+        "en": [
+          "into; to",
+          "in",
+          "in (с годами и месяцами)",
+          "on (с днями)",
+          "at (с часами)"
+        ]
+      }
+    },
+    {
+      "id": "lex:ru:важные->en",
+      "source": "ru",
+      "status": "curated-seed",
+      "primary": {
+        "en": "important"
+      },
+      "attestedForms": {}
+    },
+    {
+      "id": "lex:ru:ввод->en",
+      "source": "ru",
+      "status": "wiktionary",
+      "primary": {
+        "en": "input"
+      },
+      "attestedForms": {
+        "en": ["input", "|ar=", "|ast=", "{{t|en|input}}"]
+      }
+    },
+    {
+      "id": "lex:ru:внутри->en",
+      "source": "ru",
+      "status": "wiktionary",
+      "primary": {
+        "en": "inside"
+      },
+      "attestedForms": {
+        "en": ["inside", "|de=drinnen", "in"]
+      }
+    },
+    {
+      "id": "lex:ru:вода->en",
+      "source": "ru",
+      "status": "wiktionary",
+      "primary": {
+        "en": "water"
+      },
+      "attestedForms": {
+        "en": [
+          "water",
+          "watery prose",
+          "tagger",
+          "{{t|en|water}}",
+          "dihydrogen monoxide",
+          "drink",
+          "ade",
+          "waters",
+          "spa",
+          "{{t|en|watery prose}}",
+          "|ar=",
+          "{{t|en|tagger}}"
+        ]
+      }
+    },
+    {
+      "id": "lex:ru:возможность->en",
+      "source": "ru",
+      "status": "curated-seed",
+      "primary": {
+        "en": "ability"
+      },
+      "attestedForms": {
+        "en": ["opportunity", "chance", "potential", "fortune", "possibility"]
+      }
+    },
+    {
+      "id": "lex:ru:вопрос->en",
+      "source": "ru",
+      "status": "wiktionary",
+      "primary": {
+        "en": "question"
+      },
+      "attestedForms": {
+        "en": [
+          "question",
+          "case",
+          "issue",
+          "business",
+          "concern",
+          "matter",
+          "q<u>ue</u>stion",
+          "problem",
+          "point",
+          "essence"
+        ]
+      }
+    },
+    {
+      "id": "lex:ru:вопросы->en",
+      "source": "ru",
+      "status": "curated-seed",
+      "primary": {
+        "en": "questions"
+      },
+      "attestedForms": {}
+    },
+    {
+      "id": "lex:ru:времени->en",
+      "source": "ru",
+      "status": "curated-seed",
+      "primary": {
+        "en": "time"
+      },
+      "attestedForms": {}
+    },
+    {
+      "id": "lex:ru:все->en",
+      "source": "ru",
+      "status": "curated-seed",
+      "primary": {
+        "en": "all"
+      },
+      "attestedForms": {}
+    },
+    {
+      "id": "lex:ru:выполнение->en",
+      "source": "ru",
+      "status": "curated-seed",
+      "primary": {
+        "en": "execution"
+      },
+      "attestedForms": {
+        "en": [
+          "fulfilment",
+          "implementation",
+          "carrying out; accomplishment",
+          "realization; execution"
+        ]
+      }
+    },
+    {
+      "id": "lex:ru:высокоуровневые->en",
+      "source": "ru",
+      "status": "curated-seed",
+      "primary": {
+        "en": "high-level"
+      },
+      "attestedForms": {}
+    },
+    {
+      "id": "lex:ru:гибкая->en",
+      "source": "ru",
+      "status": "curated-seed",
+      "primary": {
+        "en": "flexible"
+      },
+      "attestedForms": {}
+    },
+    {
+      "id": "lex:ru:да->en",
+      "source": "ru",
+      "status": "wiktionary",
+      "primary": {
+        "en": "yes"
+      },
+      "attestedForms": {
+        "en": [
+          "yes",
+          "yeah",
+          "yep",
+          "let",
+          "really? is it? are you? etc.",
+          "{{t|en|yes}}",
+          "{{t|en|yeah}}",
+          "{{t|en|yep}}",
+          "{{t|en|let}}",
+          "and",
+          "but",
+          "however"
+        ]
+      }
+    },
+    {
+      "id": "lex:ru:данные_и_знания->en",
+      "source": "ru",
+      "status": "curated-seed",
+      "primary": {
+        "en": "data and knowledge"
+      },
+      "attestedForms": {}
+    },
+    {
+      "id": "lex:ru:данные->en",
+      "source": "ru",
+      "status": "wiktionary",
+      "primary": {
+        "en": "data"
+      },
+      "attestedForms": {
+        "en": [
+          "data",
+          "facts; information",
+          "figures",
+          "qualities; makings; potentialities"
+        ]
+      }
+    },
+    {
+      "id": "lex:ru:двигател->en",
+      "source": "ru",
+      "status": "curated-seed",
+      "primary": {
+        "en": "engine"
+      },
+      "attestedForms": {}
+    },
+    {
+      "id": "lex:ru:движок->en",
+      "source": "ru",
+      "status": "wiktionary",
+      "primary": {
+        "en": "engine"
+      },
+      "attestedForms": {
+        "en": ["|ar=", "engine"]
+      }
+    },
+    {
+      "id": "lex:ru:динамически->en",
+      "source": "ru",
+      "status": "wiktionary",
+      "primary": {
+        "en": "dynamically"
+      },
+      "attestedForms": {
+        "en": ["dynamically"]
+      }
+    },
+    {
+      "id": "lex:ru:для->en",
+      "source": "ru",
+      "status": "wiktionary",
+      "primary": {
+        "en": "for"
+      },
+      "attestedForms": {
+        "en": ["for", "to"]
+      }
+    },
+    {
+      "id": "lex:ru:добавить->en",
+      "source": "ru",
+      "status": "wiktionary",
+      "primary": {
+        "en": "add"
+      },
+      "attestedForms": {
+        "en": ["add"]
+      }
+    },
+    {
+      "id": "lex:ru:доброе_яблоко->en",
+      "source": "ru",
+      "status": "curated-seed",
+      "primary": {
+        "en": "good apple"
+      },
+      "attestedForms": {}
+    },
+    {
+      "id": "lex:ru:должен->en",
+      "source": "ru",
+      "status": "curated-seed",
+      "primary": {
+        "en": "should"
+      },
+      "attestedForms": {
+        "en": [
+          "owes ''(усиленное долженствование; чаще моральный)''",
+          "must ''(усиленное долженствование)''",
+          "should ''(ослабленное долженствование",
+          "ближе к совету)''",
+          "ought ''(ослабленное долженствование",
+          "ближе к желательности)''",
+          "must ''(усиленная обязанность)''",
+          "should; ought ''(ближе к желательности)''",
+          "bound to ''(о конкретных предметах)''",
+          "must ''(не о конкретных предметах)''",
+          "ought; be bound ''(o человеке; более высокая степень вероятности",
+          "нежели у ought)"
+        ]
+      }
+    },
+    {
+      "id": "lex:ru:другими_словами->en",
+      "source": "ru",
+      "status": "curated-seed",
+      "primary": {
+        "en": "in other words"
+      },
+      "attestedForms": {}
+    },
+    {
+      "id": "lex:ru:другими->en",
+      "source": "ru",
+      "status": "curated-seed",
+      "primary": {
+        "en": "other"
+      },
+      "attestedForms": {}
+    },
+    {
+      "id": "lex:ru:запланирована->en",
+      "source": "ru",
+      "status": "curated-seed",
+      "primary": {
+        "en": "planned"
+      },
+      "attestedForms": {}
+    },
+    {
+      "id": "lex:ru:знание->en",
+      "source": "ru",
+      "status": "curated-seed",
+      "primary": {
+        "en": "knowledge"
+      },
+      "attestedForms": {
+        "en": ["knowledge; erudition"]
+      }
+    },
+    {
+      "id": "lex:ru:знания->en",
+      "source": "ru",
+      "status": "curated-seed",
+      "primary": {
+        "en": "knowledge"
+      },
+      "attestedForms": {}
+    },
+    {
+      "id": "lex:ru:значение->en",
+      "source": "ru",
+      "status": "wiktionary",
+      "primary": {
+        "en": "value"
+      },
+      "attestedForms": {
+        "en": [
+          "significance",
+          "meaning",
+          "sense",
+          "importance",
+          "consequence",
+          "weight",
+          "value"
+        ]
+      }
+    },
+    {
+      "id": "lex:ru:значения->en",
+      "source": "ru",
+      "status": "curated-seed",
+      "primary": {
+        "en": "values"
+      },
+      "attestedForms": {}
+    },
+    {
+      "id": "lex:ru:и->en",
+      "source": "ru",
+      "status": "wiktionary",
+      "primary": {
+        "en": "and"
+      },
+      "attestedForms": {
+        "en": ["and", "|ar="]
+      }
+    },
+    {
+      "id": "lex:ru:из->en",
+      "source": "ru",
+      "status": "wiktionary",
+      "primary": {
+        "en": "of"
+      },
+      "attestedForms": {
+        "en": ["from", "out of", "of"]
+      }
+    },
+    {
+      "id": "lex:ru:изменять->en",
+      "source": "ru",
+      "status": "curated-seed",
+      "primary": {
+        "en": "change"
+      },
+      "attestedForms": {
+        "en": ["change; modify", "alter", "betray", "cheat"]
+      }
+    },
+    {
+      "id": "lex:ru:или->en",
+      "source": "ru",
+      "status": "wiktionary",
+      "primary": {
+        "en": "or"
+      },
+      "attestedForms": {
+        "en": ["or", "either"]
+      }
+    },
+    {
+      "id": "lex:ru:к->en",
+      "source": "ru",
+      "status": "wiktionary",
+      "primary": {
+        "en": "to"
+      },
+      "attestedForms": {
+        "en": ["to", "toward", "towards", "for", "by (3)"]
+      }
+    },
+    {
+      "id": "lex:ru:как_дела->en",
+      "source": "ru",
+      "status": "curated-seed",
+      "primary": {
+        "en": "how are you"
+      },
+      "attestedForms": {
+        "en": ["how do you do", "how are you; {{помета|разг.|}}: what's up"]
+      }
+    },
+    {
+      "id": "lex:ru:как_у_тебя_дела->en",
+      "source": "ru",
+      "status": "curated-seed",
+      "primary": {
+        "en": "how are you"
+      },
+      "attestedForms": {}
+    },
+    {
+      "id": "lex:ru:как->en",
+      "source": "ru",
+      "status": "wiktionary",
+      "primary": {
+        "en": "as"
+      },
+      "attestedForms": {
+        "en": ["how", "|de=", "what a", "like", "as"]
+      }
+    },
+    {
+      "id": "lex:ru:картофель->en",
+      "source": "ru",
+      "status": "wiktionary",
+      "primary": {
+        "en": "potato"
+      },
+      "attestedForms": {
+        "en": ["potato"]
+      }
+    },
+    {
+      "id": "lex:ru:когда->en",
+      "source": "ru",
+      "status": "wiktionary",
+      "primary": {
+        "en": "when"
+      },
+      "attestedForms": {
+        "en": ["when", "|be=", "by the time"]
+      }
+    },
+    {
+      "id": "lex:ru:который->en",
+      "source": "ru",
+      "status": "curated-seed",
+      "primary": {
+        "en": "which"
+      },
+      "attestedForms": {
+        "en": ["which; who", "which; that; who"]
+      }
+    },
+    {
+      "id": "lex:ru:кто_ты_такой->en",
+      "source": "ru",
+      "status": "curated-seed",
+      "primary": {
+        "en": "who are you"
+      },
+      "attestedForms": {}
+    },
+    {
+      "id": "lex:ru:любых->en",
+      "source": "ru",
+      "status": "curated-seed",
+      "primary": {
+        "en": "any"
+      },
+      "attestedForms": {}
+    },
+    {
+      "id": "lex:ru:метод->en",
+      "source": "ru",
+      "status": "curated-seed",
+      "primary": {
+        "en": "method"
+      },
+      "attestedForms": {
+        "en": ["method; technique", "approach", "|ar="]
+      }
+    },
+    {
+      "id": "lex:ru:могут->en",
+      "source": "ru",
+      "status": "curated-seed",
+      "primary": {
+        "en": "can"
+      },
+      "attestedForms": {}
+    },
+    {
+      "id": "lex:ru:моделирование->en",
+      "source": "ru",
+      "status": "curated-seed",
+      "primary": {
+        "en": "modeling"
+      },
+      "attestedForms": {}
+    },
+    {
+      "id": "lex:ru:морковь->en",
+      "source": "ru",
+      "status": "wiktionary",
+      "primary": {
+        "en": "carrot"
+      },
+      "attestedForms": {
+        "en": ["carrot", "carrots (собир.)"]
+      }
+    },
+    {
+      "id": "lex:ru:мы->en",
+      "source": "ru",
+      "status": "wiktionary",
+      "primary": {
+        "en": "we"
+      },
+      "attestedForms": {
+        "en": ["we"]
+      }
+    },
+    {
+      "id": "lex:ru:на->en",
+      "source": "ru",
+      "status": "wiktionary",
+      "primary": {
+        "en": "on"
+      },
+      "attestedForms": {
+        "en": ["on", "in", "to", "into", "onto", "at", "here"]
+      }
+    },
+    {
+      "id": "lex:ru:надежная->en",
+      "source": "ru",
+      "status": "curated-seed",
+      "primary": {
+        "en": "reliable"
+      },
+      "attestedForms": {}
+    },
+    {
+      "id": "lex:ru:найти->en",
+      "source": "ru",
+      "status": "wiktionary",
+      "primary": {
+        "en": "find"
+      },
+      "attestedForms": {
+        "en": ["find", "discover", "consider", "|de="]
+      }
+    },
+    {
+      "id": "lex:ru:нашу->en",
+      "source": "ru",
+      "status": "curated-seed",
+      "primary": {
+        "en": "our"
+      },
+      "attestedForms": {}
+    },
+    {
+      "id": "lex:ru:нет->en",
+      "source": "ru",
+      "status": "wiktionary",
+      "primary": {
+        "en": "no"
+      },
+      "attestedForms": {
+        "en": ["no", "have not", "there is not"]
+      }
+    },
+    {
+      "id": "lex:ru:объединяет->en",
+      "source": "ru",
+      "status": "curated-seed",
+      "primary": {
+        "en": "combines"
+      },
+      "attestedForms": {}
+    },
+    {
+      "id": "lex:ru:огурец->en",
+      "source": "ru",
+      "status": "wiktionary",
+      "primary": {
+        "en": "cucumber"
+      },
+      "attestedForms": {
+        "en": ["cucumber", "{{t|en|cucumber}}"]
+      }
+    },
+    {
+      "id": "lex:ru:одна->en",
+      "source": "ru",
+      "status": "curated-seed",
+      "primary": {
+        "en": "one"
+      },
+      "attestedForms": {}
+    },
+    {
+      "id": "lex:ru:описания->en",
+      "source": "ru",
+      "status": "curated-seed",
+      "primary": {
+        "en": "descriptions"
+      },
+      "attestedForms": {}
+    },
+    {
+      "id": "lex:ru:основанный->en",
+      "source": "ru",
+      "status": "curated-seed",
+      "primary": {
+        "en": "based"
+      },
+      "attestedForms": {
+        "en": ["founded", "built", "established"]
+      }
+    },
+    {
+      "id": "lex:ru:открыть->en",
+      "source": "ru",
+      "status": "wiktionary",
+      "primary": {
+        "en": "open"
+      },
+      "attestedForms": {
+        "en": ["open", "turn on", "discover"]
+      }
+    },
+    {
+      "id": "lex:ru:память->en",
+      "source": "ru",
+      "status": "wiktionary",
+      "primary": {
+        "en": "memory"
+      },
+      "attestedForms": {
+        "en": ["memory", "recollection", "remembrance", "|ar=", "storage"]
+      }
+    },
+    {
+      "id": "lex:ru:перевести->en",
+      "source": "ru",
+      "status": "wiktionary",
+      "primary": {
+        "en": "translate"
+      },
+      "attestedForms": {
+        "en": [
+          "take (across)",
+          "help smb cross",
+          "transfer",
+          "move",
+          "shift",
+          "|de=",
+          "translate",
+          "convert",
+          "remit"
+        ]
+      }
+    },
+    {
+      "id": "lex:ru:перевод->en",
+      "source": "ru",
+      "status": "wiktionary",
+      "primary": {
+        "en": "translation"
+      },
+      "attestedForms": {
+        "en": [
+          "transfer",
+          "transference",
+          "move",
+          "shift",
+          "switch",
+          "transl<u>a</u>tion",
+          "transl<u>a</u>ting",
+          "translation",
+          "remittance",
+          "|de="
+        ]
+      }
+    },
+    {
+      "id": "lex:ru:перевода->en",
+      "source": "ru",
+      "status": "curated-seed",
+      "primary": {
+        "en": "translation"
+      },
+      "attestedForms": {}
+    },
+    {
+      "id": "lex:ru:платформа->en",
+      "source": "ru",
+      "status": "wiktionary",
+      "primary": {
+        "en": "platform"
+      },
+      "attestedForms": {
+        "en": ["|de=", "platform"]
+      }
+    },
+    {
+      "id": "lex:ru:показать->en",
+      "source": "ru",
+      "status": "wiktionary",
+      "primary": {
+        "en": "show"
+      },
+      "attestedForms": {
+        "en": ["show", "demonstrate", "point at", "point to", "display"]
+      }
+    },
+    {
+      "id": "lex:ru:помидор->en",
+      "source": "ru",
+      "status": "wiktionary",
+      "primary": {
+        "en": "tomato"
+      },
+      "attestedForms": {
+        "en": ["tomato"]
+      }
+    },
+    {
+      "id": "lex:ru:помочь->en",
+      "source": "ru",
+      "status": "wiktionary",
+      "primary": {
+        "en": "help"
+      },
+      "attestedForms": {
+        "en": ["help", "assist", "leading string"]
+      }
+    },
+    {
+      "id": "lex:ru:преобразования->en",
+      "source": "ru",
+      "status": "curated-seed",
+      "primary": {
+        "en": "transformation"
+      },
+      "attestedForms": {}
+    },
+    {
+      "id": "lex:ru:привет->en",
+      "source": "ru",
+      "status": "curated-seed",
+      "primary": {
+        "en": "hello"
+      },
+      "attestedForms": {
+        "en": [
+          "greeting",
+          "greetings; regards",
+          "compliments",
+          "hello (хэлло)",
+          "hi (хай)"
+        ]
+      }
+    },
+    {
+      "id": "lex:ru:пример->en",
+      "source": "ru",
+      "status": "wiktionary",
+      "primary": {
+        "en": "example"
+      },
+      "attestedForms": {
+        "en": ["example", "|ar="]
+      }
+    },
+    {
+      "id": "lex:ru:примеры_перевода->en",
+      "source": "ru",
+      "status": "curated-seed",
+      "primary": {
+        "en": "examples of translation"
+      },
+      "attestedForms": {}
+    },
+    {
+      "id": "lex:ru:примеры_согласования->en",
+      "source": "ru",
+      "status": "curated-seed",
+      "primary": {
+        "en": "examples of agreement"
+      },
+      "attestedForms": {}
+    },
+    {
+      "id": "lex:ru:примеры->en",
+      "source": "ru",
+      "status": "curated-seed",
+      "primary": {
+        "en": "examples"
+      },
+      "attestedForms": {}
+    },
+    {
+      "id": "lex:ru:проверить->en",
+      "source": "ru",
+      "status": "wiktionary",
+      "primary": {
+        "en": "check"
+      },
+      "attestedForms": {
+        "en": ["verify", "check", "audit", "inspect; check"]
+      }
+    },
+    {
+      "id": "lex:ru:программировать->en",
+      "source": "ru",
+      "status": "curated-seed",
+      "primary": {
+        "en": "program"
+      },
+      "attestedForms": {}
+    },
+    {
+      "id": "lex:ru:программы->en",
+      "source": "ru",
+      "status": "curated-seed",
+      "primary": {
+        "en": "programs"
+      },
+      "attestedForms": {}
+    },
+    {
+      "id": "lex:ru:проект->en",
+      "source": "ru",
+      "status": "wiktionary",
+      "primary": {
+        "en": "project"
+      },
+      "attestedForms": {
+        "en": ["project", "design", "draft", "{{t|en|project}}"]
+      }
+    },
+    {
+      "id": "lex:ru:простое->en",
+      "source": "ru",
+      "status": "curated-seed",
+      "primary": {
+        "en": "simple"
+      },
+      "attestedForms": {}
+    },
+    {
+      "id": "lex:ru:развитие->en",
+      "source": "ru",
+      "status": "curated-seed",
+      "primary": {
+        "en": "development"
+      },
+      "attestedForms": {
+        "en": [
+          "development; progress; advance; continuation",
+          "maturity",
+          "|ar="
+        ]
+      }
+    },
+    {
+      "id": "lex:ru:разум->en",
+      "source": "ru",
+      "status": "wiktionary",
+      "primary": {
+        "en": "mind"
+      },
+      "attestedForms": {
+        "en": ["reason", "mind", "intellect"]
+      }
+    },
+    {
+      "id": "lex:ru:рассматриваться->en",
+      "source": "ru",
+      "status": "curated-seed",
+      "primary": {
+        "en": "treated"
+      },
+      "attestedForms": {
+        "en": ["|ar="]
+      }
+    },
+    {
+      "id": "lex:ru:реализация->en",
+      "source": "ru",
+      "status": "wiktionary",
+      "primary": {
+        "en": "implementation"
+      },
+      "attestedForms": {
+        "en": [
+          "implementation",
+          "realization",
+          "sale",
+          "selling",
+          "{{t|en|implementation}}",
+          "{{t|en|realization}}",
+          "{{t|en|sale}}",
+          "{{t|en|selling}}"
+        ]
+      }
+    },
+    {
+      "id": "lex:ru:реализовать->en",
+      "source": "ru",
+      "status": "wiktionary",
+      "primary": {
+        "en": "implement"
+      },
+      "attestedForms": {
+        "en": ["implement", "carry out", "realise (realize)", "|ar="]
+      }
+    },
+    {
+      "id": "lex:ru:реальном->en",
+      "source": "ru",
+      "status": "curated-seed",
+      "primary": {
+        "en": "real"
+      },
+      "attestedForms": {}
+    },
+    {
+      "id": "lex:ru:редактировать->en",
+      "source": "ru",
+      "status": "wiktionary",
+      "primary": {
+        "en": "edit"
+      },
+      "attestedForms": {
+        "en": ["edit", "redact"]
+      }
+    },
+    {
+      "id": "lex:ru:результат->en",
+      "source": "ru",
+      "status": "wiktionary",
+      "primary": {
+        "en": "result"
+      },
+      "attestedForms": {
+        "en": ["effect", "result", "return", "outcome"]
+      }
+    },
+    {
+      "id": "lex:ru:сама->en",
+      "source": "ru",
+      "status": "curated-seed",
+      "primary": {
+        "en": "itself"
+      },
+      "attestedForms": {}
+    },
+    {
+      "id": "lex:ru:самая->en",
+      "source": "ru",
+      "status": "curated-seed",
+      "primary": {
+        "en": "most"
+      },
+      "attestedForms": {}
+    },
+    {
+      "id": "lex:ru:самые_важные->en",
+      "source": "ru",
+      "status": "curated-seed",
+      "primary": {
+        "en": "most important"
+      },
+      "attestedForms": {}
+    },
+    {
+      "id": "lex:ru:сделать->en",
+      "source": "ru",
+      "status": "wiktionary",
+      "primary": {
+        "en": "make"
+      },
+      "attestedForms": {
+        "en": ["do", "perform", "make", "produce", "|de="]
+      }
+    },
+    {
+      "id": "lex:ru:себя->en",
+      "source": "ru",
+      "status": "wiktionary",
+      "primary": {
+        "en": "themselves"
+      },
+      "attestedForms": {
+        "en": [
+          "oneself; myself",
+          "himself",
+          "herself",
+          "itself",
+          "ourselves",
+          "yourselves",
+          "themselves",
+          "|ba="
+        ]
+      }
+    },
+    {
+      "id": "lex:ru:синоним->en",
+      "source": "ru",
+      "status": "wiktionary",
+      "primary": {
+        "en": "synonym"
+      },
+      "attestedForms": {
+        "en": ["synonym"]
+      }
+    },
+    {
+      "id": "lex:ru:синонимы->en",
+      "source": "ru",
+      "status": "curated-seed",
+      "primary": {
+        "en": "synonyms"
+      },
+      "attestedForms": {}
+    },
+    {
+      "id": "lex:ru:система->en",
+      "source": "ru",
+      "status": "wiktionary",
+      "primary": {
+        "en": "system"
+      },
+      "attestedForms": {
+        "en": ["system"]
+      }
+    },
+    {
+      "id": "lex:ru:словами->en",
+      "source": "ru",
+      "status": "curated-seed",
+      "primary": {
+        "en": "words"
+      },
+      "attestedForms": {}
+    },
+    {
+      "id": "lex:ru:согласование->en",
+      "source": "ru",
+      "status": "curated-seed",
+      "primary": {
+        "en": "agreement"
+      },
+      "attestedForms": {}
+    },
+    {
+      "id": "lex:ru:согласования->en",
+      "source": "ru",
+      "status": "curated-seed",
+      "primary": {
+        "en": "agreement"
+      },
+      "attestedForms": {}
+    },
+    {
+      "id": "lex:ru:создавать->en",
+      "source": "ru",
+      "status": "curated-seed",
+      "primary": {
+        "en": "create"
+      },
+      "attestedForms": {
+        "en": ["create; build", "build up", "found", "originate"]
+      }
+    },
+    {
+      "id": "lex:ru:сохранить->en",
+      "source": "ru",
+      "status": "wiktionary",
+      "primary": {
+        "en": "save"
+      },
+      "attestedForms": {
+        "en": ["preserve", "keep", "retain", "keep; maintain", "save"]
+      }
+    },
+    {
+      "id": "lex:ru:спасибо->en",
+      "source": "ru",
+      "status": "wiktionary",
+      "primary": {
+        "en": "thank you"
+      },
+      "attestedForms": {
+        "en": ["thank you", "thanks"]
+      }
+    },
+    {
+      "id": "lex:ru:способен->en",
+      "source": "ru",
+      "status": "curated-seed",
+      "primary": {
+        "en": "able"
+      },
+      "attestedForms": {}
+    },
+    {
+      "id": "lex:ru:сравнить->en",
+      "source": "ru",
+      "status": "wiktionary",
+      "primary": {
+        "en": "compare"
+      },
+      "attestedForms": {
+        "en": ["compare"]
+      }
+    },
+    {
+      "id": "lex:ru:среда->en",
+      "source": "ru",
+      "status": "wiktionary",
+      "primary": {
+        "en": "environment"
+      },
+      "attestedForms": {
+        "en": ["environment", "field", "medium", "Wednesday"]
+      }
+    },
+    {
+      "id": "lex:ru:страница->en",
+      "source": "ru",
+      "status": "wiktionary",
+      "primary": {
+        "en": "page"
+      },
+      "attestedForms": {
+        "en": ["page", "side"]
+      }
+    },
+    {
+      "id": "lex:ru:страницу->en",
+      "source": "ru",
+      "status": "curated-seed",
+      "primary": {
+        "en": "page"
+      },
+      "attestedForms": {}
+    },
+    {
+      "id": "lex:ru:стремимся->en",
+      "source": "ru",
+      "status": "curated-seed",
+      "primary": {
+        "en": "strive"
+      },
+      "attestedForms": {}
+    },
+    {
+      "id": "lex:ru:также->en",
+      "source": "ru",
+      "status": "curated-seed",
+      "primary": {
+        "en": "also"
+      },
+      "attestedForms": {
+        "en": ["also; as well", "too"]
+      }
+    },
+    {
+      "id": "lex:ru:такие->en",
+      "source": "ru",
+      "status": "curated-seed",
+      "primary": {
+        "en": "such"
+      },
+      "attestedForms": {}
+    },
+    {
+      "id": "lex:ru:там->en",
+      "source": "ru",
+      "status": "wiktionary",
+      "primary": {
+        "en": "there"
+      },
+      "attestedForms": {
+        "en": ["there", "forest", "woods"]
+      }
+    },
+    {
+      "id": "lex:ru:текст->en",
+      "source": "ru",
+      "status": "wiktionary",
+      "primary": {
+        "en": "text"
+      },
+      "attestedForms": {
+        "en": ["text", "|ar="]
+      }
+    },
+    {
+      "id": "lex:ru:точная->en",
+      "source": "ru",
+      "status": "curated-seed",
+      "primary": {
+        "en": "accurate"
+      },
+      "attestedForms": {}
+    },
+    {
+      "id": "lex:ru:универсальная->en",
+      "source": "ru",
+      "status": "curated-seed",
+      "primary": {
+        "en": "universal"
+      },
+      "attestedForms": {}
+    },
+    {
+      "id": "lex:ru:уровень->en",
+      "source": "ru",
+      "status": "wiktionary",
+      "primary": {
+        "en": "level"
+      },
+      "attestedForms": {
+        "en": [
+          "level",
+          "standard",
+          "level gauge",
+          "spirit level",
+          "bubble level"
+        ]
+      }
+    },
+    {
+      "id": "lex:ru:ускорить->en",
+      "source": "ru",
+      "status": "curated-seed",
+      "primary": {
+        "en": "accelerate"
+      },
+      "attestedForms": {}
+    },
+    {
+      "id": "lex:ru:утверждение->en",
+      "source": "ru",
+      "status": "wiktionary",
+      "primary": {
+        "en": "statement"
+      },
+      "attestedForms": {
+        "en": [
+          "strengthening",
+          "consolidation (укрепление); approval",
+          "confirmation",
+          "ratification",
+          "assertion",
+          "affirmation",
+          "statement"
+        ]
+      }
+    },
+    {
+      "id": "lex:ru:факт->en",
+      "source": "ru",
+      "status": "wiktionary",
+      "primary": {
+        "en": "fact"
+      },
+      "attestedForms": {
+        "en": ["fact"]
+      }
+    },
+    {
+      "id": "lex:ru:формализовать->en",
+      "source": "ru",
+      "status": "wiktionary",
+      "primary": {
+        "en": "formalize"
+      },
+      "attestedForms": {
+        "en": ["formalize"]
+      }
+    },
+    {
+      "id": "lex:ru:хлеб->en",
+      "source": "ru",
+      "status": "wiktionary",
+      "primary": {
+        "en": "bread"
+      },
+      "attestedForms": {
+        "en": ["bread", "loaf", "|ar=", "living"]
+      }
+    },
+    {
+      "id": "lex:ru:хранилище_ассоциативной_памяти->en",
+      "source": "ru",
+      "status": "curated-seed",
+      "primary": {
+        "en": "associative memory storage"
+      },
+      "attestedForms": {}
+    },
+    {
+      "id": "lex:ru:хранилище->en",
+      "source": "ru",
+      "status": "wiktionary",
+      "primary": {
+        "en": "storage"
+      },
+      "attestedForms": {
+        "en": [
+          "depository",
+          "depot",
+          "repository",
+          "storehouse",
+          "warehouse",
+          "storage"
+        ]
+      }
+    },
+    {
+      "id": "lex:ru:цели->en",
+      "source": "ru",
+      "status": "curated-seed",
+      "primary": {
+        "en": "goals"
+      },
+      "attestedForms": {}
+    },
+    {
+      "id": "lex:ru:человеческий_разум->en",
+      "source": "ru",
+      "status": "curated-seed",
+      "primary": {
+        "en": "human mind"
+      },
+      "attestedForms": {}
+    },
+    {
+      "id": "lex:ru:человеческий_язык->en",
+      "source": "ru",
+      "status": "curated-seed",
+      "primary": {
+        "en": "human language"
+      },
+      "attestedForms": {}
+    },
+    {
+      "id": "lex:ru:человеческий->en",
+      "source": "ru",
+      "status": "wiktionary",
+      "primary": {
+        "en": "human"
+      },
+      "attestedForms": {
+        "en": ["human", "humane", "sympathetic", "decent", "proper"]
+      }
+    },
+    {
+      "id": "lex:ru:что_это_такое->en",
+      "source": "ru",
+      "status": "curated-seed",
+      "primary": {
+        "en": "what is this"
+      },
+      "attestedForms": {}
+    },
+    {
+      "id": "lex:ru:что->en",
+      "source": "ru",
+      "status": "wiktionary",
+      "primary": {
+        "en": "that"
+      },
+      "attestedForms": {
+        "en": ["what", "that"]
+      }
+    },
+    {
+      "id": "lex:ru:это->en",
+      "source": "ru",
+      "status": "curated-seed",
+      "primary": {
+        "en": "is"
+      },
+      "attestedForms": {
+        "en": ["|de=doch", "|de=", "this; it"]
+      }
+    },
+    {
+      "id": "lex:ru:этот->en",
+      "source": "ru",
+      "status": "curated-seed",
+      "primary": {
+        "en": "this"
+      },
+      "attestedForms": {
+        "en": ["this; this one"]
+      }
+    },
+    {
+      "id": "lex:ru:эффекты->en",
+      "source": "ru",
+      "status": "curated-seed",
+      "primary": {
+        "en": "effects"
+      },
+      "attestedForms": {}
+    },
+    {
+      "id": "lex:ru:яблоко->en",
+      "source": "ru",
+      "status": "wiktionary",
+      "primary": {
+        "en": "apple"
+      },
+      "attestedForms": {
+        "en": ["apple", "|zh-cn=梨果", "|de="]
+      }
+    }
+  ]
+}

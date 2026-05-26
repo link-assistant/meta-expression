@@ -1,12 +1,28 @@
 use doublets::Doublet;
 
+mod analysis;
 mod formal_ai_support;
 mod issue52;
+mod reference_data;
+mod semantic_lexicon;
+mod statement_formalization;
+#[cfg(target_arch = "wasm32")]
+mod wasm;
 mod wikimedia_plan;
 
+pub use analysis::{
+    analyze_statement, create_statement_draft, evaluate_statement, formalize_statement,
+    select_interpretation, serialize_links_notation, serialize_statement_links_notation,
+    statement_confidence, BeliefSystem, EvaluationResult, EvidenceItem, Formalization,
+    Interpretation, LinkProvenance, LinkRecord, LinksNetwork, StatementAnalysis, StatementDraft,
+};
 pub use issue52::{
     issue52_english_text, issue52_russian_text, issue52_translation_relations,
     translate_issue52_semantic_text,
+};
+pub use semantic_lexicon::{
+    build_directional_glossary, list_directional_pairs, list_lexicon_languages,
+    resolve_concept_form,
 };
 pub use wikimedia_plan::{
     plan_wikidata_entity_batches, stable_wikimedia_cache_ttl_days, stable_wikimedia_cache_ttl_ms,
@@ -22,7 +38,8 @@ const ISSUE35_HAWAII_MEANING_ID: u64 = 782;
 const ISSUE35_STATE_MEANING_ID: u64 = 7275;
 const ISSUE35_US_STATE_MEANING_ID: u64 = 35657;
 
-#[derive(Debug, Clone, PartialEq, Eq)]
+#[derive(Debug, Clone, PartialEq, Eq, serde::Serialize)]
+#[serde(rename_all = "camelCase")]
 pub struct SemanticPhrase {
     pub text: String,
     pub meaning_id: String,
@@ -30,7 +47,8 @@ pub struct SemanticPhrase {
     pub end: usize,
 }
 
-#[derive(Debug, Clone, PartialEq, Eq)]
+#[derive(Debug, Clone, PartialEq, Eq, serde::Serialize)]
+#[serde(rename_all = "camelCase")]
 pub struct SemanticTranslation {
     pub source_text: String,
     pub source_language: String,
@@ -42,9 +60,12 @@ pub struct SemanticTranslation {
 }
 
 pub use formal_ai_support::{
-    apply_text_transformation_rules, deformalize_semantic_translation, extract_linguistic_metadata,
-    naturalize_semantic_translation, LinguisticAstSentence, LinguisticDependency,
-    LinguisticFragment, LinguisticMetadata, LinguisticRelation, TextTransformationRule,
+    apply_text_transformation_rules, deformalize_formal_expression,
+    deformalize_semantic_translation, extract_linguistic_metadata, naturalize_formal_expression,
+    naturalize_semantic_translation, LinguisticAstSentence, LinguisticCst, LinguisticCstDependency,
+    LinguisticCstSentence, LinguisticCstSymbol, LinguisticCstToken, LinguisticDependency,
+    LinguisticFragment, LinguisticMetadata, LinguisticParserDescriptor, LinguisticProvenance,
+    LinguisticRelation, LinguisticTokenRange, TextTransformationRule,
 };
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
@@ -149,8 +170,17 @@ pub fn translate_known_semantic_sentence(
         target_language.as_str(),
         sentence_key.as_str(),
     ) {
+        ("en", "ru", "hawaii") => Some(issue61_hawaii_english_to_russian(input)),
         ("en", "ru", "hawaii is a state") => Some(issue35_english_to_russian(input)),
-        ("ru", "en", "гавайи это штат") => Some(issue35_russian_to_english(input)),
+        ("ru", "en", key)
+            if key
+                == reference_data::reference_data()
+                    .issue35
+                    .ru_source_key
+                    .as_str() =>
+        {
+            Some(issue35_russian_to_english(input))
+        }
         _ => None,
     }
 }
@@ -165,7 +195,7 @@ fn translate_formal_ai_phrase_sentence(
         lookup_formal_ai_phrase_translation(source_language, target_language, sentence_key)?;
     let source_text = input.trim();
     let source_phrase_text = source_text.trim_end_matches(['.', '!', '?']);
-    let mut target_base = target.to_string();
+    let mut target_base = target;
     if starts_with_uppercase(source_text) {
         target_base = uppercase_first(&target_base);
     }
@@ -194,20 +224,19 @@ fn translate_formal_ai_phrase_sentence(
     })
 }
 
+/// Translate a whole multi-word phrase through the interlingua. Only multi-word
+/// keys are handled here so single words still flow through the lexical glossary
+/// path below; idiomatic phrases (e.g. "как у тебя дела" -> "how are you") are
+/// derived from `js/data/semantic-lexicon.json`, never hardcoded in this source.
 fn lookup_formal_ai_phrase_translation(
     source_language: &str,
     target_language: &str,
     sentence_key: &str,
-) -> Option<&'static str> {
-    match (source_language, target_language, sentence_key) {
-        ("ru", "en", "как у тебя дела") => Some("how are you"),
-        ("ru", "en", "как дела") => Some("how are you"),
-        ("ru", "en", "кто ты такой") => Some("who are you"),
-        ("ru", "en", "что это такое") => Some("what is this"),
-        ("ru", "en", "доброе яблоко") => Some("good apple"),
-        ("en", "ru", "thank you") => Some("спасибо"),
-        _ => None,
+) -> Option<String> {
+    if !sentence_key.contains(' ') {
+        return None;
     }
+    semantic_lexicon::lookup_glossary(source_language, target_language, sentence_key)
 }
 
 pub fn translate_known_semantic_text(
@@ -237,7 +266,7 @@ pub fn translate_glossary_semantic_sentence(
         let translated =
             lookup_lexical_translation(&source_language, &target_language, &token.normalized)?;
         target_tokens.push(TargetToken {
-            text: translated.to_string(),
+            text: translated,
             source_index: Some(index),
         });
     }
@@ -470,53 +499,7 @@ fn strip_parenthetical_glosses(text: &str) -> String {
 }
 
 pub fn tokenize_for_match(text: &str) -> Vec<String> {
-    let stopwords: &[&str] = &[
-        "a",
-        "an",
-        "the",
-        "is",
-        "are",
-        "was",
-        "were",
-        "be",
-        "been",
-        "being",
-        "as",
-        "of",
-        "in",
-        "on",
-        "at",
-        "to",
-        "and",
-        "or",
-        "for",
-        "by",
-        "with",
-        "from",
-        "this",
-        "that",
-        "it",
-        "its",
-        "also",
-        "но",
-        "не",
-        "и",
-        "или",
-        "для",
-        "по",
-        "в",
-        "на",
-        "из",
-        "с",
-        "о",
-        "об",
-        "это",
-        "как",
-        "что",
-        "который",
-        "которая",
-        "которое",
-    ];
+    let stopwords = &reference_data::reference_data().match_stopwords;
     let mut tokens = Vec::new();
     let mut current = String::new();
     for ch in text.chars() {
@@ -538,7 +521,7 @@ pub fn tokenize_for_match(text: &str) -> Vec<String> {
             if token.chars().all(|c| c.is_ascii_digit()) {
                 return false;
             }
-            !stopwords.contains(&token.as_str())
+            !stopwords.iter().any(|stopword| stopword == token)
         })
         .collect()
 }
@@ -690,23 +673,32 @@ fn normalize_sentence_key(input: &str) -> String {
 
 fn issue35_english_to_russian(input: &str) -> SemanticTranslation {
     let source_text = input.trim();
-    let target_text = "Гавайи это штат.";
+    let reference = &reference_data::reference_data().issue35;
+    let target_text = format!(
+        "{} {} {}.",
+        reference.hawaii, reference.copula, reference.state
+    );
     SemanticTranslation {
         source_text: source_text.to_string(),
         source_language: "en".to_string(),
         target_language: "ru".to_string(),
-        target_text: target_text.to_string(),
+        target_text: target_text.clone(),
         source_phrases: vec![
             semantic_phrase_in_text("Hawaii", ISSUE35_HAWAII_MEANING_ID, source_text, 0),
             semantic_phrase_in_text("state", ISSUE35_STATE_MEANING_ID, source_text, 12),
         ],
         target_phrases: vec![
-            semantic_phrase_in_text("Гавайи", ISSUE35_HAWAII_MEANING_ID, target_text, 0),
             semantic_phrase_in_text(
-                "штат",
+                &reference.hawaii,
+                ISSUE35_HAWAII_MEANING_ID,
+                &target_text,
+                0,
+            ),
+            semantic_phrase_in_text(
+                &reference.state,
                 ISSUE35_US_STATE_MEANING_ID,
-                target_text,
-                "Гавайи это ".len(),
+                &target_text,
+                0,
             ),
         ],
         transformation_steps: vec![
@@ -717,8 +709,33 @@ fn issue35_english_to_russian(input: &str) -> SemanticTranslation {
     }
 }
 
+fn issue61_hawaii_english_to_russian(input: &str) -> SemanticTranslation {
+    let source_text = input.trim();
+    let target_text = reference_data::reference_data().issue35.hawaii.clone();
+    SemanticTranslation {
+        source_text: source_text.to_string(),
+        source_language: "en".to_string(),
+        target_language: "ru".to_string(),
+        target_text: target_text.clone(),
+        source_phrases: vec![semantic_phrase_in_text(
+            "Hawaii",
+            ISSUE35_HAWAII_MEANING_ID,
+            source_text,
+            0,
+        )],
+        target_phrases: vec![semantic_phrase_in_text(
+            &target_text,
+            ISSUE35_HAWAII_MEANING_ID,
+            &target_text,
+            0,
+        )],
+        transformation_steps: vec!["wikidata-target-label".to_string()],
+    }
+}
+
 fn issue35_russian_to_english(input: &str) -> SemanticTranslation {
     let source_text = input.trim();
+    let reference = &reference_data::reference_data().issue35;
     let target_text = "Hawaii is a state.";
     SemanticTranslation {
         source_text: source_text.to_string(),
@@ -726,12 +743,12 @@ fn issue35_russian_to_english(input: &str) -> SemanticTranslation {
         target_language: "en".to_string(),
         target_text: target_text.to_string(),
         source_phrases: vec![
-            semantic_phrase_in_text("Гавайи", ISSUE35_HAWAII_MEANING_ID, source_text, 0),
+            semantic_phrase_in_text(&reference.hawaii, ISSUE35_HAWAII_MEANING_ID, source_text, 0),
             semantic_phrase_in_text(
-                "штат",
+                &reference.state,
                 ISSUE35_US_STATE_MEANING_ID,
                 source_text,
-                "Гавайи это ".len(),
+                0,
             ),
         ],
         target_phrases: vec![
@@ -820,76 +837,25 @@ fn tokenize_translation_words(source: &str) -> Vec<TranslationToken> {
     tokens
 }
 
+/// Translate a single source word through the interlingua. The source/target
+/// forms are derived from `js/data/semantic-lexicon.json` at runtime, so no
+/// direct language-pair dictionary lives in this source file.
 fn lookup_lexical_translation(
     source_language: &str,
     target_language: &str,
     word: &str,
-) -> Option<&'static str> {
-    match (source_language, target_language, word) {
-        ("ru", "en", "добавить") => Some("add"),
-        ("ru", "en", "найти") => Some("find"),
-        ("ru", "en", "синоним") => Some("synonym"),
-        ("ru", "en", "синонимы") => Some("synonyms"),
-        ("ru", "en", "или") => Some("or"),
-        ("ru", "en", "пример") => Some("example"),
-        ("ru", "en", "примеры") => Some("examples"),
-        ("ru", "en", "согласование") => Some("agreement"),
-        ("ru", "en", "согласования") => Some("agreement"),
-        ("ru", "en", "перевод") => Some("translation"),
-        ("ru", "en", "перевода") => Some("translation"),
-        ("ru", "en", "перевести") => Some("translate"),
-        ("ru", "en", "формализовать") => Some("formalize"),
-        ("ru", "en", "текст") => Some("text"),
-        ("ru", "en", "проверить") => Some("check"),
-        ("ru", "en", "утверждение") => Some("statement"),
-        ("ru", "en", "сравнить") => Some("compare"),
-        ("ru", "en", "значение") => Some("value"),
-        ("ru", "en", "значения") => Some("values"),
-        ("ru", "en", "показать") => Some("show"),
-        ("ru", "en", "вопрос") => Some("question"),
-        ("ru", "en", "вопросы") => Some("questions"),
-        ("ru", "en", "открыть") => Some("open"),
-        ("ru", "en", "страница") => Some("page"),
-        ("ru", "en", "страницу") => Some("page"),
-        ("ru", "en", "сохранить") => Some("save"),
-        ("ru", "en", "результат") => Some("result"),
-        ("ru", "en", "спасибо") => Some("thank you"),
-        ("ru", "en", "да") => Some("yes"),
-        ("ru", "en", "нет") => Some("no"),
-        ("ru", "en", "привет") => Some("hello"),
-        ("ru", "en", "яблоко") => Some("apple"),
-        ("ru", "en", "помидор") => Some("tomato"),
-        ("ru", "en", "огурец") => Some("cucumber"),
-        ("ru", "en", "картофель") => Some("potato"),
-        ("ru", "en", "морковь") => Some("carrot"),
-        ("ru", "en", "хлеб") => Some("bread"),
-        ("ru", "en", "вода") => Some("water"),
-        ("en", "ru", "add") => Some("добавьте"),
-        ("en", "ru", "example") => Some("пример"),
-        ("en", "ru", "examples") => Some("примеры"),
-        ("en", "ru", "hello") => Some("привет"),
-        ("en", "ru", "apple") => Some("яблоко"),
-        ("en", "ru", "tomato") => Some("помидор"),
-        ("en", "ru", "cucumber") => Some("огурец"),
-        ("en", "ru", "potato") => Some("картофель"),
-        ("en", "ru", "carrot") => Some("морковь"),
-        ("en", "ru", "bread") => Some("хлеб"),
-        ("en", "ru", "water") => Some("вода"),
-        ("en", "hi", "hello") => Some("नमस्ते"),
-        ("en", "hi", "apple") => Some("सेब"),
-        ("en", "zh", "hello") => Some("你好"),
-        ("en", "zh", "apple") => Some("苹果"),
-        _ => None,
-    }
+) -> Option<String> {
+    semantic_lexicon::lookup_glossary(source_language, target_language, word)
 }
 
 fn insert_russian_examples_of(
     source_tokens: &[TranslationToken],
     target_tokens: &mut Vec<TargetToken>,
 ) -> bool {
+    let trigger = &reference_data::reference_data().examples_genitive_trigger_ru;
     let last_index = source_tokens.len().saturating_sub(1);
     for (index, source_token) in source_tokens.iter().enumerate().take(last_index) {
-        if source_token.normalized != "примеры" {
+        if &source_token.normalized != trigger {
             continue;
         }
         let target_index = target_tokens

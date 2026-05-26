@@ -7,17 +7,15 @@ comparable systems with a known expected output. The "meta-expression
 expectation" column records what `analyzeStatement` (or the adjacent
 `/check`, `/translate`, `/formalize`, `/uniqueness` surface) should
 return today. Rows that meta-expression already supports are covered by
-[`tests/issue-26-comparable-fixtures.test.js`](../../../tests/issue-26-comparable-fixtures.test.js);
-rows that depend on roadmap-deferred work are recorded here for
-traceability and skipped in tests with explanatory titles.
+[`js/tests/integration/issue-26-comparable-fixtures.test.js`](../../../js/tests/integration/issue-26-comparable-fixtures.test.js);
+rows that depend on roadmap-deferred work are skipped in tests with
+explanatory titles.
 
 Legend for the **status** column:
 
 - `covered` — assertion is enabled in the test file.
 - `skipped` — test exists but `it.skip` is used; the title documents
   the deferred roadmap phase.
-- `documentation` — not yet captured in tests; recorded here so a
-  future contributor can promote it once the surface lands.
 
 ## A. Arithmetic kernel (deterministic, `correctness ∈ {0, 1}`)
 
@@ -36,15 +34,15 @@ Legend for the **status** column:
 
 ## B. Wikidata-structured public facts (bounded confidence)
 
-| Source                                                        | Input                              | Source-system answer                            | meta-expression expectation                                                                                        | Status        |
-| ------------------------------------------------------------- | ---------------------------------- | ----------------------------------------------- | ------------------------------------------------------------------------------------------------------------------ | ------------- |
-| Wikidata Q2 (P398 Q525); Wolfram Alpha "Earth orbital period" | `Earth orbits the Sun`             | True, with provenance                           | `correctness > 0.5`, `result.confidence` bounded below 1, evidence list non-empty                                  | covered       |
-| Wikidata negation; geocentrism corpus                         | `Earth does not orbit the Sun`     | False                                           | `correctness < 0.5`                                                                                                | covered       |
-| Wikidata Q405 (P397 Q2 → Q525)                                | `Moon orbits the Sun`              | True via parent-body chain `Moon → Earth → Sun` | `correctness > 0.5`; reasoning trace includes parent chain                                                         | covered       |
-| Wikidata Q405 P397 Q2                                         | `Moon orbits Earth`                | True                                            | `correctness > 0.5`                                                                                                | covered       |
-| Wikidata Q142 P36 Q90                                         | `Paris is the capital of France`   | True                                            | `correctness > 0.5`, live-evidence path resolves Q90                                                               | covered       |
-| Wikidata negation                                             | `Berlin is the capital of France`  | False                                           | `correctness < 0.5`                                                                                                | covered       |
-| Wikidata Q183 P36 Q64; DBpedia                                | `Berlin is the capital of Germany` | True                                            | `correctness > 0.5` (documentation; verifies analyzeStatement does not regress on a Wikidata-supported true fact). | documentation |
+| Source                                                        | Input                              | Source-system answer                            | meta-expression expectation                                                       | Status  |
+| ------------------------------------------------------------- | ---------------------------------- | ----------------------------------------------- | --------------------------------------------------------------------------------- | ------- |
+| Wikidata Q2 (P398 Q525); Wolfram Alpha "Earth orbital period" | `Earth orbits the Sun`             | True, with provenance                           | `correctness > 0.5`, `result.confidence` bounded below 1, evidence list non-empty | covered |
+| Wikidata negation; geocentrism corpus                         | `Earth does not orbit the Sun`     | False                                           | `correctness < 0.5`                                                               | covered |
+| Wikidata Q405 (P397 Q2 → Q525)                                | `Moon orbits the Sun`              | True via parent-body chain `Moon → Earth → Sun` | `correctness > 0.5`; reasoning trace includes parent chain                        | covered |
+| Wikidata Q405 P397 Q2                                         | `Moon orbits Earth`                | True                                            | `correctness > 0.5`                                                               | covered |
+| Wikidata Q142 P36 Q90                                         | `Paris is the capital of France`   | True                                            | `correctness > 0.5`, live-evidence path resolves Q90                              | covered |
+| Wikidata negation                                             | `Berlin is the capital of France`  | False                                           | `correctness < 0.5`                                                               | covered |
+| Wikidata Q183 P36 Q64; DBpedia                                | `Berlin is the capital of Germany` | True                                            | `correctness > 0.5`, bounded confidence                                           | covered |
 
 ## C. Wikidata P570 (date of death) liveness templates
 
@@ -57,11 +55,11 @@ Legend for the **status** column:
 
 ## D. Self-reference / paradoxes
 
-| Source                                | Input                                                | Source-system answer       | meta-expression expectation                           | Status        |
-| ------------------------------------- | ---------------------------------------------------- | -------------------------- | ----------------------------------------------------- | ------------- |
-| Classic Liar paradox (Tarski, Kripke) | `this statement is false`                            | Undetermined / paradoxical | `correctness === 0.5`, `signedConfidence === 0`       | covered       |
-| Classic positive Liar variant         | `this statement is true`                             | Undetermined               | `correctness === 0.5`, `signedConfidence === 0`       | covered       |
-| Russell's paradox (Frege/Russell)     | `The set of all sets that do not contain themselves` | Paradox                    | Out of scope; treat as `unknown` interpretation today | documentation |
+| Source                                | Input                                                | Source-system answer       | meta-expression expectation                         | Status  |
+| ------------------------------------- | ---------------------------------------------------- | -------------------------- | --------------------------------------------------- | ------- |
+| Classic Liar paradox (Tarski, Kripke) | `this statement is false`                            | Undetermined / paradoxical | `correctness === 0.5`, `signedConfidence === 0`     | covered |
+| Classic positive Liar variant         | `this statement is true`                             | Undetermined               | `correctness === 0.5`, `signedConfidence === 0`     | covered |
+| Russell's paradox (Frege/Russell)     | `The set of all sets that do not contain themselves` | Paradox                    | Out of scope; assert `unknown` interpretation today | covered |
 
 ## E. NL→logic / triple extraction (deferred to Phase 8 / Phase 10)
 
@@ -81,32 +79,32 @@ meta-expression's contract is that real-world claims must keep
 and provenance. Tests therefore assert the _band_ (`0 ≤ correctness ≤
 1` strictly, plus evidence presence when the live resolver runs).
 
-| Source                                        | Input                            | Source-system answer | meta-expression expectation                | Status        |
-| --------------------------------------------- | -------------------------------- | -------------------- | ------------------------------------------ | ------------- |
-| Google Fact Check Tools (ClaimReview "False") | `5G causes coronavirus`          | False                | Out of scope today; band-only when adopted | documentation |
-| Snopes (False)                                | `Einstein failed math in school` | False                | Out of scope today; band-only when adopted | documentation |
-| Politifact ("Pants on Fire")                  | `Barack Obama was born in Kenya` | False                | Out of scope today; band-only when adopted | documentation |
-| Politifact ("Half True") variants             | `Crime is at an all-time high`   | Half-true            | Out of scope today; band-only when adopted | documentation |
+| Source                                        | Input                            | Source-system answer | meta-expression expectation                                     | Status  |
+| --------------------------------------------- | -------------------------------- | -------------------- | --------------------------------------------------------------- | ------- |
+| Google Fact Check Tools (ClaimReview "False") | `5G causes coronavirus`          | False                | Roadmap Phase 10 — ClaimReview ingestion and verdict provenance | skipped |
+| Snopes (False)                                | `Einstein failed math in school` | False                | Roadmap Phase 10 — fact-check source ingestion                  | skipped |
+| Politifact ("Pants on Fire")                  | `Barack Obama was born in Kenya` | False                | Roadmap Phase 10 — fact-check source ingestion                  | skipped |
+| Politifact ("Half True") variants             | `Crime is at an all-time high`   | Half-true            | Roadmap Phase 10 — graded fact-check verdicts                   | skipped |
 
 ## G. Uniqueness / paraphrase (meta-expression `/uniqueness`)
 
-| Source                             | Input                                                   | Source-system answer                      | meta-expression expectation                                                             | Status        |
-| ---------------------------------- | ------------------------------------------------------- | ----------------------------------------- | --------------------------------------------------------------------------------------- | ------------- |
-| SBERT STS-B canonical              | `A man is eating food.` vs `A person is having a meal.` | Cosine ≈ 0.82 (paraphrase)                | Existing `/uniqueness` surface still runs (band only).                                  | documentation |
-| iThenticate published-text example | `Hawaii is a state.` (from project sample)              | "Already published; cite source" guidance | `/uniqueness` returns at least one source match (covered indirectly by issue-27 tests). | documentation |
+| Source                             | Input                                                   | Source-system answer                      | meta-expression expectation                       | Status  |
+| ---------------------------------- | ------------------------------------------------------- | ----------------------------------------- | ------------------------------------------------- | ------- |
+| SBERT STS-B canonical              | `A man is eating food.` vs `A person is having a meal.` | Cosine ≈ 0.82 (paraphrase)                | Roadmap Phase 10 — semantic paraphrase embeddings | skipped |
+| iThenticate published-text example | `Hawaii is a state.` (from project sample)              | "Already published; cite source" guidance | `/uniqueness` returns at least one source match   | covered |
 
 ## H. Knowledge representation round-trip
 
-| Source                                              | Input                                          | Source-system answer                        | meta-expression expectation                                                        | Status        |
-| --------------------------------------------------- | ---------------------------------------------- | ------------------------------------------- | ---------------------------------------------------------------------------------- | ------------- |
-| LinksPlatform Doublets demo (single-link self-loop) | Encode `[1, 1, 1]` triplet                     | Persists as a single doublet self-reference | Verified indirectly by Rust workspace tests (`cargo test --workspace`).            | documentation |
-| ClaimReview JSON-LD round trip                      | `Earth orbits the Sun` analysis as ClaimReview | Round-trip preserved                        | Roadmap Phase 4 (Links Notation Persistence) / Phase 10 (Wikipedia text evidence). | skipped       |
+| Source                                              | Input                                          | Source-system answer                        | meta-expression expectation                                                        | Status  |
+| --------------------------------------------------- | ---------------------------------------------- | ------------------------------------------- | ---------------------------------------------------------------------------------- | ------- |
+| LinksPlatform Doublets demo (single-link self-loop) | Encode `[1, 1, 1]` triplet                     | Persists as a single doublet self-reference | `createDoubletStore().create(1, 1)` persists `(1: 1 1)`                            | covered |
+| ClaimReview JSON-LD round trip                      | `Earth orbits the Sun` analysis as ClaimReview | Round-trip preserved                        | Roadmap Phase 4 (Links Notation Persistence) / Phase 10 (Wikipedia text evidence). | skipped |
 
 ## How this file is maintained
 
 When a comparable system updates its canonical example, the fixture
 should be re-checked here. If the new fixture is enabled in
-`tests/issue-26-comparable-fixtures.test.js`, the status column moves
-from `documentation`/`skipped` to `covered`. The
+`js/tests/integration/issue-26-comparable-fixtures.test.js`, the status column
+moves from `skipped` to `covered`. The
 [`ONLINE-RESEARCH.md`](./ONLINE-RESEARCH.md) log records the
 "last checked" date for the source pricing/feature page.

@@ -150,7 +150,7 @@ function cleanupTestEnvironment() {
 
 function createChangeset(filename, type, description) {
   const content = `---
-'my-package': ${type}
+'meta-expression': ${type}
 ---
 
 ${description}

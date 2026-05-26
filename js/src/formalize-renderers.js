@@ -57,14 +57,46 @@ export function renderLinksNotation(cst) {
     (relation) =>
       `(${relation.id}: ${relation.type} subject ${relation.subjectFragmentId} predicate ${relation.predicateFragmentId} object ${relation.objectFragmentId ?? 'none'})`
   );
+  const providerCandidateLines = renderProviderCandidateLines(
+    cst.providerCandidates
+  );
   return [
     head,
     ...phraseLines,
     ...fragmentLines,
     ...dependencyLines,
     ...relationLines,
+    ...providerCandidateLines,
     ...contextLines,
   ].join('\n');
+}
+
+function renderProviderCandidateLines(providerCandidates) {
+  if (!providerCandidates?.providers?.length) {
+    return [];
+  }
+  return [
+    ...providerCandidates.providers.map(
+      (provider) =>
+        `(${provider.id}: providerCandidate kind ${toLino(provider.kind)} status ${provider.status} partial ${provider.truthScoring?.included === false})`
+    ),
+    ...providerCandidates.triples.map(
+      (triple) =>
+        `(${triple.id}: providerTriple provider ${triple.providerId} status ${triple.status} subject ${toLino(triple.subject?.text ?? '')} predicate ${toLino(triple.predicate?.text ?? '')} object ${toLino(triple.object?.text ?? '')} evidenceIncluded ${triple.truthScoring?.included === true})`
+    ),
+    ...providerCandidates.roles.map(
+      (role) =>
+        `(${role.id}: providerRole provider ${role.providerId} status ${role.status} predicate ${toLino(role.predicate?.text ?? '')} arguments ${role.arguments.length} evidenceIncluded ${role.truthScoring?.included === true})`
+    ),
+    ...providerCandidates.entityLinks.map(
+      (entityLink) =>
+        `(${entityLink.id}: providerEntityLink provider ${entityLink.providerId} status ${entityLink.status} source ${toLino(entityLink.text ?? '')} target ${toLino(entityLink.target?.id ?? 'none')} evidenceIncluded ${entityLink.truthScoring?.included === true})`
+    ),
+    ...providerCandidates.graphs.map(
+      (graph) =>
+        `(${graph.id}: providerGraph provider ${graph.providerId} status ${graph.status} format ${toLino(graph.format)} evidenceIncluded ${graph.truthScoring?.included === true})`
+    ),
+  ];
 }
 
 function markdownFromCstPhrase(phrase) {
