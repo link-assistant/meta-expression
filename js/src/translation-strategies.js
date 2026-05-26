@@ -13,7 +13,7 @@ const strategyDefinitions = Object.freeze([
     id: TRANSLATION_STRATEGIES.CONTEXTUAL_GLOSSARY,
     label: 'Contextual glossary',
     description:
-      'Use source-backed Wikidata/Wiktionary translations, then curated phrases.',
+      'Use source-backed Wikidata/Wiktionary translations, then rule-derived phrases.',
   },
   {
     id: TRANSLATION_STRATEGIES.SEMANTIC_LABEL,
@@ -24,7 +24,7 @@ const strategyDefinitions = Object.freeze([
     id: TRANSLATION_STRATEGIES.LEXICAL_GLOSSARY,
     label: 'Lexical glossary',
     description:
-      'Prefer source-backed and curated lexical translations for readable text.',
+      'Prefer source-backed and rule-derived lexical translations for readable text.',
   },
 ]);
 
