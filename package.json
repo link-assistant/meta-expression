@@ -27,6 +27,7 @@
     "test:unit": "node --test js/tests/unit/*.test.js",
     "test:integration": "node --test js/tests/integration/*.test.js",
     "test:e2e": "node --test js/tests/e2e/*.test.js",
+    "test:acceptance": "node --test js/tests/integration/issue-74-acceptance-gate.test.js js/tests/integration/issue-26-comparable-fixtures.test.js js/tests/integration/issue-54-formal-ai-corpus.test.js js/tests/integration/issue-72-parity.test.js",
     "start": "node js/src/server.js",
     "build:wasm": "wasm-pack build rust --target web --out-dir pkg --release --no-opt && node -e \"require('node:fs').rmSync('rust/pkg/.gitignore', { force: true })\"",
     "test:wasm": "npm run build:wasm && node --test js/tests/integration/issue-61-wasm.test.js",

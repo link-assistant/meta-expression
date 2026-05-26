@@ -270,6 +270,14 @@ jobs:
       - name: Install dependencies (Bun)
         run: bun install
 
+      - name: Run no-regression acceptance gate (Bun)
+        run: >-
+          bun test --timeout 30000
+          js/tests/integration/issue-74-acceptance-gate.test.js
+          js/tests/integration/issue-26-comparable-fixtures.test.js
+          js/tests/integration/issue-54-formal-ai-corpus.test.js
+          js/tests/integration/issue-72-parity.test.js
+
       - name: Run tests (Bun)
         run: bun test --timeout 30000
 
