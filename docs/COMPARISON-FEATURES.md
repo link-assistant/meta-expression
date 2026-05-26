@@ -84,7 +84,31 @@ The 2026-05-26 refresh is archived in
 | F16 Issue-report URL prefilled         | —                         | —                       | —                     | —                         | —                     | —                         | —                                         | —                       | —                                      | —                       | —                | —                      | —                        |
 | F17 Rust + doublets core               | —                         | —                       | —                     | —                         | —                     | —                         | —                                         | —                       | —                                      | —                       | ✓ (Rust drivers) | ≈                      | ✓ (doublets-rs)          |
 
-## 3. Expanded academic-writing assistant matrix
+## 3. Measured competitor quality gates
+
+Issue #114 adds recurring measured gates for the harvested competitor datasets
+from issue #26. The machine-readable score fixture is
+[`js/tests/fixtures/competitor-quality-gates.json`](../js/tests/fixtures/competitor-quality-gates.json),
+and the CI gate runs
+[`js/tests/integration/issue-114-competitor-quality-gates.test.js`](../js/tests/integration/issue-114-competitor-quality-gates.test.js)
+through `npm run test:acceptance` and the JS workflow's no-regression
+acceptance step.
+
+As measured on 2026-05-26: **26/26 enabled cases passing**,
+**26/36 total harvested cases executable**, **72.2% executable coverage**.
+
+| Dataset                             | Comparable sources                             | Enabled pass score | Executable coverage | Gated status |
+| ----------------------------------- | ---------------------------------------------- | ------------------ | ------------------- | ------------ |
+| Arithmetic kernel                   | Wolfram Alpha, Metamath, Z3, Lean, SWI-Prolog  | 10/10              | 10/10               | CI gate      |
+| Wikidata structured facts           | Wikidata Query Service, Wolfram Alpha, DBpedia | 7/7                | 7/7                 | CI gate      |
+| Wikidata P570 liveness              | Wikidata Query Service                         | 4/4                | 4/4                 | CI gate      |
+| Self-reference and paradoxes        | Tarski/Kripke literature, Russell paradox      | 3/3                | 3/3                 | CI gate      |
+| NL to logic and triple extraction   | Stanford OpenIE, AllenNLP SRL, Boxer, AMR      | deferred           | 0/4                 | #89          |
+| Disputed-truth corpora              | Google Fact Check Tools, Snopes, PolitiFact    | deferred           | 0/4                 | #87          |
+| Uniqueness and paraphrase           | iThenticate, SBERT                             | 1/1                | 1/2                 | CI gate, #90 |
+| Knowledge representation round-trip | LinksPlatform / Doublets, ClaimReview JSON-LD  | 1/1                | 1/2                 | CI gate, #88 |
+
+## 4. Expanded academic-writing assistant matrix
 
 Issue #20 asks for the comparison to include projects from the
 AI-writing / academic-assistant cluster directly, rather than only via
@@ -119,7 +143,7 @@ the stronger direct comparison for originality scoring (F13), while
 Elicit and Consensus.app are stronger comparisons for paper discovery,
 evidence attachment, and literature-level confidence.
 
-## 4. How to read F8 vs F9
+## 5. How to read F8 vs F9
 
 The F8 ("evidence") and F9 ("correctness + signed confidence") rows do
 **not** mean the same thing:
@@ -132,7 +156,7 @@ The F8 ("evidence") and F9 ("correctness + signed confidence") rows do
   analog to meta-expression's `signedConfidence`. Wolfram Alpha and Z3
   return a binary verdict only, so they sit at `≈`.
 
-## 5. Notable gaps the matrix reveals
+## 6. Notable gaps the matrix reveals
 
 - **F16 (issue-report URL prefilled)** is unique to meta-expression in
   this survey. No comparable project ships a one-click "report this
@@ -156,7 +180,7 @@ The F8 ("evidence") and F9 ("correctness + signed confidence") rows do
   prefilled issue-report state, Links Notation export, or Rust/doublets
   persistence surface.
 
-## 6. Competitor-derived follow-up issues
+## 7. Competitor-derived follow-up issues
 
 Canonical ledger: `docs/case-studies/issue-71/MISSING-FEATURES.md`.
 
@@ -183,7 +207,7 @@ competitor and formal-ai corpora as tests, #73 tracks the formal-ai
 compatibility contract, and #74 keeps generalized algorithms from regressing
 already-supported examples.
 
-## 7. How this matrix is maintained
+## 8. How this matrix is maintained
 
 1. When a new feature lands in meta-expression, add a row to §1 and a
    column-by-column assessment in §2.

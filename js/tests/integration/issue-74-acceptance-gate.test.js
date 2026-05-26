@@ -28,6 +28,7 @@ const acceptanceInputs = [
 const acceptanceGateFiles = [
   'js/tests/integration/issue-74-acceptance-gate.test.js',
   'js/tests/integration/issue-26-comparable-fixtures.test.js',
+  'js/tests/integration/issue-114-competitor-quality-gates.test.js',
   'js/tests/integration/issue-54-formal-ai-corpus.test.js',
   'js/tests/integration/issue-72-parity.test.js',
 ];
