@@ -381,11 +381,14 @@ jobs:
         run: |
           mkdir -p _site
           mkdir -p _site/js
+          mkdir -p _site/node_modules/doublets-web
           mkdir -p _site/node_modules/links-notation
           mkdir -p _site/rust
           cp -R web _site/
           cp -R js/src _site/js/
           cp -R js/data _site/js/
+          cp -R node_modules/doublets-web/doublets_web* _site/node_modules/doublets-web/
+          cp node_modules/doublets-web/package.json _site/node_modules/doublets-web/
           cp -R node_modules/links-notation/dist _site/node_modules/links-notation/
           cp -R rust/pkg _site/rust/
           node --input-type=module <<'NODE'

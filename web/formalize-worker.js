@@ -1,10 +1,12 @@
 import {
-  decodeFromDoublets,
-  encodeAsDoublets,
   formalizeTextWith,
   parseSourceSpec,
   createWikidataSource,
 } from '../js/src/index.js';
+import {
+  decodeFromDoubletsWeb,
+  encodeAsDoubletsWeb,
+} from '../js/src/browser-doublets-web.js';
 
 // v2: cache entries are stored as base64-encoded doublets blobs. The
 // previous v1 key held a JSON snapshot — we leave it for one release so
@@ -13,7 +15,7 @@ const wikimediaCacheStorageKey = 'meta-expression.wikimedia-cache.v2';
 const legacyCacheStorageKey = 'meta-expression.wikimedia-cache.v1';
 const cache = new Map();
 
-hydrateCache();
+const cacheReady = hydrateCache();
 
 self.addEventListener('message', async (event) => {
   const { id, text, options } = event.data ?? {};
@@ -22,13 +24,14 @@ self.addEventListener('message', async (event) => {
   }
 
   try {
+    await cacheReady;
     const finalOptions = resolveOptions(options ?? {});
     const result = await formalizeTextWith(text, {
       ...finalOptions,
       cache,
       fetch: self.fetch?.bind(self),
     });
-    persistCache();
+    await persistCache();
     self.postMessage({ id, result: serializeResult(result) });
   } catch (error) {
     self.postMessage({
@@ -74,20 +77,24 @@ function serializeResult(result) {
   };
 }
 
-function hydrateCache() {
+async function hydrateCache() {
   if (typeof self.localStorage === 'undefined') {
     return;
   }
   try {
     const raw = self.localStorage.getItem(wikimediaCacheStorageKey);
     if (raw) {
-      const decoded = decodeBase64ToBytes(raw);
-      const entries = decodeFromDoublets(decoded);
-      if (Array.isArray(entries)) {
-        for (const [key, value] of entries) {
-          cache.set(key, value);
+      try {
+        const decoded = decodeBase64ToBytes(raw);
+        const entries = await decodeFromDoubletsWeb(decoded);
+        if (Array.isArray(entries)) {
+          for (const [key, value] of entries) {
+            cache.set(key, value);
+          }
+          return;
         }
-        return;
+      } catch {
+        // Try the previous JSON cache below if the new binary cache is stale.
       }
     }
     const legacy = self.localStorage.getItem(legacyCacheStorageKey);
@@ -104,13 +111,13 @@ function hydrateCache() {
   }
 }
 
-function persistCache() {
+async function persistCache() {
   if (typeof self.localStorage === 'undefined') {
     return;
   }
   try {
     const entries = [...cache.entries()].slice(-200);
-    const { binary } = encodeAsDoublets(entries);
+    const { binary } = await encodeAsDoubletsWeb(entries);
     self.localStorage.setItem(
       wikimediaCacheStorageKey,
       encodeBytesToBase64(binary)

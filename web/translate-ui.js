@@ -13,7 +13,7 @@ import {
 } from './source-priority-ui.js';
 import { translateSamples } from './translate-samples.js';
 
-const translateCacheStorageKey = 'meta-expression.translate-cache.v1';
+const translateCacheStorageKey = 'meta-expression.translate-cache.v2';
 
 export function setupTranslatePage({
   cache = createPersistentWikimediaCache(translateCacheStorageKey),
