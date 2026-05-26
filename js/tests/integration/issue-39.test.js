@@ -41,11 +41,12 @@ describe('issue 39 - technical sentence translation', () => {
     expect(result.phrases.every((phrase) => phrase.variable === null)).toBe(
       true
     );
+    // "with Wikidata" -> "с помощью Викиданных" and "transformation rules" ->
+    // "правила преобразования" are no longer special-cased in code: both are
+    // produced generically by the interlingua phrase naturalizer, so the
+    // sentence reports the generic transformation rather than bespoke names.
     expect(result.sentences[0].transformations).toContain(
-      'english-with-wikidata-to-russian-instrumental'
-    );
-    expect(result.sentences[0].transformations).toContain(
-      'english-transformation-rules-to-russian-noun-phrase'
+      'exact-glossary-phrase-naturalization'
     );
     expect(
       result.steps.some(

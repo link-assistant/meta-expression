@@ -6,6 +6,7 @@ import {
   TRANSLATION_STRATEGIES,
 } from './translation-strategies.js';
 import { lookupWikimediaTranslation } from './wikimedia-translation.js';
+import { resolveConceptForm } from './semantic-lexicon.js';
 import { buildLexicalTarget, lexicalSemanticId } from './lexical-entities.js';
 import { createTargetEntityBatchLoader } from './target-entity-loader.js';
 import {
@@ -30,18 +31,27 @@ import {
 const wikidataEntityBaseUrl = 'https://www.wikidata.org/wiki/';
 const wikidataPropertyBaseUrl = 'https://www.wikidata.org/wiki/Property:';
 const defaultCacheTtlMs = 7 * 24 * 60 * 60 * 1000;
-const russianUsStatePredicate = Object.freeze({
-  text: 'штат',
-  entityId: 'Q35657',
-  url: 'https://ru.wikipedia.org/wiki/%D0%A8%D1%82%D0%B0%D1%82_%D0%A1%D0%A8%D0%90',
-  description: 'state of the United States',
-});
-const russianEtoCopula = Object.freeze({
-  text: 'это',
-  entityId: 'wikt:ru:это#Determiner:0',
-  url: 'https://en.wiktionary.org/wiki/%D1%8D%D1%82%D0%BE',
-  description: 'Russian demonstrative/copula-like predicate marker',
-});
+
+// Grammatical naturalization rules need a concrete target lexeme (a copula
+// marker, a sense-disambiguated noun, …). Per the interlingua contract these
+// surface forms must never be hardcoded in `js/src`; the code only names the
+// language-neutral concept id and resolves the form from the lexicon data at
+// runtime via `resolveConceptForm`.
+const RUSSIAN_COPULA_CONCEPT_ID = 'lex:en:is->ru';
+const US_STATE_PREDICATE_CONCEPT_ID = 'Q35657';
+const RUSSIAN_EXAMPLES_CONCEPT_ID = 'lex:en:examples->ru';
+
+function requireConceptForm(conceptId, language) {
+  const form = resolveConceptForm(conceptId, language);
+  if (!form) {
+    throw new Error(
+      `Interlingua lexicon is missing concept "${conceptId}" for language ` +
+        `"${language}". Add it to js/data/lexicon-overrides.json and rebuild ` +
+        'with scripts/build-lexicon-seed.mjs.'
+    );
+  }
+  return form;
+}
 
 export function translateText(input, options = {}) {
   return translateTextWith(input, {
@@ -994,11 +1004,19 @@ function applyExactGlossaryPhraseNaturalization(
       for (const name of affectedVariables) {
         resolvedVariableNames.add(name);
       }
-      units.splice(
-        index,
-        size,
-        buildGlossaryPhraseUnit(sourceText, translation, config)
+      const phraseUnit = buildGlossaryPhraseUnit(
+        sourceText,
+        translation,
+        config
       );
+      // Collapsing several source units into one phrase unit must not drop
+      // punctuation a prior rule attached to the final unit (e.g. the comma in
+      // "Wikidata, then"). Carry that trailing punctuation onto the phrase.
+      const trailing = trailingInteriorPunctuation(slice[slice.length - 1]);
+      if (trailing) {
+        appendUnitSuffix(phraseUnit, trailing);
+      }
+      units.splice(index, size, phraseUnit);
       transformations.push('exact-glossary-phrase-naturalization');
       recordStep(config, 'transformation-rule', {
         sentenceId,
@@ -1010,6 +1028,10 @@ function applyExactGlossaryPhraseNaturalization(
     }
   }
   return { transformations, resolvedVariableNames };
+}
+
+function trailingInteriorPunctuation(unit) {
+  return String(unit?.plainText ?? '').match(/[,;:/]+$/)?.[0] ?? '';
 }
 
 function buildGlossaryPhraseUnit(sourceText, translation, config) {
@@ -1043,7 +1065,7 @@ function applyEnglishToRussianRules(units, segment, sentenceId, config) {
       1,
       buildRuleToken(
         nextUnits[isAPhraseIndex].sourceText,
-        russianEtoCopula,
+        requireConceptForm(RUSSIAN_COPULA_CONCEPT_ID, config.targetLanguage),
         config
       )
     );
@@ -1089,7 +1111,7 @@ function applyEnglishToRussianRules(units, segment, sentenceId, config) {
       1,
       buildRuleToken(
         nextUnits[copulaIndex].sourceText,
-        russianEtoCopula,
+        requireConceptForm(RUSSIAN_COPULA_CONCEPT_ID, config.targetLanguage),
         config
       )
     );
@@ -1122,66 +1144,16 @@ function applyEnglishToRussianLexicalRules(units, segment, sentenceId, config) {
     return [];
   }
   const transformations = [];
-  if (applyEnglishWithWikidataRule(units, segment, sentenceId, config)) {
-    transformations.push('english-with-wikidata-to-russian-instrumental');
-  }
-  if (applyEnglishTransformationRulesRule(units, segment, sentenceId, config)) {
-    transformations.push('english-transformation-rules-to-russian-noun-phrase');
-  }
+  // Lexical and phrase-level translations (including reordering constructions
+  // like "transformation rules" -> "правила преобразования" and instrumental
+  // "with Wikidata" -> "с помощью Викиданных") are produced generically by the
+  // interlingua phrase naturalizer in applyExactGlossaryPhraseNaturalization.
+  // Only language-grammar rules that cannot be expressed as a glossary entry
+  // live here.
   if (applyCommaBeforeThenRule(units, segment, sentenceId, config)) {
     transformations.push('english-comma-before-then-preserved');
   }
   return transformations;
-}
-
-function applyEnglishWithWikidataRule(units, segment, sentenceId, config) {
-  for (let index = 0; index < units.length - 1; index += 1) {
-    if (
-      normalizePhrase(units[index].sourceText) !== 'with' ||
-      normalizePhrase(units[index + 1].sourceText) !== 'wikidata'
-    ) {
-      continue;
-    }
-    setUnitTargetText(units[index], { text: 'с помощью' }, config);
-    setUnitTargetText(units[index + 1], { text: 'Викиданных' }, config);
-    recordStep(config, 'transformation-rule', {
-      sentenceId,
-      rule: 'english-with-wikidata-to-russian-instrumental',
-      sourceText: segment.text,
-      affectedVariables: [],
-    });
-    return true;
-  }
-  return false;
-}
-
-function applyEnglishTransformationRulesRule(
-  units,
-  segment,
-  sentenceId,
-  config
-) {
-  for (let index = 0; index < units.length - 1; index += 1) {
-    if (
-      normalizePhrase(units[index].sourceText) !== 'transformation' ||
-      normalizePhrase(units[index + 1].sourceText) !== 'rules'
-    ) {
-      continue;
-    }
-    const modifier = units[index];
-    const noun = units[index + 1];
-    setUnitTargetText(noun, { text: 'правила' }, config);
-    setUnitTargetText(modifier, { text: 'преобразования' }, config);
-    units.splice(index, 2, noun, modifier);
-    recordStep(config, 'transformation-rule', {
-      sentenceId,
-      rule: 'english-transformation-rules-to-russian-noun-phrase',
-      sourceText: segment.text,
-      affectedVariables: [],
-    });
-    return true;
-  }
-  return false;
 }
 
 function applyCommaBeforeThenRule(units, segment, sentenceId, config) {
@@ -1214,7 +1186,11 @@ function applyRussianUsStatePredicateRule(units, segment, sentenceId, config) {
     if (!isStatePredicate(predicate) || !isUsStateSubject(subject)) {
       continue;
     }
-    setUnitTargetText(predicate, russianUsStatePredicate, config);
+    setUnitTargetText(
+      predicate,
+      requireConceptForm(US_STATE_PREDICATE_CONCEPT_ID, config.targetLanguage),
+      config
+    );
     recordStep(config, 'transformation-rule', {
       sentenceId,
       rule: 'english-us-state-predicate-to-russian-shtat',
@@ -1352,7 +1328,11 @@ function applyRussianToEnglishRules(units, segment, sentenceId, config) {
     const [copula] = nextUnits.splice(
       copulaIndex,
       1,
-      buildRuleToken(nextUnits[copulaIndex].sourceText, { text: 'is' }, config)
+      buildRuleToken(
+        nextUnits[copulaIndex].sourceText,
+        { text: requireConceptForm(RUSSIAN_COPULA_CONCEPT_ID, 'en').text },
+        config
+      )
     );
     if (copula.variableName) {
       resolvedVariableNames.add(copula.variableName);
@@ -1393,10 +1373,17 @@ function applyRussianToEnglishRules(units, segment, sentenceId, config) {
 }
 
 function applyRussianExamplesOfRule(units, segment, sentenceId, config) {
+  const examplesSource = resolveConceptForm(RUSSIAN_EXAMPLES_CONCEPT_ID, 'ru');
+  const examplesTarget = resolveConceptForm(RUSSIAN_EXAMPLES_CONCEPT_ID, 'en');
+  if (!examplesSource || !examplesTarget) {
+    return false;
+  }
   for (let index = 0; index < units.length - 1; index += 1) {
     if (
-      normalizePhrase(units[index].sourceText) !== 'примеры' ||
-      normalizePhrase(units[index].plainText) !== 'examples'
+      normalizePhrase(units[index].sourceText) !==
+        normalizePhrase(examplesSource.text) ||
+      normalizePhrase(units[index].plainText) !==
+        normalizePhrase(examplesTarget.text)
     ) {
       continue;
     }
@@ -1431,7 +1418,11 @@ function isEnglishCopula(value) {
 }
 
 function isRussianCopula(value) {
-  return ['это'].includes(String(value).toLowerCase());
+  const copula = resolveConceptForm(RUSSIAN_COPULA_CONCEPT_ID, 'ru');
+  if (!copula) {
+    return false;
+  }
+  return String(value ?? '').toLowerCase() === copula.text.toLowerCase();
 }
 
 function isEnglishPreposition(value) {

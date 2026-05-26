@@ -256,12 +256,20 @@ async function loadLexicon() {
   return JSON.parse(await readFile(lexiconPath, 'utf8'));
 }
 
-async function writeLexicon(lexicon) {
-  const formatted = await prettier.format(JSON.stringify(lexicon, null, 2), {
+async function writeJsonFile(path, payload) {
+  // Route every generated JSON artifact through prettier so the committed
+  // files stay byte-identical to what `npm run format:check` expects. Writing
+  // raw JSON.stringify output here would make CI fail the moment the lexicon or
+  // its side report is regenerated.
+  const formatted = await prettier.format(JSON.stringify(payload, null, 2), {
     parser: 'json',
-    filepath: lexiconPath,
+    filepath: path,
   });
-  await writeFile(lexiconPath, formatted, 'utf8');
+  await writeFile(path, formatted, 'utf8');
+}
+
+async function writeLexicon(lexicon) {
+  await writeJsonFile(lexiconPath, lexicon);
 }
 
 async function recordConcept(concept, args, userAgent, stats, report) {
@@ -371,11 +379,7 @@ async function main() {
     curatedRemainder: stats.checked - stats.verified,
     concepts: report,
   };
-  await writeFile(
-    reportPath,
-    `${JSON.stringify(reportPayload, null, 2)}\n`,
-    'utf8'
-  );
+  await writeJsonFile(reportPath, reportPayload);
   process.stdout.write(`\nUpdated ${lexiconPath}\nWrote ${reportPath}\n`);
 }
 

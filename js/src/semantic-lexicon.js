@@ -66,6 +66,38 @@ export function buildDirectionalGlossary(sourceLanguage, targetLanguage) {
 }
 
 /**
+ * Resolve a single concept id to its licensed surface form in `language`,
+ * together with the source-backed metadata (`entityId`, `url`, `description`)
+ * the renderer needs to build a citation link. This is how grammatical
+ * naturalization rules obtain a target lexeme without embedding the foreign
+ * word in `js/src`: the code only ever names a language-neutral concept id and
+ * the surface form is derived from the interlingua data at runtime.
+ *
+ * Returns `null` when the concept is unknown or does not license `language`.
+ */
+export function resolveConceptForm(conceptId, language) {
+  if (!conceptId || !language) {
+    return null;
+  }
+  for (const concept of loadLexicon().concepts) {
+    if (concept.id !== conceptId) {
+      continue;
+    }
+    const text = concept.primary?.[language] ?? concept.labels?.[language]?.[0];
+    if (!text) {
+      return null;
+    }
+    return {
+      text,
+      entityId: concept.entityId ?? null,
+      url: concept.url ?? null,
+      description: concept.description ?? null,
+    };
+  }
+  return null;
+}
+
+/**
  * The set of directional language pairs the interlingua can currently serve.
  * Pairs are discovered from the concept data, never hardcoded.
  */
