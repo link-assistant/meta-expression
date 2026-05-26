@@ -1,0 +1,69 @@
+{
+  "input": "Mars has two small moons, Phobos and Deimos. The boiling point of water is 100 degrees Celsius at sea level. A person is having a meal. \"Hawaii is a state.\"",
+  "matches": [
+    {
+      "query": "Mars has two small moons, Phobos and Deimos",
+      "sourceId": "planetary-reference",
+      "sourceLabel": "Planetary Reference",
+      "title": "Mars moons overview",
+      "url": "https://example.test/sources/mars-moons",
+      "snippet": "Mars has two small moons, Phobos and Deimos.",
+      "sourceText": "Mars has two small moons, Phobos and Deimos. The larger moon is Phobos.",
+      "sourceSpan": {
+        "start": 0,
+        "end": 43,
+        "text": "Mars has two small moons, Phobos and Deimos"
+      },
+      "score": 0.94,
+      "matchKind": "exact-passage"
+    },
+    {
+      "query": "The boiling point of water is 100 degrees Celsius at sea level",
+      "sourceId": "chemistry-handbook",
+      "sourceLabel": "Chemistry Handbook",
+      "title": "Water boiling point",
+      "url": "https://example.test/sources/water-boiling-point",
+      "snippet": "The boiling point of water is 100 degrees Celsius at sea level.",
+      "sourceText": "At sea level, the boiling point of water is 100 degrees Celsius. The boiling point of water is 100 degrees Celsius at sea level.",
+      "sourceSpan": {
+        "start": 68,
+        "end": 129,
+        "text": "The boiling point of water is 100 degrees Celsius at sea level"
+      },
+      "score": 0.91,
+      "matchKind": "exact-passage"
+    },
+    {
+      "query": "A person is having a meal",
+      "sourceId": "semantic-similarity-fixture",
+      "sourceLabel": "Semantic Similarity Fixture",
+      "title": "STS-B paraphrase pair",
+      "url": "https://example.test/sources/sts-b-meal",
+      "snippet": "A man is eating food.",
+      "sourceText": "A man is eating food while seated at a table.",
+      "sourceSpan": {
+        "start": 0,
+        "end": 21,
+        "text": "A man is eating food."
+      },
+      "score": 0.82,
+      "matchKind": "semantic-similarity"
+    },
+    {
+      "query": "Hawaii is a state",
+      "sourceId": "published-text-sample",
+      "sourceLabel": "Published Text Sample",
+      "title": "Project sample text",
+      "url": "https://example.test/published/hawaii",
+      "snippet": "Hawaii is a state.",
+      "sourceText": "Hawaii is a state.",
+      "sourceSpan": {
+        "start": 0,
+        "end": 18,
+        "text": "Hawaii is a state."
+      },
+      "score": 0.91,
+      "matchKind": "exact-passage"
+    }
+  ]
+}

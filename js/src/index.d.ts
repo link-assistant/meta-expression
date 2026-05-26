@@ -1856,7 +1856,36 @@ export interface UniquenessSource {
   search(
     statement: UniquenessSearchStatement,
     ctx: UniquenessSearchContext
-  ): Promise<UniquenessMatch[]>;
+  ): Promise<UniquenessSourceMatch[]>;
+}
+
+export interface UniquenessSpan {
+  start: number;
+  end: number;
+  text: string;
+}
+
+export interface UniquenessExclusion {
+  id: string;
+  ruleId: string;
+  reason: string;
+  span: UniquenessSpan;
+}
+
+export interface UniquenessSourceMatch {
+  sourceId?: string;
+  sourceLabel?: string;
+  title?: string;
+  url?: string | null;
+  sourceUrl?: string | null;
+  snippet?: string;
+  sourceText?: string;
+  sourceSpan?: UniquenessSpan | null;
+  score?: number;
+  matchStrength?: number;
+  strength?: number;
+  matchKind?: string;
+  inputSpan?: UniquenessSpan;
 }
 
 export interface UniquenessMatch {
@@ -1864,9 +1893,16 @@ export interface UniquenessMatch {
   sourceLabel: string;
   title: string;
   url: string | null;
+  sourceUrl: string | null;
   snippet: string;
+  sourceText: string;
+  sourceSpan: UniquenessSpan | null;
   score: number;
+  matchStrength: number;
   matchKind: string;
+  inputSpan: UniquenessSpan;
+  excluded: boolean;
+  exclusion: UniquenessExclusion | null;
 }
 
 export interface UniquenessStatement {
@@ -1879,6 +1915,7 @@ export interface UniquenessStatement {
   uniqueness: number;
   suggestedAction: UniquenessSuggestedAction;
   matches: UniquenessMatch[];
+  exclusions: UniquenessExclusion[];
   sourceErrors: Array<{
     sourceId: string;
     sourceLabel: string;
@@ -1897,14 +1934,74 @@ export interface UniquenessSummary {
   averageUniqueness: number | null;
 }
 
+export interface OriginalityReportMatch {
+  id: string;
+  statementId: string;
+  statementText: string;
+  sourceId: string;
+  sourceLabel: string;
+  sourceTitle: string;
+  sourceUrl: string | null;
+  matchKind: string;
+  score: number;
+  strength: number;
+  matchStrength: number;
+  inputSpan: UniquenessSpan;
+  sourceSpan: UniquenessSpan | null;
+  excluded: boolean;
+  exclusion: UniquenessExclusion | null;
+}
+
+export interface OriginalityReportSource {
+  sourceId: string;
+  sourceLabel: string;
+  sourceTitle: string;
+  sourceUrl: string | null;
+  matchCount: number;
+  excludedMatchCount: number;
+  strongestMatch: number;
+  averageStrength: number;
+}
+
+export interface OriginalityReport {
+  kind: 'document-originality-report';
+  checkedAt: string;
+  document: {
+    textLength: number;
+    statementCount: number;
+  };
+  overallExistingLikelihood: number;
+  overallUniqueness: number;
+  averageExistingLikelihood: number | null;
+  averageUniqueness: number | null;
+  scoredMatchCount: number;
+  excludedMatchCount: number;
+  matchedSources: OriginalityReportSource[];
+  matches: OriginalityReportMatch[];
+  exclusions: UniquenessExclusion[];
+}
+
 export interface UniquenessResult {
   status: 'checked';
   text: string;
+  existingLikelihood: number | null;
+  uniqueness: number | null;
   summary: UniquenessSummary;
   statements: UniquenessStatement[];
+  originalityReport: OriginalityReport;
   html: string;
   markdown: string;
   linksNotation: string;
+}
+
+export interface UniquenessConfiguredExclusion {
+  id?: string;
+  ruleId?: string;
+  reason?: string;
+  start?: number;
+  end?: number;
+  text?: string;
+  span?: Partial<UniquenessSpan>;
 }
 
 export interface UniquenessOptions {
@@ -1912,6 +2009,9 @@ export interface UniquenessOptions {
   language?: string;
   limit?: number;
   sources?: UniquenessSource[];
+  exclusions?: UniquenessConfiguredExclusion[];
+  excludeQuotedText?: boolean;
+  excludeReferences?: boolean;
   crossref?: {
     mailto?: string;
   };

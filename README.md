@@ -147,6 +147,11 @@ Routes:
 - `GET /uniquness?input=...` and `POST /uniquness` as compatibility aliases
   for the issue title typo.
 
+The JSON `/uniqueness` response keeps the existing `summary` and `statements`
+score fields, and also includes an `originalityReport` with document-level
+source groups, input/source spans, match strengths, source URLs, and exclusion
+metadata for quoted or reference-list text.
+
 ## Static Web Prototype
 
 Serve the repository root and open [`web/index.html`](web/index.html):
