@@ -1,0 +1,31 @@
+{
+  "description": "Rare, curated exceptions that extend the interlingua lexicon when the live Wikidata/Wiktionary/Wikipedia APIs do not expose a usable form. Each override is merged into the generated semantic-lexicon.json by scripts/build-lexicon-seed.mjs. Keep this list small: prefer recording real source data via scripts/record-semantic-lexicon.mjs.",
+  "concepts": [
+    {
+      "id": "lex:en:is->ru",
+      "url": "https://en.wiktionary.org/wiki/%D1%8D%D1%82%D0%BE",
+      "source": "override",
+      "entityId": "wikt:ru:это#Determiner:0",
+      "description": "Russian demonstrative/copula-like predicate marker",
+      "labels": { "en": ["is"], "ru": ["это"] },
+      "primary": { "ru": "это" }
+    },
+    {
+      "id": "Q35657",
+      "url": "https://ru.wikipedia.org/wiki/%D0%A8%D1%82%D0%B0%D1%82_%D0%A1%D0%A8%D0%90",
+      "source": "override",
+      "entityId": "Q35657",
+      "description": "state of the United States",
+      "labels": { "ru": ["штат"] },
+      "primary": { "ru": "штат" }
+    },
+    {
+      "id": "lex:en:with_wikidata->ru",
+      "url": "https://www.wikidata.org/wiki/Q2013",
+      "source": "override",
+      "description": "instrumental construction 'with Wikidata' -> 'с помощью Викиданных'",
+      "labels": { "en": ["with wikidata"], "ru": ["с помощью Викиданных"] },
+      "primary": { "ru": "с помощью Викиданных" }
+    }
+  ]
+}

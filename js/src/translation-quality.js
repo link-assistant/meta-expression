@@ -106,6 +106,51 @@ export function extractFirstStatement(text) {
 }
 
 /**
+ * Normalize a single block of paragraph text so it round-trips through the
+ * formalizer. Non-breaking spaces are replaced with regular spaces and any run
+ * of whitespace (the formalizer collapses these in its CST) is reduced to one
+ * space before trimming. The result matches the `text` a formalization CST
+ * reports back, which lets the issue 96 paragraph-coverage test assert that
+ * every source token was linked.
+ *
+ * @param {string} text
+ * @returns {string}
+ */
+export function normalizeParagraphText(text) {
+  return String(text ?? '')
+    .replace(/\u00A0/g, ' ')
+    .replace(/\s+/g, ' ')
+    .trim();
+}
+
+/**
+ * Split a Wikipedia extract (or any multi-paragraph text) into normalized
+ * paragraphs. Extracts captured with `explaintext` separate paragraphs with
+ * one or more newlines, so blocks are split on newline runs, normalized with
+ * {@link normalizeParagraphText}, and empties dropped.
+ *
+ * @param {string} text
+ * @returns {string[]}
+ */
+export function extractParagraphs(text) {
+  return String(text ?? '')
+    .split(/\n+/)
+    .map((paragraph) => normalizeParagraphText(paragraph))
+    .filter((paragraph) => paragraph.length > 0);
+}
+
+/**
+ * Return the first non-empty, normalized paragraph of an extract, or an empty
+ * string when there is none.
+ *
+ * @param {string} text
+ * @returns {string}
+ */
+export function extractFirstParagraph(text) {
+  return extractParagraphs(text)[0] ?? '';
+}
+
+/**
  * Tokenize text into Unicode-aware content tokens, lowercase them, and drop
  * universal stop words and digits-only strings.
  *
@@ -147,6 +192,81 @@ export function tokenCoverage(candidate, target) {
   return {
     ratio: found.length / candidateTokens.length,
     found,
+    missing,
+  };
+}
+
+/**
+ * Build a predicate that keeps only tokens whose characters match a script
+ * pattern (e.g. Cyrillic). A `null`/`undefined` pattern keeps every token. The
+ * global/sticky flags are stripped defensively so a stateful `lastIndex` cannot
+ * make `test` skip tokens.
+ *
+ * @param {RegExp|null|undefined} script
+ * @returns {(token: string) => boolean}
+ */
+function buildScriptFilter(script) {
+  if (!script) {
+    return () => true;
+  }
+  const stateless =
+    script.global || script.sticky
+      ? new RegExp(script.source, script.flags.replace(/[gy]/g, ''))
+      : script;
+  return (token) => stateless.test(token);
+}
+
+/**
+ * Assess how closely a machine translation matches an existing human
+ * translation of the same source text. Both texts are reduced to unique content
+ * tokens via {@link tokenizeForMatch}; an optional `script` filter keeps only
+ * tokens written in the target script (e.g. Cyrillic) so that untranslated
+ * source-language residue cannot inflate the score.
+ *
+ * The result reports set-overlap precision (share of machine tokens attested by
+ * the human reference), recall (share of human reference tokens reproduced by
+ * the machine), their F1 mean, the raw overlap count, and the matched/missing
+ * token lists. This is what lets the issue 96 reference-quality gate verify the
+ * machine paragraph translation against the human-written Wikipedia lead.
+ *
+ * @param {string} machineText - machine-produced translation
+ * @param {string} referenceText - existing human translation of the same source
+ * @param {object} [options]
+ * @param {RegExp} [options.script] - keep only tokens matching this pattern
+ * @returns {{precision: number, recall: number, f1: number, overlap: number,
+ *   machineTokenCount: number, referenceTokenCount: number, matched: string[],
+ *   missing: string[]}}
+ */
+export function assessReferenceAlignment(
+  machineText,
+  referenceText,
+  options = {}
+) {
+  const keep = buildScriptFilter(options.script ?? null);
+  const machineTokens = Array.from(
+    new Set(tokenizeForMatch(machineText).filter(keep))
+  );
+  const referenceTokens = Array.from(
+    new Set(tokenizeForMatch(referenceText).filter(keep))
+  );
+  const referenceSet = new Set(referenceTokens);
+  const matched = machineTokens.filter((token) => referenceSet.has(token));
+  const missing = machineTokens.filter((token) => !referenceSet.has(token));
+  const overlap = matched.length;
+  const precision = machineTokens.length ? overlap / machineTokens.length : 0;
+  const recall = referenceTokens.length ? overlap / referenceTokens.length : 0;
+  const f1 =
+    precision + recall > 0
+      ? (2 * precision * recall) / (precision + recall)
+      : 0;
+  return {
+    precision,
+    recall,
+    f1,
+    overlap,
+    machineTokenCount: machineTokens.length,
+    referenceTokenCount: referenceTokens.length,
+    matched,
     missing,
   };
 }

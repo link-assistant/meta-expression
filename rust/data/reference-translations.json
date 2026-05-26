@@ -1,0 +1,305 @@
+{
+  "description": "Curated offline translation fixtures and linguistic metadata for the Rust engine. These are case-study reference data (issues #35 and #52) and stopword/grammar metadata, kept out of rust/src so the Rust source carries no hardcoded source<->target translation literals. Mirrors the policy enforced for js/src.",
+  "matchStopwords": [
+    "a",
+    "an",
+    "the",
+    "is",
+    "are",
+    "was",
+    "were",
+    "be",
+    "been",
+    "being",
+    "as",
+    "of",
+    "in",
+    "on",
+    "at",
+    "to",
+    "and",
+    "or",
+    "for",
+    "by",
+    "with",
+    "from",
+    "this",
+    "that",
+    "it",
+    "its",
+    "also",
+    "но",
+    "не",
+    "и",
+    "или",
+    "для",
+    "по",
+    "в",
+    "на",
+    "из",
+    "с",
+    "о",
+    "об",
+    "это",
+    "как",
+    "что",
+    "который",
+    "которая",
+    "которое"
+  ],
+  "examplesGenitiveTriggerRu": "примеры",
+  "issue35": {
+    "hawaii": "Гавайи",
+    "state": "штат",
+    "copula": "это",
+    "ruSourceKey": "гавайи это штат"
+  },
+  "issue52": {
+    "russianText": "Links Платформа запланирована как система, что объединяет простое хранилище ассоциативной памяти Links и преобразования выполнение движок Triggers. Там будет это возможность к программировать что система динамически, благодаря к факт что все алгоритмы будет быть рассматриваться как данные внутри хранилище. Такие алгоритмы могут также изменять себя в реальном времени основанный на ввод из среда. Links Платформа это метод из моделирование высокоуровневые ассоциативное память эффекты из человеческий разум. Мы стремимся к сделать нашу реализация из ассоциативное хранилище самая точная, простое, универсальная, гибкая, надежная и быстрая память реализация для любых данные и знания. Одна из самые важные цели из проект это к ускорить развитие из автоматизация к уровень когда автоматизация могут быть сама автоматизирована. В другими словами этот проект должен помочь к реализовать бот-программист который будет это способен к создавать или редактировать программы основанный на описания в человеческий язык.",
+    "englishRoundTripText": "Links Platform planned as system, that combines simple associative memory storage Links and transformation execution engine Triggers. There will is an ability to program that system dynamically, due to fact that all algorithms will be treated as data inside storage. Such algorithms can also change themselves in real time based on input of environment. Links Platform is a method of modeling high-level associative memory effects of human mind. We strive to make our implementation of associative storage most accurate, simple, universal, flexible, reliable and fast memory implementation for any data and knowledge. One of most important goals of project is to accelerate development of automation to level when automation can be itself automated. In in other words this project should help to implement bot-programmer which will is an able to create or edit programs based on descriptions in human language.",
+    "enRuPhrases": [
+      {
+        "source": "Links",
+        "target": "Links",
+        "meaningId": "Q36978172"
+      },
+      {
+        "source": "Platform",
+        "target": "Платформа",
+        "meaningId": "Q64896574"
+      },
+      {
+        "source": "planned",
+        "target": "запланирована",
+        "meaningId": "lex:en:planned"
+      },
+      {
+        "source": "system",
+        "target": "система",
+        "meaningId": "Q58778"
+      },
+      {
+        "source": "combines",
+        "target": "объединяет",
+        "meaningId": "Q85797712"
+      },
+      {
+        "source": "associative memory storage",
+        "target": "хранилище ассоциативной памяти",
+        "meaningId": "Q37941007"
+      },
+      {
+        "source": "transformation",
+        "target": "преобразования",
+        "meaningId": "lex:en:transformation"
+      },
+      {
+        "source": "execution",
+        "target": "выполнение",
+        "meaningId": "lex:en:execution"
+      },
+      {
+        "source": "engine",
+        "target": "движок",
+        "meaningId": "Q44167"
+      },
+      {
+        "source": "ability",
+        "target": "возможность",
+        "meaningId": "lex:en:ability"
+      },
+      {
+        "source": "program",
+        "target": "программировать",
+        "meaningId": "lex:en:program"
+      },
+      {
+        "source": "dynamically",
+        "target": "динамически",
+        "meaningId": "Q105856214"
+      },
+      {
+        "source": "algorithms",
+        "target": "алгоритмы",
+        "meaningId": "Q4724371"
+      },
+      {
+        "source": "data",
+        "target": "данные",
+        "meaningId": "Q42848"
+      },
+      {
+        "source": "storage",
+        "target": "хранилище",
+        "meaningId": "Q13108060"
+      },
+      {
+        "source": "real-time",
+        "target": "реальном времени",
+        "meaningId": "lex:en:real-time"
+      },
+      {
+        "source": "environment",
+        "target": "среда",
+        "meaningId": "Q2249676"
+      },
+      {
+        "source": "method",
+        "target": "метод",
+        "meaningId": "Q12221772"
+      },
+      {
+        "source": "high-level",
+        "target": "высокоуровневые",
+        "meaningId": "Q430949"
+      },
+      {
+        "source": "human mind",
+        "target": "человеческий разум",
+        "meaningId": "Q138631938"
+      },
+      {
+        "source": "implementation",
+        "target": "реализация",
+        "meaningId": "Q245962"
+      },
+      {
+        "source": "automation",
+        "target": "автоматизация",
+        "meaningId": "Q184199"
+      },
+      {
+        "source": "bot-programmer",
+        "target": "бот-программист",
+        "meaningId": "lex:en:bot-programmer"
+      },
+      {
+        "source": "human language",
+        "target": "человеческий язык",
+        "meaningId": "Q20162172"
+      }
+    ],
+    "ruEnPhrases": [
+      {
+        "source": "Links",
+        "target": "Links",
+        "meaningId": "Q36978172"
+      },
+      {
+        "source": "Платформа",
+        "target": "Platform",
+        "meaningId": "Q64896574"
+      },
+      {
+        "source": "запланирована",
+        "target": "planned",
+        "meaningId": "lex:en:planned"
+      },
+      {
+        "source": "система",
+        "target": "system",
+        "meaningId": "Q58778"
+      },
+      {
+        "source": "объединяет",
+        "target": "combines",
+        "meaningId": "Q85797712"
+      },
+      {
+        "source": "хранилище ассоциативной памяти",
+        "target": "associative memory storage",
+        "meaningId": "Q37941007"
+      },
+      {
+        "source": "преобразования",
+        "target": "transformation",
+        "meaningId": "lex:en:transformation"
+      },
+      {
+        "source": "выполнение",
+        "target": "execution",
+        "meaningId": "lex:en:execution"
+      },
+      {
+        "source": "движок",
+        "target": "engine",
+        "meaningId": "Q44167"
+      },
+      {
+        "source": "возможность",
+        "target": "ability",
+        "meaningId": "lex:en:ability"
+      },
+      {
+        "source": "программировать",
+        "target": "program",
+        "meaningId": "lex:en:program"
+      },
+      {
+        "source": "динамически",
+        "target": "dynamically",
+        "meaningId": "Q105856214"
+      },
+      {
+        "source": "алгоритмы",
+        "target": "algorithms",
+        "meaningId": "Q4724371"
+      },
+      {
+        "source": "данные",
+        "target": "data",
+        "meaningId": "Q42848"
+      },
+      {
+        "source": "хранилище",
+        "target": "storage",
+        "meaningId": "Q13108060"
+      },
+      {
+        "source": "реальном времени",
+        "target": "real time",
+        "meaningId": "lex:en:real-time"
+      },
+      {
+        "source": "среда",
+        "target": "environment",
+        "meaningId": "Q2249676"
+      },
+      {
+        "source": "метод",
+        "target": "method",
+        "meaningId": "Q12221772"
+      },
+      {
+        "source": "высокоуровневые",
+        "target": "high-level",
+        "meaningId": "Q430949"
+      },
+      {
+        "source": "человеческий разум",
+        "target": "human mind",
+        "meaningId": "Q138631938"
+      },
+      {
+        "source": "реализация",
+        "target": "implementation",
+        "meaningId": "Q245962"
+      },
+      {
+        "source": "автоматизация",
+        "target": "automation",
+        "meaningId": "Q184199"
+      },
+      {
+        "source": "бот-программист",
+        "target": "bot-programmer",
+        "meaningId": "lex:en:bot-programmer"
+      },
+      {
+        "source": "человеческий язык",
+        "target": "human language",
+        "meaningId": "Q20162172"
+      }
+    ]
+  }
+}

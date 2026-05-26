@@ -100,8 +100,12 @@ export {
   selectLanguagePair,
   summarizeAssessment,
   extractFirstStatement,
+  extractFirstParagraph,
+  extractParagraphs,
+  normalizeParagraphText,
   tokenCoverage,
   tokenizeForMatch,
+  assessReferenceAlignment,
   normalizeStatementKey,
 } from './translation-quality.js';
 export { checkText, checkTextWithLiveEvidence } from './check.js';
