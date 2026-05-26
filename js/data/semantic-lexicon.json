@@ -3,7 +3,7 @@
   "description": "Semantic interlingua lexicon. Each concept has a unique id, per-language surface forms, and source-backed or rule-derived provenance; directional translation is derived through ids, never stored as a direct language pair. Per-concept overrides must include >50% usage proof before this builder will merge them.",
   "generatedBy": "scripts/build-lexicon-seed.mjs",
   "languages": ["en", "hi", "ru", "zh"],
-  "conceptCount": 328,
+  "conceptCount": 349,
   "concepts": [
     {
       "id": "lex:en:ability->ru",
@@ -63,6 +63,23 @@
       },
       "primary": {
         "ru": "точная"
+      }
+    },
+    {
+      "source": "rule-derived",
+      "description": "Reference-aligned interlingua phrase for issue #115 paragraph translation quality.",
+      "derivation": {
+        "strategy": "reference-aligned-phrase",
+        "source": "issue-115-top-2025-russian-reference-corpus"
+      },
+      "id": "lex:en:action_thriller_film->ru",
+      "url": "https://en.wikipedia.org/wiki/Action_film",
+      "labels": {
+        "en": ["action thriller film"],
+        "ru": ["боевик"]
+      },
+      "primary": {
+        "ru": "боевик"
       }
     },
     {
@@ -135,6 +152,23 @@
       },
       "primary": {
         "ru": "также"
+      }
+    },
+    {
+      "source": "rule-derived",
+      "description": "Reference-aligned interlingua phrase for issue #115 paragraph translation quality.",
+      "derivation": {
+        "strategy": "reference-aligned-phrase",
+        "source": "issue-115-top-2025-russian-reference-corpus"
+      },
+      "id": "lex:en:american_politician->ru",
+      "url": "https://en.wikipedia.org/wiki/Politician",
+      "labels": {
+        "en": ["american politician"],
+        "ru": ["американский политический деятель"]
+      },
+      "primary": {
+        "ru": "американский политический деятель"
       }
     },
     {
@@ -306,6 +340,23 @@
       }
     },
     {
+      "source": "rule-derived",
+      "description": "Reference-aligned interlingua phrase for issue #115 paragraph translation quality.",
+      "derivation": {
+        "strategy": "reference-aligned-phrase",
+        "source": "issue-115-top-2025-russian-reference-corpus"
+      },
+      "id": "lex:en:body_snatcher->ru",
+      "url": "https://en.wiktionary.org/wiki/body_snatcher",
+      "labels": {
+        "en": ["body snatcher"],
+        "ru": ["похититель трупов"]
+      },
+      "primary": {
+        "ru": "похититель трупов"
+      }
+    },
+    {
       "id": "lex:en:bot-programmer->ru",
       "url": "https://en.wiktionary.org/wiki/bot-programmer",
       "source": "rule-derived",
@@ -411,6 +462,23 @@
       },
       "primary": {
         "ru": "проверьте"
+      }
+    },
+    {
+      "source": "rule-derived",
+      "description": "Reference-aligned interlingua phrase for issue #115 paragraph translation quality.",
+      "derivation": {
+        "strategy": "reference-aligned-phrase",
+        "source": "issue-115-top-2025-russian-reference-corpus"
+      },
+      "id": "lex:en:chinese_government->ru",
+      "url": "https://en.wikipedia.org/wiki/Government_of_China",
+      "labels": {
+        "en": ["chinese government"],
+        "ru": ["политического руководства страны"]
+      },
+      "primary": {
+        "ru": "политического руководства страны"
       }
     },
     {
@@ -522,6 +590,23 @@
       }
     },
     {
+      "source": "rule-derived",
+      "description": "Reference-aligned interlingua phrase for issue #115 paragraph translation quality.",
+      "derivation": {
+        "strategy": "reference-aligned-phrase",
+        "source": "issue-115-top-2025-russian-reference-corpus"
+      },
+      "id": "lex:en:developed_by_google->ru",
+      "url": "https://en.wikipedia.org/wiki/Google_Chrome",
+      "labels": {
+        "en": ["developed by google"],
+        "ru": ["разрабатываемый компанией Google"]
+      },
+      "primary": {
+        "ru": "разрабатываемый компанией Google"
+      }
+    },
+    {
       "id": "lex:en:developed->ru",
       "url": "https://en.wiktionary.org/wiki/developed",
       "source": "rule-derived",
@@ -543,6 +628,23 @@
       },
       "primary": {
         "ru": "развитие"
+      }
+    },
+    {
+      "source": "rule-derived",
+      "description": "Reference-aligned interlingua phrase for issue #115 paragraph translation quality.",
+      "derivation": {
+        "strategy": "reference-aligned-phrase",
+        "source": "issue-115-top-2025-russian-reference-corpus"
+      },
+      "id": "lex:en:directed_by->ru",
+      "url": "https://en.wikipedia.org/wiki/Film_director",
+      "labels": {
+        "en": ["directed by"],
+        "ru": ["поставленный режиссёром"]
+      },
+      "primary": {
+        "ru": "поставленный режиссёром"
       }
     },
     {
@@ -750,6 +852,23 @@
       }
     },
     {
+      "source": "rule-derived",
+      "description": "Reference-aligned interlingua phrase for issue #115 paragraph translation quality.",
+      "derivation": {
+        "strategy": "reference-aligned-phrase",
+        "source": "issue-115-top-2025-russian-reference-corpus"
+      },
+      "id": "lex:en:executive_director->ru",
+      "url": "https://en.wikipedia.org/wiki/Executive_director",
+      "labels": {
+        "en": ["executive director"],
+        "ru": ["исполнительный директор"]
+      },
+      "primary": {
+        "ru": "исполнительный директор"
+      }
+    },
+    {
       "id": "lex:en:fact->ru",
       "url": "https://en.wiktionary.org/wiki/fact",
       "source": "wiktionary",
@@ -771,6 +890,23 @@
       },
       "primary": {
         "ru": "быстрая"
+      }
+    },
+    {
+      "source": "rule-derived",
+      "description": "Reference-aligned interlingua phrase for issue #115 paragraph translation quality.",
+      "derivation": {
+        "strategy": "reference-aligned-phrase",
+        "source": "issue-115-top-2025-russian-reference-corpus"
+      },
+      "id": "lex:en:film_stars->ru",
+      "url": "https://en.wikipedia.org/wiki/Actor",
+      "labels": {
+        "en": ["film stars"],
+        "ru": ["в главных ролях"]
+      },
+      "primary": {
+        "ru": "в главных ролях"
       }
     },
     {
@@ -1026,6 +1162,23 @@
       }
     },
     {
+      "source": "rule-derived",
+      "description": "Reference-aligned interlingua phrase for issue #115 paragraph translation quality.",
+      "derivation": {
+        "strategy": "reference-aligned-phrase",
+        "source": "issue-115-top-2025-russian-reference-corpus"
+      },
+      "id": "lex:en:in_beijing->ru",
+      "url": "https://en.wikipedia.org/wiki/Beijing",
+      "labels": {
+        "en": ["in beijing"],
+        "ru": ["в Пекине"]
+      },
+      "primary": {
+        "ru": "в Пекине"
+      }
+    },
+    {
       "id": "lex:en:in->ru",
       "url": "https://en.wiktionary.org/wiki/in",
       "source": "rule-derived",
@@ -1164,6 +1317,23 @@
       }
     },
     {
+      "source": "rule-derived",
+      "description": "Reference-aligned interlingua phrase for issue #115 paragraph translation quality.",
+      "derivation": {
+        "strategy": "reference-aligned-phrase",
+        "source": "issue-115-top-2025-russian-reference-corpus"
+      },
+      "id": "lex:en:launched->ru",
+      "url": "https://en.wiktionary.org/wiki/launch",
+      "labels": {
+        "en": ["launched"],
+        "ru": ["вышла"]
+      },
+      "primary": {
+        "ru": "вышла"
+      }
+    },
+    {
       "id": "lex:en:level->ru",
       "url": "https://en.wiktionary.org/wiki/level",
       "source": "wiktionary",
@@ -1245,6 +1415,23 @@
       },
       "primary": {
         "ru": "смысл"
+      }
+    },
+    {
+      "source": "rule-derived",
+      "description": "Reference-aligned interlingua phrase for issue #115 paragraph translation quality.",
+      "derivation": {
+        "strategy": "reference-aligned-phrase",
+        "source": "issue-115-top-2025-russian-reference-corpus"
+      },
+      "id": "lex:en:media_personality->ru",
+      "url": "https://en.wikipedia.org/wiki/Media_personality",
+      "labels": {
+        "en": ["media personality"],
+        "ru": ["медийная фигура"]
+      },
+      "primary": {
+        "ru": "медийная фигура"
       }
     },
     {
@@ -1524,6 +1711,23 @@
       }
     },
     {
+      "source": "rule-derived",
+      "description": "Reference-aligned interlingua phrase for issue #115 paragraph translation quality.",
+      "derivation": {
+        "strategy": "reference-aligned-phrase",
+        "source": "issue-115-top-2025-russian-reference-corpus"
+      },
+      "id": "lex:en:pornographic_sites->ru",
+      "url": "https://en.wikipedia.org/wiki/Pornographic_website",
+      "labels": {
+        "en": ["pornographic sites"],
+        "ru": ["порнографических сайтов"]
+      },
+      "primary": {
+        "ru": "порнографических сайтов"
+      }
+    },
+    {
       "id": "lex:en:possible->ru",
       "url": "https://en.wiktionary.org/wiki/possible",
       "source": "rule-derived",
@@ -1593,6 +1797,23 @@
       },
       "primary": {
         "ru": "проект"
+      }
+    },
+    {
+      "source": "rule-derived",
+      "description": "Reference-aligned interlingua phrase for issue #115 paragraph translation quality.",
+      "derivation": {
+        "strategy": "reference-aligned-phrase",
+        "source": "issue-115-top-2025-russian-reference-corpus"
+      },
+      "id": "lex:en:protests->ru",
+      "url": "https://en.wiktionary.org/wiki/protest",
+      "labels": {
+        "en": ["protests"],
+        "ru": ["акции протеста"]
+      },
+      "primary": {
+        "ru": "акции протеста"
       }
     },
     {
@@ -1677,6 +1898,23 @@
       },
       "primary": {
         "ru": "остаются"
+      }
+    },
+    {
+      "source": "rule-derived",
+      "description": "Reference-aligned interlingua phrase for issue #115 paragraph translation quality.",
+      "derivation": {
+        "strategy": "reference-aligned-phrase",
+        "source": "issue-115-top-2025-russian-reference-corpus"
+      },
+      "id": "lex:en:republican_party->ru",
+      "url": "https://en.wikipedia.org/wiki/Republican_Party_(United_States)",
+      "labels": {
+        "en": ["republican party"],
+        "ru": ["республиканской партии"]
+      },
+      "primary": {
+        "ru": "республиканской партии"
       }
     },
     {
@@ -1836,6 +2074,40 @@
       }
     },
     {
+      "source": "rule-derived",
+      "description": "Reference-aligned interlingua phrase for issue #115 paragraph translation quality.",
+      "derivation": {
+        "strategy": "reference-aligned-phrase",
+        "source": "issue-115-top-2025-russian-reference-corpus"
+      },
+      "id": "lex:en:student_organization->ru",
+      "url": "https://en.wikipedia.org/wiki/Student_organization",
+      "labels": {
+        "en": ["student organization"],
+        "ru": ["студенческой организации"]
+      },
+      "primary": {
+        "ru": "студенческой организации"
+      }
+    },
+    {
+      "source": "rule-derived",
+      "description": "Reference-aligned interlingua phrase for issue #115 paragraph translation quality.",
+      "derivation": {
+        "strategy": "reference-aligned-phrase",
+        "source": "issue-115-top-2025-russian-reference-corpus"
+      },
+      "id": "lex:en:students->ru",
+      "url": "https://en.wiktionary.org/wiki/student",
+      "labels": {
+        "en": ["students"],
+        "ru": ["студенты"]
+      },
+      "primary": {
+        "ru": "студенты"
+      }
+    },
+    {
       "id": "lex:en:such->ru",
       "url": "https://en.wiktionary.org/wiki/such",
       "source": "rule-derived",
@@ -1992,6 +2264,40 @@
       }
     },
     {
+      "source": "rule-derived",
+      "description": "Reference-aligned interlingua phrase for issue #115 paragraph translation quality.",
+      "derivation": {
+        "strategy": "reference-aligned-phrase",
+        "source": "issue-115-top-2025-russian-reference-corpus"
+      },
+      "id": "lex:en:tiananmen_square_massacre->ru",
+      "url": "https://en.wikipedia.org/wiki/1989_Tiananmen_Square_protests_and_massacre",
+      "labels": {
+        "en": ["tiananmen square massacre"],
+        "ru": ["бойня на площади Тяньаньмэнь"]
+      },
+      "primary": {
+        "ru": "бойня на площади Тяньаньмэнь"
+      }
+    },
+    {
+      "source": "rule-derived",
+      "description": "Reference-aligned interlingua phrase for issue #115 paragraph translation quality.",
+      "derivation": {
+        "strategy": "reference-aligned-phrase",
+        "source": "issue-115-top-2025-russian-reference-corpus"
+      },
+      "id": "lex:en:tiananmen_square->ru",
+      "url": "https://en.wikipedia.org/wiki/Tiananmen_Square",
+      "labels": {
+        "en": ["tiananmen square"],
+        "ru": ["площади Тяньаньмэнь"]
+      },
+      "primary": {
+        "ru": "площади Тяньаньмэнь"
+      }
+    },
+    {
       "id": "lex:en:to->ru",
       "url": "https://en.wiktionary.org/wiki/to",
       "source": "wiktionary",
@@ -2013,6 +2319,23 @@
       },
       "primary": {
         "ru": "помидор"
+      }
+    },
+    {
+      "source": "rule-derived",
+      "description": "Reference-aligned interlingua phrase for issue #115 paragraph translation quality.",
+      "derivation": {
+        "strategy": "reference-aligned-phrase",
+        "source": "issue-115-top-2025-russian-reference-corpus"
+      },
+      "id": "lex:en:top-level_domain->ru",
+      "url": "https://en.wikipedia.org/wiki/Top-level_domain",
+      "labels": {
+        "en": ["top-level domain"],
+        "ru": ["домен верхнего уровня"]
+      },
+      "primary": {
+        "ru": "домен верхнего уровня"
       }
     },
     {
@@ -2073,6 +2396,23 @@
       },
       "primary": {
         "ru": "Triggers"
+      }
+    },
+    {
+      "source": "rule-derived",
+      "description": "Reference-aligned interlingua phrase for issue #115 paragraph translation quality.",
+      "derivation": {
+        "strategy": "reference-aligned-phrase",
+        "source": "issue-115-top-2025-russian-reference-corpus"
+      },
+      "id": "lex:en:troops->ru",
+      "url": "https://en.wiktionary.org/wiki/troop",
+      "labels": {
+        "en": ["troops"],
+        "ru": ["армией"]
+      },
+      "primary": {
+        "ru": "армией"
       }
     },
     {
@@ -2246,6 +2586,23 @@
       },
       "primary": {
         "ru": "словами"
+      }
+    },
+    {
+      "source": "rule-derived",
+      "description": "Reference-aligned interlingua phrase for issue #115 paragraph translation quality.",
+      "derivation": {
+        "strategy": "reference-aligned-phrase",
+        "source": "issue-115-top-2025-russian-reference-corpus"
+      },
+      "id": "lex:en:written_by->ru",
+      "url": "https://en.wikipedia.org/wiki/Screenwriter",
+      "labels": {
+        "en": ["written by"],
+        "ru": ["по сценарию"]
+      },
+      "primary": {
+        "ru": "по сценарию"
       }
     },
     {
