@@ -492,7 +492,7 @@ fn parse_binary_links(binary: &[u8]) -> Result<Vec<DoubletsLink>, String> {
             target: DOUBLETS_NULL_LINK,
         }]);
     }
-    if binary.len() % 12 != 0 {
+    if !binary.len().is_multiple_of(12) {
         return Err(format!(
             "Doublets binary length must be divisible by 12 bytes, got {}.",
             binary.len()
