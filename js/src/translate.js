@@ -15,7 +15,11 @@ import {
   applyTextTransformationRules,
   collectTranslationTransformationRules,
 } from './transformation-rules.js';
-import { buildSemanticSourceFragment } from './translation-source-fragment.js';
+import {
+  buildSemanticSourceFragment,
+  reconstructSourceText,
+  segmentSemanticMetaLanguageSource,
+} from './translation-source-fragment.js';
 import {
   escapeAttribute,
   escapeHtml,
@@ -103,7 +107,7 @@ export async function translateTextWith(input, options = {}) {
     }
   }
   const sentences = await applySentenceTextTransformationRules(
-    buildTranslatedSentences(formalization, phrases, config),
+    buildTranslatedSentences(semanticMetaLanguage, phrases, config),
     config.beforeNaturalizationRules,
     transformationContext(config, 'before-naturalization')
   );
@@ -152,7 +156,7 @@ export async function translateTextWith(input, options = {}) {
     config,
   });
   let result = {
-    text: formalization.text,
+    text: semanticMetaLanguage.text,
     sourceLanguage: config.sourceLanguage,
     targetLanguage: config.targetLanguage,
     formalization,
@@ -233,14 +237,19 @@ function buildSemanticMetaLanguage(formalization, config) {
   const links = formalization.cst.phrases.map((phrase, index) =>
     buildSemanticLink(phrase, index, config)
   );
+  const sourceReconstruction =
+    formalization.cst.linguisticMetadata?.sourceReconstruction ?? null;
+  const sourceText =
+    reconstructSourceText(sourceReconstruction) ?? formalization.text;
   const semantic = {
     type: 'semantic-meta-language',
     version: 1,
-    text: formalization.text,
+    text: sourceText,
     sourceLanguage: config.sourceLanguage,
     targetLanguage: config.targetLanguage,
     representation: 'links-notation',
     sourceLinksNotation: formalization.linksNotation,
+    sourceReconstruction,
     links,
   };
   return {
@@ -714,7 +723,7 @@ function buildTranslationCst({
   return {
     type: 'translation',
     version: 1,
-    text: formalization.text,
+    text: semanticMetaLanguage.text,
     sourceLanguage: config.sourceLanguage,
     targetLanguage: config.targetLanguage,
     formalization: formalization.cst,
@@ -740,34 +749,11 @@ function buildTranslationCst({
   };
 }
 
-function buildTranslatedSentences(formalization, phrases, config) {
-  const segments = segmentSourceText(formalization.text);
+function buildTranslatedSentences(semanticMetaLanguage, phrases, config) {
+  const segments = segmentSemanticMetaLanguageSource(semanticMetaLanguage);
   return segments.map((segment, index) =>
     buildTranslatedSentence(segment, index, phrases, config)
   );
-}
-
-function segmentSourceText(text) {
-  const source = String(text);
-  const segments = [];
-  const pattern = /\S[\s\S]*?(?:[.!?]+(?=\s|$)|$)/g;
-  for (const match of source.matchAll(pattern)) {
-    const raw = match[0];
-    const leading = raw.search(/\S/);
-    const start = (match.index ?? 0) + Math.max(leading, 0);
-    const trimmed = raw.trim();
-    if (!trimmed) {
-      continue;
-    }
-    segments.push({
-      text: trimmed,
-      start,
-      end: start + trimmed.length,
-    });
-  }
-  return segments.length
-    ? segments
-    : [{ text: source, start: 0, end: source.length }];
 }
 
 function buildTranslatedSentence(segment, index, phrases, config) {
