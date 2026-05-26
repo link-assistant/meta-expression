@@ -1,6 +1,7 @@
 use doublets::Doublet;
 
 mod analysis;
+mod doublets_store;
 mod formal_ai_support;
 mod issue52;
 mod reference_data;
@@ -15,6 +16,17 @@ pub use analysis::{
     select_interpretation, serialize_links_notation, serialize_statement_links_notation,
     statement_confidence, BeliefSystem, EvaluationResult, EvidenceItem, Formalization,
     Interpretation, LinkProvenance, LinkRecord, LinksNetwork, StatementAnalysis, StatementDraft,
+};
+pub use doublets_store::{
+    decode_json_value_from_doublets, encode_json_value_to_doublets,
+    load_meta_language_links_from_doublets, load_term_data_from_doublets,
+    save_meta_language_links_to_doublets, save_term_data_to_doublets, DoubletsArtifact,
+    DoubletsLink, PortableCaseOptions, DOUBLETS_ARRAY_TAG, DOUBLETS_BOOL_TAG, DOUBLETS_NULL_LINK,
+    DOUBLETS_NUMBER_TAG, DOUBLETS_OBJECT_TAG, DOUBLETS_STRING_TAG,
+};
+#[cfg(not(target_arch = "wasm32"))]
+pub use doublets_store::{
+    read_file_mapped_doublets_links, save_json_value_to_file_mapped_doublets,
 };
 pub use issue52::{
     issue52_english_text, issue52_russian_text, issue52_translation_relations,
