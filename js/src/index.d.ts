@@ -1638,6 +1638,37 @@ export interface ClaimReviewOptions {
   statementIndex?: number;
 }
 
+export interface EvidenceProvenanceExportOptions {
+  baseId?: string;
+  exportedAt?: string | number | Date;
+  now?: () => string | number | Date;
+  linksNotation?: string;
+}
+
+export interface EvidenceJsonLdExport extends Record<string, unknown> {
+  '@context': Record<string, unknown>;
+  '@id': string;
+  '@type': string[];
+  format: 'meta-expression-evidence-json-ld';
+  sourceSurface: 'analyze' | 'check';
+  exportedAt: string;
+  analyses: Record<string, unknown>[];
+  evidenceRecords: Record<string, unknown>[];
+  sources: Record<string, unknown>[];
+  linksNotation: string;
+}
+
+export interface EvidenceProvJsonLdExport extends Record<string, unknown> {
+  '@context': Record<string, string>;
+  '@id': string;
+  '@type': string[];
+  format: 'meta-expression-prov-o-json-ld';
+  sourceSurface: 'analyze' | 'check';
+  exportedAt: string;
+  linksNotation: string;
+  '@graph': Record<string, unknown>[];
+}
+
 export type UniquenessSuggestedAction =
   | 'cite-or-quote'
   | 'review-matches'
@@ -1780,6 +1811,16 @@ export declare function exportClaimReviewJsonLd(
   input: CheckResult | CheckStatement | StatementAnalysis,
   options?: ClaimReviewOptions
 ): Record<string, unknown>;
+
+export declare function exportEvidenceJsonLd(
+  input: StatementAnalysis | CheckResult,
+  options?: EvidenceProvenanceExportOptions
+): EvidenceJsonLdExport;
+
+export declare function exportEvidenceProvJsonLd(
+  input: StatementAnalysis | CheckResult,
+  options?: EvidenceProvenanceExportOptions
+): EvidenceProvJsonLdExport;
 
 export declare function searchTextUniqueness(
   input: string,
