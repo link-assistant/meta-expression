@@ -2828,6 +2828,23 @@ export declare function tokenCoverage(
 
 export declare function tokenizeForMatch(text: string): string[];
 
+export interface ReferenceAlignment {
+  precision: number;
+  recall: number;
+  f1: number;
+  overlap: number;
+  machineTokenCount: number;
+  referenceTokenCount: number;
+  matched: string[];
+  missing: string[];
+}
+
+export declare function assessReferenceAlignment(
+  machineText: string,
+  referenceText: string,
+  options?: { script?: RegExp }
+): ReferenceAlignment;
+
 export declare function normalizeStatementKey(text: string): string;
 
 export interface WasmCore {
