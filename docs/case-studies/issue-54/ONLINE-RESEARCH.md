@@ -25,11 +25,15 @@ Research date: 2026-05-23
 ## Formal-AI Audit Refresh
 
 The latest audit pass reviewed `link-assistant/formal-ai` at commit
-`e1467d531534af582a2f457e69695ac6861131b8`
-(`2026-05-23T23:02:47+00:00`, `chore: release v0.107.0`). The most relevant
-coverage still maps to `tests/unit/specification/translation_via_links.rs`,
+`39530ef2e71f787561f9252b72032eb81e329c3e`
+(`2026-05-26T00:48:52+00:00`, `chore: release v0.123.0`). Issue #72 refreshed
+the local corpus to that release and added a parity gate that either executes
+the mapped upstream test identity locally or records an explicit skip reason.
+The most relevant executable coverage still maps to
+`tests/unit/specification/translation_via_links.rs`,
 `tests/unit/specification/summarization_pipeline.rs`, `tests/unit/formal_ai.rs`,
-and `tests/e2e/tests/issue-230.spec.js`.
+and `tests/e2e/tests/issue-210.spec.js`, `tests/e2e/tests/issue-218.spec.js`,
+`tests/e2e/tests/issue-221.spec.js`, and `tests/e2e/tests/issue-230.spec.js`.
 
 ## Extension Components
 
