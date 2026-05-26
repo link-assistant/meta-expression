@@ -4,6 +4,7 @@
 //! lookups, issue-35 doublet relations, and the lexical glossary fallback —
 //! to verify they operate together as advertised.
 
+mod issue109_doublets_store;
 mod issue35_translation;
 mod issue41_glossary;
 mod issue52_translation;
