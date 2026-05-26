@@ -1,0 +1,4 @@
+{
+  "description": "Rare, curated exceptions that extend the interlingua lexicon when the live Wikidata/Wiktionary/Wikipedia APIs do not expose a usable form. Each override is merged into the generated semantic-lexicon.json by scripts/build-lexicon-seed.mjs. Keep this list small: prefer recording real source data via scripts/record-semantic-lexicon.mjs.",
+  "concepts": []
+}
