@@ -1,5 +1,115 @@
 use crate::SemanticTranslation;
 
+const LINGUISTIC_PARSER_ID: &str = "meta-expression-linguistic-parser";
+const LINGUISTIC_PARSER_VERSION: u32 = 1;
+const LINGUISTIC_PARSER_STRATEGY: &str = "deterministic-english-dependency-parser";
+
+#[derive(Debug, Clone, PartialEq, Eq, serde::Serialize)]
+#[serde(rename_all = "camelCase")]
+pub struct LinguisticParserDescriptor {
+    pub id: String,
+    pub version: u32,
+    pub language: String,
+    pub strategy: String,
+}
+
+#[derive(Debug, Clone, PartialEq, Eq, serde::Serialize)]
+#[serde(rename_all = "camelCase")]
+pub struct LinguisticProvenance {
+    pub source_type: String,
+    pub method: String,
+    pub parser_id: String,
+    pub parser_version: u32,
+    pub layer: String,
+}
+
+#[derive(Debug, Clone, Copy, PartialEq, Eq, serde::Serialize)]
+#[serde(rename_all = "camelCase")]
+pub struct LinguisticTokenRange {
+    pub start: usize,
+    pub end: usize,
+}
+
+#[derive(Debug, Clone, PartialEq, Eq, serde::Serialize)]
+#[serde(rename_all = "camelCase")]
+pub struct LinguisticCstDependency {
+    pub relation: String,
+    pub head: String,
+    pub dependent: String,
+}
+
+#[derive(Debug, Clone, PartialEq, Eq, serde::Serialize)]
+#[serde(rename_all = "camelCase")]
+pub struct LinguisticCstToken {
+    #[serde(rename = "type")]
+    pub kind: String,
+    pub id: String,
+    pub version: u32,
+    pub text: String,
+    pub index: usize,
+    pub source_start: usize,
+    pub source_end: usize,
+    pub sentence_boundary_after: bool,
+    pub provenance: LinguisticProvenance,
+}
+
+#[derive(Debug, Clone, PartialEq, Eq, serde::Serialize)]
+#[serde(rename_all = "camelCase")]
+pub struct LinguisticCstSymbol {
+    #[serde(rename = "type")]
+    pub kind: String,
+    pub id: String,
+    pub version: u32,
+    pub text: String,
+    pub source_start: usize,
+    pub source_end: usize,
+    pub provenance: LinguisticProvenance,
+}
+
+#[derive(Debug, Clone, PartialEq, Eq, serde::Serialize)]
+#[serde(rename_all = "camelCase")]
+pub struct LinguisticCstSentence {
+    #[serde(rename = "type")]
+    pub kind: String,
+    pub id: String,
+    pub version: u32,
+    pub text: String,
+    pub token_start: usize,
+    pub token_end: usize,
+    pub source_start: usize,
+    pub source_end: usize,
+    pub predicate_token: Option<usize>,
+    pub subject_range: Option<LinguisticTokenRange>,
+    pub predicate_range: Option<LinguisticTokenRange>,
+    pub object_phrase_range: Option<LinguisticTokenRange>,
+    pub object_range: Option<LinguisticTokenRange>,
+    pub noun_phrase_ranges: Vec<LinguisticTokenRange>,
+    pub verb_phrase_range: Option<LinguisticTokenRange>,
+    pub dependencies: Vec<LinguisticCstDependency>,
+    pub relation_type: Option<String>,
+    pub subject_fragment_id: Option<String>,
+    pub predicate_fragment_id: Option<String>,
+    pub object_fragment_id: Option<String>,
+    pub relation_id: Option<String>,
+    pub dependency_ids: Vec<String>,
+    pub provenance: LinguisticProvenance,
+}
+
+#[derive(Debug, Clone, PartialEq, Eq, serde::Serialize)]
+#[serde(rename_all = "camelCase")]
+pub struct LinguisticCst {
+    #[serde(rename = "type")]
+    pub kind: String,
+    pub version: u32,
+    pub text: String,
+    pub language: String,
+    pub parser: LinguisticParserDescriptor,
+    pub tokens: Vec<LinguisticCstToken>,
+    pub symbols: Vec<LinguisticCstSymbol>,
+    pub sentences: Vec<LinguisticCstSentence>,
+    pub provenance: LinguisticProvenance,
+}
+
 #[derive(Debug, Clone, PartialEq, Eq, serde::Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct LinguisticFragment {
@@ -13,6 +123,8 @@ pub struct LinguisticFragment {
     pub token_end: Option<usize>,
     pub source_start: Option<usize>,
     pub source_end: Option<usize>,
+    pub version: u32,
+    pub provenance: LinguisticProvenance,
 }
 
 #[derive(Debug, Clone, PartialEq, Eq, serde::Serialize)]
@@ -22,6 +134,9 @@ pub struct LinguisticDependency {
     pub relation: String,
     pub head_fragment_id: String,
     pub dependent_fragment_id: String,
+    pub source: String,
+    pub version: u32,
+    pub provenance: LinguisticProvenance,
 }
 
 #[derive(Debug, Clone, PartialEq, Eq, serde::Serialize)]
@@ -36,31 +151,44 @@ pub struct LinguisticRelation {
     pub text: String,
     pub source_start: usize,
     pub source_end: usize,
+    pub version: u32,
+    pub provenance: LinguisticProvenance,
 }
 
 #[derive(Debug, Clone, PartialEq, Eq, serde::Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct LinguisticAstSentence {
+    #[serde(rename = "type")]
+    pub kind: String,
     pub id: String,
+    pub version: u32,
     pub text: String,
+    pub token_start: usize,
+    pub token_end: usize,
     pub subject_fragment_id: Option<String>,
     pub predicate_fragment_id: Option<String>,
     pub object_fragment_id: Option<String>,
+    pub predicate_token: Option<usize>,
     pub relation_id: Option<String>,
     pub dependency_ids: Vec<String>,
     pub source_start: usize,
     pub source_end: usize,
+    pub provenance: LinguisticProvenance,
 }
 
 #[derive(Debug, Clone, PartialEq, Eq, serde::Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct LinguisticMetadata {
+    pub version: u32,
     pub text: String,
     pub language: String,
+    pub parser: LinguisticParserDescriptor,
+    pub provenance: LinguisticProvenance,
     pub fragments: Vec<LinguisticFragment>,
     pub dependencies: Vec<LinguisticDependency>,
     pub relations: Vec<LinguisticRelation>,
     pub ast: Vec<LinguisticAstSentence>,
+    pub cst: LinguisticCst,
 }
 
 #[derive(Debug, Clone, PartialEq, Eq)]
@@ -91,6 +219,7 @@ struct LinguisticExtractionState<'a> {
     dependencies: &'a mut Vec<LinguisticDependency>,
     relations: &'a mut Vec<LinguisticRelation>,
     ast: &'a mut Vec<LinguisticAstSentence>,
+    cst_sentences: &'a mut Vec<LinguisticCstSentence>,
 }
 
 struct LinguisticFragmentDraft<'a> {
@@ -104,13 +233,64 @@ struct LinguisticFragmentDraft<'a> {
     source_end: Option<usize>,
 }
 
+fn linguistic_parser_descriptor(language: &str) -> LinguisticParserDescriptor {
+    LinguisticParserDescriptor {
+        id: LINGUISTIC_PARSER_ID.to_string(),
+        version: LINGUISTIC_PARSER_VERSION,
+        language: language.to_string(),
+        strategy: LINGUISTIC_PARSER_STRATEGY.to_string(),
+    }
+}
+
+fn linguistic_provenance(layer: impl Into<String>) -> LinguisticProvenance {
+    LinguisticProvenance {
+        source_type: "algorithm".to_string(),
+        method: LINGUISTIC_PARSER_ID.to_string(),
+        parser_id: LINGUISTIC_PARSER_ID.to_string(),
+        parser_version: LINGUISTIC_PARSER_VERSION,
+        layer: layer.into(),
+    }
+}
+
 pub fn extract_linguistic_metadata(input: &str) -> LinguisticMetadata {
     let text = input.to_string();
+    let language = "en".to_string();
+    let parser = linguistic_parser_descriptor(&language);
     let tokens = tokenize_linguistic_tokens(input);
+    let symbols = linguistic_symbol_spans(input);
     let mut fragments = Vec::new();
     let mut dependencies = Vec::new();
     let mut relations = Vec::new();
     let mut ast = Vec::new();
+    let mut cst_sentences = Vec::new();
+    let cst_tokens = tokens
+        .iter()
+        .enumerate()
+        .map(|(index, token)| LinguisticCstToken {
+            kind: "token-cst".to_string(),
+            id: format!("token-{}", index + 1),
+            version: 1,
+            text: token.text.clone(),
+            index,
+            source_start: token.start,
+            source_end: token.end,
+            sentence_boundary_after: token.sentence_boundary_after,
+            provenance: linguistic_provenance("cst-token"),
+        })
+        .collect::<Vec<_>>();
+    let cst_symbols = symbols
+        .iter()
+        .enumerate()
+        .map(|(index, (symbol, start, end))| LinguisticCstSymbol {
+            kind: "symbol-cst".to_string(),
+            id: format!("symbol-{}", index + 1),
+            version: 1,
+            text: symbol.clone(),
+            source_start: *start,
+            source_end: *end,
+            provenance: linguistic_provenance("cst-symbol"),
+        })
+        .collect::<Vec<_>>();
 
     for (index, token) in tokens.iter().enumerate() {
         push_linguistic_fragment(
@@ -128,18 +308,18 @@ pub fn extract_linguistic_metadata(input: &str) -> LinguisticMetadata {
         );
     }
 
-    for (symbol, start, end) in linguistic_symbol_spans(input) {
+    for (symbol, start, end) in &symbols {
         push_linguistic_fragment(
             &mut fragments,
             LinguisticFragmentDraft {
                 kind: "symbol",
                 role: "symbol",
-                text: symbol,
+                text: symbol.clone(),
                 tokens: Vec::new(),
                 token_start: None,
                 token_end: None,
-                source_start: Some(start),
-                source_end: Some(end),
+                source_start: Some(*start),
+                source_end: Some(*end),
             },
         );
     }
@@ -150,6 +330,7 @@ pub fn extract_linguistic_metadata(input: &str) -> LinguisticMetadata {
         dependencies: &mut dependencies,
         relations: &mut relations,
         ast: &mut ast,
+        cst_sentences: &mut cst_sentences,
     };
     for index in 0..tokens.len() {
         if tokens[index].sentence_boundary_after || index + 1 == tokens.len() {
@@ -167,13 +348,29 @@ pub fn extract_linguistic_metadata(input: &str) -> LinguisticMetadata {
         }
     }
 
+    let cst = LinguisticCst {
+        kind: "document-cst".to_string(),
+        version: 1,
+        text: text.clone(),
+        language: language.clone(),
+        parser: parser.clone(),
+        tokens: cst_tokens,
+        symbols: cst_symbols,
+        sentences: cst_sentences,
+        provenance: linguistic_provenance("cst"),
+    };
+
     LinguisticMetadata {
+        version: 1,
         text,
-        language: "en".to_string(),
+        language,
+        parser,
+        provenance: linguistic_provenance("metadata"),
         fragments,
         dependencies,
         relations,
         ast,
+        cst,
     }
 }
 
@@ -266,6 +463,21 @@ fn tokenize_formal_expression(input: &str) -> Vec<String> {
     tokens
 }
 
+fn token_range(range: (usize, usize)) -> LinguisticTokenRange {
+    LinguisticTokenRange {
+        start: range.0,
+        end: range.1,
+    }
+}
+
+fn cst_dependency(relation: &str, head: &str, dependent: &str) -> LinguisticCstDependency {
+    LinguisticCstDependency {
+        relation: relation.to_string(),
+        head: head.to_string(),
+        dependent: dependent.to_string(),
+    }
+}
+
 fn extract_linguistic_sentence(
     input: &str,
     tokens: &[LinguisticToken],
@@ -285,19 +497,31 @@ fn extract_linguistic_sentence(
     let mut predicate = None;
     let mut object = None;
     let mut relation_id = None;
+    let mut predicate_token = None;
+    let mut subject_range = None;
+    let mut predicate_range = None;
+    let mut object_phrase_range = None;
+    let mut object_range = None;
+    let mut noun_phrase_ranges = Vec::new();
+    let mut verb_phrase_range = None;
+    let mut cst_dependencies = Vec::new();
 
     if let Some(predicate_index) = find_linguistic_predicate(tokens, start_token, end_token) {
+        predicate_token = Some(predicate_index);
         if predicate_index > start_token {
-            if let Some(subject_range) =
+            if let Some(subject_fragment_range) =
                 trim_linguistic_nominal_range(tokens, start_token, predicate_index - 1, true)
             {
+                let cst_subject_range = token_range(subject_fragment_range);
+                noun_phrase_ranges.push(cst_subject_range);
+                subject_range = Some(cst_subject_range);
                 push_token_range_linguistic_fragment(
                     state.fragments,
                     input,
                     tokens,
                     "noun-phrase",
                     "noun-phrase",
-                    subject_range,
+                    subject_fragment_range,
                 );
                 subject = Some(push_token_range_linguistic_fragment(
                     state.fragments,
@@ -305,19 +529,22 @@ fn extract_linguistic_sentence(
                     tokens,
                     "subject",
                     "subject",
-                    subject_range,
+                    subject_fragment_range,
                 ));
             }
         }
 
-        let predicate_range = (predicate_index, predicate_index);
+        let predicate_fragment_range = (predicate_index, predicate_index);
+        let cst_predicate_range = token_range(predicate_fragment_range);
+        predicate_range = Some(cst_predicate_range);
+        verb_phrase_range = Some(cst_predicate_range);
         push_token_range_linguistic_fragment(
             state.fragments,
             input,
             tokens,
             "verb-phrase",
             "verb-phrase",
-            predicate_range,
+            predicate_fragment_range,
         );
         predicate = Some(push_token_range_linguistic_fragment(
             state.fragments,
@@ -325,13 +552,16 @@ fn extract_linguistic_sentence(
             tokens,
             "predicate",
             "predicate",
-            predicate_range,
+            predicate_fragment_range,
         ));
 
         if predicate_index < end_token {
             if let Some(raw_object_range) =
                 trim_linguistic_nominal_range(tokens, predicate_index + 1, end_token, false)
             {
+                let cst_object_phrase_range = token_range(raw_object_range);
+                object_phrase_range = Some(cst_object_phrase_range);
+                noun_phrase_ranges.push(cst_object_phrase_range);
                 push_token_range_linguistic_fragment(
                     state.fragments,
                     input,
@@ -346,26 +576,29 @@ fn extract_linguistic_sentence(
                     raw_object_range.1,
                     true,
                 )
-                .map(|object_range| {
+                .map(|range| {
+                    object_range = Some(token_range(range));
                     push_token_range_linguistic_fragment(
                         state.fragments,
                         input,
                         tokens,
                         "object",
                         "object",
-                        object_range,
+                        range,
                     )
                 });
             }
         }
 
         if let (Some(subject), Some(predicate)) = (&subject, &predicate) {
+            cst_dependencies.push(cst_dependency("nsubj", "predicate", "subject"));
             dependency_ids.push(push_linguistic_dependency(
                 state.dependencies,
                 "nsubj",
                 &predicate.id,
                 &subject.id,
             ));
+            cst_dependencies.push(cst_dependency("root", "predicate", "predicate"));
             dependency_ids.push(push_linguistic_dependency(
                 state.dependencies,
                 "root",
@@ -373,6 +606,7 @@ fn extract_linguistic_sentence(
                 &predicate.id,
             ));
             if let Some(object) = &object {
+                cst_dependencies.push(cst_dependency("obj", "predicate", "object"));
                 dependency_ids.push(push_linguistic_dependency(
                     state.dependencies,
                     "obj",
@@ -390,6 +624,7 @@ fn extract_linguistic_sentence(
         }
     } else if let Some(range) = trim_linguistic_nominal_range(tokens, start_token, end_token, false)
     {
+        noun_phrase_ranges.push(token_range(range));
         push_token_range_linguistic_fragment(
             state.fragments,
             input,
@@ -400,16 +635,59 @@ fn extract_linguistic_sentence(
         );
     }
 
-    state.ast.push(LinguisticAstSentence {
+    let subject_fragment_id = subject.as_ref().map(|fragment| fragment.id.clone());
+    let predicate_fragment_id = predicate.as_ref().map(|fragment| fragment.id.clone());
+    let object_fragment_id = object.as_ref().map(|fragment| fragment.id.clone());
+    let relation_type = relation_id.as_ref().map(|_| {
+        if object_fragment_id.is_some() {
+            "subject-predicate-object".to_string()
+        } else {
+            "subject-predicate".to_string()
+        }
+    });
+
+    state.cst_sentences.push(LinguisticCstSentence {
+        kind: "sentence-cst".to_string(),
         id: format!("sentence-{}", span.sentence_index + 1),
+        version: 1,
         text: input[sentence_start..sentence_end].to_string(),
-        subject_fragment_id: subject.map(|fragment| fragment.id),
-        predicate_fragment_id: predicate.map(|fragment| fragment.id),
-        object_fragment_id: object.map(|fragment| fragment.id),
+        token_start: start_token,
+        token_end: end_token,
+        source_start: sentence_start,
+        source_end: sentence_end,
+        predicate_token,
+        subject_range,
+        predicate_range,
+        object_phrase_range,
+        object_range,
+        noun_phrase_ranges,
+        verb_phrase_range,
+        dependencies: cst_dependencies,
+        relation_type,
+        subject_fragment_id: subject_fragment_id.clone(),
+        predicate_fragment_id: predicate_fragment_id.clone(),
+        object_fragment_id: object_fragment_id.clone(),
+        relation_id: relation_id.clone(),
+        dependency_ids: dependency_ids.clone(),
+        provenance: linguistic_provenance("cst-sentence"),
+    });
+
+    state.ast.push(LinguisticAstSentence {
+        kind: "sentence".to_string(),
+        id: format!("sentence-{}", span.sentence_index + 1),
+        version: 1,
+        text: input[sentence_start..sentence_end].to_string(),
+        token_start: start_token,
+        token_end: end_token,
+        subject_fragment_id,
+        predicate_fragment_id,
+        object_fragment_id,
+        predicate_token,
         relation_id,
         dependency_ids,
         source_start: sentence_start,
         source_end: sentence_end,
+        provenance: linguistic_provenance("ast-sentence"),
     });
 }
 
@@ -428,6 +706,8 @@ fn push_linguistic_fragment(
         token_end: draft.token_end,
         source_start: draft.source_start,
         source_end: draft.source_end,
+        version: 1,
+        provenance: linguistic_provenance(format!("fragment:{}", draft.role)),
     });
     FragmentRef {
         id,
@@ -477,6 +757,9 @@ fn push_linguistic_dependency(
         relation: relation.to_string(),
         head_fragment_id: head_fragment_id.to_string(),
         dependent_fragment_id: dependent_fragment_id.to_string(),
+        source: LINGUISTIC_PARSER_ID.to_string(),
+        version: 1,
+        provenance: linguistic_provenance(format!("dependency:{relation}")),
     });
     id
 }
@@ -512,6 +795,12 @@ fn push_linguistic_relation(
         text: input[source_start..source_end].to_string(),
         source_start,
         source_end,
+        version: 1,
+        provenance: linguistic_provenance(if object.is_some() {
+            "relation:subject-predicate-object"
+        } else {
+            "relation:subject-predicate"
+        }),
     });
     id
 }

@@ -750,6 +750,8 @@ export interface LinguisticFragment {
   sourceStart: number | null;
   sourceEnd: number | null;
   phraseIds: string[];
+  version: number;
+  provenance: LinguisticProvenance;
 }
 
 export interface LinguisticDependency {
@@ -758,6 +760,8 @@ export interface LinguisticDependency {
   headFragmentId: string;
   dependentFragmentId: string;
   source: string;
+  version: number;
+  provenance: LinguisticProvenance;
 }
 
 export interface LinguisticRelation {
@@ -769,12 +773,91 @@ export interface LinguisticRelation {
   text: string;
   sourceStart: number;
   sourceEnd: number;
+  version: number;
+  provenance: LinguisticProvenance;
+}
+
+export interface LinguisticParserDescriptor {
+  id: string;
+  version: number;
+  language: string;
+  strategy: string;
+}
+
+export interface LinguisticProvenance {
+  sourceType: 'algorithm' | string;
+  method: string;
+  parserId: string;
+  parserVersion: number;
+  layer: string;
+}
+
+export interface LinguisticCstToken {
+  type: 'token-cst' | string;
+  id: string;
+  version: number;
+  text: string;
+  index: number;
+  sourceStart: number | null;
+  sourceEnd: number | null;
+  sentenceBoundaryAfter: boolean;
+  provenance: LinguisticProvenance;
+}
+
+export interface LinguisticCstSymbol {
+  type: 'symbol-cst' | string;
+  id: string;
+  version: number;
+  text: string;
+  sourceStart: number;
+  sourceEnd: number;
+  provenance: LinguisticProvenance;
+}
+
+export interface LinguisticCstSentence {
+  type: 'sentence-cst' | string;
+  id: string;
+  version: number;
+  text: string;
+  tokenStart: number;
+  tokenEnd: number;
+  sourceStart: number;
+  sourceEnd: number;
+  predicateToken: number | null;
+  subjectRange: Record<string, number> | null;
+  predicateRange: Record<string, number> | null;
+  objectPhraseRange: Record<string, number> | null;
+  objectRange: Record<string, number> | null;
+  nounPhraseRanges: Array<Record<string, number>>;
+  verbPhraseRange: Record<string, number> | null;
+  dependencies: Array<Record<string, string>>;
+  relationType: string | null;
+  subjectFragmentId?: string | null;
+  predicateFragmentId?: string | null;
+  objectFragmentId?: string | null;
+  relationId?: string | null;
+  dependencyIds?: string[];
+  provenance: LinguisticProvenance;
+}
+
+export interface LinguisticCst {
+  type: 'document-cst' | string;
+  version: number;
+  text: string;
+  language: string;
+  parser: LinguisticParserDescriptor;
+  tokens: LinguisticCstToken[];
+  symbols: LinguisticCstSymbol[];
+  sentences: LinguisticCstSentence[];
+  provenance: LinguisticProvenance;
 }
 
 export interface LinguisticAstNode {
   type: string;
   id?: string;
   version?: number;
+  parser?: LinguisticParserDescriptor;
+  provenance?: LinguisticProvenance;
   text: string;
   body?: LinguisticAstNode[];
   tokenStart?: number;
@@ -791,11 +874,14 @@ export interface LinguisticAstNode {
 export interface LinguisticMetadata {
   version: number;
   language: string;
+  parser: LinguisticParserDescriptor;
+  provenance: LinguisticProvenance;
   text: string;
   fragments: LinguisticFragment[];
   dependencies: LinguisticDependency[];
   relations: LinguisticRelation[];
   ast: LinguisticAstNode;
+  cst: LinguisticCst;
 }
 
 export interface FormalizePhrase {

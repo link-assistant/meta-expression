@@ -8,6 +8,7 @@ mod extract_first_statement;
 mod issue54_formal_ai;
 mod issue64_general_formalization;
 mod issue66_naturalization;
+mod issue70_reasoning_metadata;
 mod normalize_statement_key;
 mod support_ratio;
 mod token_coverage;
