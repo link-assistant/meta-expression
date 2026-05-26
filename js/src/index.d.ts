@@ -650,7 +650,7 @@ export interface WritingAssistantServices {
 }
 
 export interface WritingAssistantSurfaceOptions {
-  surface?: WritingAssistantSurfaceKind | string;
+  surface?: WritingAssistantSurfaceKind | string | WritingAssistantSurface;
   services?: WritingAssistantServices;
   context?: WritingAssistantContext;
   options?: Record<string, unknown>;

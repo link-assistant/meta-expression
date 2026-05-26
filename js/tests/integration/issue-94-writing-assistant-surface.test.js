@@ -208,5 +208,16 @@ describe('issue 94 - browser/editor writing assistant surface', () => {
             suggestion.styleRewrite === false
         )
     ).toBe(true);
+
+    const verifySelectionExports = harness.verifySelectionExports;
+    const verification = await verifySelectionExports(
+      WRITING_ASSISTANT_OPERATIONS.ANALYZE,
+      selection,
+      { report: fixture.report }
+    );
+
+    expect(verification.ok).toBe(true);
+    expect(verification.linksNotation).toBe(true);
+    expect(verification.issueReportUrl).toBe(true);
   });
 });

@@ -173,39 +173,39 @@ export function createMockWritingAssistantExtensionHarness(options = {}) {
       ? options.surface
       : createWritingAssistantSurface(options);
   const defaultContext = normalizeContext(options.context);
+  const createSelection = (text, context = {}) => ({
+    text: String(text ?? ''),
+    ...defaultContext,
+    ...normalizeContext(context),
+  });
+  const runSelection = (operation, selection, request = {}) => {
+    const selectedText =
+      typeof selection === 'string'
+        ? selection
+        : String(selection?.text ?? request.text ?? '');
+    const selectionContext =
+      typeof selection === 'string' ? {} : normalizeContext(selection);
+    const context = {
+      ...defaultContext,
+      ...selectionContext,
+      ...normalizeContext(request.context),
+    };
+    return assistantSurface.run({
+      ...request,
+      operation,
+      text: selectedText,
+      context,
+    });
+  };
 
   return Object.freeze({
     kind: 'mock-writing-assistant-extension-harness',
     surface: assistantSurface.surface,
     guardrails: assistantSurface.guardrails,
-    createSelection(text, context = {}) {
-      return {
-        text: String(text ?? ''),
-        ...defaultContext,
-        ...normalizeContext(context),
-      };
-    },
-    runSelection(operation, selection, request = {}) {
-      const selectedText =
-        typeof selection === 'string'
-          ? selection
-          : String(selection?.text ?? request.text ?? '');
-      const selectionContext =
-        typeof selection === 'string' ? {} : normalizeContext(selection);
-      const context = {
-        ...defaultContext,
-        ...selectionContext,
-        ...normalizeContext(request.context),
-      };
-      return assistantSurface.run({
-        ...request,
-        operation,
-        text: selectedText,
-        context,
-      });
-    },
+    createSelection,
+    runSelection,
     async verifySelectionExports(operation, selection, request = {}) {
-      const result = await this.runSelection(operation, selection, request);
+      const result = await runSelection(operation, selection, request);
       return verifyWritingAssistantEmbeddedExports(result);
     },
   });
