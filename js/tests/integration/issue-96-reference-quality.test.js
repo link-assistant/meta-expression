@@ -40,18 +40,30 @@ function translateToRussian(paragraph) {
 // the human-written Russian Wikipedia lead of each article. Every entry was
 // confirmed to appear verbatim in the captured human reference, so this gate
 // fails loudly if the glossary or pipeline stops producing real, human-attested
-// Russian vocabulary. Articles whose machine output shares no content word with
-// the human lead (e.g. the Tiananmen protests) are intentionally excluded from
-// the strict per-article list but still counted in the aggregate below.
+// Russian vocabulary. Each article is checked directly so topic regressions
+// cannot hide behind aggregate improvements.
 const requiredHumanMatches = {
-  '.xxx': ['домен'],
-  Charlie_Kirk: ['американский', 'активист'],
+  '.xxx': ['домен', 'верхнего', 'уровня', 'порнографических'],
+  Charlie_Kirk: [
+    'американский',
+    'активист',
+    'медийная',
+    'фигура',
+    'республиканской',
+    'партии',
+  ],
   ChatGPT: ['чат', 'бот'],
-  Google_Chrome: ['браузер'],
-  Ed_Gein: ['американский', 'убийца'],
-  Donald_Trump: ['президент'],
-  Zohran_Mamdani: ['мэр'],
+  Google_Chrome: ['браузер', 'разрабатываемый'],
+  '1989_Tiananmen_Square_protests_and_massacre': [
+    'протеста',
+    'тяньаньмэнь',
+    'студенты',
+  ],
+  Ed_Gein: ['американский', 'убийца', 'похититель', 'трупов'],
+  Donald_Trump: ['политический', 'деятель', 'президент'],
+  Zohran_Mamdani: ['политический', 'деятель', 'мэр'],
   Elon_Musk: ['предприниматель'],
+  'XXX_(2002_film)': ['американский', 'боевик', 'режиссёром'],
 };
 
 describe('issue 96 - English to Russian paragraph translation vs human reference', () => {
@@ -118,14 +130,13 @@ describe('issue 96 - English to Russian paragraph translation vs human reference
 
     // The fixture captured Russian human translations for the whole corpus.
     expect(articlesWithReference).toBe(10);
-    // Measured 9/10; require at least 8 articles to share content vocabulary
-    // with their human reference.
-    expect(articlesWithMatch).toBeGreaterThanOrEqual(8);
-    // Measured 22 matched Cyrillic tokens; require a stable floor of 18.
-    expect(totalOverlap).toBeGreaterThanOrEqual(18);
-    // Measured aggregate precision ~0.48; at least 40% of every Russian word
-    // the machine emits across the corpus is exactly a word a human chose.
+    // Issue #115 graduates the remaining no-match article and raises the
+    // measured corpus floor from 22 to at least 40 human-attested tokens.
+    expect(articlesWithMatch).toBe(10);
+    expect(totalOverlap).toBeGreaterThanOrEqual(40);
+    // At least 50% of every Russian word the machine emits across the corpus is
+    // exactly a word a human chose.
     expect(totalMachineTokens).toBeGreaterThan(0);
-    expect(totalOverlap / totalMachineTokens).toBeGreaterThanOrEqual(0.4);
+    expect(totalOverlap / totalMachineTokens).toBeGreaterThanOrEqual(0.5);
   });
 });
