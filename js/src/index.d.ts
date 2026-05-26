@@ -736,6 +736,68 @@ export interface WikimediaEvidenceClient {
   ): Promise<EvidenceItem[]>;
 }
 
+export interface TermFieldProvenance {
+  source: string;
+  sourceField: string;
+  targetField: string;
+  mergeStrategy: string;
+  sourceUrl: string | null;
+  retrievedAt: string | null;
+}
+
+export interface TermDataRecord {
+  kind: 'term-data';
+  version: number;
+  term: string;
+  normalizedTerm: string;
+  language: string;
+  retrievedAt: string;
+  fields: Record<string, unknown>;
+  sources: Record<string, unknown>;
+  provenance: {
+    fields: Record<string, TermFieldProvenance[]>;
+    requests: Array<Record<string, unknown>>;
+  };
+}
+
+export interface TermDataArtifacts {
+  linksNotation: string;
+  binary: Uint8Array;
+}
+
+export type TermDataFetch = (
+  input: string | URL,
+  init?: Record<string, unknown>
+) => Promise<{
+  ok: boolean;
+  status: number;
+  headers?: { get(name: string): string | null };
+  json(): Promise<unknown>;
+}>;
+
+export interface TermDataResult extends TermDataRecord {
+  artifacts: TermDataArtifacts;
+}
+
+export interface TermDataSource {
+  cache: Map<string, unknown>;
+  getTerm(
+    term: string,
+    options?: TermDataSourceOptions
+  ): Promise<TermDataResult>;
+}
+
+export interface TermDataSourceOptions {
+  cache?: Map<string, unknown>;
+  cacheTtlMs?: number;
+  cacheJitterMs?: number;
+  cacheJitterMinMs?: number;
+  fetch?: TermDataFetch;
+  fetchImpl?: TermDataFetch;
+  language?: string;
+  now?: () => number;
+}
+
 export declare const defaultBeliefSystem: BeliefSystem;
 
 export declare const preferenceBeliefDefinitions: readonly PreferenceBeliefDefinition[];
@@ -912,6 +974,19 @@ export declare function resolveLiveEvidence(
   input: string,
   options?: AnalysisOptions
 ): Promise<EvidenceItem[]>;
+
+export declare function createTermDataSource(
+  options?: TermDataSourceOptions
+): TermDataSource;
+
+export declare function getTerm(
+  term: string,
+  options?: TermDataSourceOptions
+): Promise<TermDataResult>;
+
+export declare function parseTermDataLinksNotation(
+  text: string
+): TermDataRecord | unknown;
 
 export declare function generateInterpretations(
   input: string,

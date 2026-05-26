@@ -21,6 +21,11 @@ export {
   createWikimediaEvidenceClient,
   resolveLiveEvidence,
 } from './wikimedia-evidence.js';
+export {
+  createTermDataSource,
+  getTerm,
+  parseTermDataLinksNotation,
+} from './term-data-source.js';
 export { computeEvidenceConfidence } from './evidence-scoring.js';
 export {
   createProbabilityCalculation,
