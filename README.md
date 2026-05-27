@@ -9,6 +9,11 @@ The implementation in this PR keeps the long-term direction documented in
 [`docs/REQUIREMENTS.md`](docs/REQUIREMENTS.md) and
 [`docs/ROADMAP.md`](docs/ROADMAP.md), while providing working library, CLI,
 microservice, and static web surfaces now.
+[`docs/IMPLEMENTATION-STATUS.md`](docs/IMPLEMENTATION-STATUS.md) is the
+single-page tracker that maps the vision (full computability and formalizing
+any text, as a foundation for
+[formal-ai](https://github.com/link-assistant/formal-ai)) to the current
+state of the code and the open plan.
 
 The text-formalization and translation sub-systems have an auto-generated
 formalization reference at
