@@ -20,12 +20,16 @@ const manifest = JSON.parse(
   readFileSync(join(rootDir, 'scripts/js-rust-parity.json'), 'utf8')
 );
 
-function runChecker(changed) {
+function runChecker(changed, { env } = {}) {
   const args = [checker];
   if (changed !== undefined) {
     args.push('--changed', changed);
   }
-  return spawnSync('node', args, { cwd: rootDir, encoding: 'utf8' });
+  return spawnSync('node', args, {
+    cwd: rootDir,
+    encoding: 'utf8',
+    env: env ?? process.env,
+  });
 }
 
 function combined(result) {
@@ -39,7 +43,18 @@ describe('JS <-> Rust parity guardrail', () => {
   });
 
   it('validates manifest paths and passes when no diff is available', () => {
-    const result = runChecker();
+    // Force the "no pull-request diff available" branch deterministically.
+    // On `pull_request`, CI checks out a synthetic merge commit, so the checker
+    // would otherwise resolve a diff via `git diff HEAD^1 HEAD^2` and report
+    // "parity holds" instead. Point git at a non-existent GIT_DIR and strip the
+    // CI diff-hint env vars so no diff can be resolved and the checker falls
+    // back to validating manifest paths only — regardless of the host's git
+    // state (local working copy vs. CI merge commit).
+    const env = { ...process.env, GIT_DIR: join(rootDir, 'no-such-git-dir') };
+    delete env.GITHUB_BASE_SHA;
+    delete env.GITHUB_HEAD_SHA;
+    delete env.PARITY_CHANGED_FILES;
+    const result = runChecker(undefined, { env });
     expect(result.status).toBe(0);
     expect(combined(result).includes('validated manifest paths only')).toBe(
       true
