@@ -26,8 +26,11 @@ import {
 } from './formalize-sources.js';
 import {
   aggregateBigContexts,
+  applyContextSelections,
+  buildContextQuestions,
   buildWordContexts,
   isScholarlyPublicationCandidate,
+  normalizeContextSelections,
 } from './formalize-contexts.js';
 import { fetchWikimediaJson } from './wikimedia-fetch.js';
 import {
@@ -281,8 +284,13 @@ export async function formalizeTextWith(input, options = {}) {
     perStepBranching: config.bigContextBranching,
     topCategories: config.bigContextTop,
   });
-  const reranked = applyContextLens(phrases, config.contextLens, flatContexts);
+  const lensed = applyContextLens(phrases, config.contextLens, flatContexts);
+  // User-pinned senses win over both the score ranking and the context lens
+  // so answering a context-selection question re-derives the formalization
+  // (and re-runs translation downstream) — issue #126.
+  const reranked = applyContextSelections(lensed, config.contextSelections);
   const wordContexts = buildWordContexts(reranked);
+  const contextQuestions = buildContextQuestions(reranked);
   const interpretations = generateFormalizeInterpretations(
     reranked,
     flatContexts,
@@ -321,6 +329,7 @@ export async function formalizeTextWith(input, options = {}) {
     mainContext: flatContexts.main,
     additionalContexts: flatContexts.additional,
     wordContexts,
+    contextQuestions,
     bigContexts: bigContexts.all,
     mainBigContext: bigContexts.main,
     additionalBigContexts: bigContexts.additional,
@@ -538,6 +547,7 @@ function resolveScalarConfigDefaults(options) {
     searchConcurrency: options.searchConcurrency ?? defaultSearchConcurrency,
     linkTargetMode: options.linkTargetMode ?? linkTargetModes.WIKIPEDIA,
     contextLens: options.contextLens ?? null,
+    contextSelections: normalizeContextSelections(options.contextSelections),
     language: options.language ?? 'en',
     bigContextDepth: options.bigContextDepth,
     bigContextBranching: options.bigContextBranching,

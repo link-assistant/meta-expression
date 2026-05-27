@@ -122,6 +122,138 @@ export function buildWordContexts(phrases) {
 }
 
 /**
+ * Build context-selection questions for every word that has more than one
+ * plausible sense. Unlike translation-variable questions, these are NOT meant
+ * to disappear once answered: selecting an option pins that sense, which the
+ * formalizer honors via `contextSelections`, re-deriving the English
+ * formalization (and re-running translation downstream) — issue #126.
+ *
+ * @param {object[]} phrases - resolved phrase objects with candidates
+ * @returns {Array<object>}
+ */
+export function buildContextQuestions(phrases) {
+  return phrases
+    .filter((phrase) => phrase.entity && (phrase.candidates?.length ?? 0) > 1)
+    .map((phrase) => {
+      const selectedEntityId = phrase.entity.id;
+      return {
+        kind: 'context-selection',
+        phraseStart: phrase.start ?? null,
+        phraseText: phrase.text,
+        selectedEntityId,
+        question: `Which meaning of "${phrase.text}" did you intend?`,
+        options: phrase.candidates.map((candidate) => ({
+          id: candidate.id,
+          entityId: candidate.id,
+          label: candidate.label ?? candidate.id,
+          description: candidate.description ?? null,
+          score: candidate.score ?? null,
+          selected: candidate.id === selectedEntityId,
+          isPublication: isScholarlyPublicationCandidate(candidate),
+        })),
+      };
+    });
+}
+
+/**
+ * Normalize user-pinned context selections into a `Map` keyed by both the
+ * phrase start index (the stable key the UI uses) and the phrase text (a
+ * convenient key for API callers). Each value is the chosen candidate id.
+ *
+ * Accepts a `Map`, an array of `{ start?, text?, entityId }`, or a plain
+ * object whose keys are start indexes / phrase text and values are ids.
+ *
+ * @param {Map|Array|object} [input]
+ * @returns {Map<string, string>}
+ */
+export function normalizeContextSelections(input) {
+  const map = new Map();
+  if (!input) {
+    return map;
+  }
+  for (const [key, value] of contextSelectionEntries(input)) {
+    const entityId =
+      typeof value === 'string' ? value : (value?.entityId ?? null);
+    if (key === null || key === undefined || !entityId) {
+      continue;
+    }
+    map.set(String(key), entityId);
+  }
+  return map;
+}
+
+function contextSelectionEntries(input) {
+  if (input instanceof Map) {
+    return [...input.entries()];
+  }
+  if (Array.isArray(input)) {
+    return input.map((entry) => [entry?.start ?? entry?.text, entry]);
+  }
+  return Object.entries(input);
+}
+
+function lookupContextSelection(selections, phrase) {
+  const hasStart = phrase.start !== null && phrase.start !== undefined;
+  if (hasStart && selections.has(String(phrase.start))) {
+    return selections.get(String(phrase.start));
+  }
+  return selections.get(phrase.text) ?? null;
+}
+
+/**
+ * Re-pick the chosen entity for any phrase the user pinned to a specific
+ * candidate sense. The picked candidate is promoted to the front so it both
+ * becomes the entity and is reported as `selected` in the word contexts and
+ * context questions — issue #126.
+ *
+ * @param {object[]} phrases
+ * @param {Map<string, string>} selections
+ * @returns {object[]}
+ */
+export function applyContextSelections(phrases, selections) {
+  if (!selections || selections.size === 0) {
+    return phrases;
+  }
+  return phrases.map((phrase) => selectPhraseCandidate(phrase, selections));
+}
+
+function selectPhraseCandidate(phrase, selections) {
+  if (!phrase.entity || (phrase.candidates?.length ?? 0) <= 1) {
+    return phrase;
+  }
+  const chosenId = lookupContextSelection(selections, phrase);
+  if (!chosenId || chosenId === phrase.entity.id) {
+    return phrase;
+  }
+  const chosen = phrase.candidates.find(
+    (candidate) => candidate.id === chosenId
+  );
+  if (!chosen) {
+    return phrase;
+  }
+  return {
+    ...phrase,
+    candidates: [
+      chosen,
+      ...phrase.candidates.filter((candidate) => candidate !== chosen),
+    ],
+    entity: {
+      ...phrase.entity,
+      id: chosen.id,
+      label: chosen.label,
+      description: chosen.description,
+      kind: chosen.kind,
+      source: chosen.source ?? phrase.entity.source,
+      sourceUrl: chosen.sourceUrl ?? phrase.entity.sourceUrl,
+      score: chosen.score,
+      contextLabels: chosen.contextLabels ?? phrase.entity.contextLabels,
+      wikipediaUrl: chosen.wikipediaUrl ?? null,
+      wikipediaTitle: chosen.wikipediaTitle ?? null,
+    },
+  };
+}
+
+/**
  * Aggregate big-context categories from a list of resolved phrases.
  *
  * @param {object[]} phrases   - Phrase objects with `entity.contextLabels`.

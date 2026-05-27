@@ -39,16 +39,41 @@ export function setupTranslatePage({
   const cstPre = document.querySelector('#translate-cst');
   const stepsList = document.querySelector('#translate-steps');
   const debugPre = document.querySelector('#translate-debug-log');
-  let currentResult = null;
   const strategyState = {
     selected: listTranslationStrategies()[0]?.id ?? 'contextual-glossary',
   };
 
   if (!input || !run || !output || !status) {
-    return { getResult: () => currentResult };
+    return { getResult: () => null };
   }
 
-  let requestId = 0;
+  const ctx = {
+    input,
+    sourceLanguage,
+    targetLanguage,
+    strategyGroup,
+    linkTargetGroup,
+    sourceList,
+    run,
+    status,
+    formalizedOutput,
+    output,
+    questions,
+    wordContextsList,
+    markdownPre,
+    linoPre,
+    cstPre,
+    stepsList,
+    debugPre,
+    cache,
+    strategyState,
+    requestId: 0,
+    currentResult: null,
+    // Pinned per-word senses persist across re-runs so answering a context
+    // question modifies the formalization without the question disappearing.
+    contextSelections: {},
+    lastText: null,
+  };
 
   setupTranslateSamples({
     sampleSelect,
@@ -59,18 +84,16 @@ export function setupTranslatePage({
   setupTranslationStrategies(strategyGroup, strategyState);
   setupSourcePriorityList(sourceList);
 
-  run.addEventListener('click', () => {
-    runTranslate();
-  });
+  run.addEventListener('click', () => runTranslate(ctx));
   input.addEventListener('keydown', (event) => {
     if ((event.metaKey || event.ctrlKey) && event.key === 'Enter') {
       event.preventDefault();
-      runTranslate();
+      runTranslate(ctx);
     }
   });
   setupTranslateCopyButtons({
     status,
-    getResult: () => currentResult,
+    getResult: () => ctx.currentResult,
     buttons: [
       { button: copyMarkdown, label: 'Markdown', value: (r) => r.markdown },
       {
@@ -86,91 +109,117 @@ export function setupTranslatePage({
     ],
   });
 
-  async function runTranslate() {
-    const text = input.value.trim();
-    if (!text) {
-      status.textContent = 'Enter some text first.';
+  return { getResult: () => ctx.currentResult };
+}
+
+function buildTranslateOptions(ctx) {
+  const sourcesSpec = collectCheckedSourceSpec(ctx.sourceList);
+  return {
+    fetch: globalThis.fetch?.bind(globalThis),
+    cache: ctx.cache,
+    sourceLanguage: selectedLanguageValue(ctx.sourceLanguage, 'en'),
+    targetLanguage: selectedLanguageValue(ctx.targetLanguage, 'ru'),
+    linkTargetMode: selectedTranslateLinkTargetMode(ctx.linkTargetGroup),
+    translationStrategy: ctx.strategyState.selected,
+    sources: selectedTranslateSources(sourcesSpec, ctx.sourceLanguage),
+    contextSelections: ctx.contextSelections,
+  };
+}
+
+function runTranslate(ctx) {
+  const text = ctx.input.value.trim();
+  if (!text) {
+    ctx.status.textContent = 'Enter some text first.';
+    return;
+  }
+  // A fresh run from the Translate button clears any pinned senses.
+  ctx.contextSelections = {};
+  ctx.lastText = text;
+  executeTranslate(ctx, text);
+}
+
+// Re-pin a word's sense and re-run translation. The selection is kept so the
+// context question stays visible with the new choice highlighted — issue #126.
+function applyContextSelection(ctx, phraseStart, entityId) {
+  if (phraseStart === null || phraseStart === undefined || !ctx.lastText) {
+    return;
+  }
+  if (ctx.contextSelections[phraseStart] === entityId) {
+    return;
+  }
+  ctx.contextSelections = { ...ctx.contextSelections, [phraseStart]: entityId };
+  executeTranslate(ctx, ctx.lastText);
+}
+
+async function executeTranslate(ctx, text) {
+  const { status, run } = ctx;
+  const id = String((ctx.requestId += 1));
+  status.dataset.requestId = id;
+  status.textContent = 'Translating...';
+  run.dataset.defaultLabel ??= run.textContent;
+  run.disabled = true;
+  run.textContent = 'Translating...';
+  try {
+    const result = await translateTextWith(text, buildTranslateOptions(ctx));
+    if (status.dataset.requestId !== id) {
       return;
     }
-    const id = String((requestId += 1));
-    status.dataset.requestId = id;
-    status.textContent = 'Translating...';
-    run.dataset.defaultLabel ??= run.textContent;
-    run.disabled = true;
-    run.textContent = 'Translating...';
-    try {
-      const sourcesSpec = collectCheckedSourceSpec(sourceList);
-      const result = await translateTextWith(text, {
-        fetch: globalThis.fetch?.bind(globalThis),
-        cache,
-        sourceLanguage: selectedLanguageValue(sourceLanguage, 'en'),
-        targetLanguage: selectedLanguageValue(targetLanguage, 'ru'),
-        linkTargetMode: selectedTranslateLinkTargetMode(linkTargetGroup),
-        translationStrategy: strategyState.selected,
-        sources: selectedTranslateSources(sourcesSpec, sourceLanguage),
-      });
-      if (status.dataset.requestId !== id) {
-        return;
-      }
-      currentResult = result;
-      renderTranslateResult(result);
-    } catch (error) {
-      if (status.dataset.requestId === id) {
-        status.textContent = `Translate failed: ${
-          error instanceof Error ? error.message : String(error)
-        }`;
-      }
-    } finally {
-      if (status.dataset.requestId === id) {
-        run.disabled = false;
-        run.textContent = run.dataset.defaultLabel || 'Translate';
-      }
+    ctx.currentResult = result;
+    renderTranslateResult(ctx, result);
+  } catch (error) {
+    if (status.dataset.requestId === id) {
+      status.textContent = `Translate failed: ${
+        error instanceof Error ? error.message : String(error)
+      }`;
+    }
+  } finally {
+    if (status.dataset.requestId === id) {
+      run.disabled = false;
+      run.textContent = run.dataset.defaultLabel || 'Translate';
     }
   }
+}
 
-  function renderTranslateResult(result) {
-    if (formalizedOutput) {
-      renderLinkedHtml(
-        formalizedOutput,
-        result.formalization.html || escapeHtml(result.formalization.markdown)
+function renderTranslateResult(ctx, result) {
+  if (ctx.formalizedOutput) {
+    renderLinkedHtml(
+      ctx.formalizedOutput,
+      result.formalization.html || escapeHtml(result.formalization.markdown)
+    );
+  }
+  renderLinkedHtml(ctx.output, result.html || escapeHtml(result.plainText));
+  renderQuestionList(
+    ctx.questions,
+    result.questionDetails ?? result.questions,
+    (question, answer) => {
+      ctx.currentResult = applyTranslationQuestionAnswers(
+        ctx.currentResult ?? result,
+        { [question.variableName]: answer }
       );
+      renderTranslateResult(ctx, ctx.currentResult);
     }
-    renderLinkedHtml(output, result.html || escapeHtml(result.plainText));
-    renderQuestionList(
-      questions,
-      result.questionDetails ?? result.questions,
-      (question, answer) => {
-        currentResult = applyTranslationQuestionAnswers(
-          currentResult ?? result,
-          {
-            [question.variableName]: answer,
-          }
-        );
-        renderTranslateResult(currentResult);
-      }
-    );
-    renderWordContextList(
-      wordContextsList,
-      result.formalization?.wordContexts ?? [],
-      result.formalization?.mainContext ?? null
-    );
-    renderStepList(stepsList, result.steps);
-    if (markdownPre) {
-      markdownPre.textContent = result.markdown;
-    }
-    if (linoPre) {
-      linoPre.textContent = result.linksNotation;
-    }
-    if (cstPre) {
-      cstPre.textContent = JSON.stringify(result.cst, null, 2);
-    }
-    if (debugPre) {
-      debugPre.textContent = formatDebugLog(result);
-    }
-    status.textContent = translateStatusText(result);
+  );
+  renderWordContextList(ctx.wordContextsList, {
+    wordContexts: result.formalization?.wordContexts ?? [],
+    contextQuestions: result.formalization?.contextQuestions ?? [],
+    mainContext: result.formalization?.mainContext ?? null,
+    selections: ctx.contextSelections,
+    onSelect: (start, entityId) => applyContextSelection(ctx, start, entityId),
+  });
+  renderStepList(ctx.stepsList, result.steps);
+  if (ctx.markdownPre) {
+    ctx.markdownPre.textContent = result.markdown;
   }
-
-  return { getResult: () => currentResult };
+  if (ctx.linoPre) {
+    ctx.linoPre.textContent = result.linksNotation;
+  }
+  if (ctx.cstPre) {
+    ctx.cstPre.textContent = JSON.stringify(result.cst, null, 2);
+  }
+  if (ctx.debugPre) {
+    ctx.debugPre.textContent = formatDebugLog(result);
+  }
+  ctx.status.textContent = translateStatusText(result);
 }
 
 function setupTranslateCopyButtons({ status, getResult, buttons }) {
@@ -373,10 +422,19 @@ function renderQuestionOptions(question, onAnswer) {
 // Issue #126: show how each word was disambiguated — every candidate sense,
 // its detected contexts (instance-of / subclass-of / …), the score, and
 // which sense the formalizer picked — plus the single most-likely context.
-function renderWordContextList(container, wordContexts, mainContext) {
+// Words with more than one plausible sense become a persistent context
+// question: clicking a sense re-pins it and re-runs translation.
+function renderWordContextList(container, options = {}) {
   if (!container) {
     return;
   }
+  const {
+    wordContexts = [],
+    contextQuestions = [],
+    mainContext = null,
+    selections = {},
+    onSelect,
+  } = options;
   container.replaceChildren();
   if (!wordContexts.length) {
     appendEmptyListItem(container, 'No word contexts detected.');
@@ -390,24 +448,69 @@ function renderWordContextList(container, wordContexts, mainContext) {
     )}`;
     container.append(summary);
   }
+  const questionByStart = new Map(
+    contextQuestions.map((question) => [question.phraseStart, question])
+  );
   for (const word of wordContexts) {
-    const item = document.createElement('li');
-    const heading = document.createElement('strong');
-    heading.textContent = word.text;
-    item.append(heading);
-    const candidateList = document.createElement('ul');
-    candidateList.className = 'translate-word-context-candidates';
-    for (const candidate of word.candidates) {
-      const candidateItem = document.createElement('li');
-      candidateItem.textContent = formatWordContextCandidate(candidate);
-      if (candidate.selected) {
-        candidateItem.classList.add('translate-word-context-selected');
-      }
-      candidateList.append(candidateItem);
-    }
-    item.append(candidateList);
-    container.append(item);
+    container.append(
+      renderWordContextItem(word, questionByStart.get(word.start), {
+        selections,
+        onSelect,
+      })
+    );
   }
+}
+
+function renderWordContextItem(word, question, { selections, onSelect }) {
+  const item = document.createElement('li');
+  const heading = document.createElement('strong');
+  heading.textContent = word.text;
+  item.append(heading);
+  if (question && onSelect) {
+    item.append(
+      renderContextQuestion(word, question, { selections, onSelect })
+    );
+    return item;
+  }
+  const candidateList = document.createElement('ul');
+  candidateList.className = 'translate-word-context-candidates';
+  for (const candidate of word.candidates) {
+    const candidateItem = document.createElement('li');
+    candidateItem.textContent = formatWordContextCandidate(candidate);
+    if (candidate.selected) {
+      candidateItem.classList.add('translate-word-context-selected');
+    }
+    candidateList.append(candidateItem);
+  }
+  item.append(candidateList);
+  return item;
+}
+
+function renderContextQuestion(word, question, { selections, onSelect }) {
+  const pinned = selections[word.start] ?? question.selectedEntityId;
+  const group = document.createElement('div');
+  group.className = 'translate-context-options';
+  group.setAttribute('role', 'group');
+  group.setAttribute('aria-label', question.question);
+  for (const option of question.options) {
+    const button = document.createElement('button');
+    button.type = 'button';
+    button.className = 'translate-context-option';
+    button.textContent = formatContextOptionLabel(option);
+    button.title = option.description ?? option.entityId;
+    button.setAttribute('aria-pressed', String(option.entityId === pinned));
+    button.addEventListener('click', () =>
+      onSelect(word.start, option.entityId)
+    );
+    group.append(button);
+  }
+  return group;
+}
+
+function formatContextOptionLabel(option) {
+  const id = option.entityId ? ` [${option.entityId}]` : '';
+  const publication = option.isPublication ? ' [publication]' : '';
+  return `${option.label ?? option.entityId}${id}${publication}`;
 }
 
 function formatWordContextCandidate(candidate) {
