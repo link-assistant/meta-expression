@@ -605,11 +605,13 @@ function formatStep(step) {
   return `${step.type}: ${step.id}`;
 }
 
+function debugSection(title, list, formatter, emptyText) {
+  const body = list.length ? list.map(formatter).join('\n\n') : emptyText;
+  return [title, body, ''];
+}
+
 function formatDebugLog(result) {
-  const questions = result.questionDetails ?? [];
-  const steps = result.steps ?? [];
   const formalization = result.formalization ?? {};
-  const wordContexts = formalization.wordContexts ?? [];
   const sourceText =
     formalization.text ?? result.text ?? result.plainText ?? '';
   return [
@@ -631,20 +633,30 @@ function formatDebugLog(result) {
     '',
     'Context detection',
     `Most likely context: ${formatContextRef(formalization.mainContext)}`,
-    wordContexts.length
-      ? wordContexts.map(formatWordContextDebug).join('\n\n')
-      : 'No word contexts detected.',
-    '',
-    'Questions',
-    questions.length
-      ? questions.map(formatQuestionDebug).join('\n\n')
-      : 'No unresolved variables.',
-    '',
-    'Translation steps',
-    steps.length
-      ? steps.map(formatStepDebug).join('\n\n')
-      : 'No recorded steps.',
-    '',
+    ...debugSection(
+      'Word contexts',
+      formalization.wordContexts ?? [],
+      formatWordContextDebug,
+      'No word contexts detected.'
+    ),
+    ...debugSection(
+      'Context selection questions',
+      formalization.contextQuestions ?? [],
+      formatContextQuestionDebug,
+      'No ambiguous words detected.'
+    ),
+    ...debugSection(
+      'Questions',
+      result.questionDetails ?? [],
+      formatQuestionDebug,
+      'No unresolved variables.'
+    ),
+    ...debugSection(
+      'Translation steps',
+      result.steps ?? [],
+      formatStepDebug,
+      'No recorded steps.'
+    ),
     'Translation CST JSON',
     JSON.stringify(result.cst, null, 2),
   ].join('\n');
@@ -662,6 +674,20 @@ function formatWordContextDebug(word) {
     ...candidates.map(
       (candidate) => `  ${formatWordContextCandidate(candidate)}`
     ),
+  ].join('\n');
+}
+
+function formatContextQuestionDebug(question) {
+  const options = question.options ?? [];
+  return [
+    `${question.question} (selected: ${question.selectedEntityId ?? 'none'})`,
+    ...options.map((option) => {
+      const mark = option.selected ? '[x]' : '[ ]';
+      const score =
+        typeof option.score === 'number' ? ` (score ${option.score})` : '';
+      const publication = option.isPublication ? ' [publication]' : '';
+      return `${mark} ${formatContextOptionLabel(option)}${score}${publication}`;
+    }),
   ].join('\n');
 }
 
