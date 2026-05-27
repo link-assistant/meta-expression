@@ -28,10 +28,12 @@ export function setupTranslatePage({
   const run = document.querySelector('#translate-run');
   const copyMarkdown = document.querySelector('#translate-copy-markdown');
   const copyLino = document.querySelector('#translate-copy-lino');
+  const copyDebugLog = document.querySelector('#translate-copy-debug-log');
   const status = document.querySelector('#translate-status');
   const formalizedOutput = document.querySelector('#translate-formalized');
   const output = document.querySelector('#translate-output');
   const questions = document.querySelector('#translate-questions');
+  const wordContextsList = document.querySelector('#translate-word-contexts');
   const markdownPre = document.querySelector('#translate-markdown');
   const linoPre = document.querySelector('#translate-lino');
   const cstPre = document.querySelector('#translate-cst');
@@ -66,21 +68,22 @@ export function setupTranslatePage({
       runTranslate();
     }
   });
-  copyMarkdown?.addEventListener('click', async () => {
-    if (!currentResult) {
-      status.textContent = 'Translate the text first.';
-      return;
-    }
-    await writeClipboard(currentResult.markdown);
-    status.textContent = 'Markdown copied to clipboard.';
-  });
-  copyLino?.addEventListener('click', async () => {
-    if (!currentResult) {
-      status.textContent = 'Translate the text first.';
-      return;
-    }
-    await writeClipboard(currentResult.linksNotation);
-    status.textContent = 'Links Notation copied to clipboard.';
+  setupTranslateCopyButtons({
+    status,
+    getResult: () => currentResult,
+    buttons: [
+      { button: copyMarkdown, label: 'Markdown', value: (r) => r.markdown },
+      {
+        button: copyLino,
+        label: 'Links Notation',
+        value: (r) => r.linksNotation,
+      },
+      {
+        button: copyDebugLog,
+        label: 'Debug log',
+        value: (r) => formatDebugLog(r),
+      },
+    ],
   });
 
   async function runTranslate() {
@@ -146,6 +149,11 @@ export function setupTranslatePage({
         renderTranslateResult(currentResult);
       }
     );
+    renderWordContextList(
+      wordContextsList,
+      result.formalization?.wordContexts ?? [],
+      result.formalization?.mainContext ?? null
+    );
     renderStepList(stepsList, result.steps);
     if (markdownPre) {
       markdownPre.textContent = result.markdown;
@@ -163,6 +171,20 @@ export function setupTranslatePage({
   }
 
   return { getResult: () => currentResult };
+}
+
+function setupTranslateCopyButtons({ status, getResult, buttons }) {
+  for (const { button, label, value } of buttons) {
+    button?.addEventListener('click', async () => {
+      const result = getResult();
+      if (!result) {
+        status.textContent = 'Translate the text first.';
+        return;
+      }
+      await writeClipboard(value(result));
+      status.textContent = `${label} copied to clipboard.`;
+    });
+  }
 }
 
 function selectedLanguageValue(select, fallback) {
@@ -348,6 +370,73 @@ function renderQuestionOptions(question, onAnswer) {
   return group;
 }
 
+// Issue #126: show how each word was disambiguated — every candidate sense,
+// its detected contexts (instance-of / subclass-of / …), the score, and
+// which sense the formalizer picked — plus the single most-likely context.
+function renderWordContextList(container, wordContexts, mainContext) {
+  if (!container) {
+    return;
+  }
+  container.replaceChildren();
+  if (!wordContexts.length) {
+    appendEmptyListItem(container, 'No word contexts detected.');
+    return;
+  }
+  if (mainContext) {
+    const summary = document.createElement('li');
+    summary.className = 'translate-word-context-main';
+    summary.textContent = `Most likely context: ${formatContextRef(
+      mainContext
+    )}`;
+    container.append(summary);
+  }
+  for (const word of wordContexts) {
+    const item = document.createElement('li');
+    const heading = document.createElement('strong');
+    heading.textContent = word.text;
+    item.append(heading);
+    const candidateList = document.createElement('ul');
+    candidateList.className = 'translate-word-context-candidates';
+    for (const candidate of word.candidates) {
+      const candidateItem = document.createElement('li');
+      candidateItem.textContent = formatWordContextCandidate(candidate);
+      if (candidate.selected) {
+        candidateItem.classList.add('translate-word-context-selected');
+      }
+      candidateList.append(candidateItem);
+    }
+    item.append(candidateList);
+    container.append(item);
+  }
+}
+
+function formatWordContextCandidate(candidate) {
+  const mark = candidate.selected ? '✓ ' : '• ';
+  const id = candidate.id ? ` [${candidate.id}]` : '';
+  const score =
+    typeof candidate.score === 'number' ? ` (score ${candidate.score})` : '';
+  const publication = candidate.isPublication ? ' [publication]' : '';
+  const contexts = candidate.contexts?.length
+    ? ` — ${candidate.contexts
+        .map((ctx) => `${ctx.propertyLabel}: ${ctx.targetId}`)
+        .join(', ')}`
+    : '';
+  return `${mark}${candidate.label ?? '(no label)'}${id}${score}${publication}${contexts}`;
+}
+
+function formatContextRef(context) {
+  if (!context) {
+    return '(none)';
+  }
+  const label = context.label ?? context.id ?? '(unknown)';
+  const probability =
+    typeof context.probability === 'number'
+      ? ` (${Math.round(context.probability * 100)}%)`
+      : '';
+  const id = context.id && context.id !== label ? ` [${context.id}]` : '';
+  return `${label}${id}${probability}`;
+}
+
 function renderStepList(container, list) {
   if (!container) {
     return;
@@ -416,18 +505,32 @@ function formatStep(step) {
 function formatDebugLog(result) {
   const questions = result.questionDetails ?? [];
   const steps = result.steps ?? [];
+  const formalization = result.formalization ?? {};
+  const wordContexts = formalization.wordContexts ?? [];
+  const sourceText =
+    formalization.text ?? result.text ?? result.plainText ?? '';
   return [
     'Translate debug log',
     'UI: web/#/translate',
+    `App version: ${describeAppVersion()}`,
     `Source language: ${result.sourceLanguage}`,
     `Target language: ${result.targetLanguage}`,
     `Status: ${translateStatusText(result)}`,
     '',
+    'Source text',
+    sourceText,
+    '',
     'Formalized input',
-    result.formalization?.markdown ?? '',
+    formalization.markdown ?? '',
     '',
     'Translated result',
     result.markdown ?? result.plainText ?? '',
+    '',
+    'Context detection',
+    `Most likely context: ${formatContextRef(formalization.mainContext)}`,
+    wordContexts.length
+      ? wordContexts.map(formatWordContextDebug).join('\n\n')
+      : 'No word contexts detected.',
     '',
     'Questions',
     questions.length
@@ -441,6 +544,21 @@ function formatDebugLog(result) {
     '',
     'Translation CST JSON',
     JSON.stringify(result.cst, null, 2),
+  ].join('\n');
+}
+
+function describeAppVersion() {
+  const meta = globalThis.document?.querySelector?.('meta[name="app-version"]');
+  return meta?.content || globalThis.__APP_VERSION__ || 'unknown';
+}
+
+function formatWordContextDebug(word) {
+  const candidates = word.candidates ?? [];
+  return [
+    `Word: ${word.text}`,
+    ...candidates.map(
+      (candidate) => `  ${formatWordContextCandidate(candidate)}`
+    ),
   ].join('\n');
 }
 

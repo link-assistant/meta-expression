@@ -155,6 +155,8 @@ export {
 export {
   aggregateBigContexts,
   aggregateBigContextsFromGraph,
+  buildWordContexts,
+  isScholarlyPublicationCandidate,
 } from './formalize-contexts.js';
 export {
   annotateLinguisticMetadataPhraseRefs,

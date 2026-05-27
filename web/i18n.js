@@ -149,6 +149,7 @@ const dictionaries = {
     'translate.runButton': 'Translate',
     'translate.copyMarkdown': 'Copy as Markdown',
     'translate.copyLino': 'Copy as Links Notation',
+    'translate.copyDebug': 'Copy debug log',
     'translate.formalized': 'Formalized input',
     'translate.formalizedPlaceholder':
       'Click Translate to see the formalized source here.',
@@ -161,6 +162,9 @@ const dictionaries = {
     'translate.cstPayload': 'Translation CST',
     'translate.stepsPayload': 'Translation steps',
     'translate.debugPayload': 'Debug log',
+    'translate.wordContexts': 'Word contexts',
+    'translate.wordContextsEmpty':
+      'Translate to see how each word was disambiguated.',
     'preferences.heading': 'Preferences',
     'preferences.worldview': 'Worldview',
     'preferences.religions': 'Religions',
@@ -323,6 +327,7 @@ const dictionaries = {
     'translate.runButton': 'Перевести',
     'translate.copyMarkdown': 'Скопировать как Markdown',
     'translate.copyLino': 'Скопировать как Links Notation',
+    'translate.copyDebug': 'Скопировать отладочный лог',
     'translate.formalized': 'Формализованный ввод',
     'translate.formalizedPlaceholder':
       'Нажмите «Перевести», чтобы увидеть формализацию источника.',
@@ -336,6 +341,9 @@ const dictionaries = {
     'translate.cstPayload': 'CST перевода',
     'translate.stepsPayload': 'Шаги перевода',
     'translate.debugPayload': 'Отладочный лог',
+    'translate.wordContexts': 'Контексты слов',
+    'translate.wordContextsEmpty':
+      'Переведите текст, чтобы увидеть, как разрешалось значение каждого слова.',
     'preferences.heading': 'Настройки',
     'preferences.worldview': 'Картина мира',
     'preferences.religions': 'Религии',
