@@ -473,10 +473,13 @@ jobs:
         run: node scripts/verify-web-module-graph.mjs --root "${{ needs.deploy-pages.outputs.page_url }}"
 
   # Release - only runs on main after tests pass (for push events)
-  # Automatic npm publishing is opt-in because this repository can publish its
-  # static web prototype even when npm package publishing is not configured.
-  # Set repository variable NPM_PUBLISH_ENABLED=true after package identity and
-  # npm trusted publishing settings are configured.
+  # Version bumping, the commit to main, the git tag, and the GitHub release all
+  # run regardless of NPM_PUBLISH_ENABLED so the version always increases as
+  # changesets land (issue #126). Only the npm publish step is opt-in, gated by
+  # the NPM_PUBLISH_ENABLED repository variable, because this repository can ship
+  # its static web prototype even when npm package publishing is not configured.
+  # Set NPM_PUBLISH_ENABLED=true after package identity and npm trusted
+  # publishing settings are configured to also publish to npm.
   release:
     name: Release
     needs: [lint, test]
@@ -485,7 +488,6 @@ jobs:
     # This is needed because lint/test jobs have a transitive dependency on changeset-check
     if: |
       !cancelled() &&
-      vars.NPM_PUBLISH_ENABLED == 'true' &&
       github.ref == 'refs/heads/main' &&
       github.event_name == 'push' &&
       needs.lint.result == 'success' &&
@@ -511,6 +513,7 @@ jobs:
         run: npm install
 
       - name: Update npm for OIDC trusted publishing
+        if: vars.NPM_PUBLISH_ENABLED == 'true'
         run: node scripts/setup-npm.mjs
 
       - name: Check for changesets
@@ -535,26 +538,33 @@ jobs:
         run: node scripts/version-and-commit.mjs --mode changeset
 
       - name: Publish to npm
-        # Run if version was committed, if a previous attempt already committed (for re-runs),
-        # or if check-release-needed detected an unpublished version (self-healing, issue #36)
+        # npm publishing is opt-in (NPM_PUBLISH_ENABLED). Run if version was
+        # committed, if a previous attempt already committed (for re-runs), or
+        # if check-release-needed detected an unpublished version (self-healing,
+        # issue #36).
         if: >-
-          steps.version.outputs.version_committed == 'true' ||
+          vars.NPM_PUBLISH_ENABLED == 'true' &&
+          (steps.version.outputs.version_committed == 'true' ||
           steps.version.outputs.already_released == 'true' ||
-          (steps.check_release.outputs.should_release == 'true' && steps.check_release.outputs.skip_bump == 'true')
+          (steps.check_release.outputs.should_release == 'true' && steps.check_release.outputs.skip_bump == 'true'))
         id: publish
         run: node scripts/publish-to-npm.mjs --should-pull
 
+      # The GitHub release (and its git tag) is created whenever the version was
+      # bumped, even when npm publishing is disabled, so every version is tagged
+      # and released on GitHub (issue #126). When npm publishing happened we use
+      # the published version; otherwise we fall back to the freshly bumped one.
       - name: Create GitHub Release
-        if: steps.publish.outputs.published == 'true'
+        if: steps.publish.outputs.published == 'true' || steps.version.outputs.version_committed == 'true'
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: node scripts/create-github-release.mjs --release-version "${{ steps.publish.outputs.published_version }}" --repository "${{ github.repository }}"
+        run: node scripts/create-github-release.mjs --release-version "${{ steps.publish.outputs.published_version || steps.version.outputs.new_version }}" --repository "${{ github.repository }}"
 
       - name: Format GitHub release notes
-        if: steps.publish.outputs.published == 'true'
+        if: steps.publish.outputs.published == 'true' || steps.version.outputs.version_committed == 'true'
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: node scripts/format-github-release.mjs --release-version "${{ steps.publish.outputs.published_version }}" --repository "${{ github.repository }}" --commit-sha "${{ github.sha }}"
+        run: node scripts/format-github-release.mjs --release-version "${{ steps.publish.outputs.published_version || steps.version.outputs.new_version }}" --repository "${{ github.repository }}" --commit-sha "${{ github.sha }}"
 
   # Manual Instant Release - triggered via workflow_dispatch with instant mode
   # This job is in js.yml because npm trusted publishing
