@@ -137,3 +137,66 @@ shared `formalize-contexts.js` used by every entry point (`formalizeTextWith`,
 
 **Status: in progress.** All work lands on branch `issue-126-e1ac50244d41` /
 PR #127.
+
+---
+
+## PR follow-up requirements (R13–R16)
+
+These were raised in a PR #127 review comment (2026-05-27) after the original
+R1–R12 work landed. They broaden the scope from the context-selection bug to
+keeping the two engines (JavaScript and Rust) in lock-step.
+
+## R13 — Keep the Rust engine in sync and selectable in the UI
+
+> Make sure we update Rust logic as well, and it is fully in sync with our
+> JavaScript logic, and we can select between Rust and JavaScript engines in the
+> UI in all places.
+
+- The Rust core must carry the same issue #126 logic as JavaScript.
+- The web UI must let a reader **select between the JavaScript and Rust
+  engines** everywhere the Rust core mirrors the page's primary operation.
+
+**Status: done.** The issue #126 context-decision helpers were ported to
+`rust/src/formalize_contexts.rs` (mirroring `js/src/formalize-contexts.js`). The
+web prototype gained a global engine selector (`web/engine.js`,
+`web/engine-ui.js`, `#engine-select`/`#engine-badge` in `web/index.html`) that
+routes the **Analyse** and **Compare** pages through the chosen engine, with a
+graceful fallback to JavaScript. Pages whose primary operation the Rust core
+does not mirror (Check, Uniqueness, Formalize, Translate) stay on JavaScript by
+design; the rationale is documented in [`docs/PARITY.md`](../../PARITY.md).
+
+## R14 — Mirror the whole repository's structure across languages
+
+> Make sure to sync entire Rust and JavaScript code, files and folders should
+> have similar names and structure. The scope is the whole repository.
+
+- Mirrored modules should use aligned names
+  (`js/src/foo-bar.js` ↔ `rust/src/foo_bar.rs`).
+
+**Status: addressed.** The mirrored modules already follow aligned names
+(`formalize-contexts.js` ↔ `formalize_contexts.rs`, `semantic-lexicon.js` ↔
+`semantic_lexicon.rs`, `statement-formalization.js` ↔
+`statement_formalization.rs`, `doublets.js` ↔ `doublets_store.rs`, …). The full
+correspondence map — including JavaScript-only modules that are intentionally
+not mirrored yet and why — is enumerated in [`docs/PARITY.md`](../../PARITY.md).
+
+## R15 — CI guardrail so the engines can never silently drift
+
+> We also need CI/CD checks/rules/tests, that will guarantee that if we change
+> JavaScript code, we will also will change Rust code in any future pull
+> request, so such mistakes will not be reintroduced ever.
+
+**Status: done.** `scripts/check-js-rust-parity.mjs` (`npm run check:parity`,
+part of `npm run check`) reads a parity manifest
+(`scripts/js-rust-parity.json`) and **fails any pull request that changes one
+side of a mirrored pair without the other**. It runs in CI on every pull
+request and is covered by `js/tests/integration/issue-126-engine-selector.test.js`
+and the parity-script tests.
+
+## R16 — Plan and execute everything in this single pull request
+
+> Please plan and execute everything in this single pull request … until each
+> and every requirement fully addressed.
+
+**Status: in progress.** All R13–R16 work lands on branch
+`issue-126-e1ac50244d41` / PR #127 alongside R1–R12.
