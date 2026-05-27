@@ -51,6 +51,20 @@ describe('issue 126 - JS/Rust engine selector in the web UI', () => {
     expect(engineUi).toContain('analyzeStatement');
   });
 
+  it('routes the Compare page through the selected engine too', async () => {
+    // The Compare page must honour the global engine choice "in all places",
+    // so app.js injects the engine runtime's analyze() into setupComparePage.
+    const app = await readWeb('app.js');
+    expect(app).toContain('analyze: (statement, options) =>');
+    expect(app).toContain('enginePage.analyze(statement, 0, options)');
+
+    // compare-ui.js accepts an injectable analyze() and uses it for each claim,
+    // defaulting to the JavaScript engine so it still works standalone.
+    const compareUi = await readWeb('compare-ui.js');
+    expect(compareUi).toContain('analyze = (statement, options) =>');
+    expect(compareUi).toContain('analysis = analyze(claim, {');
+  });
+
   it('localizes the engine controls in every shipped locale', async () => {
     const { SUPPORTED_LOCALES, translate } =
       await import('../../../web/i18n.js');

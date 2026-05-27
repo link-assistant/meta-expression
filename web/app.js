@@ -731,6 +731,9 @@ const comparePage = setupComparePage({
   userBeliefs,
   getPreferenceProfile: getActivePreferenceProfile,
   getStrategyId: () => strategyId,
+  // Route each claim through the globally selected engine (JS or Rust/WASM),
+  // using the primary interpretation just like the analyse page default.
+  analyze: (statement, options) => enginePage.analyze(statement, 0, options),
 });
 setupPreferencesPage({
   onChange() {

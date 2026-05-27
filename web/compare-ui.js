@@ -12,6 +12,9 @@ export function setupComparePage({
   userBeliefs = {},
   getPreferenceProfile = () => ({}),
   getStrategyId = () => undefined,
+  // Routes each claim's analysis through the selected engine (JS or Rust/WASM).
+  // Defaults to the JavaScript engine so the page works in isolation.
+  analyze = (statement, options) => analyzeStatement(statement, options),
 } = {}) {
   const compareRows = document.querySelector('#compare-rows');
   const compareAdd = document.querySelector('#compare-add');
@@ -82,7 +85,7 @@ export function setupComparePage({
 
     let analysis;
     try {
-      analysis = analyzeStatement(claim, {
+      analysis = analyze(claim, {
         selectedBy: 'compare',
         userBeliefs,
         preferenceProfile: getPreferenceProfile(),
