@@ -130,6 +130,38 @@ jobs:
           GITHUB_BASE_REF: ${{ github.base_ref }}
         run: node scripts/check-version.mjs
 
+  # === JS <-> RUST PARITY CHECK ===
+  # Guarantees the two engines stay in sync: a PR that changes one side of a
+  # mirrored module pair (scripts/js-rust-parity.json) must change the other
+  # side too. Prevents the kind of JS-only / Rust-only drift that issue #126's
+  # follow-up calls out. Uses only Node built-ins, so no dependency install.
+  parity-check:
+    name: Check JS/Rust Parity
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    if: github.event_name == 'pull_request'
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+          fetch-depth: 0
+
+      - name: Fetch base commit for parity diff
+        env:
+          GITHUB_BASE_SHA: ${{ github.event.pull_request.base.sha }}
+        run: git fetch --no-tags --depth=1 origin "$GITHUB_BASE_SHA"
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version: '24.x'
+
+      - name: Check JS <-> Rust parity
+        env:
+          GITHUB_BASE_SHA: ${{ github.event.pull_request.base.sha }}
+          GITHUB_HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+        run: node scripts/check-js-rust-parity.mjs
+
   # === CHANGESET CHECK - only runs on PRs with code changes ===
   # Docs-only PRs (./docs folder, markdown files) don't require changesets
   changeset-check:
