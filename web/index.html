@@ -84,6 +84,10 @@
           <span class="visually-hidden" data-i18n="prefs.locale">Language</span>
           <select id="locale-select" aria-label="Language"></select>
         </label>
+        <label class="top-nav-engine">
+          <span class="visually-hidden" data-i18n="engine.label">Engine</span>
+          <select id="engine-select" aria-label="Engine"></select>
+        </label>
         <button
           type="button"
           id="theme-toggle"
@@ -251,6 +255,11 @@
             <span class="eyebrow" data-i18n="analyse.result">Result</span>
             <strong id="result-value"></strong>
           </div>
+          <small
+            id="engine-badge"
+            class="engine-badge"
+            data-engine="js"
+          ></small>
         </section>
 
         <section class="evidence-band" aria-label="Evidence summary">
