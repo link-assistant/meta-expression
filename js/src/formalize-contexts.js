@@ -33,6 +33,94 @@ const defaultMaxDepth = 2;
 const defaultPerStepBranching = 4;
 const defaultTopCategories = 12;
 
+// Wikidata stores millions of scholarly papers, journals, and books whose
+// long titles happen to contain everyday words. `wbsearchentities` surfaces
+// them eagerly, so a phrase like "developing systems" used to resolve to the
+// 1997 clinical-trials article "Developing systems for cost-effective
+// auditing of clinical trials" (Q41668433) — issue #126. These works are
+// almost never the intended sense of a common phrase, so we detect them and
+// keep them from hijacking phrases unless the user typed the title verbatim.
+const publicationDescriptionPattern =
+  /\b(?:scientific|scholarly|research|review|academic|peer[-\s]?reviewed)\s+(?:article|paper|publication|journal)\b|\barticle published\b|\bpaper published\b|\bjournal article\b|\bconference paper\b|\bproceedings article\b|\bdoctoral thesis\b|\bmaster'?s thesis\b|\bpreprint\b|\bscientific journal\b|\bacademic journal\b/i;
+
+// P31 (instance of) targets that mark an entity as a publication. Only
+// consulted after hydration, when claims are available.
+const scholarlyInstanceIds = new Set([
+  'Q13442814', // scholarly article
+  'Q18918145', // academic journal article
+  'Q5633421', // scientific journal
+  'Q737498', // academic journal
+  'Q1002697', // periodical
+  'Q571', // book
+  'Q3331189', // version, edition, or translation
+  'Q191067', // article
+  'Q1980247', // chapter
+]);
+
+/**
+ * Detect whether a candidate is a scholarly publication (article, journal,
+ * book, …) rather than the everyday sense of the searched words. Uses the
+ * Wikidata description first, falling back to hydrated P31 claims.
+ *
+ * @param {object} candidate
+ * @returns {boolean}
+ */
+export function isScholarlyPublicationCandidate(candidate) {
+  if (!candidate) {
+    return false;
+  }
+  if (publicationDescriptionPattern.test(String(candidate.description ?? ''))) {
+    return true;
+  }
+  const labels = candidate.contextLabels;
+  if (Array.isArray(labels)) {
+    return labels.some(
+      (label) =>
+        label.property === 'P31' && scholarlyInstanceIds.has(label.targetId)
+    );
+  }
+  return false;
+}
+
+/**
+ * Expose, per word, the contexts that were detected for each candidate sense
+ * and which sense was finally selected. This is what the UI and debug log
+ * render so users can SEE how the formalizer decided a word's context (and
+ * report it when the decision is wrong) — issue #126.
+ *
+ * @param {object[]} phrases - resolved phrase objects with candidates
+ * @returns {Array<object>}
+ */
+export function buildWordContexts(phrases) {
+  return phrases
+    .filter((phrase) => phrase.entity)
+    .map((phrase) => {
+      const selectedId = phrase.entity?.id ?? null;
+      const candidates = (
+        phrase.candidates?.length ? phrase.candidates : [phrase.entity]
+      ).map((candidate) => ({
+        id: candidate.id ?? null,
+        label: candidate.label ?? null,
+        description: candidate.description ?? null,
+        score: candidate.score ?? null,
+        selected: candidate.id === selectedId,
+        isPublication: isScholarlyPublicationCandidate(candidate),
+        contexts: (candidate.contextLabels ?? []).map((label) => ({
+          property: label.property,
+          propertyLabel: label.propertyLabel,
+          targetId: label.targetId,
+        })),
+      }));
+      return {
+        text: phrase.text,
+        start: phrase.start ?? null,
+        end: phrase.end ?? null,
+        selectedId,
+        candidates,
+      };
+    });
+}
+
 /**
  * Aggregate big-context categories from a list of resolved phrases.
  *

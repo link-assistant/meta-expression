@@ -24,7 +24,11 @@ import {
   SOURCE_KIND,
   normalizeWiktionaryLookupText,
 } from './formalize-sources.js';
-import { aggregateBigContexts } from './formalize-contexts.js';
+import {
+  aggregateBigContexts,
+  buildWordContexts,
+  isScholarlyPublicationCandidate,
+} from './formalize-contexts.js';
 import { fetchWikimediaJson } from './wikimedia-fetch.js';
 import {
   buildOverrideMap,
@@ -278,6 +282,7 @@ export async function formalizeTextWith(input, options = {}) {
     topCategories: config.bigContextTop,
   });
   const reranked = applyContextLens(phrases, config.contextLens, flatContexts);
+  const wordContexts = buildWordContexts(reranked);
   const interpretations = generateFormalizeInterpretations(
     reranked,
     flatContexts,
@@ -315,6 +320,7 @@ export async function formalizeTextWith(input, options = {}) {
     contexts: flatContexts.all,
     mainContext: flatContexts.main,
     additionalContexts: flatContexts.additional,
+    wordContexts,
     bigContexts: bigContexts.all,
     mainBigContext: bigContexts.main,
     additionalBigContexts: bigContexts.additional,
@@ -623,6 +629,7 @@ async function searchNgramCandidates(ngram, config) {
   const merged = mergeSearchResults(perSource.flat(), propertyBias);
   return merged
     .filter((candidate) => candidateMatchesNgramShape(ngram, candidate))
+    .filter((candidate) => !isPublicationTitleFragment(ngram, candidate))
     .map((candidate) => scoreCandidate(ngram, candidate, propertyBias))
     .sort((left, right) => right.score - left.score)
     .slice(0, config.topKCandidates);
@@ -866,6 +873,20 @@ function isDisambiguationCandidate(candidate) {
     /\bmay refer to\b/.test(description) ||
     /\bcan refer to\b/.test(description) ||
     description.startsWith('look up ')
+  );
+}
+
+// A publication candidate is only legitimate when the user typed its title
+// (or a registered alias) verbatim. Any looser, title-fragment match is
+// rejected so the n-gram can fall back to the individual words. Detection of
+// scholarly works lives in formalize-contexts.js (issue #126).
+function isPublicationTitleFragment(ngram, candidate) {
+  if (!isScholarlyPublicationCandidate(candidate)) {
+    return false;
+  }
+  return !candidateHasDirectPhraseEvidence(
+    normalizeLabel(ngram.text),
+    candidate
   );
 }
 
