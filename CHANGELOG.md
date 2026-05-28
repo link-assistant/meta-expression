@@ -1,5 +1,194 @@
 # Changelog
 
+## 0.10.0
+
+### Minor Changes
+
+- Add bounded real-world confidence, local belief evidence, prepared examples, formalization level labels, issue reporting, live Wikimedia evidence resolution, and the initial Rust/Doublets core for the meta-expression prototype.
+
+  Add a unified on-demand Wikimedia term data source with per-field provenance and Links Notation/binary cache artifacts.
+
+  Add Rust doublets-rs backed storage helpers for portable meta-language links and unified term data cache records.
+
+  Adopt doublets-web as the browser-side doublets store for meta-language persistence and web cache serialization.
+
+  Enforce the lexicon hardcoded-data policy by removing unproven seed and
+  override provenance in favor of source-backed or rule-derived entries.
+
+  Add explicit linguistic source reconstruction metadata and route translation
+  and naturalization through the reconstructed semantic meta language instead of
+  raw formalization text.
+
+  Add a multilingual grammar checking surface for agreement, word order, article,
+  and punctuation issues across the library, CLI, service, writing assistant, and
+  web check page.
+
+  Add measured competitor dataset quality gates to the acceptance test path and
+  publish the 2026-05-26 pass-rate scores in the comparison docs.
+
+  Improve top-2025 paragraph translation quality by expanding the semantic
+  interlingua lexicon and tightening the human-reference gate.
+
+  Fix GitHub Pages web loading by making the browser module graph importable.
+
+  Add persistent context-selection questions to the Translate page so ambiguous
+  words can be re-disambiguated by hand. Selecting a sense pins it via the new
+  `contextSelections` option, re-derives the English formalization, and re-runs
+  translation. The formalizer now rejects scholarly-article title fragments,
+  surfaces per-word context candidates (and a one-click copy-debug-log button)
+  for diagnosis, and the release workflow bumps the version and tags a GitHub
+  release on every push to main even when npm publishing is disabled.
+
+  The web prototype now lets readers select between the JavaScript and Rust
+  (WebAssembly) engines from a global engine selector, routing the Analyse and
+  Compare pages through the chosen engine with a graceful fallback to JavaScript.
+  The issue #126 context-decision logic is mirrored in the Rust core, and a new
+  CI parity guardrail (`npm run check:parity`) fails any pull request that changes
+  one side of a mirrored JS/Rust module pair without the other so the engines can
+  never silently drift apart. See `docs/PARITY.md` for the full correspondence
+  map.
+
+  Surface two default metrics on every analysis — `result.correctness` (0..1) and `result.signedConfidence` (-1..1) — and add a top-menu Compare page to put competing claims side-by-side.
+
+  Add a `/formalize` library, CLI, HTTP endpoint, and SPA tab that wikifies free-form text against Wikidata (with WordNet and Fandom as layered sources), surfaces big-context categories (Math, Geography, Star Wars, …), supports repository-level and user overrides, and persists `/formalize` HTTP results to a dual-format on-disk cache. Library reference is auto-generated from JSDoc into `docs/FORMALIZE.md` and validated in CI via `npm run docs:formalize:check`.
+
+  Add a Wikidata-backed translation surface that formalizes source text first,
+  then translates sentence renderings through resolved Q/P labels and explicit
+  transformation rules while preserving unresolved parts as variables with
+  generated questions and trace steps.
+
+  Add `/check` and `/fact-check` statement checking with red-to-green correctness coloring, evidence-situation probability scoring, and configurable Wikimedia/Wikidata defaults.
+
+  Add a `/preferences` section with local worldview sliders, conditional religion
+  beliefs, fictional context presets, localStorage persistence, Links Notation
+  import/export, and analysis evidence integration for preference profiles.
+
+  Expand the feature comparison docs with a Jenni AI-focused academic-writing assistant matrix.
+
+  Issue #21 — perfect context detection in the Formalize pipeline. Adds an HTTP-level snapshot cache (`src/formalize-snapshots.js`) with REPLAY/RECORD/OVERLAY modes, persisting Wikipedia/Wikidata/Wiktionary responses to `tests/fixtures/wikimedia-snapshots/` (URL → SHA-1 keyed JSON plus a human-readable `manifest.lino`). Tests can now formalize "Hawaii", "formalize", and "the" entirely offline. The Formalize page gains a "Load repo sample" picker that runs the pipeline against repository content (README, docs, package.json, issue-21 examples), and the recorder script lives at `examples/record-wikimedia-snapshots.js` so the fixtures can be refreshed idempotently.
+
+  UI/UX overhaul of the static `web/` prototype: readable contrast inside `<details>` payload panels, clean radio fieldsets for Link Target / Sources / Interpretation Display, switchable interpretation display modes (`id` / `name` / `name+meaning` / `meaning` / `replace`), clickable interpretations with the active choice always pinned to the top‑10, language switching (`en`, `ru`) with `navigator.language` detection plus `localStorage` override, theme switching (`auto` / `light` / `dark`) with `prefers-color-scheme` detection plus `localStorage` override, and a mobile-first responsive layout (single column ≤640px, two-column from 640px, full app-shell from 960px).
+
+  Add concept and feature comparison docs vs. similar projects, plus an issue-26 case study and a comparable-system fixtures test suite.
+
+  Add a uniqueness checking API, CLI, HTTP route, and web section for finding prior public statements.
+
+  Add page-aware GitHub issue reporting and GitHub Pages version diagnostics.
+
+  Fix Hawaii sentence translation by identifying Wikimedia API requests, filtering grammar-fragment n-grams, demoting disambiguation candidates, keeping refined target ids in the phrase trace, and rendering the tested English/Russian copula plus U.S.-state predicate round trip. Add a narrow Rust semantic fixture for the same issue case.
+
+  Fix Translate page issue reports so oversized generated diagnostics are omitted
+  from prefilled GitHub URLs while keeping source text, source formalization, and
+  formalized target Markdown. Prefer the exact Wiktionary `is-a` grammar compound
+  for `is a`, and link the generated Russian `это` rule token in translations.
+
+  Improve Translate output for technical English to Russian text with selectable strategies, contextual glossary fallback, structured question options, and prepared Translate examples.
+
+  Fix Russian-to-English Translate output by rejecting snippet-only formalization hits, adding lexical fallback handling for short Russian phrases, and exposing the semantic meta-language plus naturalization trace used for translation.
+
+  Add a Wikipedia top-views translation-quality gate. New `assessArticleSet()`, `assessArticleTranslation()`, `selectLanguagePair()`, `summarizeAssessment()`, `extractFirstStatement()`, `tokenCoverage()`, `tokenizeForMatch()`, and `normalizeStatementKey()` helpers route per-article statements through curated skip-list, translation-fixes, direct coverage, and round-trip stability checks. A new `translation-quality` CLI subcommand reads articles/skip-list/fixes JSON, prints a per-status summary, and exits non-zero on failures. The Rust core mirrors the helpers and exposes a `meta_expression_translation_quality_status_code` C ABI for native consumers. Two Translate samples (Artemis II lead, Russian Michael Jackson biographical lead) are added to the web app.
+
+  Link every fallback lexical token through source formalization and target naturalization so Translate reports complete concept coverage for glossary-backed phrases, rule-inserted words, and existing Translate workflows.
+
+  Improve Translate coverage for technical prose, add opt-in local lexical links, and throttle source lookup fan-out to avoid bursting Wikimedia APIs.
+
+  Reduce Translate Wikimedia request churn, normalize Wiktionary lookups, batch Wikidata entity hydration, and apply Translate question answers to rendered output.
+
+  Add Formal AI compatibility hooks for formalization, translation, and naturalization/deformalization aliases, deterministic linguistic CST/AST metadata, and Formal AI prompt translation helpers backed by the pinned upstream test corpus. Also enforce the 1500-line architecture limit for tracked Rust, JavaScript, and Markdown files, with case-study research artifacts excluded.
+
+  Fix Translate handling for slash-separated fallback terms, add source-backed Wiktionary lexical translation, and add source-priority and debug-log controls for reproducing translation issues.
+
+  Re-sync the documentation with the actual state of the code after the
+  foundation/pillar/parity batch (#60–#74, #87–#96) and the semantic-interlingua
+  rewrite (#96 / PR #107) merged, and plan the next batch of vision work as GitHub
+  issues (issue #58). Refresh `docs/ROADMAP.md`, `docs/REQUIREMENTS.md`, and
+  `docs/IMPLEMENTATION-STATUS.md` so every shipped pillar, blocker, and parity
+  surface reflects reality, and extend the `docs/case-studies/issue-58/` analysis
+  with the next-batch plan (unified on-demand Wikipedia/Wikidata/Wiktionary data
+  source, `doublets-rs`/`doublets-web`-backed semantic meta language, rule-based
+  overrides, full explicit linguistic metadata, grammar checking, and
+  competitor-dataset quality gates). No runtime, API, or behaviour changes.
+
+  Fix the package identity so the documented meta-expression library and CLI are publishable under the project name.
+
+  Add wasm-bindgen packaging, generated Rust WASM bindings, and a JavaScript wrapper for the core analysis pipeline.
+
+  Adopt the official links-notation parser behind the existing Lino API and load CLI defaults/profiles through lino-arguments.
+
+  Add portable Doublets-backed case save/load helpers for durable statement and evidence links.
+
+  Add deterministic structured meaning metadata for arbitrary statement analysis.
+
+  Add a Links Notation rewrite and simplify transformation engine with traceable hook integration.
+
+  Add generalized naturalization/deformalization APIs for formal expressions across JS, CLI, service routes, Rust, and WASM.
+
+  Add formal statement reasoning for RML-style entailment, contradiction, and dependency traces.
+
+  Add reproducible probability calculations to statement evaluation results and issue reports.
+
+  Add a relative-meta-logic computability adapter for supported formalizations.
+
+  Add parser-backed linguistic reasoning metadata with parser CST, provenance,
+  and version fields across JavaScript and Rust.
+
+  Refresh the competitor comparison matrices with 2026-05-26 pricing and
+  capability research, and add issue #71 parity ledgers for missing features and
+  follow-up issues.
+
+  Execute issue #26 competitor fixtures and the Formal AI parity corpus as real
+  tests, refresh the pinned Formal AI corpus to v0.123.0, and add evidence
+  fixtures for documented Wikidata parity claims.
+
+  Document the formal-ai compatibility contract across the library, CLI, service,
+  web, and Rust/WASM surfaces.
+
+  Add a no-regression acceptance gate for canonical requirements examples and the
+  competitor/Formal AI parity corpora.
+
+  Add Schema.org ClaimReview JSON-LD import and export for fact-check records.
+
+  Add JSON-LD and PROV-O-compatible evidence provenance exports for analyze and
+  check results.
+
+  Add candidate-only formalization provider output for OpenIE, AMR, SRL, entity
+  links, and semantic graphs.
+
+  Add opposite/negation examples, alternatives, dependencies, definitions,
+  confirmations and refutations to every analysis. Rename the right pane to
+  "Reasoning Steps", add a strategy selector with `disambiguation-first`,
+  `evidence-first`, and `formalization-first` strategies, longest-match Wikidata
+  Q/P phrase disambiguation as additional candidate interpretations, and a
+  `localStorage`-backed Wikimedia evidence cache so requests survive reloads.
+  The web prototype now shows 4 random examples by default with shuffle and show
+  all controls.
+
+  Add document-level `/uniqueness` originality reports with source spans, match
+  strengths, source grouping, exclusion metadata, and a fixture covering exact and
+  semantic-similarity matches.
+
+  Add literature-review evidence workflows that turn screened paper metadata,
+  excerpts, and support/refute decisions into evidence links with BibTeX, RIS, and
+  CSV bibliography exports.
+
+  Add scoped SPARQL, RDF-triple, and property-graph evidence exports that preserve bounded real-world confidence guardrails.
+
+  Add proof and solver artifact adapters that normalize Lean 4 and SMT-LIB fixtures into bounded provenance-bearing evidence.
+
+  Add a browser/editor writing-assistant surface that delegates to the existing analyze, check, formalize, translate, and uniqueness APIs while preserving embedded Links Notation and report exports.
+
+  Add a CI/CD integration gate that translates lead paragraphs from the top-10 most-viewed Wikipedia articles of 2025 into the most popular languages. A new offline fixture (`js/tests/fixtures/issue-96/articles.json`) mirrors the Topviews last-year list, and `scripts/record-issue-96-articles.mjs` regenerates it by aggregating the 12 monthly Wikimedia top-pageview lists for the year and resolving multi-language intro extracts via Wikidata sitelinks. New `extractParagraphs()`, `extractFirstParagraph()`, and `normalizeParagraphText()` helpers split and whitespace-normalize multi-sentence prose so whole paragraphs flow through the formalize → semantic-meta-language → naturalize pipeline. The deterministic, network-free integration test asserts full source-side coverage, stable replays, explicit unresolved-phrase questions, and real Russian vocabulary for every captured article across en/es/de/fr/ru/ja/zh/pt/it/ar.
+
+  Deeply verify translation quality against existing human translations. A new `assessReferenceAlignment(machineText, referenceText, { script })` scorer reduces both the machine output and the human-written Wikipedia lead to content tokens (optionally filtered to the target script) and reports set-overlap precision, recall, F1, and the matched/missing word lists. A second deterministic gate (`js/tests/integration/issue-96-reference-quality.test.js`) translates each English lead into Russian and checks the machine vocabulary against the human Russian article — asserting concrete human-attested words per topic (e.g. `браузер`, `президент`, `мэр`, `убийца`, `чат`, `бот`) plus corpus-level overlap and precision floors. To raise the algorithm to that bar, the en→ru glossary gains human-attested content vocabulary (`американский`, `предприниматель`, `президент`, `браузер`, `генеративный`, …) so the pipeline now reproduces real, human-chosen Russian terms instead of leaving topical nouns untranslated.
+
+  Replace every hardcoded source↔target translation dictionary with a single semantic interlingua. Lexical translation no longer stores direct language pairs anywhere in `js/src` or `rust/src`; instead each concept carries a language-neutral id (a Wikidata `Q`, a Wiktionary/Wikipedia URL) and per-language surface forms in the shared `js/data/semantic-lexicon.json`, and a directional glossary is derived at runtime by routing a source form through its concept id to the target form. Both engines read that one file, so the Rust and JavaScript sides translate from the same source of truth. The few foreign surface forms the pure offline Rust engine cannot fetch live (the issue #35/#52 case studies) move out of `rust/src` into `rust/data/reference-translations.json`, loaded only through `reference_data.rs`, leaving `rust/src` with zero non-Latin letters outside comments.
+
+  Add CI/CD guards that enforce these invariants in both engines. `issue-96-no-hardcoded-translations` (JS) and `issue96_no_hardcoded_translations` (Rust) fail the build if a foreign surface form is hardcoded in source, if the interlingua data file is read by more than its one sanctioned module, or if a directional glossary is assembled anywhere but the strategy layer; the Rust guard includes a self-test proving it detects planted translations while ignoring comments. `issue-96-four-language-roundtrip` (JS) and `issue96_four_language_parity` (Rust) lock both engines to the same four supported languages (English, Russian, Hindi, Chinese), assert every ordered language pair is served, and verify shared vocabulary survives a full round trip through every other language — so neither engine can gain a language or concept without the other, and a test added for one language must be added for all four.
+
+  Support Moon/Sun orbit reasoning through Wikidata parent-body chains and expose Q/P reasoning links in reports and the web prototype.
+
+  Publish the static web prototype to GitHub Pages independently from npm package publishing.
+
 ## 0.9.0
 
 ### Minor Changes
