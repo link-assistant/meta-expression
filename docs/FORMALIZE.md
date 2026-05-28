@@ -392,6 +392,74 @@ Source: [`js/src/formalize-contexts.js`](../js/src/formalize-contexts.js)
 
 Walks `instance of` / `subclass of` / `part of` chains to surface broad worlds (Math, Geography, Star Wars, Genshin Impact, …) the input touches.
 
+### `isScholarlyPublicationCandidate(candidate)`
+
+Detect whether a candidate is a scholarly publication (article, journal,
+book, …) rather than the everyday sense of the searched words. Uses the
+Wikidata description first, falling back to hydrated P31 claims.
+
+| Parameter   | Type     | Description |
+| ----------- | -------- | ----------- |
+| `candidate` | `object` | —           |
+
+**Returns** `boolean`
+
+### `buildWordContexts(phrases)`
+
+Expose, per word, the contexts that were detected for each candidate sense
+and which sense was finally selected. This is what the UI and debug log
+render so users can SEE how the formalizer decided a word's context (and
+report it when the decision is wrong) — issue #126.
+
+| Parameter | Type       | Description                             |
+| --------- | ---------- | --------------------------------------- |
+| `phrases` | `object[]` | resolved phrase objects with candidates |
+
+**Returns** `Array<object>`
+
+### `buildContextQuestions(phrases)`
+
+Build context-selection questions for every word that has more than one
+plausible sense. Unlike translation-variable questions, these are NOT meant
+to disappear once answered: selecting an option pins that sense, which the
+formalizer honors via `contextSelections`, re-deriving the English
+formalization (and re-running translation downstream) — issue #126.
+
+| Parameter | Type       | Description                             |
+| --------- | ---------- | --------------------------------------- |
+| `phrases` | `object[]` | resolved phrase objects with candidates |
+
+**Returns** `Array<object>`
+
+### `normalizeContextSelections(input)`
+
+Normalize user-pinned context selections into a `Map` keyed by both the
+phrase start index (the stable key the UI uses) and the phrase text (a
+convenient key for API callers). Each value is the chosen candidate id.
+
+Accepts a `Map`, an array of `{ start?, text?, entityId }`, or a plain
+object whose keys are start indexes / phrase text and values are ids.
+
+| Parameter | Type                 | Description |
+| --------- | -------------------- | ----------- |
+| `[input]` | `Map\|Array\|object` | —           |
+
+**Returns** `Map<string, string>`
+
+### `applyContextSelections(phrases, selections)`
+
+Re-pick the chosen entity for any phrase the user pinned to a specific
+candidate sense. The picked candidate is promoted to the front so it both
+becomes the entity and is reported as `selected` in the word contexts and
+context questions — issue #126.
+
+| Parameter    | Type                  | Description |
+| ------------ | --------------------- | ----------- |
+| `phrases`    | `object[]`            | —           |
+| `selections` | `Map<string, string>` | —           |
+
+**Returns** `object[]`
+
 ### `aggregateBigContexts(phrases, options)`
 
 Aggregate big-context categories from a list of resolved phrases.

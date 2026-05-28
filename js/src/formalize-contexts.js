@@ -33,6 +33,226 @@ const defaultMaxDepth = 2;
 const defaultPerStepBranching = 4;
 const defaultTopCategories = 12;
 
+// Wikidata stores millions of scholarly papers, journals, and books whose
+// long titles happen to contain everyday words. `wbsearchentities` surfaces
+// them eagerly, so a phrase like "developing systems" used to resolve to the
+// 1997 clinical-trials article "Developing systems for cost-effective
+// auditing of clinical trials" (Q41668433) — issue #126. These works are
+// almost never the intended sense of a common phrase, so we detect them and
+// keep them from hijacking phrases unless the user typed the title verbatim.
+const publicationDescriptionPattern =
+  /\b(?:scientific|scholarly|research|review|academic|peer[-\s]?reviewed)\s+(?:article|paper|publication|journal)\b|\barticle published\b|\bpaper published\b|\bjournal article\b|\bconference paper\b|\bproceedings article\b|\bdoctoral thesis\b|\bmaster'?s thesis\b|\bpreprint\b|\bscientific journal\b|\bacademic journal\b/i;
+
+// P31 (instance of) targets that mark an entity as a publication. Only
+// consulted after hydration, when claims are available.
+const scholarlyInstanceIds = new Set([
+  'Q13442814', // scholarly article
+  'Q18918145', // academic journal article
+  'Q5633421', // scientific journal
+  'Q737498', // academic journal
+  'Q1002697', // periodical
+  'Q571', // book
+  'Q3331189', // version, edition, or translation
+  'Q191067', // article
+  'Q1980247', // chapter
+]);
+
+/**
+ * Detect whether a candidate is a scholarly publication (article, journal,
+ * book, …) rather than the everyday sense of the searched words. Uses the
+ * Wikidata description first, falling back to hydrated P31 claims.
+ *
+ * @param {object} candidate
+ * @returns {boolean}
+ */
+export function isScholarlyPublicationCandidate(candidate) {
+  if (!candidate) {
+    return false;
+  }
+  if (publicationDescriptionPattern.test(String(candidate.description ?? ''))) {
+    return true;
+  }
+  const labels = candidate.contextLabels;
+  if (Array.isArray(labels)) {
+    return labels.some(
+      (label) =>
+        label.property === 'P31' && scholarlyInstanceIds.has(label.targetId)
+    );
+  }
+  return false;
+}
+
+/**
+ * Expose, per word, the contexts that were detected for each candidate sense
+ * and which sense was finally selected. This is what the UI and debug log
+ * render so users can SEE how the formalizer decided a word's context (and
+ * report it when the decision is wrong) — issue #126.
+ *
+ * @param {object[]} phrases - resolved phrase objects with candidates
+ * @returns {Array<object>}
+ */
+export function buildWordContexts(phrases) {
+  return phrases
+    .filter((phrase) => phrase.entity)
+    .map((phrase) => {
+      const selectedId = phrase.entity?.id ?? null;
+      const candidates = (
+        phrase.candidates?.length ? phrase.candidates : [phrase.entity]
+      ).map((candidate) => ({
+        id: candidate.id ?? null,
+        label: candidate.label ?? null,
+        description: candidate.description ?? null,
+        score: candidate.score ?? null,
+        selected: candidate.id === selectedId,
+        isPublication: isScholarlyPublicationCandidate(candidate),
+        contexts: (candidate.contextLabels ?? []).map((label) => ({
+          property: label.property,
+          propertyLabel: label.propertyLabel,
+          targetId: label.targetId,
+        })),
+      }));
+      return {
+        text: phrase.text,
+        start: phrase.start ?? null,
+        end: phrase.end ?? null,
+        selectedId,
+        candidates,
+      };
+    });
+}
+
+/**
+ * Build context-selection questions for every word that has more than one
+ * plausible sense. Unlike translation-variable questions, these are NOT meant
+ * to disappear once answered: selecting an option pins that sense, which the
+ * formalizer honors via `contextSelections`, re-deriving the English
+ * formalization (and re-running translation downstream) — issue #126.
+ *
+ * @param {object[]} phrases - resolved phrase objects with candidates
+ * @returns {Array<object>}
+ */
+export function buildContextQuestions(phrases) {
+  return phrases
+    .filter((phrase) => phrase.entity && (phrase.candidates?.length ?? 0) > 1)
+    .map((phrase) => {
+      const selectedEntityId = phrase.entity.id;
+      return {
+        kind: 'context-selection',
+        phraseStart: phrase.start ?? null,
+        phraseText: phrase.text,
+        selectedEntityId,
+        question: `Which meaning of "${phrase.text}" did you intend?`,
+        options: phrase.candidates.map((candidate) => ({
+          id: candidate.id,
+          entityId: candidate.id,
+          label: candidate.label ?? candidate.id,
+          description: candidate.description ?? null,
+          score: candidate.score ?? null,
+          selected: candidate.id === selectedEntityId,
+          isPublication: isScholarlyPublicationCandidate(candidate),
+        })),
+      };
+    });
+}
+
+/**
+ * Normalize user-pinned context selections into a `Map` keyed by both the
+ * phrase start index (the stable key the UI uses) and the phrase text (a
+ * convenient key for API callers). Each value is the chosen candidate id.
+ *
+ * Accepts a `Map`, an array of `{ start?, text?, entityId }`, or a plain
+ * object whose keys are start indexes / phrase text and values are ids.
+ *
+ * @param {Map|Array|object} [input]
+ * @returns {Map<string, string>}
+ */
+export function normalizeContextSelections(input) {
+  const map = new Map();
+  if (!input) {
+    return map;
+  }
+  for (const [key, value] of contextSelectionEntries(input)) {
+    const entityId =
+      typeof value === 'string' ? value : (value?.entityId ?? null);
+    if (key === null || key === undefined || !entityId) {
+      continue;
+    }
+    map.set(String(key), entityId);
+  }
+  return map;
+}
+
+function contextSelectionEntries(input) {
+  if (input instanceof Map) {
+    return [...input.entries()];
+  }
+  if (Array.isArray(input)) {
+    return input.map((entry) => [entry?.start ?? entry?.text, entry]);
+  }
+  return Object.entries(input);
+}
+
+function lookupContextSelection(selections, phrase) {
+  const hasStart = phrase.start !== null && phrase.start !== undefined;
+  if (hasStart && selections.has(String(phrase.start))) {
+    return selections.get(String(phrase.start));
+  }
+  return selections.get(phrase.text) ?? null;
+}
+
+/**
+ * Re-pick the chosen entity for any phrase the user pinned to a specific
+ * candidate sense. The picked candidate is promoted to the front so it both
+ * becomes the entity and is reported as `selected` in the word contexts and
+ * context questions — issue #126.
+ *
+ * @param {object[]} phrases
+ * @param {Map<string, string>} selections
+ * @returns {object[]}
+ */
+export function applyContextSelections(phrases, selections) {
+  if (!selections || selections.size === 0) {
+    return phrases;
+  }
+  return phrases.map((phrase) => selectPhraseCandidate(phrase, selections));
+}
+
+function selectPhraseCandidate(phrase, selections) {
+  if (!phrase.entity || (phrase.candidates?.length ?? 0) <= 1) {
+    return phrase;
+  }
+  const chosenId = lookupContextSelection(selections, phrase);
+  if (!chosenId || chosenId === phrase.entity.id) {
+    return phrase;
+  }
+  const chosen = phrase.candidates.find(
+    (candidate) => candidate.id === chosenId
+  );
+  if (!chosen) {
+    return phrase;
+  }
+  return {
+    ...phrase,
+    candidates: [
+      chosen,
+      ...phrase.candidates.filter((candidate) => candidate !== chosen),
+    ],
+    entity: {
+      ...phrase.entity,
+      id: chosen.id,
+      label: chosen.label,
+      description: chosen.description,
+      kind: chosen.kind,
+      source: chosen.source ?? phrase.entity.source,
+      sourceUrl: chosen.sourceUrl ?? phrase.entity.sourceUrl,
+      score: chosen.score,
+      contextLabels: chosen.contextLabels ?? phrase.entity.contextLabels,
+      wikipediaUrl: chosen.wikipediaUrl ?? null,
+      wikipediaTitle: chosen.wikipediaTitle ?? null,
+    },
+  };
+}
+
 /**
  * Aggregate big-context categories from a list of resolved phrases.
  *

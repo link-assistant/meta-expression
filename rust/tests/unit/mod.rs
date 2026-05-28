@@ -5,6 +5,7 @@
 
 mod classify_statement;
 mod extract_first_statement;
+mod formalize_contexts;
 mod issue54_formal_ai;
 mod issue64_general_formalization;
 mod issue66_naturalization;

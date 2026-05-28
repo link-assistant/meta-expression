@@ -165,12 +165,28 @@ textarea {
   text-decoration: none;
 }
 
-.top-nav-locale select {
+.top-nav-locale select,
+.top-nav-engine select {
   background: var(--surface);
   color: var(--ink);
   border: 1px solid var(--border-strong);
   border-radius: 6px;
   padding: 6px 10px;
+}
+
+.engine-badge {
+  align-self: center;
+  font-weight: 700;
+  color: var(--ink-soft);
+  white-space: nowrap;
+}
+
+.engine-badge[data-engine='wasm'] {
+  color: var(--accent);
+}
+
+.engine-badge[data-engine='js-fallback'] {
+  color: #b4690e;
 }
 
 .app-shell {

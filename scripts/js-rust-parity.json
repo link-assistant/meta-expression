@@ -1,0 +1,17 @@
+{
+  "description": "JS <-> Rust parity manifest. Each pair lists JavaScript and Rust source files that implement the SAME logic in the two engines. The CI guardrail (scripts/check-js-rust-parity.mjs) fails any pull request that changes one side of a pair without also changing the other, so the engines can never silently drift apart (issue #126 PR follow-up). To add a newly mirrored module, port it in both languages and append a pair here. See docs/PARITY.md for the full correspondence map, including JS-only modules that are intentionally not mirrored yet.",
+  "pairs": [
+    {
+      "id": "formalize-contexts",
+      "description": "Issue #126 context-decision helpers: scholarly-publication rejection, per-word context breakdown, persistent context-selection questions, and re-pinning a user-chosen sense.",
+      "js": ["js/src/formalize-contexts.js"],
+      "rust": ["rust/src/formalize_contexts.rs"]
+    },
+    {
+      "id": "semantic-lexicon",
+      "description": "Interlingua glossary derived from js/data/semantic-lexicon.json: directional glossaries, concept-form resolution, and language/pair listings.",
+      "js": ["js/src/semantic-lexicon.js"],
+      "rust": ["rust/src/semantic_lexicon.rs"]
+    }
+  ]
+}

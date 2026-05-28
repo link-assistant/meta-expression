@@ -35,6 +35,7 @@ import {
   themeIcon,
   watchSystemTheme,
 } from './theme.js';
+import { setupEngineRuntime } from './engine-ui.js';
 import { formalizeRepoSamples } from './formalize-samples.js';
 import {
   escapeHtml,
@@ -62,6 +63,11 @@ import {
   collectCheckedSourceSpec,
   setupSourcePriorityList,
 } from './source-priority-ui.js';
+import {
+  findStoredBelief,
+  loadUserBeliefs,
+  saveUserBeliefs,
+} from './user-beliefs.js';
 
 const beliefStorageKey = 'meta-expression.user-beliefs.v1';
 const wikimediaCacheStorageKey = 'meta-expression.wikimedia-cache.v2';
@@ -130,7 +136,7 @@ let liveRequestId = 0;
 let showAllExamples = false;
 let randomSeed = Date.now();
 let strategyId = defaultReasoningStrategyId;
-const userBeliefs = loadUserBeliefs();
+const userBeliefs = loadUserBeliefs(beliefStorageKey);
 const wikimediaCache = createPersistentWikimediaCache(wikimediaCacheStorageKey);
 const metaLanguageStore = createBrowserMetaLanguageStore(
   metaLanguageStorageKey
@@ -219,8 +225,7 @@ function render(statement, interpretationIndex = 0) {
     interpretationIndex,
     draft.interpretations.length - 1
   );
-  currentAnalysis = analyzeStatement(statement, {
-    interpretationIndex: selectedIndex,
+  currentAnalysis = enginePage.analyze(statement, selectedIndex, {
     selectedBy: 'web',
     userBeliefs,
     preferenceProfile: getActivePreferenceProfile(),
@@ -585,25 +590,6 @@ function syncSelectedExample(statement) {
   }
 }
 
-function loadUserBeliefs() {
-  try {
-    return JSON.parse(globalThis.localStorage.getItem(beliefStorageKey)) ?? {};
-  } catch {
-    return {};
-  }
-}
-
-function saveUserBeliefs() {
-  try {
-    globalThis.localStorage.setItem(
-      beliefStorageKey,
-      JSON.stringify(userBeliefs)
-    );
-  } catch {
-    // Belief sliders still work for the current page even if storage is blocked.
-  }
-}
-
 function setUserBelief(statement, probability) {
   const key = statement.trim();
   if (!key) {
@@ -614,25 +600,15 @@ function setUserBelief(statement, probability) {
   } else {
     userBeliefs[key] = probability;
   }
-  saveUserBeliefs();
+  saveUserBeliefs(beliefStorageKey, userBeliefs);
   syncBeliefControl(statement);
 }
 
 function syncBeliefControl(statement) {
-  const stored = findStoredBelief(statement);
+  const stored = findStoredBelief(userBeliefs, statement);
   const percent = Math.round((stored ?? 0.5) * 100);
   beliefSlider.value = String(percent);
   beliefValue.textContent = `${percent}%`;
-}
-
-function findStoredBelief(statement) {
-  const key = statement.trim().toLowerCase().replace(/\s+/g, ' ');
-  for (const [storedKey, value] of Object.entries(userBeliefs)) {
-    if (storedKey.trim().toLowerCase().replace(/\s+/g, ' ') === key) {
-      return Number(value);
-    }
-  }
-  return undefined;
 }
 
 function t(key) {
@@ -651,6 +627,7 @@ function applyLocale(locale) {
       : t('analyse.showAll');
   }
   refreshThemeLabel();
+  enginePage.refreshBadge();
   document.title = `${t('formalize.heading')} · meta-expression`;
 }
 
@@ -733,6 +710,14 @@ function setupFormalizeDisplayMode() {
 
 setupLocale();
 setupTheme();
+const enginePage = setupEngineRuntime({
+  translate: t,
+  requestRerender: () => {
+    if (currentAnalysis) {
+      render(input.value, selectedIndex);
+    }
+  },
+});
 setupFormalizeDisplayMode();
 const translatePage = setupTranslatePage({ cache: wikimediaCache });
 const checkPage = setupCheckPage({
@@ -746,6 +731,9 @@ const comparePage = setupComparePage({
   userBeliefs,
   getPreferenceProfile: getActivePreferenceProfile,
   getStrategyId: () => strategyId,
+  // Route each claim through the globally selected engine (JS or Rust/WASM),
+  // using the primary interpretation just like the analyse page default.
+  analyze: (statement, options) => enginePage.analyze(statement, 0, options),
 });
 setupPreferencesPage({
   onChange() {

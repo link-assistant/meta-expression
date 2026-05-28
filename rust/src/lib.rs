@@ -3,6 +3,7 @@ use doublets::Doublet;
 mod analysis;
 mod doublets_store;
 mod formal_ai_support;
+mod formalize_contexts;
 mod issue52;
 mod reference_data;
 mod semantic_lexicon;
@@ -27,6 +28,10 @@ pub use doublets_store::{
 #[cfg(not(target_arch = "wasm32"))]
 pub use doublets_store::{
     read_file_mapped_doublets_links, save_json_value_to_file_mapped_doublets,
+};
+pub use formalize_contexts::{
+    apply_context_selections, build_context_questions, build_word_contexts,
+    is_scholarly_publication_candidate, normalize_context_selections,
 };
 pub use issue52::{
     issue52_english_text, issue52_russian_text, issue52_translation_relations,
