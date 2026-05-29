@@ -1,0 +1,19 @@
+---
+'meta-expression': minor
+---
+
+Address the issue #128 Translate-page report for "Hawaii is a state." (en→ru):
+
+- Surface a Wikipedia link for English phrases (matching the Russian behaviour)
+  by defaulting the Translate page link target to Wikipedia and resolving
+  language-specific `*.wikipedia.org` URLs from Wikidata sitelinks.
+- Render a merged entity definition in links notation that cross-references the
+  senses matched across Wikidata, Wikipedia, and Wiktionary so words can be
+  disambiguated from a single artefact.
+- Report the elected contexts in both the formalization and translation links
+  notation in priority order with the exact computed probability and the number
+  of source words sharing each context.
+- Trim the "Report Notes" and "Reproduction Steps" sections from generated issue
+  reports to leave more room for diagnostic data.
+- Fix the GitHub Pages app version readout so it reflects the deployed package
+  version instead of always showing "unknown".

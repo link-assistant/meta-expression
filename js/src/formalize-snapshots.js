@@ -21,9 +21,11 @@
 import { createHash } from 'node:crypto';
 import { mkdir, readFile, readdir, writeFile } from 'node:fs/promises';
 import { join } from 'node:path';
+import { parseLinoCacheEntries, serializeLino } from './lino.js';
 
 const manifestFileName = 'manifest.lino';
 const snapshotFileExtension = '.json';
+const linoCacheExtension = '.lino';
 
 export const SNAPSHOT_MODES = Object.freeze({
   REPLAY: 'replay',
@@ -56,21 +58,113 @@ export async function loadSnapshotMap(dir) {
     return snapshots;
   }
   await Promise.all(
-    entries
-      .filter((name) => name.endsWith(snapshotFileExtension))
-      .map(async (name) => {
-        try {
-          const raw = await readFile(join(dir, name), 'utf8');
-          const parsed = JSON.parse(raw);
-          if (parsed?.url) {
-            snapshots.set(String(parsed.url), parsed.value);
-          }
-        } catch {
-          // ignore malformed snapshot files
-        }
-      })
+    entries.map(async (name) => {
+      if (name.endsWith(snapshotFileExtension)) {
+        await loadJsonSnapshotInto(snapshots, join(dir, name));
+      } else if (
+        name.endsWith(linoCacheExtension) &&
+        name !== manifestFileName
+      ) {
+        await loadLinoCacheInto(snapshots, join(dir, name));
+      }
+    })
   );
   return snapshots;
+}
+
+async function loadJsonSnapshotInto(snapshots, filePath) {
+  try {
+    const parsed = JSON.parse(await readFile(filePath, 'utf8'));
+    if (parsed?.url) {
+      snapshots.set(String(parsed.url), parsed.value);
+    }
+  } catch {
+    // ignore malformed snapshot files
+  }
+}
+
+async function loadLinoCacheInto(snapshots, filePath) {
+  try {
+    const cache = parseSnapshotLino(await readFile(filePath, 'utf8'));
+    for (const [url, value] of cache) {
+      snapshots.set(url, value);
+    }
+  } catch {
+    // ignore malformed or non-cache .lino files (e.g. a stray manifest)
+  }
+}
+
+/**
+ * Serialize a snapshot map into a single `.lino` cache document.
+ *
+ * Issue #128 asks for the API request/response cache to live "in data folder
+ * and in .lino format, as we usually do". Each entry pins one request URL to
+ * its recorded JSON response. The response is stored as a verbatim JSON string
+ * so deeply nested Wikidata/Wikipedia/Wiktionary payloads round-trip losslessly
+ * through the generic `.lino` codec, while the URL stays human-auditable.
+ *
+ * Entries are sorted by URL and carry no wall-clock timestamp so regenerating
+ * the cache from the same inputs is byte-for-byte deterministic — a committed
+ * cache file can therefore be kept fresh with a `git diff` check in CI.
+ *
+ * @param {Map<string, unknown>|Array<[string, unknown]>} snapshots
+ * @returns {string}
+ */
+export function serializeSnapshotLino(snapshots) {
+  const pairs = snapshots instanceof Map ? [...snapshots] : snapshots;
+  const entries = pairs
+    .map(([url, value]) => ({ url: String(url), value }))
+    .sort((left, right) => left.url.localeCompare(right.url))
+    .map((entry) => ({
+      key: snapshotKey(entry.url),
+      url: entry.url,
+      response: JSON.stringify(entry.value),
+    }));
+  return serializeLino({ entries }, { rootIdentifier: 'cache' });
+}
+
+/**
+ * Parse a `.lino` cache document back into a Map<url, value>.
+ *
+ * @param {string} text
+ * @returns {Map<string, unknown>}
+ */
+export function parseSnapshotLino(text) {
+  return parseLinoCacheEntries(text);
+}
+
+/**
+ * Persist a snapshot map as a single `.lino` cache file, creating parent
+ * directories as needed. Returns the absolute path that was written.
+ *
+ * @param {string} filePath
+ * @param {Map<string, unknown>|Array<[string, unknown]>} snapshots
+ * @returns {Promise<string>}
+ */
+export async function writeSnapshotLino(filePath, snapshots) {
+  await mkdir(dirOf(filePath), { recursive: true });
+  await writeFile(filePath, serializeSnapshotLino(snapshots));
+  return filePath;
+}
+
+/**
+ * Load a single `.lino` cache file into a Map<url, value>.
+ *
+ * @param {string} filePath
+ * @returns {Promise<Map<string, unknown>>}
+ */
+export async function loadSnapshotLino(filePath) {
+  try {
+    return parseSnapshotLino(await readFile(filePath, 'utf8'));
+  } catch {
+    return new Map();
+  }
+}
+
+function dirOf(filePath) {
+  const normalized = String(filePath).replace(/\\/g, '/');
+  const index = normalized.lastIndexOf('/');
+  return index === -1 ? '.' : normalized.slice(0, index);
 }
 
 /**

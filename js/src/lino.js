@@ -573,3 +573,33 @@ export function serializeLinoEntries(entries, options = {}) {
     }
   );
 }
+
+/**
+ * Decode a `.lino` API request/response cache into a `Map<url, value>`.
+ *
+ * The cache stores one entry per request as `{ key, url, response }` where the
+ * response is a verbatim JSON string (issue #128). Parsing is browser-safe — it
+ * only depends on the codec above — so the same decoder seeds the Node quality
+ * gate and the web app's persistent cache. Malformed entries are skipped so a
+ * partially-corrupt cache still yields whatever decoded cleanly.
+ *
+ * @param {string} text
+ * @returns {Map<string, unknown>}
+ */
+export function parseLinoCacheEntries(text) {
+  const cache = new Map();
+  for (const entry of parseLinoEntries(text)) {
+    if (!entry || typeof entry !== 'object') {
+      continue;
+    }
+    if (typeof entry.url !== 'string' || typeof entry.response !== 'string') {
+      continue;
+    }
+    try {
+      cache.set(entry.url, JSON.parse(entry.response));
+    } catch {
+      // skip entries whose response payload is not valid JSON
+    }
+  }
+  return cache;
+}
