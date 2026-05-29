@@ -1411,6 +1411,7 @@ function buildFormalizationCst(
       propertyLabel: context.propertyLabel,
       weight: context.weight,
       probability: context.probability,
+      phrases: [...(context.phrases ?? [])], // issue #128: shared words
     })),
   };
 }

@@ -30,11 +30,6 @@ describe('issue 29 - page issue reporting', () => {
         },
         { heading: 'Links Notation', code: '(links-network example)' },
       ],
-      reproductionSteps: [
-        'Open the web app',
-        'Switch to the Formalize page',
-        'Click Report Issue',
-      ],
     };
 
     const url = createPageIssueReportUrl(report, {
@@ -54,7 +49,10 @@ describe('issue 29 - page issue reporting', () => {
     expect(body).toContain('**Version**: v0.9.0 (abc1234)');
     expect(body).toContain('## Text');
     expect(body).toContain('Barack Obama was born in Hawaii.');
-    expect(body).toContain('## Reproduction Steps');
+    // Issue #128: Report Notes and Reproduction Steps sections were removed to
+    // free up space for diagnostic data.
+    expect(body).not.toContain('## Reproduction Steps');
+    expect(body).not.toContain('## Report Notes');
   });
 
   it('renders markdown reports without requiring browser globals', () => {
@@ -63,7 +61,6 @@ describe('issue 29 - page issue reporting', () => {
       sections: [
         { heading: 'Links Notation', code: 'preferences\n  version 1' },
       ],
-      reproductionSteps: ['Open the Preferences page'],
     });
 
     expect(body).toContain('**Page**: Preferences');

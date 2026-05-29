@@ -110,16 +110,11 @@ export function createPageIssueReportUrl(report, options = {}) {
     return fullUrl;
   }
 
-  const omittedHeadings = omittedDiagnosticHeadings(report);
   for (const maxSectionCharacters of compactSectionCharacterLimits) {
     const compactReport = createCompactPageReport(report, {
       maxSectionCharacters,
     });
-    const compactUrl = createUrl(
-      createPageIssueReport(compactReport, {
-        notices: [compactReportNotice(omittedHeadings)],
-      })
-    );
+    const compactUrl = createUrl(createPageIssueReport(compactReport));
     if (compactUrl.length <= maxUrlLength) {
       return compactUrl;
     }
@@ -128,14 +123,10 @@ export function createPageIssueReportUrl(report, options = {}) {
   const fallbackReport = createCompactPageReport(report, {
     maxSectionCharacters: 160,
   });
-  return createUrl(
-    createPageIssueReport(fallbackReport, {
-      notices: [compactReportNotice(omittedHeadings)],
-    })
-  );
+  return createUrl(createPageIssueReport(fallbackReport));
 }
 
-export function createPageIssueReport(report, options = {}) {
+export function createPageIssueReport(report) {
   const lines = [];
   lines.push('## Environment', '');
   for (const [label, value] of Object.entries(report.environment ?? {})) {
@@ -143,16 +134,6 @@ export function createPageIssueReport(report, options = {}) {
   }
   for (const section of report.sections ?? []) {
     appendSection(lines, section);
-  }
-  if (options.notices?.length) {
-    lines.push('', '## Report Notes', '');
-    lines.push(...options.notices.map((notice) => `- ${notice}`));
-  }
-  if (report.reproductionSteps?.length) {
-    lines.push('', '## Reproduction Steps', '');
-    for (const [index, step] of report.reproductionSteps.entries()) {
-      lines.push(`${index + 1}. ${step}`);
-    }
   }
   lines.push('', '## Description', '');
   lines.push('<!-- Please describe what looked wrong or incomplete. -->', '');
@@ -168,7 +149,6 @@ function createCurrentPageReport(pageId, options) {
     summary: getPageSummary(normalizedPageId),
     environment: collectEnvironment(pageLabel, options),
     sections: collectPageSections(normalizedPageId, options),
-    reproductionSteps: createReproductionSteps(pageLabel),
   };
 }
 
@@ -504,21 +484,6 @@ function truncateReportText(value, maxSectionCharacters) {
   )}\n\n[truncated to keep the GitHub issue URL short]`;
 }
 
-function omittedDiagnosticHeadings(report) {
-  return (report.sections ?? [])
-    .filter((section) => !isEssentialReportSection(report, section))
-    .map((section) => section.heading);
-}
-
-function compactReportNotice(omittedHeadings) {
-  if (!omittedHeadings.length) {
-    return 'Shortened generated values to keep the GitHub issue URL within browser/server limits.';
-  }
-  return `Omitted generated diagnostic sections to keep the GitHub issue URL within browser/server limits: ${omittedHeadings.join(
-    ', '
-  )}.`;
-}
-
 function isEssentialReportSection(report, section) {
   const heading = normalizeHeading(section.heading);
   const headings =
@@ -552,15 +517,6 @@ function getPageSummary(pageId) {
   return pageId === 'preferences'
     ? 'preferences'
     : shorten(valueOf('#statement-input'));
-}
-
-function createReproductionSteps(pageLabel) {
-  return [
-    `Open ${globalThis.location?.href ?? 'the web app'}`,
-    `Switch to the ${pageLabel} page`,
-    'Use the page until the issue occurs',
-    'Click Report Issue',
-  ];
 }
 
 function listSection(heading, items, formatter) {

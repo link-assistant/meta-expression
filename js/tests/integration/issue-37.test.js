@@ -163,11 +163,6 @@ describe('issue 37 - bounded page issue reports', () => {
         { heading: 'Translation CST', code: oversizedDiagnostics },
         { heading: 'Translation Steps', lines: [oversizedDiagnostics] },
       ],
-      reproductionSteps: [
-        'Open the web app',
-        'Switch to the Translate page',
-        'Click Report Issue',
-      ],
     };
 
     const url = createPageIssueReportUrl(report, { maxUrlLength: 3500 });
@@ -181,7 +176,9 @@ describe('issue 37 - bounded page issue reports', () => {
     expect(body).toContain('## Markdown');
     expect(body).toContain('https://en.wiktionary.org/wiki/%D1%8D%D1%82%D0%BE');
     expect(body).not.toContain('## Translation CST');
-    expect(body).toContain('Omitted generated diagnostic sections');
+    // Issue #128: the Report Notes/compaction notice section was removed.
+    expect(body).not.toContain('## Report Notes');
+    expect(body).not.toContain('## Reproduction Steps');
   });
 });
 

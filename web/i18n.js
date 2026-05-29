@@ -143,8 +143,8 @@ const dictionaries = {
     'translate.strategyHint':
       'Contextual glossary uses source-backed Wikidata/Wiktionary translations first. Semantic labels use linked entity labels only. Lexical glossary prefers readable word and phrase translations.',
     'translate.linkTarget': 'Link target',
-    'translate.linkWikidata': 'Wikidata',
-    'translate.linkWikipedia': 'Wikipedia',
+    'translate.linkWikidata': 'Wikidata only',
+    'translate.linkWikipedia': 'Wikipedia (fallback Wikidata)',
     'translate.linkLocal': 'Local viewer',
     'translate.sources': 'Sources',
     'translate.sourcesHint':
@@ -326,8 +326,8 @@ const dictionaries = {
     'translate.strategyHint':
       'Контекстный глоссарий сначала использует переводы из Wikidata/Wiktionary. Семантические метки используют только метки связанных сущностей. Лексический глоссарий предпочитает читаемые переводы слов и фраз.',
     'translate.linkTarget': 'Цель ссылок',
-    'translate.linkWikidata': 'Wikidata',
-    'translate.linkWikipedia': 'Wikipedia',
+    'translate.linkWikidata': 'Только Wikidata',
+    'translate.linkWikipedia': 'Wikipedia (с откатом на Wikidata)',
     'translate.linkLocal': 'Локальный просмотр',
     'translate.sources': 'Источники',
     'translate.sourcesHint':

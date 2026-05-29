@@ -631,6 +631,22 @@ overrides files so the document is always rooted under a stable name.
 
 **Returns** `string`
 
+### `parseLinoCacheEntries(text)`
+
+Decode a `.lino` API request/response cache into a `Map<url, value>`.
+
+The cache stores one entry per request as `{ key, url, response }` where the
+response is a verbatim JSON string (issue #128). Parsing is browser-safe — it
+only depends on the codec above — so the same decoder seeds the Node quality
+gate and the web app's persistent cache. Malformed entries are skipped so a
+partially-corrupt cache still yields whatever decoded cleanly.
+
+| Parameter | Type     | Description |
+| --------- | -------- | ----------- |
+| `text`    | `string` | —           |
+
+**Returns** `Map<string, unknown>`
+
 ## Doublets binary store
 
 Source: [`js/src/doublets.js`](../js/src/doublets.js)

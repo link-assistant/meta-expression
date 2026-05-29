@@ -1803,6 +1803,16 @@ export interface FormalizationCstPhrase {
   candidates: FormalizationCstCandidate[];
 }
 
+export interface FormalizationCstContext {
+  id: string;
+  wikidataId: string;
+  property: string;
+  propertyLabel: string;
+  weight: number;
+  probability: number;
+  phrases: Array<{ text: string; entityId: string }>;
+}
+
 export interface FormalizationCst {
   type: 'formalization';
   version: number;
@@ -1813,7 +1823,7 @@ export interface FormalizationCst {
   linguisticMetadata: LinguisticMetadata;
   providerCandidates: FormalizationProviderCandidates;
   phrases: FormalizationCstPhrase[];
-  contexts: FormalizeContext[];
+  contexts: FormalizationCstContext[];
 }
 
 export interface FormalizeOptions {
