@@ -151,10 +151,12 @@ The prototype must keep these examples working:
 - `Paris is the capital of France`: live Wikimedia evidence template.
 - `Hawaii`: `/translate` can formalize `Q782` and emit target-language
   Wikidata labels such as Russian `Гавайи`.
-- `Hawaii is a state.`: `/translate` can formalize `Q782` and `Q7275`, show
-  the formalized input, record API/rule steps, preserve the source `state`
-  concept separately from target predicate `Q35657`, and emit
-  `Гавайи это штат.` for the tested English-to-Russian rule slice.
+- `Hawaii is a state.`: `/translate` formalizes `Q782` and resolves the copula
+  predicate `state` to the subject's asserted type — the contextually-correct
+  `Q35657` ([`U.S. state`](https://en.wikipedia.org/wiki/U.S._state)) rather than
+  the generic federated-state concept — language-neutrally, shows the formalized
+  input, records API/rule steps, and emits `Гавайи это штат.` for the tested
+  English-to-Russian rule slice.
 
 ## Current Guardrails
 

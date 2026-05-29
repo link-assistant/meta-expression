@@ -11,22 +11,33 @@ Wikimedia HTTP evidence, CI logs, and before/after test logs.
 
 ## R35.2 — Keep semantic phrases separate from grammar glue
 
-`Hawaii is a state.` must resolve `Hawaii` to `Q782` and `state` to `Q7275`
-without linking `Hawaii is a`, `a state`, or `is a state`.
+`Hawaii is a state.` must resolve `Hawaii` to `Q782` and `state` to a state
+concept without linking `Hawaii is a`, `a state`, or `is a state`.
 
 Status: implemented. Multi-token n-gram filtering and candidate shape checks
 reject grammar-fragment matches. `tests/issue-35.test.js` pins the exact search
 terms that must not be requested.
 
+> **Superseded by issue #128 R12.** The original fix resolved `state` to the
+> generic federated-state concept `Q7275`. Contextual copula disambiguation now
+> resolves it to the subject's asserted type `Q35657`
+> ([`U.S. state`](https://en.wikipedia.org/wiki/U.S._state)) — see
+> [`../issue-128/REQUIREMENTS.md`](../issue-128/REQUIREMENTS.md) R12. The
+> grammar-glue separation requirement is unchanged.
+
 ## R35.3 — Emit the expected Russian sentence
 
 The fixed translation must produce `Гавайи это штат.` for the issue example.
 
-Status: implemented. The English-to-Russian rule slice now emits
-`english-copula-to-russian-eto`, and the U.S.-state predicate slice rewrites
-the broad `Q7275` Russian label to `штат` when the subject is a U.S. state.
-Issue #16 expectations and repository requirements were updated from the old
-dash rendering.
+Status: implemented. The English-to-Russian rule slice emits
+`english-copula-to-russian-eto`. Issue #16 expectations and repository
+requirements were updated from the old dash rendering.
+
+> **Superseded by issue #128 R12.** The original fix added a dedicated
+> U.S.-state predicate rule that rewrote the broad `Q7275` Russian label to
+> `штат`. That language-specific rule is removed; the predicate now resolves to
+> `Q35657` at formalization time and the interlingua supplies the `штат` surface
+> form. The expected output `Гавайи это штат.` is unchanged.
 
 ## R35.4 — Identify Wikimedia API requests
 
@@ -52,11 +63,13 @@ sentence renderings, transformation steps, and formalization data.
 
 Status: implemented and regression-tested. Translation output includes phrase
 ids, source ranges, target labels, sentence records, transformation steps, CST,
-and Links Notation. Rule-based target rewrites now update phrase target
-metadata as well as sentence rendering, so the source `state` phrase remains
-`Q7275` while the Russian target predicate is recorded as `штат`/`Q35657`.
-The issue #35 tests assert formalization entity ids, target entity ids, and the
-`targetId Q35657` Links Notation trace.
+and Links Notation.
+
+> **Superseded by issue #128 R12.** The original fix preserved the source
+> `state` phrase as `Q7275` while recording the target predicate as
+> `штат`/`Q35657`. The source and target now share the resolved meaning
+> `Q35657`, so the issue #35 tests assert `Q35657` on both sides (and the Links
+> Notation omits a redundant `targetId` when source id == target id).
 
 ## R35.7 — Expand tests before and after the fix
 

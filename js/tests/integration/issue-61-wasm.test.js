@@ -127,9 +127,11 @@ describe('issue 61 - wasm-bindgen core wrapper parity', () => {
     expect(wasmSentence.transformationSteps).toEqual(
       jsSentence.sentences[0].transformations
     );
+    // The source "state" resolves to its contextual U.S.-state sense (Q35657)
+    // end to end, matching the JavaScript formalizer (issue #128).
     expect(
       wasmSentence.sourcePhrases.map((phrase) => phrase.meaningId)
-    ).toEqual(['Q782', 'Q7275']);
+    ).toEqual(['Q782', 'Q35657']);
     expect(
       wasmSentence.targetPhrases.map((phrase) => phrase.meaningId)
     ).toEqual(['Q782', 'Q35657']);
@@ -146,10 +148,12 @@ function createHawaiiFetch() {
     ],
   };
   const entities = {
-    'Q782|en': entity('Q782', 'Hawaii', 'en', 'Hawaii'),
+    'Q782|en': entity('Q782', 'Hawaii', 'en', 'Hawaii', instanceOf('Q35657')),
     'Q782|ru': entity('Q782', 'Гавайи', 'ru', 'Гавайи'),
     'Q7275|en': entity('Q7275', 'state', 'en', 'Federated state'),
     'Q7275|ru': entity('Q7275', 'государство', 'ru', 'Государство'),
+    'Q35657|en': entity('Q35657', 'U.S. state', 'en', 'U.S. state'),
+    'Q35657|ru': entity('Q35657', 'Штат США', 'ru', 'Штат США'),
   };
 
   return async (url) => {
@@ -187,15 +191,22 @@ function jsonResponse(payload) {
   };
 }
 
-function entity(id, label, language, sitelink) {
+function entity(id, label, language, sitelink, claims = {}) {
   const site = `${language}wiki`;
   return {
     id,
     type: id.startsWith('P') ? 'property' : 'item',
     labels: { [language]: { value: label } },
     descriptions: { [language]: { value: `${label} description` } },
-    claims: {},
+    claims,
     aliases: {},
     sitelinks: { [site]: { site, title: sitelink } },
+  };
+}
+
+// Wikidata "instance of" (P31) claim pointing at the given type id (issue #128).
+function instanceOf(typeId) {
+  return {
+    P31: [{ mainsnak: { datavalue: { value: { id: typeId } } } }],
   };
 }

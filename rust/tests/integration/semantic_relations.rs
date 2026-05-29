@@ -23,9 +23,11 @@ fn encodes_issue35_translation_phrase_relations_as_doublets() {
         meta_expression_issue35_hawaii_meaning_id()
     );
     assert_eq!(relations[1].source, 35_000);
+    // After contextual disambiguation the source "state" resolves to the
+    // U.S.-state sense (Q35657), matching the target phrase (issue #128).
     assert_eq!(
         relations[1].target,
-        meta_expression_issue35_state_meaning_id()
+        meta_expression_issue35_us_state_meaning_id()
     );
     assert_eq!(relations[2].source, 35_001);
     assert_eq!(
@@ -36,6 +38,12 @@ fn encodes_issue35_translation_phrase_relations_as_doublets() {
         relations[3].target,
         meta_expression_issue35_us_state_meaning_id()
     );
+    // The generic federated-state concept (Q7275) remains available as a
+    // distinct reference value, separate from the resolved U.S.-state sense.
+    assert_ne!(
+        meta_expression_issue35_state_meaning_id(),
+        meta_expression_issue35_us_state_meaning_id()
+    );
     assert_eq!(meta_expression_issue35_phrase_count(), 2);
-    assert_eq!(meta_expression_issue35_rule_count(), 3);
+    assert_eq!(meta_expression_issue35_rule_count(), 2);
 }

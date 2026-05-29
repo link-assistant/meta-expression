@@ -152,5 +152,35 @@ The report change (R2) lives in the single shared `page-report.js`.
 > Please plan and execute everything in this single pull request … until each
 > and every requirement fully addressed, and everything is totally done.
 
-**Status: in progress.** All work lands on branch `issue-128-41095a0f356d` /
-PR #129, with a single changeset (`.changeset/issue-128-links-notation.md`).
+**Status: done.** R1–R11 landed on branch `issue-128-41095a0f356d` / PR #129,
+with a single changeset (`.changeset/issue-128-links-notation.md`).
+
+## R12 — Resolve the predicate to its most-correct sense (follow-up, PR #130)
+
+> Issue was not fully solved in the widest and deepest sense possible. The most
+> correct selection for `state` in the context of that statement is
+> `https://en.wikipedia.org/wiki/U.S._state`, because `Hawaii` is US state, and
+> also in russian we have russian version … as
+> `https://ru.wikipedia.org/wiki/Штат_США`. … We need to generalize our
+> algorithms … every change in one place should also be applied in all places
+> in the codebase and docs.
+
+After PR #129 the sentence still translated correctly on the surface
+(`Гавайи это штат.`), but the **formalized meaning** of "state" was the generic
+federated-state concept (`Q7275`), not the contextually-correct
+[`U.S. state` (`Q35657`)](https://en.wikipedia.org/wiki/U.S._state). The Russian
+side relied on a hardcoded, language-specific predicate rule
+(`english-us-state-predicate-to-russian-shtat`) rather than a general algorithm.
+
+**Status: done (PR #130).** Disambiguation now resolves the copula predicate to
+the subject's asserted type at **formalization** time, language-neutrally, so
+"state" → `Q35657` and "штат" → `Q35657` end to end. The bespoke Russian
+predicate rule is removed; the translation reuses the resolved meaning and the
+interlingua surface form. See [`ROOT-CAUSES.md`](ROOT-CAUSES.md) RC7 and
+[`SOLUTION-PLAN.md`](SOLUTION-PLAN.md) R12. Verified by
+`js/tests/integration/issue-128.test.js` (the elected context is `Q35657`,
+shared by both words), the issue-35/37/56/61/74 suites, and the Rust parity
+tests (`rust/tests/integration/issue35_translation.rs`,
+`semantic_relations.rs`). The change is applied across the entire codebase —
+JavaScript formalizer/translator, the Rust core and its curated reference, the
+committed WASM build, and these docs.

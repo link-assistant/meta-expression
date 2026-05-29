@@ -42,7 +42,6 @@ const defaultCacheTtlMs = 7 * 24 * 60 * 60 * 1000;
 // language-neutral concept id and resolves the form from the lexicon data at
 // runtime via `resolveConceptForm`.
 const RUSSIAN_COPULA_CONCEPT_ID = 'lex:en:is->ru';
-const US_STATE_PREDICATE_CONCEPT_ID = 'Q35657';
 const RUSSIAN_EXAMPLES_CONCEPT_ID = 'lex:en:examples->ru';
 
 function requireConceptForm(conceptId, language) {
@@ -597,6 +596,15 @@ async function responseBodyPreview(response) {
 }
 
 function targetLabelFor(entity, language) {
+  // Prefer the interlingua's licensed short surface form for the concept when
+  // one exists (e.g. Q35657 → ru "штат" rather than the full Wikidata label
+  // "Штат США"). This keeps the rendered word natural while the link still
+  // points at the canonical article via targetUrlFor. The lookup is concept-id
+  // driven, so it stays free of hardcoded language pairs (issue #128).
+  const concept = entity?.id ? resolveConceptForm(entity.id, language) : null;
+  if (concept?.text) {
+    return concept.text;
+  }
   return entity?.labels?.[language]?.value ?? null;
 }
 
@@ -1114,11 +1122,6 @@ function applyEnglishToRussianRules(units, segment, sentenceId, config) {
     });
   }
 
-  if (
-    applyRussianUsStatePredicateRule(nextUnits, segment, sentenceId, config)
-  ) {
-    transformations.push('english-us-state-predicate-to-russian-shtat');
-  }
   transformations.push(
     ...applyEnglishToRussianLexicalRules(nextUnits, segment, sentenceId, config)
   );
@@ -1163,95 +1166,12 @@ function applyCommaBeforeThenRule(units, segment, sentenceId, config) {
   return true;
 }
 
-function applyRussianUsStatePredicateRule(units, segment, sentenceId, config) {
-  for (let index = 1; index < units.length - 1; index += 1) {
-    if (!isRussianCopula(units[index].plainText)) {
-      continue;
-    }
-    const subject = units[index - 1];
-    const predicate = units[index + 1];
-    if (!isStatePredicate(predicate) || !isUsStateSubject(subject)) {
-      continue;
-    }
-    setUnitTargetText(
-      predicate,
-      requireConceptForm(US_STATE_PREDICATE_CONCEPT_ID, config.targetLanguage),
-      config
-    );
-    recordStep(config, 'transformation-rule', {
-      sentenceId,
-      rule: 'english-us-state-predicate-to-russian-shtat',
-      sourceText: segment.text,
-      affectedVariables: predicate.variableName ? [predicate.variableName] : [],
-    });
-    return true;
-  }
-  return false;
-}
-
-function isStatePredicate(unit) {
-  if (normalizePhrase(unit?.sourceText) !== 'state') {
-    return false;
-  }
-  return !unit.entityId || ['Q7275', 'Q35657'].includes(unit.entityId);
-}
-
-function isUsStateSubject(unit) {
-  const description = normalizePhrase(unit?.sourceDescription);
-  return (
-    description.includes('state of the united states') ||
-    description.includes('state of the united states of america') ||
-    description.includes('us state') ||
-    description.includes('u s state')
-  );
-}
-
 function normalizePhrase(value) {
   return String(value ?? '')
     .toLowerCase()
     .replace(/[^\p{Letter}\p{Number}]+/gu, ' ')
     .trim()
     .replace(/\s+/g, ' ');
-}
-
-function setUnitTargetText(unit, target, config = null) {
-  const resolvedTarget = resolveUnitTarget(unit, target, config);
-  unit.plainText = target.text;
-  unit.targetEntityId = resolvedTarget.entityId;
-  unit.targetUrl = resolvedTarget.url;
-  applyUnitTargetToPhrase(unit, {
-    ...target,
-    entityId: resolvedTarget.entityId,
-    url: resolvedTarget.url,
-    description: target.description ?? resolvedTarget.description,
-  });
-  if (unit.targetEntityId && unit.targetUrl) {
-    unit.markdown = `[${escapeMarkdown(unit.plainText)}](${unit.targetUrl} "${unit.targetEntityId}")`;
-    unit.html = `<a href="${escapeAttribute(unit.targetUrl)}" title="${escapeAttribute(
-      unit.targetEntityId
-    )}">${escapeHtml(unit.plainText)}</a>`;
-    return;
-  }
-  unit.markdown = unit.plainText;
-  unit.html = escapeHtml(unit.plainText);
-}
-
-function resolveUnitTarget(unit, target, config) {
-  const lexicalTarget =
-    target.entityId || !target.text || !config
-      ? null
-      : buildLexicalTarget(target.text, config.targetLanguage, {
-          linkTargetMode: config.linkTargetMode,
-        });
-  return {
-    entityId:
-      target.entityId ??
-      lexicalTarget?.entityId ??
-      unit.targetEntityId ??
-      unit.entityId,
-    url: target.url ?? lexicalTarget?.url ?? unit.targetUrl,
-    description: lexicalTarget?.description,
-  };
 }
 
 function appendUnitSuffix(unit, suffix) {
@@ -1287,17 +1207,6 @@ function buildRuleToken(sourceText, target, config = null) {
     )}">${escapeHtml(unit.plainText)}</a>`;
   }
   return unit;
-}
-
-function applyUnitTargetToPhrase(unit, target) {
-  if (!unit.phraseRef) {
-    return;
-  }
-  unit.phraseRef.target.text = target.text;
-  unit.phraseRef.target.entityId = unit.targetEntityId;
-  unit.phraseRef.target.url = unit.targetUrl;
-  unit.phraseRef.target.description =
-    target.description ?? unit.phraseRef.target.description;
 }
 
 function applyRussianToEnglishRules(units, segment, sentenceId, config) {

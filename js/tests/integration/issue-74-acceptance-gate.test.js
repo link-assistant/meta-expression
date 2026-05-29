@@ -207,17 +207,19 @@ describe('issue 74 - no-regression acceptance gate', () => {
     expect(sentence.plainText).toBe('Гавайи это штат.');
     expect(sentence.questions).toEqual([]);
     expect(sentence.formalization.markdown).toContain('Q782');
-    expect(sentence.formalization.markdown).toContain('Q7275');
+    // "state" resolves to its contextual U.S.-state sense (Q35657) during
+    // formalization, so the formalized markdown links to U.S._state and the
+    // source phrase reports Q35657 (issue #128).
+    expect(sentence.formalization.markdown).toContain('Q35657');
     expect(
       sentence.sentences[0].phrases.map((phrase) => phrase.source.entityId)
-    ).toEqual(['Q782', 'lex:en:is', 'lex:en:a', 'Q7275']);
+    ).toEqual(['Q782', 'lex:en:is', 'lex:en:a', 'Q35657']);
     expect(
       sentence.sentences[0].targetUnits.map((unit) => unit.targetEntityId)
     ).toEqual(['Q782', 'wikt:ru:это#Determiner:0', 'Q35657']);
     expect(sentence.sentences[0].transformations).toEqual([
       'english-article-omission',
       'english-copula-to-russian-eto',
-      'english-us-state-predicate-to-russian-shtat',
     ]);
     expect(sentence.steps.some((step) => step.type === 'api-request')).toBe(
       true
@@ -360,10 +362,12 @@ function createHawaiiFetch() {
     ],
   };
   const entities = {
-    'Q782|en': entity('Q782', 'Hawaii', 'en', 'Hawaii'),
+    'Q782|en': entity('Q782', 'Hawaii', 'en', 'Hawaii', instanceOf('Q35657')),
     'Q782|ru': entity('Q782', 'Гавайи', 'ru', 'Гавайи'),
     'Q7275|en': entity('Q7275', 'state', 'en', 'Federated state'),
     'Q7275|ru': entity('Q7275', 'государство', 'ru', 'Государство'),
+    'Q35657|en': entity('Q35657', 'U.S. state', 'en', 'U.S. state'),
+    'Q35657|ru': entity('Q35657', 'Штат США', 'ru', 'Штат США'),
   };
 
   return async (url) => {
@@ -401,15 +405,22 @@ function jsonResponse(payload) {
   };
 }
 
-function entity(id, label, language, sitelink) {
+function entity(id, label, language, sitelink, claims = {}) {
   const site = `${language}wiki`;
   return {
     id,
     type: id.startsWith('P') ? 'property' : 'item',
     labels: { [language]: { value: label } },
     descriptions: { [language]: { value: `${label} description` } },
-    claims: {},
+    claims,
     aliases: {},
     sitelinks: { [site]: { site, title: sitelink } },
+  };
+}
+
+// Wikidata "instance of" (P31) claim pointing at the given type id (issue #128).
+function instanceOf(typeId) {
+  return {
+    P31: [{ mainsnak: { datavalue: { value: { id: typeId } } } }],
   };
 }

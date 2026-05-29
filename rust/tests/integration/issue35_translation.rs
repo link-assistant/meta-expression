@@ -8,18 +8,16 @@ fn translates_issue35_sentence_through_semantic_ids() {
     assert_eq!(translation.source_phrases[0].text, "Hawaii");
     assert_eq!(translation.source_phrases[0].meaning_id, "Q782");
     assert_eq!(translation.source_phrases[1].text, "state");
-    assert_eq!(translation.source_phrases[1].meaning_id, "Q7275");
+    // "state" resolves to the U.S.-state sense (Q35657) during formalization,
+    // matching the JavaScript formalizer end to end (issue #128).
+    assert_eq!(translation.source_phrases[1].meaning_id, "Q35657");
     assert_eq!(translation.target_phrases[0].text, "Гавайи");
     assert_eq!(translation.target_phrases[0].meaning_id, "Q782");
     assert_eq!(translation.target_phrases[1].text, "штат");
     assert_eq!(translation.target_phrases[1].meaning_id, "Q35657");
     assert_eq!(
         translation.transformation_steps,
-        [
-            "english-article-omission",
-            "english-copula-to-russian-eto",
-            "english-us-state-predicate-to-russian-shtat"
-        ]
+        ["english-article-omission", "english-copula-to-russian-eto"]
     );
 
     let round_trip =

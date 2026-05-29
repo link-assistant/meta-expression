@@ -13,11 +13,11 @@
  */
 import { fileURLToPath } from 'node:url';
 import { dirname, resolve } from 'node:path';
-import { formalizeTextWith } from '../src/index.js';
+import { formalizeTextWith } from '../js/src/index.js';
 import {
   SNAPSHOT_MODES,
   createSnapshotLayer,
-} from '../src/formalize-snapshots.js';
+} from '../js/src/formalize-snapshots.js';
 
 const here = dirname(fileURLToPath(import.meta.url));
 const fixturesDir = resolve(

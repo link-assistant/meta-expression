@@ -40,3 +40,18 @@ All timestamps come from [`data/issue.json`](data/issue.json) and the captured
    - `10d9485` — Add the `.lino` Wikimedia API cache in the data folder, the
      refresh script, the freshness check, and web-app seeding (R6), plus this
      case study (R7).
+
+6. **2026-05-29 — Follow-up review on the merged PR #129.** The maintainer notes
+   the issue "was not fully solved in the widest and deepest sense possible":
+   "state" should resolve to the contextually-correct
+   [`U.S. state` (`Q35657`)](https://en.wikipedia.org/wiki/U.S._state) — which
+   has a Russian counterpart [`Штат США`](https://ru.wikipedia.org/wiki/Штат_США)
+   — instead of the generic federated-state concept, the algorithm must be
+   generalized, and the change must reach every place in the codebase and docs.
+
+7. **2026-05-29 — Work begins on branch `issue-128-fed1f7a14626` / PR #130.**
+   The predicate is now resolved to the subject's asserted type at formalization
+   time (`resolveCopulaTypes`), language-neutrally; the hardcoded Russian
+   US-state predicate rule is removed; the Rust core, its curated reference, and
+   the committed WASM are flipped to `Q35657`; all affected tests and this case
+   study are updated (R12).

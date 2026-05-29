@@ -28,7 +28,6 @@ export interface InitOutput {
     readonly meta_expression_default_translation_match_threshold: () => number;
     readonly meta_expression_issue35_hawaii_meaning_id: () => bigint;
     readonly meta_expression_issue35_phrase_count: () => number;
-    readonly meta_expression_issue35_rule_count: () => number;
     readonly meta_expression_issue35_state_meaning_id: () => bigint;
     readonly meta_expression_issue35_us_state_meaning_id: () => bigint;
     readonly meta_expression_issue52_sentence_count: () => number;
@@ -38,11 +37,12 @@ export interface InitOutput {
     readonly meta_expression_translation_quality_status_code: (a: number) => number;
     readonly meta_expression_weighted_support_ratio: (a: number, b: number, c: number) => number;
     readonly meta_expression_wikidata_default_entity_batch_limit: () => number;
+    readonly meta_expression_wikimedia_cache_max_jitter_days: () => number;
     readonly meta_expression_wikimedia_cache_min_jitter_days: () => number;
     readonly meta_expression_wikimedia_cache_ttl_days_from_hash: (a: bigint) => number;
+    readonly meta_expression_issue35_rule_count: () => number;
     readonly meta_expression_issue52_target_phrase_count: () => number;
     readonly meta_expression_wikimedia_cache_base_ttl_days: () => number;
-    readonly meta_expression_wikimedia_cache_max_jitter_days: () => number;
     readonly analyzeStatementJson: (a: number, b: number, c: number) => [number, number, number, number];
     readonly createStatementDraftJson: (a: number, b: number) => [number, number, number, number];
     readonly deformalizeFormalExpression: (a: number, b: number) => [number, number];

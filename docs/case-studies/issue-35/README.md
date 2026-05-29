@@ -95,6 +95,14 @@ requested a full requirements audit rather than a single inline code change.
 
 ## Implemented Slice
 
+> **Note (issue #128 R12).** The U.S.-state predicate handling described below
+> was later generalized: the predicate now resolves to `Q35657` at
+> formalization time via language-neutral copula disambiguation, the bespoke
+> `X is a state` → `X это штат` rule is removed, and the source and target share
+> the resolved `Q35657` meaning. See
+> [`../issue-128/REQUIREMENTS.md`](../issue-128/REQUIREMENTS.md) R12. The tested
+> output `Гавайи это штат.` is unchanged.
+
 - Wikimedia requests now send `Api-User-Agent` everywhere and `User-Agent` in
   Node-compatible runtimes.
 - Formalization skips multi-token n-grams containing English or Russian copula

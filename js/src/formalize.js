@@ -51,6 +51,12 @@ import {
 } from './linguistic-metadata.js';
 import { buildLinksNetwork } from './formalize-links-network.js';
 import { collectFormalizationProviderCandidates } from './formalization-providers.js';
+import { resolveCopulaTypes } from './copula-types.js';
+import {
+  extractAliases,
+  extractContextLabels,
+  wikipediaArticleBaseUrl,
+} from './wikidata-entity-context.js';
 import {
   escapeAttribute,
   escapeHtml,
@@ -62,7 +68,6 @@ import {
 
 const wikidataEntityBaseUrl = 'https://www.wikidata.org/wiki/';
 const wikidataPropertyBaseUrl = 'https://www.wikidata.org/wiki/Property:';
-const wikipediaArticleBaseUrl = 'https://en.wikipedia.org/wiki/';
 const localEntityViewerBaseUrl =
   'https://link-assistant.github.io/human-language/entities.html';
 const localPropertyViewerBaseUrl =
@@ -95,16 +100,6 @@ const propertyIndicators = new Set([
   'place of birth', 'date of birth', 'date of death', 'was born in',
   'is located in',
 ]); // prettier-ignore
-
-const contextProperties = Object.freeze({
-  P31: 'instance of',
-  P279: 'subclass of',
-  P361: 'part of',
-  P137: 'operator',
-  P136: 'genre',
-  P425: 'field of work',
-  P106: 'occupation',
-});
 
 const linkTargetModes = Object.freeze({
   WIKIPEDIA: 'wikipedia',
@@ -275,6 +270,17 @@ export async function formalizeTextWith(input, options = {}) {
   await Promise.all(
     phrases.map((phrase) => attachEntityDetails(phrase, config))
   );
+  // Issue #128: resolve "X is a Y" predicates to the subject's asserted type
+  // (e.g. "Hawaii is a state." -> state = Q35657 "U.S. state") using the
+  // instance-of / subclass-of relation now visible after hydration. The pass
+  // lives in copula-types.js (to keep this file within its line budget) and
+  // receives the formalizer-internal helpers/constants it needs.
+  await resolveCopulaTypes(phrases, config, {
+    buildSourceContext,
+    isCopula,
+    isEnglishArticle,
+    normalizeLabel,
+  });
   const flatContexts = aggregateContexts(phrases);
   const bigContexts = await aggregateBigContexts(phrases, {
     fetchJson: (url) => fetchWikimediaJson(url, config),
@@ -1107,49 +1113,6 @@ function applyEntityHydration(candidate, entity) {
   }
   candidate.contextLabels = extractContextLabels(entity);
   candidate.aliases = extractAliases(entity);
-}
-
-function extractContextLabels(entity) {
-  const labels = [];
-  for (const property of Object.keys(contextProperties)) {
-    const claims = entity.claims?.[property];
-    if (!Array.isArray(claims)) {
-      continue;
-    }
-    for (const claim of claims) {
-      const value = claim.mainsnak?.datavalue?.value;
-      const id = value?.id ?? wikidataIdFromNumericValue(value);
-      if (!id) {
-        continue;
-      }
-      labels.push({
-        property,
-        propertyLabel: contextProperties[property],
-        targetId: id,
-      });
-    }
-  }
-  return labels;
-}
-
-function wikidataIdFromNumericValue(value) {
-  if (!value || typeof value !== 'object') {
-    return null;
-  }
-  return value['numeric-id'] ? `Q${value['numeric-id']}` : null;
-}
-
-// Surface every alias the entity carries so the candidate matcher can
-// snap "to formalize" → Q115492965 even when the canonical label is
-// "formalizing" (issue #21).
-function extractAliases(entity) {
-  const aliases = entity?.aliases?.en;
-  if (!Array.isArray(aliases)) {
-    return [];
-  }
-  return aliases
-    .map((alias) => alias?.value)
-    .filter((value) => typeof value === 'string' && value.length > 0);
 }
 
 function aggregateContexts(phrases) {

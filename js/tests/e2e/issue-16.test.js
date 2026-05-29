@@ -36,7 +36,7 @@ function entityPayload(entries) {
   return { entities };
 }
 
-function entity({ id, label, language = 'en', sitelink = null }) {
+function entity({ id, label, language = 'en', sitelink = null, claims = {} }) {
   const site = `${language}wiki`;
   return {
     id,
@@ -45,9 +45,16 @@ function entity({ id, label, language = 'en', sitelink = null }) {
     descriptions: {
       [language]: { value: `${label} description` },
     },
-    claims: {},
+    claims,
     aliases: {},
     sitelinks: sitelink ? { [site]: { site, title: sitelink } } : {},
+  };
+}
+
+// Wikidata "instance of" (P31) claim pointing at the given type id (issue #128).
+function instanceOf(typeId) {
+  return {
+    P31: [{ mainsnak: { datavalue: { value: { id: typeId } } } }],
   };
 }
 
@@ -199,6 +206,7 @@ describe('issue 16 — translate through formalized Wikidata labels', () => {
           label: 'Hawaii',
           language: 'en',
           sitelink: 'Hawaii',
+          claims: instanceOf('Q35657'),
         }),
         'Q782|ru': entity({
           id: 'Q782',
@@ -217,6 +225,18 @@ describe('issue 16 — translate through formalized Wikidata labels', () => {
           label: 'государство',
           language: 'ru',
           sitelink: 'Государство',
+        }),
+        'Q35657|en': entity({
+          id: 'Q35657',
+          label: 'U.S. state',
+          language: 'en',
+          sitelink: 'U.S. state',
+        }),
+        'Q35657|ru': entity({
+          id: 'Q35657',
+          label: 'Штат США',
+          language: 'ru',
+          sitelink: 'Штат США',
         }),
       },
     });
@@ -237,7 +257,6 @@ describe('issue 16 — translate through formalized Wikidata labels', () => {
     expect(result.sentences[0].transformations).toEqual([
       'english-article-omission',
       'english-copula-to-russian-eto',
-      'english-us-state-predicate-to-russian-shtat',
     ]);
     expect(result.plainText).toBe('Гавайи это штат.');
     expect(result.markdown).toContain('[Гавайи](');

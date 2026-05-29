@@ -348,7 +348,9 @@ pub fn translate_glossary_semantic_sentence(
 pub fn issue35_translation_relations() -> Vec<Doublet<u64>> {
     vec![
         relation_doublet(ISSUE35_SOURCE_SENTENCE_NODE, ISSUE35_HAWAII_MEANING_ID),
-        relation_doublet(ISSUE35_SOURCE_SENTENCE_NODE, ISSUE35_STATE_MEANING_ID),
+        // Both the source and target "state" phrases resolve to the U.S.-state
+        // sense (Q35657) after contextual disambiguation (issue #128).
+        relation_doublet(ISSUE35_SOURCE_SENTENCE_NODE, ISSUE35_US_STATE_MEANING_ID),
         relation_doublet(ISSUE35_TARGET_SENTENCE_NODE, ISSUE35_HAWAII_MEANING_ID),
         relation_doublet(ISSUE35_TARGET_SENTENCE_NODE, ISSUE35_US_STATE_MEANING_ID),
     ]
@@ -376,7 +378,10 @@ pub extern "C" fn meta_expression_issue35_phrase_count() -> u32 {
 
 #[no_mangle]
 pub extern "C" fn meta_expression_issue35_rule_count() -> u32 {
-    3
+    // Two genuine grammatical transformation steps remain after the
+    // language-pair-specific "state -> штат" predicate rule was replaced by the
+    // general formalization-time copula instance-of resolution (issue #128).
+    2
 }
 
 #[no_mangle]
@@ -702,7 +707,11 @@ fn issue35_english_to_russian(input: &str) -> SemanticTranslation {
         target_text: target_text.clone(),
         source_phrases: vec![
             semantic_phrase_in_text("Hawaii", ISSUE35_HAWAII_MEANING_ID, source_text, 0),
-            semantic_phrase_in_text("state", ISSUE35_STATE_MEANING_ID, source_text, 12),
+            // "state" is resolved to its contextual U.S.-state sense (Q35657)
+            // during formalization — Hawaii's asserted P31 type promotes the
+            // predicate noun — so the source phrase reports the same resolved
+            // meaning the JavaScript formalizer produces (issue #128).
+            semantic_phrase_in_text("state", ISSUE35_US_STATE_MEANING_ID, source_text, 12),
         ],
         target_phrases: vec![
             semantic_phrase_in_text(
@@ -718,10 +727,15 @@ fn issue35_english_to_russian(input: &str) -> SemanticTranslation {
                 0,
             ),
         ],
+        // The predicate noun "state" is resolved to its U.S.-state sense
+        // (Q35657) during *formalization* via the general copula instance-of
+        // rule, so the Russian "штат" is now produced by the ordinary
+        // Wikidata-entity translation path rather than a language-pair-specific
+        // predicate rule. Only the genuine grammatical operations remain as
+        // translation steps (issue #128).
         transformation_steps: vec![
             "english-article-omission".to_string(),
             "english-copula-to-russian-eto".to_string(),
-            "english-us-state-predicate-to-russian-shtat".to_string(),
         ],
     }
 }
@@ -770,7 +784,10 @@ fn issue35_russian_to_english(input: &str) -> SemanticTranslation {
         ],
         target_phrases: vec![
             semantic_phrase_in_text("Hawaii", ISSUE35_HAWAII_MEANING_ID, target_text, 0),
-            semantic_phrase_in_text("state", ISSUE35_STATE_MEANING_ID, target_text, 12),
+            // The English "state" carries the same contextual U.S.-state sense
+            // (Q35657) as the forward direction so the round-trip preserves the
+            // resolved meaning end to end (issue #128).
+            semantic_phrase_in_text("state", ISSUE35_US_STATE_MEANING_ID, target_text, 12),
         ],
         transformation_steps: vec![
             "russian-copula-to-english-be".to_string(),
