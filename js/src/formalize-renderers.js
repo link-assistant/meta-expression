@@ -30,17 +30,20 @@ export function htmlFromFormalizationCst(cst) {
 export function renderLinksNotation(cst) {
   const safeText = toLino(cst.text);
   const head = `(formalization: ${safeText})`;
-  const phraseLines = cst.phrases.map((phrase) => {
+  const phraseLines = cst.phrases.flatMap((phrase) => {
     if (!phrase.entity) {
-      return `(${phrase.id}: source ${toLino(phrase.text)} start ${phrase.start} end ${phrase.end} unresolved)`;
+      return [
+        `(${phrase.id}: source ${toLino(phrase.text)} start ${phrase.start} end ${phrase.end} unresolved)`,
+        ...renderMergedDefinitionLines(phrase),
+      ];
     }
     const label = phrase.entity.label ?? phrase.text;
-    return `(${phrase.id}: source ${toLino(phrase.text)} start ${phrase.start} end ${phrase.end} id ${phrase.entity.id} label ${toLino(label)} kind ${phrase.entity.kind ?? 'entity'} markdownUrl ${toLino(phrase.entity.url)})`;
+    return [
+      `(${phrase.id}: source ${toLino(phrase.text)} start ${phrase.start} end ${phrase.end} id ${phrase.entity.id} label ${toLino(label)} kind ${phrase.entity.kind ?? 'entity'} markdownUrl ${toLino(phrase.entity.url)})`,
+      ...renderMergedDefinitionLines(phrase),
+    ];
   });
-  const contextLines = cst.contexts.map((context) => {
-    const probability = (context.probability * 100).toFixed(1);
-    return `(${context.id}: ${context.wikidataId} weight ${context.weight} probability ${probability})`;
-  });
+  const contextLines = renderContextLines(cst.contexts);
   const fragmentLines = (cst.linguisticMetadata?.fragments ?? [])
     .filter(
       (fragment) => fragment.role !== 'word' && fragment.role !== 'symbol'
@@ -97,6 +100,98 @@ function renderProviderCandidateLines(providerCandidates) {
         `(${graph.id}: providerGraph provider ${graph.providerId} status ${graph.status} format ${toLino(graph.format)} evidenceIncluded ${graph.truthScoring?.included === true})`
     ),
   ];
+}
+
+// Issue #128: render the selected contexts in priority order (highest
+// probability first) with the exact probability we computed and how many
+// words in the source text share that context. Sorting here is defensive —
+// the formalizer already emits contexts weight-descending, but the links
+// notation is a stable, self-describing artefact so we re-sort to guarantee
+// the documented "first context has the highest probability" invariant.
+export function renderContextLines(contexts) {
+  const ranked = [...(contexts ?? [])].sort(
+    (left, right) =>
+      right.probability - left.probability ||
+      right.weight - left.weight ||
+      String(left.wikidataId).localeCompare(String(right.wikidataId))
+  );
+  return ranked.map((context, index) => {
+    const probability = (context.probability * 100).toFixed(1);
+    const words = (context.phrases ?? []).map((phrase) => phrase.text);
+    const sharedBy = words.length ? words.join(', ') : 'none';
+    const property = context.property ? ` property ${context.property}` : '';
+    return `(${context.id}: ${context.wikidataId}${property} priority ${index + 1} probability ${probability} weight ${context.weight} words ${words.length} sharedBy ${toLino(sharedBy)})`;
+  });
+}
+
+// Issue #128: a merged entity definition gathers every sense matched for a
+// phrase across Wikidata, Wikipedia, and Wiktionary so the links notation can
+// be used to cross-reference sources and disambiguate words. The first line
+// summarises the union of source links for the selected sense and the
+// following `sense` lines enumerate each candidate that matched the term.
+function renderMergedDefinitionLines(phrase) {
+  const candidates =
+    phrase.candidates?.length > 0
+      ? phrase.candidates
+      : phrase.entity
+        ? [phrase.entity]
+        : [];
+  if (candidates.length === 0) {
+    return [];
+  }
+  const selectedId = phrase.entity?.id ?? null;
+  const merged = mergeEntityDefinition(candidates);
+  const summary =
+    `(${phrase.id}-definition: source ${toLino(phrase.text)}` +
+    ` selected ${toLino(selectedId ?? 'none')}` +
+    ` senses ${candidates.length}` +
+    ` wikidata ${toLino(merged.wikidata ?? 'none')}` +
+    ` wikipedia ${toLino(merged.wikipedia ?? 'none')}` +
+    ` wiktionary ${toLino(merged.wiktionary ?? 'none')})`;
+  const senseLines = candidates.map((candidate, index) => {
+    const label = candidate.label ?? phrase.text;
+    const selected = candidate.id === selectedId;
+    const score = typeof candidate.score === 'number' ? candidate.score : 'n/a';
+    return `(${phrase.id}-sense-${index + 1}: source ${toLino(candidate.source ?? 'unknown')} id ${toLino(candidate.id)} label ${toLino(label)} kind ${candidate.kind ?? 'entity'} score ${score} selected ${selected} markdownUrl ${toLino(candidate.url)})`;
+  });
+  return [summary, ...senseLines];
+}
+
+// Collapse a phrase's candidates into the single best link per source family
+// so the merged-definition summary can point at each project at once. The
+// selected sense wins ties so the summary stays consistent with the chosen
+// link, otherwise the highest-scoring candidate for each family is kept.
+function mergeEntityDefinition(candidates) {
+  const merged = { wikidata: null, wikipedia: null, wiktionary: null };
+  for (const candidate of candidates) {
+    const id = String(candidate.id ?? '');
+    if (/^[QP]\d+$/.test(id)) {
+      merged.wikidata ??= id;
+    }
+    merged.wikipedia ??= wikipediaLinkFor(candidate);
+    merged.wiktionary ??= wiktionaryLinkFor(candidate, id);
+  }
+  return merged;
+}
+
+function wikipediaLinkFor(candidate) {
+  if (candidate.wikipediaUrl) {
+    return candidate.wikipediaUrl;
+  }
+  if (candidate.source === 'wikipedia' && candidate.sourceUrl) {
+    return candidate.sourceUrl;
+  }
+  return null;
+}
+
+function wiktionaryLinkFor(candidate, id) {
+  if (id.startsWith('wikt:')) {
+    return candidate.sourceUrl ?? id;
+  }
+  if (candidate.source === 'wiktionary' && candidate.sourceUrl) {
+    return candidate.sourceUrl;
+  }
+  return null;
 }
 
 function markdownFromCstPhrase(phrase) {

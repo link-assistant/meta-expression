@@ -1,3 +1,5 @@
+import { renderContextLines } from './formalize-renderers.js';
+
 export function renderSentenceOutput(sentences, key, fallbackPhrases) {
   if (!sentences.length) {
     return fallbackPhrases.map((phrase) => phrase.target.text).join(' ');
@@ -59,12 +61,17 @@ export function renderTranslationLinksNotation(cst, questions) {
   const steps = cst.steps.map(
     (step) => `(${step.id}: type ${step.type} ${toLino(stepSummary(step))})`
   );
+  // Issue #128: surface the selected contexts (priority order, exact
+  // probability, shared-word count) carried over from the formalization so the
+  // translation links notation explains which world disambiguated the phrases.
+  const contexts = renderContextLines(cst.formalization?.contexts ?? []);
   return [
     head,
     ...semantic,
     ...naturalization,
     ...sentences,
     ...phrases,
+    ...contexts,
     ...variables,
     ...questionLines,
     ...steps,

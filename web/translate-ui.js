@@ -5,6 +5,7 @@ import {
   parseSourceSpec,
   translateTextWith,
 } from '../js/src/index.js';
+import { formatAppVersion, loadAppVersionInfo } from './app-version.js';
 import { escapeHtml } from './format-helpers.js';
 import { createPersistentWikimediaCache } from './persistent-cache.js';
 import {
@@ -15,9 +16,24 @@ import { translateSamples } from './translate-samples.js';
 
 const translateCacheStorageKey = 'meta-expression.translate-cache.v2';
 
+// Resolved at setup time so the debug log can report the real deployed build
+// instead of the placeholder "unknown" (issue #128). Kept module-level so the
+// standalone formatDebugLog/describeAppVersion helpers can read it.
+let appVersionInfo = null;
+
 export function setupTranslatePage({
   cache = createPersistentWikimediaCache(translateCacheStorageKey),
+  loadVersion = loadAppVersionInfo,
 } = {}) {
+  // Fire-and-forget: the version JSON is small and the debug log is only
+  // generated on demand, so by the time a user copies it this has resolved.
+  Promise.resolve(loadVersion())
+    .then((info) => {
+      appVersionInfo = info;
+    })
+    .catch(() => {
+      appVersionInfo = null;
+    });
   const input = document.querySelector('#translate-input');
   const sampleSelect = document.querySelector('#translate-sample');
   const sourceLanguage = document.querySelector('#translate-source-language');
@@ -663,6 +679,10 @@ function formatDebugLog(result) {
 }
 
 function describeAppVersion() {
+  if (appVersionInfo) {
+    return formatAppVersion(appVersionInfo);
+  }
+  // Fallbacks for environments where the version JSON has not loaded yet.
   const meta = globalThis.document?.querySelector?.('meta[name="app-version"]');
   return meta?.content || globalThis.__APP_VERSION__ || 'unknown';
 }
