@@ -293,7 +293,12 @@ describe('issue 56 - Translate slash terms and diagnostics', () => {
       now: () => 0,
     });
 
-    expect(result.plainText).toBe('яблоко Wikidata');
+    // The Wikidata entity (Q89) still wins over any lexical Wiktionary
+    // fallback — proven by the resolved entityId, the absent lexical strategy,
+    // and the lack of any wiktionary.org call. The surface form now comes from
+    // the interlingua lexicon ("яблоко"), which the global target-label
+    // preference applies uniformly to every linked concept (issue #128).
+    expect(result.plainText).toBe('яблоко');
     expect(result.phrases[0].target.entityId).toBe('Q89');
     expect(result.phrases[0].target.strategy).toBe(undefined);
     expect(

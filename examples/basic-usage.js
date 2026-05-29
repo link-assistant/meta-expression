@@ -11,7 +11,7 @@ import {
   analyzeStatement,
   getPreparedExamples,
   serializeLinksNotation,
-} from '../src/index.js';
+} from '../js/src/index.js';
 
 const examples = getPreparedExamples().map((example) => example.input);
 

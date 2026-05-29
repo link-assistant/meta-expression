@@ -2,7 +2,8 @@
 
 Issue: https://github.com/link-assistant/meta-expression/issues/128
 
-PR: https://github.com/link-assistant/meta-expression/pull/129
+PR: https://github.com/link-assistant/meta-expression/pull/129 (R1–R11) and
+https://github.com/link-assistant/meta-expression/pull/130 (R12 deep follow-up)
 
 ## Summary
 
@@ -35,6 +36,16 @@ infrastructure problems:
    data folder and in .lino format, as we usually do."
 7. **Compile this case study** and do a deep analysis (timeline, requirements,
    root causes, solution plans, online research).
+
+A follow-up review (PR #130) added one more, deeper requirement:
+
+8. **Resolve the predicate to its most-correct sense.** The surface translation
+   was already correct, but "state" formalized to the generic federated-state
+   concept (`Q7275`) rather than the contextually-licensed
+   [`U.S. state` (`Q35657`)](https://en.wikipedia.org/wiki/U.S._state). The
+   disambiguation algorithm must be generalized — language-neutral, applied
+   everywhere in the codebase and docs — so the copula's subject type licenses
+   the predicate's meaning end to end. See R12.
 
 This folder reconstructs the timeline, enumerates every requirement, performs
 root-cause analysis backed by the captured debug log, proposes solution plans,

@@ -30,7 +30,7 @@ function entityPayload(entries) {
   return { entities };
 }
 
-function entity({ id, label, language = 'en', sitelink = null }) {
+function entity({ id, label, language = 'en', sitelink = null, claims = {} }) {
   const site = `${language}wiki`;
   return {
     id,
@@ -39,9 +39,16 @@ function entity({ id, label, language = 'en', sitelink = null }) {
     descriptions: {
       [language]: { value: `${label} description` },
     },
-    claims: {},
+    claims,
     aliases: {},
     sitelinks: sitelink ? { [site]: { site, title: sitelink } } : {},
+  };
+}
+
+// Wikidata "instance of" (P31) claim pointing at the given type id (issue #128).
+function instanceOf(typeId) {
+  return {
+    P31: [{ mainsnak: { datavalue: { value: { id: typeId } } } }],
   };
 }
 
@@ -104,6 +111,7 @@ function makeIssue37Fetch() {
           label: 'Hawaii',
           language: 'en',
           sitelink: 'Hawaii',
+          claims: instanceOf('Q35657'),
         }),
         'Q782|ru': entity({
           id: 'Q782',
@@ -122,6 +130,18 @@ function makeIssue37Fetch() {
           label: 'государство',
           language: 'ru',
           sitelink: 'Государство',
+        }),
+        'Q35657|en': entity({
+          id: 'Q35657',
+          label: 'U.S. state',
+          language: 'en',
+          sitelink: 'U.S. state',
+        }),
+        'Q35657|ru': entity({
+          id: 'Q35657',
+          label: 'Штат США',
+          language: 'ru',
+          sitelink: 'Штат США',
         }),
       };
       const entries = String(ids ?? '')

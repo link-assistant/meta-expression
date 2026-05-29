@@ -28,7 +28,7 @@ function entityPayload(entries) {
   return { entities };
 }
 
-function entity({ id, label, language = 'en', sitelink = null }) {
+function entity({ id, label, language = 'en', sitelink = null, claims = {} }) {
   const site = `${language}wiki`;
   return {
     id,
@@ -37,9 +37,18 @@ function entity({ id, label, language = 'en', sitelink = null }) {
     descriptions: {
       [language]: { value: `${label} description` },
     },
-    claims: {},
+    claims,
     aliases: {},
     sitelinks: sitelink ? { [site]: { site, title: sitelink } } : {},
+  };
+}
+
+// Wikidata "instance of" (P31) claim pointing at the given type id, shaped the
+// way the live API returns it so the formalizer can read the subject's
+// asserted type (issue #128).
+function instanceOf(typeId) {
+  return {
+    P31: [{ mainsnak: { datavalue: { value: { id: typeId } } } }],
   };
 }
 
@@ -123,6 +132,7 @@ function hawaiiStateRoutes() {
         label: 'Hawaii',
         language: 'en',
         sitelink: 'Hawaii',
+        claims: instanceOf('Q35657'),
       }),
       'Q782|ru': entity({
         id: 'Q782',
@@ -141,6 +151,18 @@ function hawaiiStateRoutes() {
         label: 'государство',
         language: 'ru',
         sitelink: 'Государство',
+      }),
+      'Q35657|en': entity({
+        id: 'Q35657',
+        label: 'U.S. state',
+        language: 'en',
+        sitelink: 'U.S. state',
+      }),
+      'Q35657|ru': entity({
+        id: 'Q35657',
+        label: 'Штат США',
+        language: 'ru',
+        sitelink: 'Штат США',
       }),
     },
   };
@@ -194,9 +216,13 @@ describe('issue 35 — Hawaii translation through semantic phrases', () => {
       'Hawaii',
       'state',
     ]);
+    // The contextual copula resolver promotes the predicate "state" to the
+    // most correct sense for "Hawaii is a state." — the U.S. state (Q35657,
+    // https://en.wikipedia.org/wiki/U.S._state) — driven entirely by Hawaii's
+    // asserted P31 type, with no language-specific hack (issue #128).
     expect(wikidataLinkedPhrases.map((phrase) => phrase.entity.id)).toEqual([
       'Q782',
-      'Q7275',
+      'Q35657',
     ]);
     expect(result.plainText).toBe('Гавайи это штат.');
     expect(result.markdown).toContain('[Гавайи](');
@@ -205,16 +231,15 @@ describe('issue 35 — Hawaii translation through semantic phrases', () => {
     const stateTranslation = result.phrases.find(
       (phrase) => phrase.source.text === 'state'
     );
-    expect(stateTranslation.entityId).toBe('Q7275');
+    expect(stateTranslation.entityId).toBe('Q35657');
     expect(stateTranslation.target.text).toBe('штат');
     expect(stateTranslation.target.entityId).toBe('Q35657');
     expect(result.linksNotation).toContain(
-      'source (state) target (штат) status translated id Q7275 targetId Q35657'
+      'source (state) target (штат) status translated id Q35657'
     );
     expect(result.sentences[0].transformations).toEqual([
       'english-article-omission',
       'english-copula-to-russian-eto',
-      'english-us-state-predicate-to-russian-shtat',
     ]);
     assertCompleteTranslationCoverage(result, 'Hawaii is a state.');
   });
@@ -269,7 +294,7 @@ describe('issue 35 — Hawaii translation through semantic phrases', () => {
     const statePhrase = result.formalization.cst.phrases.find(
       (phrase) => phrase.text === 'state'
     );
-    expect(statePhrase.entity.id).toBe('Q7275');
+    expect(statePhrase.entity.id).toBe('Q35657');
     expect(result.plainText).toBe('Гавайи это штат.');
     assertCompleteTranslationCoverage(result, 'Hawaii is a state.');
   });

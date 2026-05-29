@@ -153,3 +153,38 @@ now reads `.lino` caches alongside the JSON snapshots;
 offline and `--check` fails CI on drift; `web/persistent-cache.js` seeds the
 in-memory cache from the deployed file on first load. See
 [`SOLUTION-PLAN.md`](SOLUTION-PLAN.md) for the full design.
+
+## RC7 — The predicate noun kept its generic sense instead of the licensed type (R12)
+
+**Symptom.** For "Hawaii is a state." the formalizer selected the generic
+federated-state concept `Q7275` for "state", even though Hawaii's own Wikidata
+record asserts `instance of` (P31) → `Q35657` "U.S. state". The
+[most-correct sense](https://en.wikipedia.org/wiki/U.S._state) was available but
+not chosen. The Russian translation still reached "штат" only via a hardcoded
+`english-us-state-predicate-to-russian-shtat` rule that pattern-matched the
+English description "state of the United States" — a language-specific patch,
+not a general algorithm.
+
+**Cause.** Candidate selection scored each word in isolation. A bare predicate
+noun ("state") has no local signal to prefer the specific class over the generic
+one, and nothing in the pipeline used the copula relation
+("_subject_ is a _predicate_") to let the subject's asserted type license the
+predicate's sense. The translation layer compensated with the bespoke
+US-state rule instead of fixing the meaning upstream.
+
+**Fix.** A new `resolveCopulaTypes` pass runs in `formalizeTextWith` after entity
+hydration (`js/src/formalize.js`). For each copula phrase it finds the nearest
+contentful subject and predicate (bridging articles/glue), reads the subject's
+hydrated `instance of` / `subclass of` context labels, and — when the predicate
+noun is the head word of one of those types' names in _any_ language — promotes
+the predicate to that type (`state` → `Q35657`, carrying the Wikipedia link and
+a self-vote so the context election reports the shared class for R5). The pass
+is fully language-neutral, so the Russian "Гавайи это штат" resolves to the same
+`Q35657` without a per-language rule. The old
+`applyRussianUsStatePredicateRule` and its helpers are deleted from
+`js/src/translate.js`; `targetLabelFor` now prefers the interlingua's licensed
+short surface form (`Q35657` → ru "штат") so the rendered word stays natural
+while the link points at the canonical article. The Rust core and its curated
+reference are flipped to `Q35657` for the resolved "state"/"штат" meaning in all
+phrase positions, the obsolete predicate rule is dropped (rule count 3 → 2), and
+the committed WASM is rebuilt for JS↔Rust parity.

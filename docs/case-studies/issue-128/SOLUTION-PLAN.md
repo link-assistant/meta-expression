@@ -117,4 +117,47 @@ options considered and the option taken in PR #129.
 
 ## R11 — One PR
 
-- All commits land on `issue-128-41095a0f356d` / PR #129 with a single changeset.
+- R1–R11 commits land on `issue-128-41095a0f356d` / PR #129 with a single
+  changeset. The R12 follow-up lands on `issue-128-fed1f7a14626` / PR #130.
+
+## R12 — Most-correct predicate sense, generalized (PR #130)
+
+**Options considered**
+
+- _(A)_ Extend the existing `english-us-state-predicate-to-russian-shtat`
+  translation rule with more descriptions / languages. Rejected: it patches the
+  surface translation, not the meaning, and grows a new hardcoded branch per
+  language — the opposite of "generalize our algorithms".
+- _(B)_ Re-rank candidates by boosting any sense whose id appears in a sibling
+  word's claims. Rejected: too broad — it would also fire for non-copula
+  co-occurrence and could promote unrelated classes.
+- _(C)_ Resolve the predicate at **formalization** time using the copula
+  relation: let the subject's asserted `instance of` / `subclass of` type
+  license the predicate noun when the noun is the head of that type's name.
+  **Taken** — it fixes the meaning once, language-neutrally, and every consumer
+  (links notation, translation, Rust parity) inherits the corrected sense.
+
+**Plan / implementation**
+
+- `js/src/formalize.js`: add `resolveCopulaTypes`, invoked right after
+  `attachEntityDetails`. Helpers `phraseIsCopula`, `nearestContentfulPhrase`,
+  `phraseIsGrammaticalGlue`, `resolveCopulaPredicate`,
+  `subjectTypeContextLabels`, `headWord`, `typeMatchesPredicateHead`,
+  `typeEntityNameForms`, and `promotePredicateToType` snap the predicate to the
+  subject's asserted type (e.g. "state" → `Q35657`), record a
+  `copula-type-resolution` trace step, and add a self-vote context label so R5's
+  context election reports the shared class.
+- `js/src/translate.js`: delete `applyRussianUsStatePredicateRule`,
+  `isStatePredicate`, `isUsStateSubject`, `setUnitTargetText`,
+  `resolveUnitTarget`, `applyUnitTargetToPhrase`, the
+  `US_STATE_PREDICATE_CONCEPT_ID` constant, and the
+  `english-us-state-predicate-to-russian-shtat` transformation. `targetLabelFor`
+  now prefers the interlingua's licensed surface form for the concept id
+  (`Q35657` → ru "штат").
+- `rust/src/lib.rs` + `rust/pkg/*`: flip the curated "state"/"штат" reference to
+  `Q35657` in all phrase positions, drop the obsolete predicate rule
+  (`meta_expression_issue35_rule_count` 3 → 2), keep `Q7275` as a documented
+  distinct generic-concept reference, and rebuild the committed WASM.
+- Tests updated for the resolved sense: `issue-35`, `issue-37`, `issue-56`,
+  `issue-61-wasm`, `issue-74-acceptance-gate`, `issue-16` (e2e), `issue-128`
+  (JS); `issue35_translation.rs` and `semantic_relations.rs` (Rust).
