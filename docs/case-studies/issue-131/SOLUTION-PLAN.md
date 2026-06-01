@@ -3,7 +3,7 @@
 For each requirement in [`REQUIREMENTS.md`](REQUIREMENTS.md), this records the
 implemented fix in PR #132. The PR comment on June 1, 2026 clarified that the
 virtual source layer, recursive article translation, and Russian grammar quality
-are inside issue #131 scope, so they are implemented here rather than deferred.
+are inside issue #131 scope, so they are implemented here in full.
 
 ## Implemented in PR #132
 

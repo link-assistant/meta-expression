@@ -19,8 +19,8 @@ Source: https://en.wiktionary.org/api/rest_v1/page/definition/lie
 
 The Wiktionary REST definition endpoint can provide structured definitions for
 single words, but it does not by itself solve a missing multi-word geographic
-phrase such as `lies on`. For this PR it is useful as supporting data and as a
-future upstream contribution target, not as a complete fix.
+phrase such as `lies on`. For this PR it is useful as supporting data and as an
+upstream contribution target, not as a complete fix.
 
 The API snapshot is preserved at
 [`data/wiktionary-lie-definition.json`](data/wiktionary-lie-definition.json).

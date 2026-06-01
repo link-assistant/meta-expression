@@ -28,9 +28,9 @@ phrasal verb:
    local formatting rules.
 
 For issue #131, the lexical problem is the geographic `lie on` / `lies on`
-sense. A Wiktionary entry or translation table may help later, but this PR uses
-an Oxford-backed `virtual-source-overrides` entry because the app needs
-deterministic behavior in CI.
+sense. A Wiktionary entry or translation table is an upstream maintenance path,
+while this PR uses an Oxford-backed `virtual-source-overrides` entry because
+the app needs deterministic behavior in CI.
 
 ## When to add a local repository override
 
@@ -58,9 +58,8 @@ translation behavior.
 ## Credentials and automation
 
 Do not store Wikimedia credentials, bot passwords, OAuth tokens, or cookies in
-this repository. Any future automated contribution workflow should read
-credentials from a local secret store or CI secret and should default to a dry
-run.
+this repository. Automated contribution workflows should read credentials from a
+local secret store or CI secret and should default to a dry run.
 
 ## External GitHub issues
 

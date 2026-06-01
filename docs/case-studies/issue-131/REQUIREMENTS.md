@@ -7,10 +7,11 @@ Every requirement extracted from the issue body
 
 The report included a debug log gist and a concrete Translate-page input. The
 PR must preserve the raw issue context, debug log, PR comments, and CI logs so
-the investigation can be audited later.
+reviewers can audit the investigation.
 
 **Status: done.** The case-study `data/` and `logs/` folders preserve issue,
-PR, debug, CI, and local test artifacts.
+PR, debug, CI, and local test artifacts, including the final PR audit request
+and green current-head CI run list.
 
 ## R2 - Parentheses must be punctuation, not phrase content
 
@@ -92,7 +93,8 @@ other projects, and how credentials or upstream reporting should work.
 ## R11 - Implement virtual links and overridable sources
 
 The issue asked for a robust data-source abstraction where missing concepts can
-be represented as virtual links and later contributed upstream.
+be represented as virtual links with provenance suitable for upstream
+contribution.
 
 **Status: done.** The `virtual-source-overrides` registry is a first-class
 formalization source and semantic lexicon supplement. It records source-backed
@@ -130,8 +132,8 @@ patch release.
 
 ## R15 - Naturalize the reported Russian sentence grammar
 
-The issue discussion rejected deferring grammar quality when the reported output
-still contained `в Запад США`, `что расположен`, and nominative
+The issue discussion treats grammar quality as part of this fix because the
+reported output still contained `в Запад США`, `что расположен`, and nominative
 `Тихоокеанское побережье` after `на`.
 
 **Status: done.** The English-to-Russian naturalization pass now applies

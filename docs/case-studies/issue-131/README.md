@@ -21,7 +21,7 @@ The reported output had four separate failures:
 3. `lies on` was split into `lies` and `on`, giving the wrong parts of speech
    and the wrong Russian surface text.
 4. `Pacific Coast` had no usable Russian target, so the translation kept the
-   English phrase and asked a follow-up question.
+   English phrase and asked an unresolved translation question.
 
 This PR fixes the common cause in tokenization and the phrase-selection gate,
 adds a reusable virtual source override layer for missing source data, adds
@@ -49,6 +49,11 @@ senses, or upstream-contribution candidates.
   snapshot.
 - [`data/pr-132-before-finalize.json`](data/pr-132-before-finalize.json) - PR
   state before finalizing this fix.
+- [`data/pr-132-final-audit.json`](data/pr-132-final-audit.json) - PR body,
+  head SHA, draft state, commits, and check rollup captured after the final
+  review request.
+- [`data/ci-runs-final-audit.json`](data/ci-runs-final-audit.json) - recent CI
+  runs for `issue-131-84c06d630fcf` captured during the final audit.
 - [`data/live-translate-after.json`](data/live-translate-after.json) - verified
   post-fix Translate output using live sources plus local lexicon data.
 - [`data/wikidata-Q430265.json`](data/wikidata-Q430265.json) and
@@ -66,6 +71,14 @@ senses, or upstream-contribution candidates.
 - [`logs/node-issue-131-red.log`](logs/node-issue-131-red.log) and
   [`logs/node-focused-green.log`](logs/node-focused-green.log) - focused test
   logs before and after the fix.
+- [`logs/final-node-issue-131.log`](logs/final-node-issue-131.log),
+  [`logs/final-npm-test.log`](logs/final-npm-test.log),
+  [`logs/final-npm-check.log`](logs/final-npm-check.log),
+  [`logs/final-cargo-test.log`](logs/final-cargo-test.log), and
+  [`logs/final-parity.log`](logs/final-parity.log) - final local verification
+  logs captured during the PR audit.
+- [`logs/final-npm-ci.log`](logs/final-npm-ci.log) - locked dependency install
+  log used for the final local verification run.
 - [`REQUIREMENTS.md`](REQUIREMENTS.md) - complete requirement list extracted from
   the issue body.
 - [`TIMELINE.md`](TIMELINE.md) - reconstructed sequence of events.

@@ -1,0 +1,35 @@
+
+> meta-expression@0.12.0 check
+> npm run lint && npm run format:check && npm run check:duplication && npm run docs:formalize:check && npm run check:parity && npm run cache:check
+
+
+> meta-expression@0.12.0 lint
+> eslint .
+
+
+> meta-expression@0.12.0 format:check
+> prettier --check .
+
+Checking formatting...
+All matched files use Prettier code style!
+
+> meta-expression@0.12.0 check:duplication
+> jscpd .
+
+[3m[90mDetection time:[39m[23m: 0.159ms
+
+> meta-expression@0.12.0 docs:formalize:check
+> node scripts/generate-formalize-docs.mjs --check
+
+docs/FORMALIZE.md is up to date.
+
+> meta-expression@0.12.0 check:parity
+> node scripts/check-js-rust-parity.mjs
+
+JS <-> Rust parity: 2 mirrored module pair(s).
+No pull-request diff available; validated manifest paths only. Parity co-change is enforced in CI on pull requests.
+
+> meta-expression@0.12.0 cache:check
+> node scripts/refresh-wikimedia-cache.mjs --check
+
+Wikimedia .lino cache is up to date (21 entries).
