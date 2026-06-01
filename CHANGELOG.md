@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.12.1
+
+### Patch Changes
+
+- 7de9d71: Fix Translate handling for parenthesized pronunciations, source-backed phrasal verbs, virtual source overrides, experimental linked-article context translation, and the California/Pacific Coast Russian grammar regression.
+
 ## 0.12.0
 
 ### Minor Changes

@@ -1,6 +1,6 @@
 {
   "name": "meta-expression",
-  "version": "0.12.0",
+  "version": "0.12.1",
   "description": "meta-expression tooling for formalizing text into linked expressions",
   "type": "module",
   "main": "js/src/index.js",
