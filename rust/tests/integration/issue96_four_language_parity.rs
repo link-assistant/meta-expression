@@ -13,7 +13,8 @@
 
 use meta_expression_core::{
     build_directional_glossary, list_directional_pairs, list_lexicon_languages,
-    resolve_concept_form, translate_known_semantic_text,
+    resolve_concept_form, resolve_concept_form_details, resolve_concept_grammar_form,
+    resolve_source_phrase_grammar_value, translate_known_semantic_text,
 };
 
 const SUPPORTED_LANGUAGES: [&str; 4] = ["en", "hi", "ru", "zh"];
@@ -128,6 +129,58 @@ fn translates_shared_vocabulary_forward_in_every_direction() {
             );
         }
     }
+}
+
+#[test]
+fn merges_issue131_virtual_concepts_into_the_rust_glossary() {
+    let glossary = build_directional_glossary("en", "ru");
+
+    assert_eq!(
+        glossary.get("California").map(String::as_str),
+        Some("Калифорния")
+    );
+    assert_eq!(glossary.get("state").map(String::as_str), Some("штат"));
+    assert_eq!(
+        glossary.get("lies on").map(String::as_str),
+        Some("расположен на")
+    );
+    assert_eq!(
+        glossary.get("Western United States").map(String::as_str),
+        Some("Запад США")
+    );
+    assert_eq!(
+        glossary.get("pacific coast").map(String::as_str),
+        Some("Тихоокеанское побережье")
+    );
+}
+
+#[test]
+fn resolves_issue131_grammar_forms_with_source_metadata() {
+    let california = resolve_concept_form_details("Q99", "ru").unwrap();
+    assert_eq!(california.text, "Калифорния");
+    assert_eq!(california.entity_id.as_deref(), Some("Q99"));
+
+    let lie_on = resolve_concept_form("lex:en:lie_on", "ru");
+    assert_eq!(lie_on.as_deref(), Some("расположен на"));
+
+    let relative_that = resolve_concept_form("lex:en:that_relative", "ru");
+    assert_eq!(relative_that.as_deref(), Some("который"));
+
+    let locative = resolve_concept_grammar_form("Q12612", "ru", "locative").unwrap();
+    assert_eq!(locative.text, "западе США");
+    assert_eq!(locative.entity_id.as_deref(), Some("Q12612"));
+
+    let preposition = resolve_concept_grammar_form("Q12612", "ru", "locativePreposition").unwrap();
+    assert_eq!(preposition.text, "на");
+    assert_eq!(preposition.entity_id, None);
+
+    let coast = resolve_concept_grammar_form("Q430265", "ru", "prepositional").unwrap();
+    assert_eq!(coast.text, "Тихоокеанском побережье");
+
+    assert_eq!(
+        resolve_source_phrase_grammar_value("lying on", "en", "ru", "objectCase").as_deref(),
+        Some("prepositional")
+    );
 }
 
 #[test]
