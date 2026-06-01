@@ -70,8 +70,8 @@ candidate after external lookup returns no scored candidates.
 description but no Russian label in the `en|ru` lookup captured for this case.
 Without a local target, the translator asked the user.
 
-**Fix.** `js/data/semantic-lexicon.json` now includes `Q430265` with English
-aliases and Russian `Тихоокеанское побережье`.
+**Fix.** `js/data/virtual-source-overrides.js` supplements `Q430265` with
+English aliases plus Russian nominative and prepositional forms.
 
 ## RC7 - Initial PR CI failed before behavior was tested
 
@@ -83,3 +83,38 @@ the package-identity test requires one for PR changes.
 
 **Fix.** Added a patch changeset. The original log is preserved at
 [`logs/ci-js-checks-26727847528.log`](logs/ci-js-checks-26727847528.log).
+
+## RC8 - Local target data was not exposed as a formalization source
+
+**Symptom.** Missing or incomplete source data could be fixed only by direct
+semantic lexicon entries, which made it hard to show whether a link was
+source-backed, rule-derived, or an upstream-contribution candidate.
+
+**Cause.** The source registry did not have a local virtual source tier for
+source-backed missing-data overrides.
+
+**Fix.** Added `virtual-source-overrides` as a default source tier, a source spec
+token, a links-view export, and a semantic lexicon supplement.
+
+## RC9 - Linked article context had no bounded experimental path
+
+**Symptom.** The issue asked for recursive article translation, but doing this
+unconditionally would make Translate nondeterministic and potentially expensive.
+
+**Cause.** There was no API or UI path for translating a bounded article context
+separately from the main sentence.
+
+**Fix.** Added disabled-by-default linked article summary translation with
+revision-aware caching and Translate-page controls.
+
+## RC10 - Russian grammar forms were unavailable to naturalization
+
+**Symptom.** The first fix still produced `в Запад США`, `что расположен`, and
+`на Тихоокеанское побережье`.
+
+**Cause.** The translation pipeline had target lexemes but no source-backed
+grammatical forms for locative regions, relative clauses, or prepositional
+objects.
+
+**Fix.** The virtual source entries now carry grammatical forms, and
+`russian-naturalization.js` applies them to the reported sentence.

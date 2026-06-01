@@ -89,23 +89,26 @@ other projects, and how credentials or upstream reporting should work.
 **Status: done.** See
 [`CONTRIBUTING-MISSING-DATA.md`](CONTRIBUTING-MISSING-DATA.md).
 
-## R11 - Plan virtual links and overridable sources
+## R11 - Implement virtual links and overridable sources
 
 The issue asked for a robust data-source abstraction where missing concepts can
 be represented as virtual links and later contributed upstream.
 
-**Status: planned.** This PR adds the minimal local lexical entries required for
-the regression. The broader abstraction plan is in
-[`SOLUTION-PLAN.md`](SOLUTION-PLAN.md).
+**Status: done.** The `virtual-source-overrides` registry is a first-class
+formalization source and semantic lexicon supplement. It records source-backed
+entries for `Q99`, `Q35657`, `Q12612`, `Q430265`, the geographic `lie on`
+sense, and the relative-clause `that` rule, and exposes a virtual links view for
+UI/debug use.
 
-## R12 - Plan recursive article translation
+## R12 - Implement experimental recursive article translation
 
 The issue asked for recursive Wikipedia article translation as an experimental
 feature where a concept link can expand into translated source context.
 
-**Status: planned.** This is intentionally not implemented in this bug-fix PR.
-The proposed experimental design is in
-[`SOLUTION-PLAN.md`](SOLUTION-PLAN.md).
+**Status: done.** The Translate page lists linked Wikipedia articles, keeps the
+feature behind an explicit Experimental checkbox, fetches bounded summaries
+only, translates them through the existing pipeline, and caches by source URL,
+target language, section, and source revision.
 
 ## R13 - Report external issues if another GitHub project is at fault
 
@@ -124,3 +127,14 @@ The prepared PR initially failed JS CI because there was no active changeset for
 
 **Status: done.** `.changeset/quiet-lakes-lie.md` targets `meta-expression` as a
 patch release.
+
+## R15 - Naturalize the reported Russian sentence grammar
+
+The issue discussion rejected deferring grammar quality when the reported output
+still contained `в Запад США`, `что расположен`, and nominative
+`Тихоокеанское побережье` after `на`.
+
+**Status: done.** The English-to-Russian naturalization pass now applies
+source-backed locative/prepositional forms and relative-clause wording, producing
+`на западе США, который расположен на Тихоокеанском побережье` for the reported
+sentence.

@@ -900,8 +900,8 @@ Barack Obama was born in Hawaii.</textarea
             <legend data-i18n="translate.sources">Sources</legend>
             <p class="section-hint" data-i18n="translate.sourcesHint">
               Drag checked sources to set lookup order: Wikipedia article
-              matches, Wikidata Q/P entities and target labels, then Wiktionary
-              lexical definitions and translation entries.
+              matches, Wikidata Q/P entities, virtual overrides for missing
+              data, then Wiktionary lexical definitions and translation entries.
             </p>
             <div class="source-priority-list" id="translate-source-list">
               <label
@@ -929,6 +929,21 @@ Barack Obama was born in Hawaii.</textarea
                   checked
                 />
                 <span data-i18n="translate.sourceWikidata">Wikidata</span>
+              </label>
+              <label
+                class="translate-source-option source-priority-option"
+                data-source-option
+                draggable="true"
+              >
+                <input
+                  type="checkbox"
+                  name="translate-source"
+                  value="virtual-source-overrides"
+                  checked
+                />
+                <span data-i18n="translate.sourceVirtual"
+                  >Virtual overrides</span
+                >
               </label>
               <label
                 class="translate-source-option source-priority-option"
@@ -1020,6 +1035,39 @@ Barack Obama was born in Hawaii.</textarea
           <ul id="translate-word-contexts">
             <li class="section-empty" data-i18n="translate.wordContextsEmpty">
               Translate to see how each word was disambiguated.
+            </li>
+          </ul>
+        </section>
+
+        <section
+          class="translate-article-context"
+          aria-label="Wikipedia article translation"
+        >
+          <h2 data-i18n="translate.articleContext">Article context</h2>
+          <div class="translate-article-controls">
+            <label class="translate-article-experimental">
+              <input type="checkbox" id="translate-article-experimental" />
+              <span data-i18n="translate.articleExperimental"
+                >Experimental</span
+              >
+            </label>
+            <input
+              id="translate-article-source"
+              type="url"
+              placeholder="https://en.wikipedia.org/wiki/California"
+              aria-label="Wikipedia article URL or title"
+            />
+            <button
+              type="button"
+              id="translate-article-run"
+              data-i18n="translate.articleRun"
+            >
+              Translate article
+            </button>
+          </div>
+          <ul id="translate-linked-articles">
+            <li class="section-empty" data-i18n="translate.articleEmpty">
+              Translate text to see linked articles.
             </li>
           </ul>
         </section>

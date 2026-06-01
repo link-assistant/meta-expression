@@ -24,22 +24,23 @@ The reported output had four separate failures:
    English phrase and asked a follow-up question.
 
 This PR fixes the common cause in tokenization and the phrase-selection gate,
-adds a source-backed lexical override for the geographic `lie on` sense, adds a
-local target for `Pacific Coast`, and locks the regression down with integration
-tests.
+adds a reusable virtual source override layer for missing source data, adds
+bounded experimental linked-article translation, applies the required Russian
+case/relative-clause naturalization, and locks the regression down with
+integration tests.
 
 The post-fix live run captured in
 [`data/live-translate-after.json`](data/live-translate-after.json) now produces:
 
 ```text
-Калифорния (/ˌkælɪˈfɔːrniə/) это штат в Запад США что расположен на Тихоокеанское побережье.
+Калифорния (/ˌkælɪˈfɔːrniə/) это штат на западе США, который расположен на Тихоокеанском побережье.
 ```
 
 The pronunciation stays plain text, `state` remains the `U.S. state` sense
 (`Q35657`), `lies on` resolves as one lexical phrase, `Pacific Coast` resolves to
-`Q430265`, and there are no translation questions. Russian case and agreement
-improvements are intentionally outside this PR; the regression here was
-unresolved or wrongly linked phrases.
+`Q430265`, and there are no translation questions. The virtual source override
+view records which links are local supplements, dictionary-backed lexical
+senses, or upstream-contribution candidates.
 
 ## Files
 
@@ -53,6 +54,8 @@ unresolved or wrongly linked phrases.
 - [`data/wikidata-Q430265.json`](data/wikidata-Q430265.json) and
   [`data/wikidata-Q430265-en-ru.json`](data/wikidata-Q430265-en-ru.json) -
   Wikidata snapshots for `Pacific Coast`.
+- [`../../../js/data/virtual-source-overrides.js`](../../../js/data/virtual-source-overrides.js) -
+  source-backed local supplements used by the fix.
 - [`data/oxford-lie_1.html`](data/oxford-lie_1.html) and
   [`data/wiktionary-lie-definition.json`](data/wiktionary-lie-definition.json) -
   source snapshots used while validating the `lie on` sense.
@@ -68,8 +71,8 @@ unresolved or wrongly linked phrases.
 - [`TIMELINE.md`](TIMELINE.md) - reconstructed sequence of events.
 - [`ROOT-CAUSES.md`](ROOT-CAUSES.md) - root-cause analysis with concrete
   symptoms.
-- [`SOLUTION-PLAN.md`](SOLUTION-PLAN.md) - implemented slice plus planned
-  broader work.
+- [`SOLUTION-PLAN.md`](SOLUTION-PLAN.md) - implemented design and validation
+  checklist.
 - [`ONLINE-RESEARCH.md`](ONLINE-RESEARCH.md) - external data and library
   research.
 - [`CONTRIBUTING-MISSING-DATA.md`](CONTRIBUTING-MISSING-DATA.md) - guide for

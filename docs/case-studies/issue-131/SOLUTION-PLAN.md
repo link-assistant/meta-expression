@@ -1,8 +1,9 @@
 # Issue 131 - Solution Plan
 
 For each requirement in [`REQUIREMENTS.md`](REQUIREMENTS.md), this records the
-implemented fix and the planned work that was intentionally kept out of this
-bug-fix PR.
+implemented fix in PR #132. The PR comment on June 1, 2026 clarified that the
+virtual source layer, recursive article translation, and Russian grammar quality
+are inside issue #131 scope, so they are implemented here rather than deferred.
 
 ## Implemented in PR #132
 
@@ -30,12 +31,51 @@ formalizer emits a lexical fallback candidate instead of splitting the phrase.
 
 ### Local semantic data
 
-Add two narrow semantic lexicon entries:
+Add a source-backed virtual override registry that feeds both formalization
+source search and the semantic interlingua. The registry includes:
 
+- `Q99` and `Q35657` target supplements so the reported sentence remains
+  deterministic without live target-label lookup;
+- `Q12612` with Russian locative form `западе США` and unlinked preposition
+  `на`;
 - `lex:en:lie_on->ru`, source-backed by Oxford Learner's Dictionaries, for the
   geographic "be located" sense of `lie + adv./prep.`;
 - `Q430265`, source-backed by Wikidata, with English labels for `Pacific Coast`
-  and Russian `Тихоокеанское побережье`.
+  and Russian nominative/prepositional forms;
+- `lex:en:that_relative->ru`, a rule-derived relative-clause supplement for
+  `который`.
+
+The default source tier order is Wikipedia, Wikidata, virtual overrides, and
+Wiktionary. `parseSourceSpec()` also accepts `virtual-source-overrides`.
+
+### Russian naturalization
+
+Add an English-to-Russian lexical naturalization pass that consumes grammatical
+forms from the semantic/virtual source data:
+
+- `in` + `Q12612` becomes `на западе США`;
+- relative `that` before the geographic predicate becomes `, который`;
+- the object of `lie on` receives the prepositional form
+  `Тихоокеанском побережье`.
+
+The reported sentence now produces:
+
+```text
+Калифорния (/ˌkælɪˈfɔːrniə/) это штат на западе США, который расположен на Тихоокеанском побережье.
+```
+
+### Experimental linked-article translation
+
+Add `collectLinkedArticleTargets()` and `translateWikipediaArticleContext()`:
+
+- linked Wikipedia article targets are collected from the formalization CST;
+- translation is disabled unless the caller passes `experimental: true`;
+- only REST summary text is fetched by default;
+- source text is bounded before translation;
+- results are cached by source URL, target language, section, and revision.
+
+The Translate page exposes the flow with an Experimental checkbox, per-link
+"Translate linked context" actions, and a manual article URL/title input.
 
 ### Regression tests
 
@@ -45,18 +85,20 @@ Add two narrow semantic lexicon entries:
 - source-backed phrasal verbs ending in prepositions;
 - lexical fallback for known phrasal verbs when source data is missing;
 - the full California sentence with preserved pronunciation, `Q35657` state,
-  `lies on`, `Q430265`, and no translation questions.
+  `lies on`, `Q430265`, natural Russian locative/prepositional wording, and no
+  translation questions;
+- the virtual source override layer;
+- linked Wikipedia article target collection;
+- disabled-by-default article translation;
+- bounded summary translation with cache reuse;
+- Translate-page article-context wiring.
 
 ### Release trigger
 
 Add a patch changeset so JS CI's package-identity check passes and the next main
 merge can bump the package version.
 
-## Planned: virtual links and source overrides
-
-The regression is fixed with direct lexicon entries, but the issue's broader
-request is a reusable override layer. A good next step is a structured
-`virtual-source-overrides` registry with entries like:
+## Virtual links and source overrides
 
 ```json
 {
@@ -69,35 +111,14 @@ request is a reusable override layer. A good next step is a structured
 }
 ```
 
-The formalizer can then expose a virtual link when external sources are missing
-data, and the UI can show whether the entry is local-only, source-backed, or
-ready to contribute upstream.
+The formalizer exposes virtual links when external sources are missing data, and
+the source metadata records whether the entry is local-only, source-backed,
+rule-derived, or ready to contribute upstream.
 
-## Planned: recursive article translation
+## Verification commands
 
-Recursive translation of linked Wikipedia articles should be behind an
-experimental flag because it can explode network and token usage. The proposed
-shape:
-
-1. Add a per-link action such as "Translate linked context".
-2. Fetch the source article summary or selected section, not the whole article
-   by default.
-3. Run the existing formalize/translate pipeline on that bounded text.
-4. Cache by source URL, target language, selected section, and source revision.
-5. Surface translated context as expandable evidence, not as part of the main
-   sentence translation.
-
-This keeps the main Translate page deterministic while enabling deeper context
-when reviewers need it.
-
-## Planned: grammar quality follow-up
-
-The current fix removes unresolved and wrongly linked phrases. It does not
-solve Russian agreement and case for every phrase. A later grammar pass should
-handle examples such as:
-
-- `в Запад США` -> `на западе США` or another context-appropriate expression;
-- `расположен на Тихоокеанское побережье` -> case/agreement-aware wording.
-
-That work belongs in a separate grammar requirement because it affects many
-sentences beyond issue #131.
+```sh
+node --test js/tests/integration/issue-131.test.js
+npm test
+npm run check
+```

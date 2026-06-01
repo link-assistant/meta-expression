@@ -14,8 +14,8 @@ Use Wikidata when the missing data is about an entity such as `Q430265`
    obvious.
 
 For issue #131, adding or improving Russian terms for `Q430265` is a Wikidata
-task. The local semantic lexicon entry is a source-backed workaround so the app
-works before or regardless of upstream edits.
+task. The `virtual-source-overrides` entry is a source-backed workaround so the
+app works before or regardless of upstream edits.
 
 ## When to edit Wiktionary
 
@@ -29,12 +29,12 @@ phrasal verb:
 
 For issue #131, the lexical problem is the geographic `lie on` / `lies on`
 sense. A Wiktionary entry or translation table may help later, but this PR uses
-an Oxford-backed local override because the app needs deterministic behavior in
-CI.
+an Oxford-backed `virtual-source-overrides` entry because the app needs
+deterministic behavior in CI.
 
 ## When to add a local repository override
 
-Add a local semantic lexicon or override entry when:
+Add a `virtual-source-overrides` entry when:
 
 - external data exists but is not exposed through the source adapter yet;
 - external data is missing in one target language;
@@ -44,10 +44,16 @@ Add a local semantic lexicon or override entry when:
 Local entries should include:
 
 - a stable id;
+- `sourceStatus` and `upstreamTarget`;
 - source language labels and aliases;
 - target language labels;
+- grammatical forms when the target language needs case or agreement;
 - a source URL;
 - a test that proves the entry fixes a real translation or formalization case.
+
+The override registry feeds both the formalizer source layer and the semantic
+lexicon. This keeps provenance visible in links while preserving deterministic
+translation behavior.
 
 ## Credentials and automation
 

@@ -1,8 +1,10 @@
 import {
   applyTranslationQuestionAnswers,
+  collectLinkedArticleTargets,
   FORMALIZE_LINK_TARGETS,
   listTranslationStrategies,
   parseSourceSpec,
+  translateWikipediaArticleContext,
   translateTextWith,
 } from '../js/src/index.js';
 import { formatAppVersion, loadAppVersionInfo } from './app-version.js';
@@ -50,6 +52,12 @@ export function setupTranslatePage({
   const output = document.querySelector('#translate-output');
   const questions = document.querySelector('#translate-questions');
   const wordContextsList = document.querySelector('#translate-word-contexts');
+  const articleExperimental = document.querySelector(
+    '#translate-article-experimental'
+  );
+  const articleSource = document.querySelector('#translate-article-source');
+  const articleRun = document.querySelector('#translate-article-run');
+  const linkedArticles = document.querySelector('#translate-linked-articles');
   const markdownPre = document.querySelector('#translate-markdown');
   const linoPre = document.querySelector('#translate-lino');
   const cstPre = document.querySelector('#translate-cst');
@@ -76,6 +84,10 @@ export function setupTranslatePage({
     output,
     questions,
     wordContextsList,
+    articleExperimental,
+    articleSource,
+    articleRun,
+    linkedArticles,
     markdownPre,
     linoPre,
     cstPre,
@@ -84,6 +96,7 @@ export function setupTranslatePage({
     cache,
     strategyState,
     requestId: 0,
+    articleRequestId: 0,
     currentResult: null,
     // Pinned per-word senses persist across re-runs so answering a context
     // question modifies the formalization without the question disappearing.
@@ -124,6 +137,7 @@ export function setupTranslatePage({
       },
     ],
   });
+  setupArticleTranslationControls(ctx);
 
   return { getResult: () => ctx.currentResult };
 }
@@ -222,6 +236,7 @@ function renderTranslateResult(ctx, result) {
     selections: ctx.contextSelections,
     onSelect: (start, entityId) => applyContextSelection(ctx, start, entityId),
   });
+  renderLinkedArticleTargets(ctx, result);
   renderStepList(ctx.stepsList, result.steps);
   if (ctx.markdownPre) {
     ctx.markdownPre.textContent = result.markdown;
@@ -236,6 +251,162 @@ function renderTranslateResult(ctx, result) {
     ctx.debugPre.textContent = formatDebugLog(result);
   }
   ctx.status.textContent = translateStatusText(result);
+}
+
+function setupArticleTranslationControls(ctx) {
+  if (!ctx.articleRun) {
+    return;
+  }
+  ctx.articleRun.addEventListener('click', () => {
+    const value = ctx.articleSource?.value.trim();
+    if (!value) {
+      ctx.status.textContent = 'Enter a Wikipedia article URL or title.';
+      ctx.articleSource?.focus();
+      return;
+    }
+    runArticleTranslation(ctx, { sourceUrl: value });
+  });
+}
+
+function renderLinkedArticleTargets(ctx, result) {
+  if (!ctx.linkedArticles) {
+    return;
+  }
+  ctx.linkedArticles.replaceChildren();
+  const targets = collectLinkedArticleTargets(result, {
+    sourceLanguage: selectedLanguageValue(ctx.sourceLanguage, 'en'),
+  });
+  if (!targets.length) {
+    appendEmptyListItem(ctx.linkedArticles, 'No linked Wikipedia articles.');
+    return;
+  }
+  for (const target of targets) {
+    ctx.linkedArticles.append(renderLinkedArticleTarget(ctx, target));
+  }
+}
+
+function renderLinkedArticleTarget(ctx, target) {
+  const item = document.createElement('li');
+  item.className = 'translate-linked-article';
+  const heading = document.createElement('div');
+  heading.className = 'translate-linked-article-heading';
+  const link = document.createElement('a');
+  link.href = target.sourceUrl;
+  link.target = '_blank';
+  link.rel = 'noopener noreferrer';
+  link.textContent = target.label ?? target.title;
+  const meta = document.createElement('span');
+  meta.textContent = [target.entityId, target.title]
+    .filter(Boolean)
+    .join(' · ');
+  const button = document.createElement('button');
+  button.type = 'button';
+  button.className = 'translate-article-action';
+  button.textContent = 'Translate linked context';
+  button.addEventListener('click', () =>
+    runArticleTranslation(ctx, target, item, button)
+  );
+  heading.append(link, meta, button);
+  item.append(heading);
+  return item;
+}
+
+async function runArticleTranslation(ctx, article, item = null, button = null) {
+  const container = ensureArticleResultContainer(ctx, item);
+  if (!ctx.articleExperimental?.checked) {
+    renderArticleMessage(
+      container,
+      'Enable Experimental to translate linked article context.'
+    );
+    return;
+  }
+  const id = String((ctx.articleRequestId += 1));
+  container.dataset.requestId = id;
+  renderArticleMessage(container, 'Translating linked context...');
+  button?.setAttribute('disabled', '');
+  try {
+    const result = await translateWikipediaArticleContext(article, {
+      ...buildArticleTranslationOptions(ctx),
+      experimental: true,
+    });
+    if (container.dataset.requestId !== id) {
+      return;
+    }
+    renderArticleTranslationResult(container, result);
+  } catch (error) {
+    if (container.dataset.requestId === id) {
+      renderArticleMessage(
+        container,
+        `Article translation failed: ${
+          error instanceof Error ? error.message : String(error)
+        }`
+      );
+    }
+  } finally {
+    button?.removeAttribute('disabled');
+  }
+}
+
+function buildArticleTranslationOptions(ctx) {
+  const options = buildTranslateOptions(ctx);
+  return {
+    fetch: options.fetch,
+    cache: options.cache,
+    sourceLanguage: options.sourceLanguage,
+    targetLanguage: options.targetLanguage,
+    linkTargetMode: options.linkTargetMode,
+    translationStrategy: options.translationStrategy,
+    translateOptions: {
+      sources: options.sources,
+      contextSelections: options.contextSelections,
+    },
+  };
+}
+
+function ensureArticleResultContainer(ctx, item) {
+  if (item) {
+    const existing = item.querySelector('.translate-article-result');
+    if (existing) {
+      return existing;
+    }
+    const created = document.createElement('div');
+    created.className = 'translate-article-result';
+    item.append(created);
+    return created;
+  }
+  let standalone = document.querySelector('#translate-article-standalone');
+  if (!standalone) {
+    standalone = document.createElement('li');
+    standalone.id = 'translate-article-standalone';
+    standalone.className = 'translate-linked-article';
+    if (ctx.linkedArticles?.querySelector('.section-empty')) {
+      ctx.linkedArticles.replaceChildren();
+    }
+    ctx.linkedArticles?.append(standalone);
+  }
+  return standalone;
+}
+
+function renderArticleMessage(container, text) {
+  container.replaceChildren();
+  container.textContent = text;
+}
+
+function renderArticleTranslationResult(container, result) {
+  if (result.status !== 'translated') {
+    renderArticleMessage(container, `Article context ${result.status}.`);
+    return;
+  }
+  container.replaceChildren();
+  const title = document.createElement('strong');
+  title.textContent = `${result.title ?? result.article.title} (${result.section})`;
+  const output = document.createElement('div');
+  output.className = 'translate-output translate-article-output';
+  renderLinkedHtml(
+    output,
+    result.translation.html || escapeHtml(result.translation.plainText)
+  );
+  container.append(title, output);
 }
 
 function setupTranslateCopyButtons({ status, getResult, buttons }) {

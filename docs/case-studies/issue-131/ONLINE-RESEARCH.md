@@ -58,11 +58,12 @@ issue #131 fix.
 ## Libraries and components considered
 
 - Existing repository source adapters for Wikidata, Wikipedia, Wiktionary, and
-  the semantic lexicon are sufficient for this scoped bug fix.
+  the semantic lexicon are sufficient for this fix.
 - Adding a new dictionary package would not address the core tokenizer and
   phrase-gate bugs.
-- The useful broader addition is an override/virtual-link registry, described in
-  [`SOLUTION-PLAN.md`](SOLUTION-PLAN.md), rather than a new external library.
+- The implemented repository-native addition is an override/virtual-link
+  registry, described in [`SOLUTION-PLAN.md`](SOLUTION-PLAN.md), rather than a
+  new external library.
 
 ## External issue filing
 

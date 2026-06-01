@@ -520,10 +520,9 @@ function wikidataPageUrl(entity) {
 
 function createConfig(options) {
   const fetchImpl = options.fetch ?? globalThis.fetch?.bind(globalThis) ?? null;
-  // Issue #21: default tier order is Wikipedia → Wikidata → Wiktionary so
-  // every phrase — including stop words like `the` — has at least one
-  // resolver willing to answer. Callers can still override `sources`
-  // explicitly (legacy callers and unit tests do).
+  // Issue #21 and #131: default tier order is
+  // Wikipedia → Wikidata → virtual overrides → Wiktionary so every phrase has
+  // at least one resolver while source-backed local supplements stay visible.
   const sources = createSourceRegistry(
     options.sources ?? createDefaultSourceTiers(options.language ?? 'en')
   );
@@ -623,7 +622,9 @@ async function searchNgramCandidates(ngram, config) {
     : config.sources.all;
   const perSource = await Promise.all(
     eligibleSources.map((source) =>
-      source.searchPhrase(ngram.text, sourceCtx).catch(() => [])
+      Promise.resolve(source.searchPhrase(ngram.text, sourceCtx)).catch(
+        () => []
+      )
     )
   );
   const merged = mergeSearchResults(perSource.flat(), propertyBias);

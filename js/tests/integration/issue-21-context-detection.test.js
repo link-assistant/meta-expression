@@ -325,12 +325,13 @@ describe('issue 21 — multi-candidate context aggregation', () => {
 });
 
 describe('issue 21 — disambiguation tier registry', () => {
-  it('exposes the three default tiers in priority order', () => {
+  it('exposes the four default tiers in priority order', () => {
     const tiers = createDefaultSourceTiers('en');
-    expect(tiers.length).toBe(3);
+    expect(tiers.length).toBe(4);
     expect(tiers[0].name).toBe(FORMALIZE_SOURCES.WIKIPEDIA);
     expect(tiers[1].name).toBe(FORMALIZE_SOURCES.WIKIDATA);
-    expect(tiers[2].name).toBe(FORMALIZE_SOURCES.WIKTIONARY);
+    expect(tiers[2].name).toBe(FORMALIZE_SOURCES.VIRTUAL);
+    expect(tiers[3].name).toBe(FORMALIZE_SOURCES.WIKTIONARY);
   });
 
   it('keeps single-token stop words in the n-gram list with stopOnly=true', () => {

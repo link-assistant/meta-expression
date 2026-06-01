@@ -36,16 +36,31 @@ Focused integration tests were added for:
 - parenthesized IPA preservation;
 - preposition-ending phrasal verbs;
 - fallback for known `lie` + particle phrases;
-- the full California sentence.
+- the virtual source override layer;
+- the full California sentence, including Russian case/relative-clause wording;
+- experimental linked-article translation and cache behavior;
+- Translate-page article-context wiring.
 
 The first focused test run failed before the implementation and is preserved at
 [`logs/node-issue-131-red.log`](logs/node-issue-131-red.log).
 
 ## Implementation
 
-The fix introduced shared tokenization, pronunciation-preserving translation
-punctuation stitching, phrasal-verb-aware phrase search, local semantic lexicon
-entries, and a patch changeset.
+The first implementation introduced shared tokenization,
+pronunciation-preserving translation punctuation stitching,
+phrasal-verb-aware phrase search, local semantic lexicon entries, and a patch
+changeset.
+
+## 2026-06-01 10:05 UTC
+
+A PR comment clarified that virtual source overrides, recursive article
+translation, and Russian grammar quality are all in issue #131 scope. The PR was
+converted back to draft and the implementation was expanded to add:
+
+- `virtual-source-overrides` as a default source tier and semantic supplement;
+- source-backed grammatical forms for the reported Russian sentence;
+- disabled-by-default linked Wikipedia summary translation;
+- Translate-page article-context controls.
 
 ## Verification
 

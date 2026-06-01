@@ -164,7 +164,10 @@ describe('issue 96 - paragraph translation into most popular languages', () => {
         // questions rather than being silently dropped or hallucinated.
         for (const question of result.questions) {
           expect(typeof question).toBe('string');
-          expect(question).toContain(`from en to ${targetLanguage}`);
+          expect(
+            question.includes(`from en to ${targetLanguage}`) ||
+              question.startsWith(`What ${targetLanguage} label should`)
+          ).toBe(true);
         }
       }
     });
