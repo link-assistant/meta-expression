@@ -31,6 +31,7 @@ import {
   renderSentenceOutput,
   renderTranslationLinksNotation,
 } from './translation-renderers.js';
+import { containsNonAscii } from './text-tokenization.js';
 
 const wikidataEntityBaseUrl = 'https://www.wikidata.org/wiki/';
 const wikidataPropertyBaseUrl = 'https://www.wikidata.org/wiki/Property:';
@@ -900,7 +901,11 @@ function applySourceInteriorPunctuation(units, segment, sentenceId, config) {
       continue;
     }
     const trailing = segment.text.slice(offset);
-    const match = trailing.match(/^\s*([,;:/])/);
+    const pronunciationMatch = trailing.match(/^(\s*\(\/[^/()]*\/\))/u);
+    const match =
+      pronunciationMatch && containsNonAscii(pronunciationMatch[1])
+        ? pronunciationMatch
+        : trailing.match(/^(\s*[()[\]{},;:/]+)/);
     if (!match) {
       continue;
     }

@@ -3,7 +3,7 @@
   "description": "Semantic interlingua lexicon. Each concept has a unique id, per-language surface forms, and source-backed or rule-derived provenance; directional translation is derived through ids, never stored as a direct language pair. Per-concept overrides must include >50% usage proof before this builder will merge them.",
   "generatedBy": "scripts/build-lexicon-seed.mjs",
   "languages": ["en", "hi", "ru", "zh"],
-  "conceptCount": 349,
+  "conceptCount": 351,
   "concepts": [
     {
       "id": "lex:en:ability->ru",
@@ -1346,6 +1346,19 @@
       }
     },
     {
+      "id": "lex:en:lie_on->ru",
+      "url": "https://www.oxfordlearnersdictionaries.com/definition/english/lie_1",
+      "source": "dictionary",
+      "description": "geographic sense of lie + adverb/preposition: to be located in a particular place",
+      "labels": {
+        "en": ["lie on", "lies on"],
+        "ru": ["расположен на"]
+      },
+      "primary": {
+        "ru": "расположен на"
+      }
+    },
+    {
       "id": "lex:en:links->ru",
       "url": "https://en.wiktionary.org/wiki/(links)",
       "source": "rule-derived",
@@ -2391,7 +2404,7 @@
       "url": "https://en.wiktionary.org/wiki/(triggers)",
       "source": "rule-derived",
       "labels": {
-        "en": ["(triggers)"],
+        "en": ["(triggers)", "triggers"],
         "ru": ["Triggers"]
       },
       "primary": {
@@ -4284,6 +4297,20 @@
       },
       "primary": {
         "ru": "штат"
+      }
+    },
+    {
+      "id": "Q430265",
+      "url": "https://www.wikidata.org/wiki/Q430265",
+      "source": "wikidata",
+      "entityId": "Q430265",
+      "description": "coastline bordering the Pacific Ocean",
+      "labels": {
+        "en": ["pacific coast", "Pacific Coast", "Pacific coast"],
+        "ru": ["Тихоокеанское побережье"]
+      },
+      "primary": {
+        "ru": "Тихоокеанское побережье"
       }
     },
     {

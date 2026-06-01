@@ -49,6 +49,7 @@ import {
   annotateLinguisticMetadataPhraseRefs,
   extractLinguisticMetadata,
 } from './linguistic-metadata.js';
+import { tokenizeTextWithSpans } from './text-tokenization.js';
 import { buildLinksNetwork } from './formalize-links-network.js';
 import { collectFormalizationProviderCandidates } from './formalization-providers.js';
 import { resolveCopulaTypes } from './copula-types.js';
@@ -100,6 +101,9 @@ const propertyIndicators = new Set([
   'place of birth', 'date of birth', 'date of death', 'was born in',
   'is located in',
 ]); // prettier-ignore
+
+// prettier-ignore
+const phrasalVerbParticles = new Set('about across after against along around at away back by down for forth from in into off on onto out over through to up upon with'.split(' '));
 
 const linkTargetModes = Object.freeze({
   WIKIPEDIA: 'wikipedia',
@@ -248,7 +252,7 @@ export async function formalizeTextWith(input, options = {}) {
     config.beforeFormalizationRules,
     transformationContext(config, 'before-formalization')
   );
-  const tokenSpans = tokenizeWithSpans(text);
+  const tokenSpans = tokenizeTextWithSpans(text);
   const tokens = tokenSpans.map((span) => span.token);
   const ngrams = generateNgrams(tokens, config.maxNgramSize, tokenSpans);
   const ngramCandidates = await mapWithConcurrency(
@@ -381,7 +385,7 @@ export function markdownFromFormalizationCst(cst) {
  * @returns {string[]}
  */
 export function tokenize(text) {
-  return tokenizeWithSpans(text).map((span) => span.token);
+  return tokenizeTextWithSpans(text).map((span) => span.token);
 }
 
 /**
@@ -565,26 +569,6 @@ function isStopOnly(tokens) {
   return tokens.every((token) => stopWords.has(token.toLowerCase()));
 }
 
-function tokenizeWithSpans(text) {
-  const source = String(text);
-  const tokenPattern = /[^\s.,!?;:"“”/]+/g;
-  const spans = [];
-  let match;
-  while ((match = tokenPattern.exec(source)) !== null) {
-    spans.push({
-      token: match[0],
-      start: match.index,
-      end: match.index + match[0].length,
-      sentenceBoundaryAfter: false,
-    });
-  }
-  for (let index = 0; index < spans.length - 1; index += 1) {
-    const delimiter = source.slice(spans[index].end, spans[index + 1].start);
-    spans[index].sentenceBoundaryAfter = /[.!?]/.test(delimiter);
-  }
-  return spans;
-}
-
 function crossesSentenceBoundary(tokenSpans, start, end) {
   if (!Array.isArray(tokenSpans) || tokenSpans.length === 0) {
     return false;
@@ -643,12 +627,16 @@ async function searchNgramCandidates(ngram, config) {
     )
   );
   const merged = mergeSearchResults(perSource.flat(), propertyBias);
-  return merged
+  const scored = merged
     .filter((candidate) => candidateMatchesNgramShape(ngram, candidate))
     .filter((candidate) => !isPublicationTitleFragment(ngram, candidate))
     .map((candidate) => scoreCandidate(ngram, candidate, propertyBias))
     .sort((left, right) => right.score - left.score)
     .slice(0, config.topKCandidates);
+  if (scored.length === 0 && isKnownEnglishPhrasalVerbCandidate(ngram.tokens)) {
+    return [buildLexicalFallbackCandidate(ngram.text, config)];
+  }
+  return scored;
 }
 
 function buildSourceContext(config) {
@@ -681,6 +669,9 @@ function shouldSearchNgram(ngram) {
   }
   const lowered = String(ngram.text).toLowerCase();
   if (propertyIndicators.has(lowered)) {
+    return true;
+  }
+  if (isEnglishPhrasalVerbCandidate(ngram.tokens)) {
     return true;
   }
   if (ngram.tokens.some((token) => isCopula(token))) {
@@ -760,6 +751,44 @@ function isRussianCopula(value) {
 
 function isCopula(value) {
   return isEnglishCopula(value) || isRussianCopula(value);
+}
+
+function isEnglishPhrasalVerbCandidate(tokens) {
+  if (!Array.isArray(tokens) || tokens.length < 2 || tokens.length > 4) {
+    return false;
+  }
+  if (!isEnglishPhrasalVerbHead(tokens[0])) {
+    return false;
+  }
+  return tokens
+    .slice(1)
+    .every((token) => phrasalVerbParticles.has(normalizeLabel(token)));
+}
+
+function isEnglishPhrasalVerbHead(value) {
+  const normalized = normalizeLabel(value);
+  if (!normalized || isEnglishGrammarGlue(normalized)) {
+    return false;
+  }
+  if (propertyIndicators.has(normalized)) {
+    return true;
+  }
+  if (['lie', 'lay', 'lain'].includes(normalized)) {
+    return true;
+  }
+  return (
+    normalized.length > 3 &&
+    (normalized.endsWith('s') ||
+      normalized.endsWith('ed') ||
+      normalized.endsWith('ing') ||
+      normalized.endsWith('ize') ||
+      normalized.endsWith('ise'))
+  );
+}
+
+// prettier-ignore
+function isKnownEnglishPhrasalVerbCandidate(tokens) {
+  return Array.isArray(tokens) && tokens.length >= 2 && ['lie', 'lies', 'lay', 'lain', 'lying'].includes(normalizeLabel(tokens[0])) && tokens.slice(1).every((token) => phrasalVerbParticles.has(normalizeLabel(token)));
 }
 
 function mergeSearchResults(results, propertyBias) {
@@ -1007,6 +1036,10 @@ function buildRawPhrase(token, position, config) {
     candidates: [],
     entity: buildLexicalFallbackEntity(token, config),
   };
+}
+
+function buildLexicalFallbackCandidate(text, config) {
+  return { ...buildLexicalFallbackEntity(text, config), matchText: text };
 }
 
 function buildLexicalFallbackEntity(token, config) {

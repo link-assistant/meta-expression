@@ -2,6 +2,7 @@ import {
   buildSourceReconstruction,
   reconstructTextFromSourceReconstruction,
 } from './linguistic-reconstruction.js';
+import { tokenizeTextWithSpans } from './text-tokenization.js';
 
 export { reconstructTextFromSourceReconstruction } from './linguistic-reconstruction.js';
 
@@ -1081,31 +1082,7 @@ function normalizeTokenSpans(tokenSpans, text) {
       sentenceBoundaryAfter: Boolean(span.sentenceBoundaryAfter),
     }));
   }
-  return tokenizeWithSpans(text);
-}
-
-function tokenizeWithSpans(text) {
-  const source = String(text);
-  const tokenPattern = /[^\s.,!?;:"“”]+/g;
-  const spans = [];
-  let match;
-  while ((match = tokenPattern.exec(source)) !== null) {
-    spans.push({
-      token: match[0],
-      start: match.index,
-      end: match.index + match[0].length,
-      sentenceBoundaryAfter: false,
-    });
-  }
-  for (let index = 0; index < spans.length - 1; index += 1) {
-    const delimiter = source.slice(spans[index].end, spans[index + 1].start);
-    spans[index].sentenceBoundaryAfter = /[.!?]/.test(delimiter);
-  }
-  if (spans.length > 0) {
-    const tail = source.slice(spans[spans.length - 1].end);
-    spans[spans.length - 1].sentenceBoundaryAfter = /[.!?]/.test(tail);
-  }
-  return spans;
+  return tokenizeTextWithSpans(text);
 }
 
 function extractSymbolSpans(text) {
