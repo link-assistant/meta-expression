@@ -148,8 +148,9 @@ const dictionaries = {
     'translate.linkLocal': 'Local viewer',
     'translate.sources': 'Sources',
     'translate.sourcesHint':
-      'Drag checked sources to set lookup order: Wikipedia article matches, Wikidata Q/P entities and target labels, then Wiktionary lexical definitions and translation entries.',
+      'Drag checked sources to set lookup order: Wikipedia article matches, Wikidata Q/P entities, virtual overrides for missing data, then Wiktionary lexical definitions and translation entries.',
     'translate.sourceWikidata': 'Wikidata',
+    'translate.sourceVirtual': 'Virtual overrides',
     'translate.sourceWiktionary': 'Wiktionary',
     'translate.runButton': 'Translate',
     'translate.copyMarkdown': 'Copy as Markdown',
@@ -170,6 +171,10 @@ const dictionaries = {
     'translate.wordContexts': 'Word contexts',
     'translate.wordContextsEmpty':
       'Translate to see how each word was disambiguated.',
+    'translate.articleContext': 'Article context',
+    'translate.articleExperimental': 'Experimental',
+    'translate.articleRun': 'Translate article',
+    'translate.articleEmpty': 'Translate text to see linked articles.',
     'preferences.heading': 'Preferences',
     'preferences.worldview': 'Worldview',
     'preferences.religions': 'Religions',
@@ -331,8 +336,9 @@ const dictionaries = {
     'translate.linkLocal': 'Локальный просмотр',
     'translate.sources': 'Источники',
     'translate.sourcesHint':
-      'Перетащите включенные источники, чтобы задать порядок поиска: статьи Wikipedia, Q/P-сущности и целевые метки Wikidata, затем лексические определения и переводы Wiktionary.',
+      'Перетащите включенные источники, чтобы задать порядок поиска: статьи Wikipedia, Q/P-сущности Wikidata, виртуальные переопределения для недостающих данных, затем определения и переводы Wiktionary.',
     'translate.sourceWikidata': 'Wikidata',
+    'translate.sourceVirtual': 'Виртуальные переопределения',
     'translate.sourceWiktionary': 'Wiktionary',
     'translate.runButton': 'Перевести',
     'translate.copyMarkdown': 'Скопировать как Markdown',
@@ -354,6 +360,11 @@ const dictionaries = {
     'translate.wordContexts': 'Контексты слов',
     'translate.wordContextsEmpty':
       'Переведите текст, чтобы увидеть, как разрешалось значение каждого слова.',
+    'translate.articleContext': 'Контекст статьи',
+    'translate.articleExperimental': 'Экспериментально',
+    'translate.articleRun': 'Перевести статью',
+    'translate.articleEmpty':
+      'Переведите текст, чтобы увидеть связанные статьи.',
     'preferences.heading': 'Настройки',
     'preferences.worldview': 'Картина мира',
     'preferences.religions': 'Религии',

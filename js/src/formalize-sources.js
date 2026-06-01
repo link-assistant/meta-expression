@@ -12,6 +12,11 @@
  * draw on multiple knowledge graphs without changing call sites.
  */
 
+import {
+  createVirtualSourceOverrideSource,
+  VIRTUAL_SOURCE_KIND,
+} from './virtual-source-overrides.js';
+
 const wikidataApiUrl = 'https://www.wikidata.org/w/api.php';
 const wikidataEntityBaseUrl = 'https://www.wikidata.org/wiki/';
 const wikidataPropertyBaseUrl = 'https://www.wikidata.org/wiki/Property:';
@@ -30,6 +35,7 @@ export const SOURCE_KIND = Object.freeze({
   WIKTIONARY: 'wiktionary',
   FANDOM: 'fandom',
   LEXICAL: 'lexical',
+  VIRTUAL: VIRTUAL_SOURCE_KIND,
 });
 
 /**
@@ -690,6 +696,7 @@ export function createSourceRegistry(sources = []) {
  * Parse a comma-separated source spec (used by CLI / server / web URL
  * params) into a list of source instances. Supported tokens:
  *   wikidata
+ *   virtual-source-overrides
  *   wordnet
  *   fandom:<slug>          e.g. `fandom:genshin-impact`
  *   fandom-host:<host>     e.g. `fandom-host:tolkiengateway.net`
@@ -715,6 +722,10 @@ export function parseSourceSpec(spec, options = {}) {
     }
     if (token === SOURCE_KIND.WIKIDATA) {
       sources.push(createWikidataSource({ language }));
+      continue;
+    }
+    if (token === SOURCE_KIND.VIRTUAL) {
+      sources.push(createVirtualSourceOverrideSource({ language }));
       continue;
     }
     if (token === SOURCE_KIND.WIKTIONARY) {
@@ -752,7 +763,8 @@ export function parseSourceSpec(spec, options = {}) {
  * Default tier order per issue #21:
  *   1. Wikipedia (richest article context, carries wikibase_item)
  *   2. Wikidata  (canonical Q/P graph, holds claims for context BFS)
- *   3. Wiktionary (last-resort lexical fallback for stop words / verbs)
+ *   3. Virtual source overrides (source-backed local missing-data layer)
+ *   4. Wiktionary (last-resort lexical fallback for stop words / verbs)
  *
  * @param {string} [language]
  * @returns {object[]}
@@ -761,6 +773,7 @@ export function createDefaultSourceTiers(language = 'en') {
   return [
     createWikipediaSource({ language }),
     createWikidataSource({ language }),
+    createVirtualSourceOverrideSource({ language }),
     createWiktionarySource({ language }),
   ];
 }

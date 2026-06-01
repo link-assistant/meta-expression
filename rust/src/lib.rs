@@ -39,7 +39,8 @@ pub use issue52::{
 };
 pub use semantic_lexicon::{
     build_directional_glossary, list_directional_pairs, list_lexicon_languages,
-    resolve_concept_form,
+    resolve_concept_form, resolve_concept_form_details, resolve_concept_grammar_form,
+    resolve_source_phrase_grammar_value, ResolvedConceptForm,
 };
 pub use wikimedia_plan::{
     plan_wikidata_entity_batches, stable_wikimedia_cache_ttl_days, stable_wikimedia_cache_ttl_ms,

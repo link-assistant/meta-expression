@@ -1551,7 +1551,8 @@ pre {
 
 .translate-formalized,
 .translate-result,
-.translate-unresolved {
+.translate-unresolved,
+.translate-article-context {
   display: grid;
   gap: 8px;
 }
@@ -1582,6 +1583,65 @@ pre {
 
 .translate-unresolved li {
   margin-bottom: 8px;
+}
+
+.translate-article-controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+}
+
+.translate-article-experimental {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--ink-soft);
+  font-size: 0.86rem;
+}
+
+.translate-article-controls input[type='url'] {
+  flex: 1 1 260px;
+  min-width: min(100%, 220px);
+}
+
+.translate-article-context ul {
+  display: grid;
+  gap: 8px;
+  margin: 0;
+  padding-left: 20px;
+}
+
+.translate-linked-article {
+  overflow-wrap: anywhere;
+}
+
+.translate-linked-article-heading {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 10px;
+  align-items: center;
+}
+
+.translate-linked-article-heading span {
+  color: var(--ink-soft);
+  font-size: 0.82rem;
+}
+
+.translate-article-action {
+  font-size: 0.82rem;
+  padding: 5px 8px;
+}
+
+.translate-article-result {
+  display: grid;
+  gap: 6px;
+  margin-top: 8px;
+}
+
+.translate-article-output {
+  font-size: 0.95rem;
+  padding: 10px 12px;
 }
 
 .translate-steps {

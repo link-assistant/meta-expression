@@ -270,6 +270,7 @@ target and entity hydration).
 Parse a comma-separated source spec (used by CLI / server / web URL
 params) into a list of source instances. Supported tokens:
 wikidata
+virtual-source-overrides
 wordnet
 fandom:<slug> e.g. `fandom:genshin-impact`
 fandom-host:<host> e.g. `fandom-host:tolkiengateway.net`
@@ -288,7 +289,8 @@ Default tier order per issue #21:
 
 1. Wikipedia (richest article context, carries wikibase_item)
 2. Wikidata (canonical Q/P graph, holds claims for context BFS)
-3. Wiktionary (last-resort lexical fallback for stop words / verbs)
+3. Virtual source overrides (source-backed local missing-data layer)
+4. Wiktionary (last-resort lexical fallback for stop words / verbs)
 
 | Parameter    | Type     | Description |
 | ------------ | -------- | ----------- |

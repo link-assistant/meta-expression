@@ -83,6 +83,10 @@ export {
 } from './formalize-sources.js';
 export { translateText, translateTextWith } from './translate.js';
 export {
+  collectLinkedArticleTargets,
+  translateWikipediaArticleContext,
+} from './article-translation.js';
+export {
   deformalizeExpression,
   deformalizeExpressionWith,
   naturalizeExpression,
@@ -177,6 +181,13 @@ export {
   decodeOverridesText,
   encodeOverridesAsLino,
 } from './formalize-overrides.js';
+export {
+  VIRTUAL_SOURCE_KIND,
+  buildVirtualLinksView,
+  createVirtualSourceOverrideSource,
+  listVirtualSourceOverrides,
+  renderVirtualLinksNotation,
+} from './virtual-source-overrides.js';
 export {
   parseLino,
   serializeLino,

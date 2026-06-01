@@ -1152,6 +1152,114 @@ export declare const FORMALIZE_LINK_TARGETS: {
   readonly LOCAL: 'local-viewer';
 };
 
+export declare const FORMALIZE_SOURCES: {
+  readonly WIKIPEDIA: 'wikipedia';
+  readonly WIKIDATA: 'wikidata';
+  readonly WORDNET: 'wordnet';
+  readonly WIKTIONARY: 'wiktionary';
+  readonly FANDOM: 'fandom';
+  readonly LEXICAL: 'lexical';
+  readonly VIRTUAL: 'virtual-source-overrides';
+};
+
+export declare const FORMALIZE_SOURCE_KIND: typeof FORMALIZE_SOURCES;
+
+export declare const VIRTUAL_SOURCE_KIND: 'virtual-source-overrides';
+
+export interface VirtualSourceOverrideEntry {
+  id: string;
+  conceptId?: string;
+  entityId?: string;
+  kind?: string;
+  source?: string;
+  sourceStatus?: string;
+  upstreamTarget?: string | null;
+  sourceUrl?: string | null;
+  description?: string | null;
+  searchable?: boolean;
+  labels?: Record<string, string[]>;
+  primary?: Record<string, string>;
+  forms?: Record<string, Record<string, unknown>>;
+  derivation?: Record<string, unknown>;
+}
+
+export interface VirtualLinksView {
+  type: 'virtual-links-view';
+  version: number;
+  source: 'virtual-source-overrides';
+  entries: Array<{
+    id: string;
+    conceptId: string;
+    entityId: string;
+    kind: string;
+    sourceStatus: string;
+    upstreamTarget: string | null;
+    sourceUrl: string | null;
+    labels: Record<string, string[]>;
+    primary: Record<string, string>;
+    forms: Record<string, Record<string, unknown>>;
+  }>;
+}
+
+export declare function createWikidataSource(options?: {
+  language?: string;
+  searchLimit?: number;
+}): FormalizationSource;
+
+export declare function createWikipediaSource(options?: {
+  language?: string;
+  searchLimit?: number;
+}): FormalizationSource;
+
+export declare function createWiktionarySource(options?: {
+  language?: string;
+  searchLimit?: number;
+}): FormalizationSource;
+
+export declare function createWordNetSource(options?: {
+  language?: string;
+  searchLimit?: number;
+}): FormalizationSource;
+
+export declare function createFandomSource(options: {
+  wiki?: string;
+  host?: string;
+  language?: string;
+  searchLimit?: number;
+}): FormalizationSource;
+
+export declare function createVirtualSourceOverrideSource(options?: {
+  language?: string;
+  entries?: VirtualSourceOverrideEntry[];
+}): FormalizationSource & { linksView: VirtualLinksView };
+
+export declare function createDefaultSourceTiers(
+  language?: string
+): FormalizationSource[];
+
+export declare function createSourceRegistry(sources?: FormalizationSource[]): {
+  primary: FormalizationSource;
+  all: FormalizationSource[];
+  byName: Map<string, FormalizationSource>;
+};
+
+export declare function parseSourceSpec(
+  spec: string | string[],
+  options?: { language?: string }
+): FormalizationSource[];
+
+export declare function listVirtualSourceOverrides(
+  extraEntries?: VirtualSourceOverrideEntry[]
+): VirtualSourceOverrideEntry[];
+
+export declare function buildVirtualLinksView(
+  entries?: VirtualSourceOverrideEntry[]
+): VirtualLinksView;
+
+export declare function renderVirtualLinksNotation(
+  view?: VirtualLinksView
+): string;
+
 export type FormalizationProviderStatus =
   | 'candidate'
   | 'selected'
@@ -1208,6 +1316,9 @@ export interface FormalizeCandidate {
   source?: string | null;
   sourceUrl?: string | null;
   matchText?: string;
+  aliases?: string[];
+  sourceStatus?: string | null;
+  upstreamTarget?: string | null;
   score: number;
   ngramSize: number;
 }
@@ -1222,11 +1333,39 @@ export interface FormalizePhraseEntity {
   score: number;
   wikipediaUrl: string | null;
   wikipediaTitle: string | null;
+  sourceStatus?: string | null;
+  upstreamTarget?: string | null;
   contextLabels: Array<{
     property: string;
     propertyLabel: string;
     targetId: string;
   }>;
+}
+
+export interface FormalizationSource {
+  name: string;
+  searchPhrase(
+    text: string,
+    context?: Record<string, unknown>
+  ):
+    | Array<
+        Partial<FormalizeCandidate> &
+          Pick<FormalizeCandidate, 'id' | 'label' | 'description' | 'kind'>
+      >
+    | Promise<
+        Array<
+          Partial<FormalizeCandidate> &
+            Pick<FormalizeCandidate, 'id' | 'label' | 'description' | 'kind'>
+        >
+      >;
+  getEntity?(
+    id: string,
+    context?: Record<string, unknown>
+  ): FormalizePhraseEntity | null | Promise<FormalizePhraseEntity | null>;
+  resolveUrl?(
+    entity: FormalizePhraseEntity | FormalizeCandidate | Record<string, unknown>
+  ): string | null;
+  linksView?: unknown;
 }
 
 export interface LinguisticFragment {
@@ -1843,6 +1982,8 @@ export interface FormalizeOptions {
   preFormalizationRules?: TransformationRule | TransformationRule[];
   afterFormalizationRules?: TransformationRule | TransformationRule[];
   postFormalizationRules?: TransformationRule | TransformationRule[];
+  sources?: FormalizationSource[];
+  overrides?: Array<Record<string, unknown>>;
   providers?: FormalizationProvider | FormalizationProvider[];
   providerOutputs?: FormalizationProviderOutput | FormalizationProviderOutput[];
 }
@@ -2242,6 +2383,76 @@ export interface TranslateResult {
   questionDetails: TranslationQuestion[];
   steps: TranslationStep[];
 }
+
+export interface ArticleTarget {
+  title: string;
+  language: string;
+  sourceUrl: string | null;
+  phraseId?: string;
+  sourceText?: string;
+  entityId?: string | null;
+  label?: string | null;
+}
+
+export interface LinkedArticleTarget extends ArticleTarget {
+  sourceUrl: string;
+}
+
+export interface ArticleTranslationOptions {
+  experimental?: boolean;
+  fetch?: typeof fetch | null;
+  cache?: Map<string, unknown>;
+  cacheTtlMs?: number;
+  now?: () => number;
+  sourceLanguage?: string;
+  targetLanguage?: string;
+  from?: string;
+  to?: string;
+  section?: 'summary' | string;
+  maxCharacters?: number;
+  linkTargetMode?: FormalizeLinkTargetMode;
+  translationStrategy?: TranslationStrategyId;
+  trace?: boolean;
+  translateOptions?: TranslateOptions;
+}
+
+export type ArticleTranslationResult =
+  | {
+      status: 'disabled';
+      reason: 'experimental-article-translation-disabled';
+      article: ArticleTarget | null;
+    }
+  | {
+      status: 'empty';
+      article: ArticleTarget;
+      sourceUrl: string;
+      revision: string | number;
+      section: string;
+      sourceText: string;
+      translation: null;
+    }
+  | {
+      status: 'translated';
+      article: ArticleTarget;
+      title: string;
+      sourceUrl: string;
+      revision: string | number;
+      section: string;
+      sourceText: string;
+      truncated: boolean;
+      cacheKey: string;
+      translation: TranslateResult;
+    };
+
+export declare function collectLinkedArticleTargets(
+  result: TranslateResult,
+  options?: { sourceLanguage?: string }
+): LinkedArticleTarget[];
+
+export declare function translateWikipediaArticleContext(
+  article: string | Partial<ArticleTarget>,
+  options?: ArticleTranslationOptions
+): Promise<ArticleTranslationResult>;
 
 export interface NaturalizeResult {
   text: string;

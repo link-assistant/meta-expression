@@ -300,7 +300,8 @@ describe('issue 56 - Translate slash terms and diagnostics', () => {
     // preference applies uniformly to every linked concept (issue #128).
     expect(result.plainText).toBe('яблоко');
     expect(result.phrases[0].target.entityId).toBe('Q89');
-    expect(result.phrases[0].target.strategy).toBe(undefined);
+    expect(result.phrases[0].target.strategy).toBe('semantic-lexicon');
+    expect(result.phrases[0].target.source).toBe('semantic-lexicon');
     expect(
       fetch.calls.some((call) => call.hostname.endsWith('wiktionary.org'))
     ).toBe(false);

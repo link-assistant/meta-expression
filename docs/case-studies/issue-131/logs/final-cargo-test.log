@@ -1,0 +1,137 @@
+   Compiling proc-macro2 v1.0.106
+   Compiling quote v1.0.45
+   Compiling unicode-ident v1.0.24
+   Compiling libc v0.2.186
+   Compiling autocfg v1.5.0
+   Compiling getrandom v0.4.2
+   Compiling thiserror v2.0.18
+   Compiling num-traits v0.2.19
+   Compiling rustix v1.1.4
+   Compiling serde_core v1.0.228
+   Compiling cfg-if v1.0.4
+   Compiling bitflags v2.11.1
+   Compiling linux-raw-sys v0.12.1
+   Compiling fastrand v2.4.1
+   Compiling once_cell v1.21.4
+   Compiling zmij v1.0.21
+   Compiling syn v2.0.117
+   Compiling platform-num v0.8.0
+   Compiling serde_json v1.0.149
+   Compiling serde v1.0.228
+   Compiling memmap2 v0.9.10
+   Compiling beef v0.5.2
+   Compiling allocator-api2 v0.4.0
+   Compiling platform-trees v0.3.4
+   Compiling leak_slice v0.2.0
+   Compiling tap v1.0.1
+   Compiling memchr v2.8.0
+   Compiling itoa v1.0.18
+   Compiling tempfile v3.27.0
+   Compiling thiserror-impl v2.0.18
+   Compiling serde_derive v1.0.228
+   Compiling platform-data v2.0.0
+   Compiling platform-mem v0.3.0
+   Compiling doublets v0.3.0
+   Compiling meta-expression-core v0.1.0 (/tmp/gh-issue-solver-1780321226409/rust)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 9.18s
+     Running unittests src/lib.rs (target/debug/deps/meta_expression_core-a550da203d75ba25)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/e2e/mod.rs (target/debug/deps/e2e-3d74c0855cf80c89)
+
+running 6 tests
+test ffi_issue52::issue52_and_wikimedia_planning_values_are_exposed_through_extern ... ok
+test ffi_translation_quality::translation_quality_status_codes_round_trip_through_extern ... ok
+test ffi_translation_quality::default_translation_match_threshold_is_exposed_through_extern ... ok
+test ffi_weighted_support::weighted_support_ratio_extern_returns_nan_when_undefined ... ok
+test ffi_translation_quality::relation_source_and_target_match_the_doublet_constructor ... ok
+test ffi_weighted_support::weighted_support_ratio_extern_matches_safe_helper ... ok
+
+test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/integration/mod.rs (target/debug/deps/integration-3e13a7fbb58aea66)
+
+running 24 tests
+test issue35_translation::translates_issue35_sentence_through_semantic_ids ... ok
+test issue52_translation::issue52_relations_link_source_and_target_text_to_shared_meanings ... ok
+test issue41_glossary::translates_issue41_glossary_examples_through_semantic_links ... ok
+test issue52_translation::sentence_api_accepts_the_issue52_full_text_for_wasm_callers ... ok
+test issue52_translation::translates_full_issue52_text_and_round_trips_back_to_english ... ok
+test issue61_wasm_surface::exposes_analysis_pipeline_surface_for_wasm ... ok
+test issue96_four_language_parity::declares_all_four_supported_languages_in_the_interlingua ... ok
+test issue96_four_language_parity::maps_shared_vocabulary_through_a_single_id_carrying_every_language ... ok
+test issue96_four_language_parity::merges_issue131_virtual_concepts_into_the_rust_glossary ... ok
+test issue96_four_language_parity::resolves_issue131_grammar_forms_with_source_metadata ... ok
+test issue96_four_language_parity::serves_every_ordered_pair_among_the_four_languages ... ok
+test issue96_four_language_parity::survives_a_round_trip_through_every_other_language ... ok
+test issue96_four_language_parity::translates_shared_vocabulary_forward_in_every_direction ... ok
+test issue61_wasm_surface::covers_requirements_acceptance_examples_without_network ... ok
+test issue96_no_hardcoded_translations::keeps_the_lexical_translation_pipeline_free_of_foreign_surface_forms ... ok
+test issue96_no_hardcoded_translations::routes_every_lexicon_read_through_the_single_interlingua_module ... ok
+test issue96_no_hardcoded_translations::the_guard_detects_planted_translations_yet_ignores_comments ... ok
+test semantic_relations::encodes_issue35_translation_phrase_relations_as_doublets ... ok
+test semantic_relations::encodes_relation_as_doublet ... ok
+test issue96_no_hardcoded_translations::routes_every_reference_fixture_read_through_the_single_reference_module ... ok
+test issue109_doublets_store::rust_doublets_store_round_trips_unified_term_data_cache_records ... ok
+test issue109_doublets_store::rust_doublets_store_matches_js_unicode_and_scalar_shapes ... ok
+test issue109_doublets_store::rust_doublets_store_persists_through_file_mapped_unit_store ... ok
+test issue109_doublets_store::rust_doublets_store_round_trips_portable_meta_language_links ... ok
+
+test result: ok. 24 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.31s
+
+     Running tests/unit/mod.rs (target/debug/deps/unit-b3e89d79cb7d32de)
+
+running 42 tests
+test classify_statement::statement_template_codes_round_trip ... ok
+test extract_first_statement::drops_parenthetical_glosses_from_leading_statement ... ok
+test classify_statement::classifies_supported_statement_templates ... ok
+test extract_first_statement::extracts_first_statement_from_multi_paragraph_extract ... ok
+test extract_first_statement::returns_empty_statement_for_blank_text ... ok
+test formalize_contexts::accepts_array_of_selection_entries ... ok
+test formalize_contexts::detects_scholarly_article_from_p31_claim ... ok
+test formalize_contexts::detects_scholarly_article_from_description ... ok
+test formalize_contexts::builds_persistent_context_question_for_homonym ... ok
+test formalize_contexts::everyday_word_is_not_a_publication ... ok
+test formalize_contexts::single_candidate_word_gets_no_question ... ok
+test formalize_contexts::re_pins_chosen_sense_by_phrase_start_index ... ok
+test formalize_contexts::surfaces_per_word_context_detection ... ok
+test formalize_contexts::re_pins_chosen_sense_by_phrase_text ... ok
+test formalize_contexts::leaves_phrases_untouched_without_selections ... ok
+test issue54_formal_ai::configurable_text_rules_apply_in_order ... ok
+test issue54_formal_ai::linguistic_metadata_extracts_formal_ai_structural_fragments ... ok
+test issue64_general_formalization::known_claims_keep_their_wikidata_expression_type ... ok
+test issue66_naturalization::deformalization_is_alias_for_formal_expression_naturalization ... ok
+test issue64_general_formalization::arbitrary_text_reaches_partial_structured_meaning_links ... ok
+test issue66_naturalization::naturalizes_links_notation_claims_back_to_text ... ok
+test issue70_reasoning_metadata::linguistic_metadata_has_parser_cst_and_artifact_provenance ... ok
+test support_ratio::bounds_real_world_confidence ... ok
+test normalize_statement_key::normalizes_statement_keys_by_collapsing_whitespace_and_punctuation ... ok
+test support_ratio::caps_uncertainty_below_one_half ... ok
+test support_ratio::returns_none_when_total_weight_is_not_finite ... ok
+test token_coverage::computes_token_coverage_as_overlap_ratio ... ok
+test token_coverage::reports_zero_coverage_for_disjoint_text ... ok
+test tokenize_for_match::tokenizes_with_unicode_and_drops_stopwords ... ok
+test translation_quality::default_translation_match_threshold_matches_javascript ... ok
+test translation_quality::statement_in_skip_list_normalizes_punctuation_and_whitespace ... ok
+test translation_quality::summarize_translation_quality_counts_statuses_by_kind ... ok
+test translation_quality::translation_meets_threshold_compares_against_supplied_threshold ... ok
+test translation_quality::find_translation_fix_returns_matching_entry_or_none ... ok
+test wikimedia_plan::cache_ttl_hash_adapter_matches_the_documented_one_to_three_day_jitter ... ok
+test wikimedia_plan::wikidata_entity_batches_dedupe_normalize_and_chunk_ids ... ok
+test wikimedia_plan::wikimedia_cache_ttl_is_stable_and_spread_across_jitter_window ... ok
+test wikimedia_plan::wikidata_entity_batches_use_default_limit_when_zero_is_requested ... ok
+test issue54_formal_ai::deformalization_is_alias_for_semantic_translation_naturalization ... ok
+test issue54_formal_ai::formal_ai_unknown_translation_gaps_stay_explicitly_unresolved ... ok
+test issue54_formal_ai::formal_ai_common_noun_cases_translate_in_both_directions ... ok
+test issue54_formal_ai::formal_ai_translation_via_links_cases_are_supported ... ok
+
+test result: ok. 42 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+
+   Doc-tests meta_expression_core
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s

@@ -30,8 +30,8 @@ describe('issue 110 - doublets-web browser store', () => {
     if (!playwright) {
       return;
     }
-    const server = await startStaticServer(resolve('.'));
     let browser = null;
+    let server = null;
     try {
       browser = await playwright.chromium.launch();
     } catch (error) {
@@ -41,6 +41,7 @@ describe('issue 110 - doublets-web browser store', () => {
       throw error;
     }
     try {
+      server = await startStaticServer(resolve('.'));
       const page = await browser.newPage();
       await page.goto(`${server.origin}/web/`);
       const result = await page.evaluate(async () => {
@@ -103,7 +104,7 @@ describe('issue 110 - doublets-web browser store', () => {
       expect(result.text).toBe('Doublets-web stores browser links.');
     } finally {
       await browser?.close();
-      await server.close();
+      await server?.close();
     }
   });
 });

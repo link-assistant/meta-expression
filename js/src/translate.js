@@ -7,6 +7,7 @@ import {
 } from './translation-strategies.js';
 import { lookupWikimediaTranslation } from './wikimedia-translation.js';
 import { resolveConceptForm } from './semantic-lexicon.js';
+import { applyEnglishToRussianLexicalRules } from './russian-naturalization.js';
 import { buildLexicalTarget, lexicalSemanticId } from './lexical-entities.js';
 import { createTargetEntityBatchLoader } from './target-entity-loader.js';
 import {
@@ -31,6 +32,7 @@ import {
   renderSentenceOutput,
   renderTranslationLinksNotation,
 } from './translation-renderers.js';
+import { containsNonAscii } from './text-tokenization.js';
 
 const wikidataEntityBaseUrl = 'https://www.wikidata.org/wiki/';
 const wikidataPropertyBaseUrl = 'https://www.wikidata.org/wiki/Property:';
@@ -325,24 +327,22 @@ function sourceUrlForSemanticEntity(entity) {
 }
 async function translatePhrase(phrase, config) {
   const translationEntity = translatableEntityForPhrase(phrase, config);
-  const sourceBackedTranslation =
-    translationEntity ||
-    config.translationStrategy === TRANSLATION_STRATEGIES.SEMANTIC_LABEL
-      ? null
-      : await lookupWikimediaTranslation(phrase, config);
-  const glossaryTranslation =
-    sourceBackedTranslation || translationEntity
-      ? null
-      : lookupGlossaryTranslation(phrase.text, config);
-  const base = buildPhraseTranslationBase(
+  const immediateTranslation = await lookupImmediatePhraseTranslation(
     phrase,
-    sourceBackedTranslation || glossaryTranslation ? null : translationEntity,
+    translationEntity,
     config
   );
-  if (sourceBackedTranslation || glossaryTranslation) {
+  const base = buildPhraseTranslationBase(
+    phrase,
+    immediateTranslation
+      ? immediateTranslation.sourceEntity
+      : translationEntity,
+    config
+  );
+  if (immediateTranslation) {
     const translated = translatedGlossaryPhrase(
       base,
-      sourceBackedTranslation ?? glossaryTranslation,
+      immediateTranslation.translation,
       config
     );
     recordPhraseStep(translated, config);
@@ -404,6 +404,49 @@ async function translatePhrase(phrase, config) {
   };
   recordPhraseStep(translated, config);
   return translated;
+}
+
+async function lookupImmediatePhraseTranslation(
+  phrase,
+  translationEntity,
+  config
+) {
+  if (!translationEntity) {
+    const translation = await lookupUnlinkedPhraseTranslation(phrase, config);
+    return translation ? { translation, sourceEntity: null } : null;
+  }
+  const translation = lookupLocalConceptTranslation(translationEntity, config);
+  return translation ? { translation, sourceEntity: translationEntity } : null;
+}
+
+async function lookupUnlinkedPhraseTranslation(phrase, config) {
+  if (config.translationStrategy === TRANSLATION_STRATEGIES.SEMANTIC_LABEL) {
+    return null;
+  }
+  return (
+    (await lookupWikimediaTranslation(phrase, config)) ??
+    lookupGlossaryTranslation(phrase.text, config)
+  );
+}
+
+function lookupLocalConceptTranslation(entity, config) {
+  const concept = entity?.id
+    ? resolveConceptForm(entity.id, config.targetLanguage)
+    : null;
+  if (!concept?.text) {
+    return null;
+  }
+  return {
+    text: concept.text,
+    target: {
+      entityId: concept.entityId ?? entity.id,
+      description: concept.description ?? entity.description ?? null,
+      url: concept.url ?? sourceUrlForSemanticEntity(entity),
+      source: 'semantic-lexicon',
+      sourceUrl: concept.url ?? sourceUrlForSemanticEntity(entity),
+    },
+    strategy: 'semantic-lexicon',
+  };
 }
 function translatedGlossaryPhrase(base, translation, config) {
   const entityId = base.source.entityId ?? null;
@@ -900,7 +943,11 @@ function applySourceInteriorPunctuation(units, segment, sentenceId, config) {
       continue;
     }
     const trailing = segment.text.slice(offset);
-    const match = trailing.match(/^\s*([,;:/])/);
+    const pronunciationMatch = trailing.match(/^(\s*\(\/[^/()]*\/\))/u);
+    const match =
+      pronunciationMatch && containsNonAscii(pronunciationMatch[1])
+        ? pronunciationMatch
+        : trailing.match(/^(\s*[()[\]{},;:/]+)/);
     if (!match) {
       continue;
     }
@@ -1123,47 +1170,21 @@ function applyEnglishToRussianRules(units, segment, sentenceId, config) {
   }
 
   transformations.push(
-    ...applyEnglishToRussianLexicalRules(nextUnits, segment, sentenceId, config)
+    ...applyEnglishToRussianLexicalRules(
+      nextUnits,
+      segment,
+      sentenceId,
+      config,
+      {
+        normalizePhrase,
+        appendUnitSuffix,
+        replaceUnitTarget,
+        recordStep,
+      }
+    )
   );
 
   return { units: nextUnits, transformations, resolvedVariableNames };
-}
-
-function applyEnglishToRussianLexicalRules(units, segment, sentenceId, config) {
-  if (config.translationStrategy === TRANSLATION_STRATEGIES.SEMANTIC_LABEL) {
-    return [];
-  }
-  const transformations = [];
-  // Lexical and phrase-level translations (including reordering constructions
-  // like "transformation rules" -> "правила преобразования" and instrumental
-  // "with Wikidata" -> "с помощью Викиданных") are produced generically by the
-  // interlingua phrase naturalizer in applyExactGlossaryPhraseNaturalization.
-  // Only language-grammar rules that cannot be expressed as a glossary entry
-  // live here.
-  if (applyCommaBeforeThenRule(units, segment, sentenceId, config)) {
-    transformations.push('english-comma-before-then-preserved');
-  }
-  return transformations;
-}
-
-function applyCommaBeforeThenRule(units, segment, sentenceId, config) {
-  if (!/,\s*then\b/i.test(segment.text)) {
-    return false;
-  }
-  const thenIndex = units.findIndex(
-    (unit) => normalizePhrase(unit.sourceText) === 'then'
-  );
-  if (thenIndex <= 0) {
-    return false;
-  }
-  appendUnitSuffix(units[thenIndex - 1], ',');
-  recordStep(config, 'transformation-rule', {
-    sentenceId,
-    rule: 'english-comma-before-then-preserved',
-    sourceText: segment.text,
-    affectedVariables: [],
-  });
-  return true;
 }
 
 function normalizePhrase(value) {
@@ -1181,6 +1202,15 @@ function appendUnitSuffix(unit, suffix) {
   unit.plainText = `${unit.plainText}${suffix}`;
   unit.markdown = `${unit.markdown}${suffix}`;
   unit.html = `${unit.html}${suffix}`;
+}
+
+function replaceUnitTarget(unit, target, config) {
+  const replacement = buildRuleToken(unit.sourceText, target, config);
+  unit.plainText = replacement.plainText;
+  unit.markdown = replacement.markdown;
+  unit.html = replacement.html;
+  unit.targetEntityId = replacement.targetEntityId;
+  unit.targetUrl = replacement.targetUrl;
 }
 
 function buildRuleToken(sourceText, target, config = null) {

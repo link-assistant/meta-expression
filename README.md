@@ -200,10 +200,12 @@ statement from red (wrong) to green (correct) and exposes the checked result as
 Markdown and Links Notation. The Uniqueness page searches public APIs for prior
 instances of each detected statement and suggests citing, quoting, reviewing,
 or rewording statements that look already published. The Translate page uses
-the formalization CST to show formalized
-source text, translated sentence output, unresolved questions, Markdown, Links
-Notation, the translation CST, and a collapsed step trace. The Preferences page
-stores a local profile with worldview sliders, context presets, and Links
+the formalization CST to show formalized source text, translated sentence
+output, unresolved questions, word-context evidence, experimental linked
+Wikipedia summary translation, Markdown, Links Notation, the translation CST,
+and a collapsed step trace. The default source stack includes virtual
+source-backed overrides for missing or upstream-pending data. The Preferences
+page stores a local profile with worldview sliders, context presets, and Links
 Notation import/export.
 
 ### Default metrics
