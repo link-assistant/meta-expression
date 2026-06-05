@@ -1,0 +1,14 @@
+[
+  {
+    "conclusion": "failure",
+    "createdAt": "2026-06-04T23:54:01Z",
+    "databaseId": 26986686564,
+    "headSha": "324b6ef1cfe3646dcb4e53831d2f8455b0372c32"
+  },
+  {
+    "conclusion": "success",
+    "createdAt": "2026-06-04T23:54:01Z",
+    "databaseId": 26986686568,
+    "headSha": "324b6ef1cfe3646dcb4e53831d2f8455b0372c32"
+  }
+]

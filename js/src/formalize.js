@@ -299,7 +299,9 @@ export async function formalizeTextWith(input, options = {}) {
   // so answering a context-selection question re-derives the formalization
   // (and re-runs translation downstream) — issue #126.
   const reranked = applyContextSelections(lensed, config.contextSelections);
-  const wordContexts = buildWordContexts(reranked);
+  const wordContexts = buildWordContexts(reranked, {
+    broadContexts: bigContexts.all,
+  });
   const contextQuestions = buildContextQuestions(reranked);
   const interpretations = generateFormalizeInterpretations(
     reranked,

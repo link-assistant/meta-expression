@@ -139,6 +139,9 @@ const dictionaries = {
     'translate.pickExample': '— pick an example —',
     'translate.from': 'From',
     'translate.to': 'To',
+    'translate.inputMode': 'Input',
+    'translate.inputModeText': 'Text',
+    'translate.inputModeArticle': 'Wikipedia article',
     'translate.strategy': 'Strategy',
     'translate.strategyHint':
       'Contextual glossary uses source-backed Wikidata/Wiktionary translations first. Semantic labels use linked entity labels only. Lexical glossary prefers readable word and phrase translations.',
@@ -146,9 +149,11 @@ const dictionaries = {
     'translate.linkWikidata': 'Wikidata only',
     'translate.linkWikipedia': 'Wikipedia (fallback Wikidata)',
     'translate.linkLocal': 'Local viewer',
+    'translate.replaceWikidataLinks':
+      'Replace Wikidata links with local viewer',
     'translate.sources': 'Sources',
     'translate.sourcesHint':
-      'Drag checked sources to set lookup order: Wikipedia article matches, Wikidata Q/P entities, virtual overrides for missing data, then Wiktionary lexical definitions and translation entries.',
+      'Drag checked sources to set lookup order: Wikipedia article matches, Wikidata Q/P entities, Wiktionary lexical definitions and translation entries, then virtual overrides for missing data.',
     'translate.sourceWikidata': 'Wikidata',
     'translate.sourceVirtual': 'Virtual overrides',
     'translate.sourceWiktionary': 'Wiktionary',
@@ -173,6 +178,7 @@ const dictionaries = {
       'Translate to see how each word was disambiguated.',
     'translate.articleContext': 'Article context',
     'translate.articleExperimental': 'Experimental',
+    'translate.articleSource': 'Wikipedia article',
     'translate.articleRun': 'Translate article',
     'translate.articleEmpty': 'Translate text to see linked articles.',
     'preferences.heading': 'Preferences',
@@ -328,15 +334,20 @@ const dictionaries = {
     'translate.from': 'С языка',
     'translate.to': 'На язык',
     'translate.strategy': 'Стратегия',
+    'translate.inputMode': 'Ввод',
+    'translate.inputModeText': 'Текст',
+    'translate.inputModeArticle': 'Статья Wikipedia',
     'translate.strategyHint':
       'Контекстный глоссарий сначала использует переводы из Wikidata/Wiktionary. Семантические метки используют только метки связанных сущностей. Лексический глоссарий предпочитает читаемые переводы слов и фраз.',
     'translate.linkTarget': 'Цель ссылок',
     'translate.linkWikidata': 'Только Wikidata',
     'translate.linkWikipedia': 'Wikipedia (с откатом на Wikidata)',
     'translate.linkLocal': 'Локальный просмотр',
+    'translate.replaceWikidataLinks':
+      'Заменять ссылки Wikidata локальным просмотром',
     'translate.sources': 'Источники',
     'translate.sourcesHint':
-      'Перетащите включенные источники, чтобы задать порядок поиска: статьи Wikipedia, Q/P-сущности Wikidata, виртуальные переопределения для недостающих данных, затем определения и переводы Wiktionary.',
+      'Перетащите включенные источники, чтобы задать порядок поиска: статьи Wikipedia, Q/P-сущности Wikidata, определения и переводы Wiktionary, затем виртуальные переопределения для недостающих данных.',
     'translate.sourceWikidata': 'Wikidata',
     'translate.sourceVirtual': 'Виртуальные переопределения',
     'translate.sourceWiktionary': 'Wiktionary',
@@ -362,6 +373,7 @@ const dictionaries = {
       'Переведите текст, чтобы увидеть, как разрешалось значение каждого слова.',
     'translate.articleContext': 'Контекст статьи',
     'translate.articleExperimental': 'Экспериментально',
+    'translate.articleSource': 'Статья Wikipedia',
     'translate.articleRun': 'Перевести статью',
     'translate.articleEmpty':
       'Переведите текст, чтобы увидеть связанные статьи.',

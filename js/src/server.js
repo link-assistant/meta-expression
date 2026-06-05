@@ -459,7 +459,7 @@ async function sendTranslate(response, params, ctx) {
     : params.overrideFile
       ? await loadUserOverrides(params.overrideFile)
       : [];
-  const linkTargetMode = resolveLinkTargetParam(params.target ?? 'wikidata');
+  const linkTargetMode = resolveLinkTargetParam(params.target);
   const result = await translateTextWith(params.input, {
     fetch: globalThis.fetch?.bind(globalThis),
     cache: ctx.liveCache,

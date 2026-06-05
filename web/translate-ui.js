@@ -37,6 +37,11 @@ export function setupTranslatePage({
       appVersionInfo = null;
     });
   const input = document.querySelector('#translate-input');
+  const inputModeGroup = document.querySelector('#translate-mode');
+  const textModePanel = document.querySelector('#translate-text-mode-panel');
+  const articleModePanel = document.querySelector(
+    '#translate-article-mode-panel'
+  );
   const sampleSelect = document.querySelector('#translate-sample');
   const sourceLanguage = document.querySelector('#translate-source-language');
   const targetLanguage = document.querySelector('#translate-target-language');
@@ -56,7 +61,6 @@ export function setupTranslatePage({
     '#translate-article-experimental'
   );
   const articleSource = document.querySelector('#translate-article-source');
-  const articleRun = document.querySelector('#translate-article-run');
   const linkedArticles = document.querySelector('#translate-linked-articles');
   const markdownPre = document.querySelector('#translate-markdown');
   const linoPre = document.querySelector('#translate-lino');
@@ -73,6 +77,9 @@ export function setupTranslatePage({
 
   const ctx = {
     input,
+    inputModeGroup,
+    textModePanel,
+    articleModePanel,
     sourceLanguage,
     targetLanguage,
     strategyGroup,
@@ -86,7 +93,6 @@ export function setupTranslatePage({
     wordContextsList,
     articleExperimental,
     articleSource,
-    articleRun,
     linkedArticles,
     markdownPre,
     linoPre,
@@ -110,6 +116,7 @@ export function setupTranslatePage({
     sourceLanguage,
     targetLanguage,
   });
+  setupTranslateInputModes(ctx);
   setupTranslationStrategies(strategyGroup, strategyState);
   setupSourcePriorityList(sourceList);
 
@@ -157,6 +164,10 @@ function buildTranslateOptions(ctx) {
 }
 
 function runTranslate(ctx) {
+  if (selectedTranslateInputMode(ctx.inputModeGroup) === 'article') {
+    runStandaloneArticleTranslation(ctx);
+    return;
+  }
   const text = ctx.input.value.trim();
   if (!text) {
     ctx.status.textContent = 'Enter some text first.';
@@ -166,6 +177,16 @@ function runTranslate(ctx) {
   ctx.contextSelections = {};
   ctx.lastText = text;
   executeTranslate(ctx, text);
+}
+
+function runStandaloneArticleTranslation(ctx) {
+  const value = ctx.articleSource?.value.trim();
+  if (!value) {
+    ctx.status.textContent = 'Enter a Wikipedia article URL or title.';
+    ctx.articleSource?.focus();
+    return;
+  }
+  runArticleTranslation(ctx, { sourceUrl: value }, null, ctx.run);
 }
 
 // Re-pin a word's sense and re-run translation. The selection is kept so the
@@ -254,17 +275,14 @@ function renderTranslateResult(ctx, result) {
 }
 
 function setupArticleTranslationControls(ctx) {
-  if (!ctx.articleRun) {
+  if (!ctx.articleSource) {
     return;
   }
-  ctx.articleRun.addEventListener('click', () => {
-    const value = ctx.articleSource?.value.trim();
-    if (!value) {
-      ctx.status.textContent = 'Enter a Wikipedia article URL or title.';
-      ctx.articleSource?.focus();
-      return;
+  ctx.articleSource.addEventListener('keydown', (event) => {
+    if ((event.metaKey || event.ctrlKey) && event.key === 'Enter') {
+      event.preventDefault();
+      runStandaloneArticleTranslation(ctx);
     }
-    runArticleTranslation(ctx, { sourceUrl: value });
   });
 }
 
@@ -437,16 +455,37 @@ function selectedTranslateSources(sourcesSpec, sourceLanguage) {
 }
 
 function selectedTranslateLinkTargetMode(linkTargetGroup) {
-  const selected = linkTargetGroup?.querySelector(
-    'input[name="translate-target"]:checked'
-  )?.value;
-  if (selected === FORMALIZE_LINK_TARGETS.LOCAL) {
-    return FORMALIZE_LINK_TARGETS.LOCAL;
+  const useLocalViewer = linkTargetGroup?.querySelector(
+    '#translate-local-viewer-links'
+  )?.checked;
+  return useLocalViewer
+    ? FORMALIZE_LINK_TARGETS.LOCAL
+    : FORMALIZE_LINK_TARGETS.WIKIPEDIA;
+}
+
+function setupTranslateInputModes(ctx) {
+  if (!ctx.inputModeGroup) {
+    return;
   }
-  if (selected === FORMALIZE_LINK_TARGETS.WIKIPEDIA) {
-    return FORMALIZE_LINK_TARGETS.WIKIPEDIA;
-  }
-  return FORMALIZE_LINK_TARGETS.WIKIDATA;
+  const sync = () => {
+    const articleMode =
+      selectedTranslateInputMode(ctx.inputModeGroup) === 'article';
+    if (ctx.textModePanel) {
+      ctx.textModePanel.hidden = articleMode;
+    }
+    if (ctx.articleModePanel) {
+      ctx.articleModePanel.hidden = !articleMode;
+    }
+  };
+  ctx.inputModeGroup.addEventListener('change', sync);
+  sync();
+}
+
+function selectedTranslateInputMode(inputModeGroup) {
+  return (
+    inputModeGroup?.querySelector('input[name="translate-mode"]:checked')
+      ?.value ?? 'text'
+  );
 }
 
 function translateStatusText(result) {
@@ -711,7 +750,13 @@ function formatWordContextCandidate(candidate) {
         .map((ctx) => `${ctx.propertyLabel}: ${ctx.targetId}`)
         .join(', ')}`
     : '';
-  return `${mark}${candidate.label ?? '(no label)'}${id}${score}${publication}${contexts}`;
+  const broadContexts = candidate.broadContexts?.length
+    ? `; broader: ${candidate.broadContexts
+        .slice(0, 4)
+        .map(formatContextRef)
+        .join(', ')}`
+    : '';
+  return `${mark}${candidate.label ?? '(no label)'}${id}${score}${publication}${contexts}${broadContexts}`;
 }
 
 function formatContextRef(context) {

@@ -31,7 +31,8 @@ pub use doublets_store::{
 };
 pub use formalize_contexts::{
     apply_context_selections, build_context_questions, build_word_contexts,
-    is_scholarly_publication_candidate, normalize_context_selections,
+    build_word_contexts_with_broad_contexts, is_scholarly_publication_candidate,
+    normalize_context_selections,
 };
 pub use issue52::{
     issue52_english_text, issue52_russian_text, issue52_translation_relations,

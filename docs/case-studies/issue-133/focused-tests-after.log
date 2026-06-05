@@ -1,0 +1,69 @@
+TAP version 13
+# Subtest: issue 133 - Translate defaults and state links
+    # Subtest: keeps the source-backed Russian Wikipedia URL for Q35657
+    ok 1 - keeps the source-backed Russian Wikipedia URL for Q35657
+      ---
+      duration_ms: 2.705019
+      ...
+    # Subtest: uses Wikipedia links by default in Translate output
+    ok 2 - uses Wikipedia links by default in Translate output
+      ---
+      duration_ms: 12.824669
+      ...
+    # Subtest: defaults source priority to Wikipedia, Wikidata, Wiktionary, virtual overrides
+    ok 3 - defaults source priority to Wikipedia, Wikidata, Wiktionary, virtual overrides
+      ---
+      duration_ms: 2.347735
+      ...
+    # Subtest: surfaces transitive broad contexts on word candidates
+    ok 4 - surfaces transitive broad contexts on word candidates
+      ---
+      duration_ms: 0.671503
+      ...
+    1..4
+ok 1 - issue 133 - Translate defaults and state links
+  ---
+  duration_ms: 20.736322
+  type: 'suite'
+  ...
+# Subtest: issue 50 - Translate page coverage and link targets
+    # Subtest: translates the reported technical prose without unresolved variables
+    ok 1 - translates the reported technical prose without unresolved variables
+      ---
+      duration_ms: 56.536006
+      ...
+    # Subtest: keeps local lexical links opt-in for Translate output
+    ok 2 - keeps local lexical links opt-in for Translate output
+      ---
+      duration_ms: 2.112665
+      ...
+    # Subtest: uses Wikipedia link targets by default in Translate
+    ok 3 - uses Wikipedia link targets by default in Translate
+      ---
+      duration_ms: 1.404076
+      ...
+    # Subtest: limits source lookup concurrency so long text does not burst Wikimedia
+    ok 4 - limits source lookup concurrency so long text does not burst Wikimedia
+      ---
+      duration_ms: 15.913261
+      ...
+    # Subtest: exposes a Translate link-target selector in the web UI
+    ok 5 - exposes a Translate link-target selector in the web UI
+      ---
+      duration_ms: 1.314182
+      ...
+    1..5
+ok 2 - issue 50 - Translate page coverage and link targets
+  ---
+  duration_ms: 78.359502
+  type: 'suite'
+  ...
+1..2
+# tests 9
+# suites 2
+# pass 9
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 188.257645

@@ -1,0 +1,5 @@
+
+> meta-expression@0.12.1 docs:formalize
+> node scripts/generate-formalize-docs.mjs
+
+Wrote docs/FORMALIZE.md

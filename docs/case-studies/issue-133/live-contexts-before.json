@@ -1,0 +1,691 @@
+{
+  "mainBigContext": {
+    "id": "Q107390",
+    "label": null,
+    "weight": 0.5310077519379844,
+    "depth": 1,
+    "paths": [["Q35657", "Q107390"], ["Q107390"]],
+    "propertyTrail": ["P31", "P279"],
+    "sourcePhrases": [
+      {
+        "text": "Hawaii",
+        "entityId": "Q782"
+      },
+      {
+        "text": "state",
+        "entityId": "Q35657"
+      }
+    ],
+    "sourceCandidates": [
+      {
+        "phrase": "Hawaii",
+        "candidateId": "Q782",
+        "candidateLabel": "Hawaii",
+        "weight": 0.3953488372093023
+      },
+      {
+        "phrase": "state",
+        "candidateId": "Q35657",
+        "candidateLabel": "state",
+        "weight": 0.3333333333333333
+      }
+    ],
+    "probability": 0.05225019069412664
+  },
+  "bigContexts": [
+    {
+      "id": "Q107390",
+      "label": null,
+      "weight": 0.5310077519379844,
+      "depth": 1,
+      "paths": [["Q35657", "Q107390"], ["Q107390"]],
+      "propertyTrail": ["P31", "P279"],
+      "sourcePhrases": [
+        {
+          "text": "Hawaii",
+          "entityId": "Q782"
+        },
+        {
+          "text": "state",
+          "entityId": "Q35657"
+        }
+      ],
+      "sourceCandidates": [
+        {
+          "phrase": "Hawaii",
+          "candidateId": "Q782",
+          "candidateLabel": "Hawaii",
+          "weight": 0.3953488372093023
+        },
+        {
+          "phrase": "state",
+          "candidateId": "Q35657",
+          "candidateLabel": "state",
+          "weight": 0.3333333333333333
+        }
+      ],
+      "probability": 0.05225019069412664
+    },
+    {
+      "id": "Q135236673",
+      "label": null,
+      "weight": 0.5310077519379844,
+      "depth": 1,
+      "paths": [["Q35657", "Q135236673"], ["Q135236673"]],
+      "propertyTrail": ["P31", "P31"],
+      "sourcePhrases": [
+        {
+          "text": "Hawaii",
+          "entityId": "Q782"
+        },
+        {
+          "text": "state",
+          "entityId": "Q35657"
+        }
+      ],
+      "sourceCandidates": [
+        {
+          "phrase": "Hawaii",
+          "candidateId": "Q782",
+          "candidateLabel": "Hawaii",
+          "weight": 0.3953488372093023
+        },
+        {
+          "phrase": "state",
+          "candidateId": "Q35657",
+          "candidateLabel": "state",
+          "weight": 0.3333333333333333
+        }
+      ],
+      "probability": 0.05225019069412664
+    },
+    {
+      "id": "Q28872924",
+      "label": null,
+      "weight": 0.5310077519379844,
+      "depth": 1,
+      "paths": [["Q35657", "Q28872924"], ["Q28872924"]],
+      "propertyTrail": ["P31", "P31"],
+      "sourcePhrases": [
+        {
+          "text": "Hawaii",
+          "entityId": "Q782"
+        },
+        {
+          "text": "state",
+          "entityId": "Q35657"
+        }
+      ],
+      "sourceCandidates": [
+        {
+          "phrase": "Hawaii",
+          "candidateId": "Q782",
+          "candidateLabel": "Hawaii",
+          "weight": 0.3953488372093023
+        },
+        {
+          "phrase": "state",
+          "candidateId": "Q35657",
+          "candidateLabel": "state",
+          "weight": 0.3333333333333333
+        }
+      ],
+      "probability": 0.05225019069412664
+    },
+    {
+      "id": "Q852446",
+      "label": null,
+      "weight": 0.5310077519379844,
+      "depth": 1,
+      "paths": [["Q35657", "Q852446"], ["Q852446"]],
+      "propertyTrail": ["P31", "P279"],
+      "sourcePhrases": [
+        {
+          "text": "Hawaii",
+          "entityId": "Q782"
+        },
+        {
+          "text": "state",
+          "entityId": "Q35657"
+        }
+      ],
+      "sourceCandidates": [
+        {
+          "phrase": "Hawaii",
+          "candidateId": "Q782",
+          "candidateLabel": "Hawaii",
+          "weight": 0.3953488372093023
+        },
+        {
+          "phrase": "state",
+          "candidateId": "Q35657",
+          "candidateLabel": "state",
+          "weight": 0.3333333333333333
+        }
+      ],
+      "probability": 0.05225019069412664
+    },
+    {
+      "id": "Q35657",
+      "label": null,
+      "weight": 0.3953488372093023,
+      "depth": 1,
+      "paths": [["Q35657"]],
+      "propertyTrail": ["P31"],
+      "sourcePhrases": [
+        {
+          "text": "Hawaii",
+          "entityId": "Q782"
+        }
+      ],
+      "sourceCandidates": [
+        {
+          "phrase": "Hawaii",
+          "candidateId": "Q782",
+          "candidateLabel": "Hawaii",
+          "weight": 0.3953488372093023
+        }
+      ],
+      "probability": 0.038901601830663636
+    },
+    {
+      "id": "Q106458883",
+      "label": null,
+      "weight": 0.3333333333333333,
+      "depth": 1,
+      "paths": [["Q106458883"]],
+      "propertyTrail": ["P279"],
+      "sourcePhrases": [
+        {
+          "text": "state",
+          "entityId": "Q35657"
+        }
+      ],
+      "sourceCandidates": [
+        {
+          "phrase": "state",
+          "candidateId": "Q35657",
+          "candidateLabel": "state",
+          "weight": 0.3333333333333333
+        }
+      ],
+      "probability": 0.032799389778794825
+    },
+    {
+      "id": "Q10864048",
+      "label": null,
+      "weight": 0.3333333333333333,
+      "depth": 1,
+      "paths": [["Q10864048"]],
+      "propertyTrail": ["P279"],
+      "sourcePhrases": [
+        {
+          "text": "state",
+          "entityId": "Q35657"
+        }
+      ],
+      "sourceCandidates": [
+        {
+          "phrase": "state",
+          "candidateId": "Q35657",
+          "candidateLabel": "state",
+          "weight": 0.3333333333333333
+        }
+      ],
+      "probability": 0.032799389778794825
+    },
+    {
+      "id": "Q155076",
+      "label": null,
+      "weight": 0.3333333333333333,
+      "depth": 1,
+      "paths": [["Q155076"]],
+      "propertyTrail": ["P279"],
+      "sourcePhrases": [
+        {
+          "text": "state",
+          "entityId": "Q35657"
+        }
+      ],
+      "sourceCandidates": [
+        {
+          "phrase": "state",
+          "candidateId": "Q35657",
+          "candidateLabel": "state",
+          "weight": 0.3333333333333333
+        }
+      ],
+      "probability": 0.032799389778794825
+    },
+    {
+      "id": "Q192611",
+      "label": null,
+      "weight": 0.3333333333333333,
+      "depth": 1,
+      "paths": [["Q192611"]],
+      "propertyTrail": ["P279"],
+      "sourcePhrases": [
+        {
+          "text": "state",
+          "entityId": "Q35657"
+        }
+      ],
+      "sourceCandidates": [
+        {
+          "phrase": "state",
+          "candidateId": "Q35657",
+          "candidateLabel": "state",
+          "weight": 0.3333333333333333
+        }
+      ],
+      "probability": 0.032799389778794825
+    },
+    {
+      "id": "Q1054574",
+      "label": null,
+      "weight": 0.3023255813953488,
+      "depth": 1,
+      "paths": [["Q1054574"]],
+      "propertyTrail": ["P136"],
+      "sourcePhrases": [
+        {
+          "text": "Hawaii",
+          "entityId": "Q782"
+        }
+      ],
+      "sourceCandidates": [
+        {
+          "phrase": "Hawaii",
+          "candidateId": "Q18703903",
+          "candidateLabel": "Hawaii",
+          "weight": 0.3023255813953488
+        }
+      ],
+      "probability": 0.029748283752860424
+    },
+    {
+      "id": "Q11424",
+      "label": null,
+      "weight": 0.3023255813953488,
+      "depth": 1,
+      "paths": [["Q11424"]],
+      "propertyTrail": ["P31"],
+      "sourcePhrases": [
+        {
+          "text": "Hawaii",
+          "entityId": "Q782"
+        }
+      ],
+      "sourceCandidates": [
+        {
+          "phrase": "Hawaii",
+          "candidateId": "Q18703903",
+          "candidateLabel": "Hawaii",
+          "weight": 0.3023255813953488
+        }
+      ],
+      "probability": 0.029748283752860424
+    },
+    {
+      "id": "Q1161185",
+      "label": null,
+      "weight": 0.3023255813953488,
+      "depth": 1,
+      "paths": [["Q1161185"]],
+      "propertyTrail": ["P31"],
+      "sourcePhrases": [
+        {
+          "text": "Hawaii",
+          "entityId": "Q782"
+        }
+      ],
+      "sourceCandidates": [
+        {
+          "phrase": "Hawaii",
+          "candidateId": "Q68740",
+          "candidateLabel": "Hawaii",
+          "weight": 0.3023255813953488
+        }
+      ],
+      "probability": 0.029748283752860424
+    }
+  ],
+  "mainContext": {
+    "id": "Q35657",
+    "property": "P31",
+    "propertyLabel": "instance of",
+    "weight": 0.3953488372093023,
+    "phrases": [
+      {
+        "text": "Hawaii",
+        "entityId": "Q782"
+      }
+    ],
+    "candidates": [
+      {
+        "phrase": "Hawaii",
+        "candidateId": "Q782",
+        "candidateLabel": "Hawaii",
+        "weight": 0.3953488372093023
+      }
+    ],
+    "probability": 0.08108108108108109
+  },
+  "contexts": [
+    {
+      "id": "Q35657",
+      "property": "P31",
+      "propertyLabel": "instance of",
+      "weight": 0.3953488372093023,
+      "phrases": [
+        {
+          "text": "Hawaii",
+          "entityId": "Q782"
+        }
+      ],
+      "candidates": [
+        {
+          "phrase": "Hawaii",
+          "candidateId": "Q782",
+          "candidateLabel": "Hawaii",
+          "weight": 0.3953488372093023
+        }
+      ],
+      "probability": 0.08108108108108109
+    },
+    {
+      "id": "Q106458883",
+      "property": "P279",
+      "propertyLabel": "subclass of",
+      "weight": 0.3333333333333333,
+      "phrases": [
+        {
+          "text": "state",
+          "entityId": "Q35657"
+        }
+      ],
+      "candidates": [
+        {
+          "phrase": "state",
+          "candidateId": "Q35657",
+          "candidateLabel": "state",
+          "weight": 0.3333333333333333
+        }
+      ],
+      "probability": 0.06836248012718601
+    },
+    {
+      "id": "Q107390",
+      "property": "P279",
+      "propertyLabel": "subclass of",
+      "weight": 0.3333333333333333,
+      "phrases": [
+        {
+          "text": "state",
+          "entityId": "Q35657"
+        }
+      ],
+      "candidates": [
+        {
+          "phrase": "state",
+          "candidateId": "Q35657",
+          "candidateLabel": "state",
+          "weight": 0.3333333333333333
+        }
+      ],
+      "probability": 0.06836248012718601
+    },
+    {
+      "id": "Q10864048",
+      "property": "P279",
+      "propertyLabel": "subclass of",
+      "weight": 0.3333333333333333,
+      "phrases": [
+        {
+          "text": "state",
+          "entityId": "Q35657"
+        }
+      ],
+      "candidates": [
+        {
+          "phrase": "state",
+          "candidateId": "Q35657",
+          "candidateLabel": "state",
+          "weight": 0.3333333333333333
+        }
+      ],
+      "probability": 0.06836248012718601
+    },
+    {
+      "id": "Q135236673",
+      "property": "P31",
+      "propertyLabel": "instance of",
+      "weight": 0.3333333333333333,
+      "phrases": [
+        {
+          "text": "state",
+          "entityId": "Q35657"
+        }
+      ],
+      "candidates": [
+        {
+          "phrase": "state",
+          "candidateId": "Q35657",
+          "candidateLabel": "state",
+          "weight": 0.3333333333333333
+        }
+      ],
+      "probability": 0.06836248012718601
+    },
+    {
+      "id": "Q155076",
+      "property": "P279",
+      "propertyLabel": "subclass of",
+      "weight": 0.3333333333333333,
+      "phrases": [
+        {
+          "text": "state",
+          "entityId": "Q35657"
+        }
+      ],
+      "candidates": [
+        {
+          "phrase": "state",
+          "candidateId": "Q35657",
+          "candidateLabel": "state",
+          "weight": 0.3333333333333333
+        }
+      ],
+      "probability": 0.06836248012718601
+    },
+    {
+      "id": "Q192611",
+      "property": "P279",
+      "propertyLabel": "subclass of",
+      "weight": 0.3333333333333333,
+      "phrases": [
+        {
+          "text": "state",
+          "entityId": "Q35657"
+        }
+      ],
+      "candidates": [
+        {
+          "phrase": "state",
+          "candidateId": "Q35657",
+          "candidateLabel": "state",
+          "weight": 0.3333333333333333
+        }
+      ],
+      "probability": 0.06836248012718601
+    },
+    {
+      "id": "Q28872924",
+      "property": "P31",
+      "propertyLabel": "instance of",
+      "weight": 0.3333333333333333,
+      "phrases": [
+        {
+          "text": "state",
+          "entityId": "Q35657"
+        }
+      ],
+      "candidates": [
+        {
+          "phrase": "state",
+          "candidateId": "Q35657",
+          "candidateLabel": "state",
+          "weight": 0.3333333333333333
+        }
+      ],
+      "probability": 0.06836248012718601
+    },
+    {
+      "id": "Q852446",
+      "property": "P279",
+      "propertyLabel": "subclass of",
+      "weight": 0.3333333333333333,
+      "phrases": [
+        {
+          "text": "state",
+          "entityId": "Q35657"
+        }
+      ],
+      "candidates": [
+        {
+          "phrase": "state",
+          "candidateId": "Q35657",
+          "candidateLabel": "state",
+          "weight": 0.3333333333333333
+        }
+      ],
+      "probability": 0.06836248012718601
+    },
+    {
+      "id": "Q1054574",
+      "property": "P136",
+      "propertyLabel": "genre",
+      "weight": 0.3023255813953488,
+      "phrases": [
+        {
+          "text": "Hawaii",
+          "entityId": "Q782"
+        }
+      ],
+      "candidates": [
+        {
+          "phrase": "Hawaii",
+          "candidateId": "Q18703903",
+          "candidateLabel": "Hawaii",
+          "weight": 0.3023255813953488
+        }
+      ],
+      "probability": 0.06200317965023847
+    },
+    {
+      "id": "Q11424",
+      "property": "P31",
+      "propertyLabel": "instance of",
+      "weight": 0.3023255813953488,
+      "phrases": [
+        {
+          "text": "Hawaii",
+          "entityId": "Q782"
+        }
+      ],
+      "candidates": [
+        {
+          "phrase": "Hawaii",
+          "candidateId": "Q18703903",
+          "candidateLabel": "Hawaii",
+          "weight": 0.3023255813953488
+        }
+      ],
+      "probability": 0.06200317965023847
+    },
+    {
+      "id": "Q1161185",
+      "property": "P31",
+      "propertyLabel": "instance of",
+      "weight": 0.3023255813953488,
+      "phrases": [
+        {
+          "text": "Hawaii",
+          "entityId": "Q782"
+        }
+      ],
+      "candidates": [
+        {
+          "phrase": "Hawaii",
+          "candidateId": "Q68740",
+          "candidateLabel": "Hawaii",
+          "weight": 0.3023255813953488
+        }
+      ],
+      "probability": 0.06200317965023847
+    },
+    {
+      "id": "Q130232",
+      "property": "P136",
+      "propertyLabel": "genre",
+      "weight": 0.3023255813953488,
+      "phrases": [
+        {
+          "text": "Hawaii",
+          "entityId": "Q782"
+        }
+      ],
+      "candidates": [
+        {
+          "phrase": "Hawaii",
+          "candidateId": "Q18703903",
+          "candidateLabel": "Hawaii",
+          "weight": 0.3023255813953488
+        }
+      ],
+      "probability": 0.06200317965023847
+    },
+    {
+      "id": "Q192626",
+      "property": "P361",
+      "propertyLabel": "part of",
+      "weight": 0.3023255813953488,
+      "phrases": [
+        {
+          "text": "Hawaii",
+          "entityId": "Q782"
+        }
+      ],
+      "candidates": [
+        {
+          "phrase": "Hawaii",
+          "candidateId": "Q68740",
+          "candidateLabel": "Hawaii",
+          "weight": 0.3023255813953488
+        }
+      ],
+      "probability": 0.06200317965023847
+    },
+    {
+      "id": "Q20442589",
+      "property": "P136",
+      "propertyLabel": "genre",
+      "weight": 0.3023255813953488,
+      "phrases": [
+        {
+          "text": "Hawaii",
+          "entityId": "Q782"
+        }
+      ],
+      "candidates": [
+        {
+          "phrase": "Hawaii",
+          "candidateId": "Q18703903",
+          "candidateLabel": "Hawaii",
+          "weight": 0.3023255813953488
+        }
+      ],
+      "probability": 0.06200317965023847
+    }
+  ]
+}

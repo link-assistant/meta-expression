@@ -167,6 +167,16 @@ fn detected_contexts(candidate: &Value) -> Vec<Value> {
 /// Expose, per word, the contexts that were detected for each candidate sense
 /// and which sense was finally selected. Mirrors `buildWordContexts`.
 pub fn build_word_contexts(phrases: &[Value]) -> Vec<Value> {
+    build_word_contexts_with_broad_contexts(phrases, &[])
+}
+
+/// Same as `build_word_contexts`, with the transitive broader contexts attached
+/// to matching candidate senses. Mirrors the JavaScript optional
+/// `{ broadContexts }` argument.
+pub fn build_word_contexts_with_broad_contexts(
+    phrases: &[Value],
+    broad_contexts: &[Value],
+) -> Vec<Value> {
     phrases
         .iter()
         .filter(|phrase| is_present(phrase.get("entity")))
@@ -187,6 +197,7 @@ pub fn build_word_contexts(phrases: &[Value]) -> Vec<Value> {
                         "selected": selected,
                         "isPublication": is_scholarly_publication_candidate(candidate),
                         "contexts": detected_contexts(candidate),
+                        "broadContexts": candidate_broad_contexts(phrase, candidate, broad_contexts),
                     })
                 })
                 .collect::<Vec<_>>();
@@ -199,6 +210,82 @@ pub fn build_word_contexts(phrases: &[Value]) -> Vec<Value> {
             })
         })
         .collect()
+}
+
+fn candidate_broad_contexts(
+    phrase: &Value,
+    candidate: &Value,
+    broad_contexts: &[Value],
+) -> Vec<Value> {
+    if broad_contexts.is_empty() {
+        return Vec::new();
+    }
+    broad_contexts
+        .iter()
+        .filter(|context| broad_context_matches_candidate(context, phrase, candidate))
+        .map(|context| {
+            json!({
+                "id": or_null(context.get("id")),
+                "label": or_null(context.get("label")),
+                "weight": or_null(context.get("weight")),
+                "probability": or_null(context.get("probability")),
+                "depth": or_null(context.get("depth")),
+                "paths": array_or_empty(context.get("paths")),
+                "propertyTrail": array_or_empty(context.get("propertyTrail")),
+            })
+        })
+        .collect()
+}
+
+fn broad_context_matches_candidate(context: &Value, phrase: &Value, candidate: &Value) -> bool {
+    let Some(candidate_id) = candidate.get("id").and_then(Value::as_str) else {
+        return false;
+    };
+    if context
+        .get("sourceCandidates")
+        .and_then(Value::as_array)
+        .map(|entries| {
+            entries.iter().any(|entry| {
+                entry.get("candidateId").and_then(Value::as_str) == Some(candidate_id)
+                    && field_missing_or_equals(entry, "phrase", phrase.get("text"))
+            })
+        })
+        .unwrap_or(false)
+    {
+        return true;
+    }
+    phrase
+        .get("entity")
+        .and_then(|entity| entity.get("id"))
+        .and_then(Value::as_str)
+        .map(|entity_id| {
+            candidate_id == entity_id
+                && context
+                    .get("sourcePhrases")
+                    .and_then(Value::as_array)
+                    .map(|entries| {
+                        entries.iter().any(|entry| {
+                            entry.get("entityId").and_then(Value::as_str) == Some(candidate_id)
+                                && field_missing_or_equals(entry, "text", phrase.get("text"))
+                        })
+                    })
+                    .unwrap_or(false)
+        })
+        .unwrap_or(false)
+}
+
+fn field_missing_or_equals(entry: &Value, key: &str, expected: Option<&Value>) -> bool {
+    match entry.get(key) {
+        None => true,
+        Some(found) => expected.map(|value| found == value).unwrap_or(false),
+    }
+}
+
+fn array_or_empty(value: Option<&Value>) -> Value {
+    match value {
+        Some(Value::Array(_)) => value.cloned().unwrap_or_else(|| json!([])),
+        _ => json!([]),
+    }
 }
 
 /// Build context-selection questions for every word with more than one

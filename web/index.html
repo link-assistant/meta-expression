@@ -819,20 +819,61 @@ Barack Obama was born in Hawaii.</textarea
           </p>
         </header>
 
-        <div class="translate-input-row">
-          <label class="translate-input-label" for="translate-input">
-            <span data-i18n="translate.text">Text</span>
-          </label>
-          <label class="translate-sample-label" for="translate-sample">
-            <span data-i18n="translate.loadSample">Load sample</span>
-            <select id="translate-sample">
-              <option value="" data-i18n="translate.pickExample">
-                — pick an example —
-              </option>
-            </select>
-          </label>
+        <fieldset class="translate-mode">
+          <legend data-i18n="translate.inputMode">Input</legend>
+          <div id="translate-mode" class="translate-mode-group">
+            <label class="translate-mode-option">
+              <input type="radio" name="translate-mode" value="text" checked />
+              <span data-i18n="translate.inputModeText">Text</span>
+            </label>
+            <label class="translate-mode-option">
+              <input type="radio" name="translate-mode" value="article" />
+              <span data-i18n="translate.inputModeArticle"
+                >Wikipedia article</span
+              >
+            </label>
+          </div>
+        </fieldset>
+
+        <div id="translate-text-mode-panel" class="translate-mode-panel">
+          <div class="translate-input-row">
+            <label class="translate-input-label" for="translate-input">
+              <span data-i18n="translate.text">Text</span>
+            </label>
+            <label class="translate-sample-label" for="translate-sample">
+              <span data-i18n="translate.loadSample">Load sample</span>
+              <select id="translate-sample">
+                <option value="" data-i18n="translate.pickExample">
+                  — pick an example —
+                </option>
+              </select>
+            </label>
+          </div>
+          <textarea id="translate-input" rows="5">Hawaii is a state.</textarea>
         </div>
-        <textarea id="translate-input" rows="5">Hawaii is a state.</textarea>
+
+        <div
+          id="translate-article-mode-panel"
+          class="translate-mode-panel translate-article-controls"
+          hidden
+        >
+          <label class="translate-article-experimental">
+            <input type="checkbox" id="translate-article-experimental" />
+            <span data-i18n="translate.articleExperimental">Experimental</span>
+          </label>
+          <label
+            class="translate-article-source-label"
+            for="translate-article-source"
+          >
+            <span data-i18n="translate.articleSource">Wikipedia article</span>
+          </label>
+          <input
+            id="translate-article-source"
+            type="url"
+            placeholder="https://en.wikipedia.org/wiki/California"
+            aria-label="Wikipedia article URL or title"
+          />
+        </div>
 
         <div class="translate-options">
           <label class="translate-option">
@@ -873,26 +914,13 @@ Barack Obama was born in Hawaii.</textarea
             <div id="translate-link-target" class="translate-target-group">
               <label class="translate-target-option">
                 <input
-                  type="radio"
-                  name="translate-target"
-                  value="wikipedia"
-                  checked
+                  type="checkbox"
+                  id="translate-local-viewer-links"
+                  name="translate-local-viewer-links"
                 />
-                <span data-i18n="translate.linkWikipedia"
-                  >Wikipedia (fallback Wikidata)</span
+                <span data-i18n="translate.replaceWikidataLinks"
+                  >Replace Wikidata links with local viewer</span
                 >
-              </label>
-              <label class="translate-target-option">
-                <input type="radio" name="translate-target" value="wikidata" />
-                <span data-i18n="translate.linkWikidata">Wikidata only</span>
-              </label>
-              <label class="translate-target-option">
-                <input
-                  type="radio"
-                  name="translate-target"
-                  value="local-viewer"
-                />
-                <span data-i18n="translate.linkLocal">Local viewer</span>
               </label>
             </div>
           </fieldset>
@@ -900,8 +928,8 @@ Barack Obama was born in Hawaii.</textarea
             <legend data-i18n="translate.sources">Sources</legend>
             <p class="section-hint" data-i18n="translate.sourcesHint">
               Drag checked sources to set lookup order: Wikipedia article
-              matches, Wikidata Q/P entities, virtual overrides for missing
-              data, then Wiktionary lexical definitions and translation entries.
+              matches, Wikidata Q/P entities, Wiktionary lexical definitions and
+              translation entries, then virtual overrides for missing data.
             </p>
             <div class="source-priority-list" id="translate-source-list">
               <label
@@ -938,12 +966,10 @@ Barack Obama was born in Hawaii.</textarea
                 <input
                   type="checkbox"
                   name="translate-source"
-                  value="virtual-source-overrides"
+                  value="wiktionary"
                   checked
                 />
-                <span data-i18n="translate.sourceVirtual"
-                  >Virtual overrides</span
-                >
+                <span data-i18n="translate.sourceWiktionary">Wiktionary</span>
               </label>
               <label
                 class="translate-source-option source-priority-option"
@@ -953,10 +979,12 @@ Barack Obama was born in Hawaii.</textarea
                 <input
                   type="checkbox"
                   name="translate-source"
-                  value="wiktionary"
+                  value="virtual-source-overrides"
                   checked
                 />
-                <span data-i18n="translate.sourceWiktionary">Wiktionary</span>
+                <span data-i18n="translate.sourceVirtual"
+                  >Virtual overrides</span
+                >
               </label>
             </div>
           </fieldset>
@@ -1044,27 +1072,6 @@ Barack Obama was born in Hawaii.</textarea
           aria-label="Wikipedia article translation"
         >
           <h2 data-i18n="translate.articleContext">Article context</h2>
-          <div class="translate-article-controls">
-            <label class="translate-article-experimental">
-              <input type="checkbox" id="translate-article-experimental" />
-              <span data-i18n="translate.articleExperimental"
-                >Experimental</span
-              >
-            </label>
-            <input
-              id="translate-article-source"
-              type="url"
-              placeholder="https://en.wikipedia.org/wiki/California"
-              aria-label="Wikipedia article URL or title"
-            />
-            <button
-              type="button"
-              id="translate-article-run"
-              data-i18n="translate.articleRun"
-            >
-              Translate article
-            </button>
-          </div>
           <ul id="translate-linked-articles">
             <li class="section-empty" data-i18n="translate.articleEmpty">
               Translate text to see linked articles.

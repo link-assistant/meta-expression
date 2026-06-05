@@ -330,8 +330,8 @@ describe('issue 21 — disambiguation tier registry', () => {
     expect(tiers.length).toBe(4);
     expect(tiers[0].name).toBe(FORMALIZE_SOURCES.WIKIPEDIA);
     expect(tiers[1].name).toBe(FORMALIZE_SOURCES.WIKIDATA);
-    expect(tiers[2].name).toBe(FORMALIZE_SOURCES.VIRTUAL);
-    expect(tiers[3].name).toBe(FORMALIZE_SOURCES.WIKTIONARY);
+    expect(tiers[2].name).toBe(FORMALIZE_SOURCES.WIKTIONARY);
+    expect(tiers[3].name).toBe(FORMALIZE_SOURCES.VIRTUAL);
   });
 
   it('keeps single-token stop words in the n-gram list with stopOnly=true', () => {

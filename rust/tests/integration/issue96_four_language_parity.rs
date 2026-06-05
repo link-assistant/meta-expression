@@ -152,6 +152,13 @@ fn merges_issue131_virtual_concepts_into_the_rust_glossary() {
         glossary.get("pacific coast").map(String::as_str),
         Some("Тихоокеанское побережье")
     );
+
+    let state = resolve_concept_form_details("Q35657", "ru").unwrap();
+    assert_eq!(state.text, "штат");
+    assert_eq!(
+        state.url.as_deref(),
+        Some("https://ru.wikipedia.org/wiki/%D0%A8%D1%82%D0%B0%D1%82_%D0%A1%D0%A8%D0%90")
+    );
 }
 
 #[test]
