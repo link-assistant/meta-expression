@@ -1,0 +1,145 @@
+TAP version 13
+# Subtest: issue 133 - Translate defaults and state links
+    # Subtest: keeps the source-backed Russian Wikipedia URL for Q35657
+    not ok 1 - keeps the source-backed Russian Wikipedia URL for Q35657
+      ---
+      duration_ms: 2.39813
+      location: '/tmp/gh-issue-solver-1780617228631/node_modules/test-anywhere/src/index.js:174:12'
+      failureType: 'testCodeFailure'
+      error: 'Expected "https://www.wikidata.org/wiki/Q35657" to be "https://ru.wikipedia.org/wiki/%D0%A8%D1%82%D0%B0%D1%82_%D0%A1%D0%A8%D0%90"'
+      code: 'ERR_TEST_FAILURE'
+      stack: |-
+        Object.toBe (file:///tmp/gh-issue-solver-1780617228631/node_modules/test-anywhere/src/index.js:391:15)
+        TestContext.<anonymous> (file:///tmp/gh-issue-solver-1780617228631/js/tests/integration/issue-133.test.js:29:24)
+        Test.runInAsyncScope (node:async_hooks:206:9)
+        Test.run (node:internal/test_runner/test:796:25)
+        Test.start (node:internal/test_runner/test:702:17)
+        node:internal/test_runner/test:1133:71
+        node:internal/per_context/primordials:482:82
+        new Promise (<anonymous>)
+        new SafePromise (node:internal/per_context/primordials:450:29)
+        node:internal/per_context/primordials:482:9
+      ...
+    # Subtest: uses Wikipedia links by default in Translate output
+    not ok 2 - uses Wikipedia links by default in Translate output
+      ---
+      duration_ms: 12.593384
+      location: '/tmp/gh-issue-solver-1780617228631/node_modules/test-anywhere/src/index.js:174:12'
+      failureType: 'testCodeFailure'
+      error: 'Expected "wikidata" to be "wikipedia"'
+      code: 'ERR_TEST_FAILURE'
+      stack: |-
+        Object.toBe (file:///tmp/gh-issue-solver-1780617228631/node_modules/test-anywhere/src/index.js:391:15)
+        TestContext.<anonymous> (file:///tmp/gh-issue-solver-1780617228631/js/tests/integration/issue-133.test.js:41:49)
+        async Test.run (node:internal/test_runner/test:797:9)
+        async Suite.processPendingSubtests (node:internal/test_runner/test:526:7)
+      ...
+    # Subtest: defaults source priority to Wikipedia, Wikidata, Wiktionary, virtual overrides
+    not ok 3 - defaults source priority to Wikipedia, Wikidata, Wiktionary, virtual overrides
+      ---
+      duration_ms: 0.334529
+      location: '/tmp/gh-issue-solver-1780617228631/node_modules/test-anywhere/src/index.js:174:12'
+      failureType: 'testCodeFailure'
+      error: 'Expected ["wikipedia","wikidata","virtual-source-overrides","wiktionary"] to equal ["wikipedia","wikidata","wiktionary","virtual-source-overrides"]'
+      code: 'ERR_TEST_FAILURE'
+      stack: |-
+        Object.toEqual (file:///tmp/gh-issue-solver-1780617228631/node_modules/test-anywhere/src/index.js:399:15)
+        TestContext.<anonymous> (file:///tmp/gh-issue-solver-1780617228631/js/tests/integration/issue-133.test.js:49:73)
+        Test.runInAsyncScope (node:async_hooks:206:9)
+        Test.run (node:internal/test_runner/test:796:25)
+        Suite.processPendingSubtests (node:internal/test_runner/test:526:18)
+        Test.postRun (node:internal/test_runner/test:889:19)
+        Test.run (node:internal/test_runner/test:835:12)
+        async Suite.processPendingSubtests (node:internal/test_runner/test:526:7)
+      ...
+    # Subtest: surfaces transitive broad contexts on word candidates
+    not ok 4 - surfaces transitive broad contexts on word candidates
+      ---
+      duration_ms: 0.467999
+      location: '/tmp/gh-issue-solver-1780617228631/node_modules/test-anywhere/src/index.js:174:12'
+      failureType: 'testCodeFailure'
+      error: "Cannot read properties of undefined (reading 'some')"
+      code: 'ERR_TEST_FAILURE'
+      name: 'TypeError'
+      stack: |-
+        TestContext.<anonymous> (file:///tmp/gh-issue-solver-1780617228631/js/tests/integration/issue-133.test.js:133:42)
+        Test.runInAsyncScope (node:async_hooks:206:9)
+        Test.run (node:internal/test_runner/test:796:25)
+        Suite.processPendingSubtests (node:internal/test_runner/test:526:18)
+        Test.postRun (node:internal/test_runner/test:889:19)
+        Test.run (node:internal/test_runner/test:835:12)
+        async Suite.processPendingSubtests (node:internal/test_runner/test:526:7)
+      ...
+    1..4
+not ok 1 - issue 133 - Translate defaults and state links
+  ---
+  duration_ms: 16.71647
+  type: 'suite'
+  location: '/tmp/gh-issue-solver-1780617228631/node_modules/test-anywhere/src/index.js:205:12'
+  failureType: 'subtestsFailed'
+  error: '4 subtests failed'
+  code: 'ERR_TEST_FAILURE'
+  ...
+# Subtest: issue 50 - Translate page coverage and link targets
+    # Subtest: translates the reported technical prose without unresolved variables
+    ok 1 - translates the reported technical prose without unresolved variables
+      ---
+      duration_ms: 51.501171
+      ...
+    # Subtest: keeps local lexical links opt-in for Translate output
+    ok 2 - keeps local lexical links opt-in for Translate output
+      ---
+      duration_ms: 2.443378
+      ...
+    # Subtest: uses Wikipedia link targets by default in Translate
+    not ok 3 - uses Wikipedia link targets by default in Translate
+      ---
+      duration_ms: 1.668973
+      location: '/tmp/gh-issue-solver-1780617228631/node_modules/test-anywhere/src/index.js:174:12'
+      failureType: 'testCodeFailure'
+      error: 'Expected "wikidata" to be "wikipedia"'
+      code: 'ERR_TEST_FAILURE'
+      stack: |-
+        Object.toBe (file:///tmp/gh-issue-solver-1780617228631/node_modules/test-anywhere/src/index.js:391:15)
+        TestContext.<anonymous> (file:///tmp/gh-issue-solver-1780617228631/js/tests/integration/issue-50.test.js:68:49)
+        async Test.run (node:internal/test_runner/test:797:9)
+        async Suite.processPendingSubtests (node:internal/test_runner/test:526:7)
+      ...
+    # Subtest: limits source lookup concurrency so long text does not burst Wikimedia
+    ok 4 - limits source lookup concurrency so long text does not burst Wikimedia
+      ---
+      duration_ms: 16.412397
+      ...
+    # Subtest: exposes a Translate link-target selector in the web UI
+    not ok 5 - exposes a Translate link-target selector in the web UI
+      ---
+      duration_ms: 1.698697
+      location: '/tmp/gh-issue-solver-1780617228631/node_modules/test-anywhere/src/index.js:174:12'
+      failureType: 'testCodeFailure'
+      error: 'Expected "<!doctype html>\\n<html lang=\\"en\\">\\n  <head>\\n    <meta charset=\\"utf-8\\" />\\n    <meta name=\\"viewport\\" content=\\"width=device-width, initial-scale=1\\" />\\n    <meta name=\\"color-scheme\\" content=\\"light dark\\" />\\n    <title>meta-expression prototype</title>\\n    <link rel=\\"icon\\" href=\\"data:,\\" />\\n    <link rel=\\"stylesheet\\" href=\\"./styles.css\\" />\\n    <link rel=\\"stylesheet\\" href=\\"./check.css\\" />\\n    <link rel=\\"stylesheet\\" href=\\"./uniqueness.css\\" />\\n    <script type=\\"importmap\\">\\n      {\\n        \\"imports\\": {\\n          \\"links-notation\\": \\"../node_modules/links-notation/dist/index.js\\"\\n        }\\n      }\\n    </script>\\n  </head>\\n  <body>\\n    <nav class=\\"top-nav\\" aria-label=\\"Pages\\">\\n      <div class=\\"top-nav-pages\\">\\n        <button\\n          type=\\"button\\"\\n          id=\\"nav-analyse\\"\\n          class=\\"top-nav-button\\"\\n          aria-current=\\"page\\"\\n          data-i18n=\\"nav.analyse\\"\\n        >\\n          Analyse\\n        </button>\\n        <button\\n          type=\\"button\\"\\n          id=\\"nav-compare\\"\\n          class=\\"top-nav-button\\"\\n          data-i18n=\\"nav.compare\\"\\n        >\\n          Compare\\n        </button>\\n        <button\\n          type=\\"button\\"\\n          id=\\"nav-check\\"\\n          class=\\"top-nav-button\\"\\n          data-i18n=\\"nav.check\\"\\n        >\\n          Check\\n        </button>\\n        <button\\n          type=\\"button\\"\\n          id=\\"nav-uniqueness\\"\\n          class=\\"top-nav-button\\"\\n          data-i18n=\\"nav.uniqueness\\"\\n        >\\n          Uniqueness\\n        </button>\\n        <button\\n          type=\\"button\\"\\n          id=\\"nav-formalize\\"\\n          class=\\"top-nav-button\\"\\n          data-i18n=\\"nav.formalize\\"\\n        >\\n          Formalize\\n        </button>\\n        <button\\n          type=\\"button\\"\\n          id=\\"nav-translate\\"\\n          class=\\"top-nav-button\\"\\n          data-i18n=\\"nav.translate\\"\\n        >\\n          Translate\\n        </button>\\n        <button\\n          type=\\"button\\"\\n          id=\\"nav-preferences\\"\\n          class=\\"top-nav-button\\"\\n          data-i18n=\\"nav.preferences\\"\\n        >\\n          Preferences\\n        </button>\\n      </div>\\n      <div class=\\"top-nav-prefs\\">\\n        <span class=\\"app-version\\" id=\\"app-version\\">version unknown</span>\\n        <label class=\\"top-nav-locale\\">\\n          <span class=\\"visually-hidden\\" data-i18n=\\"prefs.locale\\">Language</span>\\n          <select id=\\"locale-select\\" aria-label=\\"Language\\"></select>\\n        </label>\\n        <label class=\\"top-nav-engine\\">\\n          <span class=\\"visually-hidden\\" data-i18n=\\"engine.label\\">Engine</span>\\n          <select id=\\"engine-select\\" aria-label=\\"Engine\\"></select>\\n        </label>\\n        <button\\n          type=\\"button\\"\\n          id=\\"theme-toggle\\"\\n          class=\\"top-nav-button top-nav-icon-button\\"\\n          aria-label=\\"Theme\\"\\n          data-i18n-aria=\\"prefs.theme\\"\\n        >\\n          <span id=\\"theme-toggle-icon\\" aria-hidden=\\"true\\">◐</span>\\n          <span class=\\"visually-hidden\\" id=\\"theme-toggle-label\\"\\n            >Theme: auto</span\\n          >\\n        </button>\\n        <a\\n          class=\\"top-nav-button top-nav-report\\"\\n          id=\\"report-issue-global\\"\\n          href=\\"https://github.com/link-assistant/meta-expression/issues/new\\"\\n          target=\\"_blank\\"\\n          rel=\\"noopener noreferrer\\"\\n          data-issue-report-link\\n          data-i18n=\\"nav.reportIssue\\"\\n          >Report Issue</a\\n        >\\n      </div>\\n    </nav>\\n    <main class=\\"app-shell\\" id=\\"page-analyse\\">\\n      <section class=\\"workspace\\" aria-label=\\"Statement workspace\\">\\n        <form class=\\"statement-form\\" id=\\"statement-form\\">\\n          <label for=\\"statement-input\\" data-i18n=\\"analyse.statement\\"\\n            >Statement</label\\n          >\\n          <div class=\\"input-row\\">\\n            <input\\n              id=\\"statement-input\\"\\n              name=\\"statement\\"\\n              value=\\"Earth orbits the Sun\\"\\n              autocomplete=\\"off\\"\\n            />\\n            <button type=\\"submit\\" data-i18n=\\"analyse.analyze\\">Analyze</button>\\n          </div>\\n        </form>\\n\\n        <section class=\\"examples\\" aria-label=\\"Prepared examples\\">\\n          <div class=\\"examples-heading\\">\\n            <h1 data-i18n=\\"analyse.examples\\">Examples</h1>\\n            <div class=\\"examples-actions\\">\\n              <button\\n                type=\\"button\\"\\n                id=\\"shuffle-examples\\"\\n                data-i18n=\\"analyse.shuffle\\"\\n              >\\n                Shuffle\\n              </button>\\n              <button\\n                type=\\"button\\"\\n                id=\\"toggle-show-all\\"\\n                aria-pressed=\\"false\\"\\n                data-i18n=\\"analyse.showAll\\"\\n              >\\n                Show all\\n              </button>\\n            </div>\\n          </div>\\n          <div class=\\"example-list\\" id=\\"example-list\\"></div>\\n        </section>\\n\\n        <section class=\\"belief-panel\\" aria-label=\\"Local belief\\">\\n          <div class=\\"belief-heading\\">\\n            <h1 data-i18n=\\"analyse.belief\\">Belief</h1>\\n            <output id=\\"belief-value\\" for=\\"belief-slider\\">50%</output>\\n          </div>\\n          <label for=\\"belief-slider\\" data-i18n=\\"analyse.beliefCurrent\\"\\n            >Current statement</label\\n          >\\n          <div class=\\"belief-control\\">\\n            <span data-i18n=\\"analyse.beliefFalse\\">False</span>\\n            <input\\n              id=\\"belief-slider\\"\\n              type=\\"range\\"\\n              min=\\"0\\"\\n              max=\\"100\\"\\n              value=\\"50\\"\\n            />\\n            <span data-i18n=\\"analyse.beliefTrue\\">True</span>\\n            <button\\n              type=\\"button\\"\\n              id=\\"reset-belief\\"\\n              data-i18n=\\"analyse.beliefReset\\"\\n            >\\n              Reset\\n            </button>\\n          </div>\\n        </section>\\n\\n        <section class=\\"interpretations\\" aria-label=\\"Interpretations\\">\\n          <h1 data-i18n=\\"analyse.interpretations\\">Interpretations</h1>\\n          <div id=\\"interpretation-list\\"></div>\\n        </section>\\n\\n        <section class=\\"alternatives\\" aria-label=\\"Alternatives\\">\\n          <h1 data-i18n=\\"analyse.alternatives\\">Alternatives</h1>\\n          <p class=\\"section-hint\\" data-i18n=\\"analyse.alternativesHint\\">\\n            More precise rephrasings of the current statement.\\n          </p>\\n          <div id=\\"alternative-list\\"></div>\\n        </section>\\n\\n        <section class=\\"dependencies\\" aria-label=\\"Dependencies\\">\\n          <h1 data-i18n=\\"analyse.dependencies\\">Dependencies</h1>\\n          <p class=\\"section-hint\\" data-i18n=\\"analyse.dependenciesHint\\">\\n            The selected interpretation may only be true if these conditions\\n            hold.\\n          </p>\\n          <ul id=\\"dependency-list\\"></ul>\\n        </section>\\n\\n        <section class=\\"definitions\\" aria-label=\\"Definitions\\">\\n          <h1 data-i18n=\\"analyse.definitions\\">Definitions</h1>\\n          <p class=\\"section-hint\\" data-i18n=\\"analyse.definitionsHint\\">\\n            Wikidata-backed definitions for each phrase in the statement.\\n          </p>\\n          <ul id=\\"definition-list\\"></ul>\\n        </section>\\n\\n        <section class=\\"confirmations\\" aria-label=\\"Confirmations\\">\\n          <h1 data-i18n=\\"analyse.confirmations\\">Confirmations</h1>\\n          <ul id=\\"confirmation-list\\"></ul>\\n        </section>\\n\\n        <section class=\\"refutations\\" aria-label=\\"Refutations\\">\\n          <h1 data-i18n=\\"analyse.refutations\\">Refutations</h1>\\n          <ul id=\\"refutation-list\\"></ul>\\n        </section>\\n\\n        <section class=\\"opposite\\" aria-label=\\"Opposite statement\\">\\n          <h1 data-i18n=\\"analyse.opposite\\">Opposite</h1>\\n          <p class=\\"section-hint\\" data-i18n=\\"analyse.oppositeHint\\">\\n            Click to analyze the negation of the current statement.\\n          </p>\\n          <button type=\\"button\\" id=\\"opposite-button\\" class=\\"opposite-button\\">\\n            -\\n          </button>\\n        </section>\\n\\n        <section class=\\"result-band\\" aria-label=\\"Result\\">\\n          <div>\\n            <span class=\\"eyebrow\\" data-i18n=\\"analyse.correctness\\"\\n              >Correctness</span\\n            >\\n            <strong id=\\"correctness-value\\"></strong>\\n            <small>0% … 100%</small>\\n          </div>\\n          <div>\\n            <span class=\\"eyebrow\\" data-i18n=\\"analyse.confidence\\"\\n              >Confidence</span\\n            >\\n            <strong id=\\"confidence-value\\"></strong>\\n            <small>-100% … +100%</small>\\n          </div>\\n          <div>\\n            <span class=\\"eyebrow\\" data-i18n=\\"analyse.level\\">Level</span>\\n            <strong id=\\"formalization-level\\"></strong>\\n            <small id=\\"formalization-level-name\\"></small>\\n          </div>\\n          <div>\\n            <span class=\\"eyebrow\\" data-i18n=\\"analyse.result\\">Result</span>\\n            <strong id=\\"result-value\\"></strong>\\n          </div>\\n          <small\\n            id=\\"engine-badge\\"\\n            class=\\"engine-badge\\"\\n            data-engine=\\"js\\"\\n          ></small>\\n        </section>\\n\\n        <section class=\\"evidence-band\\" aria-label=\\"Evidence summary\\">\\n          <div>\\n            <span class=\\"eyebrow\\" data-i18n=\\"analyse.supports\\">Supports</span>\\n            <strong id=\\"support-count\\"></strong>\\n          </div>\\n          <div>\\n            <span class=\\"eyebrow\\" data-i18n=\\"analyse.refutes\\">Refutes</span>\\n            <strong id=\\"refute-count\\"></strong>\\n          </div>\\n          <div>\\n            <span class=\\"eyebrow\\" data-i18n=\\"analyse.unknowns\\">Unknowns</span>\\n            <strong id=\\"unknown-count\\"></strong>\\n          </div>\\n          <small id=\\"live-evidence-status\\" data-i18n=\\"analyse.fixtureEvi'... 35377 more characters
+      code: 'ERR_TEST_FAILURE'
+      stack: |-
+        Object.toContain (file:///tmp/gh-issue-solver-1780617228631/node_modules/test-anywhere/src/index.js:566:15)
+        TestContext.<anonymous> (file:///tmp/gh-issue-solver-1780617228631/js/tests/integration/issue-50.test.js:115:18)
+        async Test.run (node:internal/test_runner/test:797:9)
+        async Suite.processPendingSubtests (node:internal/test_runner/test:526:7)
+      ...
+    1..5
+not ok 2 - issue 50 - Translate page coverage and link targets
+  ---
+  duration_ms: 76.077008
+  type: 'suite'
+  location: '/tmp/gh-issue-solver-1780617228631/node_modules/test-anywhere/src/index.js:205:12'
+  failureType: 'subtestsFailed'
+  error: '2 subtests failed'
+  code: 'ERR_TEST_FAILURE'
+  ...
+1..2
+# tests 9
+# suites 2
+# pass 3
+# fail 6
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 180.527341

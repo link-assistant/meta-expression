@@ -1,0 +1,232 @@
+{
+  "baseRefName": "main",
+  "body": "## 🤖 AI-Powered Solution Draft\n\nThis pull request is being automatically generated to solve issue #133.\n\n### 📋 Issue Reference\nFixes #133\n\n### 🚧 Status\n**Work in Progress** - The AI assistant is currently analyzing and implementing the solution draft.\n\n### 📝 Implementation Details\n_Details will be added as the solution draft is developed..._\n\n---\n*This PR was created automatically by the AI issue solver*",
+  "comments": [],
+  "commits": [
+    {
+      "authoredDate": "2026-06-04T23:53:51Z",
+      "authors": [
+        {
+          "email": "drakonard@gmail.com",
+          "id": "MDQ6VXNlcjE0MzE5MDQ=",
+          "login": "konard",
+          "name": "konard"
+        }
+      ],
+      "committedDate": "2026-06-04T23:53:51Z",
+      "messageBody": "Adding .gitkeep for PR creation (default mode).\nThis file will be removed when the task is complete.\n\nIssue: https://github.com/link-assistant/meta-expression/issues/133",
+      "messageHeadline": "Initial commit with task details",
+      "oid": "324b6ef1cfe3646dcb4e53831d2f8455b0372c32"
+    }
+  ],
+  "headRefName": "issue-133-a2575051275f",
+  "isDraft": true,
+  "number": 134,
+  "reviewDecision": "",
+  "state": "OPEN",
+  "statusCheckRollup": [
+    {
+      "__typename": "CheckRun",
+      "completedAt": "2026-06-04T23:54:09Z",
+      "conclusion": "SUCCESS",
+      "detailsUrl": "https://github.com/link-assistant/meta-expression/actions/runs/26986686564/job/79637755690",
+      "name": "Detect Changes",
+      "startedAt": "2026-06-04T23:54:04Z",
+      "status": "COMPLETED",
+      "workflowName": "JS Checks and release"
+    },
+    {
+      "__typename": "CheckRun",
+      "completedAt": "2026-06-04T23:54:12Z",
+      "conclusion": "SUCCESS",
+      "detailsUrl": "https://github.com/link-assistant/meta-expression/actions/runs/26986686568/job/79637755918",
+      "name": "Detect Changes",
+      "startedAt": "2026-06-04T23:54:04Z",
+      "status": "COMPLETED",
+      "workflowName": "Rust Checks"
+    },
+    {
+      "__typename": "CheckRun",
+      "completedAt": "2026-06-04T23:54:12Z",
+      "conclusion": "SKIPPED",
+      "detailsUrl": "https://github.com/link-assistant/meta-expression/actions/runs/26986686568/job/79637774175",
+      "name": "Lint and Format Check",
+      "startedAt": "2026-06-04T23:54:12Z",
+      "status": "COMPLETED",
+      "workflowName": "Rust Checks"
+    },
+    {
+      "__typename": "CheckRun",
+      "completedAt": "2026-06-04T23:54:09Z",
+      "conclusion": "SUCCESS",
+      "detailsUrl": "https://github.com/link-assistant/meta-expression/actions/runs/26986686564/job/79637755704",
+      "name": "Check for Manual Version Changes",
+      "startedAt": "2026-06-04T23:54:04Z",
+      "status": "COMPLETED",
+      "workflowName": "JS Checks and release"
+    },
+    {
+      "__typename": "CheckRun",
+      "completedAt": "2026-06-04T23:54:12Z",
+      "conclusion": "SKIPPED",
+      "detailsUrl": "https://github.com/link-assistant/meta-expression/actions/runs/26986686568/job/79637774077",
+      "name": "Test (ubuntu-latest)",
+      "startedAt": "2026-06-04T23:54:12Z",
+      "status": "COMPLETED",
+      "workflowName": "Rust Checks"
+    },
+    {
+      "__typename": "CheckRun",
+      "completedAt": "2026-06-04T23:54:09Z",
+      "conclusion": "SUCCESS",
+      "detailsUrl": "https://github.com/link-assistant/meta-expression/actions/runs/26986686564/job/79637755638",
+      "name": "Check JS/Rust Parity",
+      "startedAt": "2026-06-04T23:54:04Z",
+      "status": "COMPLETED",
+      "workflowName": "JS Checks and release"
+    },
+    {
+      "__typename": "CheckRun",
+      "completedAt": "2026-06-04T23:54:02Z",
+      "conclusion": "SKIPPED",
+      "detailsUrl": "https://github.com/link-assistant/meta-expression/actions/runs/26986686564/job/79637755985",
+      "name": "Instant Release",
+      "startedAt": "2026-06-04T23:54:02Z",
+      "status": "COMPLETED",
+      "workflowName": "JS Checks and release"
+    },
+    {
+      "__typename": "CheckRun",
+      "completedAt": "2026-06-04T23:54:12Z",
+      "conclusion": "SKIPPED",
+      "detailsUrl": "https://github.com/link-assistant/meta-expression/actions/runs/26986686568/job/79637774169",
+      "name": "Build and Test WASM",
+      "startedAt": "2026-06-04T23:54:12Z",
+      "status": "COMPLETED",
+      "workflowName": "Rust Checks"
+    },
+    {
+      "__typename": "CheckRun",
+      "completedAt": "2026-06-04T23:54:02Z",
+      "conclusion": "SKIPPED",
+      "detailsUrl": "https://github.com/link-assistant/meta-expression/actions/runs/26986686564/job/79637755896",
+      "name": "Create Changeset PR",
+      "startedAt": "2026-06-04T23:54:02Z",
+      "status": "COMPLETED",
+      "workflowName": "JS Checks and release"
+    },
+    {
+      "__typename": "CheckRun",
+      "completedAt": "2026-06-04T23:54:12Z",
+      "conclusion": "SKIPPED",
+      "detailsUrl": "https://github.com/link-assistant/meta-expression/actions/runs/26986686568/job/79637774198",
+      "name": "Build (release)",
+      "startedAt": "2026-06-04T23:54:12Z",
+      "status": "COMPLETED",
+      "workflowName": "Rust Checks"
+    },
+    {
+      "__typename": "CheckRun",
+      "completedAt": "2026-06-04T23:54:10Z",
+      "conclusion": "SKIPPED",
+      "detailsUrl": "https://github.com/link-assistant/meta-expression/actions/runs/26986686564/job/79637769883",
+      "name": "Test Compilation",
+      "startedAt": "2026-06-04T23:54:10Z",
+      "status": "COMPLETED",
+      "workflowName": "JS Checks and release"
+    },
+    {
+      "__typename": "CheckRun",
+      "completedAt": "2026-06-04T23:54:10Z",
+      "conclusion": "SKIPPED",
+      "detailsUrl": "https://github.com/link-assistant/meta-expression/actions/runs/26986686564/job/79637770032",
+      "name": "Check File Line Limits",
+      "startedAt": "2026-06-04T23:54:10Z",
+      "status": "COMPLETED",
+      "workflowName": "JS Checks and release"
+    },
+    {
+      "__typename": "CheckRun",
+      "completedAt": "2026-06-04T23:54:10Z",
+      "conclusion": "SKIPPED",
+      "detailsUrl": "https://github.com/link-assistant/meta-expression/actions/runs/26986686564/job/79637770087",
+      "name": "Check for Changesets",
+      "startedAt": "2026-06-04T23:54:10Z",
+      "status": "COMPLETED",
+      "workflowName": "JS Checks and release"
+    },
+    {
+      "__typename": "CheckRun",
+      "completedAt": "2026-06-04T23:54:10Z",
+      "conclusion": "SKIPPED",
+      "detailsUrl": "https://github.com/link-assistant/meta-expression/actions/runs/26986686564/job/79637770034",
+      "name": "Lint and Format Check",
+      "startedAt": "2026-06-04T23:54:10Z",
+      "status": "COMPLETED",
+      "workflowName": "JS Checks and release"
+    },
+    {
+      "__typename": "CheckRun",
+      "completedAt": "2026-06-04T23:54:10Z",
+      "conclusion": "SKIPPED",
+      "detailsUrl": "https://github.com/link-assistant/meta-expression/actions/runs/26986686564/job/79637770078",
+      "name": "Validate Documentation",
+      "startedAt": "2026-06-04T23:54:10Z",
+      "status": "COMPLETED",
+      "workflowName": "JS Checks and release"
+    },
+    {
+      "__typename": "CheckRun",
+      "completedAt": "2026-06-04T23:54:25Z",
+      "conclusion": "FAILURE",
+      "detailsUrl": "https://github.com/link-assistant/meta-expression/actions/runs/26986686564/job/79637769800",
+      "name": "Test (bun on ubuntu-latest)",
+      "startedAt": "2026-06-04T23:54:13Z",
+      "status": "COMPLETED",
+      "workflowName": "JS Checks and release"
+    },
+    {
+      "__typename": "CheckRun",
+      "completedAt": "2026-06-04T23:54:26Z",
+      "conclusion": "SKIPPED",
+      "detailsUrl": "https://github.com/link-assistant/meta-expression/actions/runs/26986686564/job/79637797790",
+      "name": "Build GitHub Pages",
+      "startedAt": "2026-06-04T23:54:26Z",
+      "status": "COMPLETED",
+      "workflowName": "JS Checks and release"
+    },
+    {
+      "__typename": "CheckRun",
+      "completedAt": "2026-06-04T23:54:26Z",
+      "conclusion": "SKIPPED",
+      "detailsUrl": "https://github.com/link-assistant/meta-expression/actions/runs/26986686564/job/79637797796",
+      "name": "Release",
+      "startedAt": "2026-06-04T23:54:26Z",
+      "status": "COMPLETED",
+      "workflowName": "JS Checks and release"
+    },
+    {
+      "__typename": "CheckRun",
+      "completedAt": "2026-06-04T23:54:26Z",
+      "conclusion": "SKIPPED",
+      "detailsUrl": "https://github.com/link-assistant/meta-expression/actions/runs/26986686564/job/79637798170",
+      "name": "Deploy GitHub Pages",
+      "startedAt": "2026-06-04T23:54:26Z",
+      "status": "COMPLETED",
+      "workflowName": "JS Checks and release"
+    },
+    {
+      "__typename": "CheckRun",
+      "completedAt": "2026-06-04T23:54:26Z",
+      "conclusion": "SKIPPED",
+      "detailsUrl": "https://github.com/link-assistant/meta-expression/actions/runs/26986686564/job/79637798358",
+      "name": "Verify Deployed GitHub Pages",
+      "startedAt": "2026-06-04T23:54:26Z",
+      "status": "COMPLETED",
+      "workflowName": "JS Checks and release"
+    }
+  ],
+  "title": "[WIP] `Issue on Translate page: Hawaii is a state.` and UI/UX improvements",
+  "updatedAt": "2026-06-04T23:53:59Z",
+  "url": "https://github.com/link-assistant/meta-expression/pull/134"
+}

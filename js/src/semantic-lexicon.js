@@ -222,6 +222,7 @@ function mergeConcept(previous, incoming) {
   return {
     ...previous,
     ...withoutEmpty(incoming),
+    url: previous.url ?? incoming.url ?? null,
     labels: mergeLanguageLists(previous.labels, incoming.labels),
     primary: { ...(previous.primary ?? {}), ...(incoming.primary ?? {}) },
     forms: mergeNestedObjects(previous.forms, incoming.forms),

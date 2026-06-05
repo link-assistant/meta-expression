@@ -285,12 +285,12 @@ fandom-host:<host> e.g. `fandom-host:tolkiengateway.net`
 
 ### `createDefaultSourceTiers(language)`
 
-Default tier order per issue #21:
+Default tier order per issue #21/#133:
 
 1. Wikipedia (richest article context, carries wikibase_item)
 2. Wikidata (canonical Q/P graph, holds claims for context BFS)
-3. Virtual source overrides (source-backed local missing-data layer)
-4. Wiktionary (last-resort lexical fallback for stop words / verbs)
+3. Wiktionary (lexical definitions and translation entries)
+4. Virtual source overrides (source-backed local missing-data layer)
 
 | Parameter    | Type     | Description |
 | ------------ | -------- | ----------- |
@@ -406,16 +406,18 @@ Wikidata description first, falling back to hydrated P31 claims.
 
 **Returns** `boolean`
 
-### `buildWordContexts(phrases)`
+### `buildWordContexts(phrases, options)`
 
 Expose, per word, the contexts that were detected for each candidate sense
 and which sense was finally selected. This is what the UI and debug log
 render so users can SEE how the formalizer decided a word's context (and
 report it when the decision is wrong) — issue #126.
 
-| Parameter | Type       | Description                             |
-| --------- | ---------- | --------------------------------------- |
-| `phrases` | `object[]` | resolved phrase objects with candidates |
+| Parameter                 | Type       | Description                             |
+| ------------------------- | ---------- | --------------------------------------- |
+| `phrases`                 | `object[]` | resolved phrase objects with candidates |
+| `[options]`               | `object`   | —                                       |
+| `[options.broadContexts]` | `object[]` | aggregated transitive contexts          |
 
 **Returns** `Array<object>`
 

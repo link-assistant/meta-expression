@@ -57,7 +57,7 @@ describe('issue 50 - Translate page coverage and link targets', () => {
     expect(result.questions).toEqual([]);
   });
 
-  it('uses Wikidata link targets by default in Translate', async () => {
+  it('uses Wikipedia link targets by default in Translate', async () => {
     const result = await translateTextWith('statement', {
       fetch: () => emptyJsonResponse(),
       sourceLanguage: 'en',
@@ -66,7 +66,7 @@ describe('issue 50 - Translate page coverage and link targets', () => {
     });
 
     expect(result.formalization.linkTargetMode).toBe(
-      FORMALIZE_LINK_TARGETS.WIKIDATA
+      FORMALIZE_LINK_TARGETS.WIKIPEDIA
     );
     expect(result.markdown).not.toContain(
       'https://link-assistant.github.io/human-language/entities.html#lex'
@@ -112,8 +112,8 @@ describe('issue 50 - Translate page coverage and link targets', () => {
     );
 
     expect(html).toContain('id="translate-link-target"');
-    expect(html).toContain('value="wikidata"');
-    expect(html).toContain('checked');
+    expect(html).toContain('id="translate-local-viewer-links"');
+    expect(html).not.toContain('name="translate-target"');
     expect(translateUi).toContain('selectedTranslateLinkTargetMode');
   });
 });

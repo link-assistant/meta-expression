@@ -89,9 +89,12 @@ export function isScholarlyPublicationCandidate(candidate) {
  * report it when the decision is wrong) — issue #126.
  *
  * @param {object[]} phrases - resolved phrase objects with candidates
+ * @param {object} [options]
+ * @param {object[]} [options.broadContexts] - aggregated transitive contexts
  * @returns {Array<object>}
  */
-export function buildWordContexts(phrases) {
+export function buildWordContexts(phrases, options = {}) {
+  const broadContexts = options.broadContexts ?? options.bigContexts ?? [];
   return phrases
     .filter((phrase) => phrase.entity)
     .map((phrase) => {
@@ -110,6 +113,7 @@ export function buildWordContexts(phrases) {
           propertyLabel: label.propertyLabel,
           targetId: label.targetId,
         })),
+        broadContexts: candidateBroadContexts(phrase, candidate, broadContexts),
       }));
       return {
         text: phrase.text,
@@ -119,6 +123,51 @@ export function buildWordContexts(phrases) {
         candidates,
       };
     });
+}
+
+function candidateBroadContexts(phrase, candidate, broadContexts) {
+  if (!Array.isArray(broadContexts) || broadContexts.length === 0) {
+    return [];
+  }
+  return broadContexts
+    .filter((context) =>
+      broadContextMatchesCandidate(context, phrase, candidate)
+    )
+    .map((context) => ({
+      id: context.id,
+      label: context.label ?? null,
+      weight: context.weight ?? null,
+      probability: context.probability ?? null,
+      depth: context.depth ?? null,
+      paths: Array.isArray(context.paths) ? context.paths : [],
+      propertyTrail: Array.isArray(context.propertyTrail)
+        ? context.propertyTrail
+        : [],
+    }));
+}
+
+function broadContextMatchesCandidate(context, phrase, candidate) {
+  const candidateId = candidate?.id ?? null;
+  if (!candidateId) {
+    return false;
+  }
+  if (
+    (context.sourceCandidates ?? []).some(
+      (entry) =>
+        entry.candidateId === candidateId &&
+        (entry.phrase === undefined || entry.phrase === phrase.text)
+    )
+  ) {
+    return true;
+  }
+  return (
+    candidateId === phrase.entity?.id &&
+    (context.sourcePhrases ?? []).some(
+      (entry) =>
+        entry.entityId === candidateId &&
+        (entry.text === undefined || entry.text === phrase.text)
+    )
+  );
 }
 
 /**
@@ -386,8 +435,14 @@ async function traverseFromPhrase(
     if (node.depth >= config.maxDepth) {
       continue;
     }
-    const ancestors = await fetchAncestors(node.id, config);
-    for (const ancestor of ancestors.slice(0, config.perStepBranching)) {
+    const contextNode = await fetchContextNode(node.id, config);
+    if (contextNode.label) {
+      labelCount(counts, node.id, contextNode.label);
+    }
+    for (const ancestor of contextNode.ancestors.slice(
+      0,
+      config.perStepBranching
+    )) {
       if (visited.has(ancestor.id)) {
         continue;
       }
@@ -441,9 +496,9 @@ function addCount(counts, node, phrase, candidateWeight = 1, candidate = null) {
   counts.set(node.id, entry);
 }
 
-async function fetchAncestors(id, config) {
+async function fetchContextNode(id, config) {
   if (!config.fetchJson || !/^Q\d+$/.test(id)) {
-    return [];
+    return { label: null, ancestors: [] };
   }
   const url = new URL(wikidataApiUrl);
   url.search = new URLSearchParams({
@@ -458,13 +513,28 @@ async function fetchAncestors(id, config) {
   try {
     payload = await config.fetchJson(url);
   } catch {
-    return [];
+    return { label: null, ancestors: [] };
   }
   const entity = payload?.entities?.[id];
   if (!entity || entity.missing) {
-    return [];
+    return { label: null, ancestors: [] };
   }
-  return extractAncestorEdges(entity.claims);
+  return {
+    label:
+      entity.labels?.[config.language]?.value ??
+      entity.labels?.en?.value ??
+      null,
+    ancestors: extractAncestorEdges(entity.claims),
+  };
+}
+
+function labelCount(counts, id, label) {
+  const entry = counts.get(id);
+  if (!entry || entry.label) {
+    return;
+  }
+  entry.label = label;
+  counts.set(id, entry);
 }
 
 function extractAncestorEdges(claims) {

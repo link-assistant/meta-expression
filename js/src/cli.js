@@ -592,7 +592,7 @@ async function runTranslateCommand(options, output) {
   const userOverrides = options.overrideFile
     ? await loadUserOverrides(options.overrideFile)
     : [];
-  const linkTargetMode = resolveCliLinkTargetMode(options.target ?? 'wikidata');
+  const linkTargetMode = resolveCliLinkTargetMode(options.target);
   const result = await translateTextWith(options.input, {
     fetch: globalThis.fetch?.bind(globalThis),
     sourceLanguage: options.sourceLanguage,

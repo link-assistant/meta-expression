@@ -1,0 +1,5 @@
+
+> meta-expression@0.12.1 start
+> node js/src/server.js
+
+meta-expression service listening on http://127.0.0.1:3000

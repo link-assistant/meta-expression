@@ -712,7 +712,7 @@ export function parseSourceSpec(spec, options = {}) {
     .map((token) => token.trim())
     .filter(Boolean);
   if (tokens.length === 0) {
-    return [createWikidataSource({ language })];
+    return createDefaultSourceTiers(language);
   }
   const sources = [];
   for (const token of tokens) {
@@ -760,11 +760,11 @@ export function parseSourceSpec(spec, options = {}) {
 }
 
 /**
- * Default tier order per issue #21:
+ * Default tier order per issue #21/#133:
  *   1. Wikipedia (richest article context, carries wikibase_item)
  *   2. Wikidata  (canonical Q/P graph, holds claims for context BFS)
- *   3. Virtual source overrides (source-backed local missing-data layer)
- *   4. Wiktionary (last-resort lexical fallback for stop words / verbs)
+ *   3. Wiktionary (lexical definitions and translation entries)
+ *   4. Virtual source overrides (source-backed local missing-data layer)
  *
  * @param {string} [language]
  * @returns {object[]}
@@ -773,7 +773,7 @@ export function createDefaultSourceTiers(language = 'en') {
   return [
     createWikipediaSource({ language }),
     createWikidataSource({ language }),
-    createVirtualSourceOverrideSource({ language }),
     createWiktionarySource({ language }),
+    createVirtualSourceOverrideSource({ language }),
   ];
 }

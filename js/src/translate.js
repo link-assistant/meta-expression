@@ -1,4 +1,8 @@
-import { FORMALIZE_LINK_TARGETS, formalizeTextWith } from './formalize.js';
+import {
+  FORMALIZE_LINK_TARGETS,
+  formalizeTextWith,
+  resolveLinkTarget,
+} from './formalize.js';
 import {
   lookupExactGlossaryTranslation,
   lookupGlossaryTranslation,
@@ -202,7 +206,7 @@ function createTranslateConfig(options) {
     targetLanguage: String(requestedTargetLanguage ?? '').trim()
       ? normalizeLanguage(requestedTargetLanguage)
       : defaultTargetLanguage(sourceLanguage),
-    linkTargetMode: options.linkTargetMode ?? FORMALIZE_LINK_TARGETS.WIKIDATA,
+    linkTargetMode: options.linkTargetMode ?? FORMALIZE_LINK_TARGETS.WIKIPEDIA,
     translationStrategy: normalizeTranslationStrategy(
       options.translationStrategy ?? options.strategy
     ),
@@ -396,7 +400,8 @@ async function translatePhrase(phrase, config) {
       url: targetUrlFor(
         targetResult.entity,
         translationEntity,
-        config.targetLanguage
+        config.targetLanguage,
+        config
       ),
       status: 'translated',
     },
@@ -436,12 +441,21 @@ function lookupLocalConceptTranslation(entity, config) {
   if (!concept?.text) {
     return null;
   }
+  const targetEntity = {
+    ...entity,
+    id: concept.entityId ?? entity.id,
+    sourceUrl: concept.url ?? sourceUrlForSemanticEntity(entity),
+    wikipediaUrl: concept.url ?? null,
+  };
   return {
     text: concept.text,
     target: {
-      entityId: concept.entityId ?? entity.id,
+      entityId: targetEntity.id,
       description: concept.description ?? entity.description ?? null,
-      url: concept.url ?? sourceUrlForSemanticEntity(entity),
+      url: resolveLinkTarget(
+        { entity: targetEntity },
+        { linkTargetMode: config.linkTargetMode }
+      ),
       source: 'semantic-lexicon',
       sourceUrl: concept.url ?? sourceUrlForSemanticEntity(entity),
     },
@@ -655,17 +669,22 @@ function targetDescriptionFor(entity, language) {
   return entity?.descriptions?.[language]?.value ?? null;
 }
 
-function targetUrlFor(entity, sourceEntity, language) {
+function targetUrlFor(entity, sourceEntity, language, config) {
   const title = entity?.sitelinks?.[`${language}wiki`]?.title;
-  if (title) {
-    return `https://${language}.wikipedia.org/wiki/${encodeURIComponent(
-      title.replace(/ /g, '_')
-    )}`;
-  }
-  if (sourceEntity.kind === 'property') {
-    return `${wikidataPropertyBaseUrl}${sourceEntity.id}`;
-  }
-  return `${wikidataEntityBaseUrl}${sourceEntity.id}`;
+  const targetEntity = {
+    ...sourceEntity,
+    wikipediaUrl: title
+      ? `https://${language}.wikipedia.org/wiki/${encodeURIComponent(
+          title.replace(/ /g, '_')
+        )}`
+      : null,
+  };
+  return resolveLinkTarget(
+    { entity: targetEntity },
+    {
+      linkTargetMode: config.linkTargetMode,
+    }
+  );
 }
 
 function buildVariableQuestionDetails(variable, config) {

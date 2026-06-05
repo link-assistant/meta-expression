@@ -1,0 +1,266 @@
+{
+  "plainText": "Гавайи это штат.",
+  "markdown": "[Гавайи](https://ru.wikipedia.org/wiki/%D0%93%D0%B0%D0%B2%D0%B0%D0%B9%D0%B8 \"Q782\") [это](https://en.wiktionary.org/wiki/%D1%8D%D1%82%D0%BE \"wikt:ru:это#Determiner:0\") [штат](https://www.wikidata.org/wiki/Q35657 \"Q35657\").",
+  "formalizedMarkdown": "[Hawaii](https://www.wikidata.org/wiki/Q782 \"Q782\") [is a](https://en.wiktionary.org/wiki/is-a \"wikt:en:is-a#Noun:0\") [state](https://www.wikidata.org/wiki/Q35657 \"Q35657\").",
+  "sources": [
+    "wikipedia",
+    "wikidata",
+    "virtual-source-overrides",
+    "wiktionary"
+  ],
+  "linkTargetMode": "wikidata",
+  "wordContexts": [
+    {
+      "text": "Hawaii",
+      "start": 0,
+      "end": 0,
+      "selectedId": "Q782",
+      "candidates": [
+        {
+          "id": "Q782",
+          "label": "Hawaii",
+          "description": "state of the United States of America",
+          "score": 51,
+          "selected": true,
+          "isPublication": false,
+          "contexts": [
+            {
+              "property": "P31",
+              "propertyLabel": "instance of",
+              "targetId": "Q35657"
+            }
+          ]
+        },
+        {
+          "id": "Q68740",
+          "label": "Hawaii",
+          "description": "largest of the Hawaiian islands",
+          "score": 51,
+          "selected": false,
+          "isPublication": false,
+          "contexts": [
+            {
+              "property": "P31",
+              "propertyLabel": "instance of",
+              "targetId": "Q1161185"
+            },
+            {
+              "property": "P361",
+              "propertyLabel": "part of",
+              "targetId": "Q192626"
+            }
+          ]
+        },
+        {
+          "id": "Q18703903",
+          "label": "Hawaii",
+          "description": "2013 film by Marco Berger",
+          "score": 39,
+          "selected": false,
+          "isPublication": false,
+          "contexts": [
+            {
+              "property": "P31",
+              "propertyLabel": "instance of",
+              "targetId": "Q11424"
+            },
+            {
+              "property": "P136",
+              "propertyLabel": "genre",
+              "targetId": "Q130232"
+            },
+            {
+              "property": "P136",
+              "propertyLabel": "genre",
+              "targetId": "Q20442589"
+            },
+            {
+              "property": "P136",
+              "propertyLabel": "genre",
+              "targetId": "Q1054574"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "text": "is a",
+      "start": 1,
+      "end": 2,
+      "selectedId": "wikt:en:is-a#Noun:0",
+      "candidates": [
+        {
+          "id": "wikt:en:is-a#Noun:0",
+          "label": "is a",
+          "description": " The relationship between two entities in which one entity inherits from the other.",
+          "score": 32,
+          "selected": true,
+          "isPublication": false,
+          "contexts": []
+        },
+        {
+          "id": "wikt:en:is-a#Noun:1",
+          "label": "is a",
+          "description": " Such a relationship expressed as an ontology component (regardless of whether the OOP paradigm per se is implemented).",
+          "score": 32,
+          "selected": false,
+          "isPublication": false,
+          "contexts": []
+        }
+      ]
+    },
+    {
+      "text": "state",
+      "start": 3,
+      "end": 3,
+      "selectedId": "Q35657",
+      "candidates": [
+        {
+          "id": "Q35657",
+          "label": "state",
+          "description": "state of the United States",
+          "score": 43,
+          "selected": true,
+          "isPublication": false,
+          "contexts": [
+            {
+              "property": "P31",
+              "propertyLabel": "instance of",
+              "targetId": "Q28872924"
+            },
+            {
+              "property": "P31",
+              "propertyLabel": "instance of",
+              "targetId": "Q135236673"
+            },
+            {
+              "property": "P279",
+              "propertyLabel": "subclass of",
+              "targetId": "Q852446"
+            },
+            {
+              "property": "P279",
+              "propertyLabel": "subclass of",
+              "targetId": "Q107390"
+            },
+            {
+              "property": "P279",
+              "propertyLabel": "subclass of",
+              "targetId": "Q106458883"
+            },
+            {
+              "property": "P279",
+              "propertyLabel": "subclass of",
+              "targetId": "Q192611"
+            },
+            {
+              "property": "P279",
+              "propertyLabel": "subclass of",
+              "targetId": "Q10864048"
+            },
+            {
+              "property": "P279",
+              "propertyLabel": "subclass of",
+              "targetId": "Q155076"
+            }
+          ]
+        },
+        {
+          "id": "wikt:en:state#Noun:0",
+          "label": "state",
+          "description": "A condition; a set of circumstances applying at any given time.",
+          "score": 43,
+          "selected": false,
+          "isPublication": false,
+          "contexts": []
+        },
+        {
+          "id": "wikt:en:state#Noun:1",
+          "label": "state",
+          "description": " A complete description of a system, consisting of parameters that determine all properties of the system.",
+          "score": 43,
+          "selected": false,
+          "isPublication": false,
+          "contexts": []
+        }
+      ]
+    }
+  ],
+  "phrases": [
+    {
+      "source": {
+        "text": "Hawaii",
+        "start": 0,
+        "end": 0,
+        "sourceStart": 0,
+        "sourceEnd": 6,
+        "language": "en",
+        "entityId": "Q782",
+        "label": "Hawaii",
+        "description": "state of the United States of America",
+        "url": "https://en.wikipedia.org/wiki/Hawaii",
+        "source": "wikidata"
+      },
+      "entityId": "Q782",
+      "target": {
+        "text": "Гавайи",
+        "language": "ru",
+        "entityId": "Q782",
+        "description": "штат в США, в центральной части Тихого океана",
+        "url": "https://ru.wikipedia.org/wiki/%D0%93%D0%B0%D0%B2%D0%B0%D0%B9%D0%B8",
+        "status": "translated"
+      }
+    },
+    {
+      "source": {
+        "text": "is a",
+        "start": 1,
+        "end": 2,
+        "sourceStart": 7,
+        "sourceEnd": 11,
+        "language": "en",
+        "entityId": "wikt:en:is-a#Noun:0",
+        "label": "is a",
+        "description": " The relationship between two entities in which one entity inherits from the other.",
+        "url": "https://en.wiktionary.org/wiki/is-a",
+        "source": "wiktionary"
+      },
+      "entityId": null,
+      "target": {
+        "text": "is a",
+        "language": null,
+        "entityId": null,
+        "description": null,
+        "url": null,
+        "status": "non-wikidata-source"
+      }
+    },
+    {
+      "source": {
+        "text": "state",
+        "start": 3,
+        "end": 3,
+        "sourceStart": 12,
+        "sourceEnd": 17,
+        "language": "en",
+        "entityId": "Q35657",
+        "label": "state",
+        "description": "state of the United States",
+        "url": "https://en.wikipedia.org/wiki/U.S._state",
+        "source": "virtual-source-overrides"
+      },
+      "entityId": "Q35657",
+      "target": {
+        "text": "штат",
+        "language": "ru",
+        "entityId": "Q35657",
+        "description": "state of the United States",
+        "url": "https://www.wikidata.org/wiki/Q35657",
+        "source": "semantic-lexicon",
+        "sourceUrl": "https://www.wikidata.org/wiki/Q35657",
+        "status": "translated",
+        "strategy": "semantic-lexicon"
+      }
+    }
+  ]
+}

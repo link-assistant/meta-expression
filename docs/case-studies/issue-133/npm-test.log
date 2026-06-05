@@ -1,0 +1,3236 @@
+
+> meta-expression@0.12.1 test
+> npm run test:unit && npm run test:integration && npm run test:e2e
+
+
+> meta-expression@0.12.1 test:unit
+> node --test js/tests/unit/*.test.js
+
+TAP version 13
+# Subtest: vision documentation
+    # Subtest: promotes the canonical requirements and roadmap into docs
+    ok 1 - promotes the canonical requirements and roadmap into docs
+      ---
+      duration_ms: 0.816539
+      ...
+    # Subtest: keeps first-class docs in links terminology
+    ok 2 - keeps first-class docs in links terminology
+      ---
+      duration_ms: 1.724745
+      ...
+    # Subtest: keeps competitor parity research current and linked to follow-up issues
+    ok 3 - keeps competitor parity research current and linked to follow-up issues
+      ---
+      duration_ms: 0.403503
+      ...
+    # Subtest: tracks the formal-ai compatibility contract as a first-class doc
+    ok 4 - tracks the formal-ai compatibility contract as a first-class doc
+      ---
+      duration_ms: 0.237385
+      ...
+    1..4
+ok 1 - vision documentation
+  ---
+  duration_ms: 5.002859
+  type: 'suite'
+  ...
+# Subtest: file line limit checker
+    # Subtest: fails tracked Rust, JavaScript, and Markdown files above the limit
+    ok 1 - fails tracked Rust, JavaScript, and Markdown files above the limit
+      ---
+      duration_ms: 38.87208
+      ...
+    # Subtest: ignores case-study Markdown and unrelated file types
+    ok 2 - ignores case-study Markdown and unrelated file types
+      ---
+      duration_ms: 27.383657
+      ...
+    # Subtest: warns before the hard line limit without failing
+    ok 3 - warns before the hard line limit without failing
+      ---
+      duration_ms: 27.366431
+      ...
+    1..3
+ok 2 - file line limit checker
+  ---
+  duration_ms: 94.810933
+  type: 'suite'
+  ...
+# Subtest: add function
+    # Subtest: should add two positive numbers
+    ok 1 - should add two positive numbers
+      ---
+      duration_ms: 0.587287
+      ...
+    # Subtest: should add negative numbers
+    ok 2 - should add negative numbers
+      ---
+      duration_ms: 0.090675
+      ...
+    # Subtest: should add zero
+    ok 3 - should add zero
+      ---
+      duration_ms: 0.078416
+      ...
+    1..3
+ok 3 - add function
+  ---
+  duration_ms: 2.642896
+  type: 'suite'
+  ...
+# Subtest: multiply function
+    # Subtest: should multiply two positive numbers
+    ok 1 - should multiply two positive numbers
+      ---
+      duration_ms: 0.192397
+      ...
+    # Subtest: should multiply by zero
+    ok 2 - should multiply by zero
+      ---
+      duration_ms: 0.545775
+      ...
+    # Subtest: should multiply negative numbers
+    ok 3 - should multiply negative numbers
+      ---
+      duration_ms: 0.096574
+      ...
+    1..3
+ok 4 - multiply function
+  ---
+  duration_ms: 0.955657
+  type: 'suite'
+  ...
+# Subtest: issue 108 - unified term data source
+    # Subtest: merges Wikimedia term data with provenance and dual cache artifacts
+    ok 1 - merges Wikimedia term data with provenance and dual cache artifacts
+      ---
+      duration_ms: 39.54221
+      ...
+    # Subtest: caches repeated top-level getTerm calls
+    ok 2 - caches repeated top-level getTerm calls
+      ---
+      duration_ms: 3.250194
+      ...
+    1..2
+ok 5 - issue 108 - unified term data source
+  ---
+  duration_ms: 46.231869
+  type: 'suite'
+  ...
+# Subtest: issue 20 — Jenni AI comparison expansion
+    # Subtest: adds a focused academic-writing assistant feature lens
+    ok 1 - adds a focused academic-writing assistant feature lens
+      ---
+      duration_ms: 1.824705
+      ...
+    # Subtest: archives the issue-specific research trail
+    ok 2 - archives the issue-specific research trail
+      ---
+      duration_ms: 0.229603
+      ...
+    1..2
+ok 6 - issue 20 — Jenni AI comparison expansion
+  ---
+  duration_ms: 2.923675
+  type: 'suite'
+  ...
+# Subtest: issue 52 - Translate request churn and answers
+    # Subtest: coalesces concurrent Wikimedia 404s and caches negative results
+    ok 1 - coalesces concurrent Wikimedia 404s and caches negative results
+      ---
+      duration_ms: 17.189035
+      ...
+    # Subtest: normalizes Wiktionary lookup text before calling the definition API
+    ok 2 - normalizes Wiktionary lookup text before calling the definition API
+      ---
+      duration_ms: 1.142607
+      ...
+    # Subtest: batches same-tick Wikidata entity hydration requests
+    ok 3 - batches same-tick Wikidata entity hydration requests
+      ---
+      duration_ms: 0.930909
+      ...
+    # Subtest: batches target-language Wikidata label requests during translation
+    ok 4 - batches target-language Wikidata label requests during translation
+      ---
+      duration_ms: 11.731296
+      ...
+    # Subtest: applies selected question answers to translated output
+    ok 5 - applies selected question answers to translated output
+      ---
+      duration_ms: 3.887925
+      ...
+    1..5
+ok 7 - issue 52 - Translate request churn and answers
+  ---
+  duration_ms: 35.751891
+  type: 'suite'
+  ...
+# Subtest: issue 96 - paragraph extraction helpers
+    # Subtest: collapses internal whitespace and non-breaking spaces
+    ok 1 - collapses internal whitespace and non-breaking spaces
+      ---
+      duration_ms: 0.652755
+      ...
+    # Subtest: splits an extract into normalized non-empty paragraphs
+    ok 2 - splits an extract into normalized non-empty paragraphs
+      ---
+      duration_ms: 0.229963
+      ...
+    # Subtest: splits on single newlines as used by Wikipedia explaintext extracts
+    ok 3 - splits on single newlines as used by Wikipedia explaintext extracts
+      ---
+      duration_ms: 0.094171
+      ...
+    # Subtest: returns the first normalized paragraph or an empty string
+    ok 4 - returns the first normalized paragraph or an empty string
+      ---
+      duration_ms: 0.138036
+      ...
+    1..4
+ok 8 - issue 96 - paragraph extraction helpers
+  ---
+  duration_ms: 1.885164
+  type: 'suite'
+  ...
+# Subtest: issue 96 - reference alignment scorer
+    # Subtest: scores set overlap precision, recall, and F1 against a reference
+    ok 1 - scores set overlap precision, recall, and F1 against a reference
+      ---
+      duration_ms: 1.359359
+      ...
+    # Subtest: keeps only target-script tokens when a script filter is given
+    ok 2 - keeps only target-script tokens when a script filter is given
+      ---
+      duration_ms: 0.159538
+      ...
+    # Subtest: ignores global flags on the script filter so no tokens are skipped
+    ok 3 - ignores global flags on the script filter so no tokens are skipped
+      ---
+      duration_ms: 0.133179
+      ...
+    # Subtest: returns zeroed metrics for empty input
+    ok 4 - returns zeroed metrics for empty input
+      ---
+      duration_ms: 0.238876
+      ...
+    1..4
+ok 9 - issue 96 - reference alignment scorer
+  ---
+  duration_ms: 2.143651
+  type: 'suite'
+  ...
+# Subtest: JS <-> Rust parity guardrail
+    # Subtest: declares at least the issue \#126 context module pair
+    ok 1 - declares at least the issue \#126 context module pair
+      ---
+      duration_ms: 0.560427
+      ...
+    # Subtest: validates manifest paths and passes when no diff is available
+    ok 2 - validates manifest paths and passes when no diff is available
+      ---
+      duration_ms: 42.231006
+      ...
+    # Subtest: passes when both sides of a pair change together
+    ok 3 - passes when both sides of a pair change together
+      ---
+      duration_ms: 32.962526
+      ...
+    # Subtest: fails when only the JavaScript side changes
+    ok 4 - fails when only the JavaScript side changes
+      ---
+      duration_ms: 29.695238
+      ...
+    # Subtest: fails when only the Rust side changes
+    ok 5 - fails when only the Rust side changes
+      ---
+      duration_ms: 33.928079
+      ...
+    # Subtest: ignores changes outside every mirrored pair
+    ok 6 - ignores changes outside every mirrored pair
+      ---
+      duration_ms: 31.319945
+      ...
+    # Subtest: ships a manifest whose every path exists on disk
+    ok 7 - ships a manifest whose every path exists on disk
+      ---
+      duration_ms: 0.298867
+      ...
+    1..7
+ok 10 - JS <-> Rust parity guardrail
+  ---
+  duration_ms: 172.224771
+  type: 'suite'
+  ...
+# Subtest: package identity
+    # Subtest: publishes the documented meta-expression package identity
+    ok 1 - publishes the documented meta-expression package identity
+      ---
+      duration_ms: 2.228817
+      ...
+    # Subtest: keeps project docs aligned with the published package name
+    ok 2 - keeps project docs aligned with the published package name
+      ---
+      duration_ms: 0.366537
+      ...
+    # Subtest: targets meta-expression in active changesets and release tooling
+    ok 3 - targets meta-expression in active changesets and release tooling
+      ---
+      duration_ms: 2.277802
+      ...
+    1..3
+ok 11 - package identity
+  ---
+  duration_ms: 5.911446
+  type: 'suite'
+  ...
+# Subtest: meta-expression prototype pipeline
+    # Subtest: keeps user selection as an explicit pipeline boundary
+    ok 1 - keeps user selection as an explicit pipeline boundary
+      ---
+      duration_ms: 1.261804
+      ...
+    # Subtest: evaluates fully computable arithmetic statements exactly
+    ok 2 - evaluates fully computable arithmetic statements exactly
+      ---
+      duration_ms: 3.644542
+      ...
+    # Subtest: represents real-world evidence as non-absolute links with provenance
+    ok 3 - represents real-world evidence as non-absolute links with provenance
+      ---
+      duration_ms: 4.578816
+      ...
+    # Subtest: supports the Moon-Sun orbit claim through a Wikidata parent-body chain
+    ok 4 - supports the Moon-Sun orbit claim through a Wikidata parent-body chain
+      ---
+      duration_ms: 1.083138
+      ...
+    # Subtest: uses bounded Wikidata-backed evidence for a person alive claim
+    ok 5 - uses bounded Wikidata-backed evidence for a person alive claim
+      ---
+      duration_ms: 1.612699
+      ...
+    # Subtest: turns local user beliefs into support or refutation evidence
+    ok 6 - turns local user beliefs into support or refutation evidence
+      ---
+      duration_ms: 1.920609
+      ...
+    # Subtest: marks self-referential false statements as undetermined
+    ok 7 - marks self-referential false statements as undetermined
+      ---
+      duration_ms: 0.31437
+      ...
+    # Subtest: serializes the selected links network to Links Notation text
+    ok 8 - serializes the selected links network to Links Notation text
+      ---
+      duration_ms: 0.556501
+      ...
+    # Subtest: exposes prepared examples, level descriptions, and report URLs
+    ok 9 - exposes prepared examples, level descriptions, and report URLs
+      ---
+      duration_ms: 3.078816
+      ...
+    1..9
+ok 12 - meta-expression prototype pipeline
+  ---
+  duration_ms: 19.092327
+  type: 'suite'
+  ...
+# Subtest: Wikimedia live evidence client
+    # Subtest: resolves live Wikimedia evidence with reusable cache and statement templates
+    ok 1 - resolves live Wikimedia evidence with reusable cache and statement templates
+      ---
+      duration_ms: 5.033526
+      ...
+    1..1
+ok 13 - Wikimedia live evidence client
+  ---
+  duration_ms: 5.150571
+  type: 'suite'
+  ...
+# Subtest: tag prefix logic
+    # Subtest: defaults to "v" prefix (backward compatible)
+    ok 1 - defaults to "v" prefix (backward compatible)
+      ---
+      duration_ms: 1.861861
+      ...
+    # Subtest: supports "js-v" prefix for multi-language repos
+    ok 2 - supports "js-v" prefix for multi-language repos
+      ---
+      duration_ms: 0.224886
+      ...
+    # Subtest: supports "rust-v" prefix
+    ok 3 - supports "rust-v" prefix
+      ---
+      duration_ms: 0.182734
+      ...
+    # Subtest: supports empty prefix
+    ok 4 - supports empty prefix
+      ---
+      duration_ms: 0.110857
+      ...
+    # Subtest: works with pre-release versions
+    ok 5 - works with pre-release versions
+      ---
+      duration_ms: 0.127101
+      ...
+    1..5
+ok 14 - tag prefix logic
+  ---
+  duration_ms: 3.539755
+  type: 'suite'
+  ...
+# Subtest: js workflow publishing boundaries
+    # Subtest: deploys the static web prototype through GitHub Pages
+    ok 1 - deploys the static web prototype through GitHub Pages
+      ---
+      duration_ms: 0.714978
+      ...
+    # Subtest: keeps Pages deployment independent from npm release publication
+    ok 2 - keeps Pages deployment independent from npm release publication
+      ---
+      duration_ms: 0.130625
+      ...
+    # Subtest: requires an explicit repository variable before automatic npm publishing
+    ok 3 - requires an explicit repository variable before automatic npm publishing
+      ---
+      duration_ms: 0.10066
+      ...
+    # Subtest: checks line limits for Rust, JavaScript, and Markdown changes
+    ok 4 - checks line limits for Rust, JavaScript, and Markdown changes
+      ---
+      duration_ms: 0.153319
+      ...
+    # Subtest: runs JavaScript tests only on Bun and Linux
+    ok 5 - runs JavaScript tests only on Bun and Linux
+      ---
+      duration_ms: 0.097475
+      ...
+    # Subtest: uses targeted checkout for changeset validation
+    ok 6 - uses targeted checkout for changeset validation
+      ---
+      duration_ms: 0.071206
+      ...
+    1..6
+ok 15 - js workflow publishing boundaries
+  ---
+  duration_ms: 2.065133
+  type: 'suite'
+  ...
+# Subtest: rust workflow checks coverage
+    # Subtest: runs lint and clippy on workspace
+    ok 1 - runs lint and clippy on workspace
+      ---
+      duration_ms: 0.13425
+      ...
+    # Subtest: runs the full workspace test suite on Linux
+    ok 2 - runs the full workspace test suite on Linux
+      ---
+      duration_ms: 0.089825
+      ...
+    1..2
+ok 16 - rust workflow checks coverage
+  ---
+  duration_ms: 0.424974
+  type: 'suite'
+  ...
+1..16
+# tests 63
+# suites 16
+# pass 63
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 330.454367
+
+> meta-expression@0.12.1 test:integration
+> node --test js/tests/integration/*.test.js
+
+TAP version 13
+# Subtest: issue 111 - lexicon hardcoded-data policy
+    # Subtest: requires >50% usage proof for hand-written per-concept lexicon data
+    ok 1 - requires >50% usage proof for hand-written per-concept lexicon data
+      ---
+      duration_ms: 0.808117
+      ...
+    # Subtest: keeps lexicon override records policy-proven rather than ad hoc
+    ok 2 - keeps lexicon override records policy-proven rather than ad hoc
+      ---
+      duration_ms: 0.186288
+      ...
+    # Subtest: records generated lexicon remainders as rule-derived data
+    ok 3 - records generated lexicon remainders as rule-derived data
+      ---
+      duration_ms: 0.183725
+      ...
+    # Subtest: requires rule-derived concepts to point back to source data or a rule
+    ok 4 - requires rule-derived concepts to point back to source data or a rule
+      ---
+      duration_ms: 1.318239
+      ...
+    1..4
+ok 1 - issue 111 - lexicon hardcoded-data policy
+  ---
+  duration_ms: 3.33499
+  type: 'suite'
+  ...
+# Subtest: issue 112 - explicit interlingua reconstruction
+    # Subtest: formalization records enough linguistic metadata to reconstruct the source without the raw source string
+    ok 1 - formalization records enough linguistic metadata to reconstruct the source without the raw source string
+      ---
+      duration_ms: 10.504313
+      ...
+    # Subtest: carries explicit coreference chains in the formalization metadata
+    ok 2 - carries explicit coreference chains in the formalization metadata
+      ---
+      duration_ms: 2.692961
+      ...
+    # Subtest: translates and naturalizes from the reconstructed semantic meta language after raw source strings are poisoned
+    ok 3 - translates and naturalizes from the reconstructed semantic meta language after raw source strings are poisoned
+      ---
+      duration_ms: 21.569697
+      ...
+    1..3
+ok 2 - issue 112 - explicit interlingua reconstruction
+  ---
+  duration_ms: 35.658362
+  type: 'suite'
+  ...
+# Subtest: issue 113 - grammar checking surface
+    # Subtest: detects seeded grammatical-error fixtures per supported language with suggested corrections
+    ok 1 - detects seeded grammatical-error fixtures per supported language with suggested corrections
+      ---
+      duration_ms: 11.49325
+      ...
+    # Subtest: reports clean text with no grammar issues in every supported language
+    ok 2 - reports clean text with no grammar issues in every supported language
+      ---
+      duration_ms: 1.671546
+      ...
+    # Subtest: exposes grammar checking through CLI and HTTP surfaces
+    ok 3 - exposes grammar checking through CLI and HTTP surfaces
+      ---
+      duration_ms: 68.041824
+      ...
+    # Subtest: exposes grammar suggestions through the embedded writing assistant surface
+    ok 4 - exposes grammar suggestions through the embedded writing assistant surface
+      ---
+      duration_ms: 1.764794
+      ...
+    1..4
+ok 3 - issue 113 - grammar checking surface
+  ---
+  duration_ms: 84.315925
+  type: 'suite'
+  ...
+# Subtest: issue 114 - competitor dataset quality gates
+    # Subtest: tracks measured pass rates for every harvested competitor dataset
+    ok 1 - tracks measured pass rates for every harvested competitor dataset
+      ---
+      duration_ms: 1.168715
+      ...
+    # Subtest: executes every enabled competitor dataset case as a recurring gate
+    ok 2 - executes every enabled competitor dataset case as a recurring gate
+      ---
+      duration_ms: 38.875285
+      ...
+    # Subtest: keeps the competitor gate wired into local acceptance and CI
+    ok 3 - keeps the competitor gate wired into local acceptance and CI
+      ---
+      duration_ms: 0.315051
+      ...
+    # Subtest: publishes the measured scores in both comparison documents
+    ok 4 - publishes the measured scores in both comparison documents
+      ---
+      duration_ms: 0.815348
+      ...
+    1..4
+ok 4 - issue 114 - competitor dataset quality gates
+  ---
+  duration_ms: 42.066781
+  type: 'suite'
+  ...
+# Subtest: issue 126 — scholarly-article candidates must not hijack phrases
+    # Subtest: does not formalize "developing systems" as a scientific article
+    ok 1 - does not formalize "developing systems" as a scientific article
+      ---
+      duration_ms: 17.418949
+      ...
+    # Subtest: surfaces per-word context detection on the result
+    ok 2 - surfaces per-word context detection on the result
+      ---
+      duration_ms: 3.510192
+      ...
+    1..2
+ok 5 - issue 126 — scholarly-article candidates must not hijack phrases
+  ---
+  duration_ms: 21.729474
+  type: 'suite'
+  ...
+# Subtest: issue 126 — context-selection questions modify the formalization
+    # Subtest: surfaces a persistent context question for an ambiguous word
+    ok 1 - surfaces a persistent context question for an ambiguous word
+      ---
+      duration_ms: 21.786008
+      ...
+    # Subtest: re-picks the chosen sense when a context selection is supplied
+    ok 2 - re-picks the chosen sense when a context selection is supplied
+      ---
+      duration_ms: 6.14883
+      ...
+    # Subtest: accepts selections keyed by phrase text as well
+    ok 3 - accepts selections keyed by phrase text as well
+      ---
+      duration_ms: 4.669943
+      ...
+    # Subtest: re-runs translation against the re-derived formalization
+    ok 4 - re-runs translation against the re-derived formalization
+      ---
+      duration_ms: 18.210881
+      ...
+    1..4
+ok 6 - issue 126 — context-selection questions modify the formalization
+  ---
+  duration_ms: 52.108864
+  type: 'suite'
+  ...
+# Subtest: issue 126 - JS/Rust engine selector in the web UI
+    # Subtest: renders a global engine selector and a result-band engine badge
+    ok 1 - renders a global engine selector and a result-band engine badge
+      ---
+      duration_ms: 6.199856
+      ...
+    # Subtest: wires app.js to route the analysis through the selected engine
+    ok 2 - wires app.js to route the analysis through the selected engine
+      ---
+      duration_ms: 1.950573
+      ...
+    # Subtest: routes the Compare page through the selected engine too
+    ok 3 - routes the Compare page through the selected engine too
+      ---
+      duration_ms: 3.435559
+      ...
+    # Subtest: localizes the engine controls in every shipped locale
+    ok 4 - localizes the engine controls in every shipped locale
+      ---
+      duration_ms: 2.002209
+      ...
+    # Subtest: exposes pure engine-preference helpers backed by storage
+    ok 5 - exposes pure engine-preference helpers backed by storage
+      ---
+      duration_ms: 1.565558
+      ...
+    # Subtest: overlays the Rust headline onto a JS analysis without losing aux panels
+    ok 6 - overlays the Rust headline onto a JS analysis without losing aux panels
+      ---
+      duration_ms: 0.369612
+      ...
+    # Subtest: produces a Rust-computed headline that matches the JavaScript engine
+    ok 7 - produces a Rust-computed headline that matches the JavaScript engine
+      ---
+      duration_ms: 49.066572
+      ...
+    1..7
+ok 7 - issue 126 - JS/Rust engine selector in the web UI
+  ---
+  duration_ms: 66.128508
+  type: 'suite'
+  ...
+# Subtest: issue 128 - Wikimedia .lino API cache
+    # Subtest: round-trips nested API payloads through the .lino codec losslessly
+    ok 1 - round-trips nested API payloads through the .lino codec losslessly
+      ---
+      duration_ms: 7.285998
+      ...
+    # Subtest: serializes deterministically regardless of insertion order
+    ok 2 - serializes deterministically regardless of insertion order
+      ---
+      duration_ms: 1.378538
+      ...
+    # Subtest: keeps the committed data-folder cache in sync with the JSON snapshots
+    ok 3 - keeps the committed data-folder cache in sync with the JSON snapshots
+      ---
+      duration_ms: 88.912807
+      ...
+    # Subtest: replays "Hawaii is a state." from the .lino cache alone, offline
+    ok 4 - replays "Hawaii is a state." from the .lino cache alone, offline
+      ---
+      duration_ms: 74.595881
+      ...
+    1..4
+ok 8 - issue 128 - Wikimedia .lino API cache
+  ---
+  duration_ms: 173.320298
+  type: 'suite'
+  ...
+# Subtest: issue 128 - Hawaii is a state links notation
+    # Subtest: renders an English Wikipedia link when the Wikipedia target is selected (R3)
+    ok 1 - renders an English Wikipedia link when the Wikipedia target is selected (R3)
+      ---
+      duration_ms: 13.4554
+      ...
+    # Subtest: exposes a merged entity definition for each phrase (R4)
+    ok 2 - exposes a merged entity definition for each phrase (R4)
+      ---
+      duration_ms: 5.113946
+      ...
+    # Subtest: reports selected contexts with priority and probability (R5)
+    ok 3 - reports selected contexts with priority and probability (R5)
+      ---
+      duration_ms: 6.954374
+      ...
+    # Subtest: carries the contexts into the translation links notation (R5)
+    ok 4 - carries the contexts into the translation links notation (R5)
+      ---
+      duration_ms: 15.158393
+      ...
+    1..4
+ok 9 - issue 128 - Hawaii is a state links notation
+  ---
+  duration_ms: 41.71147
+  type: 'suite'
+  ...
+# Subtest: issue 13 - default metrics: correctness and signed confidence
+    # Subtest: exposes both correctness and signedConfidence on every result
+    ok 1 - exposes both correctness and signedConfidence on every result
+      ---
+      duration_ms: 4.695842
+      ...
+    # Subtest: reports correctness=1 and signedConfidence=+1 for a true arithmetic claim
+    ok 2 - reports correctness=1 and signedConfidence=+1 for a true arithmetic claim
+      ---
+      duration_ms: 0.672093
+      ...
+    # Subtest: reports correctness=0 and signedConfidence=-1 for a false arithmetic claim
+    ok 3 - reports correctness=0 and signedConfidence=-1 for a false arithmetic claim
+      ---
+      duration_ms: 0.6225
+      ...
+    # Subtest: keeps correctness equal to the legacy unsigned confidence value
+    ok 4 - keeps correctness equal to the legacy unsigned confidence value
+      ---
+      duration_ms: 5.432601
+      ...
+    # Subtest: signedConfidence equals 2 * correctness - 1 whenever correctness is known
+    ok 5 - signedConfidence equals 2 * correctness - 1 whenever correctness is known
+      ---
+      duration_ms: 5.353685
+      ...
+    # Subtest: keeps signedConfidence within the documented [-1, 1] range
+    ok 6 - keeps signedConfidence within the documented [-1, 1] range
+      ---
+      duration_ms: 5.801552
+      ...
+    # Subtest: keeps correctness within the documented [0, 1] range
+    ok 7 - keeps correctness within the documented [0, 1] range
+      ---
+      duration_ms: 2.570628
+      ...
+    # Subtest: reports neutral metrics for the self-reference paradox
+    ok 8 - reports neutral metrics for the self-reference paradox
+      ---
+      duration_ms: 0.253468
+      ...
+    # Subtest: lets two competing real-world claims be ranked by signed confidence
+    ok 9 - lets two competing real-world claims be ranked by signed confidence
+      ---
+      duration_ms: 1.168315
+      ...
+    1..9
+ok 10 - issue 13 - default metrics: correctness and signed confidence
+  ---
+  duration_ms: 27.932397
+  type: 'suite'
+  ...
+# Subtest: issue 131 - parenthesized pronunciation
+    # Subtest: keeps parentheses out of formalized phrase links
+    ok 1 - keeps parentheses out of formalized phrase links
+      ---
+      duration_ms: 17.293642
+      ...
+    1..1
+ok 11 - issue 131 - parenthesized pronunciation
+  ---
+  duration_ms: 18.080246
+  type: 'suite'
+  ...
+# Subtest: issue 131 - phrasal verbs and Russian grammar
+    # Subtest: allows source-backed phrasal verbs ending in a preposition
+    ok 1 - allows source-backed phrasal verbs ending in a preposition
+      ---
+      duration_ms: 2.098063
+      ...
+    # Subtest: falls back to one lexical phrase when sources miss a known phrasal verb
+    ok 2 - falls back to one lexical phrase when sources miss a known phrasal verb
+      ---
+      duration_ms: 1.459759
+      ...
+    # Subtest: uses source-backed virtual overrides for known missing source data
+    ok 3 - uses source-backed virtual overrides for known missing source data
+      ---
+      duration_ms: 7.032621
+      ...
+    # Subtest: preserves pronunciation punctuation and naturalizes the Russian grammar
+    ok 4 - preserves pronunciation punctuation and naturalizes the Russian grammar
+      ---
+      duration_ms: 15.098744
+      ...
+    1..4
+ok 12 - issue 131 - phrasal verbs and Russian grammar
+  ---
+  duration_ms: 25.960912
+  type: 'suite'
+  ...
+# Subtest: issue 131 - linked article context translation
+    # Subtest: collects linked Wikipedia article targets once per source URL
+    ok 1 - collects linked Wikipedia article targets once per source URL
+      ---
+      duration_ms: 0.970299
+      ...
+    # Subtest: keeps recursive article translation behind the experimental flag
+    ok 2 - keeps recursive article translation behind the experimental flag
+      ---
+      duration_ms: 0.325015
+      ...
+    # Subtest: translates bounded linked article summaries experimentally and caches them
+    ok 3 - translates bounded linked article summaries experimentally and caches them
+      ---
+      duration_ms: 5.262999
+      ...
+    # Subtest: wires article context controls into the Translate UI
+    ok 4 - wires article context controls into the Translate UI
+      ---
+      duration_ms: 0.608118
+      ...
+    1..4
+ok 13 - issue 131 - linked article context translation
+  ---
+  duration_ms: 7.5484
+  type: 'suite'
+  ...
+# Subtest: issue 133 - Translate defaults and state links
+    # Subtest: keeps the source-backed Russian Wikipedia URL for Q35657
+    ok 1 - keeps the source-backed Russian Wikipedia URL for Q35657
+      ---
+      duration_ms: 3.128722
+      ...
+    # Subtest: uses Wikipedia links by default in Translate output
+    ok 2 - uses Wikipedia links by default in Translate output
+      ---
+      duration_ms: 18.474553
+      ...
+    # Subtest: defaults source priority to Wikipedia, Wikidata, Wiktionary, virtual overrides
+    ok 3 - defaults source priority to Wikipedia, Wikidata, Wiktionary, virtual overrides
+      ---
+      duration_ms: 0.364403
+      ...
+    # Subtest: surfaces transitive broad contexts on word candidates
+    ok 4 - surfaces transitive broad contexts on word candidates
+      ---
+      duration_ms: 0.718753
+      ...
+    1..4
+ok 14 - issue 133 - Translate defaults and state links
+  ---
+  duration_ms: 23.799976
+  type: 'suite'
+  ...
+# Subtest: issue 18 - preference profiles
+    # Subtest: round-trips a profile through Links Notation
+    ok 1 - round-trips a profile through Links Notation
+      ---
+      duration_ms: 3.471183
+      ...
+    # Subtest: keeps specific religion sliders hidden unless the God belief is positive
+    ok 2 - keeps specific religion sliders hidden unless the God belief is positive
+      ---
+      duration_ms: 0.175162
+      ...
+    # Subtest: derives atheist refutations for specific religions
+    ok 3 - derives atheist refutations for specific religions
+      ---
+      duration_ms: 6.793764
+      ...
+    # Subtest: uses the selected context as local lore evidence
+    ok 4 - uses the selected context as local lore evidence
+      ---
+      duration_ms: 3.577833
+      ...
+    1..4
+ok 15 - issue 18 - preference profiles
+  ---
+  duration_ms: 15.161718
+  type: 'suite'
+  ...
+# Subtest: issue 21 — verb-form disambiguation
+    # Subtest: routes "formalize" through the "to formalize" alias to Q115492965
+    ok 1 - routes "formalize" through the "to formalize" alias to Q115492965
+      ---
+      duration_ms: 18.842385
+      ...
+    # Subtest: does not expand multi-token phrases or non-verb-like tokens
+    ok 2 - does not expand multi-token phrases or non-verb-like tokens
+      ---
+      duration_ms: 6.043173
+      ...
+    1..2
+ok 16 - issue 21 — verb-form disambiguation
+  ---
+  duration_ms: 26.241942
+  type: 'suite'
+  ...
+# Subtest: issue 21 — multi-candidate context aggregation
+    # Subtest: lets weaker candidates contribute weighted votes to the shared context
+    ok 1 - lets weaker candidates contribute weighted votes to the shared context
+      ---
+      duration_ms: 8.96108
+      ...
+    # Subtest: records sourceCandidates with the per-candidate weight
+    ok 2 - records sourceCandidates with the per-candidate weight
+      ---
+      duration_ms: 0.580828
+      ...
+    1..2
+ok 17 - issue 21 — multi-candidate context aggregation
+  ---
+  duration_ms: 9.762457
+  type: 'suite'
+  ...
+# Subtest: issue 21 — disambiguation tier registry
+    # Subtest: exposes the four default tiers in priority order
+    ok 1 - exposes the four default tiers in priority order
+      ---
+      duration_ms: 0.409081
+      ...
+    # Subtest: keeps single-token stop words in the n-gram list with stopOnly=true
+    ok 2 - keeps single-token stop words in the n-gram list with stopOnly=true
+      ---
+      duration_ms: 0.385446
+      ...
+    1..2
+ok 18 - issue 21 — disambiguation tier registry
+  ---
+  duration_ms: 0.972583
+  type: 'suite'
+  ...
+# Subtest: issue 21 — Wikipedia tier
+    # Subtest: Wikipedia source backfills wikibase_item Q-ids onto its candidates
+    ok 1 - Wikipedia source backfills wikibase_item Q-ids onto its candidates
+      ---
+      duration_ms: 1.075567
+      ...
+    # Subtest: falls back to a wp:<slug> id when Wikipedia returns no wikibase_item
+    ok 2 - falls back to a wp:<slug> id when Wikipedia returns no wikibase_item
+      ---
+      duration_ms: 0.462291
+      ...
+    1..2
+ok 19 - issue 21 — Wikipedia tier
+  ---
+  duration_ms: 1.74181
+  type: 'suite'
+  ...
+# Subtest: issue 21 — Wiktionary tier
+    # Subtest: Wiktionary source returns one candidate per definition for single tokens
+    ok 1 - Wiktionary source returns one candidate per definition for single tokens
+      ---
+      duration_ms: 0.501258
+      ...
+    # Subtest: skips Wiktionary lookups for multi-token phrases
+    ok 2 - skips Wiktionary lookups for multi-token phrases
+      ---
+      duration_ms: 0.285906
+      ...
+    1..2
+ok 20 - issue 21 — Wiktionary tier
+  ---
+  duration_ms: 0.91105
+  type: 'suite'
+  ...
+# Subtest: issue 21 — pipeline integration of new tiers
+    # Subtest: routes stop words ONLY to the Wiktionary tier in the full pipeline
+    ok 1 - routes stop words ONLY to the Wiktionary tier in the full pipeline
+      ---
+      duration_ms: 2.603567
+      ...
+    # Subtest: Wikipedia-confirmed Wikidata Q-id outranks a bare Wikidata-only hit
+    ok 2 - Wikipedia-confirmed Wikidata Q-id outranks a bare Wikidata-only hit
+      ---
+      duration_ms: 3.95184
+      ...
+    # Subtest: still allows callers to disable the new tiers by passing explicit sources
+    ok 3 - still allows callers to disable the new tiers by passing explicit sources
+      ---
+      duration_ms: 4.192019
+      ...
+    1..3
+ok 21 - issue 21 — pipeline integration of new tiers
+  ---
+  duration_ms: 12.408868
+  type: 'suite'
+  ...
+# Subtest: issue 21 — snapshot store
+    # Subtest: round-trips a snapshot: write → load → cache.get returns the same value
+    ok 1 - round-trips a snapshot: write → load → cache.get returns the same value
+      ---
+      duration_ms: 15.233745
+      ...
+    # Subtest: writes a manifest.lino entry alongside every recorded snapshot
+    ok 2 - writes a manifest.lino entry alongside every recorded snapshot
+      ---
+      duration_ms: 3.18836
+      ...
+    # Subtest: skips duplicate manifest entries when the same URL is rewritten
+    ok 3 - skips duplicate manifest entries when the same URL is rewritten
+      ---
+      duration_ms: 5.883385
+      ...
+    1..3
+ok 22 - issue 21 — snapshot store
+  ---
+  duration_ms: 25.61035
+  type: 'suite'
+  ...
+# Subtest: issue 21 — snapshot fetch modes
+    # Subtest: replay mode never calls the live fetch when the snapshot exists
+    ok 1 - replay mode never calls the live fetch when the snapshot exists
+      ---
+      duration_ms: 0.42223
+      ...
+    # Subtest: replay mode throws when no snapshot is recorded for the URL
+    ok 2 - replay mode throws when no snapshot is recorded for the URL
+      ---
+      duration_ms: 0.148612
+      ...
+    # Subtest: record mode always calls the live fetch and persists the response
+    ok 3 - record mode always calls the live fetch and persists the response
+      ---
+      duration_ms: 24.580682
+      ...
+    # Subtest: overlay mode prefers cached snapshots and only records misses
+    ok 4 - overlay mode prefers cached snapshots and only records misses
+      ---
+      duration_ms: 6.129312
+      ...
+    1..4
+ok 23 - issue 21 — snapshot fetch modes
+  ---
+  duration_ms: 32.464063
+  type: 'suite'
+  ...
+# Subtest: issue 21 — snapshot layer wired into formalizeTextWith
+    # Subtest: replays the cached search response without touching the network
+    ok 1 - replays the cached search response without touching the network
+      ---
+      duration_ms: 0.832503
+      ...
+    # Subtest: overlay mode lets formalize fall back to a stub fetch on a miss
+    ok 2 - overlay mode lets formalize fall back to a stub fetch on a miss
+      ---
+      duration_ms: 20.864783
+      ...
+    1..2
+ok 24 - issue 21 — snapshot layer wired into formalizeTextWith
+  ---
+  duration_ms: 30.309466
+  type: 'suite'
+  ...
+# Subtest: issue 21 — committed Wikipedia/Wikidata snapshots replay offline
+    # Subtest: loads every snapshot under tests/fixtures/wikimedia-snapshots without error
+    ok 1 - loads every snapshot under tests/fixtures/wikimedia-snapshots without error
+      ---
+      duration_ms: 1.261724
+      ...
+    # Subtest: formalizes "Hawaii" entirely from snapshots in REPLAY mode
+    ok 2 - formalizes "Hawaii" entirely from snapshots in REPLAY mode
+      ---
+      duration_ms: 0.60924
+      ...
+    # Subtest: formalizes "formalize" entirely from snapshots in REPLAY mode
+    ok 3 - formalizes "formalize" entirely from snapshots in REPLAY mode
+      ---
+      duration_ms: 0.520337
+      ...
+    # Subtest: resolves "the" via Wiktionary fallback when Wikidata has no item
+    ok 4 - resolves "the" via Wiktionary fallback when Wikidata has no item
+      ---
+      duration_ms: 0.480727
+      ...
+    1..4
+ok 25 - issue 21 — committed Wikipedia/Wikidata snapshots replay offline
+  ---
+  duration_ms: 3.19457
+  type: 'suite'
+  ...
+# Subtest: issue-23 R3 — interpretation display modes
+    # Subtest: exposes the five public modes
+    ok 1 - exposes the five public modes
+      ---
+      duration_ms: 1.189868
+      ...
+    # Subtest: formats phrase by id
+    ok 2 - formats phrase by id
+      ---
+      duration_ms: 0.203845
+      ...
+    # Subtest: formats phrase by name (default)
+    ok 3 - formats phrase by name (default)
+      ---
+      duration_ms: 0.12771
+      ...
+    # Subtest: formats phrase by name+meaning
+    ok 4 - formats phrase by name+meaning
+      ---
+      duration_ms: 0.143945
+      ...
+    # Subtest: formats phrase by meaning only
+    ok 5 - formats phrase by meaning only
+      ---
+      duration_ms: 0.138437
+      ...
+    # Subtest: formats phrase as replacement
+    ok 6 - formats phrase as replacement
+      ---
+      duration_ms: 0.119107
+      ...
+    # Subtest: falls back to plain text when entity is missing
+    ok 7 - falls back to plain text when entity is missing
+      ---
+      duration_ms: 0.12703
+      ...
+    1..7
+ok 26 - issue-23 R3 — interpretation display modes
+  ---
+  duration_ms: 3.383423
+  type: 'suite'
+  ...
+# Subtest: issue-23 R4 — interpretationKey identifies the active choice
+    # Subtest: builds a stable key from phrase entity ids
+    ok 1 - builds a stable key from phrase entity ids
+      ---
+      duration_ms: 0.2341
+      ...
+    # Subtest: returns different keys for different entities
+    ok 2 - returns different keys for different entities
+      ---
+      duration_ms: 0.204955
+      ...
+    # Subtest: marks empty slots so partial selections still differ
+    ok 3 - marks empty slots so partial selections still differ
+      ---
+      duration_ms: 0.161952
+      ...
+    1..3
+ok 27 - issue-23 R4 — interpretationKey identifies the active choice
+  ---
+  duration_ms: 0.926384
+  type: 'suite'
+  ...
+# Subtest: issue-23 R5 — language switching
+    # Subtest: exposes English and Russian dictionaries
+    ok 1 - exposes English and Russian dictionaries
+      ---
+      duration_ms: 0.251776
+      ...
+    # Subtest: detects locale from navigator language tag
+    ok 2 - detects locale from navigator language tag
+      ---
+      duration_ms: 0.232868
+      ...
+    # Subtest: translates known keys per locale
+    ok 3 - translates known keys per locale
+      ---
+      duration_ms: 0.194991
+      ...
+    # Subtest: falls back to English when key is missing in selected locale
+    ok 4 - falls back to English when key is missing in selected locale
+      ---
+      duration_ms: 0.104435
+      ...
+    # Subtest: lists locales with display labels
+    ok 5 - lists locales with display labels
+      ---
+      duration_ms: 0.148783
+      ...
+    1..5
+ok 28 - issue-23 R5 — language switching
+  ---
+  duration_ms: 1.116066
+  type: 'suite'
+  ...
+# Subtest: issue-23 R6 — theme switching
+    # Subtest: cycles through auto / light / dark
+    ok 1 - cycles through auto / light / dark
+      ---
+      duration_ms: 0.422811
+      ...
+    # Subtest: returns explicit theme as-is
+    ok 2 - returns explicit theme as-is
+      ---
+      duration_ms: 0.135282
+      ...
+    # Subtest: provides an icon hint for each preference
+    ok 3 - provides an icon hint for each preference
+      ---
+      duration_ms: 0.297104
+      ...
+    1..3
+ok 29 - issue-23 R6 — theme switching
+  ---
+  duration_ms: 0.994936
+  type: 'suite'
+  ...
+# Subtest: issue-23 R1 — contrast tokens replace hard-coded colours
+    # Subtest: routes formalize-payload pre through CSS custom properties
+    ok 1 - routes formalize-payload pre through CSS custom properties
+      ---
+      duration_ms: 24.217128
+      ...
+    # Subtest: declares dark-theme overrides on :root[data-theme="dark"]
+    ok 2 - declares dark-theme overrides on :root[data-theme="dark"]
+      ---
+      duration_ms: 2.51258
+      ...
+    1..2
+ok 30 - issue-23 R1 — contrast tokens replace hard-coded colours
+  ---
+  duration_ms: 28.566633
+  type: 'suite'
+  ...
+# Subtest: issue-23 R2 — radio fieldsets use inline-flex options
+    # Subtest: declares inline-flex on formalize option labels
+    ok 1 - declares inline-flex on formalize option labels
+      ---
+      duration_ms: 2.060727
+      ...
+    # Subtest: does not stretch the formalize fieldsets into a grid
+    ok 2 - does not stretch the formalize fieldsets into a grid
+      ---
+      duration_ms: 0.899222
+      ...
+    1..2
+ok 31 - issue-23 R2 — radio fieldsets use inline-flex options
+  ---
+  duration_ms: 3.183353
+  type: 'suite'
+  ...
+# Subtest: issue-23 R7 — mobile-first responsive layout
+    # Subtest: default layout is single-column and grows at min-width breakpoints
+    ok 1 - default layout is single-column and grows at min-width breakpoints
+      ---
+      duration_ms: 0.844732
+      ...
+    # Subtest: does not use legacy max-width-only breakpoint
+    ok 2 - does not use legacy max-width-only breakpoint
+      ---
+      duration_ms: 0.699033
+      ...
+    1..2
+ok 32 - issue-23 R7 — mobile-first responsive layout
+  ---
+  duration_ms: 1.733499
+  type: 'suite'
+  ...
+# Subtest: issue-23 — index.html is wired for theme + locale
+    # Subtest: contains a locale select and a theme toggle in the top nav
+    ok 1 - contains a locale select and a theme toggle in the top nav
+      ---
+      duration_ms: 2.098804
+      ...
+    # Subtest: includes data-i18n attributes on the analyse navigation
+    ok 2 - includes data-i18n attributes on the analyse navigation
+      ---
+      duration_ms: 1.787449
+      ...
+    # Subtest: exposes the five interpretation display radio buttons
+    ok 3 - exposes the five interpretation display radio buttons
+      ---
+      duration_ms: 1.78157
+      ...
+    1..3
+ok 33 - issue-23 — index.html is wired for theme + locale
+  ---
+  duration_ms: 5.904546
+  type: 'suite'
+  ...
+# Subtest: issue 26 — A. arithmetic kernel (deterministic)
+    # Subtest: reports correctness=1 and signedConfidence=+1 for "1 + 1 = 2" (matches Wolfram Alpha / Z3 sat / Lean rfl)
+    ok 1 - reports correctness=1 and signedConfidence=+1 for "1 + 1 = 2" (matches Wolfram Alpha / Z3 sat / Lean rfl)
+      ---
+      duration_ms: 4.049116
+      ...
+    # Subtest: reports correctness=1 and signedConfidence=+1 for "2 + 2 = 4" (matches Wolfram Alpha / Z3 sat / Lean rfl)
+    ok 2 - reports correctness=1 and signedConfidence=+1 for "2 + 2 = 4" (matches Wolfram Alpha / Z3 sat / Lean rfl)
+      ---
+      duration_ms: 0.794377
+      ...
+    # Subtest: reports correctness=1 and signedConfidence=+1 for "2 * 3 = 6" (matches Wolfram Alpha / Z3 sat / Lean rfl)
+    ok 3 - reports correctness=1 and signedConfidence=+1 for "2 * 3 = 6" (matches Wolfram Alpha / Z3 sat / Lean rfl)
+      ---
+      duration_ms: 0.615369
+      ...
+    # Subtest: reports correctness=1 and signedConfidence=+1 for "10 - 4 = 6" (matches Wolfram Alpha / Z3 sat / Lean rfl)
+    ok 4 - reports correctness=1 and signedConfidence=+1 for "10 - 4 = 6" (matches Wolfram Alpha / Z3 sat / Lean rfl)
+      ---
+      duration_ms: 0.340327
+      ...
+    # Subtest: reports correctness=0 and signedConfidence=-1 for "1 + 1 = 1" (matches Wolfram Alpha False / Z3 unsat)
+    ok 5 - reports correctness=0 and signedConfidence=-1 for "1 + 1 = 1" (matches Wolfram Alpha False / Z3 unsat)
+      ---
+      duration_ms: 0.393718
+      ...
+    # Subtest: reports correctness=0 and signedConfidence=-1 for "2 + 2 = 5" (matches Wolfram Alpha False / Z3 unsat)
+    ok 6 - reports correctness=0 and signedConfidence=-1 for "2 + 2 = 5" (matches Wolfram Alpha False / Z3 unsat)
+      ---
+      duration_ms: 0.379176
+      ...
+    # Subtest: reports correctness=0 and signedConfidence=-1 for "2 * 3 = 7" (matches Wolfram Alpha False / Z3 unsat)
+    ok 7 - reports correctness=0 and signedConfidence=-1 for "2 * 3 = 7" (matches Wolfram Alpha False / Z3 unsat)
+      ---
+      duration_ms: 0.486136
+      ...
+    # Subtest: reports correctness=0 and signedConfidence=-1 for "10 - 4 = 5" (matches Wolfram Alpha False / Z3 unsat)
+    ok 8 - reports correctness=0 and signedConfidence=-1 for "10 - 4 = 5" (matches Wolfram Alpha False / Z3 unsat)
+      ---
+      duration_ms: 0.380418
+      ...
+    # Subtest: returns the question-shaped value for "1 + 1" (Wolfram Alpha "Result" pod = 2)
+    ok 9 - returns the question-shaped value for "1 + 1" (Wolfram Alpha "Result" pod = 2)
+      ---
+      duration_ms: 1.050498
+      ...
+    # Subtest: returns the question-shaped value for "1 - 1" (Wolfram Alpha "Result" pod = 0)
+    ok 10 - returns the question-shaped value for "1 - 1" (Wolfram Alpha "Result" pod = 0)
+      ---
+      duration_ms: 0.731002
+      ...
+    1..10
+ok 34 - issue 26 — A. arithmetic kernel (deterministic)
+  ---
+  duration_ms: 10.577454
+  type: 'suite'
+  ...
+# Subtest: issue 26 — B. Wikidata-structured public facts
+    # Subtest: keeps "Earth orbits the Sun" within the (0.5, 1) support band (Wikidata Q2 P398 Q525)
+    ok 1 - keeps "Earth orbits the Sun" within the (0.5, 1) support band (Wikidata Q2 P398 Q525)
+      ---
+      duration_ms: 7.115835
+      ...
+    # Subtest: keeps real-world confidence bounded below 1 to leave room for refutation
+    ok 2 - keeps real-world confidence bounded below 1 to leave room for refutation
+      ---
+      duration_ms: 1.302525
+      ...
+    # Subtest: still resolves "Moon orbits the Sun" as supported via the parent-body chain Moon → Earth → Sun
+    ok 3 - still resolves "Moon orbits the Sun" as supported via the parent-body chain Moon → Earth → Sun
+      ---
+      duration_ms: 1.091509
+      ...
+    # Subtest: resolves "Moon orbits Earth" as supported by Wikidata Q405 P397 Q2
+    ok 4 - resolves "Moon orbits Earth" as supported by Wikidata Q405 P397 Q2
+      ---
+      duration_ms: 0.796289
+      ...
+    # Subtest: resolves "Paris is the capital of France" as supported by Wikidata Q142 P36 Q90
+    ok 5 - resolves "Paris is the capital of France" as supported by Wikidata Q142 P36 Q90
+      ---
+      duration_ms: 1.497636
+      ...
+    # Subtest: resolves "Berlin is the capital of Germany" as supported by Wikidata Q183 P36 Q64
+    ok 6 - resolves "Berlin is the capital of Germany" as supported by Wikidata Q183 P36 Q64
+      ---
+      duration_ms: 0.997439
+      ...
+    # Subtest: refutes "Berlin is the capital of France" from the France capital fixture
+    ok 7 - refutes "Berlin is the capital of France" from the France capital fixture
+      ---
+      duration_ms: 0.878322
+      ...
+    # Subtest: refuses to claim binary certainty for negated facts (e.g. "Earth does not orbit the Sun")
+    ok 8 - refuses to claim binary certainty for negated facts (e.g. "Earth does not orbit the Sun")
+      ---
+      duration_ms: 1.005812
+      ...
+    1..8
+ok 35 - issue 26 — B. Wikidata-structured public facts
+  ---
+  duration_ms: 15.081147
+  type: 'suite'
+  ...
+# Subtest: issue 26 — C. Wikidata P570 liveness templates
+    # Subtest: keeps "Elon Musk is alive" within the (0.5, 1) support band (Wikidata Q317521 has no P570)
+    ok 1 - keeps "Elon Musk is alive" within the (0.5, 1) support band (Wikidata Q317521 has no P570)
+      ---
+      duration_ms: 1.120312
+      ...
+    # Subtest: keeps bounded confidence (<1) for the liveness fixture so refutation remains representable
+    ok 2 - keeps bounded confidence (<1) for the liveness fixture so refutation remains representable
+      ---
+      duration_ms: 0.953103
+      ...
+    # Subtest: handles the negated liveness fixture without crashing or claiming binary certainty
+    ok 3 - handles the negated liveness fixture without crashing or claiming binary certainty
+      ---
+      duration_ms: 1.177799
+      ...
+    # Subtest: resolves "Ada Lovelace is dead" from the recorded P570 value
+    ok 4 - resolves "Ada Lovelace is dead" from the recorded P570 value
+      ---
+      duration_ms: 0.888506
+      ...
+    # Subtest: refutes "Ada Lovelace is alive" from the recorded P570 value
+    ok 5 - refutes "Ada Lovelace is alive" from the recorded P570 value
+      ---
+      duration_ms: 0.845492
+      ...
+    1..5
+ok 36 - issue 26 — C. Wikidata P570 liveness templates
+  ---
+  duration_ms: 5.202849
+  type: 'suite'
+  ...
+# Subtest: issue 26 — D. self-reference / Liar paradox
+    # Subtest: returns neutral metrics for "this statement is false" (Tarski/Kripke undetermined)
+    ok 1 - returns neutral metrics for "this statement is false" (Tarski/Kripke undetermined)
+      ---
+      duration_ms: 0.4826
+      ...
+    # Subtest: never assigns a binary verdict to a self-referential claim
+    ok 2 - never assigns a binary verdict to a self-referential claim
+      ---
+      duration_ms: 0.338016
+      ...
+    # Subtest: returns neutral metrics for the positive Liar variant "this statement is true"
+    ok 3 - returns neutral metrics for the positive Liar variant "this statement is true"
+      ---
+      duration_ms: 0.312496
+      ...
+    # Subtest: records Russell-style set self-reference as unknown instead of inventing a binary verdict
+    ok 4 - records Russell-style set self-reference as unknown instead of inventing a binary verdict
+      ---
+      duration_ms: 1.009457
+      ...
+    1..4
+ok 37 - issue 26 — D. self-reference / Liar paradox
+  ---
+  duration_ms: 2.3312
+  type: 'suite'
+  ...
+# Subtest: issue 26 — E. NL → logic / triple extraction (roadmap Phase 8)
+    # Subtest: extracts (Barack Obama; was born in; Hawaii) triple — Stanford OpenIE canonical
+    ok 1 - extracts (Barack Obama; was born in; Hawaii) triple — Stanford OpenIE canonical # SKIP
+      ---
+      duration_ms: 0.122763
+      ...
+    # Subtest: extracts SRL roles for "Mary gave John a book" — AllenNLP canonical
+    ok 2 - extracts SRL roles for "Mary gave John a book" — AllenNLP canonical # SKIP
+      ---
+      duration_ms: 0.068493
+      ...
+    # Subtest: exposes scope-ambiguous FOL for "Every man loves a woman" — Boxer/Montague
+    ok 3 - exposes scope-ambiguous FOL for "Every man loves a woman" — Boxer/Montague # SKIP
+      ---
+      duration_ms: 0.053679
+      ...
+    # Subtest: emits AMR-style CST for "The boy wants to go" — AMR canonical
+    ok 4 - emits AMR-style CST for "The boy wants to go" — AMR canonical # SKIP
+      ---
+      duration_ms: 0.065829
+      ...
+    1..4
+ok 38 - issue 26 — E. NL → logic / triple extraction (roadmap Phase 8)
+  ---
+  duration_ms: 0.525094
+  type: 'suite'
+  ...
+# Subtest: issue 26 — F. disputed-truth corpora (band-only, Phase 10)
+    # Subtest: keeps `0 < correctness < 1` for ClaimReview "5G causes coronavirus" — Google Fact Check
+    ok 1 - keeps `0 < correctness < 1` for ClaimReview "5G causes coronavirus" — Google Fact Check # SKIP
+      ---
+      duration_ms: 0.113029
+      ...
+    # Subtest: keeps `0 < correctness < 1` for Snopes "Einstein failed math in school"
+    ok 2 - keeps `0 < correctness < 1` for Snopes "Einstein failed math in school" # SKIP
+      ---
+      duration_ms: 0.04662
+      ...
+    # Subtest: keeps `0 < correctness < 1` for Politifact "Barack Obama was born in Kenya"
+    ok 3 - keeps `0 < correctness < 1` for Politifact "Barack Obama was born in Kenya" # SKIP
+      ---
+      duration_ms: 0.041403
+      ...
+    # Subtest: keeps `0 < correctness < 1` for Politifact "Crime is at an all-time high"
+    ok 4 - keeps `0 < correctness < 1` for Politifact "Crime is at an all-time high" # SKIP
+      ---
+      duration_ms: 0.054592
+      ...
+    1..4
+ok 39 - issue 26 — F. disputed-truth corpora (band-only, Phase 10)
+  ---
+  duration_ms: 0.403963
+  type: 'suite'
+  ...
+# Subtest: issue 26 — G. uniqueness / paraphrase
+    # Subtest: detects paraphrase similarity for SBERT STS-B canonical pair
+    ok 1 - detects paraphrase similarity for SBERT STS-B canonical pair # SKIP
+      ---
+      duration_ms: 0.083834
+      ...
+    # Subtest: returns at least one source match for the iThenticate-style published text sample
+    ok 2 - returns at least one source match for the iThenticate-style published text sample
+      ---
+      duration_ms: 14.577716
+      ...
+    1..2
+ok 40 - issue 26 — G. uniqueness / paraphrase
+  ---
+  duration_ms: 14.786909
+  type: 'suite'
+  ...
+# Subtest: issue 26 — H. knowledge representation round-trip
+    # Subtest: persists the LinksPlatform Doublets single-link self-loop fixture
+    ok 1 - persists the LinksPlatform Doublets single-link self-loop fixture
+      ---
+      duration_ms: 0.374128
+      ...
+    # Subtest: round-trips ClaimReview JSON-LD for "Earth orbits the Sun" — Phase 10 evidence interchange
+    ok 2 - round-trips ClaimReview JSON-LD for "Earth orbits the Sun" — Phase 10 evidence interchange # SKIP
+      ---
+      duration_ms: 2.496478
+      ...
+    1..2
+ok 41 - issue 26 — H. knowledge representation round-trip
+  ---
+  duration_ms: 3.030296
+  type: 'suite'
+  ...
+# Subtest: issue 26 — documentation sanity
+    # Subtest: publishes the concept comparison doc with the documented legend symbols
+    ok 1 - publishes the concept comparison doc with the documented legend symbols
+      ---
+      duration_ms: 0.482239
+      ...
+    # Subtest: publishes the feature comparison matrix with the four legend symbols
+    ok 2 - publishes the feature comparison matrix with the four legend symbols
+      ---
+      duration_ms: 0.249773
+      ...
+    # Subtest: publishes the case-study README and test-case catalogue
+    ok 3 - publishes the case-study README and test-case catalogue
+      ---
+      duration_ms: 0.16054
+      ...
+    1..3
+ok 42 - issue 26 — documentation sanity
+  ---
+  duration_ms: 1.043348
+  type: 'suite'
+  ...
+# Subtest: issue 29 - page issue reporting
+    # Subtest: creates a GitHub issue URL with page state and version diagnostics
+    ok 1 - creates a GitHub issue URL with page state and version diagnostics
+      ---
+      duration_ms: 1.653659
+      ...
+    # Subtest: renders markdown reports without requiring browser globals
+    ok 2 - renders markdown reports without requiring browser globals
+      ---
+      duration_ms: 0.147921
+      ...
+    # Subtest: loads GitHub Pages build metadata before falling back to package data
+    ok 3 - loads GitHub Pages build metadata before falling back to package data
+      ---
+      duration_ms: 0.34169
+      ...
+    # Subtest: wires the static web app and Pages workflow for reporting
+    ok 4 - wires the static web app and Pages workflow for reporting
+      ---
+      duration_ms: 9.948564
+      ...
+    1..4
+ok 43 - issue 29 - page issue reporting
+  ---
+  duration_ms: 13.15384
+  type: 'suite'
+  ...
+# Subtest: issue 35 — Hawaii translation through semantic phrases
+    # Subtest: identifies Wikimedia calls, rejects grammar-fragment n-grams, and emits Russian
+    ok 1 - identifies Wikimedia calls, rejects grammar-fragment n-grams, and emits Russian
+      ---
+      duration_ms: 27.924804
+      ...
+    # Subtest: round-trips the fixed sentence through Russian without semantic loss
+    ok 2 - round-trips the fixed sentence through Russian without semantic loss
+      ---
+      duration_ms: 14.78087
+      ...
+    # Subtest: prefers the Wikidata state concept over a Wikipedia disambiguation page
+    ok 3 - prefers the Wikidata state concept over a Wikipedia disambiguation page
+      ---
+      duration_ms: 5.453243
+      ...
+    1..3
+ok 44 - issue 35 — Hawaii translation through semantic phrases
+  ---
+  duration_ms: 49.263947
+  type: 'suite'
+  ...
+# Subtest: issue 37 - bounded page issue reports
+    # Subtest: keeps essential Translate sections while omitting oversized diagnostics
+    ok 1 - keeps essential Translate sections while omitting oversized diagnostics
+      ---
+      duration_ms: 5.29751
+      ...
+    1..1
+ok 45 - issue 37 - bounded page issue reports
+  ---
+  duration_ms: 6.062762
+  type: 'suite'
+  ...
+# Subtest: issue 37 - Wiktionary grammar compounds
+    # Subtest: prefers the exact Wiktionary compound over separate stop words
+    ok 1 - prefers the exact Wiktionary compound over separate stop words
+      ---
+      duration_ms: 11.488533
+      ...
+    # Subtest: translates a linked `is a` grammar phrase to linked Russian `это`
+    ok 2 - translates a linked `is a` grammar phrase to linked Russian `это`
+      ---
+      duration_ms: 15.76642
+      ...
+    1..2
+ok 46 - issue 37 - Wiktionary grammar compounds
+  ---
+  duration_ms: 27.504047
+  type: 'suite'
+  ...
+# Subtest: issue 39 - technical sentence translation
+    # Subtest: uses contextual glossary and Russian grammar rules for the reported text
+    ok 1 - uses contextual glossary and Russian grammar rules for the reported text
+      ---
+      duration_ms: 49.341884
+      ...
+    # Subtest: does not let formalized phrases cross sentence boundaries
+    ok 2 - does not let formalized phrases cross sentence boundaries
+      ---
+      duration_ms: 12.821644
+      ...
+    # Subtest: keeps a strict semantic-label strategy for traceable fallback behavior
+    ok 3 - keeps a strict semantic-label strategy for traceable fallback behavior
+      ---
+      duration_ms: 6.600935
+      ...
+    # Subtest: returns structured answer options for unresolved translation questions
+    ok 4 - returns structured answer options for unresolved translation questions
+      ---
+      duration_ms: 1.079462
+      ...
+    # Subtest: exposes translation strategies and prepared Translate examples in the web app
+    ok 5 - exposes translation strategies and prepared Translate examples in the web app
+      ---
+      duration_ms: 7.737983
+      ...
+    1..5
+ok 47 - issue 39 - technical sentence translation
+  ---
+  duration_ms: 81.035987
+  type: 'suite'
+  ...
+# Subtest: issue 41 - Russian translate fallback
+    # Subtest: translates the reported Russian phrase through lexical glossary entries
+    ok 1 - translates the reported Russian phrase through lexical glossary entries
+      ---
+      duration_ms: 28.218113
+      ...
+    # Subtest: does not translate unrelated full-text search hits as phrase meanings
+    ok 2 - does not translate unrelated full-text search hits as phrase meanings
+      ---
+      duration_ms: 8.997735
+      ...
+    # Subtest: exposes semantic meta language before naturalizing the target text
+    ok 3 - exposes semantic meta language before naturalizing the target text
+      ---
+      duration_ms: 8.301906
+      ...
+    # Subtest: supports ten more Translate examples through reusable glossary naturalization
+    ok 4 - supports ten more Translate examples through reusable glossary naturalization
+      ---
+      duration_ms: 30.570004
+      ...
+    # Subtest: exposes the reported phrase as a Translate sample
+    ok 5 - exposes the reported phrase as a Translate sample
+      ---
+      duration_ms: 9.97284
+      ...
+    1..5
+ok 48 - issue 41 - Russian translate fallback
+  ---
+  duration_ms: 87.087101
+  type: 'suite'
+  ...
+# Subtest: issue 48 - complete formalize -> semantic -> naturalize coverage
+    # Subtest: formalizes and naturalizes every word from issue 45
+    ok 1 - formalizes and naturalizes every word from issue 45
+      ---
+      duration_ms: 20.954187
+      ...
+    # Subtest: keeps issue 45 stable through a round trip
+    ok 2 - keeps issue 45 stable through a round trip
+      ---
+      duration_ms: 23.871662
+      ...
+    # Subtest: formalizes and naturalizes every word from issue 46
+    ok 3 - formalizes and naturalizes every word from issue 46
+      ---
+      duration_ms: 1.76858
+      ...
+    # Subtest: keeps issue 46 stable through a round trip
+    ok 4 - keeps issue 46 stable through a round trip
+      ---
+      duration_ms: 7.984011
+      ...
+    # Subtest: formalizes and naturalizes every word from issue 47
+    ok 5 - formalizes and naturalizes every word from issue 47
+      ---
+      duration_ms: 4.341432
+      ...
+    # Subtest: keeps issue 47 stable through a round trip
+    ok 6 - keeps issue 47 stable through a round trip
+      ---
+      duration_ms: 6.948655
+      ...
+    1..6
+ok 49 - issue 48 - complete formalize -> semantic -> naturalize coverage
+  ---
+  duration_ms: 66.906628
+  type: 'suite'
+  ...
+# Subtest: issue 50 - Translate page coverage and link targets
+    # Subtest: translates the reported technical prose without unresolved variables
+    ok 1 - translates the reported technical prose without unresolved variables
+      ---
+      duration_ms: 58.735498
+      ...
+    # Subtest: keeps local lexical links opt-in for Translate output
+    ok 2 - keeps local lexical links opt-in for Translate output
+      ---
+      duration_ms: 2.443378
+      ...
+    # Subtest: uses Wikipedia link targets by default in Translate
+    ok 3 - uses Wikipedia link targets by default in Translate
+      ---
+      duration_ms: 1.415314
+      ...
+    # Subtest: limits source lookup concurrency so long text does not burst Wikimedia
+    ok 4 - limits source lookup concurrency so long text does not burst Wikimedia
+      ---
+      duration_ms: 20.229705
+      ...
+    # Subtest: exposes a Translate link-target selector in the web UI
+    ok 5 - exposes a Translate link-target selector in the web UI
+      ---
+      duration_ms: 7.927987
+      ...
+    1..5
+ok 50 - issue 50 - Translate page coverage and link targets
+  ---
+  duration_ms: 91.965044
+  type: 'suite'
+  ...
+# Subtest: issue 52 - full Translate case coverage
+    # Subtest: formalizes, translates, and formalizes the full reported text
+    ok 1 - formalizes, translates, and formalizes the full reported text
+      ---
+      duration_ms: 182.254036
+      ...
+    # Subtest: keeps the full case stable through back translation
+    ok 2 - keeps the full case stable through back translation
+      ---
+      duration_ms: 152.74066
+      ...
+    1..2
+ok 51 - issue 52 - full Translate case coverage
+  ---
+  duration_ms: 337.043975
+  type: 'suite'
+  ...
+# Subtest: issue 54 - exact formal-ai upstream test corpus index
+    # Subtest: indexes every formal-ai test case from the pinned upstream commit
+    ok 1 - indexes every formal-ai test case from the pinned upstream commit
+      ---
+      duration_ms: 2.71205
+      ...
+    1..1
+ok 52 - issue 54 - exact formal-ai upstream test corpus index
+  ---
+  duration_ms: 3.502039
+  type: 'suite'
+  ...
+# Subtest: issue 54 - formal-ai prompt parsing
+    # Subtest: parses formal-ai translation prompt variants without configuration
+    ok 1 - parses formal-ai translation prompt variants without configuration
+      ---
+      duration_ms: 2.258903
+      ...
+    1..1
+ok 53 - issue 54 - formal-ai prompt parsing
+  ---
+  duration_ms: 2.388976
+  type: 'suite'
+  ...
+# Subtest: issue 54 - formal-ai prompt translation corpus
+    # Subtest: answers formal-ai translation-via-links corpus prompts
+    ok 1 - answers formal-ai translation-via-links corpus prompts
+      ---
+      duration_ms: 67.119798
+      ...
+    # Subtest: covers formal-ai common-noun translation prompts in both directions
+    ok 2 - covers formal-ai common-noun translation prompts in both directions
+      ---
+      duration_ms: 6.522359
+      ...
+    # Subtest: reports formal-ai translation gaps without language placeholders
+    ok 3 - reports formal-ai translation gaps without language placeholders
+      ---
+      duration_ms: 6.850228
+      ...
+    1..3
+ok 54 - issue 54 - formal-ai prompt translation corpus
+  ---
+  duration_ms: 80.76389
+  type: 'suite'
+  ...
+# Subtest: issue 54 - formal-ai linguistic metadata
+    # Subtest: publishes linguistic CST/AST metadata and links for structural fragments
+    ok 1 - publishes linguistic CST/AST metadata and links for structural fragments
+      ---
+      duration_ms: 9.198865
+      ...
+    # Subtest: carries source linguistic metadata through translation semantic links
+    ok 2 - carries source linguistic metadata through translation semantic links
+      ---
+      duration_ms: 10.367019
+      ...
+    1..2
+ok 55 - issue 54 - formal-ai linguistic metadata
+  ---
+  duration_ms: 20.347962
+  type: 'suite'
+  ...
+# Subtest: issue 54 - formal-ai compatibility hooks
+    # Subtest: applies configurable rules before and after formalization
+    ok 1 - applies configurable rules before and after formalization
+      ---
+      duration_ms: 16.42153
+      ...
+    # Subtest: supports translation and naturalization rules with a deformalization alias
+    ok 2 - supports translation and naturalization rules with a deformalization alias
+      ---
+      duration_ms: 20.21976
+      ...
+    # Subtest: keeps deformalization aliases and transformed artifacts consistent
+    ok 3 - keeps deformalization aliases and transformed artifacts consistent
+      ---
+      duration_ms: 2.154688
+      ...
+    1..3
+ok 56 - issue 54 - formal-ai compatibility hooks
+  ---
+  duration_ms: 39.860595
+  type: 'suite'
+  ...
+# Subtest: issue 56 - Translate slash terms and diagnostics
+    # Subtest: splits slash-separated fallback terms before knowledge-source lookup
+    ok 1 - splits slash-separated fallback terms before knowledge-source lookup
+      ---
+      duration_ms: 15.386383
+      ...
+    # Subtest: keeps reported technical prose slash terms separated during translation
+    ok 2 - keeps reported technical prose slash terms separated during translation
+      ---
+      duration_ms: 64.79031
+      ...
+    # Subtest: uses source-backed Wiktionary translations for every supported target language
+    ok 3 - uses source-backed Wiktionary translations for every supported target language
+      ---
+      duration_ms: 32.707146
+      ...
+    # Subtest: keeps linked Wikidata entities ahead of lexical Wiktionary translations
+    ok 4 - keeps linked Wikidata entities ahead of lexical Wiktionary translations
+      ---
+      duration_ms: 1.688802
+      ...
+    # Subtest: covers issue-56 lexical translations through source fixtures for all supported targets
+    ok 5 - covers issue-56 lexical translations through source fixtures for all supported targets
+      ---
+      duration_ms: 12.168168
+      ...
+    # Subtest: does not keep issue-56 vocabulary in the local fallback glossary
+    ok 6 - does not keep issue-56 vocabulary in the local fallback glossary
+      ---
+      duration_ms: 23.211968
+      ...
+    # Subtest: keeps every generated question with selected actionable options
+    ok 7 - keeps every generated question with selected actionable options
+      ---
+      duration_ms: 2.837387
+      ...
+    1..7
+ok 57 - issue 56 - Translate slash terms and diagnostics
+  ---
+  duration_ms: 154.134651
+  type: 'suite'
+  ...
+# Subtest: issue 56 - Translate UI diagnostics
+    # Subtest: exposes source-priority controls and a copyable Translate debug log
+    ok 1 - exposes source-priority controls and a copyable Translate debug log
+      ---
+      duration_ms: 9.746292
+      ...
+    1..1
+ok 58 - issue 56 - Translate UI diagnostics
+  ---
+  duration_ms: 10.090677
+  type: 'suite'
+  ...
+# Subtest: issue 61 - wasm-bindgen core wrapper parity
+    # Subtest: exposes draft, selection, formalization, evaluation, confidence, and Links Notation helpers
+    ok 1 - exposes draft, selection, formalization, evaluation, confidence, and Links Notation helpers
+      ---
+      duration_ms: 45.034381
+      ...
+    # Subtest: matches JavaScript analysis results for every non-translation acceptance example
+    ok 2 - matches JavaScript analysis results for every non-translation acceptance example
+      ---
+      duration_ms: 53.864626
+      ...
+    # Subtest: matches JavaScript translation behavior for the Hawaii acceptance examples
+    ok 3 - matches JavaScript translation behavior for the Hawaii acceptance examples
+      ---
+      duration_ms: 29.558935
+      ...
+    1..3
+ok 59 - issue 61 - wasm-bindgen core wrapper parity
+  ---
+  duration_ms: 129.543634
+  type: 'suite'
+  ...
+# Subtest: issue 63 - durable Doublets-backed storage
+    # Subtest: round-trips statement and evidence links without losing identity, provenance, Unicode, or versions
+    ok 1 - round-trips statement and evidence links without losing identity, provenance, Unicode, or versions
+      ---
+      duration_ms: 67.030935
+      ...
+    # Subtest: imports current links-network fixtures as portable case data
+    ok 2 - imports current links-network fixtures as portable case data
+      ---
+      duration_ms: 3.560667
+      ...
+    1..2
+ok 60 - issue 63 - durable Doublets-backed storage
+  ---
+  duration_ms: 71.305297
+  type: 'suite'
+  ...
+# Subtest: issue 64 - general statement formalization
+    # Subtest: turns arbitrary text into partial structured meaning links with questions
+    ok 1 - turns arbitrary text into partial structured meaning links with questions
+      ---
+      duration_ms: 7.475101
+      ...
+    # Subtest: keeps concrete acceptance examples evidence-backed while adding metadata
+    ok 2 - keeps concrete acceptance examples evidence-backed while adding metadata
+      ---
+      duration_ms: 2.243941
+      ...
+    1..2
+ok 61 - issue 64 - general statement formalization
+  ---
+  duration_ms: 10.514709
+  type: 'suite'
+  ...
+# Subtest: issue 65 - Links Notation rewrite transformations
+    # Subtest: rewrites Links Notation terms with RML-style direction and occurrence controls
+    ok 1 - rewrites Links Notation terms with RML-style direction and occurrence controls
+      ---
+      duration_ms: 3.350553
+      ...
+    # Subtest: simplifies Links Notation with a guarded repeated rewrite set
+    ok 2 - simplifies Links Notation with a guarded repeated rewrite set
+      ---
+      duration_ms: 2.231372
+      ...
+    # Subtest: runs declarative rewrite and simplify rules through existing transformation hooks
+    ok 3 - runs declarative rewrite and simplify rules through existing transformation hooks
+      ---
+      duration_ms: 0.912862
+      ...
+    # Subtest: rewrites a targeted Links Notation field on object transformations
+    ok 4 - rewrites a targeted Links Notation field on object transformations
+      ---
+      duration_ms: 0.698053
+      ...
+    # Subtest: keeps zero-config hook behavior for legacy text rules
+    ok 5 - keeps zero-config hook behavior for legacy text rules
+      ---
+      duration_ms: 0.212627
+      ...
+    1..5
+ok 62 - issue 65 - Links Notation rewrite transformations
+  ---
+  duration_ms: 8.460132
+  type: 'suite'
+  ...
+# Subtest: issue 66 - generalized naturalization
+    # Subtest: naturalizes arbitrary partial formal expressions with CST and deformalization alias
+    ok 1 - naturalizes arbitrary partial formal expressions with CST and deformalization alias
+      ---
+      duration_ms: 9.451823
+      ...
+    # Subtest: renders Links Notation claims through naturalization and deformalization aliases
+    ok 2 - renders Links Notation claims through naturalization and deformalization aliases
+      ---
+      duration_ms: 2.982043
+      ...
+    # Subtest: exposes naturalization through the CLI
+    ok 3 - exposes naturalization through the CLI
+      ---
+      duration_ms: 12.627123
+      ...
+    # Subtest: serves POST /naturalize and /deformalize aliases
+    ok 4 - serves POST /naturalize and /deformalize aliases
+      ---
+      duration_ms: 79.336539
+      ...
+    1..4
+ok 63 - issue 66 - generalized naturalization
+  ---
+  duration_ms: 105.796836
+  type: 'suite'
+  ...
+# Subtest: issue 67 - formal statement reasoning
+    # Subtest: derives formal entailments and surfaces dependency provenance as links
+    ok 1 - derives formal entailments and surfaces dependency provenance as links
+      ---
+      duration_ms: 6.770769
+      ...
+    # Subtest: answers contradiction and dependency queries over formal statements
+    ok 2 - answers contradiction and dependency queries over formal statements
+      ---
+      duration_ms: 0.808747
+      ...
+    # Subtest: keeps self-reference undetermined while adding formal reasoning
+    ok 3 - keeps self-reference undetermined while adding formal reasoning
+      ---
+      duration_ms: 0.947324
+      ...
+    1..3
+ok 64 - issue 67 - formal statement reasoning
+  ---
+  duration_ms: 9.563469
+  type: 'suite'
+  ...
+# Subtest: issue 68 - reproducible statement probability
+    # Subtest: maps relative-meta-logic truth range and valence onto default metrics
+    ok 1 - maps relative-meta-logic truth range and valence onto default metrics
+      ---
+      duration_ms: 7.672816
+      ...
+    # Subtest: exposes a reproducible probability calculation for each result kind
+    ok 2 - exposes a reproducible probability calculation for each result kind
+      ---
+      duration_ms: 8.803305
+      ...
+    # Subtest: includes probability inputs in issue reports
+    ok 3 - includes probability inputs in issue reports
+      ---
+      duration_ms: 5.643426
+      ...
+    1..3
+ok 65 - issue 68 - reproducible statement probability
+  ---
+  duration_ms: 24.812959
+  type: 'suite'
+  ...
+# Subtest: issue 69 - relative-meta-logic computability adapter
+    # Subtest: maps supported formalization levels to relative-meta-logic inputs
+    ok 1 - maps supported formalization levels to relative-meta-logic inputs
+      ---
+      duration_ms: 9.813412
+      ...
+    # Subtest: uses a provided relative-meta-logic engine for arithmetic extraction
+    ok 2 - uses a provided relative-meta-logic engine for arithmetic extraction
+      ---
+      duration_ms: 0.849558
+      ...
+    # Subtest: keeps local arithmetic as the fallback when RML is unavailable
+    ok 3 - keeps local arithmetic as the fallback when RML is unavailable
+      ---
+      duration_ms: 0.506166
+      ...
+    # Subtest: pins the inspected upstream relative-meta-logic source
+    ok 4 - pins the inspected upstream relative-meta-logic source
+      ---
+      duration_ms: 0.191917
+      ...
+    1..4
+ok 66 - issue 69 - relative-meta-logic computability adapter
+  ---
+  duration_ms: 12.527555
+  type: 'suite'
+  ...
+# Subtest: issue 70 - parser-backed reasoning metadata
+    # Subtest: publishes parser CST plus versioned provenance on every reasoning artifact
+    ok 1 - publishes parser CST plus versioned provenance on every reasoning artifact
+      ---
+      duration_ms: 4.967187
+      ...
+    1..1
+ok 67 - issue 70 - parser-backed reasoning metadata
+  ---
+  duration_ms: 5.981891
+  type: 'suite'
+  ...
+# Subtest: issue 72 - formal-ai upstream corpus parity gate
+    # Subtest: pins the current upstream release instead of the stale 706-case release
+    ok 1 - pins the current upstream release instead of the stale 706-case release
+      ---
+      duration_ms: 0.927716
+      ...
+    # Subtest: assigns every upstream test case either a local assertion or an explicit skip reason
+    ok 2 - assigns every upstream test case either a local assertion or an explicit skip reason
+      ---
+      duration_ms: 4.084478
+      ...
+    # Subtest: executes the currently shipped Formal AI translation parity assertions
+    ok 3 - executes the currently shipped Formal AI translation parity assertions
+      ---
+      duration_ms: 106.561388
+      ...
+    1..3
+ok 68 - issue 72 - formal-ai upstream corpus parity gate
+  ---
+  duration_ms: 112.692433
+  type: 'suite'
+  ...
+# Subtest: issue 74 - no-regression acceptance gate
+    # Subtest: covers every concrete acceptance example listed in the requirements
+    ok 1 - covers every concrete acceptance example listed in the requirements
+      ---
+      duration_ms: 1.154673
+      ...
+    # Subtest: keeps the current behavior for non-translation acceptance examples
+    ok 2 - keeps the current behavior for non-translation acceptance examples
+      ---
+      duration_ms: 14.669092
+      ...
+    # Subtest: keeps the current behavior for translation acceptance examples
+    ok 3 - keeps the current behavior for translation acceptance examples
+      ---
+      duration_ms: 27.691757
+      ...
+    # Subtest: wires competitor and formal-ai corpora into the same local gate
+    ok 4 - wires competitor and formal-ai corpora into the same local gate
+      ---
+      duration_ms: 0.27474
+      ...
+    # Subtest: runs the same no-regression gate in CI
+    ok 5 - runs the same no-regression gate in CI
+      ---
+      duration_ms: 0.19498
+      ...
+    1..5
+ok 69 - issue 74 - no-regression acceptance gate
+  ---
+  duration_ms: 44.967312
+  type: 'suite'
+  ...
+# Subtest: issue 87 - ClaimReview fact-check interchange
+    # Subtest: imports a public ClaimReview JSON-LD example into evidence, verdict, source, and provenance fields
+    ok 1 - imports a public ClaimReview JSON-LD example into evidence, verdict, source, and provenance fields
+      ---
+      duration_ms: 2.014197
+      ...
+    # Subtest: parses ClaimReview JSON-LD from an HTML script tag
+    ok 2 - parses ClaimReview JSON-LD from an HTML script tag
+      ---
+      duration_ms: 0.530712
+      ...
+    # Subtest: exports a checked statement as ClaimReview JSON-LD with claim, rating, source URL, and retrieval timestamp
+    ok 3 - exports a checked statement as ClaimReview JSON-LD with claim, rating, source URL, and retrieval timestamp
+      ---
+      duration_ms: 19.327387
+      ...
+    # Subtest: keeps plain text /check behavior unchanged
+    ok 4 - keeps plain text /check behavior unchanged
+      ---
+      duration_ms: 2.979628
+      ...
+    # Subtest: supports ClaimReview JSON-LD as a /check export format in the CLI
+    ok 5 - supports ClaimReview JSON-LD as a /check export format in the CLI
+      ---
+      duration_ms: 13.548279
+      ...
+    # Subtest: serves ClaimReview JSON-LD from HTTP /check while keeping default JSON check output
+    ok 6 - serves ClaimReview JSON-LD from HTTP /check while keeping default JSON check output
+      ---
+      duration_ms: 72.274705
+      ...
+    1..6
+ok 70 - issue 87 - ClaimReview fact-check interchange
+  ---
+  duration_ms: 111.81384
+  type: 'suite'
+  ...
+# Subtest: issue 88 - JSON-LD and PROV-O evidence provenance
+    # Subtest: exports /analyze evidence as JSON-LD with result, source, retrieval time, confidence inputs, and Links Notation
+    ok 1 - exports /analyze evidence as JSON-LD with result, source, retrieval time, confidence inputs, and Links Notation
+      ---
+      duration_ms: 11.226294
+      ...
+    # Subtest: projects /analyze evidence into a PROV-O-compatible JSON-LD graph
+    ok 2 - projects /analyze evidence into a PROV-O-compatible JSON-LD graph
+      ---
+      duration_ms: 2.472432
+      ...
+    # Subtest: exports /check evidence as JSON-LD without dropping the existing Links Notation output
+    ok 3 - exports /check evidence as JSON-LD without dropping the existing Links Notation output
+      ---
+      duration_ms: 16.175553
+      ...
+    # Subtest: supports JSON-LD and PROV-O as analyze/check export formats in CLI and HTTP surfaces
+    ok 4 - supports JSON-LD and PROV-O as analyze/check export formats in CLI and HTTP surfaces
+      ---
+      duration_ms: 82.487773
+      ...
+    1..4
+ok 71 - issue 88 - JSON-LD and PROV-O evidence provenance
+  ---
+  duration_ms: 116.881669
+  type: 'suite'
+  ...
+# Subtest: issue 89 - OpenIE AMR SRL formalization providers
+    # Subtest: records provider triples, roles, entity links, and graphs without changing deterministic formalization
+    ok 1 - records provider triples, roles, entity links, and graphs without changing deterministic formalization
+      ---
+      duration_ms: 9.702347
+      ...
+    # Subtest: accepts mocked provider output through HTTP /formalize without treating it as verified evidence
+    ok 2 - accepts mocked provider output through HTTP /formalize without treating it as verified evidence
+      ---
+      duration_ms: 102.559633
+      ...
+    1..2
+ok 72 - issue 89 - OpenIE AMR SRL formalization providers
+  ---
+  duration_ms: 113.33345
+  type: 'suite'
+  ...
+# Subtest: issue 9 - prepared examples and opposites
+    # Subtest: exposes opposites for every prepared example
+    ok 1 - exposes opposites for every prepared example
+      ---
+      duration_ms: 1.152359
+      ...
+    # Subtest: keeps opposites symmetric for negation pairs
+    ok 2 - keeps opposites symmetric for negation pairs
+      ---
+      duration_ms: 0.292417
+      ...
+    # Subtest: returns 4 random examples by default with deterministic seed
+    ok 3 - returns 4 random examples by default with deterministic seed
+      ---
+      duration_ms: 0.344224
+      ...
+    # Subtest: finds opposites for known examples
+    ok 4 - finds opposites for known examples
+      ---
+      duration_ms: 0.834055
+      ...
+    1..4
+ok 73 - issue 9 - prepared examples and opposites
+  ---
+  duration_ms: 3.722698
+  type: 'suite'
+  ...
+# Subtest: issue 9 - disambiguation longest-match
+    # Subtest: matches Elon Musk as a single Wikidata Q id
+    ok 1 - matches Elon Musk as a single Wikidata Q id
+      ---
+      duration_ms: 0.664673
+      ...
+    # Subtest: exposes sub-phrase candidates as additional interpretations
+    ok 2 - exposes sub-phrase candidates as additional interpretations
+      ---
+      duration_ms: 0.209734
+      ...
+    # Subtest: describes phrase mappings for downstream consumers
+    ok 3 - describes phrase mappings for downstream consumers
+      ---
+      duration_ms: 0.262051
+      ...
+    1..3
+ok 74 - issue 9 - disambiguation longest-match
+  ---
+  duration_ms: 1.31313
+  type: 'suite'
+  ...
+# Subtest: issue 9 - reasoning strategies
+    # Subtest: defaults to disambiguation-first
+    ok 1 - defaults to disambiguation-first
+      ---
+      duration_ms: 0.213069
+      ...
+    # Subtest: lists multiple strategies for meta-strategy composition
+    ok 2 - lists multiple strategies for meta-strategy composition
+      ---
+      duration_ms: 0.289892
+      ...
+    # Subtest: orders steps according to the selected strategy
+    ok 3 - orders steps according to the selected strategy
+      ---
+      duration_ms: 0.39495
+      ...
+    # Subtest: returns the default strategy when an unknown id is requested
+    ok 4 - returns the default strategy when an unknown id is requested
+      ---
+      duration_ms: 0.141061
+      ...
+    1..4
+ok 75 - issue 9 - reasoning strategies
+  ---
+  duration_ms: 1.231449
+  type: 'suite'
+  ...
+# Subtest: issue 9 - analyzeStatement enrichment
+    # Subtest: returns alternatives, dependencies, definitions, and confirmations
+    ok 1 - returns alternatives, dependencies, definitions, and confirmations
+      ---
+      duration_ms: 6.499416
+      ...
+    # Subtest: exposes refutations when evidence refutes the claim
+    ok 2 - exposes refutations when evidence refutes the claim
+      ---
+      duration_ms: 1.14487
+      ...
+    # Subtest: attaches the selected reasoning strategy and ordered steps
+    ok 3 - attaches the selected reasoning strategy and ordered steps
+      ---
+      duration_ms: 2.825188
+      ...
+    # Subtest: returns the opposite statement for known examples
+    ok 4 - returns the opposite statement for known examples
+      ---
+      duration_ms: 0.781296
+      ...
+    1..4
+ok 76 - issue 9 - analyzeStatement enrichment
+  ---
+  duration_ms: 11.489926
+  type: 'suite'
+  ...
+# Subtest: issue 90 - document-level originality report
+    # Subtest: returns source spans, strengths, exclusions, and document source groups
+    ok 1 - returns source spans, strengths, exclusions, and document source groups
+      ---
+      duration_ms: 15.625921
+      ...
+    1..1
+ok 77 - issue 90 - document-level originality report
+  ---
+  duration_ms: 16.608649
+  type: 'suite'
+  ...
+# Subtest: issue 91 - literature-review evidence workflows
+    # Subtest: checks one claim against multiple screened papers without using LLM truth evidence
+    ok 1 - checks one claim against multiple screened papers without using LLM truth evidence
+      ---
+      duration_ms: 29.551674
+      ...
+    # Subtest: exports literature-backed evidence bibliography data as BibTeX, RIS, and CSV
+    ok 2 - exports literature-backed evidence bibliography data as BibTeX, RIS, and CSV
+      ---
+      duration_ms: 4.72147
+      ...
+    # Subtest: supports the literature-review fixture workflow from the CLI
+    ok 3 - supports the literature-review fixture workflow from the CLI
+      ---
+      duration_ms: 16.742017
+      ...
+    1..3
+ok 78 - issue 91 - literature-review evidence workflows
+  ---
+  duration_ms: 52.42727
+  type: 'suite'
+  ...
+# Subtest: issue 92 - scoped SPARQL and graph-database interchange
+    # Subtest: exports selected Q/P evidence templates as a scoped SPARQL CONSTRUCT query with limits and provenance
+    ok 1 - exports selected Q/P evidence templates as a scoped SPARQL CONSTRUCT query with limits and provenance
+      ---
+      duration_ms: 9.969105
+      ...
+    # Subtest: maps Links Notation evidence links to RDF triples and back
+    ok 2 - maps Links Notation evidence links to RDF triples and back
+      ---
+      duration_ms: 2.09599
+      ...
+    # Subtest: applies scoped SPARQL limits after counting available Q/P evidence
+    ok 3 - applies scoped SPARQL limits after counting available Q/P evidence
+      ---
+      duration_ms: 12.231243
+      ...
+    # Subtest: maps Links Notation evidence links to a graph-database property graph and back
+    ok 4 - maps Links Notation evidence links to a graph-database property graph and back
+      ---
+      duration_ms: 1.77483
+      ...
+    # Subtest: does not let generic graph export bypass bounded-confidence guardrails
+    ok 5 - does not let generic graph export bypass bounded-confidence guardrails
+      ---
+      duration_ms: 1.56755
+      ...
+    # Subtest: supports scoped SPARQL exports from CLI and HTTP analyze surfaces
+    ok 6 - supports scoped SPARQL exports from CLI and HTTP analyze surfaces
+      ---
+      duration_ms: 80.77716
+      ...
+    1..6
+ok 79 - issue 92 - scoped SPARQL and graph-database interchange
+  ---
+  duration_ms: 109.531363
+  type: 'suite'
+  ...
+# Subtest: issue 93 - proof and solver artifact adapters
+    # Subtest: normalizes proof assistant and solver artifacts into bounded provenance-bearing evidence
+    ok 1 - normalizes proof assistant and solver artifacts into bounded provenance-bearing evidence
+      ---
+      duration_ms: 2.869854
+      ...
+    # Subtest: attaches artifact evidence through analyzeStatement without producing absolute confidence
+    ok 2 - attaches artifact evidence through analyzeStatement without producing absolute confidence
+      ---
+      duration_ms: 7.335773
+      ...
+    1..2
+ok 80 - issue 93 - proof and solver artifact adapters
+  ---
+  duration_ms: 11.124911
+  type: 'suite'
+  ...
+# Subtest: issue 94 - browser/editor writing assistant surface
+    # Subtest: delegates embedded operations to existing APIs and preserves guardrails
+    ok 1 - delegates embedded operations to existing APIs and preserves guardrails
+      ---
+      duration_ms: 33.071449
+      ...
+    # Subtest: keeps prefilled report URLs and Links Notation exports in a mock extension harness
+    ok 2 - keeps prefilled report URLs and Links Notation exports in a mock extension harness
+      ---
+      duration_ms: 13.407078
+      ...
+    1..2
+ok 81 - issue 94 - browser/editor writing assistant surface
+  ---
+  duration_ms: 47.639891
+  type: 'suite'
+  ...
+# Subtest: issue 96 - four-language interlingua round trips
+    # Subtest: declares all four supported languages in the interlingua
+    ok 1 - declares all four supported languages in the interlingua
+      ---
+      duration_ms: 3.59032
+      ...
+    # Subtest: serves every ordered pair among the four languages through concept ids
+    ok 2 - serves every ordered pair among the four languages through concept ids
+      ---
+      duration_ms: 0.522611
+      ...
+    # Subtest: maps the shared vocabulary through a single id carrying every language
+    ok 3 - maps the shared vocabulary through a single id carrying every language
+      ---
+      duration_ms: 0.318375
+      ...
+    # Subtest: translates the shared vocabulary forward in every direction
+    ok 4 - translates the shared vocabulary forward in every direction
+      ---
+      duration_ms: 61.534268
+      ...
+    # Subtest: survives a round trip through every other language
+    ok 5 - survives a round trip through every other language
+      ---
+      duration_ms: 39.538476
+      ...
+    1..5
+ok 82 - issue 96 - four-language interlingua round trips
+  ---
+  duration_ms: 106.444625
+  type: 'suite'
+  ...
+# Subtest: issue 96 - no hardcoded translations in js/src
+    # Subtest: keeps the lexical translation pipeline free of foreign surface forms
+    ok 1 - keeps the lexical translation pipeline free of foreign surface forms
+      ---
+      duration_ms: 62.711415
+      ...
+    # Subtest: only allowlists files with a documented non-translation reason
+    ok 2 - only allowlists files with a documented non-translation reason
+      ---
+      duration_ms: 2.305422
+      ...
+    # Subtest: routes every lexicon read through the single interlingua module
+    ok 3 - routes every lexicon read through the single interlingua module
+      ---
+      duration_ms: 2.369126
+      ...
+    # Subtest: builds the directional glossary only through the interlingua module
+    ok 4 - builds the directional glossary only through the interlingua module
+      ---
+      duration_ms: 1.625016
+      ...
+    1..4
+ok 83 - issue 96 - no hardcoded translations in js/src
+  ---
+  duration_ms: 70.228119
+  type: 'suite'
+  ...
+# Subtest: issue 96 - top-2025 article fixture
+    # Subtest: captures the top-10 most viewed 2025 articles from the Topviews last-year list
+    ok 1 - captures the top-10 most viewed 2025 articles from the Topviews last-year list
+      ---
+      duration_ms: 0.723851
+      ...
+    # Subtest: captures multi-paragraph prose for each article in most popular languages
+    ok 2 - captures multi-paragraph prose for each article in most popular languages
+      ---
+      duration_ms: 6.490361
+      ...
+    1..2
+ok 84 - issue 96 - top-2025 article fixture
+  ---
+  duration_ms: 8.176128
+  type: 'suite'
+  ...
+# Subtest: issue 96 - paragraph translation into most popular languages
+    # Subtest: translates the .xxx lead paragraph into every captured language
+    ok 1 - translates the .xxx lead paragraph into every captured language
+      ---
+      duration_ms: 446.068773
+      ...
+    # Subtest: translates the Charlie_Kirk lead paragraph into every captured language
+    ok 2 - translates the Charlie_Kirk lead paragraph into every captured language
+      ---
+      duration_ms: 577.935264
+      ...
+    # Subtest: translates the ChatGPT lead paragraph into every captured language
+    ok 3 - translates the ChatGPT lead paragraph into every captured language
+      ---
+      duration_ms: 539.813825
+      ...
+    # Subtest: translates the Google_Chrome lead paragraph into every captured language
+    ok 4 - translates the Google_Chrome lead paragraph into every captured language
+      ---
+      duration_ms: 391.315389
+      ...
+    # Subtest: translates the 1989_Tiananmen_Square_protests_and_massacre lead paragraph into every captured language
+    ok 5 - translates the 1989_Tiananmen_Square_protests_and_massacre lead paragraph into every captured language
+      ---
+      duration_ms: 595.500241
+      ...
+    # Subtest: translates the Ed_Gein lead paragraph into every captured language
+    ok 6 - translates the Ed_Gein lead paragraph into every captured language
+      ---
+      duration_ms: 519.042941
+      ...
+    # Subtest: translates the Donald_Trump lead paragraph into every captured language
+    ok 7 - translates the Donald_Trump lead paragraph into every captured language
+      ---
+      duration_ms: 234.24236
+      ...
+    # Subtest: translates the Zohran_Mamdani lead paragraph into every captured language
+    ok 8 - translates the Zohran_Mamdani lead paragraph into every captured language
+      ---
+      duration_ms: 307.718639
+      ...
+    # Subtest: translates the Elon_Musk lead paragraph into every captured language
+    ok 9 - translates the Elon_Musk lead paragraph into every captured language
+      ---
+      duration_ms: 226.413501
+      ...
+    # Subtest: translates the XXX_(2002_film) lead paragraph into every captured language
+    ok 10 - translates the XXX_(2002_film) lead paragraph into every captured language
+      ---
+      duration_ms: 557.175707
+      ...
+    1..10
+ok 85 - issue 96 - paragraph translation into most popular languages
+  ---
+  duration_ms: 4396.528741
+  type: 'suite'
+  ...
+# Subtest: issue 96 - English to Russian paragraph translation quality
+    # Subtest: produces real Russian vocabulary for every top-2025 lead paragraph
+    ok 1 - produces real Russian vocabulary for every top-2025 lead paragraph
+      ---
+      duration_ms: 264.863282
+      ...
+    1..1
+ok 86 - issue 96 - English to Russian paragraph translation quality
+  ---
+  duration_ms: 265.112804
+  type: 'suite'
+  ...
+# Subtest: issue 96 - multi-paragraph article coverage
+    # Subtest: translates every paragraph of a multi-paragraph lead
+    ok 1 - translates every paragraph of a multi-paragraph lead
+      ---
+      duration_ms: 33.698406
+      ...
+    1..1
+ok 87 - issue 96 - multi-paragraph article coverage
+  ---
+  duration_ms: 33.892706
+  type: 'suite'
+  ...
+# Subtest: issue 96 - English to Russian paragraph translation vs human reference
+    # Subtest: matches the human Russian lead of .xxx on домен, верхнего, уровня, порнографических
+    ok 1 - matches the human Russian lead of .xxx on домен, верхнего, уровня, порнографических
+      ---
+      duration_ms: 74.793885
+      ...
+    # Subtest: matches the human Russian lead of Charlie_Kirk on американский, активист, медийная, фигура, республиканской, партии
+    ok 2 - matches the human Russian lead of Charlie_Kirk on американский, активист, медийная, фигура, республиканской, партии
+      ---
+      duration_ms: 48.26858
+      ...
+    # Subtest: matches the human Russian lead of ChatGPT on чат, бот
+    ok 3 - matches the human Russian lead of ChatGPT on чат, бот
+      ---
+      duration_ms: 50.218221
+      ...
+    # Subtest: matches the human Russian lead of Google_Chrome on браузер, разрабатываемый
+    ok 4 - matches the human Russian lead of Google_Chrome on браузер, разрабатываемый
+      ---
+      duration_ms: 26.198347
+      ...
+    # Subtest: matches the human Russian lead of 1989_Tiananmen_Square_protests_and_massacre on протеста, тяньаньмэнь, студенты
+    ok 5 - matches the human Russian lead of 1989_Tiananmen_Square_protests_and_massacre on протеста, тяньаньмэнь, студенты
+      ---
+      duration_ms: 42.509172
+      ...
+    # Subtest: matches the human Russian lead of Ed_Gein on американский, убийца, похититель, трупов
+    ok 6 - matches the human Russian lead of Ed_Gein on американский, убийца, похититель, трупов
+      ---
+      duration_ms: 39.151849
+      ...
+    # Subtest: matches the human Russian lead of Donald_Trump on политический, деятель, президент
+    ok 7 - matches the human Russian lead of Donald_Trump on политический, деятель, президент
+      ---
+      duration_ms: 17.08445
+      ...
+    # Subtest: matches the human Russian lead of Zohran_Mamdani on политический, деятель, мэр
+    ok 8 - matches the human Russian lead of Zohran_Mamdani on политический, деятель, мэр
+      ---
+      duration_ms: 31.0221
+      ...
+    # Subtest: matches the human Russian lead of Elon_Musk on предприниматель
+    ok 9 - matches the human Russian lead of Elon_Musk on предприниматель
+      ---
+      duration_ms: 15.601184
+      ...
+    # Subtest: matches the human Russian lead of XXX_(2002_film) on американский, боевик, режиссёром
+    ok 10 - matches the human Russian lead of XXX_(2002_film) on американский, боевик, режиссёром
+      ---
+      duration_ms: 54.533816
+      ...
+    # Subtest: reproduces human-attested Russian vocabulary across the top-2025 corpus
+    ok 11 - reproduces human-attested Russian vocabulary across the top-2025 corpus
+      ---
+      duration_ms: 657.890035
+      ...
+    1..11
+ok 88 - issue 96 - English to Russian paragraph translation vs human reference
+  ---
+  duration_ms: 1059.256441
+  type: 'suite'
+  ...
+1..88
+# tests 318
+# suites 88
+# pass 308
+# fail 0
+# cancelled 0
+# skipped 10
+# todo 0
+# duration_ms 6694.626146
+
+> meta-expression@0.12.1 test:e2e
+> node --test js/tests/e2e/*.test.js
+
+TAP version 13
+# Subtest: issue 110 - doublets-web browser store
+    # Subtest: keeps the doublets-web browser store in the static module graph
+    ok 1 - keeps the doublets-web browser store in the static module graph
+      ---
+      duration_ms: 55.096995
+      ...
+    # Subtest: stores and loads portable meta-language links in a browser
+    ok 2 - stores and loads portable meta-language links in a browser
+      ---
+      duration_ms: 1275.687428
+      ...
+    1..2
+ok 1 - issue 110 - doublets-web browser store
+  ---
+  duration_ms: 1331.96699
+  type: 'suite'
+  ...
+# Subtest: issue 116 - static web module graph
+    # Subtest: keeps the GitHub Pages web entrypoints browser-loadable
+    ok 1 - keeps the GitHub Pages web entrypoints browser-loadable
+      ---
+      duration_ms: 55.09952
+      ...
+    1..1
+ok 2 - issue 116 - static web module graph
+  ---
+  duration_ms: 56.145852
+  type: 'suite'
+  ...
+# Subtest: issue 15 — formalize text into Wikipedia/Wikidata-anchored phrases
+    # Subtest: tokenizes input and tags stop-only single-token n-grams (issue \#21)
+    ok 1 - tokenizes input and tags stop-only single-token n-grams (issue \#21)
+      ---
+      duration_ms: 3.227649
+      ...
+    # Subtest: prefers the longest non-overlapping match (Barack Obama as one entity)
+    ok 2 - prefers the longest non-overlapping match (Barack Obama as one entity)
+      ---
+      duration_ms: 18.635866
+      ...
+    # Subtest: emits HTML link with title containing the Q id (F6)
+    ok 3 - emits HTML link with title containing the Q id (F6)
+      ---
+      duration_ms: 1.70148
+      ...
+    # Subtest: renders Markdown with [phrase](url "Qid") shape (F8)
+    ok 4 - renders Markdown with [phrase](url "Qid") shape (F8)
+      ---
+      duration_ms: 4.075877
+      ...
+    # Subtest: falls back to Wikidata page when no enwiki sitelink (properties)
+    ok 5 - falls back to Wikidata page when no enwiki sitelink (properties)
+      ---
+      duration_ms: 7.32073
+      ...
+    # Subtest: respects local viewer toggle for entities and properties (F7)
+    ok 6 - respects local viewer toggle for entities and properties (F7)
+      ---
+      duration_ms: 0.220219
+      ...
+    # Subtest: always switches link targets to Wikidata when mode=wikidata
+    ok 7 - always switches link targets to Wikidata when mode=wikidata
+      ---
+      duration_ms: 0.096564
+      ...
+    # Subtest: aggregates contexts with weight and probability (F10/F11)
+    ok 8 - aggregates contexts with weight and probability (F10/F11)
+      ---
+      duration_ms: 10.793106
+      ...
+    # Subtest: produces at most maxInterpretations interpretations (F13)
+    ok 9 - produces at most maxInterpretations interpretations (F13)
+      ---
+      duration_ms: 5.362067
+      ...
+    # Subtest: emits Links Notation with phrase and context lines (F9)
+    ok 10 - emits Links Notation with phrase and context lines (F9)
+      ---
+      duration_ms: 1.77519
+      ...
+    # Subtest: reuses cache for repeated calls (F15)
+    ok 11 - reuses cache for repeated calls (F15)
+      ---
+      duration_ms: 2.313154
+      ...
+    # Subtest: keeps every word in a phrase, even without a Wikidata match
+    ok 12 - keeps every word in a phrase, even without a Wikidata match
+      ---
+      duration_ms: 2.167275
+      ...
+    # Subtest: builds Markdown and HTML links via the standalone helpers
+    ok 13 - builds Markdown and HTML links via the standalone helpers
+      ---
+      duration_ms: 0.224124
+      ...
+    # Subtest: routes default-tier traffic to Wikipedia, Wikidata, and Wiktionary endpoints
+    ok 14 - routes default-tier traffic to Wikipedia, Wikidata, and Wiktionary endpoints
+      ---
+      duration_ms: 3.389451
+      ...
+    # Subtest: still uses only the Wikidata endpoint when sources are explicitly set to Wikidata
+    ok 15 - still uses only the Wikidata endpoint when sources are explicitly set to Wikidata
+      ---
+      duration_ms: 0.778774
+      ...
+    1..15
+ok 3 - issue 15 — formalize text into Wikipedia/Wikidata-anchored phrases
+  ---
+  duration_ms: 63.847301
+  type: 'suite'
+  ...
+# Subtest: issue 15 — layered sources, overrides, big contexts
+    # Subtest: parses source spec tokens into source instances
+    ok 1 - parses source spec tokens into source instances
+      ---
+      duration_ms: 0.433878
+      ...
+    # Subtest: layers WordNet + Wikidata candidates via createWordNetSource
+    ok 2 - layers WordNet + Wikidata candidates via createWordNetSource
+      ---
+      duration_ms: 1.413419
+      ...
+    # Subtest: routes Fandom-only entities through their sourceUrl
+    ok 3 - routes Fandom-only entities through their sourceUrl
+      ---
+      duration_ms: 1.167243
+      ...
+    # Subtest: builds an override map and short-circuits search to keep tests deterministic
+    ok 4 - builds an override map and short-circuits search to keep tests deterministic
+      ---
+      duration_ms: 0.206768
+      ...
+    # Subtest: overrides outrank live Wikidata search candidates
+    ok 5 - overrides outrank live Wikidata search candidates
+      ---
+      duration_ms: 0.933874
+      ...
+    # Subtest: aggregates big-context categories via transitive graph traversal
+    ok 6 - aggregates big-context categories via transitive graph traversal
+      ---
+      duration_ms: 0.44205
+      ...
+    # Subtest: exposes bigContexts in formalize result alongside flat contexts
+    ok 7 - exposes bigContexts in formalize result alongside flat contexts
+      ---
+      duration_ms: 1.288653
+      ...
+    1..7
+ok 4 - issue 15 — layered sources, overrides, big contexts
+  ---
+  duration_ms: 6.168561
+  type: 'suite'
+  ...
+# Subtest: issue 15 — CLI: formalize subcommand
+    # Subtest: parses formalize-specific flags
+    ok 1 - parses formalize-specific flags
+      ---
+      duration_ms: 14.234324
+      ...
+    # Subtest: runs the formalize subcommand and emits markdown
+    ok 2 - runs the formalize subcommand and emits markdown
+      ---
+      duration_ms: 5.026996
+      ...
+    1..2
+ok 5 - issue 15 — CLI: formalize subcommand
+  ---
+  duration_ms: 19.405665
+  type: 'suite'
+  ...
+# Subtest: issue 15 — HTTP /formalize endpoint with persistent cache
+    # Subtest: persists results to dual-format cache and reuses them on the next request
+    ok 1 - persists results to dual-format cache and reuses them on the next request
+      ---
+      duration_ms: 96.625604
+      ...
+    # Subtest: returns lino body via format=lino with cache headers
+    ok 2 - returns lino body via format=lino with cache headers
+      ---
+      duration_ms: 15.714854
+      ...
+    # Subtest: honours POST overrides and varies cache key by overrides payload
+    ok 3 - honours POST overrides and varies cache key by overrides payload
+      ---
+      duration_ms: 29.027241
+      ...
+    # Subtest: returns 400 when input parameter is missing
+    ok 4 - returns 400 when input parameter is missing
+      ---
+      duration_ms: 4.019201
+      ...
+    1..4
+ok 6 - issue 15 — HTTP /formalize endpoint with persistent cache
+  ---
+  duration_ms: 145.819295
+  type: 'suite'
+  ...
+# Subtest: issue 15 — auto-generated formalize library docs
+    # Subtest: keeps docs/FORMALIZE.md in sync with src/formalize*.js JSDoc
+    ok 1 - keeps docs/FORMALIZE.md in sync with src/formalize*.js JSDoc
+      ---
+      duration_ms: 1.045321
+      ...
+    1..1
+ok 7 - issue 15 — auto-generated formalize library docs
+  ---
+  duration_ms: 1.157388
+  type: 'suite'
+  ...
+# Subtest: issue 15 — Links Notation codec
+    # Subtest: round-trips a nested object through indented .lino
+    ok 1 - round-trips a nested object through indented .lino
+      ---
+      duration_ms: 0.494288
+      ...
+    # Subtest: parses the repository overrides.lino format
+    ok 2 - parses the repository overrides.lino format
+      ---
+      duration_ms: 0.195942
+      ...
+    # Subtest: accepts both .lino and legacy JSON via decodeOverridesText
+    ok 3 - accepts both .lino and legacy JSON via decodeOverridesText
+      ---
+      duration_ms: 0.363633
+      ...
+    1..3
+ok 8 - issue 15 — Links Notation codec
+  ---
+  duration_ms: 1.196946
+  type: 'suite'
+  ...
+# Subtest: issue 15 — doublets binary store
+    # Subtest: round-trips primitives, arrays, and objects
+    ok 1 - round-trips primitives, arrays, and objects
+      ---
+      duration_ms: 0.24144
+      ...
+    # Subtest: encodes strings as unicode-sequence chains
+    ok 2 - encodes strings as unicode-sequence chains
+      ---
+      duration_ms: 0.093269
+      ...
+    1..2
+ok 9 - issue 15 — doublets binary store
+  ---
+  duration_ms: 0.39534
+  type: 'suite'
+  ...
+# Subtest: issue 16 — formalize CST for translation
+    # Subtest: emits a CST that can regenerate formalize Markdown
+    ok 1 - emits a CST that can regenerate formalize Markdown
+      ---
+      duration_ms: 8.742534
+      ...
+    1..1
+ok 10 - issue 16 — formalize CST for translation
+  ---
+  duration_ms: 9.459504
+  type: 'suite'
+  ...
+# Subtest: issue 16 — translate through formalized Wikidata labels
+    # Subtest: translates linked phrases with target-language labels and links
+    ok 1 - translates linked phrases with target-language labels and links
+      ---
+      duration_ms: 7.281833
+      ...
+    # Subtest: translates full sentences and records formalization plus rule steps
+    ok 2 - translates full sentences and records formalization plus rule steps
+      ---
+      duration_ms: 9.387757
+      ...
+    # Subtest: keeps unresolved parts as variables with clarifying questions
+    ok 3 - keeps unresolved parts as variables with clarifying questions
+      ---
+      duration_ms: 4.348223
+      ...
+    1..3
+ok 11 - issue 16 — translate through formalized Wikidata labels
+  ---
+  duration_ms: 21.344159
+  type: 'suite'
+  ...
+# Subtest: issue 16 — CLI and HTTP translate surfaces
+    # Subtest: parses translate-specific flags
+    ok 1 - parses translate-specific flags
+      ---
+      duration_ms: 14.281173
+      ...
+    # Subtest: runs the translate command as Markdown
+    ok 2 - runs the translate command as Markdown
+      ---
+      duration_ms: 9.821364
+      ...
+    # Subtest: serves POST /translate
+    ok 3 - serves POST /translate
+      ---
+      duration_ms: 87.767427
+      ...
+    1..3
+ok 12 - issue 16 — CLI and HTTP translate surfaces
+  ---
+  duration_ms: 112.276892
+  type: 'suite'
+  ...
+# Subtest: issue 16 — web translate surface
+    # Subtest: adds a translated workspace to the static web app
+    ok 1 - adds a translated workspace to the static web app
+      ---
+      duration_ms: 9.341599
+      ...
+    1..1
+ok 13 - issue 16 — web translate surface
+  ---
+  duration_ms: 9.542177
+  type: 'suite'
+  ...
+# Subtest: issue 17 - check text statements
+    # Subtest: detects statements and assigns red-to-green correctness colors
+    ok 1 - detects statements and assigns red-to-green correctness colors
+      ---
+      duration_ms: 17.113072
+      ...
+    1..1
+ok 14 - issue 17 - check text statements
+  ---
+  duration_ms: 17.95545
+  type: 'suite'
+  ...
+# Subtest: issue 17 - evidence probability scoring
+    # Subtest: lets preferences control the probability assigned to evidence situations
+    ok 1 - lets preferences control the probability assigned to evidence situations
+      ---
+      duration_ms: 1.913867
+      ...
+    # Subtest: uses belief-system preferences for worldview-sensitive statements
+    ok 2 - uses belief-system preferences for worldview-sensitive statements
+      ---
+      duration_ms: 2.231592
+      ...
+    # Subtest: scores cited Wikipedia statements in the 75-99% band with debug reasoning
+    ok 3 - scores cited Wikipedia statements in the 75-99% band with debug reasoning
+      ---
+      duration_ms: 4.439779
+      ...
+    # Subtest: finds similar Wikipedia wording after exact search misses
+    ok 4 - finds similar Wikipedia wording after exact search misses
+      ---
+      duration_ms: 2.383238
+      ...
+    # Subtest: allows cited Wikipedia scoring to be tuned by preferences
+    ok 5 - allows cited Wikipedia scoring to be tuned by preferences
+      ---
+      duration_ms: 2.29648
+      ...
+    1..5
+ok 15 - issue 17 - evidence probability scoring
+  ---
+  duration_ms: 13.569751
+  type: 'suite'
+  ...
+# Subtest: issue 17 - check integration surfaces
+    # Subtest: supports CLI check and fact-check aliases
+    ok 1 - supports CLI check and fact-check aliases
+      ---
+      duration_ms: 22.266426
+      ...
+    # Subtest: exposes HTTP /check and /fact-check endpoints
+    ok 2 - exposes HTTP /check and /fact-check endpoints
+      ---
+      duration_ms: 69.476847
+      ...
+    # Subtest: wires the static web app with check and fact-check hash aliases
+    ok 3 - wires the static web app with check and fact-check hash aliases
+      ---
+      duration_ms: 5.302838
+      ...
+    1..3
+ok 16 - issue 17 - check integration surfaces
+  ---
+  duration_ms: 97.500109
+  type: 'suite'
+  ...
+# Subtest: issue 27 - uniqueness likelihood
+    # Subtest: scores exact external matches as citation candidates per statement
+    ok 1 - scores exact external matches as citation candidates per statement
+      ---
+      duration_ms: 15.310239
+      ...
+    # Subtest: ignores unrelated rows returned by public search providers
+    ok 2 - ignores unrelated rows returned by public search providers
+      ---
+      duration_ms: 1.324758
+      ...
+    # Subtest: wires uniqueness into the CLI, including the issue title typo alias
+    ok 3 - wires uniqueness into the CLI, including the issue title typo alias
+      ---
+      duration_ms: 13.18047
+      ...
+    # Subtest: exposes HTTP /uniqueness and /uniquness endpoints
+    ok 4 - exposes HTTP /uniqueness and /uniquness endpoints
+      ---
+      duration_ms: 54.402229
+      ...
+    # Subtest: documents the HTTP route and exposes the web page shell
+    ok 5 - documents the HTTP route and exposes the web page shell
+      ---
+      duration_ms: 3.698433
+      ...
+    1..5
+ok 17 - issue 27 - uniqueness likelihood
+  ---
+  duration_ms: 89.039796
+  type: 'suite'
+  ...
+# Subtest: issue 43 - translation quality assessment helpers
+    # Subtest: extracts a first statement from a multi-paragraph extract
+    ok 1 - extracts a first statement from a multi-paragraph extract
+      ---
+      duration_ms: 1.207643
+      ...
+    # Subtest: drops parenthetical Latin and Cyrillic asides from leading sentences
+    ok 2 - drops parenthetical Latin and Cyrillic asides from leading sentences
+      ---
+      duration_ms: 0.303772
+      ...
+    # Subtest: returns an empty string when the extract is blank or whitespace
+    ok 3 - returns an empty string when the extract is blank or whitespace
+      ---
+      duration_ms: 0.127761
+      ...
+    # Subtest: tokenizes Unicode-aware content tokens and drops stop words
+    ok 4 - tokenizes Unicode-aware content tokens and drops stop words
+      ---
+      duration_ms: 3.263223
+      ...
+    # Subtest: computes token coverage as the fraction of unique tokens that overlap
+    ok 5 - computes token coverage as the fraction of unique tokens that overlap
+      ---
+      duration_ms: 0.585725
+      ...
+    # Subtest: reports zero coverage for completely disjoint texts
+    ok 6 - reports zero coverage for completely disjoint texts
+      ---
+      duration_ms: 0.161941
+      ...
+    # Subtest: normalizes statement keys by collapsing whitespace and trailing punctuation
+    ok 7 - normalizes statement keys by collapsing whitespace and trailing punctuation
+      ---
+      duration_ms: 0.302993
+      ...
+    # Subtest: selects the two largest language versions from a fixture-style entry
+    ok 8 - selects the two largest language versions from a fixture-style entry
+      ---
+      duration_ms: 0.190163
+      ...
+    1..8
+ok 18 - issue 43 - translation quality assessment helpers
+  ---
+  duration_ms: 7.505928
+  type: 'suite'
+  ...
+# Subtest: issue 43 - assessArticleTranslation status routing
+    # Subtest: returns no-statement when the source extract is empty
+    ok 1 - returns no-statement when the source extract is empty
+      ---
+      duration_ms: 0.419977
+      ...
+    # Subtest: uses a curated translation-fix when the source statement matches
+    ok 2 - uses a curated translation-fix when the source statement matches
+      ---
+      duration_ms: 0.291625
+      ...
+    # Subtest: marks a source statement as skipped when it is on the skip list
+    ok 3 - marks a source statement as skipped when it is on the skip list
+      ---
+      duration_ms: 0.247279
+      ...
+    # Subtest: matches when the translated tokens cover the target extract
+    ok 4 - matches when the translated tokens cover the target extract
+      ---
+      duration_ms: 25.352053
+      ...
+    # Subtest: promotes round-trip-stable translations to fix-suggested
+    ok 5 - promotes round-trip-stable translations to fix-suggested
+      ---
+      duration_ms: 10.757333
+      ...
+    1..5
+ok 19 - issue 43 - assessArticleTranslation status routing
+  ---
+  duration_ms: 37.553381
+  type: 'suite'
+  ...
+# Subtest: issue 43 - Wikipedia top-views integration test
+    # Subtest: passes the quality bar for every captured article
+    ok 1 - passes the quality bar for every captured article
+      ---
+      duration_ms: 13.925432
+      ...
+    # Subtest: uses the formalize → semantic meta language → naturalize pipeline for every assessed statement
+    ok 2 - uses the formalize → semantic meta language → naturalize pipeline for every assessed statement
+      ---
+      duration_ms: 18.575335
+      ...
+    # Subtest: summarises results into per-status counts and exposes failures
+    ok 3 - summarises results into per-status counts and exposes failures
+      ---
+      duration_ms: 0.355071
+      ...
+    # Subtest: captures a top-10 fixture for April 2026 with two language versions per article
+    ok 4 - captures a top-10 fixture for April 2026 with two language versions per article
+      ---
+      duration_ms: 3.400777
+      ...
+    # Subtest: exposes the assessment as a translation-quality CLI command
+    ok 5 - exposes the assessment as a translation-quality CLI command
+      ---
+      duration_ms: 19.160319
+      ...
+    # Subtest: exits non-zero from the CLI when any article fails
+    ok 6 - exits non-zero from the CLI when any article fails
+      ---
+      duration_ms: 3.8575
+      ...
+    # Subtest: keeps every skip-list entry referenced by a captured article statement
+    ok 7 - keeps every skip-list entry referenced by a captured article statement
+      ---
+      duration_ms: 1.912075
+      ...
+    1..7
+ok 20 - issue 43 - Wikipedia top-views integration test
+  ---
+  duration_ms: 61.941547
+  type: 'suite'
+  ...
+# Subtest: issue 62 - official Links Notation and lino-arguments
+    # Subtest: parses official Links Notation tuples through the current Lino API
+    ok 1 - parses official Links Notation tuples through the current Lino API
+      ---
+      duration_ms: 2.88631
+      ...
+    # Subtest: loads CLI defaults from a Links Notation configuration file
+    ok 2 - loads CLI defaults from a Links Notation configuration file
+      ---
+      duration_ms: 24.462576
+      ...
+    # Subtest: applies a Links Notation preference profile from the CLI
+    ok 3 - applies a Links Notation preference profile from the CLI
+      ---
+      duration_ms: 23.39434
+      ...
+    1..3
+ok 21 - issue 62 - official Links Notation and lino-arguments
+  ---
+  duration_ms: 52.137188
+  type: 'suite'
+  ...
+1..21
+# tests 82
+# suites 21
+# pass 82
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 1408.467604

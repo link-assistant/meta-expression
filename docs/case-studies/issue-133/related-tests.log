@@ -1,0 +1,244 @@
+TAP version 13
+# Subtest: issue 16 — formalize CST for translation
+    # Subtest: emits a CST that can regenerate formalize Markdown
+    ok 1 - emits a CST that can regenerate formalize Markdown
+      ---
+      duration_ms: 12.312614
+      ...
+    1..1
+ok 1 - issue 16 — formalize CST for translation
+  ---
+  duration_ms: 13.379288
+  type: 'suite'
+  ...
+# Subtest: issue 16 — translate through formalized Wikidata labels
+    # Subtest: translates linked phrases with target-language labels and links
+    ok 1 - translates linked phrases with target-language labels and links
+      ---
+      duration_ms: 8.087015
+      ...
+    # Subtest: translates full sentences and records formalization plus rule steps
+    ok 2 - translates full sentences and records formalization plus rule steps
+      ---
+      duration_ms: 11.339802
+      ...
+    # Subtest: keeps unresolved parts as variables with clarifying questions
+    ok 3 - keeps unresolved parts as variables with clarifying questions
+      ---
+      duration_ms: 4.045851
+      ...
+    1..3
+ok 2 - issue 16 — translate through formalized Wikidata labels
+  ---
+  duration_ms: 23.787669
+  type: 'suite'
+  ...
+# Subtest: issue 16 — CLI and HTTP translate surfaces
+    # Subtest: parses translate-specific flags
+    ok 1 - parses translate-specific flags
+      ---
+      duration_ms: 21.015719
+      ...
+    # Subtest: runs the translate command as Markdown
+    ok 2 - runs the translate command as Markdown
+      ---
+      duration_ms: 13.158868
+      ...
+    # Subtest: serves POST /translate
+    ok 3 - serves POST /translate
+      ---
+      duration_ms: 98.103602
+      ...
+    1..3
+ok 3 - issue 16 — CLI and HTTP translate surfaces
+  ---
+  duration_ms: 132.886138
+  type: 'suite'
+  ...
+# Subtest: issue 16 — web translate surface
+    # Subtest: adds a translated workspace to the static web app
+    ok 1 - adds a translated workspace to the static web app
+      ---
+      duration_ms: 5.823315
+      ...
+    1..1
+ok 4 - issue 16 — web translate surface
+  ---
+  duration_ms: 6.240007
+  type: 'suite'
+  ...
+# Subtest: issue 126 — scholarly-article candidates must not hijack phrases
+    # Subtest: does not formalize "developing systems" as a scientific article
+    ok 1 - does not formalize "developing systems" as a scientific article
+      ---
+      duration_ms: 26.358937
+      ...
+    # Subtest: surfaces per-word context detection on the result
+    ok 2 - surfaces per-word context detection on the result
+      ---
+      duration_ms: 3.999602
+      ...
+    1..2
+ok 5 - issue 126 — scholarly-article candidates must not hijack phrases
+  ---
+  duration_ms: 31.642237
+  type: 'suite'
+  ...
+# Subtest: issue 126 — context-selection questions modify the formalization
+    # Subtest: surfaces a persistent context question for an ambiguous word
+    ok 1 - surfaces a persistent context question for an ambiguous word
+      ---
+      duration_ms: 27.869774
+      ...
+    # Subtest: re-picks the chosen sense when a context selection is supplied
+    ok 2 - re-picks the chosen sense when a context selection is supplied
+      ---
+      duration_ms: 12.923026
+      ...
+    # Subtest: accepts selections keyed by phrase text as well
+    ok 3 - accepts selections keyed by phrase text as well
+      ---
+      duration_ms: 5.544319
+      ...
+    # Subtest: re-runs translation against the re-derived formalization
+    ok 4 - re-runs translation against the re-derived formalization
+      ---
+      duration_ms: 18.505422
+      ...
+    1..4
+ok 6 - issue 126 — context-selection questions modify the formalization
+  ---
+  duration_ms: 66.451202
+  type: 'suite'
+  ...
+# Subtest: issue 128 - Hawaii is a state links notation
+    # Subtest: renders an English Wikipedia link when the Wikipedia target is selected (R3)
+    ok 1 - renders an English Wikipedia link when the Wikipedia target is selected (R3)
+      ---
+      duration_ms: 22.772083
+      ...
+    # Subtest: exposes a merged entity definition for each phrase (R4)
+    ok 2 - exposes a merged entity definition for each phrase (R4)
+      ---
+      duration_ms: 8.693971
+      ...
+    # Subtest: reports selected contexts with priority and probability (R5)
+    ok 3 - reports selected contexts with priority and probability (R5)
+      ---
+      duration_ms: 8.569475
+      ...
+    # Subtest: carries the contexts into the translation links notation (R5)
+    ok 4 - carries the contexts into the translation links notation (R5)
+      ---
+      duration_ms: 23.664835
+      ...
+    1..4
+ok 7 - issue 128 - Hawaii is a state links notation
+  ---
+  duration_ms: 65.212902
+  type: 'suite'
+  ...
+# Subtest: issue 131 - parenthesized pronunciation
+    # Subtest: keeps parentheses out of formalized phrase links
+    ok 1 - keeps parentheses out of formalized phrase links
+      ---
+      duration_ms: 26.283525
+      ...
+    1..1
+ok 8 - issue 131 - parenthesized pronunciation
+  ---
+  duration_ms: 27.725017
+  type: 'suite'
+  ...
+# Subtest: issue 131 - phrasal verbs and Russian grammar
+    # Subtest: allows source-backed phrasal verbs ending in a preposition
+    ok 1 - allows source-backed phrasal verbs ending in a preposition
+      ---
+      duration_ms: 5.588454
+      ...
+    # Subtest: falls back to one lexical phrase when sources miss a known phrasal verb
+    ok 2 - falls back to one lexical phrase when sources miss a known phrasal verb
+      ---
+      duration_ms: 3.073379
+      ...
+    # Subtest: uses source-backed virtual overrides for known missing source data
+    ok 3 - uses source-backed virtual overrides for known missing source data
+      ---
+      duration_ms: 11.24526
+      ...
+    # Subtest: preserves pronunciation punctuation and naturalizes the Russian grammar
+    ok 4 - preserves pronunciation punctuation and naturalizes the Russian grammar
+      ---
+      duration_ms: 21.393614
+      ...
+    1..4
+ok 9 - issue 131 - phrasal verbs and Russian grammar
+  ---
+  duration_ms: 41.795267
+  type: 'suite'
+  ...
+# Subtest: issue 131 - linked article context translation
+    # Subtest: collects linked Wikipedia article targets once per source URL
+    ok 1 - collects linked Wikipedia article targets once per source URL
+      ---
+      duration_ms: 0.906402
+      ...
+    # Subtest: keeps recursive article translation behind the experimental flag
+    ok 2 - keeps recursive article translation behind the experimental flag
+      ---
+      duration_ms: 0.513176
+      ...
+    # Subtest: translates bounded linked article summaries experimentally and caches them
+    ok 3 - translates bounded linked article summaries experimentally and caches them
+      ---
+      duration_ms: 6.435308
+      ...
+    # Subtest: wires article context controls into the Translate UI
+    ok 4 - wires article context controls into the Translate UI
+      ---
+      duration_ms: 0.714487
+      ...
+    1..4
+ok 10 - issue 131 - linked article context translation
+  ---
+  duration_ms: 8.990514
+  type: 'suite'
+  ...
+# Subtest: issue 37 - bounded page issue reports
+    # Subtest: keeps essential Translate sections while omitting oversized diagnostics
+    ok 1 - keeps essential Translate sections while omitting oversized diagnostics
+      ---
+      duration_ms: 10.096145
+      ...
+    1..1
+ok 11 - issue 37 - bounded page issue reports
+  ---
+  duration_ms: 14.268285
+  type: 'suite'
+  ...
+# Subtest: issue 37 - Wiktionary grammar compounds
+    # Subtest: prefers the exact Wiktionary compound over separate stop words
+    ok 1 - prefers the exact Wiktionary compound over separate stop words
+      ---
+      duration_ms: 16.256064
+      ...
+    # Subtest: translates a linked `is a` grammar phrase to linked Russian `это`
+    ok 2 - translates a linked `is a` grammar phrase to linked Russian `это`
+      ---
+      duration_ms: 25.817459
+      ...
+    1..2
+ok 12 - issue 37 - Wiktionary grammar compounds
+  ---
+  duration_ms: 42.566437
+  type: 'suite'
+  ...
+1..12
+# tests 30
+# suites 12
+# pass 30
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 473.243991
