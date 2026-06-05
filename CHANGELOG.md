@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.12.2
+
+### Patch Changes
+
+- 6307ddc: Fix Translate defaults, Russian Wikipedia links for U.S. state, source priority,
+  word-context reporting, and article input mode.
+
 ## 0.12.1
 
 ### Patch Changes
