@@ -68,3 +68,14 @@ The downloaded JS workflow log failed in
 `.changeset/*.md` file targeting `meta-expression`.
 
 Fix: add `.changeset/issue-133-translate-defaults.md`.
+
+## RC7 - CI parity requires Rust mirror updates for mirrored JS helpers
+
+After the first implementation push, the fresh JS workflow failed
+`Check JS/Rust Parity`. The failed job identified `js/src/formalize-contexts.js`
+and `js/src/semantic-lexicon.js` as mirrored modules whose Rust counterparts
+had not changed.
+
+Fix: make the same URL-preservation change in `rust/src/semantic_lexicon.rs`,
+add broad-context output support to `rust/src/formalize_contexts.rs`, and cover
+both behaviors with Rust tests.

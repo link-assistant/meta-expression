@@ -17,9 +17,15 @@
   `web/i18n.js`: replace the link-target radios with the unchecked local-viewer
   checkbox, reorder sources, add top-level text/article input modes, and render
   broad contexts in the word-context panel/debug log.
+- `rust/src/semantic_lexicon.rs` and `rust/src/formalize_contexts.rs`: keep the
+  Rust mirrors in sync with the semantic URL merge and broad-context output
+  behavior enforced by CI parity.
 - `js/tests/integration/issue-133.test.js`: regression coverage for the
   reported `Q35657` URL, source order, default link target mode, and broad
   word contexts.
+- `rust/tests/unit/formalize_contexts.rs` and
+  `rust/tests/integration/issue96_four_language_parity.rs`: Rust mirror
+  coverage for broad word contexts and the `Q35657` Russian Wikipedia URL.
 - `js/tests/integration/issue-50.test.js`: update Translate UI/default
   expectations to the new contract.
 - `.changeset/issue-133-translate-defaults.md`: release readiness.
@@ -54,6 +60,14 @@ node --test js/tests/integration/issue-37.test.js \
 ```
 
 Saved passing log: [`related-tests.log`](related-tests.log).
+
+Rust parity follow-up:
+
+```text
+cargo test
+npm run check
+npm test
+```
 
 ## Residual Risk
 

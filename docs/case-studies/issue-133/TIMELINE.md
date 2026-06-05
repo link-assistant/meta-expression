@@ -18,3 +18,5 @@
 - Captured the live after-state in `live-translation-after.json`.
 - Downloaded Wikidata and Russian Wikipedia research artifacts.
 - Wrote this case study and added a changeset.
+- Downloaded the fresh post-push parity failure log and updated the Rust mirror
+  modules/tests identified by CI.

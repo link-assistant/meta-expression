@@ -342,7 +342,7 @@ fn merge_virtual_concepts(concepts: &mut Vec<RawConcept>) {
 }
 
 fn merge_concept(previous: &mut RawConcept, incoming: RawConcept) {
-    previous.url = incoming.url.or_else(|| previous.url.clone());
+    previous.url = previous.url.clone().or(incoming.url);
     previous.entity_id = incoming.entity_id.or_else(|| previous.entity_id.clone());
     previous.description = incoming
         .description

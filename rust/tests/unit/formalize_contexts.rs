@@ -14,7 +14,8 @@
 
 use meta_expression_core::{
     apply_context_selections, build_context_questions, build_word_contexts,
-    is_scholarly_publication_candidate, normalize_context_selections,
+    build_word_contexts_with_broad_contexts, is_scholarly_publication_candidate,
+    normalize_context_selections,
 };
 use serde_json::{json, Value};
 
@@ -97,6 +98,78 @@ fn surfaces_per_word_context_detection() {
     assert!(contexts
         .iter()
         .any(|ctx| ctx["targetId"] == json!("Q16889133")));
+}
+
+#[test]
+fn surfaces_transitive_broad_contexts_per_candidate() {
+    let phrases = vec![
+        json!({
+            "text": "Hawaii",
+            "start": 0,
+            "end": 6,
+            "entity": {
+                "id": "Q782",
+                "label": "Hawaii",
+                "contextLabels": [
+                    { "property": "P31", "propertyLabel": "instance of", "targetId": "Q35657" }
+                ],
+            },
+            "candidates": [{
+                "id": "Q782",
+                "label": "Hawaii",
+                "score": 20,
+                "contextLabels": [
+                    { "property": "P31", "propertyLabel": "instance of", "targetId": "Q35657" }
+                ],
+            }],
+        }),
+        json!({
+            "text": "state",
+            "start": 12,
+            "end": 17,
+            "entity": {
+                "id": "Q35657",
+                "label": "state",
+                "contextLabels": [
+                    { "property": "P279", "propertyLabel": "subclass of", "targetId": "Q107390" }
+                ],
+            },
+            "candidates": [{
+                "id": "Q35657",
+                "label": "state",
+                "score": 20,
+                "contextLabels": [
+                    { "property": "P279", "propertyLabel": "subclass of", "targetId": "Q107390" }
+                ],
+            }],
+        }),
+    ];
+    let broad_contexts = vec![json!({
+        "id": "Q107390",
+        "label": "federated state",
+        "weight": 2,
+        "probability": 0.5,
+        "depth": 2,
+        "paths": [["Q782", "Q35657", "Q107390"]],
+        "propertyTrail": ["P31", "P279"],
+        "sourceCandidates": [
+            { "phrase": "Hawaii", "candidateId": "Q782" },
+            { "phrase": "state", "candidateId": "Q35657" }
+        ],
+        "sourcePhrases": [
+            { "text": "Hawaii", "entityId": "Q782" },
+            { "text": "state", "entityId": "Q35657" }
+        ],
+    })];
+
+    let word_contexts = build_word_contexts_with_broad_contexts(&phrases, &broad_contexts);
+    let hawaii = &word_contexts[0]["candidates"][0]["broadContexts"];
+    let state = &word_contexts[1]["candidates"][0]["broadContexts"];
+
+    assert_eq!(hawaii[0]["id"], json!("Q107390"));
+    assert_eq!(hawaii[0]["label"], json!("federated state"));
+    assert_eq!(state[0]["id"], json!("Q107390"));
+    assert_eq!(state[0]["propertyTrail"], json!(["P31", "P279"]));
 }
 
 /// Two senses of "bank" sharing the same label form a genuine homonym, so both

@@ -40,6 +40,9 @@ The fixed live after-state is captured in
   captured before the fix.
 - [`ci-logs/js-checks-26986686564.log`](ci-logs/js-checks-26986686564.log):
   failed JS workflow log showing the missing changeset failure.
+- [`ci-logs/js-parity-79640971351.log`](ci-logs/js-parity-79640971351.log):
+  fresh post-push CI job log showing the mirrored Rust modules that needed the
+  same semantic-lexicon and word-context changes.
 - [`focused-tests-before.log`](focused-tests-before.log): failing regression
   tests before implementation.
 - [`focused-tests-after.log`](focused-tests-after.log) and
@@ -52,6 +55,8 @@ The fixed live after-state is captured in
   [`ruwiki-state-summary.json`](ruwiki-state-summary.json), and
   [`ruwiki-hawaii-summary.json`](ruwiki-hawaii-summary.json): online research
   artifacts.
+- UI screenshots are committed in
+  [`../../screenshots/issue-133`](../../screenshots/issue-133).
 
 ## Reproduction
 
