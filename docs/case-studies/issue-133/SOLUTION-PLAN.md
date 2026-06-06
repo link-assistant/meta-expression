@@ -23,12 +23,18 @@
 - `js/tests/integration/issue-133.test.js`: regression coverage for the
   reported `Q35657` URL, source order, default link target mode, and broad
   word contexts.
+- Follow-up PR #135 extends `js/src/translate.js` so semantic-lexicon immediate
+  translations can use a live target-language sitelink when the local concept
+  only carries a Wikidata URL. It adds `Q99` / `California` regression coverage
+  to `js/tests/integration/issue-133.test.js`.
 - `rust/tests/unit/formalize_contexts.rs` and
   `rust/tests/integration/issue96_four_language_parity.rs`: Rust mirror
   coverage for broad word contexts and the `Q35657` Russian Wikipedia URL.
 - `js/tests/integration/issue-50.test.js`: update Translate UI/default
   expectations to the new contract.
 - `.changeset/issue-133-translate-defaults.md`: release readiness.
+- `.changeset/issue-133-california-target-links.md`: follow-up release
+  readiness for PR #135.
 
 ## Verification
 
@@ -47,6 +53,18 @@ node --test js/tests/integration/issue-133.test.js js/tests/integration/issue-50
 ```
 
 Saved passing log: [`focused-tests-after.log`](focused-tests-after.log).
+
+Follow-up focused before/after:
+
+```text
+node --test js/tests/integration/issue-133.test.js
+```
+
+Saved failing log:
+[`focused-california-before.log`](focused-california-before.log).
+
+Saved passing log:
+[`focused-california-after.log`](focused-california-after.log).
 
 Related Translate/context/article checks:
 

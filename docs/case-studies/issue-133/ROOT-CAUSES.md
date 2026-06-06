@@ -79,3 +79,24 @@ had not changed.
 Fix: make the same URL-preservation change in `rust/src/semantic_lexicon.rs`,
 add broad-context output support to `rust/src/formalize_contexts.rs`, and cover
 both behaviors with Rust tests.
+
+## RC8 - Semantic-lexicon immediate translation skipped live target sitelinks
+
+The first fix preserved source-backed URLs such as `Q35657` -> `ruwiki/Штат
+США`, but new virtual-only concepts can still carry a Wikidata source URL. For
+`Q99`, the local virtual override supplies the Russian text `Калифорния` and
+the URL `https://www.wikidata.org/wiki/Q99`.
+
+`lookupImmediatePhraseTranslation()` accepted that semantic-lexicon translation
+immediately. Because `lookupLocalConceptTranslation()` was synchronous, it could
+not fetch the target-language entity and therefore could not see that Wikidata
+already exposes the `ruwiki` sitelink `Калифорния`.
+
+Effect: `California` translated to Russian text correctly, but the rendered
+default Wikipedia-mode link still pointed at Wikidata.
+
+Fix: make semantic-lexicon immediate translation able to fetch the
+target-language entity when the target URL is not already a target-language
+Wikipedia URL. The rendered text still comes from the licensed local concept,
+while the default link target prefers a live target-language Wikipedia sitelink
+and falls back to the configured link mode.
