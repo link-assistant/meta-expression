@@ -2,7 +2,9 @@
 
 Issue: https://github.com/link-assistant/meta-expression/issues/133
 
-PR: https://github.com/link-assistant/meta-expression/pull/134
+Original PR: https://github.com/link-assistant/meta-expression/pull/134
+
+Follow-up PR: https://github.com/link-assistant/meta-expression/pull/135
 
 ## Summary
 
@@ -32,14 +34,30 @@ The fixed live after-state is captured in
 [штат](https://ru.wikipedia.org/wiki/%D0%A8%D1%82%D0%B0%D1%82_%D0%A1%D0%A8%D0%90 "Q35657").
 ```
 
+Follow-up PR #135 covers the later `California is a state.` regression from
+the latest issue comment. `Q99` came from a virtual semantic-lexicon concept
+whose local URL was Wikidata, so immediate translation returned before the
+target-language entity lookup could use the live `ruwiki` sitelink. The fixed
+target for `Калифорния` is:
+
+```text
+https://ru.wikipedia.org/wiki/%D0%9A%D0%B0%D0%BB%D0%B8%D1%84%D0%BE%D1%80%D0%BD%D0%B8%D1%8F
+```
+
 ## Files
 
 - [`issue.json`](issue.json) and [`issue-comments.json`](issue-comments.json):
   issue metadata captured from GitHub.
+- [`issue-latest.json`](issue-latest.json) and
+  [`issue-comments-latest.json`](issue-comments-latest.json): refreshed
+  metadata after the follow-up California comment.
 - [`pr-134.json`](pr-134.json), review comments, and reviews: PR metadata
   captured before the fix.
 - [`ci-logs/js-checks-26986686564.log`](ci-logs/js-checks-26986686564.log):
   failed JS workflow log showing the missing changeset failure.
+- [`ci-logs/js-checks-27068274619.log`](ci-logs/js-checks-27068274619.log):
+  failed PR #135 placeholder workflow log showing the same active-changeset
+  failure before implementation.
 - [`ci-logs/js-parity-79640971351.log`](ci-logs/js-parity-79640971351.log):
   fresh post-push CI job log showing the mirrored Rust modules that needed the
   same semantic-lexicon and word-context changes.
@@ -47,14 +65,21 @@ The fixed live after-state is captured in
   tests before implementation.
 - [`focused-tests-after.log`](focused-tests-after.log) and
   [`related-tests.log`](related-tests.log): passing local verification.
+- [`california-translation-debug-log.txt`](california-translation-debug-log.txt):
+  debug log from the issue comment's Gist.
+- [`focused-california-before.log`](focused-california-before.log) and
+  [`focused-california-after.log`](focused-california-after.log): focused
+  failing/passing regression logs for PR #135.
 - [`live-translation-before.json`](live-translation-before.json) and
   [`live-translation-after.json`](live-translation-after.json): real Wikimedia
   before/after captures for the reported sentence.
 - [`wikidata-q35657-sitelinks.json`](wikidata-q35657-sitelinks.json),
   [`wikidata-q782-sitelinks.json`](wikidata-q782-sitelinks.json),
-  [`ruwiki-state-summary.json`](ruwiki-state-summary.json), and
-  [`ruwiki-hawaii-summary.json`](ruwiki-hawaii-summary.json): online research
-  artifacts.
+  [`wikidata-q99-sitelinks.json`](wikidata-q99-sitelinks.json),
+  [`ruwiki-state-summary.json`](ruwiki-state-summary.json),
+  [`ruwiki-hawaii-summary.json`](ruwiki-hawaii-summary.json), and
+  [`ruwiki-california-summary.json`](ruwiki-california-summary.json): online
+  research artifacts.
 - UI screenshots are committed in
   [`../../screenshots/issue-133`](../../screenshots/issue-133).
 

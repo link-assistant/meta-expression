@@ -420,7 +420,10 @@ async function lookupImmediatePhraseTranslation(
     const translation = await lookupUnlinkedPhraseTranslation(phrase, config);
     return translation ? { translation, sourceEntity: null } : null;
   }
-  const translation = lookupLocalConceptTranslation(translationEntity, config);
+  const translation = await lookupLocalConceptTranslation(
+    translationEntity,
+    config
+  );
   return translation ? { translation, sourceEntity: translationEntity } : null;
 }
 
@@ -434,7 +437,7 @@ async function lookupUnlinkedPhraseTranslation(phrase, config) {
   );
 }
 
-function lookupLocalConceptTranslation(entity, config) {
+async function lookupLocalConceptTranslation(entity, config) {
   const concept = entity?.id
     ? resolveConceptForm(entity.id, config.targetLanguage)
     : null;
@@ -445,22 +448,69 @@ function lookupLocalConceptTranslation(entity, config) {
     ...entity,
     id: concept.entityId ?? entity.id,
     sourceUrl: concept.url ?? sourceUrlForSemanticEntity(entity),
-    wikipediaUrl: concept.url ?? null,
+    wikipediaUrl: wikipediaConceptUrl(concept.url, config.targetLanguage),
   };
+  const liveTargetEntity = targetEntity.wikipediaUrl
+    ? null
+    : await lookupLocalConceptTargetEntity(targetEntity.id, config);
   return {
     text: concept.text,
     target: {
       entityId: targetEntity.id,
-      description: concept.description ?? entity.description ?? null,
-      url: resolveLinkTarget(
-        { entity: targetEntity },
-        { linkTargetMode: config.linkTargetMode }
-      ),
+      description:
+        concept.description ??
+        targetDescriptionFor(liveTargetEntity, config.targetLanguage) ??
+        entity.description ??
+        null,
+      url: localConceptTargetUrl(targetEntity, liveTargetEntity, config),
       source: 'semantic-lexicon',
       sourceUrl: concept.url ?? sourceUrlForSemanticEntity(entity),
     },
     strategy: 'semantic-lexicon',
   };
+}
+
+async function lookupLocalConceptTargetEntity(id, config) {
+  if (
+    config.linkTargetMode !== FORMALIZE_LINK_TARGETS.WIKIPEDIA ||
+    !isWikidataId(id) ||
+    !config.fetchImpl
+  ) {
+    return null;
+  }
+  try {
+    return await fetchTargetEntity(id, config);
+  } catch (error) {
+    recordStep(config, 'semantic-lexicon-target-lookup-error', {
+      entityId: id,
+      targetLanguage: config.targetLanguage,
+      error: error instanceof Error ? error.message : String(error),
+    });
+    return null;
+  }
+}
+
+function localConceptTargetUrl(targetEntity, liveTargetEntity, config) {
+  if (liveTargetEntity?.sitelinks?.[`${config.targetLanguage}wiki`]?.title) {
+    return targetUrlFor(
+      liveTargetEntity,
+      targetEntity,
+      config.targetLanguage,
+      config
+    );
+  }
+  return resolveLinkTarget(
+    { entity: targetEntity },
+    { linkTargetMode: config.linkTargetMode }
+  );
+}
+
+function wikipediaConceptUrl(url, language) {
+  return new RegExp(`^https://${language}\\.wikipedia\\.org/wiki/`).test(
+    String(url ?? '')
+  )
+    ? url
+    : null;
 }
 function translatedGlossaryPhrase(base, translation, config) {
   const entityId = base.source.entityId ?? null;

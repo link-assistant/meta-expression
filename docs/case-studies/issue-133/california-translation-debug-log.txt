@@ -1,0 +1,3020 @@
+Translate debug log
+UI: web/#/translate
+App version: v0.12.1 (787765c)
+Source language: en
+Target language: ru
+Status: Translated 1 sentence (2/3 linked phrases, 1 rule-resolved).
+
+Source text
+California is a state.
+
+Formalized input
+[California](https://en.wikipedia.org/wiki/California "Q99") [is a](https://en.wiktionary.org/wiki/is-a "wikt:en:is-a#Noun:0") [state](https://en.wikipedia.org/wiki/U.S._state "Q35657").
+
+Translated result
+[Калифорния](https://www.wikidata.org/wiki/Q99 "Q99") [это](https://en.wiktionary.org/wiki/%D1%8D%D1%82%D0%BE "wikt:ru:это#Determiner:0") [штат](https://ru.wikipedia.org/wiki/%D0%A8%D1%82%D0%B0%D1%82_%D0%A1%D0%A8%D0%90 "Q35657").
+
+Context detection
+Most likely context: Q35657 (8%)
+Word contexts
+Word: California
+  ✓ California [Q99] (score 51) — instance of: Q35657, part of: Q578170; broader: federated state [Q107390] (5%), Pentacontad [Q135236673] (5%), designation for an administrative territorial entity of a single country [Q28872924] (5%), administrative territorial entity of the United States [Q852446] (5%)
+  • California [Q16047894] (score 39) — instance of: Q16521; broader: Q24017414 (3%), taxon [Q16521] (3%)
+  • California [Q23930100] (score 39) — instance of: Q482994, part of: Q84077605, genre: Q487914
+
+Word: is a
+  ✓ is a [wikt:en:is-a#Noun:0] (score 32)
+  • is a [wikt:en:is-a#Noun:1] (score 32)
+
+Word: state
+  ✓ state [Q35657] (score 43) — instance of: Q28872924, instance of: Q135236673, subclass of: Q852446, subclass of: Q107390, subclass of: Q106458883, subclass of: Q192611, subclass of: Q10864048, subclass of: Q155076; broader: federated state [Q107390] (5%), Pentacontad [Q135236673] (5%), designation for an administrative territorial entity of a single country [Q28872924] (5%), administrative territorial entity of the United States [Q852446] (5%)
+  • state [wikt:en:state#Noun:0] (score 43)
+  • state [wikt:en:state#Noun:1] (score 43)
+
+Context selection questions
+Which meaning of "California" did you intend? (selected: Q99)
+[x] California [Q99] (score 51)
+[ ] California [Q16047894] (score 39)
+[ ] California [Q23930100] (score 39)
+
+Which meaning of "is a" did you intend? (selected: wikt:en:is-a#Noun:0)
+[x] is a [wikt:en:is-a#Noun:0] (score 32)
+[ ] is a [wikt:en:is-a#Noun:1] (score 32)
+
+Which meaning of "state" did you intend? (selected: Q35657)
+[x] state [Q35657] (score 43)
+[ ] state [wikt:en:state#Noun:0] (score 43)
+[ ] state [wikt:en:state#Noun:1] (score 43)
+
+Questions
+No unresolved variables.
+
+Translation steps
+1. input: step-1
+{
+  "id": "step-1",
+  "type": "input",
+  "sourceLanguage": "en",
+  "targetLanguage": "ru",
+  "text": "California is a state."
+}
+
+2. API request: GET https://en.wikipedia.org/w/api.php?action=query&format=json&list=search&srsearch=California&srlimit=5&origin=*
+{
+  "id": "step-2",
+  "type": "api-request",
+  "method": "GET",
+  "url": "https://en.wikipedia.org/w/api.php?action=query&format=json&list=search&srsearch=California&srlimit=5&origin=*"
+}
+
+3. API request: GET https://www.wikidata.org/w/api.php?action=wbsearchentities&format=json&language=en&origin=*&type=item&limit=5&search=California
+{
+  "id": "step-3",
+  "type": "api-request",
+  "method": "GET",
+  "url": "https://www.wikidata.org/w/api.php?action=wbsearchentities&format=json&language=en&origin=*&type=item&limit=5&search=California"
+}
+
+4. API request: GET https://www.wikidata.org/w/api.php?action=wbsearchentities&format=json&language=en&origin=*&type=property&limit=5&search=California
+{
+  "id": "step-4",
+  "type": "api-request",
+  "method": "GET",
+  "url": "https://www.wikidata.org/w/api.php?action=wbsearchentities&format=json&language=en&origin=*&type=property&limit=5&search=California"
+}
+
+5. API request: GET https://en.wiktionary.org/api/rest_v1/page/definition/california
+{
+  "id": "step-5",
+  "type": "api-request",
+  "method": "GET",
+  "url": "https://en.wiktionary.org/api/rest_v1/page/definition/california"
+}
+
+6. API response: 200 https://www.wikidata.org/w/api.php?action=wbsearchentities&format=json&language=en&origin=*&type=property&limit=5&search=California
+{
+  "id": "step-6",
+  "type": "api-response",
+  "method": "GET",
+  "url": "https://www.wikidata.org/w/api.php?action=wbsearchentities&format=json&language=en&origin=*&type=property&limit=5&search=California",
+  "status": 200,
+  "ok": true,
+  "bodyPreview": "{\"searchinfo\":{\"search\":\"California\"},\"search\":[{\"id\":\"P4194\",\"title\":\"Property:P4194\",\"pageid\":40052248,\"concepturi\":\"http://www.wikidata.org/entity/P4194\",\"datatype\":\"external-id\",\"repository\":\"wikidata\",\"url\":\"//www.wikidata.org/wiki/Property:P4194\",\"display\":{\"label\":{\"value\":\"CNPS ID\",\"language\":\"en\"},\"description\":{\"value\":\"identifier in the California Native Plant Society database\",\"language\":\"en\"}},\"label\":\"CNPS ID\",\"description\":\"identifier in the California Native Plant Society databas..."
+}
+
+7. API response: 200 https://www.wikidata.org/w/api.php?action=wbsearchentities&format=json&language=en&origin=*&type=item&limit=5&search=California
+{
+  "id": "step-7",
+  "type": "api-response",
+  "method": "GET",
+  "url": "https://www.wikidata.org/w/api.php?action=wbsearchentities&format=json&language=en&origin=*&type=item&limit=5&search=California",
+  "status": 200,
+  "ok": true,
+  "bodyPreview": "{\"searchinfo\":{\"search\":\"California\"},\"search\":[{\"id\":\"Q99\",\"title\":\"Q99\",\"pageid\":230,\"concepturi\":\"http://www.wikidata.org/entity/Q99\",\"repository\":\"wikidata\",\"url\":\"//www.wikidata.org/wiki/Q99\",\"display\":{\"label\":{\"value\":\"California\",\"language\":\"en\"},\"description\":{\"value\":\"state of the United States of America\",\"language\":\"en\"}},\"label\":\"California\",\"description\":\"state of the United States of America\",\"match\":{\"type\":\"label\",\"language\":\"en\",\"text\":\"California\"}},{\"id\":\"Q16047894\",\"title\":\"..."
+}
+
+8. API response: 200 https://en.wikipedia.org/w/api.php?action=query&format=json&list=search&srsearch=California&srlimit=5&origin=*
+{
+  "id": "step-8",
+  "type": "api-response",
+  "method": "GET",
+  "url": "https://en.wikipedia.org/w/api.php?action=query&format=json&list=search&srsearch=California&srlimit=5&origin=*",
+  "status": 200,
+  "ok": true,
+  "bodyPreview": "{\"batchcomplete\":\"\",\"continue\":{\"sroffset\":5,\"continue\":\"-||\"},\"query\":{\"searchinfo\":{\"totalhits\":521871},\"search\":[{\"ns\":0,\"title\":\"California\",\"pageid\":5407,\"size\":292386,\"wordcount\":24609,\"snippet\":\"<span class=\\\"searchmatch\\\">California</span> (/\\u02cck\\u00e6l\\u026a\\u02c8f\\u0254\\u02d0rni\\u0259/) is a state in the Western United States that lies on the Pacific Coast. It borders Oregon to the north, and Nevada and Arizona\",\"timestamp\":\"2026-06-06T15:31:23Z\"},{\"ns\":0,\"title\":\"California City, C..."
+}
+
+9. API request: GET https://en.wikipedia.org/w/api.php?action=query&format=json&prop=pageprops&titles=California%7CCalifornia+City%2C+California%7CCalifornia+Saga%2FCalifornia%7CThe+Californias%7CCalifornia+Valley%2C+California&ppprop=wikibase_item&origin=*
+{
+  "id": "step-9",
+  "type": "api-request",
+  "method": "GET",
+  "url": "https://en.wikipedia.org/w/api.php?action=query&format=json&prop=pageprops&titles=California%7CCalifornia+City%2C+California%7CCalifornia+Saga%2FCalifornia%7CThe+Californias%7CCalifornia+Valley%2C+California&ppprop=wikibase_item&origin=*"
+}
+
+10. API response: 200 https://en.wiktionary.org/api/rest_v1/page/definition/california
+{
+  "id": "step-10",
+  "type": "api-response",
+  "method": "GET",
+  "url": "https://en.wiktionary.org/api/rest_v1/page/definition/california",
+  "status": 200,
+  "ok": true,
+  "bodyPreview": "{\"la\":[{\"partOfSpeech\":\"Noun\",\"language\":\"Latin\",\"definitions\":[{\"definition\":\"<span class=\\\"form-of-definition use-with-mention\\\" about=\\\"#mwt3\\\" typeof=\\\"mw:Transclusion\\\"><span class=\\\"inflection-of-conjoined\\\"><a rel=\\\"mw:WikiLink\\\" href=\\\"/wiki/Appendix:Glossary#nominative_case\\\" title=\\\"Appendix:Glossary\\\">nominative</a><span class=\\\"inflection-of-sep\\\">/</span><a rel=\\\"mw:WikiLink\\\" href=\\\"/wiki/Appendix:Glossary#accusative_case\\\" title=\\\"Appendix:Glossary\\\">accusative</a><span class=\\\"in..."
+}
+
+11. API response: 200 https://en.wikipedia.org/w/api.php?action=query&format=json&prop=pageprops&titles=California%7CCalifornia+City%2C+California%7CCalifornia+Saga%2FCalifornia%7CThe+Californias%7CCalifornia+Valley%2C+California&ppprop=wikibase_item&origin=*
+{
+  "id": "step-11",
+  "type": "api-response",
+  "method": "GET",
+  "url": "https://en.wikipedia.org/w/api.php?action=query&format=json&prop=pageprops&titles=California%7CCalifornia+City%2C+California%7CCalifornia+Saga%2FCalifornia%7CThe+Californias%7CCalifornia+Valley%2C+California&ppprop=wikibase_item&origin=*",
+  "status": 200,
+  "ok": true,
+  "bodyPreview": "{\"batchcomplete\":\"\",\"query\":{\"pages\":{\"5407\":{\"pageid\":5407,\"ns\":0,\"title\":\"California\",\"pageprops\":{\"wikibase_item\":\"Q99\"}},\"107526\":{\"pageid\":107526,\"ns\":0,\"title\":\"California City, California\",\"pageprops\":{\"wikibase_item\":\"Q732125\"}},\"4819291\":{\"pageid\":4819291,\"ns\":0,\"title\":\"California Saga/California\",\"pageprops\":{\"wikibase_item\":\"Q5020935\"}},\"1571632\":{\"pageid\":1571632,\"ns\":0,\"title\":\"California Valley, California\",\"pageprops\":{\"wikibase_item\":\"Q3475029\"}},\"9386836\":{\"pageid\":9386836,\"ns\"..."
+}
+
+12. API request: GET https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&ids=Q99&languages=en&origin=*&props=labels%7Caliases%7Cdescriptions%7Cclaims%7Csitelinks&sitefilter=enwiki
+{
+  "id": "step-12",
+  "type": "api-request",
+  "method": "GET",
+  "url": "https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&ids=Q99&languages=en&origin=*&props=labels%7Caliases%7Cdescriptions%7Cclaims%7Csitelinks&sitefilter=enwiki"
+}
+
+13. API request: GET https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&ids=Q16047894&languages=en&origin=*&props=labels%7Caliases%7Cdescriptions%7Cclaims%7Csitelinks&sitefilter=enwiki
+{
+  "id": "step-13",
+  "type": "api-request",
+  "method": "GET",
+  "url": "https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&ids=Q16047894&languages=en&origin=*&props=labels%7Caliases%7Cdescriptions%7Cclaims%7Csitelinks&sitefilter=enwiki"
+}
+
+14. API request: GET https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&ids=Q23930100&languages=en&origin=*&props=labels%7Caliases%7Cdescriptions%7Cclaims%7Csitelinks&sitefilter=enwiki
+{
+  "id": "step-14",
+  "type": "api-request",
+  "method": "GET",
+  "url": "https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&ids=Q23930100&languages=en&origin=*&props=labels%7Caliases%7Cdescriptions%7Cclaims%7Csitelinks&sitefilter=enwiki"
+}
+
+15. API response: 200 https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&ids=Q16047894&languages=en&origin=*&props=labels%7Caliases%7Cdescriptions%7Cclaims%7Csitelinks&sitefilter=enwiki
+{
+  "id": "step-15",
+  "type": "api-response",
+  "method": "GET",
+  "url": "https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&ids=Q16047894&languages=en&origin=*&props=labels%7Caliases%7Cdescriptions%7Cclaims%7Csitelinks&sitefilter=enwiki",
+  "status": 200,
+  "ok": true,
+  "bodyPreview": "{\"entities\":{\"Q16047894\":{\"type\":\"item\",\"id\":\"Q16047894\",\"labels\":{\"en\":{\"language\":\"en\",\"value\":\"California\"}},\"descriptions\":{\"en\":{\"language\":\"en\",\"value\":\"genus of plants\"}},\"aliases\":{},\"claims\":{\"P225\":[{\"mainsnak\":{\"snaktype\":\"value\",\"property\":\"P225\",\"hash\":\"44e7ea13dfffbb12de0ee5929498b79e0824a8cc\",\"datavalue\":{\"value\":\"California\",\"type\":\"string\"},\"datatype\":\"string\"},\"type\":\"statement\",\"qualifiers\":{\"P405\":[{\"snaktype\":\"value\",\"property\":\"P405\",\"hash\":\"57cd856cc956ed2eb0918700e78f31f2..."
+}
+
+16. API response: 200 https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&ids=Q23930100&languages=en&origin=*&props=labels%7Caliases%7Cdescriptions%7Cclaims%7Csitelinks&sitefilter=enwiki
+{
+  "id": "step-16",
+  "type": "api-response",
+  "method": "GET",
+  "url": "https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&ids=Q23930100&languages=en&origin=*&props=labels%7Caliases%7Cdescriptions%7Cclaims%7Csitelinks&sitefilter=enwiki",
+  "status": 200,
+  "ok": true,
+  "bodyPreview": "{\"entities\":{\"Q23930100\":{\"type\":\"item\",\"id\":\"Q23930100\",\"labels\":{\"en\":{\"language\":\"en\",\"value\":\"California\"}},\"descriptions\":{\"en\":{\"language\":\"en\",\"value\":\"2016 album by Blink-182\"}},\"aliases\":{},\"claims\":{\"P175\":[{\"mainsnak\":{\"snaktype\":\"value\",\"property\":\"P175\",\"hash\":\"75d2af8cb60e1de6eed858d07116068e7a7554f3\",\"datavalue\":{\"value\":{\"entity-type\":\"item\",\"numeric-id\":482477,\"id\":\"Q482477\"},\"type\":\"wikibase-entityid\"},\"datatype\":\"wikibase-item\"},\"type\":\"statement\",\"id\":\"Q23930100$0c728f66-4534..."
+}
+
+17. API response: 200 https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&ids=Q99&languages=en&origin=*&props=labels%7Caliases%7Cdescriptions%7Cclaims%7Csitelinks&sitefilter=enwiki
+{
+  "id": "step-17",
+  "type": "api-response",
+  "method": "GET",
+  "url": "https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&ids=Q99&languages=en&origin=*&props=labels%7Caliases%7Cdescriptions%7Cclaims%7Csitelinks&sitefilter=enwiki",
+  "status": 200,
+  "ok": true,
+  "bodyPreview": "{\"entities\":{\"Q99\":{\"type\":\"item\",\"id\":\"Q99\",\"labels\":{\"en\":{\"language\":\"en\",\"value\":\"California\"}},\"descriptions\":{\"en\":{\"language\":\"en\",\"value\":\"state of the United States of America\"}},\"aliases\":{\"en\":[{\"language\":\"en\",\"value\":\"State of California\"},{\"language\":\"en\",\"value\":\"The Golden State\"},{\"language\":\"en\",\"value\":\"Calif.\"},{\"language\":\"en\",\"value\":\"California, United States\"},{\"language\":\"en\",\"value\":\"Cali.\"},{\"language\":\"en\",\"value\":\"Cal.\"},{\"language\":\"en\",\"value\":\"CA\"},{\"language\":\"en..."
+}
+
+18. API request: GET https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&ids=Q578170&languages=en&origin=*&props=labels%7Cclaims
+{
+  "id": "step-18",
+  "type": "api-request",
+  "method": "GET",
+  "url": "https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&ids=Q578170&languages=en&origin=*&props=labels%7Cclaims"
+}
+
+19. API response: 200 https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&ids=Q578170&languages=en&origin=*&props=labels%7Cclaims
+{
+  "id": "step-19",
+  "type": "api-response",
+  "method": "GET",
+  "url": "https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&ids=Q578170&languages=en&origin=*&props=labels%7Cclaims",
+  "status": 200,
+  "ok": true,
+  "bodyPreview": "{\"entities\":{\"Q578170\":{\"type\":\"item\",\"id\":\"Q578170\",\"labels\":{\"en\":{\"language\":\"en\",\"value\":\"contiguous United States\"}},\"claims\":{\"P646\":[{\"mainsnak\":{\"snaktype\":\"value\",\"property\":\"P646\",\"hash\":\"34bac08556a5a1e46fe9a7065c563e8d810bb461\",\"datavalue\":{\"value\":\"/m/04_1l0v\",\"type\":\"string\"},\"datatype\":\"external-id\"},\"type\":\"statement\",\"id\":\"Q578170$523141CF-B2AC-45F9-819D-D92409CF3E28\",\"rank\":\"normal\",\"references\":[{\"hash\":\"2b00cb481cddcac7623114367489b5c194901c4a\",\"snaks\":{\"P248\":[{\"snaktype\":\"v..."
+}
+
+20. API request: GET https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&ids=Q16521&languages=en&origin=*&props=labels%7Cclaims
+{
+  "id": "step-20",
+  "type": "api-request",
+  "method": "GET",
+  "url": "https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&ids=Q16521&languages=en&origin=*&props=labels%7Cclaims"
+}
+
+21. API response: 200 https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&ids=Q16521&languages=en&origin=*&props=labels%7Cclaims
+{
+  "id": "step-21",
+  "type": "api-response",
+  "method": "GET",
+  "url": "https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&ids=Q16521&languages=en&origin=*&props=labels%7Cclaims",
+  "status": 200,
+  "ok": true,
+  "bodyPreview": "{\"entities\":{\"Q16521\":{\"type\":\"item\",\"id\":\"Q16521\",\"labels\":{\"en\":{\"language\":\"en\",\"value\":\"taxon\"}},\"claims\":{\"P279\":[{\"mainsnak\":{\"snaktype\":\"value\",\"property\":\"P279\",\"hash\":\"00c897a47bf7ff183f7d33952c29bff7c4f663f2\",\"datavalue\":{\"value\":{\"entity-type\":\"item\",\"numeric-id\":21871294,\"id\":\"Q21871294\"},\"type\":\"wikibase-entityid\"},\"datatype\":\"wikibase-item\"},\"type\":\"statement\",\"id\":\"Q16521$cc853109-4c46-028a-dd45-d52b4a34cb75\",\"rank\":\"normal\"}],\"P646\":[{\"mainsnak\":{\"snaktype\":\"value\",\"property\":\"P6..."
+}
+
+22. API request: GET https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&ids=Q482994&languages=en&origin=*&props=labels%7Cclaims
+{
+  "id": "step-22",
+  "type": "api-request",
+  "method": "GET",
+  "url": "https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&ids=Q482994&languages=en&origin=*&props=labels%7Cclaims"
+}
+
+23. API response: 200 https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&ids=Q482994&languages=en&origin=*&props=labels%7Cclaims
+{
+  "id": "step-23",
+  "type": "api-response",
+  "method": "GET",
+  "url": "https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&ids=Q482994&languages=en&origin=*&props=labels%7Cclaims",
+  "status": 200,
+  "ok": true,
+  "bodyPreview": "{\"entities\":{\"Q482994\":{\"type\":\"item\",\"id\":\"Q482994\",\"labels\":{\"en\":{\"language\":\"en\",\"value\":\"album\"}},\"claims\":{\"P373\":[{\"mainsnak\":{\"snaktype\":\"value\",\"property\":\"P373\",\"hash\":\"441701dcbc53db35219e83ecf42d2898ff226184\",\"datavalue\":{\"value\":\"Music albums\",\"type\":\"string\"},\"datatype\":\"string\"},\"type\":\"statement\",\"id\":\"q482994$B560975B-DF6D-4C5B-A306-88A416DA27EC\",\"rank\":\"normal\"}],\"P508\":[{\"mainsnak\":{\"snaktype\":\"value\",\"property\":\"P508\",\"hash\":\"b8c71fd0684be0d8d451cc2f0f0ebe156bbf85f2\",\"dataval..."
+}
+
+24. API request: GET https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&ids=Q84077605&languages=en&origin=*&props=labels%7Cclaims
+{
+  "id": "step-24",
+  "type": "api-request",
+  "method": "GET",
+  "url": "https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&ids=Q84077605&languages=en&origin=*&props=labels%7Cclaims"
+}
+
+25. API response: 200 https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&ids=Q84077605&languages=en&origin=*&props=labels%7Cclaims
+{
+  "id": "step-25",
+  "type": "api-response",
+  "method": "GET",
+  "url": "https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&ids=Q84077605&languages=en&origin=*&props=labels%7Cclaims",
+  "status": 200,
+  "ok": true,
+  "bodyPreview": "{\"entities\":{\"Q84077605\":{\"type\":\"item\",\"id\":\"Q84077605\",\"labels\":{\"en\":{\"language\":\"en\",\"value\":\"Blink-182's albums in chronological order\"}},\"claims\":{\"P31\":[{\"mainsnak\":{\"snaktype\":\"value\",\"property\":\"P31\",\"hash\":\"34c4e1d7d4d661131e4b47ebdfaad89bf77da4af\",\"datavalue\":{\"value\":{\"entity-type\":\"item\",\"numeric-id\":59191021,\"id\":\"Q59191021\"},\"type\":\"wikibase-entityid\"},\"datatype\":\"wikibase-item\"},\"type\":\"statement\",\"id\":\"Q84077605$58b78ed9-489c-8531-480c-843297a026ca\",\"rank\":\"normal\"}],\"P360\":[{\"m..."
+}
+
+26. API request: GET https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&ids=Q487914&languages=en&origin=*&props=labels%7Cclaims
+{
+  "id": "step-26",
+  "type": "api-request",
+  "method": "GET",
+  "url": "https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&ids=Q487914&languages=en&origin=*&props=labels%7Cclaims"
+}
+
+27. API response: 200 https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&ids=Q487914&languages=en&origin=*&props=labels%7Cclaims
+{
+  "id": "step-27",
+  "type": "api-response",
+  "method": "GET",
+  "url": "https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&ids=Q487914&languages=en&origin=*&props=labels%7Cclaims",
+  "status": 200,
+  "ok": true,
+  "bodyPreview": "{\"entities\":{\"Q487914\":{\"type\":\"item\",\"id\":\"Q487914\",\"labels\":{\"en\":{\"language\":\"en\",\"value\":\"pop-punk\"}},\"claims\":{\"P31\":[{\"mainsnak\":{\"snaktype\":\"value\",\"property\":\"P31\",\"hash\":\"8afc10155c81399639bb273986eff2b54ba28f89\",\"datavalue\":{\"value\":{\"entity-type\":\"item\",\"numeric-id\":188451,\"id\":\"Q188451\"},\"type\":\"wikibase-entityid\"},\"datatype\":\"wikibase-item\"},\"type\":\"statement\",\"id\":\"q487914$2A361BD9-5C72-4D09-A823-9EB00DCC1039\",\"rank\":\"normal\",\"references\":[{\"hash\":\"dd3528c6302a390cda99702c4264cd488..."
+}
+
+28. Formalization: 3 phrases
+{
+  "id": "step-28",
+  "type": "formalization",
+  "phraseCount": 3,
+  "markdown": "[California](https://en.wikipedia.org/wiki/California \"Q99\") [is a](https://en.wiktionary.org/wiki/is-a \"wikt:en:is-a#Noun:0\") [state](https://en.wikipedia.org/wiki/U.S._state \"Q35657\").",
+  "linksNotation": "(formalization: (California is a state.))\n(phrase-1: source (California) start 0 end 0 id Q99 label (California) kind entity markdownUrl (https://en.wikipedia.org/wiki/California))\n(phrase-1-definition: source (California) selected (Q99) senses 3 wikidata (Q99) wikipedia (https://en.wikipedia.org/wiki/California) wiktionary (none))\n(phrase-1-sense-1: source (virtual-source-overrides) id (Q99) label (California) kind entity score 51 selected true markdownUrl (https://en.wikipedia.org/wiki/California))\n(phrase-1-sense-2: source (wikidata) id (Q16047894) label (California) kind entity score 39 selected false markdownUrl (https://www.wikidata.org/wiki/Q16047894))\n(phrase-1-sense-3: source (wikidata) id (Q23930100) label (California) kind entity score 39 selected false markdownUrl (https://en.wikipedia.org/wiki/California_ Blink-182_album))\n(phrase-2: source (is a) start 1 end 2 id wikt:en:is-a#Noun:0 label (is a) kind entity markdownUrl (https://en.wiktionary.org/wiki/is-a))\n(phrase-2-definition: source (is a) selected (wikt:en:is-a#Noun:0) senses 2 wikidata (none) wikipedia (none) wiktionary (https://en.wiktionary.org/wiki/is-a))\n(phrase-2-sense-1: source (wiktionary) id (wikt:en:is-a#Noun:0) label (is a) kind entity score 32 selected true markdownUrl (https://en.wiktionary.org/wiki/is-a))\n(phrase-2-sense-2: source (wiktionary) id (wikt:en:is-a#Noun:1) label (is a) kind entity score 32 selected false markdownUrl (https://en.wiktionary.org/wiki/is-a))\n(phrase-3: source (state) start 3 end 3 id Q35657 label (state) kind entity markdownUrl (https://en.wikipedia.org/wiki/U.S._state))\n(phrase-3-definition: source (state) selected (Q35657) senses 3 wikidata (Q35657) wikipedia (https://en.wikipedia.org/wiki/U.S._state) wiktionary (https://en.wiktionary.org/wiki/state))\n(phrase-3-sense-1: source (virtual-source-overrides) id (Q35657) label (state) kind entity score 43 selected true markdownUrl (https://en.wikipedia.org/wiki/U.S._state))\n(phrase-3-sense-2: source (wiktionary) id (wikt:en:state#Noun:0) label (state) kind entity score 43 selected false markdownUrl (https://en.wiktionary.org/wiki/state))\n(phrase-3-sense-3: source (wiktionary) id (wikt:en:state#Noun:1) label (state) kind entity score 43 selected false markdownUrl (https://en.wiktionary.org/wiki/state))\n(fragment-6: noun-phrase role noun-phrase source (California) start 0 end 0 phrases (phrase-1))\n(fragment-7: subject role subject source (California) start 0 end 0 phrases (phrase-1))\n(fragment-8: verb-phrase role verb-phrase source (is) start 1 end 1 phrases (phrase-2))\n(fragment-9: predicate role predicate source (is) start 1 end 1 phrases (phrase-2))\n(fragment-10: noun-phrase role noun-phrase source (a state) start 2 end 3 phrases (phrase-2 phrase-3))\n(fragment-11: object role object source (state) start 3 end 3 phrases (phrase-3))\n(dependency-1: nsubj head fragment-9 dependent fragment-7)\n(dependency-2: root head fragment-9 dependent fragment-9)\n(dependency-3: obj head fragment-9 dependent fragment-11)\n(dependency-4: root head fragment-2 dependent fragment-2)\n(dependency-5: nsubj head fragment-2 dependent fragment-1)\n(dependency-6: obj head fragment-2 dependent fragment-4)\n(dependency-7: det head fragment-4 dependent fragment-3)\n(relation-1: subject-predicate-object subject fragment-7 predicate fragment-9 object fragment-11)\n(context-1: Q35657 property P31 priority 1 probability 8.5 weight 0.3953488372093023 words 1 sharedBy (California))\n(context-2: Q578170 property P361 priority 2 probability 8.5 weight 0.3953488372093023 words 1 sharedBy (California))\n(context-3: Q106458883 property P279 priority 3 probability 7.1 weight 0.3333333333333333 words 1 sharedBy (state))\n(context-4: Q107390 property P279 priority 4 probability 7.1 weight 0.3333333333333333 words 1 sharedBy (state))\n(context-5: Q10864048 property P279 priority 5 probability 7.1 weight 0.3333333333333333 words 1 sharedBy (state))\n(context-6: Q135236673 property P31 priority 6 probability 7.1 weight 0.3333333333333333 words 1 sharedBy (state))\n(context-7: Q155076 property P279 priority 7 probability 7.1 weight 0.3333333333333333 words 1 sharedBy (state))\n(context-8: Q192611 property P279 priority 8 probability 7.1 weight 0.3333333333333333 words 1 sharedBy (state))\n(context-9: Q28872924 property P31 priority 9 probability 7.1 weight 0.3333333333333333 words 1 sharedBy (state))\n(context-10: Q852446 property P279 priority 10 probability 7.1 weight 0.3333333333333333 words 1 sharedBy (state))\n(context-11: Q16521 property P31 priority 11 probability 6.5 weight 0.3023255813953488 words 1 sharedBy (California))\n(context-12: Q482994 property P31 priority 12 probability 6.5 weight 0.3023255813953488 words 1 sharedBy (California))\n(context-13: Q487914 property P136 priority 13 probability 6.5 weight 0.3023255813953488 words 1 sharedBy (California))\n(context-14: Q84077605 property P361 priority 14 probability 6.5 weight 0.3023255813953488 words 1 sharedBy (California))"
+}
+
+29. semantic-meta-language: step-29
+{
+  "id": "step-29",
+  "type": "semantic-meta-language",
+  "linkCount": 3,
+  "linksNotation": "(semantic-meta-language: (California is a state.) from en to ru)\n(semantic-link-1: source (California) status linked-entity sourceRole subject meaning (Q99) label (California) targetHint (Калифорния) url (https://en.wikipedia.org/wiki/California))\n(semantic-link-2: source (is a) status linked-entity meaning (wikt:en:is-a#Noun:0) label (is a) url (https://en.wiktionary.org/wiki/is-a))\n(semantic-link-3: source (state) status linked-entity sourceRole object meaning (Q35657) label (state) targetHint (штат) url (https://en.wikipedia.org/wiki/U.S._state))"
+}
+
+30. Phrase: California -> Калифорния (translated)
+{
+  "id": "step-30",
+  "type": "translation-phrase",
+  "phraseId": "phrase-1",
+  "sourceText": "California",
+  "entityId": "Q99",
+  "status": "translated",
+  "targetText": "Калифорния",
+  "strategy": "semantic-lexicon"
+}
+
+31. Phrase: state -> штат (translated)
+{
+  "id": "step-31",
+  "type": "translation-phrase",
+  "phraseId": "phrase-3",
+  "sourceText": "state",
+  "entityId": "Q35657",
+  "status": "translated",
+  "targetText": "штат",
+  "strategy": "semantic-lexicon"
+}
+
+32. Wiktionary miss: is a
+{
+  "id": "step-32",
+  "type": "wiktionary-translation-miss",
+  "sourceText": "is a",
+  "sourceLanguage": "en",
+  "targetLanguage": "ru"
+}
+
+33. Phrase: is a -> is a (non-wikidata-source)
+{
+  "id": "step-33",
+  "type": "translation-phrase",
+  "phraseId": "phrase-2",
+  "sourceText": "is a",
+  "entityId": null,
+  "status": "non-wikidata-source",
+  "targetText": "is a",
+  "strategy": "contextual-glossary"
+}
+
+34. Rule: english-is-a-to-russian-eto (sentence-1)
+{
+  "id": "step-34",
+  "type": "transformation-rule",
+  "sentenceId": "sentence-1",
+  "rule": "english-is-a-to-russian-eto",
+  "sourceText": "California is a state.",
+  "affectedVariables": [
+    "variable-1"
+  ]
+}
+
+35. Sentence: California is a state. -> Калифорния это штат.
+{
+  "id": "step-35",
+  "type": "sentence",
+  "sentenceId": "sentence-1",
+  "sourceText": "California is a state.",
+  "targetText": "Калифорния это штат.",
+  "transformations": [
+    "english-is-a-to-russian-eto"
+  ]
+}
+
+36. Text: Калифорния это штат.
+{
+  "id": "step-36",
+  "type": "text",
+  "sentenceCount": 1,
+  "text": "Калифорния это штат."
+}
+
+Translation CST JSON
+{
+  "type": "translation",
+  "version": 1,
+  "text": "California is a state.",
+  "sourceLanguage": "en",
+  "targetLanguage": "ru",
+  "formalization": {
+    "type": "formalization",
+    "version": 1,
+    "text": "California is a state.",
+    "tokens": [
+      "California",
+      "is",
+      "a",
+      "state"
+    ],
+    "linkTargetMode": "wikipedia",
+    "ast": {
+      "type": "document",
+      "version": 1,
+      "parser": {
+        "id": "meta-expression-linguistic-parser",
+        "version": 1,
+        "language": "en",
+        "strategy": "deterministic-english-dependency-parser"
+      },
+      "provenance": {
+        "sourceType": "algorithm",
+        "method": "meta-expression-linguistic-parser",
+        "parserId": "meta-expression-linguistic-parser",
+        "parserVersion": 1,
+        "layer": "ast"
+      },
+      "text": "California is a state.",
+      "body": [
+        {
+          "type": "sentence",
+          "id": "sentence-1",
+          "version": 1,
+          "provenance": {
+            "sourceType": "algorithm",
+            "method": "meta-expression-linguistic-parser",
+            "parserId": "meta-expression-linguistic-parser",
+            "parserVersion": 1,
+            "layer": "ast-sentence"
+          },
+          "text": "California is a state.",
+          "tokenStart": 0,
+          "tokenEnd": 3,
+          "sourceStart": 0,
+          "sourceEnd": 22,
+          "subject": {
+            "fragmentId": "fragment-7",
+            "text": "California",
+            "role": "subject",
+            "sourceStart": 0,
+            "sourceEnd": 10,
+            "version": 1,
+            "provenance": {
+              "sourceType": "algorithm",
+              "method": "meta-expression-linguistic-parser",
+              "parserId": "meta-expression-linguistic-parser",
+              "parserVersion": 1,
+              "layer": "fragment:subject"
+            }
+          },
+          "predicate": {
+            "fragmentId": "fragment-9",
+            "text": "is",
+            "role": "predicate",
+            "sourceStart": 11,
+            "sourceEnd": 13,
+            "version": 1,
+            "provenance": {
+              "sourceType": "algorithm",
+              "method": "meta-expression-linguistic-parser",
+              "parserId": "meta-expression-linguistic-parser",
+              "parserVersion": 1,
+              "layer": "fragment:predicate"
+            }
+          },
+          "object": {
+            "fragmentId": "fragment-11",
+            "text": "state",
+            "role": "object",
+            "sourceStart": 16,
+            "sourceEnd": 21,
+            "version": 1,
+            "provenance": {
+              "sourceType": "algorithm",
+              "method": "meta-expression-linguistic-parser",
+              "parserId": "meta-expression-linguistic-parser",
+              "parserVersion": 1,
+              "layer": "fragment:object"
+            }
+          },
+          "relationId": "relation-1",
+          "dependencyIds": [
+            "dependency-1",
+            "dependency-2",
+            "dependency-3",
+            "dependency-4",
+            "dependency-5",
+            "dependency-6",
+            "dependency-7"
+          ],
+          "attachmentIds": [
+            "attachment-1",
+            "attachment-2",
+            "attachment-3"
+          ],
+          "agreementIds": [
+            "agreement-1"
+          ]
+        }
+      ]
+    },
+    "linguisticMetadata": {
+      "version": 1,
+      "language": "en",
+      "parser": {
+        "id": "meta-expression-linguistic-parser",
+        "version": 1,
+        "language": "en",
+        "strategy": "deterministic-english-dependency-parser"
+      },
+      "provenance": {
+        "sourceType": "algorithm",
+        "method": "meta-expression-linguistic-parser",
+        "parserId": "meta-expression-linguistic-parser",
+        "parserVersion": 1,
+        "layer": "metadata"
+      },
+      "text": "California is a state.",
+      "sourceReconstruction": {
+        "type": "source-reconstruction",
+        "version": 1,
+        "language": "en",
+        "units": [
+          {
+            "id": "source-unit-1",
+            "type": "source-unit",
+            "version": 1,
+            "kind": "token",
+            "text": "California",
+            "tokenIndex": 0,
+            "sourceStart": 0,
+            "sourceEnd": 10,
+            "provenance": {
+              "sourceType": "algorithm",
+              "method": "meta-expression-linguistic-parser",
+              "parserId": "meta-expression-linguistic-parser",
+              "parserVersion": 1,
+              "layer": "source-unit:token"
+            }
+          },
+          {
+            "id": "source-unit-2",
+            "type": "source-unit",
+            "version": 1,
+            "kind": "separator",
+            "text": " ",
+            "sourceStart": 10,
+            "sourceEnd": 11,
+            "provenance": {
+              "sourceType": "algorithm",
+              "method": "meta-expression-linguistic-parser",
+              "parserId": "meta-expression-linguistic-parser",
+              "parserVersion": 1,
+              "layer": "source-unit:separator"
+            }
+          },
+          {
+            "id": "source-unit-3",
+            "type": "source-unit",
+            "version": 1,
+            "kind": "token",
+            "text": "is",
+            "tokenIndex": 1,
+            "sourceStart": 11,
+            "sourceEnd": 13,
+            "provenance": {
+              "sourceType": "algorithm",
+              "method": "meta-expression-linguistic-parser",
+              "parserId": "meta-expression-linguistic-parser",
+              "parserVersion": 1,
+              "layer": "source-unit:token"
+            }
+          },
+          {
+            "id": "source-unit-4",
+            "type": "source-unit",
+            "version": 1,
+            "kind": "separator",
+            "text": " ",
+            "sourceStart": 13,
+            "sourceEnd": 14,
+            "provenance": {
+              "sourceType": "algorithm",
+              "method": "meta-expression-linguistic-parser",
+              "parserId": "meta-expression-linguistic-parser",
+              "parserVersion": 1,
+              "layer": "source-unit:separator"
+            }
+          },
+          {
+            "id": "source-unit-5",
+            "type": "source-unit",
+            "version": 1,
+            "kind": "token",
+            "text": "a",
+            "tokenIndex": 2,
+            "sourceStart": 14,
+            "sourceEnd": 15,
+            "provenance": {
+              "sourceType": "algorithm",
+              "method": "meta-expression-linguistic-parser",
+              "parserId": "meta-expression-linguistic-parser",
+              "parserVersion": 1,
+              "layer": "source-unit:token"
+            }
+          },
+          {
+            "id": "source-unit-6",
+            "type": "source-unit",
+            "version": 1,
+            "kind": "separator",
+            "text": " ",
+            "sourceStart": 15,
+            "sourceEnd": 16,
+            "provenance": {
+              "sourceType": "algorithm",
+              "method": "meta-expression-linguistic-parser",
+              "parserId": "meta-expression-linguistic-parser",
+              "parserVersion": 1,
+              "layer": "source-unit:separator"
+            }
+          },
+          {
+            "id": "source-unit-7",
+            "type": "source-unit",
+            "version": 1,
+            "kind": "token",
+            "text": "state",
+            "tokenIndex": 3,
+            "sourceStart": 16,
+            "sourceEnd": 21,
+            "provenance": {
+              "sourceType": "algorithm",
+              "method": "meta-expression-linguistic-parser",
+              "parserId": "meta-expression-linguistic-parser",
+              "parserVersion": 1,
+              "layer": "source-unit:token"
+            }
+          },
+          {
+            "id": "source-unit-8",
+            "type": "source-unit",
+            "version": 1,
+            "kind": "symbol",
+            "text": ".",
+            "symbolId": "symbol-1",
+            "sourceStart": 21,
+            "sourceEnd": 22,
+            "provenance": {
+              "sourceType": "algorithm",
+              "method": "meta-expression-linguistic-parser",
+              "parserId": "meta-expression-linguistic-parser",
+              "parserVersion": 1,
+              "layer": "source-unit:symbol"
+            }
+          }
+        ],
+        "sentences": [
+          {
+            "id": "sentence-1",
+            "tokenStart": 0,
+            "tokenEnd": 3,
+            "sourceStart": 0,
+            "sourceEnd": 22,
+            "unitIds": [
+              "source-unit-1",
+              "source-unit-2",
+              "source-unit-3",
+              "source-unit-4",
+              "source-unit-5",
+              "source-unit-6",
+              "source-unit-7",
+              "source-unit-8"
+            ]
+          }
+        ],
+        "provenance": {
+          "sourceType": "algorithm",
+          "method": "meta-expression-linguistic-parser",
+          "parserId": "meta-expression-linguistic-parser",
+          "parserVersion": 1,
+          "layer": "source-reconstruction"
+        }
+      },
+      "fragments": [
+        {
+          "id": "fragment-1",
+          "type": "word",
+          "role": "word",
+          "text": "California",
+          "tokens": [
+            "California"
+          ],
+          "lemma": "california",
+          "partOfSpeech": "proper-noun",
+          "features": {
+            "language": "en",
+            "number": "singular"
+          },
+          "tokenStart": 0,
+          "tokenEnd": 0,
+          "sourceStart": 0,
+          "sourceEnd": 10,
+          "phraseIds": [
+            "phrase-1"
+          ],
+          "version": 1,
+          "provenance": {
+            "sourceType": "algorithm",
+            "method": "meta-expression-linguistic-parser",
+            "parserId": "meta-expression-linguistic-parser",
+            "parserVersion": 1,
+            "layer": "fragment:word"
+          }
+        },
+        {
+          "id": "fragment-2",
+          "type": "word",
+          "role": "word",
+          "text": "is",
+          "tokens": [
+            "is"
+          ],
+          "lemma": "be",
+          "partOfSpeech": "verb",
+          "features": {
+            "language": "en",
+            "tense": "present",
+            "aspect": "simple",
+            "mood": "indicative",
+            "person": 3,
+            "number": "singular"
+          },
+          "tokenStart": 1,
+          "tokenEnd": 1,
+          "sourceStart": 11,
+          "sourceEnd": 13,
+          "phraseIds": [
+            "phrase-2"
+          ],
+          "version": 1,
+          "provenance": {
+            "sourceType": "algorithm",
+            "method": "meta-expression-linguistic-parser",
+            "parserId": "meta-expression-linguistic-parser",
+            "parserVersion": 1,
+            "layer": "fragment:word"
+          }
+        },
+        {
+          "id": "fragment-3",
+          "type": "word",
+          "role": "word",
+          "text": "a",
+          "tokens": [
+            "a"
+          ],
+          "lemma": "a",
+          "partOfSpeech": "determiner",
+          "features": {
+            "language": "en",
+            "definiteness": "indefinite"
+          },
+          "tokenStart": 2,
+          "tokenEnd": 2,
+          "sourceStart": 14,
+          "sourceEnd": 15,
+          "phraseIds": [
+            "phrase-2"
+          ],
+          "version": 1,
+          "provenance": {
+            "sourceType": "algorithm",
+            "method": "meta-expression-linguistic-parser",
+            "parserId": "meta-expression-linguistic-parser",
+            "parserVersion": 1,
+            "layer": "fragment:word"
+          }
+        },
+        {
+          "id": "fragment-4",
+          "type": "word",
+          "role": "word",
+          "text": "state",
+          "tokens": [
+            "state"
+          ],
+          "lemma": "state",
+          "partOfSpeech": "noun",
+          "features": {
+            "language": "en",
+            "number": "singular"
+          },
+          "tokenStart": 3,
+          "tokenEnd": 3,
+          "sourceStart": 16,
+          "sourceEnd": 21,
+          "phraseIds": [
+            "phrase-3"
+          ],
+          "version": 1,
+          "provenance": {
+            "sourceType": "algorithm",
+            "method": "meta-expression-linguistic-parser",
+            "parserId": "meta-expression-linguistic-parser",
+            "parserVersion": 1,
+            "layer": "fragment:word"
+          }
+        },
+        {
+          "id": "fragment-5",
+          "type": "symbol",
+          "role": "symbol",
+          "text": ".",
+          "tokens": [],
+          "lemma": null,
+          "partOfSpeech": "punctuation",
+          "features": {
+            "punctuation": "."
+          },
+          "tokenStart": null,
+          "tokenEnd": null,
+          "sourceStart": 21,
+          "sourceEnd": 22,
+          "phraseIds": [],
+          "version": 1,
+          "provenance": {
+            "sourceType": "algorithm",
+            "method": "meta-expression-linguistic-parser",
+            "parserId": "meta-expression-linguistic-parser",
+            "parserVersion": 1,
+            "layer": "fragment:symbol"
+          }
+        },
+        {
+          "id": "fragment-6",
+          "type": "noun-phrase",
+          "role": "noun-phrase",
+          "text": "California",
+          "tokens": [
+            "California"
+          ],
+          "lemma": "california",
+          "partOfSpeech": "noun-phrase",
+          "features": {
+            "language": "en",
+            "number": "singular",
+            "headToken": "California",
+            "headTokenIndex": 0
+          },
+          "tokenStart": 0,
+          "tokenEnd": 0,
+          "sourceStart": 0,
+          "sourceEnd": 10,
+          "phraseIds": [
+            "phrase-1"
+          ],
+          "version": 1,
+          "provenance": {
+            "sourceType": "algorithm",
+            "method": "meta-expression-linguistic-parser",
+            "parserId": "meta-expression-linguistic-parser",
+            "parserVersion": 1,
+            "layer": "fragment:noun-phrase"
+          }
+        },
+        {
+          "id": "fragment-7",
+          "type": "subject",
+          "role": "subject",
+          "text": "California",
+          "tokens": [
+            "California"
+          ],
+          "lemma": "california",
+          "partOfSpeech": "noun-phrase",
+          "features": {
+            "language": "en",
+            "number": "singular",
+            "headToken": "California",
+            "headTokenIndex": 0
+          },
+          "tokenStart": 0,
+          "tokenEnd": 0,
+          "sourceStart": 0,
+          "sourceEnd": 10,
+          "phraseIds": [
+            "phrase-1"
+          ],
+          "version": 1,
+          "provenance": {
+            "sourceType": "algorithm",
+            "method": "meta-expression-linguistic-parser",
+            "parserId": "meta-expression-linguistic-parser",
+            "parserVersion": 1,
+            "layer": "fragment:subject"
+          }
+        },
+        {
+          "id": "fragment-8",
+          "type": "verb-phrase",
+          "role": "verb-phrase",
+          "text": "is",
+          "tokens": [
+            "is"
+          ],
+          "lemma": "be",
+          "partOfSpeech": "verb-phrase",
+          "features": {
+            "language": "en",
+            "tense": "present",
+            "aspect": "simple",
+            "mood": "indicative",
+            "person": 3,
+            "number": "singular",
+            "headToken": "is",
+            "headTokenIndex": 1
+          },
+          "tokenStart": 1,
+          "tokenEnd": 1,
+          "sourceStart": 11,
+          "sourceEnd": 13,
+          "phraseIds": [
+            "phrase-2"
+          ],
+          "version": 1,
+          "provenance": {
+            "sourceType": "algorithm",
+            "method": "meta-expression-linguistic-parser",
+            "parserId": "meta-expression-linguistic-parser",
+            "parserVersion": 1,
+            "layer": "fragment:verb-phrase"
+          }
+        },
+        {
+          "id": "fragment-9",
+          "type": "predicate",
+          "role": "predicate",
+          "text": "is",
+          "tokens": [
+            "is"
+          ],
+          "lemma": "be",
+          "partOfSpeech": "verb-phrase",
+          "features": {
+            "language": "en",
+            "tense": "present",
+            "aspect": "simple",
+            "mood": "indicative",
+            "person": 3,
+            "number": "singular",
+            "headToken": "is",
+            "headTokenIndex": 1
+          },
+          "tokenStart": 1,
+          "tokenEnd": 1,
+          "sourceStart": 11,
+          "sourceEnd": 13,
+          "phraseIds": [
+            "phrase-2"
+          ],
+          "version": 1,
+          "provenance": {
+            "sourceType": "algorithm",
+            "method": "meta-expression-linguistic-parser",
+            "parserId": "meta-expression-linguistic-parser",
+            "parserVersion": 1,
+            "layer": "fragment:predicate"
+          }
+        },
+        {
+          "id": "fragment-10",
+          "type": "noun-phrase",
+          "role": "noun-phrase",
+          "text": "a state",
+          "tokens": [
+            "a",
+            "state"
+          ],
+          "lemma": "state",
+          "partOfSpeech": "noun-phrase",
+          "features": {
+            "language": "en",
+            "number": "singular",
+            "headToken": "state",
+            "headTokenIndex": 3
+          },
+          "tokenStart": 2,
+          "tokenEnd": 3,
+          "sourceStart": 14,
+          "sourceEnd": 21,
+          "phraseIds": [
+            "phrase-2",
+            "phrase-3"
+          ],
+          "version": 1,
+          "provenance": {
+            "sourceType": "algorithm",
+            "method": "meta-expression-linguistic-parser",
+            "parserId": "meta-expression-linguistic-parser",
+            "parserVersion": 1,
+            "layer": "fragment:noun-phrase"
+          }
+        },
+        {
+          "id": "fragment-11",
+          "type": "object",
+          "role": "object",
+          "text": "state",
+          "tokens": [
+            "state"
+          ],
+          "lemma": "state",
+          "partOfSpeech": "noun-phrase",
+          "features": {
+            "language": "en",
+            "number": "singular",
+            "headToken": "state",
+            "headTokenIndex": 3
+          },
+          "tokenStart": 3,
+          "tokenEnd": 3,
+          "sourceStart": 16,
+          "sourceEnd": 21,
+          "phraseIds": [
+            "phrase-3"
+          ],
+          "version": 1,
+          "provenance": {
+            "sourceType": "algorithm",
+            "method": "meta-expression-linguistic-parser",
+            "parserId": "meta-expression-linguistic-parser",
+            "parserVersion": 1,
+            "layer": "fragment:object"
+          }
+        }
+      ],
+      "dependencies": [
+        {
+          "id": "dependency-1",
+          "relation": "nsubj",
+          "headFragmentId": "fragment-9",
+          "dependentFragmentId": "fragment-7",
+          "source": "meta-expression-linguistic-parser",
+          "version": 1,
+          "provenance": {
+            "sourceType": "algorithm",
+            "method": "meta-expression-linguistic-parser",
+            "parserId": "meta-expression-linguistic-parser",
+            "parserVersion": 1,
+            "layer": "dependency:nsubj"
+          }
+        },
+        {
+          "id": "dependency-2",
+          "relation": "root",
+          "headFragmentId": "fragment-9",
+          "dependentFragmentId": "fragment-9",
+          "source": "meta-expression-linguistic-parser",
+          "version": 1,
+          "provenance": {
+            "sourceType": "algorithm",
+            "method": "meta-expression-linguistic-parser",
+            "parserId": "meta-expression-linguistic-parser",
+            "parserVersion": 1,
+            "layer": "dependency:root"
+          }
+        },
+        {
+          "id": "dependency-3",
+          "relation": "obj",
+          "headFragmentId": "fragment-9",
+          "dependentFragmentId": "fragment-11",
+          "source": "meta-expression-linguistic-parser",
+          "version": 1,
+          "provenance": {
+            "sourceType": "algorithm",
+            "method": "meta-expression-linguistic-parser",
+            "parserId": "meta-expression-linguistic-parser",
+            "parserVersion": 1,
+            "layer": "dependency:obj"
+          }
+        },
+        {
+          "id": "dependency-4",
+          "relation": "root",
+          "headFragmentId": "fragment-2",
+          "dependentFragmentId": "fragment-2",
+          "source": "meta-expression-linguistic-parser",
+          "version": 1,
+          "granularity": "token",
+          "provenance": {
+            "sourceType": "algorithm",
+            "method": "meta-expression-linguistic-parser",
+            "parserId": "meta-expression-linguistic-parser",
+            "parserVersion": 1,
+            "layer": "dependency:root"
+          }
+        },
+        {
+          "id": "dependency-5",
+          "relation": "nsubj",
+          "headFragmentId": "fragment-2",
+          "dependentFragmentId": "fragment-1",
+          "source": "meta-expression-linguistic-parser",
+          "version": 1,
+          "granularity": "token",
+          "provenance": {
+            "sourceType": "algorithm",
+            "method": "meta-expression-linguistic-parser",
+            "parserId": "meta-expression-linguistic-parser",
+            "parserVersion": 1,
+            "layer": "dependency:nsubj"
+          }
+        },
+        {
+          "id": "dependency-6",
+          "relation": "obj",
+          "headFragmentId": "fragment-2",
+          "dependentFragmentId": "fragment-4",
+          "source": "meta-expression-linguistic-parser",
+          "version": 1,
+          "granularity": "token",
+          "provenance": {
+            "sourceType": "algorithm",
+            "method": "meta-expression-linguistic-parser",
+            "parserId": "meta-expression-linguistic-parser",
+            "parserVersion": 1,
+            "layer": "dependency:obj"
+          }
+        },
+        {
+          "id": "dependency-7",
+          "relation": "det",
+          "headFragmentId": "fragment-4",
+          "dependentFragmentId": "fragment-3",
+          "source": "meta-expression-linguistic-parser",
+          "version": 1,
+          "granularity": "token",
+          "provenance": {
+            "sourceType": "algorithm",
+            "method": "meta-expression-linguistic-parser",
+            "parserId": "meta-expression-linguistic-parser",
+            "parserVersion": 1,
+            "layer": "dependency:det"
+          }
+        }
+      ],
+      "relations": [
+        {
+          "id": "relation-1",
+          "type": "subject-predicate-object",
+          "subjectFragmentId": "fragment-7",
+          "predicateFragmentId": "fragment-9",
+          "objectFragmentId": "fragment-11",
+          "text": "California is a state",
+          "sourceStart": 0,
+          "sourceEnd": 21,
+          "version": 1,
+          "provenance": {
+            "sourceType": "algorithm",
+            "method": "meta-expression-linguistic-parser",
+            "parserId": "meta-expression-linguistic-parser",
+            "parserVersion": 1,
+            "layer": "relation:subject-predicate-object"
+          }
+        }
+      ],
+      "attachments": [
+        {
+          "id": "attachment-1",
+          "type": "noun-phrase-attachment",
+          "fragmentId": "fragment-7",
+          "version": 1,
+          "role": "subject",
+          "tokenStart": 0,
+          "tokenEnd": 0,
+          "provenance": {
+            "sourceType": "algorithm",
+            "method": "meta-expression-linguistic-parser",
+            "parserId": "meta-expression-linguistic-parser",
+            "parserVersion": 1,
+            "layer": "attachment:noun-phrase-attachment"
+          }
+        },
+        {
+          "id": "attachment-2",
+          "type": "verb-phrase-attachment",
+          "fragmentId": "fragment-9",
+          "version": 1,
+          "role": "predicate",
+          "tokenStart": 1,
+          "tokenEnd": 1,
+          "provenance": {
+            "sourceType": "algorithm",
+            "method": "meta-expression-linguistic-parser",
+            "parserId": "meta-expression-linguistic-parser",
+            "parserVersion": 1,
+            "layer": "attachment:verb-phrase-attachment"
+          }
+        },
+        {
+          "id": "attachment-3",
+          "type": "noun-phrase-attachment",
+          "fragmentId": "fragment-11",
+          "version": 1,
+          "role": "object",
+          "tokenStart": 3,
+          "tokenEnd": 3,
+          "provenance": {
+            "sourceType": "algorithm",
+            "method": "meta-expression-linguistic-parser",
+            "parserId": "meta-expression-linguistic-parser",
+            "parserVersion": 1,
+            "layer": "attachment:noun-phrase-attachment"
+          }
+        }
+      ],
+      "agreements": [
+        {
+          "id": "agreement-1",
+          "type": "subject-predicate-agreement",
+          "leftFragmentId": "fragment-7",
+          "rightFragmentId": "fragment-9",
+          "features": {
+            "number": "singular",
+            "person": 3,
+            "tense": "present",
+            "aspect": "simple",
+            "mood": "indicative"
+          },
+          "version": 1,
+          "provenance": {
+            "sourceType": "algorithm",
+            "method": "meta-expression-linguistic-parser",
+            "parserId": "meta-expression-linguistic-parser",
+            "parserVersion": 1,
+            "layer": "agreement:subject-predicate-agreement"
+          }
+        }
+      ],
+      "coreferenceChains": [],
+      "ast": {
+        "type": "document",
+        "version": 1,
+        "parser": {
+          "id": "meta-expression-linguistic-parser",
+          "version": 1,
+          "language": "en",
+          "strategy": "deterministic-english-dependency-parser"
+        },
+        "provenance": {
+          "sourceType": "algorithm",
+          "method": "meta-expression-linguistic-parser",
+          "parserId": "meta-expression-linguistic-parser",
+          "parserVersion": 1,
+          "layer": "ast"
+        },
+        "text": "California is a state.",
+        "body": [
+          {
+            "type": "sentence",
+            "id": "sentence-1",
+            "version": 1,
+            "provenance": {
+              "sourceType": "algorithm",
+              "method": "meta-expression-linguistic-parser",
+              "parserId": "meta-expression-linguistic-parser",
+              "parserVersion": 1,
+              "layer": "ast-sentence"
+            },
+            "text": "California is a state.",
+            "tokenStart": 0,
+            "tokenEnd": 3,
+            "sourceStart": 0,
+            "sourceEnd": 22,
+            "subject": {
+              "fragmentId": "fragment-7",
+              "text": "California",
+              "role": "subject",
+              "sourceStart": 0,
+              "sourceEnd": 10,
+              "version": 1,
+              "provenance": {
+                "sourceType": "algorithm",
+                "method": "meta-expression-linguistic-parser",
+                "parserId": "meta-expression-linguistic-parser",
+                "parserVersion": 1,
+                "layer": "fragment:subject"
+              }
+            },
+            "predicate": {
+              "fragmentId": "fragment-9",
+              "text": "is",
+              "role": "predicate",
+              "sourceStart": 11,
+              "sourceEnd": 13,
+              "version": 1,
+              "provenance": {
+                "sourceType": "algorithm",
+                "method": "meta-expression-linguistic-parser",
+                "parserId": "meta-expression-linguistic-parser",
+                "parserVersion": 1,
+                "layer": "fragment:predicate"
+              }
+            },
+            "object": {
+              "fragmentId": "fragment-11",
+              "text": "state",
+              "role": "object",
+              "sourceStart": 16,
+              "sourceEnd": 21,
+              "version": 1,
+              "provenance": {
+                "sourceType": "algorithm",
+                "method": "meta-expression-linguistic-parser",
+                "parserId": "meta-expression-linguistic-parser",
+                "parserVersion": 1,
+                "layer": "fragment:object"
+              }
+            },
+            "relationId": "relation-1",
+            "dependencyIds": [
+              "dependency-1",
+              "dependency-2",
+              "dependency-3",
+              "dependency-4",
+              "dependency-5",
+              "dependency-6",
+              "dependency-7"
+            ],
+            "attachmentIds": [
+              "attachment-1",
+              "attachment-2",
+              "attachment-3"
+            ],
+            "agreementIds": [
+              "agreement-1"
+            ]
+          }
+        ]
+      },
+      "cst": {
+        "type": "document-cst",
+        "version": 1,
+        "text": "California is a state.",
+        "language": "en",
+        "parser": {
+          "id": "meta-expression-linguistic-parser",
+          "version": 1,
+          "language": "en",
+          "strategy": "deterministic-english-dependency-parser"
+        },
+        "sourceReconstruction": {
+          "type": "source-reconstruction",
+          "version": 1,
+          "language": "en",
+          "units": [
+            {
+              "id": "source-unit-1",
+              "type": "source-unit",
+              "version": 1,
+              "kind": "token",
+              "text": "California",
+              "tokenIndex": 0,
+              "sourceStart": 0,
+              "sourceEnd": 10,
+              "provenance": {
+                "sourceType": "algorithm",
+                "method": "meta-expression-linguistic-parser",
+                "parserId": "meta-expression-linguistic-parser",
+                "parserVersion": 1,
+                "layer": "source-unit:token"
+              }
+            },
+            {
+              "id": "source-unit-2",
+              "type": "source-unit",
+              "version": 1,
+              "kind": "separator",
+              "text": " ",
+              "sourceStart": 10,
+              "sourceEnd": 11,
+              "provenance": {
+                "sourceType": "algorithm",
+                "method": "meta-expression-linguistic-parser",
+                "parserId": "meta-expression-linguistic-parser",
+                "parserVersion": 1,
+                "layer": "source-unit:separator"
+              }
+            },
+            {
+              "id": "source-unit-3",
+              "type": "source-unit",
+              "version": 1,
+              "kind": "token",
+              "text": "is",
+              "tokenIndex": 1,
+              "sourceStart": 11,
+              "sourceEnd": 13,
+              "provenance": {
+                "sourceType": "algorithm",
+                "method": "meta-expression-linguistic-parser",
+                "parserId": "meta-expression-linguistic-parser",
+                "parserVersion": 1,
+                "layer": "source-unit:token"
+              }
+            },
+            {
+              "id": "source-unit-4",
+              "type": "source-unit",
+              "version": 1,
+              "kind": "separator",
+              "text": " ",
+              "sourceStart": 13,
+              "sourceEnd": 14,
+              "provenance": {
+                "sourceType": "algorithm",
+                "method": "meta-expression-linguistic-parser",
+                "parserId": "meta-expression-linguistic-parser",
+                "parserVersion": 1,
+                "layer": "source-unit:separator"
+              }
+            },
+            {
+              "id": "source-unit-5",
+              "type": "source-unit",
+              "version": 1,
+              "kind": "token",
+              "text": "a",
+              "tokenIndex": 2,
+              "sourceStart": 14,
+              "sourceEnd": 15,
+              "provenance": {
+                "sourceType": "algorithm",
+                "method": "meta-expression-linguistic-parser",
+                "parserId": "meta-expression-linguistic-parser",
+                "parserVersion": 1,
+                "layer": "source-unit:token"
+              }
+            },
+            {
+              "id": "source-unit-6",
+              "type": "source-unit",
+              "version": 1,
+              "kind": "separator",
+              "text": " ",
+              "sourceStart": 15,
+              "sourceEnd": 16,
+              "provenance": {
+                "sourceType": "algorithm",
+                "method": "meta-expression-linguistic-parser",
+                "parserId": "meta-expression-linguistic-parser",
+                "parserVersion": 1,
+                "layer": "source-unit:separator"
+              }
+            },
+            {
+              "id": "source-unit-7",
+              "type": "source-unit",
+              "version": 1,
+              "kind": "token",
+              "text": "state",
+              "tokenIndex": 3,
+              "sourceStart": 16,
+              "sourceEnd": 21,
+              "provenance": {
+                "sourceType": "algorithm",
+                "method": "meta-expression-linguistic-parser",
+                "parserId": "meta-expression-linguistic-parser",
+                "parserVersion": 1,
+                "layer": "source-unit:token"
+              }
+            },
+            {
+              "id": "source-unit-8",
+              "type": "source-unit",
+              "version": 1,
+              "kind": "symbol",
+              "text": ".",
+              "symbolId": "symbol-1",
+              "sourceStart": 21,
+              "sourceEnd": 22,
+              "provenance": {
+                "sourceType": "algorithm",
+                "method": "meta-expression-linguistic-parser",
+                "parserId": "meta-expression-linguistic-parser",
+                "parserVersion": 1,
+                "layer": "source-unit:symbol"
+              }
+            }
+          ],
+          "sentences": [
+            {
+              "id": "sentence-1",
+              "tokenStart": 0,
+              "tokenEnd": 3,
+              "sourceStart": 0,
+              "sourceEnd": 22,
+              "unitIds": [
+                "source-unit-1",
+                "source-unit-2",
+                "source-unit-3",
+                "source-unit-4",
+                "source-unit-5",
+                "source-unit-6",
+                "source-unit-7",
+                "source-unit-8"
+              ]
+            }
+          ],
+          "provenance": {
+            "sourceType": "algorithm",
+            "method": "meta-expression-linguistic-parser",
+            "parserId": "meta-expression-linguistic-parser",
+            "parserVersion": 1,
+            "layer": "source-reconstruction"
+          }
+        },
+        "tokens": [
+          {
+            "lemma": "california",
+            "partOfSpeech": "proper-noun",
+            "features": {
+              "language": "en",
+              "number": "singular"
+            },
+            "type": "token-cst",
+            "id": "token-1",
+            "version": 1,
+            "text": "California",
+            "index": 0,
+            "sourceStart": 0,
+            "sourceEnd": 10,
+            "sentenceBoundaryAfter": false,
+            "provenance": {
+              "sourceType": "algorithm",
+              "method": "meta-expression-linguistic-parser",
+              "parserId": "meta-expression-linguistic-parser",
+              "parserVersion": 1,
+              "layer": "cst-token"
+            }
+          },
+          {
+            "lemma": "be",
+            "partOfSpeech": "verb",
+            "features": {
+              "language": "en",
+              "tense": "present",
+              "aspect": "simple",
+              "mood": "indicative",
+              "person": 3,
+              "number": "singular"
+            },
+            "type": "token-cst",
+            "id": "token-2",
+            "version": 1,
+            "text": "is",
+            "index": 1,
+            "sourceStart": 11,
+            "sourceEnd": 13,
+            "sentenceBoundaryAfter": false,
+            "provenance": {
+              "sourceType": "algorithm",
+              "method": "meta-expression-linguistic-parser",
+              "parserId": "meta-expression-linguistic-parser",
+              "parserVersion": 1,
+              "layer": "cst-token"
+            }
+          },
+          {
+            "lemma": "a",
+            "partOfSpeech": "determiner",
+            "features": {
+              "language": "en",
+              "definiteness": "indefinite"
+            },
+            "type": "token-cst",
+            "id": "token-3",
+            "version": 1,
+            "text": "a",
+            "index": 2,
+            "sourceStart": 14,
+            "sourceEnd": 15,
+            "sentenceBoundaryAfter": false,
+            "provenance": {
+              "sourceType": "algorithm",
+              "method": "meta-expression-linguistic-parser",
+              "parserId": "meta-expression-linguistic-parser",
+              "parserVersion": 1,
+              "layer": "cst-token"
+            }
+          },
+          {
+            "lemma": "state",
+            "partOfSpeech": "noun",
+            "features": {
+              "language": "en",
+              "number": "singular"
+            },
+            "type": "token-cst",
+            "id": "token-4",
+            "version": 1,
+            "text": "state",
+            "index": 3,
+            "sourceStart": 16,
+            "sourceEnd": 21,
+            "sentenceBoundaryAfter": true,
+            "provenance": {
+              "sourceType": "algorithm",
+              "method": "meta-expression-linguistic-parser",
+              "parserId": "meta-expression-linguistic-parser",
+              "parserVersion": 1,
+              "layer": "cst-token"
+            }
+          }
+        ],
+        "symbols": [
+          {
+            "type": "symbol-cst",
+            "id": "symbol-1",
+            "version": 1,
+            "text": ".",
+            "sourceStart": 21,
+            "sourceEnd": 22,
+            "provenance": {
+              "sourceType": "algorithm",
+              "method": "meta-expression-linguistic-parser",
+              "parserId": "meta-expression-linguistic-parser",
+              "parserVersion": 1,
+              "layer": "cst-symbol"
+            }
+          }
+        ],
+        "sentences": [
+          {
+            "type": "sentence-cst",
+            "id": "sentence-1",
+            "version": 1,
+            "text": "California is a state.",
+            "tokenStart": 0,
+            "tokenEnd": 3,
+            "sourceStart": 0,
+            "sourceEnd": 22,
+            "predicateToken": 1,
+            "provenance": {
+              "sourceType": "algorithm",
+              "method": "meta-expression-linguistic-parser",
+              "parserId": "meta-expression-linguistic-parser",
+              "parserVersion": 1,
+              "layer": "cst-sentence"
+            },
+            "subjectRange": {
+              "start": 0,
+              "end": 0
+            },
+            "predicateRange": {
+              "start": 1,
+              "end": 1
+            },
+            "objectPhraseRange": {
+              "start": 2,
+              "end": 3
+            },
+            "objectRange": {
+              "start": 3,
+              "end": 3
+            },
+            "nounPhraseRanges": [
+              {
+                "start": 0,
+                "end": 0
+              },
+              {
+                "start": 2,
+                "end": 3
+              }
+            ],
+            "verbPhraseRange": {
+              "start": 1,
+              "end": 1
+            },
+            "dependencies": [
+              {
+                "relation": "nsubj",
+                "head": "predicate",
+                "dependent": "subject"
+              },
+              {
+                "relation": "root",
+                "head": "predicate",
+                "dependent": "predicate"
+              },
+              {
+                "relation": "obj",
+                "head": "predicate",
+                "dependent": "object"
+              }
+            ],
+            "relationType": "subject-predicate-object",
+            "subjectFragmentId": "fragment-7",
+            "predicateFragmentId": "fragment-9",
+            "objectFragmentId": "fragment-11",
+            "relationId": "relation-1",
+            "dependencyIds": [
+              "dependency-1",
+              "dependency-2",
+              "dependency-3",
+              "dependency-4",
+              "dependency-5",
+              "dependency-6",
+              "dependency-7"
+            ],
+            "attachmentIds": [
+              "attachment-1",
+              "attachment-2",
+              "attachment-3"
+            ],
+            "agreementIds": [
+              "agreement-1"
+            ]
+          }
+        ],
+        "provenance": {
+          "sourceType": "algorithm",
+          "method": "meta-expression-linguistic-parser",
+          "parserId": "meta-expression-linguistic-parser",
+          "parserVersion": 1,
+          "layer": "cst"
+        }
+      }
+    },
+    "providerCandidates": {
+      "type": "formalization-provider-candidates",
+      "version": 1,
+      "status": "empty",
+      "truthScoring": {
+        "included": false,
+        "eligible": false,
+        "reason": "Provider output is a candidate formalization and is not evidence until selected or validated."
+      },
+      "providers": [],
+      "triples": [],
+      "roles": [],
+      "entityLinks": [],
+      "graphs": [],
+      "diagnostics": []
+    },
+    "phrases": [
+      {
+        "type": "phrase",
+        "id": "phrase-1",
+        "text": "California",
+        "tokens": [
+          "California"
+        ],
+        "start": 0,
+        "end": 0,
+        "sourceStart": 0,
+        "sourceEnd": 10,
+        "size": 1,
+        "linguisticRole": "subject",
+        "linguisticFragmentIds": [
+          "fragment-1",
+          "fragment-6",
+          "fragment-7"
+        ],
+        "entity": {
+          "id": "Q99",
+          "label": "California",
+          "description": "state of the United States of America",
+          "kind": "entity",
+          "source": "virtual-source-overrides",
+          "sourceUrl": "https://www.wikidata.org/wiki/Q99",
+          "wikipediaUrl": "https://en.wikipedia.org/wiki/California",
+          "wikipediaTitle": "California",
+          "score": 51,
+          "url": "https://en.wikipedia.org/wiki/California"
+        },
+        "candidates": [
+          {
+            "id": "Q99",
+            "label": "California",
+            "description": "state of the United States of America",
+            "kind": "entity",
+            "source": "virtual-source-overrides",
+            "sourceUrl": "https://www.wikidata.org/wiki/Q99",
+            "wikipediaUrl": "https://en.wikipedia.org/wiki/California",
+            "wikipediaTitle": "California",
+            "score": 51,
+            "url": "https://en.wikipedia.org/wiki/California"
+          },
+          {
+            "id": "Q16047894",
+            "label": "California",
+            "description": "genus of plants",
+            "kind": "entity",
+            "source": "wikidata",
+            "sourceUrl": "https://www.wikidata.org/wiki/Q16047894",
+            "wikipediaUrl": null,
+            "wikipediaTitle": null,
+            "score": 39,
+            "url": "https://www.wikidata.org/wiki/Q16047894"
+          },
+          {
+            "id": "Q23930100",
+            "label": "California",
+            "description": "2016 album by Blink-182",
+            "kind": "entity",
+            "source": "wikidata",
+            "sourceUrl": "https://www.wikidata.org/wiki/Q23930100",
+            "wikipediaUrl": "https://en.wikipedia.org/wiki/California_(Blink-182_album)",
+            "wikipediaTitle": "California (Blink-182 album)",
+            "score": 39,
+            "url": "https://en.wikipedia.org/wiki/California_(Blink-182_album)"
+          }
+        ]
+      },
+      {
+        "type": "phrase",
+        "id": "phrase-2",
+        "text": "is a",
+        "tokens": [
+          "is",
+          "a"
+        ],
+        "start": 1,
+        "end": 2,
+        "sourceStart": 11,
+        "sourceEnd": 15,
+        "size": 2,
+        "linguisticRole": null,
+        "linguisticFragmentIds": [
+          "fragment-2",
+          "fragment-3",
+          "fragment-8",
+          "fragment-9",
+          "fragment-10"
+        ],
+        "entity": {
+          "id": "wikt:en:is-a#Noun:0",
+          "label": "is a",
+          "description": " The relationship between two entities in which one entity inherits from the other.",
+          "kind": "entity",
+          "source": "wiktionary",
+          "sourceUrl": "https://en.wiktionary.org/wiki/is-a",
+          "wikipediaUrl": null,
+          "wikipediaTitle": null,
+          "score": 32,
+          "url": "https://en.wiktionary.org/wiki/is-a"
+        },
+        "candidates": [
+          {
+            "id": "wikt:en:is-a#Noun:0",
+            "label": "is a",
+            "description": " The relationship between two entities in which one entity inherits from the other.",
+            "kind": "entity",
+            "source": "wiktionary",
+            "sourceUrl": "https://en.wiktionary.org/wiki/is-a",
+            "wikipediaUrl": null,
+            "wikipediaTitle": null,
+            "score": 32,
+            "url": "https://en.wiktionary.org/wiki/is-a"
+          },
+          {
+            "id": "wikt:en:is-a#Noun:1",
+            "label": "is a",
+            "description": " Such a relationship expressed as an ontology component (regardless of whether the OOP paradigm per se is implemented).",
+            "kind": "entity",
+            "source": "wiktionary",
+            "sourceUrl": "https://en.wiktionary.org/wiki/is-a",
+            "wikipediaUrl": null,
+            "wikipediaTitle": null,
+            "score": 32,
+            "url": "https://en.wiktionary.org/wiki/is-a"
+          }
+        ]
+      },
+      {
+        "type": "phrase",
+        "id": "phrase-3",
+        "text": "state",
+        "tokens": [
+          "state"
+        ],
+        "start": 3,
+        "end": 3,
+        "sourceStart": 16,
+        "sourceEnd": 21,
+        "size": 1,
+        "linguisticRole": "object",
+        "linguisticFragmentIds": [
+          "fragment-4",
+          "fragment-10",
+          "fragment-11"
+        ],
+        "entity": {
+          "id": "Q35657",
+          "label": "state",
+          "description": "state of the United States",
+          "kind": "entity",
+          "source": "virtual-source-overrides",
+          "sourceUrl": "https://www.wikidata.org/wiki/Q35657",
+          "wikipediaUrl": "https://en.wikipedia.org/wiki/U.S._state",
+          "wikipediaTitle": "U.S. state",
+          "score": 43,
+          "url": "https://en.wikipedia.org/wiki/U.S._state"
+        },
+        "candidates": [
+          {
+            "id": "Q35657",
+            "label": "state",
+            "description": "state of the United States",
+            "kind": "entity",
+            "source": "virtual-source-overrides",
+            "sourceUrl": "https://www.wikidata.org/wiki/Q35657",
+            "wikipediaUrl": "https://en.wikipedia.org/wiki/U.S._state",
+            "wikipediaTitle": "U.S. state",
+            "score": 43,
+            "url": "https://en.wikipedia.org/wiki/U.S._state"
+          },
+          {
+            "id": "wikt:en:state#Noun:0",
+            "label": "state",
+            "description": "A condition; a set of circumstances applying at any given time.",
+            "kind": "entity",
+            "source": "wiktionary",
+            "sourceUrl": "https://en.wiktionary.org/wiki/state",
+            "wikipediaUrl": null,
+            "wikipediaTitle": null,
+            "score": 43,
+            "url": "https://en.wiktionary.org/wiki/state"
+          },
+          {
+            "id": "wikt:en:state#Noun:1",
+            "label": "state",
+            "description": " A complete description of a system, consisting of parameters that determine all properties of the system.",
+            "kind": "entity",
+            "source": "wiktionary",
+            "sourceUrl": "https://en.wiktionary.org/wiki/state",
+            "wikipediaUrl": null,
+            "wikipediaTitle": null,
+            "score": 43,
+            "url": "https://en.wiktionary.org/wiki/state"
+          }
+        ]
+      }
+    ],
+    "contexts": [
+      {
+        "id": "context-1",
+        "wikidataId": "Q35657",
+        "property": "P31",
+        "propertyLabel": "instance of",
+        "weight": 0.3953488372093023,
+        "probability": 0.08471760797342191,
+        "phrases": [
+          {
+            "text": "California",
+            "entityId": "Q99"
+          }
+        ]
+      },
+      {
+        "id": "context-2",
+        "wikidataId": "Q578170",
+        "property": "P361",
+        "propertyLabel": "part of",
+        "weight": 0.3953488372093023,
+        "probability": 0.08471760797342191,
+        "phrases": [
+          {
+            "text": "California",
+            "entityId": "Q99"
+          }
+        ]
+      },
+      {
+        "id": "context-3",
+        "wikidataId": "Q106458883",
+        "property": "P279",
+        "propertyLabel": "subclass of",
+        "weight": 0.3333333333333333,
+        "probability": 0.07142857142857142,
+        "phrases": [
+          {
+            "text": "state",
+            "entityId": "Q35657"
+          }
+        ]
+      },
+      {
+        "id": "context-4",
+        "wikidataId": "Q107390",
+        "property": "P279",
+        "propertyLabel": "subclass of",
+        "weight": 0.3333333333333333,
+        "probability": 0.07142857142857142,
+        "phrases": [
+          {
+            "text": "state",
+            "entityId": "Q35657"
+          }
+        ]
+      },
+      {
+        "id": "context-5",
+        "wikidataId": "Q10864048",
+        "property": "P279",
+        "propertyLabel": "subclass of",
+        "weight": 0.3333333333333333,
+        "probability": 0.07142857142857142,
+        "phrases": [
+          {
+            "text": "state",
+            "entityId": "Q35657"
+          }
+        ]
+      },
+      {
+        "id": "context-6",
+        "wikidataId": "Q135236673",
+        "property": "P31",
+        "propertyLabel": "instance of",
+        "weight": 0.3333333333333333,
+        "probability": 0.07142857142857142,
+        "phrases": [
+          {
+            "text": "state",
+            "entityId": "Q35657"
+          }
+        ]
+      },
+      {
+        "id": "context-7",
+        "wikidataId": "Q155076",
+        "property": "P279",
+        "propertyLabel": "subclass of",
+        "weight": 0.3333333333333333,
+        "probability": 0.07142857142857142,
+        "phrases": [
+          {
+            "text": "state",
+            "entityId": "Q35657"
+          }
+        ]
+      },
+      {
+        "id": "context-8",
+        "wikidataId": "Q192611",
+        "property": "P279",
+        "propertyLabel": "subclass of",
+        "weight": 0.3333333333333333,
+        "probability": 0.07142857142857142,
+        "phrases": [
+          {
+            "text": "state",
+            "entityId": "Q35657"
+          }
+        ]
+      },
+      {
+        "id": "context-9",
+        "wikidataId": "Q28872924",
+        "property": "P31",
+        "propertyLabel": "instance of",
+        "weight": 0.3333333333333333,
+        "probability": 0.07142857142857142,
+        "phrases": [
+          {
+            "text": "state",
+            "entityId": "Q35657"
+          }
+        ]
+      },
+      {
+        "id": "context-10",
+        "wikidataId": "Q852446",
+        "property": "P279",
+        "propertyLabel": "subclass of",
+        "weight": 0.3333333333333333,
+        "probability": 0.07142857142857142,
+        "phrases": [
+          {
+            "text": "state",
+            "entityId": "Q35657"
+          }
+        ]
+      },
+      {
+        "id": "context-11",
+        "wikidataId": "Q16521",
+        "property": "P31",
+        "propertyLabel": "instance of",
+        "weight": 0.3023255813953488,
+        "probability": 0.06478405315614617,
+        "phrases": [
+          {
+            "text": "California",
+            "entityId": "Q99"
+          }
+        ]
+      },
+      {
+        "id": "context-12",
+        "wikidataId": "Q482994",
+        "property": "P31",
+        "propertyLabel": "instance of",
+        "weight": 0.3023255813953488,
+        "probability": 0.06478405315614617,
+        "phrases": [
+          {
+            "text": "California",
+            "entityId": "Q99"
+          }
+        ]
+      },
+      {
+        "id": "context-13",
+        "wikidataId": "Q487914",
+        "property": "P136",
+        "propertyLabel": "genre",
+        "weight": 0.3023255813953488,
+        "probability": 0.06478405315614617,
+        "phrases": [
+          {
+            "text": "California",
+            "entityId": "Q99"
+          }
+        ]
+      },
+      {
+        "id": "context-14",
+        "wikidataId": "Q84077605",
+        "property": "P361",
+        "propertyLabel": "part of",
+        "weight": 0.3023255813953488,
+        "probability": 0.06478405315614617,
+        "phrases": [
+          {
+            "text": "California",
+            "entityId": "Q99"
+          }
+        ]
+      }
+    ]
+  },
+  "semanticMetaLanguage": {
+    "type": "semantic-meta-language",
+    "version": 1,
+    "text": "California is a state.",
+    "sourceLanguage": "en",
+    "targetLanguage": "ru",
+    "representation": "links-notation",
+    "sourceLinksNotation": "(formalization: (California is a state.))\n(phrase-1: source (California) start 0 end 0 id Q99 label (California) kind entity markdownUrl (https://en.wikipedia.org/wiki/California))\n(phrase-1-definition: source (California) selected (Q99) senses 3 wikidata (Q99) wikipedia (https://en.wikipedia.org/wiki/California) wiktionary (none))\n(phrase-1-sense-1: source (virtual-source-overrides) id (Q99) label (California) kind entity score 51 selected true markdownUrl (https://en.wikipedia.org/wiki/California))\n(phrase-1-sense-2: source (wikidata) id (Q16047894) label (California) kind entity score 39 selected false markdownUrl (https://www.wikidata.org/wiki/Q16047894))\n(phrase-1-sense-3: source (wikidata) id (Q23930100) label (California) kind entity score 39 selected false markdownUrl (https://en.wikipedia.org/wiki/California_ Blink-182_album))\n(phrase-2: source (is a) start 1 end 2 id wikt:en:is-a#Noun:0 label (is a) kind entity markdownUrl (https://en.wiktionary.org/wiki/is-a))\n(phrase-2-definition: source (is a) selected (wikt:en:is-a#Noun:0) senses 2 wikidata (none) wikipedia (none) wiktionary (https://en.wiktionary.org/wiki/is-a))\n(phrase-2-sense-1: source (wiktionary) id (wikt:en:is-a#Noun:0) label (is a) kind entity score 32 selected true markdownUrl (https://en.wiktionary.org/wiki/is-a))\n(phrase-2-sense-2: source (wiktionary) id (wikt:en:is-a#Noun:1) label (is a) kind entity score 32 selected false markdownUrl (https://en.wiktionary.org/wiki/is-a))\n(phrase-3: source (state) start 3 end 3 id Q35657 label (state) kind entity markdownUrl (https://en.wikipedia.org/wiki/U.S._state))\n(phrase-3-definition: source (state) selected (Q35657) senses 3 wikidata (Q35657) wikipedia (https://en.wikipedia.org/wiki/U.S._state) wiktionary (https://en.wiktionary.org/wiki/state))\n(phrase-3-sense-1: source (virtual-source-overrides) id (Q35657) label (state) kind entity score 43 selected true markdownUrl (https://en.wikipedia.org/wiki/U.S._state))\n(phrase-3-sense-2: source (wiktionary) id (wikt:en:state#Noun:0) label (state) kind entity score 43 selected false markdownUrl (https://en.wiktionary.org/wiki/state))\n(phrase-3-sense-3: source (wiktionary) id (wikt:en:state#Noun:1) label (state) kind entity score 43 selected false markdownUrl (https://en.wiktionary.org/wiki/state))\n(fragment-6: noun-phrase role noun-phrase source (California) start 0 end 0 phrases (phrase-1))\n(fragment-7: subject role subject source (California) start 0 end 0 phrases (phrase-1))\n(fragment-8: verb-phrase role verb-phrase source (is) start 1 end 1 phrases (phrase-2))\n(fragment-9: predicate role predicate source (is) start 1 end 1 phrases (phrase-2))\n(fragment-10: noun-phrase role noun-phrase source (a state) start 2 end 3 phrases (phrase-2 phrase-3))\n(fragment-11: object role object source (state) start 3 end 3 phrases (phrase-3))\n(dependency-1: nsubj head fragment-9 dependent fragment-7)\n(dependency-2: root head fragment-9 dependent fragment-9)\n(dependency-3: obj head fragment-9 dependent fragment-11)\n(dependency-4: root head fragment-2 dependent fragment-2)\n(dependency-5: nsubj head fragment-2 dependent fragment-1)\n(dependency-6: obj head fragment-2 dependent fragment-4)\n(dependency-7: det head fragment-4 dependent fragment-3)\n(relation-1: subject-predicate-object subject fragment-7 predicate fragment-9 object fragment-11)\n(context-1: Q35657 property P31 priority 1 probability 8.5 weight 0.3953488372093023 words 1 sharedBy (California))\n(context-2: Q578170 property P361 priority 2 probability 8.5 weight 0.3953488372093023 words 1 sharedBy (California))\n(context-3: Q106458883 property P279 priority 3 probability 7.1 weight 0.3333333333333333 words 1 sharedBy (state))\n(context-4: Q107390 property P279 priority 4 probability 7.1 weight 0.3333333333333333 words 1 sharedBy (state))\n(context-5: Q10864048 property P279 priority 5 probability 7.1 weight 0.3333333333333333 words 1 sharedBy (state))\n(context-6: Q135236673 property P31 priority 6 probability 7.1 weight 0.3333333333333333 words 1 sharedBy (state))\n(context-7: Q155076 property P279 priority 7 probability 7.1 weight 0.3333333333333333 words 1 sharedBy (state))\n(context-8: Q192611 property P279 priority 8 probability 7.1 weight 0.3333333333333333 words 1 sharedBy (state))\n(context-9: Q28872924 property P31 priority 9 probability 7.1 weight 0.3333333333333333 words 1 sharedBy (state))\n(context-10: Q852446 property P279 priority 10 probability 7.1 weight 0.3333333333333333 words 1 sharedBy (state))\n(context-11: Q16521 property P31 priority 11 probability 6.5 weight 0.3023255813953488 words 1 sharedBy (California))\n(context-12: Q482994 property P31 priority 12 probability 6.5 weight 0.3023255813953488 words 1 sharedBy (California))\n(context-13: Q487914 property P136 priority 13 probability 6.5 weight 0.3023255813953488 words 1 sharedBy (California))\n(context-14: Q84077605 property P361 priority 14 probability 6.5 weight 0.3023255813953488 words 1 sharedBy (California))",
+    "sourceReconstruction": {
+      "type": "source-reconstruction",
+      "version": 1,
+      "language": "en",
+      "units": [
+        {
+          "id": "source-unit-1",
+          "type": "source-unit",
+          "version": 1,
+          "kind": "token",
+          "text": "California",
+          "tokenIndex": 0,
+          "sourceStart": 0,
+          "sourceEnd": 10,
+          "provenance": {
+            "sourceType": "algorithm",
+            "method": "meta-expression-linguistic-parser",
+            "parserId": "meta-expression-linguistic-parser",
+            "parserVersion": 1,
+            "layer": "source-unit:token"
+          }
+        },
+        {
+          "id": "source-unit-2",
+          "type": "source-unit",
+          "version": 1,
+          "kind": "separator",
+          "text": " ",
+          "sourceStart": 10,
+          "sourceEnd": 11,
+          "provenance": {
+            "sourceType": "algorithm",
+            "method": "meta-expression-linguistic-parser",
+            "parserId": "meta-expression-linguistic-parser",
+            "parserVersion": 1,
+            "layer": "source-unit:separator"
+          }
+        },
+        {
+          "id": "source-unit-3",
+          "type": "source-unit",
+          "version": 1,
+          "kind": "token",
+          "text": "is",
+          "tokenIndex": 1,
+          "sourceStart": 11,
+          "sourceEnd": 13,
+          "provenance": {
+            "sourceType": "algorithm",
+            "method": "meta-expression-linguistic-parser",
+            "parserId": "meta-expression-linguistic-parser",
+            "parserVersion": 1,
+            "layer": "source-unit:token"
+          }
+        },
+        {
+          "id": "source-unit-4",
+          "type": "source-unit",
+          "version": 1,
+          "kind": "separator",
+          "text": " ",
+          "sourceStart": 13,
+          "sourceEnd": 14,
+          "provenance": {
+            "sourceType": "algorithm",
+            "method": "meta-expression-linguistic-parser",
+            "parserId": "meta-expression-linguistic-parser",
+            "parserVersion": 1,
+            "layer": "source-unit:separator"
+          }
+        },
+        {
+          "id": "source-unit-5",
+          "type": "source-unit",
+          "version": 1,
+          "kind": "token",
+          "text": "a",
+          "tokenIndex": 2,
+          "sourceStart": 14,
+          "sourceEnd": 15,
+          "provenance": {
+            "sourceType": "algorithm",
+            "method": "meta-expression-linguistic-parser",
+            "parserId": "meta-expression-linguistic-parser",
+            "parserVersion": 1,
+            "layer": "source-unit:token"
+          }
+        },
+        {
+          "id": "source-unit-6",
+          "type": "source-unit",
+          "version": 1,
+          "kind": "separator",
+          "text": " ",
+          "sourceStart": 15,
+          "sourceEnd": 16,
+          "provenance": {
+            "sourceType": "algorithm",
+            "method": "meta-expression-linguistic-parser",
+            "parserId": "meta-expression-linguistic-parser",
+            "parserVersion": 1,
+            "layer": "source-unit:separator"
+          }
+        },
+        {
+          "id": "source-unit-7",
+          "type": "source-unit",
+          "version": 1,
+          "kind": "token",
+          "text": "state",
+          "tokenIndex": 3,
+          "sourceStart": 16,
+          "sourceEnd": 21,
+          "provenance": {
+            "sourceType": "algorithm",
+            "method": "meta-expression-linguistic-parser",
+            "parserId": "meta-expression-linguistic-parser",
+            "parserVersion": 1,
+            "layer": "source-unit:token"
+          }
+        },
+        {
+          "id": "source-unit-8",
+          "type": "source-unit",
+          "version": 1,
+          "kind": "symbol",
+          "text": ".",
+          "symbolId": "symbol-1",
+          "sourceStart": 21,
+          "sourceEnd": 22,
+          "provenance": {
+            "sourceType": "algorithm",
+            "method": "meta-expression-linguistic-parser",
+            "parserId": "meta-expression-linguistic-parser",
+            "parserVersion": 1,
+            "layer": "source-unit:symbol"
+          }
+        }
+      ],
+      "sentences": [
+        {
+          "id": "sentence-1",
+          "tokenStart": 0,
+          "tokenEnd": 3,
+          "sourceStart": 0,
+          "sourceEnd": 22,
+          "unitIds": [
+            "source-unit-1",
+            "source-unit-2",
+            "source-unit-3",
+            "source-unit-4",
+            "source-unit-5",
+            "source-unit-6",
+            "source-unit-7",
+            "source-unit-8"
+          ]
+        }
+      ],
+      "provenance": {
+        "sourceType": "algorithm",
+        "method": "meta-expression-linguistic-parser",
+        "parserId": "meta-expression-linguistic-parser",
+        "parserVersion": 1,
+        "layer": "source-reconstruction"
+      }
+    },
+    "links": [
+      {
+        "id": "semantic-link-1",
+        "sourceText": "California",
+        "sourceStart": 0,
+        "sourceEnd": 10,
+        "tokenStart": 0,
+        "tokenEnd": 0,
+        "sourceLanguage": "en",
+        "sourceFragment": {
+          "phraseId": "phrase-1",
+          "role": "subject",
+          "fragmentIds": [
+            "fragment-1",
+            "fragment-6",
+            "fragment-7"
+          ]
+        },
+        "meaning": {
+          "id": "Q99",
+          "label": "California",
+          "description": "state of the United States of America",
+          "url": "https://en.wikipedia.org/wiki/California",
+          "source": "virtual-source-overrides"
+        },
+        "targetHint": "Калифорния",
+        "status": "linked-entity"
+      },
+      {
+        "id": "semantic-link-2",
+        "sourceText": "is a",
+        "sourceStart": 11,
+        "sourceEnd": 15,
+        "tokenStart": 1,
+        "tokenEnd": 2,
+        "sourceLanguage": "en",
+        "sourceFragment": {
+          "phraseId": "phrase-2",
+          "role": null,
+          "fragmentIds": [
+            "fragment-2",
+            "fragment-3",
+            "fragment-8",
+            "fragment-9",
+            "fragment-10"
+          ]
+        },
+        "meaning": {
+          "id": "wikt:en:is-a#Noun:0",
+          "label": "is a",
+          "description": " The relationship between two entities in which one entity inherits from the other.",
+          "url": "https://en.wiktionary.org/wiki/is-a",
+          "source": "wiktionary"
+        },
+        "targetHint": null,
+        "status": "linked-entity"
+      },
+      {
+        "id": "semantic-link-3",
+        "sourceText": "state",
+        "sourceStart": 16,
+        "sourceEnd": 21,
+        "tokenStart": 3,
+        "tokenEnd": 3,
+        "sourceLanguage": "en",
+        "sourceFragment": {
+          "phraseId": "phrase-3",
+          "role": "object",
+          "fragmentIds": [
+            "fragment-4",
+            "fragment-10",
+            "fragment-11"
+          ]
+        },
+        "meaning": {
+          "id": "Q35657",
+          "label": "state",
+          "description": "state of the United States",
+          "url": "https://en.wikipedia.org/wiki/U.S._state",
+          "source": "virtual-source-overrides"
+        },
+        "targetHint": "штат",
+        "status": "linked-entity"
+      }
+    ],
+    "linksNotation": "(semantic-meta-language: (California is a state.) from en to ru)\n(semantic-link-1: source (California) status linked-entity sourceRole subject meaning (Q99) label (California) targetHint (Калифорния) url (https://en.wikipedia.org/wiki/California))\n(semantic-link-2: source (is a) status linked-entity meaning (wikt:en:is-a#Noun:0) label (is a) url (https://en.wiktionary.org/wiki/is-a))\n(semantic-link-3: source (state) status linked-entity sourceRole object meaning (Q35657) label (state) targetHint (штат) url (https://en.wikipedia.org/wiki/U.S._state))"
+  },
+  "naturalization": {
+    "type": "naturalization",
+    "version": 1,
+    "sourceLanguage": "en",
+    "targetLanguage": "ru",
+    "semanticMetaLanguageId": "semantic-meta-language",
+    "semanticLinkIds": [
+      "semantic-link-1",
+      "semantic-link-2",
+      "semantic-link-3"
+    ],
+    "targetText": "Калифорния это штат.",
+    "targetMarkdown": "[Калифорния](https://www.wikidata.org/wiki/Q99 \"Q99\") [это](https://en.wiktionary.org/wiki/%D1%8D%D1%82%D0%BE \"wikt:ru:это#Determiner:0\") [штат](https://ru.wikipedia.org/wiki/%D0%A8%D1%82%D0%B0%D1%82_%D0%A1%D0%A8%D0%90 \"Q35657\").",
+    "targetHtml": "<a href=\"https://www.wikidata.org/wiki/Q99\" title=\"Q99\">Калифорния</a> <a href=\"https://en.wiktionary.org/wiki/%D1%8D%D1%82%D0%BE\" title=\"wikt:ru:это#Determiner:0\">это</a> <a href=\"https://ru.wikipedia.org/wiki/%D0%A8%D1%82%D0%B0%D1%82_%D0%A1%D0%A8%D0%90\" title=\"Q35657\">штат</a>.",
+    "sentences": [
+      {
+        "id": "sentence-1",
+        "semanticLinkIds": [
+          "semantic-link-1",
+          "semantic-link-2",
+          "semantic-link-3"
+        ],
+        "targetText": "Калифорния это штат.",
+        "targetMarkdown": "[Калифорния](https://www.wikidata.org/wiki/Q99 \"Q99\") [это](https://en.wiktionary.org/wiki/%D1%8D%D1%82%D0%BE \"wikt:ru:это#Determiner:0\") [штат](https://ru.wikipedia.org/wiki/%D0%A8%D1%82%D0%B0%D1%82_%D0%A1%D0%A8%D0%90 \"Q35657\").",
+        "targetHtml": "<a href=\"https://www.wikidata.org/wiki/Q99\" title=\"Q99\">Калифорния</a> <a href=\"https://en.wiktionary.org/wiki/%D1%8D%D1%82%D0%BE\" title=\"wikt:ru:это#Determiner:0\">это</a> <a href=\"https://ru.wikipedia.org/wiki/%D0%A8%D1%82%D0%B0%D1%82_%D0%A1%D0%A8%D0%90\" title=\"Q35657\">штат</a>.",
+        "targetUnits": [
+          {
+            "id": "target-unit-1-1",
+            "kind": "phrase",
+            "phraseId": "phrase-1",
+            "semanticLinkId": "semantic-link-1",
+            "sourceText": "California",
+            "targetText": "Калифорния",
+            "plainText": "Калифорния",
+            "markdown": "[Калифорния](https://www.wikidata.org/wiki/Q99 \"Q99\")",
+            "html": "<a href=\"https://www.wikidata.org/wiki/Q99\" title=\"Q99\">Калифорния</a>",
+            "targetEntityId": "Q99",
+            "targetUrl": "https://www.wikidata.org/wiki/Q99"
+          },
+          {
+            "id": "target-unit-1-2",
+            "kind": "rule-token",
+            "phraseId": null,
+            "semanticLinkId": null,
+            "sourceText": "is a",
+            "targetText": "это",
+            "plainText": "это",
+            "markdown": "[это](https://en.wiktionary.org/wiki/%D1%8D%D1%82%D0%BE \"wikt:ru:это#Determiner:0\")",
+            "html": "<a href=\"https://en.wiktionary.org/wiki/%D1%8D%D1%82%D0%BE\" title=\"wikt:ru:это#Determiner:0\">это</a>",
+            "targetEntityId": "wikt:ru:это#Determiner:0",
+            "targetUrl": "https://en.wiktionary.org/wiki/%D1%8D%D1%82%D0%BE"
+          },
+          {
+            "id": "target-unit-1-3",
+            "kind": "phrase",
+            "phraseId": "phrase-3",
+            "semanticLinkId": "semantic-link-3",
+            "sourceText": "state",
+            "targetText": "штат",
+            "plainText": "штат",
+            "markdown": "[штат](https://ru.wikipedia.org/wiki/%D0%A8%D1%82%D0%B0%D1%82_%D0%A1%D0%A8%D0%90 \"Q35657\")",
+            "html": "<a href=\"https://ru.wikipedia.org/wiki/%D0%A8%D1%82%D0%B0%D1%82_%D0%A1%D0%A8%D0%90\" title=\"Q35657\">штат</a>",
+            "targetEntityId": "Q35657",
+            "targetUrl": "https://ru.wikipedia.org/wiki/%D0%A8%D1%82%D0%B0%D1%82_%D0%A1%D0%A8%D0%90"
+          }
+        ],
+        "transformations": [
+          "english-is-a-to-russian-eto"
+        ]
+      }
+    ],
+    "linksNotation": "(naturalization: target (Калифорния это штат.) language ru)\n(sentence-1: semanticLinks (semantic-link-1 semantic-link-2 semantic-link-3) target (Калифорния это штат.) transformations (english-is-a-to-russian-eto))\n(target-unit-1-1: target (Калифорния) semanticLink semantic-link-1 targetId Q99 markdownUrl (https://www.wikidata.org/wiki/Q99))\n(target-unit-1-2: target (это) targetId wikt:ru:это#Determiner:0 markdownUrl (https://en.wiktionary.org/wiki/%D1%8D%D1%82%D0%BE))\n(target-unit-1-3: target (штат) semanticLink semantic-link-3 targetId Q35657 markdownUrl (https://ru.wikipedia.org/wiki/%D0%A8%D1%82%D0%B0%D1%82_%D0%A1%D0%A8%D0%90))"
+  },
+  "deformalization": {
+    "type": "naturalization",
+    "version": 1,
+    "sourceLanguage": "en",
+    "targetLanguage": "ru",
+    "semanticMetaLanguageId": "semantic-meta-language",
+    "semanticLinkIds": [
+      "semantic-link-1",
+      "semantic-link-2",
+      "semantic-link-3"
+    ],
+    "targetText": "Калифорния это штат.",
+    "targetMarkdown": "[Калифорния](https://www.wikidata.org/wiki/Q99 \"Q99\") [это](https://en.wiktionary.org/wiki/%D1%8D%D1%82%D0%BE \"wikt:ru:это#Determiner:0\") [штат](https://ru.wikipedia.org/wiki/%D0%A8%D1%82%D0%B0%D1%82_%D0%A1%D0%A8%D0%90 \"Q35657\").",
+    "targetHtml": "<a href=\"https://www.wikidata.org/wiki/Q99\" title=\"Q99\">Калифорния</a> <a href=\"https://en.wiktionary.org/wiki/%D1%8D%D1%82%D0%BE\" title=\"wikt:ru:это#Determiner:0\">это</a> <a href=\"https://ru.wikipedia.org/wiki/%D0%A8%D1%82%D0%B0%D1%82_%D0%A1%D0%A8%D0%90\" title=\"Q35657\">штат</a>.",
+    "sentences": [
+      {
+        "id": "sentence-1",
+        "semanticLinkIds": [
+          "semantic-link-1",
+          "semantic-link-2",
+          "semantic-link-3"
+        ],
+        "targetText": "Калифорния это штат.",
+        "targetMarkdown": "[Калифорния](https://www.wikidata.org/wiki/Q99 \"Q99\") [это](https://en.wiktionary.org/wiki/%D1%8D%D1%82%D0%BE \"wikt:ru:это#Determiner:0\") [штат](https://ru.wikipedia.org/wiki/%D0%A8%D1%82%D0%B0%D1%82_%D0%A1%D0%A8%D0%90 \"Q35657\").",
+        "targetHtml": "<a href=\"https://www.wikidata.org/wiki/Q99\" title=\"Q99\">Калифорния</a> <a href=\"https://en.wiktionary.org/wiki/%D1%8D%D1%82%D0%BE\" title=\"wikt:ru:это#Determiner:0\">это</a> <a href=\"https://ru.wikipedia.org/wiki/%D0%A8%D1%82%D0%B0%D1%82_%D0%A1%D0%A8%D0%90\" title=\"Q35657\">штат</a>.",
+        "targetUnits": [
+          {
+            "id": "target-unit-1-1",
+            "kind": "phrase",
+            "phraseId": "phrase-1",
+            "semanticLinkId": "semantic-link-1",
+            "sourceText": "California",
+            "targetText": "Калифорния",
+            "plainText": "Калифорния",
+            "markdown": "[Калифорния](https://www.wikidata.org/wiki/Q99 \"Q99\")",
+            "html": "<a href=\"https://www.wikidata.org/wiki/Q99\" title=\"Q99\">Калифорния</a>",
+            "targetEntityId": "Q99",
+            "targetUrl": "https://www.wikidata.org/wiki/Q99"
+          },
+          {
+            "id": "target-unit-1-2",
+            "kind": "rule-token",
+            "phraseId": null,
+            "semanticLinkId": null,
+            "sourceText": "is a",
+            "targetText": "это",
+            "plainText": "это",
+            "markdown": "[это](https://en.wiktionary.org/wiki/%D1%8D%D1%82%D0%BE \"wikt:ru:это#Determiner:0\")",
+            "html": "<a href=\"https://en.wiktionary.org/wiki/%D1%8D%D1%82%D0%BE\" title=\"wikt:ru:это#Determiner:0\">это</a>",
+            "targetEntityId": "wikt:ru:это#Determiner:0",
+            "targetUrl": "https://en.wiktionary.org/wiki/%D1%8D%D1%82%D0%BE"
+          },
+          {
+            "id": "target-unit-1-3",
+            "kind": "phrase",
+            "phraseId": "phrase-3",
+            "semanticLinkId": "semantic-link-3",
+            "sourceText": "state",
+            "targetText": "штат",
+            "plainText": "штат",
+            "markdown": "[штат](https://ru.wikipedia.org/wiki/%D0%A8%D1%82%D0%B0%D1%82_%D0%A1%D0%A8%D0%90 \"Q35657\")",
+            "html": "<a href=\"https://ru.wikipedia.org/wiki/%D0%A8%D1%82%D0%B0%D1%82_%D0%A1%D0%A8%D0%90\" title=\"Q35657\">штат</a>",
+            "targetEntityId": "Q35657",
+            "targetUrl": "https://ru.wikipedia.org/wiki/%D0%A8%D1%82%D0%B0%D1%82_%D0%A1%D0%A8%D0%90"
+          }
+        ],
+        "transformations": [
+          "english-is-a-to-russian-eto"
+        ]
+      }
+    ],
+    "linksNotation": "(naturalization: target (Калифорния это штат.) language ru)\n(sentence-1: semanticLinks (semantic-link-1 semantic-link-2 semantic-link-3) target (Калифорния это штат.) transformations (english-is-a-to-russian-eto))\n(target-unit-1-1: target (Калифорния) semanticLink semantic-link-1 targetId Q99 markdownUrl (https://www.wikidata.org/wiki/Q99))\n(target-unit-1-2: target (это) targetId wikt:ru:это#Determiner:0 markdownUrl (https://en.wiktionary.org/wiki/%D1%8D%D1%82%D0%BE))\n(target-unit-1-3: target (штат) semanticLink semantic-link-3 targetId Q35657 markdownUrl (https://ru.wikipedia.org/wiki/%D0%A8%D1%82%D0%B0%D1%82_%D0%A1%D0%A8%D0%90))"
+  },
+  "phrases": [
+    {
+      "id": "phrase-1",
+      "source": {
+        "text": "California",
+        "start": 0,
+        "end": 0,
+        "sourceStart": 0,
+        "sourceEnd": 10,
+        "language": "en",
+        "entityId": "Q99",
+        "label": "California",
+        "description": "state of the United States of America",
+        "url": "https://en.wikipedia.org/wiki/California",
+        "source": "virtual-source-overrides"
+      },
+      "entityId": "Q99",
+      "target": {
+        "text": "Калифорния",
+        "language": "ru",
+        "entityId": "Q99",
+        "description": "state of the United States of America",
+        "url": "https://www.wikidata.org/wiki/Q99",
+        "source": "semantic-lexicon",
+        "sourceUrl": "https://www.wikidata.org/wiki/Q99",
+        "status": "translated",
+        "strategy": "semantic-lexicon"
+      },
+      "variable": null
+    },
+    {
+      "id": "phrase-2",
+      "source": {
+        "text": "is a",
+        "start": 1,
+        "end": 2,
+        "sourceStart": 11,
+        "sourceEnd": 15,
+        "language": "en",
+        "entityId": "wikt:en:is-a#Noun:0",
+        "label": "is a",
+        "description": " The relationship between two entities in which one entity inherits from the other.",
+        "url": "https://en.wiktionary.org/wiki/is-a",
+        "source": "wiktionary"
+      },
+      "entityId": null,
+      "target": {
+        "text": "is a",
+        "language": null,
+        "entityId": null,
+        "description": null,
+        "url": null,
+        "status": "non-wikidata-source"
+      },
+      "variable": {
+        "name": "variable-1",
+        "sourceText": "is a",
+        "sourceLabel": "is a",
+        "sourceUrl": "https://en.wiktionary.org/wiki/is-a",
+        "entityId": null,
+        "reason": "non-wikidata-source",
+        "resolvedByRule": true
+      }
+    },
+    {
+      "id": "phrase-3",
+      "source": {
+        "text": "state",
+        "start": 3,
+        "end": 3,
+        "sourceStart": 16,
+        "sourceEnd": 21,
+        "language": "en",
+        "entityId": "Q35657",
+        "label": "state",
+        "description": "state of the United States",
+        "url": "https://en.wikipedia.org/wiki/U.S._state",
+        "source": "virtual-source-overrides"
+      },
+      "entityId": "Q35657",
+      "target": {
+        "text": "штат",
+        "language": "ru",
+        "entityId": "Q35657",
+        "description": "state of the United States",
+        "url": "https://ru.wikipedia.org/wiki/%D0%A8%D1%82%D0%B0%D1%82_%D0%A1%D0%A8%D0%90",
+        "source": "semantic-lexicon",
+        "sourceUrl": "https://ru.wikipedia.org/wiki/%D0%A8%D1%82%D0%B0%D1%82_%D0%A1%D0%A8%D0%90",
+        "status": "translated",
+        "strategy": "semantic-lexicon"
+      },
+      "variable": null
+    }
+  ],
+  "variables": [
+    {
+      "name": "variable-1",
+      "sourceText": "is a",
+      "sourceLabel": "is a",
+      "sourceUrl": "https://en.wiktionary.org/wiki/is-a",
+      "entityId": null,
+      "reason": "non-wikidata-source",
+      "resolvedByRule": true
+    }
+  ],
+  "sentences": [
+    {
+      "type": "sentence",
+      "id": "sentence-1",
+      "sourceText": "California is a state.",
+      "sourceStart": 0,
+      "sourceEnd": 22,
+      "targetText": "Калифорния это штат.",
+      "targetMarkdown": "[Калифорния](https://www.wikidata.org/wiki/Q99 \"Q99\") [это](https://en.wiktionary.org/wiki/%D1%8D%D1%82%D0%BE \"wikt:ru:это#Determiner:0\") [штат](https://ru.wikipedia.org/wiki/%D0%A8%D1%82%D0%B0%D1%82_%D0%A1%D0%A8%D0%90 \"Q35657\").",
+      "targetHtml": "<a href=\"https://www.wikidata.org/wiki/Q99\" title=\"Q99\">Калифорния</a> <a href=\"https://en.wiktionary.org/wiki/%D1%8D%D1%82%D0%BE\" title=\"wikt:ru:это#Determiner:0\">это</a> <a href=\"https://ru.wikipedia.org/wiki/%D0%A8%D1%82%D0%B0%D1%82_%D0%A1%D0%A8%D0%90\" title=\"Q35657\">штат</a>.",
+      "targetUnits": [
+        {
+          "id": "target-unit-1-1",
+          "kind": "phrase",
+          "phraseId": "phrase-1",
+          "semanticLinkId": "semantic-link-1",
+          "sourceText": "California",
+          "targetText": "Калифорния",
+          "plainText": "Калифорния",
+          "markdown": "[Калифорния](https://www.wikidata.org/wiki/Q99 \"Q99\")",
+          "html": "<a href=\"https://www.wikidata.org/wiki/Q99\" title=\"Q99\">Калифорния</a>",
+          "targetEntityId": "Q99",
+          "targetUrl": "https://www.wikidata.org/wiki/Q99"
+        },
+        {
+          "id": "target-unit-1-2",
+          "kind": "rule-token",
+          "phraseId": null,
+          "semanticLinkId": null,
+          "sourceText": "is a",
+          "targetText": "это",
+          "plainText": "это",
+          "markdown": "[это](https://en.wiktionary.org/wiki/%D1%8D%D1%82%D0%BE \"wikt:ru:это#Determiner:0\")",
+          "html": "<a href=\"https://en.wiktionary.org/wiki/%D1%8D%D1%82%D0%BE\" title=\"wikt:ru:это#Determiner:0\">это</a>",
+          "targetEntityId": "wikt:ru:это#Determiner:0",
+          "targetUrl": "https://en.wiktionary.org/wiki/%D1%8D%D1%82%D0%BE"
+        },
+        {
+          "id": "target-unit-1-3",
+          "kind": "phrase",
+          "phraseId": "phrase-3",
+          "semanticLinkId": "semantic-link-3",
+          "sourceText": "state",
+          "targetText": "штат",
+          "plainText": "штат",
+          "markdown": "[штат](https://ru.wikipedia.org/wiki/%D0%A8%D1%82%D0%B0%D1%82_%D0%A1%D0%A8%D0%90 \"Q35657\")",
+          "html": "<a href=\"https://ru.wikipedia.org/wiki/%D0%A8%D1%82%D0%B0%D1%82_%D0%A1%D0%A8%D0%90\" title=\"Q35657\">штат</a>",
+          "targetEntityId": "Q35657",
+          "targetUrl": "https://ru.wikipedia.org/wiki/%D0%A8%D1%82%D0%B0%D1%82_%D0%A1%D0%A8%D0%90"
+        }
+      ],
+      "transformations": [
+        "english-is-a-to-russian-eto"
+      ],
+      "phraseIds": [
+        "phrase-1",
+        "phrase-2",
+        "phrase-3"
+      ]
+    }
+  ],
+  "steps": [
+    {
+      "id": "step-1",
+      "type": "input",
+      "sourceLanguage": "en",
+      "targetLanguage": "ru",
+      "text": "California is a state."
+    },
+    {
+      "id": "step-2",
+      "type": "api-request",
+      "method": "GET",
+      "url": "https://en.wikipedia.org/w/api.php?action=query&format=json&list=search&srsearch=California&srlimit=5&origin=*"
+    },
+    {
+      "id": "step-3",
+      "type": "api-request",
+      "method": "GET",
+      "url": "https://www.wikidata.org/w/api.php?action=wbsearchentities&format=json&language=en&origin=*&type=item&limit=5&search=California"
+    },
+    {
+      "id": "step-4",
+      "type": "api-request",
+      "method": "GET",
+      "url": "https://www.wikidata.org/w/api.php?action=wbsearchentities&format=json&language=en&origin=*&type=property&limit=5&search=California"
+    },
+    {
+      "id": "step-5",
+      "type": "api-request",
+      "method": "GET",
+      "url": "https://en.wiktionary.org/api/rest_v1/page/definition/california"
+    },
+    {
+      "id": "step-6",
+      "type": "api-response",
+      "method": "GET",
+      "url": "https://www.wikidata.org/w/api.php?action=wbsearchentities&format=json&language=en&origin=*&type=property&limit=5&search=California",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"searchinfo\":{\"search\":\"California\"},\"search\":[{\"id\":\"P4194\",\"title\":\"Property:P4194\",\"pageid\":40052248,\"concepturi\":\"http://www.wikidata.org/entity/P4194\",\"datatype\":\"external-id\",\"repository\":\"wikidata\",\"url\":\"//www.wikidata.org/wiki/Property:P4194\",\"display\":{\"label\":{\"value\":\"CNPS ID\",\"language\":\"en\"},\"description\":{\"value\":\"identifier in the California Native Plant Society database\",\"language\":\"en\"}},\"label\":\"CNPS ID\",\"description\":\"identifier in the California Native Plant Society databas..."
+    },
+    {
+      "id": "step-7",
+      "type": "api-response",
+      "method": "GET",
+      "url": "https://www.wikidata.org/w/api.php?action=wbsearchentities&format=json&language=en&origin=*&type=item&limit=5&search=California",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"searchinfo\":{\"search\":\"California\"},\"search\":[{\"id\":\"Q99\",\"title\":\"Q99\",\"pageid\":230,\"concepturi\":\"http://www.wikidata.org/entity/Q99\",\"repository\":\"wikidata\",\"url\":\"//www.wikidata.org/wiki/Q99\",\"display\":{\"label\":{\"value\":\"California\",\"language\":\"en\"},\"description\":{\"value\":\"state of the United States of America\",\"language\":\"en\"}},\"label\":\"California\",\"description\":\"state of the United States of America\",\"match\":{\"type\":\"label\",\"language\":\"en\",\"text\":\"California\"}},{\"id\":\"Q16047894\",\"title\":\"..."
+    },
+    {
+      "id": "step-8",
+      "type": "api-response",
+      "method": "GET",
+      "url": "https://en.wikipedia.org/w/api.php?action=query&format=json&list=search&srsearch=California&srlimit=5&origin=*",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"batchcomplete\":\"\",\"continue\":{\"sroffset\":5,\"continue\":\"-||\"},\"query\":{\"searchinfo\":{\"totalhits\":521871},\"search\":[{\"ns\":0,\"title\":\"California\",\"pageid\":5407,\"size\":292386,\"wordcount\":24609,\"snippet\":\"<span class=\\\"searchmatch\\\">California</span> (/\\u02cck\\u00e6l\\u026a\\u02c8f\\u0254\\u02d0rni\\u0259/) is a state in the Western United States that lies on the Pacific Coast. It borders Oregon to the north, and Nevada and Arizona\",\"timestamp\":\"2026-06-06T15:31:23Z\"},{\"ns\":0,\"title\":\"California City, C..."
+    },
+    {
+      "id": "step-9",
+      "type": "api-request",
+      "method": "GET",
+      "url": "https://en.wikipedia.org/w/api.php?action=query&format=json&prop=pageprops&titles=California%7CCalifornia+City%2C+California%7CCalifornia+Saga%2FCalifornia%7CThe+Californias%7CCalifornia+Valley%2C+California&ppprop=wikibase_item&origin=*"
+    },
+    {
+      "id": "step-10",
+      "type": "api-response",
+      "method": "GET",
+      "url": "https://en.wiktionary.org/api/rest_v1/page/definition/california",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"la\":[{\"partOfSpeech\":\"Noun\",\"language\":\"Latin\",\"definitions\":[{\"definition\":\"<span class=\\\"form-of-definition use-with-mention\\\" about=\\\"#mwt3\\\" typeof=\\\"mw:Transclusion\\\"><span class=\\\"inflection-of-conjoined\\\"><a rel=\\\"mw:WikiLink\\\" href=\\\"/wiki/Appendix:Glossary#nominative_case\\\" title=\\\"Appendix:Glossary\\\">nominative</a><span class=\\\"inflection-of-sep\\\">/</span><a rel=\\\"mw:WikiLink\\\" href=\\\"/wiki/Appendix:Glossary#accusative_case\\\" title=\\\"Appendix:Glossary\\\">accusative</a><span class=\\\"in..."
+    },
+    {
+      "id": "step-11",
+      "type": "api-response",
+      "method": "GET",
+      "url": "https://en.wikipedia.org/w/api.php?action=query&format=json&prop=pageprops&titles=California%7CCalifornia+City%2C+California%7CCalifornia+Saga%2FCalifornia%7CThe+Californias%7CCalifornia+Valley%2C+California&ppprop=wikibase_item&origin=*",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"batchcomplete\":\"\",\"query\":{\"pages\":{\"5407\":{\"pageid\":5407,\"ns\":0,\"title\":\"California\",\"pageprops\":{\"wikibase_item\":\"Q99\"}},\"107526\":{\"pageid\":107526,\"ns\":0,\"title\":\"California City, California\",\"pageprops\":{\"wikibase_item\":\"Q732125\"}},\"4819291\":{\"pageid\":4819291,\"ns\":0,\"title\":\"California Saga/California\",\"pageprops\":{\"wikibase_item\":\"Q5020935\"}},\"1571632\":{\"pageid\":1571632,\"ns\":0,\"title\":\"California Valley, California\",\"pageprops\":{\"wikibase_item\":\"Q3475029\"}},\"9386836\":{\"pageid\":9386836,\"ns\"..."
+    },
+    {
+      "id": "step-12",
+      "type": "api-request",
+      "method": "GET",
+      "url": "https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&ids=Q99&languages=en&origin=*&props=labels%7Caliases%7Cdescriptions%7Cclaims%7Csitelinks&sitefilter=enwiki"
+    },
+    {
+      "id": "step-13",
+      "type": "api-request",
+      "method": "GET",
+      "url": "https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&ids=Q16047894&languages=en&origin=*&props=labels%7Caliases%7Cdescriptions%7Cclaims%7Csitelinks&sitefilter=enwiki"
+    },
+    {
+      "id": "step-14",
+      "type": "api-request",
+      "method": "GET",
+      "url": "https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&ids=Q23930100&languages=en&origin=*&props=labels%7Caliases%7Cdescriptions%7Cclaims%7Csitelinks&sitefilter=enwiki"
+    },
+    {
+      "id": "step-15",
+      "type": "api-response",
+      "method": "GET",
+      "url": "https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&ids=Q16047894&languages=en&origin=*&props=labels%7Caliases%7Cdescriptions%7Cclaims%7Csitelinks&sitefilter=enwiki",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"entities\":{\"Q16047894\":{\"type\":\"item\",\"id\":\"Q16047894\",\"labels\":{\"en\":{\"language\":\"en\",\"value\":\"California\"}},\"descriptions\":{\"en\":{\"language\":\"en\",\"value\":\"genus of plants\"}},\"aliases\":{},\"claims\":{\"P225\":[{\"mainsnak\":{\"snaktype\":\"value\",\"property\":\"P225\",\"hash\":\"44e7ea13dfffbb12de0ee5929498b79e0824a8cc\",\"datavalue\":{\"value\":\"California\",\"type\":\"string\"},\"datatype\":\"string\"},\"type\":\"statement\",\"qualifiers\":{\"P405\":[{\"snaktype\":\"value\",\"property\":\"P405\",\"hash\":\"57cd856cc956ed2eb0918700e78f31f2..."
+    },
+    {
+      "id": "step-16",
+      "type": "api-response",
+      "method": "GET",
+      "url": "https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&ids=Q23930100&languages=en&origin=*&props=labels%7Caliases%7Cdescriptions%7Cclaims%7Csitelinks&sitefilter=enwiki",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"entities\":{\"Q23930100\":{\"type\":\"item\",\"id\":\"Q23930100\",\"labels\":{\"en\":{\"language\":\"en\",\"value\":\"California\"}},\"descriptions\":{\"en\":{\"language\":\"en\",\"value\":\"2016 album by Blink-182\"}},\"aliases\":{},\"claims\":{\"P175\":[{\"mainsnak\":{\"snaktype\":\"value\",\"property\":\"P175\",\"hash\":\"75d2af8cb60e1de6eed858d07116068e7a7554f3\",\"datavalue\":{\"value\":{\"entity-type\":\"item\",\"numeric-id\":482477,\"id\":\"Q482477\"},\"type\":\"wikibase-entityid\"},\"datatype\":\"wikibase-item\"},\"type\":\"statement\",\"id\":\"Q23930100$0c728f66-4534..."
+    },
+    {
+      "id": "step-17",
+      "type": "api-response",
+      "method": "GET",
+      "url": "https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&ids=Q99&languages=en&origin=*&props=labels%7Caliases%7Cdescriptions%7Cclaims%7Csitelinks&sitefilter=enwiki",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"entities\":{\"Q99\":{\"type\":\"item\",\"id\":\"Q99\",\"labels\":{\"en\":{\"language\":\"en\",\"value\":\"California\"}},\"descriptions\":{\"en\":{\"language\":\"en\",\"value\":\"state of the United States of America\"}},\"aliases\":{\"en\":[{\"language\":\"en\",\"value\":\"State of California\"},{\"language\":\"en\",\"value\":\"The Golden State\"},{\"language\":\"en\",\"value\":\"Calif.\"},{\"language\":\"en\",\"value\":\"California, United States\"},{\"language\":\"en\",\"value\":\"Cali.\"},{\"language\":\"en\",\"value\":\"Cal.\"},{\"language\":\"en\",\"value\":\"CA\"},{\"language\":\"en..."
+    },
+    {
+      "id": "step-18",
+      "type": "api-request",
+      "method": "GET",
+      "url": "https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&ids=Q578170&languages=en&origin=*&props=labels%7Cclaims"
+    },
+    {
+      "id": "step-19",
+      "type": "api-response",
+      "method": "GET",
+      "url": "https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&ids=Q578170&languages=en&origin=*&props=labels%7Cclaims",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"entities\":{\"Q578170\":{\"type\":\"item\",\"id\":\"Q578170\",\"labels\":{\"en\":{\"language\":\"en\",\"value\":\"contiguous United States\"}},\"claims\":{\"P646\":[{\"mainsnak\":{\"snaktype\":\"value\",\"property\":\"P646\",\"hash\":\"34bac08556a5a1e46fe9a7065c563e8d810bb461\",\"datavalue\":{\"value\":\"/m/04_1l0v\",\"type\":\"string\"},\"datatype\":\"external-id\"},\"type\":\"statement\",\"id\":\"Q578170$523141CF-B2AC-45F9-819D-D92409CF3E28\",\"rank\":\"normal\",\"references\":[{\"hash\":\"2b00cb481cddcac7623114367489b5c194901c4a\",\"snaks\":{\"P248\":[{\"snaktype\":\"v..."
+    },
+    {
+      "id": "step-20",
+      "type": "api-request",
+      "method": "GET",
+      "url": "https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&ids=Q16521&languages=en&origin=*&props=labels%7Cclaims"
+    },
+    {
+      "id": "step-21",
+      "type": "api-response",
+      "method": "GET",
+      "url": "https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&ids=Q16521&languages=en&origin=*&props=labels%7Cclaims",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"entities\":{\"Q16521\":{\"type\":\"item\",\"id\":\"Q16521\",\"labels\":{\"en\":{\"language\":\"en\",\"value\":\"taxon\"}},\"claims\":{\"P279\":[{\"mainsnak\":{\"snaktype\":\"value\",\"property\":\"P279\",\"hash\":\"00c897a47bf7ff183f7d33952c29bff7c4f663f2\",\"datavalue\":{\"value\":{\"entity-type\":\"item\",\"numeric-id\":21871294,\"id\":\"Q21871294\"},\"type\":\"wikibase-entityid\"},\"datatype\":\"wikibase-item\"},\"type\":\"statement\",\"id\":\"Q16521$cc853109-4c46-028a-dd45-d52b4a34cb75\",\"rank\":\"normal\"}],\"P646\":[{\"mainsnak\":{\"snaktype\":\"value\",\"property\":\"P6..."
+    },
+    {
+      "id": "step-22",
+      "type": "api-request",
+      "method": "GET",
+      "url": "https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&ids=Q482994&languages=en&origin=*&props=labels%7Cclaims"
+    },
+    {
+      "id": "step-23",
+      "type": "api-response",
+      "method": "GET",
+      "url": "https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&ids=Q482994&languages=en&origin=*&props=labels%7Cclaims",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"entities\":{\"Q482994\":{\"type\":\"item\",\"id\":\"Q482994\",\"labels\":{\"en\":{\"language\":\"en\",\"value\":\"album\"}},\"claims\":{\"P373\":[{\"mainsnak\":{\"snaktype\":\"value\",\"property\":\"P373\",\"hash\":\"441701dcbc53db35219e83ecf42d2898ff226184\",\"datavalue\":{\"value\":\"Music albums\",\"type\":\"string\"},\"datatype\":\"string\"},\"type\":\"statement\",\"id\":\"q482994$B560975B-DF6D-4C5B-A306-88A416DA27EC\",\"rank\":\"normal\"}],\"P508\":[{\"mainsnak\":{\"snaktype\":\"value\",\"property\":\"P508\",\"hash\":\"b8c71fd0684be0d8d451cc2f0f0ebe156bbf85f2\",\"dataval..."
+    },
+    {
+      "id": "step-24",
+      "type": "api-request",
+      "method": "GET",
+      "url": "https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&ids=Q84077605&languages=en&origin=*&props=labels%7Cclaims"
+    },
+    {
+      "id": "step-25",
+      "type": "api-response",
+      "method": "GET",
+      "url": "https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&ids=Q84077605&languages=en&origin=*&props=labels%7Cclaims",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"entities\":{\"Q84077605\":{\"type\":\"item\",\"id\":\"Q84077605\",\"labels\":{\"en\":{\"language\":\"en\",\"value\":\"Blink-182's albums in chronological order\"}},\"claims\":{\"P31\":[{\"mainsnak\":{\"snaktype\":\"value\",\"property\":\"P31\",\"hash\":\"34c4e1d7d4d661131e4b47ebdfaad89bf77da4af\",\"datavalue\":{\"value\":{\"entity-type\":\"item\",\"numeric-id\":59191021,\"id\":\"Q59191021\"},\"type\":\"wikibase-entityid\"},\"datatype\":\"wikibase-item\"},\"type\":\"statement\",\"id\":\"Q84077605$58b78ed9-489c-8531-480c-843297a026ca\",\"rank\":\"normal\"}],\"P360\":[{\"m..."
+    },
+    {
+      "id": "step-26",
+      "type": "api-request",
+      "method": "GET",
+      "url": "https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&ids=Q487914&languages=en&origin=*&props=labels%7Cclaims"
+    },
+    {
+      "id": "step-27",
+      "type": "api-response",
+      "method": "GET",
+      "url": "https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&ids=Q487914&languages=en&origin=*&props=labels%7Cclaims",
+      "status": 200,
+      "ok": true,
+      "bodyPreview": "{\"entities\":{\"Q487914\":{\"type\":\"item\",\"id\":\"Q487914\",\"labels\":{\"en\":{\"language\":\"en\",\"value\":\"pop-punk\"}},\"claims\":{\"P31\":[{\"mainsnak\":{\"snaktype\":\"value\",\"property\":\"P31\",\"hash\":\"8afc10155c81399639bb273986eff2b54ba28f89\",\"datavalue\":{\"value\":{\"entity-type\":\"item\",\"numeric-id\":188451,\"id\":\"Q188451\"},\"type\":\"wikibase-entityid\"},\"datatype\":\"wikibase-item\"},\"type\":\"statement\",\"id\":\"q487914$2A361BD9-5C72-4D09-A823-9EB00DCC1039\",\"rank\":\"normal\",\"references\":[{\"hash\":\"dd3528c6302a390cda99702c4264cd488..."
+    },
+    {
+      "id": "step-28",
+      "type": "formalization",
+      "phraseCount": 3,
+      "markdown": "[California](https://en.wikipedia.org/wiki/California \"Q99\") [is a](https://en.wiktionary.org/wiki/is-a \"wikt:en:is-a#Noun:0\") [state](https://en.wikipedia.org/wiki/U.S._state \"Q35657\").",
+      "linksNotation": "(formalization: (California is a state.))\n(phrase-1: source (California) start 0 end 0 id Q99 label (California) kind entity markdownUrl (https://en.wikipedia.org/wiki/California))\n(phrase-1-definition: source (California) selected (Q99) senses 3 wikidata (Q99) wikipedia (https://en.wikipedia.org/wiki/California) wiktionary (none))\n(phrase-1-sense-1: source (virtual-source-overrides) id (Q99) label (California) kind entity score 51 selected true markdownUrl (https://en.wikipedia.org/wiki/California))\n(phrase-1-sense-2: source (wikidata) id (Q16047894) label (California) kind entity score 39 selected false markdownUrl (https://www.wikidata.org/wiki/Q16047894))\n(phrase-1-sense-3: source (wikidata) id (Q23930100) label (California) kind entity score 39 selected false markdownUrl (https://en.wikipedia.org/wiki/California_ Blink-182_album))\n(phrase-2: source (is a) start 1 end 2 id wikt:en:is-a#Noun:0 label (is a) kind entity markdownUrl (https://en.wiktionary.org/wiki/is-a))\n(phrase-2-definition: source (is a) selected (wikt:en:is-a#Noun:0) senses 2 wikidata (none) wikipedia (none) wiktionary (https://en.wiktionary.org/wiki/is-a))\n(phrase-2-sense-1: source (wiktionary) id (wikt:en:is-a#Noun:0) label (is a) kind entity score 32 selected true markdownUrl (https://en.wiktionary.org/wiki/is-a))\n(phrase-2-sense-2: source (wiktionary) id (wikt:en:is-a#Noun:1) label (is a) kind entity score 32 selected false markdownUrl (https://en.wiktionary.org/wiki/is-a))\n(phrase-3: source (state) start 3 end 3 id Q35657 label (state) kind entity markdownUrl (https://en.wikipedia.org/wiki/U.S._state))\n(phrase-3-definition: source (state) selected (Q35657) senses 3 wikidata (Q35657) wikipedia (https://en.wikipedia.org/wiki/U.S._state) wiktionary (https://en.wiktionary.org/wiki/state))\n(phrase-3-sense-1: source (virtual-source-overrides) id (Q35657) label (state) kind entity score 43 selected true markdownUrl (https://en.wikipedia.org/wiki/U.S._state))\n(phrase-3-sense-2: source (wiktionary) id (wikt:en:state#Noun:0) label (state) kind entity score 43 selected false markdownUrl (https://en.wiktionary.org/wiki/state))\n(phrase-3-sense-3: source (wiktionary) id (wikt:en:state#Noun:1) label (state) kind entity score 43 selected false markdownUrl (https://en.wiktionary.org/wiki/state))\n(fragment-6: noun-phrase role noun-phrase source (California) start 0 end 0 phrases (phrase-1))\n(fragment-7: subject role subject source (California) start 0 end 0 phrases (phrase-1))\n(fragment-8: verb-phrase role verb-phrase source (is) start 1 end 1 phrases (phrase-2))\n(fragment-9: predicate role predicate source (is) start 1 end 1 phrases (phrase-2))\n(fragment-10: noun-phrase role noun-phrase source (a state) start 2 end 3 phrases (phrase-2 phrase-3))\n(fragment-11: object role object source (state) start 3 end 3 phrases (phrase-3))\n(dependency-1: nsubj head fragment-9 dependent fragment-7)\n(dependency-2: root head fragment-9 dependent fragment-9)\n(dependency-3: obj head fragment-9 dependent fragment-11)\n(dependency-4: root head fragment-2 dependent fragment-2)\n(dependency-5: nsubj head fragment-2 dependent fragment-1)\n(dependency-6: obj head fragment-2 dependent fragment-4)\n(dependency-7: det head fragment-4 dependent fragment-3)\n(relation-1: subject-predicate-object subject fragment-7 predicate fragment-9 object fragment-11)\n(context-1: Q35657 property P31 priority 1 probability 8.5 weight 0.3953488372093023 words 1 sharedBy (California))\n(context-2: Q578170 property P361 priority 2 probability 8.5 weight 0.3953488372093023 words 1 sharedBy (California))\n(context-3: Q106458883 property P279 priority 3 probability 7.1 weight 0.3333333333333333 words 1 sharedBy (state))\n(context-4: Q107390 property P279 priority 4 probability 7.1 weight 0.3333333333333333 words 1 sharedBy (state))\n(context-5: Q10864048 property P279 priority 5 probability 7.1 weight 0.3333333333333333 words 1 sharedBy (state))\n(context-6: Q135236673 property P31 priority 6 probability 7.1 weight 0.3333333333333333 words 1 sharedBy (state))\n(context-7: Q155076 property P279 priority 7 probability 7.1 weight 0.3333333333333333 words 1 sharedBy (state))\n(context-8: Q192611 property P279 priority 8 probability 7.1 weight 0.3333333333333333 words 1 sharedBy (state))\n(context-9: Q28872924 property P31 priority 9 probability 7.1 weight 0.3333333333333333 words 1 sharedBy (state))\n(context-10: Q852446 property P279 priority 10 probability 7.1 weight 0.3333333333333333 words 1 sharedBy (state))\n(context-11: Q16521 property P31 priority 11 probability 6.5 weight 0.3023255813953488 words 1 sharedBy (California))\n(context-12: Q482994 property P31 priority 12 probability 6.5 weight 0.3023255813953488 words 1 sharedBy (California))\n(context-13: Q487914 property P136 priority 13 probability 6.5 weight 0.3023255813953488 words 1 sharedBy (California))\n(context-14: Q84077605 property P361 priority 14 probability 6.5 weight 0.3023255813953488 words 1 sharedBy (California))"
+    },
+    {
+      "id": "step-29",
+      "type": "semantic-meta-language",
+      "linkCount": 3,
+      "linksNotation": "(semantic-meta-language: (California is a state.) from en to ru)\n(semantic-link-1: source (California) status linked-entity sourceRole subject meaning (Q99) label (California) targetHint (Калифорния) url (https://en.wikipedia.org/wiki/California))\n(semantic-link-2: source (is a) status linked-entity meaning (wikt:en:is-a#Noun:0) label (is a) url (https://en.wiktionary.org/wiki/is-a))\n(semantic-link-3: source (state) status linked-entity sourceRole object meaning (Q35657) label (state) targetHint (штат) url (https://en.wikipedia.org/wiki/U.S._state))"
+    },
+    {
+      "id": "step-30",
+      "type": "translation-phrase",
+      "phraseId": "phrase-1",
+      "sourceText": "California",
+      "entityId": "Q99",
+      "status": "translated",
+      "targetText": "Калифорния",
+      "strategy": "semantic-lexicon"
+    },
+    {
+      "id": "step-31",
+      "type": "translation-phrase",
+      "phraseId": "phrase-3",
+      "sourceText": "state",
+      "entityId": "Q35657",
+      "status": "translated",
+      "targetText": "штат",
+      "strategy": "semantic-lexicon"
+    },
+    {
+      "id": "step-32",
+      "type": "wiktionary-translation-miss",
+      "sourceText": "is a",
+      "sourceLanguage": "en",
+      "targetLanguage": "ru"
+    },
+    {
+      "id": "step-33",
+      "type": "translation-phrase",
+      "phraseId": "phrase-2",
+      "sourceText": "is a",
+      "entityId": null,
+      "status": "non-wikidata-source",
+      "targetText": "is a",
+      "strategy": "contextual-glossary"
+    },
+    {
+      "id": "step-34",
+      "type": "transformation-rule",
+      "sentenceId": "sentence-1",
+      "rule": "english-is-a-to-russian-eto",
+      "sourceText": "California is a state.",
+      "affectedVariables": [
+        "variable-1"
+      ]
+    },
+    {
+      "id": "step-35",
+      "type": "sentence",
+      "sentenceId": "sentence-1",
+      "sourceText": "California is a state.",
+      "targetText": "Калифорния это штат.",
+      "transformations": [
+        "english-is-a-to-russian-eto"
+      ]
+    },
+    {
+      "id": "step-36",
+      "type": "text",
+      "sentenceCount": 1,
+      "text": "Калифорния это штат."
+    }
+  ]
+}

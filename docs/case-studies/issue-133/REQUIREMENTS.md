@@ -69,3 +69,15 @@ The PR must include a changeset so the package-identity test and release tooling
 recognize the active package change.
 
 Status: done. `.changeset/issue-133-translate-defaults.md` covers the patch.
+
+## R9 - Semantic-lexicon translations still prefer live Wikipedia sitelinks
+
+When a local semantic-lexicon concept supplies the translated surface form but
+does not already have a target-language Wikipedia URL, Translate must still
+check the target-language Wikidata entity before rendering the link. If a
+target-language Wikipedia sitelink exists, the default link target must use it
+instead of the local concept's Wikidata source URL.
+
+Status: done. `js/tests/integration/issue-133.test.js` covers `Q99`
+(`California` -> `Калифорния`) and asserts that the output links to Russian
+Wikipedia instead of `https://www.wikidata.org/wiki/Q99`.
