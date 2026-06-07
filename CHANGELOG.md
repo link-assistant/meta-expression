@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.12.3
+
+### Patch Changes
+
+- 03284f6: Prefer live target-language Wikipedia sitelinks for semantic-lexicon Translate links.
+
 ## 0.12.2
 
 ### Patch Changes
