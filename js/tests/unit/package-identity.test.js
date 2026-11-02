@@ -65,4 +65,12 @@ describe('package identity', () => {
     expect(changesets.includes('my-package')).toBe(false);
     expect(releaseScripts.includes('my-package')).toBe(false);
   });
+
+  it('keeps the Rust WASM core crate out of crates.io (issue #136)', () => {
+    const cargoToml = readFileSync('rust/Cargo.toml', 'utf8');
+    const packageSection = cargoToml.split(/^\[(?!package\])/m)[0];
+
+    expect(packageSection.includes('name = "meta-expression-core"')).toBe(true);
+    expect(/^publish\s*=\s*false\s*$/m.test(packageSection)).toBe(true);
+  });
 });

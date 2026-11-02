@@ -1,6 +1,9 @@
 [package]
 name = "meta-expression-core"
 version = "0.1.0"
+# Not meant for crates.io: this crate is the Rust/WASM core that ships inside
+# the `meta-expression` npm package (rust/pkg), not a standalone library.
+publish = false
 edition = "2021"
 license = "Unlicense"
 description = "Rust core primitives for the meta-expression prototype"
