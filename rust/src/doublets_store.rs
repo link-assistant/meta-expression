@@ -500,7 +500,7 @@ fn parse_binary_links(binary: &[u8]) -> Result<Vec<DoubletsLink>, String> {
     }
 
     let mut links = Vec::with_capacity(binary.len() / 12);
-    for chunk in binary.chunks_exact(12) {
+    for chunk in binary.as_chunks::<12>().0 {
         links.push(DoubletsLink {
             index: read_u32(chunk, 0) as u64,
             source: read_u32(chunk, 4) as u64,
