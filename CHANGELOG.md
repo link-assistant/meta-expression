@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.12.4
+
+### Patch Changes
+
+- 2758a45: Mark the Rust `meta-expression-core` crate as `publish = false`: it is the WebAssembly core bundled into the `meta-expression` npm package, not a standalone crates.io library.
+
 ## 0.12.3
 
 ### Patch Changes
