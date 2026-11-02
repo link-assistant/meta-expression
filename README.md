@@ -234,7 +234,10 @@ source/target semantic phrase ids, round-trip checks, Wikimedia entity-batch
 planning, stable seven-day cache TTL plus one-to-three-day jitter, and
 ABI-safe helper exports. The issue #61 `wasm-bindgen` package exposes the
 analysis pipeline and Links Notation helpers through
-[`js/src/wasm-core.js`](js/src/wasm-core.js):
+[`js/src/wasm-core.js`](js/src/wasm-core.js).
+The `meta-expression-core` crate is marked `publish = false`: it ships as the
+WASM build inside the `meta-expression` npm package, not on crates.io. Test it
+with:
 
 ```bash
 cargo test --workspace
